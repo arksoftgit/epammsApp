@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSPLDSPLD_PanelUpdate   Generate Timestamp: 20160531205246943 --%>
+<%-- wSPLDSPLD_PanelUpdate   Generate Timestamp: 20160620105929607 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -1102,7 +1102,7 @@ else
    }
 %>
 
-<input name="EditBox2" id="EditBox2" maxlength="0" style="width:78px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="EditBox2" id="EditBox2" maxlength="20" style="width:78px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>
@@ -1153,7 +1153,7 @@ else
    }
 %>
 
-<input name="EditBox1" id="EditBox1" maxlength="0" style="width:78px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="EditBox1" id="EditBox1" maxlength="20" style="width:78px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>
@@ -1204,7 +1204,7 @@ else
    }
 %>
 
-<input name="EditBox3" id="EditBox3" maxlength="0" style="width:78px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="EditBox3" id="EditBox3" maxlength="20" style="width:78px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>
@@ -1255,7 +1255,7 @@ else
    }
 %>
 
-<input name="EditBox4" id="EditBox4" maxlength="0" style="width:78px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="EditBox4" id="EditBox4" maxlength="20" style="width:78px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>

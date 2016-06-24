@@ -1,4 +1,4 @@
-// wSystemImportAppTypesList   Generate Timestamp: 20160531205256975
+// wSystemImportAppTypesList   Generate Timestamp: 20160620105933483
 
 var isWindowClosing = true;
 var timerID = null;

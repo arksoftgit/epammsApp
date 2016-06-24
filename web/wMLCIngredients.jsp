@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCIngredients   Generate Timestamp: 20160531205226803 --%>
+<%-- wMLCIngredients   Generate Timestamp: 20160623085855614 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -114,6 +114,25 @@ public int DoInputMapping( HttpServletRequest request,
          {
             nMapError = -16;
             VmlOperation.CreateMessage( task, "GeneralInertPercentage", e.getReason( ), strMapValue );
+         }
+      }
+
+      // EditBox: EditBox1
+      nRC = mMasLC.cursor( "M_IngredientsSection" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 ) // CursorResult.SET
+      {
+         strMapValue = request.getParameter( "EditBox1" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "EditBox1", "", strMapValue );
+            else
+               mMasLC.cursor( "M_IngredientsSection" ).getAttribute( "dSpecifiedActiveIngredients" ).setValue( strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "EditBox1", e.getReason( ), strMapValue );
          }
       }
 
@@ -425,44 +444,6 @@ if ( strActionToProcess != null )
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "smSaveAndReturnMLC" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCIngredients", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCIngredients", "wMLC.SaveAndReturnMLC" );
-      nOptRC = wMLC.SaveAndReturnMLC( new zVIEW( vKZXMLPGO ) );
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReturnToParent, "", "" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
    while ( bDone == false && StringUtils.equals( strActionToProcess, "smSaveMLC" ) )
    {
       bDone = true;
@@ -494,6 +475,44 @@ if ( strActionToProcess != null )
       {
          // Next Window
          strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "smSaveAndReturnMLC" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCIngredients", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Action Operation
+      nRC = 0;
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCIngredients", "wMLC.SaveAndReturnMLC" );
+      nOptRC = wMLC.SaveAndReturnMLC( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReturnToParent, "", "" );
       }
 
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -1098,21 +1117,21 @@ else
 <div id="sidenavigation">
    <ul id="MLC_SideBar" name="MLC_SideBar">
 <%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "New4" );
-   if ( !csrRC.isSet() ) //if ( nRC < 0 )
-   {
-%>
-       <li id="smNew4" name="smNew4"><a href="#"  onclick="smSaveAndReturnMLC()">Save & Return</a></li>
-<%
-   }
-%>
-
-<%
    csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "New6" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
        <li id="smNew6" name="smNew6"><a href="#"  onclick="smSaveMLC()">Save</a></li>
+<%
+   }
+%>
+
+<%
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "New4" );
+   if ( !csrRC.isSet() ) //if ( nRC < 0 )
+   {
+%>
+       <li id="smNew4" name="smNew4"><a href="#"  onclick="smSaveAndReturnMLC()">Save & Return</a></li>
 <%
    }
 %>
@@ -1172,7 +1191,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="smStorDisp" name="smStorDisp"><a href="#"  onclick="smEditStorDispSect()">Storage and Disposal</a></li>
+       <li id="smStorDisp" name="smStorDisp"><a href="#"  onclick="smEditStorDispSect()">Storage & Disposal</a></li>
 <%
    }
 %>
@@ -1297,13 +1316,14 @@ else
 
 <%
    View mEPA = null;
+   View mMasLC_Root = null;
    View mMasLC = null;
+   View mMasLCIncludeExclude = null;
    View mMasProd = null;
    View mMasProdLST = null;
    View mOrganiz = null;
    View mPrimReg = null;
    View wWebXfer = null;
-   View mMasLCIncludeExclude = null;
    String strRadioGroupValue = "";
    String strComboCurrentValue = "";
    String strAutoComboBoxExternalValue = "";
@@ -1594,7 +1614,54 @@ else
    }
 %>
 
-<input class="text12" name="GeneralInertPercentage" id="GeneralInertPercentage" maxlength="0" style="width:50px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="GeneralInertPercentage" id="GeneralInertPercentage" maxlength="20" style="width:50px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+
+<span style="height:16px;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
+<% /* SpecifiedActivePercentage::Text */ %>
+
+<span  id="SpecifiedActivePercentage:" name="SpecifiedActivePercentage:" style="width:210px;height:16px;">Specified Active Percentage:</span>
+
+<span style="height:16px;">&nbsp&nbsp</span>
+<% /* EditBox1:EditBox */ %>
+<%
+   strErrorMapValue = VmlOperation.CheckError( "EditBox1", strError );
+   if ( !StringUtils.isBlank( strErrorMapValue ) )
+   {
+      if ( StringUtils.equals( strErrorFlag, "Y" ) )
+         strErrorColor = "color:red;";
+   }
+   else
+   {
+      strErrorColor = "";
+      mMasLC = task.getViewByName( "mMasLC" );
+      if ( VmlOperation.isValid( mMasLC ) == false )
+         task.log( ).debug( "Invalid View: " + "EditBox1" );
+      else
+      {
+         nRC = mMasLC.cursor( "M_IngredientsSection" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            try
+            {
+               strErrorMapValue = mMasLC.cursor( "M_IngredientsSection" ).getAttribute( "dSpecifiedActiveIngredients" ).getString( "" );
+            }
+            catch (Exception e)
+            {
+               out.println("There is an error on EditBox1: " + e.getMessage());
+               task.log().error( "*** Error on ctrl EditBox1", e );
+            }
+            if ( strErrorMapValue == null )
+               strErrorMapValue = "";
+
+            task.log( ).debug( "M_IngredientsSection.dSpecifiedActiveIngredients: " + strErrorMapValue );
+         }
+         else
+            task.log( ).debug( "Entity does not exist for EditBox1: " + "mMasLC.M_IngredientsSection" );
+      }
+   }
+%>
+
+<input class="text12" name="EditBox1" id="EditBox1" maxlength="20" style="width:50px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </div>  <!-- End of a new line -->
 

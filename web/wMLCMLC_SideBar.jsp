@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCMLC_Sidebar   Generate Timestamp: 20160531205228694 --%>
+<%-- wMLCMLC_Sidebar   Generate Timestamp: 20160623085856202 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -880,21 +880,21 @@ else
 <div id="sidenavigation">
    <ul id="MLC_SideBar" name="MLC_SideBar">
 <%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "New4" );
-   if ( !csrRC.isSet() ) //if ( nRC < 0 )
-   {
-%>
-       <li id="New4" name="New4"><a href="#"  onclick="SaveAndReturnMLC()">Save & Return</a></li>
-<%
-   }
-%>
-
-<%
    csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "New6" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
        <li id="New6" name="New6"><a href="#"  onclick="SaveMLC()">Save</a></li>
+<%
+   }
+%>
+
+<%
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "New4" );
+   if ( !csrRC.isSet() ) //if ( nRC < 0 )
+   {
+%>
+       <li id="New4" name="New4"><a href="#"  onclick="SaveAndReturnMLC()">Save & Return</a></li>
 <%
    }
 %>
@@ -954,7 +954,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="StorDisp" name="StorDisp"><a href="#"  onclick="EditStorDispSect()">Storage and Disposal</a></li>
+       <li id="StorDisp" name="StorDisp"><a href="#"  onclick="EditStorDispSect()">Storage & Disposal</a></li>
 <%
    }
 %>
@@ -1079,13 +1079,14 @@ else
 
 <%
    View mEPA = null;
+   View mMasLC_Root = null;
    View mMasLC = null;
+   View mMasLCIncludeExclude = null;
    View mMasProd = null;
    View mMasProdLST = null;
    View mOrganiz = null;
    View mPrimReg = null;
    View wWebXfer = null;
-   View mMasLCIncludeExclude = null;
    String strRadioGroupValue = "";
    String strComboCurrentValue = "";
    String strAutoComboBoxExternalValue = "";

@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCApplicationTypesStatement   Generate Timestamp: 20160531205223287 --%>
+<%-- wMLCApplicationTypesStatement   Generate Timestamp: 20160623085854477 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -709,21 +709,21 @@ else
 <div id="sidenavigation">
    <ul id="Return" name="Return">
 <%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "AcceptAndReturn" );
-   if ( !csrRC.isSet() ) //if ( nRC < 0 )
-   {
-%>
-       <li id="AcceptAndReturn" name="AcceptAndReturn"><a href="#"  onclick="AcceptAndReturnAppTypesStatement()">Accept & Return</a></li>
-<%
-   }
-%>
-
-<%
    csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "SaveAddNew" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
        <li id="SaveAddNew" name="SaveAddNew"><a href="#"  onclick="SaveAddNewUsage()">Accept & Add</a></li>
+<%
+   }
+%>
+
+<%
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "AcceptAndReturn" );
+   if ( !csrRC.isSet() ) //if ( nRC < 0 )
+   {
+%>
+       <li id="AcceptAndReturn" name="AcceptAndReturn"><a href="#"  onclick="AcceptAndReturnAppTypesStatement()">Accept & Return</a></li>
 <%
    }
 %>
@@ -768,13 +768,14 @@ else
 
 <%
    View mEPA = null;
+   View mMasLC_Root = null;
    View mMasLC = null;
+   View mMasLCIncludeExclude = null;
    View mMasProd = null;
    View mMasProdLST = null;
    View mOrganiz = null;
    View mPrimReg = null;
    View wWebXfer = null;
-   View mMasLCIncludeExclude = null;
    String strRadioGroupValue = "";
    String strComboCurrentValue = "";
    String strAutoComboBoxExternalValue = "";

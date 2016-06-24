@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSubRDeleteSubregProduct   Generate Timestamp: 20160531205253990 --%>
+<%-- wSubRDeleteSubregProduct   Generate Timestamp: 20160620105932247 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>

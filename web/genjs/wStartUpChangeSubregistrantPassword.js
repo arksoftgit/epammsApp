@@ -1,4 +1,4 @@
-// wStartUpChangeSubregistrantPassword   Generate Timestamp: 20160531205251959
+// wStartUpChangeSubregistrantPassword   Generate Timestamp: 20160620105931259
 
 var isWindowClosing = true;
 var timerID = null;

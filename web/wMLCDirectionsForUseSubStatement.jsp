@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCDirectionsForUseSubStatement   Generate Timestamp: 20160605160747650 --%>
+<%-- wMLCDirectionsForUseSubStatement   Generate Timestamp: 20160623085855133 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -527,6 +527,26 @@ if ( strActionToProcess != null )
          }
       }
 
+      // Action Auto Object Function
+      nRC = 0;
+      try
+      {
+         EntityCursor cursor = mMasLC.cursor( "M_InsertTextKeywordDU" );
+            if ( cursor.isNull() )
+               nRC = 0;
+            else
+            {
+               cursor.deleteEntity( CursorPosition.NEXT );
+            nRC = 0;
+         }
+
+      }
+      catch ( Exception e )
+      {
+         nRC = 2;
+         VmlOperation.CreateMessage( task, "DELETE_DU_StatementKeyword", e.getMessage( ), "" );
+         break;
+      }
       // Next Window
       strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -873,13 +893,14 @@ else
 
 <%
    View mEPA = null;
+   View mMasLC_Root = null;
    View mMasLC = null;
+   View mMasLCIncludeExclude = null;
    View mMasProd = null;
    View mMasProdLST = null;
    View mOrganiz = null;
    View mPrimReg = null;
    View wWebXfer = null;
-   View mMasLCIncludeExclude = null;
    String strRadioGroupValue = "";
    String strComboCurrentValue = "";
    String strAutoComboBoxExternalValue = "";

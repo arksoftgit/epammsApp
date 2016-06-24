@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wPrimRNewMasterProductSection   Generate Timestamp: 20160531205237132 --%>
+<%-- wPrimRNewMasterProductSection   Generate Timestamp: 20160620105841179 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -1120,7 +1120,7 @@ else
 <div>  <!-- Beginning of a new line -->
 <span style="height:62px;">&nbsp&nbsp</span>
 <% /* Text:EditBox */ %>
-<input class="withborder" name="Text" id="Text" maxlength="0" style="width:802px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="withborder" name="Text" id="Text" maxlength="20" style="width:802px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </div>  <!-- End of a new line -->
 
@@ -1135,7 +1135,7 @@ else
 
 <span style="height:16px;">&nbsp</span>
 <% /* EPA_Title:EditBox */ %>
-<input name="EPA_Title" id="EPA_Title" maxlength="0" style="width:366px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="EPA_Title" id="EPA_Title" maxlength="20" style="width:366px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </div>  <!-- End of a new line -->
 
@@ -1153,7 +1153,7 @@ else
 
 <span style="height:16px;">&nbsp</span>
 <% /* Graphic:EditBox */ %>
-<input name="Graphic" id="Graphic" maxlength="0" style="width:366px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="Graphic" id="Graphic" maxlength="20" style="width:366px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </div>  <!-- End of a new line -->
 

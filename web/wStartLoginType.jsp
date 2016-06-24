@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wStartLoginType   Generate Timestamp: 20160531205247834 --%>
+<%-- wStartLoginType   Generate Timestamp: 20160620105929832 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>

@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSubRChangeSubregPassword   Generate Timestamp: 20160531205253365 --%>
+<%-- wSubRChangeSubregPassword   Generate Timestamp: 20160620105931719 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>

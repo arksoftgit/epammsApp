@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wStartUpAdminDeletePrimRegUser   Generate Timestamp: 20160531205248615 --%>
+<%-- wStartUpAdminDeletePrimRegUser   Generate Timestamp: 20160620105930155 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>

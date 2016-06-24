@@ -1,4 +1,4 @@
-// wSubRChangeSubregUserPass   Generate Timestamp: 20160531205253474
+// wSubRChangeSubregUserPass   Generate Timestamp: 20160620105931743
 
 var isWindowClosing = true;
 var timerID = null;

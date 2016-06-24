@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCFirstAidSection   Generate Timestamp: 20160531205226022 --%>
+<%-- wMLCFirstAidSection   Generate Timestamp: 20160623085855379 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -486,44 +486,6 @@ if ( strActionToProcess != null )
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "smSaveAndReturnMLC" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCFirstAidSection", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCFirstAidSection", "wMLC.SaveAndReturnMLC" );
-      nOptRC = wMLC.SaveAndReturnMLC( new zVIEW( vKZXMLPGO ) );
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReturnToParent, "", "" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
    while ( bDone == false && StringUtils.equals( strActionToProcess, "smSaveMLC" ) )
    {
       bDone = true;
@@ -555,6 +517,44 @@ if ( strActionToProcess != null )
       {
          // Next Window
          strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "smSaveAndReturnMLC" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCFirstAidSection", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Action Operation
+      nRC = 0;
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCFirstAidSection", "wMLC.SaveAndReturnMLC" );
+      nOptRC = wMLC.SaveAndReturnMLC( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReturnToParent, "", "" );
       }
 
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -1139,21 +1139,21 @@ else
 <div id="sidenavigation">
    <ul id="MLC_SideBar" name="MLC_SideBar">
 <%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "New4" );
-   if ( !csrRC.isSet() ) //if ( nRC < 0 )
-   {
-%>
-       <li id="smNew4" name="smNew4"><a href="#"  onclick="smSaveAndReturnMLC()">Save & Return</a></li>
-<%
-   }
-%>
-
-<%
    csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "New6" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
        <li id="smNew6" name="smNew6"><a href="#"  onclick="smSaveMLC()">Save</a></li>
+<%
+   }
+%>
+
+<%
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "New4" );
+   if ( !csrRC.isSet() ) //if ( nRC < 0 )
+   {
+%>
+       <li id="smNew4" name="smNew4"><a href="#"  onclick="smSaveAndReturnMLC()">Save & Return</a></li>
 <%
    }
 %>
@@ -1213,7 +1213,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="smStorDisp" name="smStorDisp"><a href="#"  onclick="smEditStorDispSect()">Storage and Disposal</a></li>
+       <li id="smStorDisp" name="smStorDisp"><a href="#"  onclick="smEditStorDispSect()">Storage & Disposal</a></li>
 <%
    }
 %>
@@ -1338,13 +1338,14 @@ else
 
 <%
    View mEPA = null;
+   View mMasLC_Root = null;
    View mMasLC = null;
+   View mMasLCIncludeExclude = null;
    View mMasProd = null;
    View mMasProdLST = null;
    View mOrganiz = null;
    View mPrimReg = null;
    View wWebXfer = null;
-   View mMasLCIncludeExclude = null;
    String strRadioGroupValue = "";
    String strComboCurrentValue = "";
    String strAutoComboBoxExternalValue = "";
@@ -1471,24 +1472,21 @@ else
 <div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GBPrecautionarySection:GroupBox */ %>
 
-<div id="GBPrecautionarySection" name="GBPrecautionarySection" class="withborder" style="width:730px;height:66px;float:left;">  <!-- GBPrecautionarySection --> 
+<div id="GBPrecautionarySection" name="GBPrecautionarySection" class="withborder"   style="float:left;position:relative; width:730px; height:100px;">  <!-- GBPrecautionarySection --> 
 
-
-<div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:8px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox1:GroupBox */ %>
-<div id="GroupBox1" name="GroupBox1" style="float:left;width:698px;" >
+<div id="GroupBox1" name="GroupBox1" style="float:left;width:712px;" >
 
-<table cols=2 style="width:698px;"  class="grouptable">
+<table cols=2 style="width:712px;"  class="grouptable">
 
 <tr>
 <td valign="top" style="width:112px;">
 <% /* PrecautionaryTitle::Text */ %>
 
-<span  id="PrecautionaryTitle:" name="PrecautionaryTitle:" style="width:106px;height:16px;">Title:</span>
+<label  id="PrecautionaryTitle:" name="PrecautionaryTitle:" style="width:106px;height:16px;position:absolute;left:6px;top:14px;">Title:</label>
 
 </td>
-<td valign="top"  class="text12" style="width:550px;">
+<td valign="top"  class="text12" style="width:582px;">
 <% /* PrecautionaryTitle:EditBox */ %>
 <%
    strErrorMapValue = VmlOperation.CheckError( "PrecautionaryTitle", strError );
@@ -1528,7 +1526,7 @@ else
    }
 %>
 
-<input class="text12" name="PrecautionaryTitle" id="PrecautionaryTitle" maxlength="254" style="width:550px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="PrecautionaryTitle" id="PrecautionaryTitle" maxlength="254" style="width:582px;position:absolute;left:118px;top:14px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>
@@ -1536,10 +1534,10 @@ else
 <td valign="top" style="width:112px;">
 <% /* ReviewerNote::Text */ %>
 
-<span  id="ReviewerNote:" name="ReviewerNote:" style="width:106px;height:16px;">Reviewer Note:</span>
+<label  id="ReviewerNote:" name="ReviewerNote:" style="width:106px;height:16px;position:absolute;left:6px;top:36px;">Reviewer Note:</label>
 
 </td>
-<td valign="top"  class="text12" style="width:550px;">
+<td valign="top"  class="text12" style="width:582px;">
 <% /* ReviewerNote:EditBox */ %>
 <%
    strErrorMapValue = VmlOperation.CheckError( "ReviewerNote", strError );
@@ -1579,7 +1577,7 @@ else
    }
 %>
 
-<input class="text12" name="ReviewerNote" id="ReviewerNote" maxlength="1024" style="width:550px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="ReviewerNote" id="ReviewerNote" maxlength="1024" style="width:582px;position:absolute;left:118px;top:36px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>
@@ -1587,51 +1585,24 @@ else
 
 </div>  <!-- GroupBox1 --> 
 
-</div>  <!-- End of a new line -->
-
-
-</div>  <!--  GBPrecautionarySection --> 
-</div>  <!-- End of a new line -->
-
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
-
-
- <!-- This is added as a line spacer -->
-<div style="height:2px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GroupBox2:GroupBox */ %>
-
-<div id="GroupBox2" name="GroupBox2"   style="float:left;position:relative; width:730px; height:226px;">  <!-- GroupBox2 --> 
-
 <% /* GBPrecautionaryStatements:GroupBox */ %>
-<div id="GBPrecautionaryStatements" name="GBPrecautionaryStatements" style="float:left;width:708px;"  class="listgroup">
 
-<table cols=3 style="width:708px;"  class="grouptable">
+<div id="GBPrecautionaryStatements" name="GBPrecautionaryStatements" class="listgroup" style="width:708px;height:28px;position:absolute;left:8px;top:78px;">  <!-- GBPrecautionaryStatements --> 
 
-<tr>
-<td valign="top"  class="listheader" style="width:508px;">
 <% /* FirstAidStatements:Text */ %>
 
 <label class="listheader"  id="FirstAidStatements" name="FirstAidStatements" style="width:158px;height:26px;position:absolute;left:10px;top:2px;">First Aid Statements</label>
 
-</td>
-<td valign="top"  class="newbutton" style="width:96px;">
 <% /* RefreshStatements:PushBtn */ %>
-<button type="button" class="newbutton"  id="RefreshStatements" name="RefreshStatements" value="Refresh" onclick="Refresh( )"  style="width:78px;height:26px;">Refresh</button>
+<button type="button" class="newbutton" name="RefreshStatements" id="RefreshStatements" value="" onclick="Refresh( )" style="width:78px;height:26px;position:absolute;left:518px;top:2px;">Refresh</button>
 
-</td>
-<td valign="top"  class="newbutton" style="width:78px;">
 <% /* New:PushBtn */ %>
-<button type="button" class="newbutton"  id="New" name="New" value="New" onclick="GOTO_AddFirstAidStatement( )"  style="width:78px;height:26px;">New</button>
+<button type="button" class="newbutton" name="New" id="New" value="" onclick="GOTO_AddFirstAidStatement( )" style="width:78px;height:26px;position:absolute;left:614px;top:2px;">New</button>
 
-</td>
-</tr>
-<tr>
-<td valign="top" style="width:314px;">
 <% /* GroupBox4:GroupBox */ %>
-<div id="GroupBox4" name="GroupBox4" style="width:314px;height:18px;position:absolute;left:190px;top:10px;">
+
+<div id="GroupBox4" name="GroupBox4" style="width:314px;height:18px;position:absolute;left:190px;top:10px;">  <!-- GroupBox4 --> 
+
 <% /* Combine:CheckBox */ %>
 <%
    strErrorMapValue = "";
@@ -1692,17 +1663,31 @@ else
 <input type="checkbox" name="BoldText" id="BoldText"  value="Y" <%=strErrorMapValue%> style="position:absolute;left:206px;top:0px;">
 <span style="width:102px;height:18px;position:absolute;left:236px;top:0px;">Bold Text</span>
 
-</div>  <!-- GroupBox4 --> 
-</td>
-<td>&nbsp</td>
-<td>&nbsp</td>
-</tr>
-</table>
 
-</div>  <!-- GBPrecautionaryStatements --> 
+</div>  <!--  GroupBox4 --> 
 
+</div>  <!--  GBPrecautionaryStatements --> 
+
+</div>  <!--  GBPrecautionarySection --> 
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GroupBox2:GroupBox */ %>
+
+<div id="GroupBox2" name="GroupBox2" style="width:730px;float:left;">  <!-- GroupBox2 --> 
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:14px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:2px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GridPrecautionary:Grid */ %>
-<table  cols=3 style="position:absolute;top:38px;left:2px;width:710px;"  name="GridPrecautionary" id="GridPrecautionary">
+<table  cols=3 style="width:710px;"  name="GridPrecautionary" id="GridPrecautionary">
 
 <thead><tr>
 
@@ -1777,6 +1762,8 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 %>
 </tbody>
 </table>
+
+</div>  <!-- End of a new line -->
 
 
 </div>  <!--  GroupBox2 --> 

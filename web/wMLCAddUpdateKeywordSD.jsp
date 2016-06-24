@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCAddUpdateKeywordSD   Generate Timestamp: 20160531205222725 --%>
+<%-- wMLCAddUpdateKeywordSD   Generate Timestamp: 20160623085854273 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -291,6 +291,82 @@ if ( strActionToProcess != null )
       }
       // Next Window
       strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReturnToParent, "", "" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "AcceptNext" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCAddUpdateKeywordSD", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Action Operation
+      nRC = 0;
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCAddUpdateKeywordSD", "wMLC.AcceptSD_KeywordGoNext" );
+      nOptRC = wMLC.AcceptSD_KeywordGoNext( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "AcceptPrevious" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCAddUpdateKeywordSD", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Action Operation
+      nRC = 0;
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCAddUpdateKeywordSD", "wMLC.AcceptSD_KeywordGoPrev" );
+      nOptRC = wMLC.AcceptSD_KeywordGoPrev( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
+      }
+
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
@@ -647,6 +723,26 @@ else
 %>
 
 <%
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "NextKeyword" );
+   if ( !csrRC.isSet() ) //if ( nRC < 0 )
+   {
+%>
+       <li id="NextKeyword" name="NextKeyword"><a href="#"  onclick="AcceptNext()">Next Keyword</a></li>
+<%
+   }
+%>
+
+<%
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "PreviousKeyword" );
+   if ( !csrRC.isSet() ) //if ( nRC < 0 )
+   {
+%>
+       <li id="PreviousKeyword" name="PreviousKeyword"><a href="#"  onclick="AcceptPrevious()">Previous Keyword</a></li>
+<%
+   }
+%>
+
+<%
    csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "CancelAndReturn" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
@@ -676,13 +772,14 @@ else
 
 <%
    View mEPA = null;
+   View mMasLC_Root = null;
    View mMasLC = null;
+   View mMasLCIncludeExclude = null;
    View mMasProd = null;
    View mMasProdLST = null;
    View mOrganiz = null;
    View mPrimReg = null;
    View wWebXfer = null;
-   View mMasLCIncludeExclude = null;
    String strRadioGroupValue = "";
    String strComboCurrentValue = "";
    String strAutoComboBoxExternalValue = "";
@@ -969,7 +1066,7 @@ else
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox1:GroupBox */ %>
 
-<div id="GroupBox1" name="GroupBox1" style="width:838px;height:142px;float:left;">  <!-- GroupBox1 --> 
+<div id="GroupBox1" name="GroupBox1" style="width:746px;height:142px;float:left;">  <!-- GroupBox1 --> 
 
 
  <!-- This is added as a line spacer -->
@@ -979,7 +1076,7 @@ else
 <div style="height:1px;width:2px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox7:GroupBox */ %>
 
-<div id="GroupBox7" name="GroupBox7"   style="float:left;position:relative; width:794px; height:30px;">  <!-- GroupBox7 --> 
+<div id="GroupBox7" name="GroupBox7"   style="float:left;position:relative; width:718px; height:30px;">  <!-- GroupBox7 --> 
 
 <% /* Text5:Text */ %>
 
@@ -1068,7 +1165,7 @@ try
 
 <tr<%=strOdd%>>
 
-   <td><input size="116" value="<%=strGridCtrlText11%>"<%=strGridCtrlText11ErrorColor%> name="GridCtrlText11::<%=strEntityKey%>" id="GridCtrlText11::<%=strEntityKey%>" ></td>
+   <td><input size="104" value="<%=strGridCtrlText11%>"<%=strGridCtrlText11ErrorColor%> name="GridCtrlText11::<%=strEntityKey%>" id="GridCtrlText11::<%=strEntityKey%>" ></td>
    <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="DeleteBtn1" onclick="ADD_SD_KeywordTextItem( this.id )" id="DeleteBtn1::<%=strEntityKey%>"><img src="./images/ePammsNew.png" alt="Add"></a></td>
    <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BitmapBtn1" onclick="DELETE_InsertTextItem( this.id )" id="BitmapBtn1::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
 

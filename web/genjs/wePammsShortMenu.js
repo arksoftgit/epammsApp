@@ -1,4 +1,4 @@
-// wePammsShortMenu   Generate Timestamp: 20160531205220881
+// wePammsShortMenu   Generate Timestamp: 20160620105817351
 
 var isWindowClosing = true;
 var timerID = null;

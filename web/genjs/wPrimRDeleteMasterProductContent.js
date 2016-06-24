@@ -1,4 +1,4 @@
-// wPrimRDeleteMasterProductContent   Generate Timestamp: 20160531205232897
+// wPrimRDeleteMasterProductContent   Generate Timestamp: 20160620105837071
 
 var isWindowClosing = true;
 var timerID = null;

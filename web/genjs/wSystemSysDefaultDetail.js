@@ -1,4 +1,4 @@
-// wSystemSysDefaultDetail   Generate Timestamp: 20160531205258850
+// wSystemSysDefaultDetail   Generate Timestamp: 20160620105934047
 
 var isWindowClosing = true;
 var timerID = null;

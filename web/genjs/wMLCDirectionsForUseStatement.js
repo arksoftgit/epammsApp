@@ -1,4 +1,4 @@
-// wMLCDirectionsForUseStatement   Generate Timestamp: 20160605160737962
+// wMLCDirectionsForUseStatement   Generate Timestamp: 20160623085855069
 
 var isWindowClosing = true;
 var timerID = null;
@@ -206,7 +206,7 @@ function AcceptDirectionsStatement( )
    }
 }
 
-function ParseStatementText( )
+function AcceptNext( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -216,7 +216,86 @@ function ParseStatementText( )
    {
       _DisableFormElements( true );
 
-      document.wMLCDirectionsForUseStatement.zAction.value = "ParseStatementText";
+      document.wMLCDirectionsForUseStatement.zAction.value = "AcceptNext";
+      document.wMLCDirectionsForUseStatement.submit( );
+   }
+}
+
+function AcceptPrevious( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCDirectionsForUseStatement.zAction.value = "AcceptPrevious";
+      document.wMLCDirectionsForUseStatement.submit( );
+   }
+}
+
+function AddNewStatement( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCDirectionsForUseStatement.zAction.value = "AddNewStatement";
+      document.wMLCDirectionsForUseStatement.submit( );
+   }
+}
+
+function ADD_DFU_StatementKeyword( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCDirectionsForUseStatement.zAction.value = "ADD_DFU_StatementKeyword";
+      document.wMLCDirectionsForUseStatement.submit( );
+   }
+}
+
+function CancelDirectionsStatement( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCDirectionsForUseStatement.zAction.value = "CancelDirectionsStatement";
+      document.wMLCDirectionsForUseStatement.submit( );
+   }
+}
+
+function COPY_InsertKeywordDU( strTagEntityKey )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      var nIdx = strTagEntityKey.lastIndexOf( '::' );
+      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
+
+      document.wMLCDirectionsForUseStatement.zTableRowSelect.value = strEntityKey;
+      _DisableFormElements( true );
+
+      document.wMLCDirectionsForUseStatement.zAction.value = "COPY_InsertKeywordDU";
       document.wMLCDirectionsForUseStatement.submit( );
    }
 }
@@ -232,6 +311,44 @@ function DELETE_DirectionsForUseStatement( )
       _DisableFormElements( true );
 
       document.wMLCDirectionsForUseStatement.zAction.value = "DELETE_DirectionsForUseStatement";
+      document.wMLCDirectionsForUseStatement.submit( );
+   }
+}
+
+function DELETE_DirectionsForUseSubStmt( strTagEntityKey )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      var nIdx = strTagEntityKey.lastIndexOf( '::' );
+      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
+
+      document.wMLCDirectionsForUseStatement.zTableRowSelect.value = strEntityKey;
+      _DisableFormElements( true );
+
+      document.wMLCDirectionsForUseStatement.zAction.value = "DELETE_DirectionsForUseSubStmt";
+      document.wMLCDirectionsForUseStatement.submit( );
+   }
+}
+
+function DELETE_DU_StatementKeyword( strTagEntityKey )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      var nIdx = strTagEntityKey.lastIndexOf( '::' );
+      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
+
+      document.wMLCDirectionsForUseStatement.zTableRowSelect.value = strEntityKey;
+      _DisableFormElements( true );
+
+      document.wMLCDirectionsForUseStatement.zAction.value = "DELETE_DU_StatementKeyword";
       document.wMLCDirectionsForUseStatement.submit( );
    }
 }
@@ -262,46 +379,6 @@ function GOTO_DirsForUseStatementUpdate( )
       _DisableFormElements( true );
 
       document.wMLCDirectionsForUseStatement.zAction.value = "GOTO_DirsForUseStatementUpdate";
-      document.wMLCDirectionsForUseStatement.submit( );
-   }
-}
-
-function Sort( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      // Javascript code entered by user.
-
-       document.wMLCDirectionsForUseStatement.zTableRowSelect.value = buildSortTableHtml( "mMasLC", "M_InsertTextKeywordDU", "GridKeywords",  ["Keyword","Keyword Text"]  );
-
-      // END of Javascript code entered by user.
-
-      _DisableFormElements( true );
-
-      document.wMLCDirectionsForUseStatement.zAction.value = "Sort";
-      document.wMLCDirectionsForUseStatement.submit( );
-   }
-}
-
-function DELETE_DirectionsForUseSubStmt( strTagEntityKey )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      var nIdx = strTagEntityKey.lastIndexOf( '::' );
-      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
-
-      document.wMLCDirectionsForUseStatement.zTableRowSelect.value = strEntityKey;
-      _DisableFormElements( true );
-
-      document.wMLCDirectionsForUseStatement.zAction.value = "DELETE_DirectionsForUseSubStmt";
       document.wMLCDirectionsForUseStatement.submit( );
    }
 }
@@ -340,74 +417,6 @@ function GOTO_DirsForUseSubStmtUpdate( strTagEntityKey )
    }
 }
 
-function PASTE_InsertKeywordDU( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCDirectionsForUseStatement.zAction.value = "PASTE_InsertKeywordDU";
-      document.wMLCDirectionsForUseStatement.submit( );
-   }
-}
-
-function COPY_InsertKeywordDU( strTagEntityKey )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      var nIdx = strTagEntityKey.lastIndexOf( '::' );
-      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
-
-      document.wMLCDirectionsForUseStatement.zTableRowSelect.value = strEntityKey;
-      _DisableFormElements( true );
-
-      document.wMLCDirectionsForUseStatement.zAction.value = "COPY_InsertKeywordDU";
-      document.wMLCDirectionsForUseStatement.submit( );
-   }
-}
-
-function ADD_MarketingStatementKeyword( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCDirectionsForUseStatement.zAction.value = "ADD_MarketingStatementKeyword";
-      document.wMLCDirectionsForUseStatement.submit( );
-   }
-}
-
-function DELETE_DU_StatementKeyword( strTagEntityKey )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      var nIdx = strTagEntityKey.lastIndexOf( '::' );
-      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
-
-      document.wMLCDirectionsForUseStatement.zTableRowSelect.value = strEntityKey;
-      _DisableFormElements( true );
-
-      document.wMLCDirectionsForUseStatement.zAction.value = "DELETE_DU_StatementKeyword";
-      document.wMLCDirectionsForUseStatement.submit( );
-   }
-}
-
 function GOTO_DisplayGeneratedTextDU( )
 {
 
@@ -442,21 +451,6 @@ function GOTO_MarketingKeywordUpdate( strTagEntityKey )
    }
 }
 
-function CancelDirectionsStatement( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCDirectionsForUseStatement.zAction.value = "CancelDirectionsStatement";
-      document.wMLCDirectionsForUseStatement.submit( );
-   }
-}
-
 function GOTO_SelectRemoveDUEntries( )
 {
 
@@ -468,6 +462,57 @@ function GOTO_SelectRemoveDUEntries( )
       _DisableFormElements( true );
 
       document.wMLCDirectionsForUseStatement.zAction.value = "GOTO_SelectRemoveDUEntries";
+      document.wMLCDirectionsForUseStatement.submit( );
+   }
+}
+
+function ParseStatementText( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCDirectionsForUseStatement.zAction.value = "ParseStatementText";
+      document.wMLCDirectionsForUseStatement.submit( );
+   }
+}
+
+function PASTE_InsertKeywordDU( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCDirectionsForUseStatement.zAction.value = "PASTE_InsertKeywordDU";
+      document.wMLCDirectionsForUseStatement.submit( );
+   }
+}
+
+function Sort( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      // Javascript code entered by user.
+
+       document.wMLCDirectionsForUseStatement.zTableRowSelect.value = buildSortTableHtml( "mMasLC", "M_InsertTextKeywordDU", "GridKeywords",  ["Keyword","Keyword Text"]  );
+
+      // END of Javascript code entered by user.
+
+      _DisableFormElements( true );
+
+      document.wMLCDirectionsForUseStatement.zAction.value = "Sort";
       document.wMLCDirectionsForUseStatement.submit( );
    }
 }

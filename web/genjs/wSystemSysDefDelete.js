@@ -1,4 +1,4 @@
-// wSystemSysDefDelete   Generate Timestamp: 20160531205258990
+// wSystemSysDefDelete   Generate Timestamp: 20160620105934110
 
 var isWindowClosing = true;
 var timerID = null;

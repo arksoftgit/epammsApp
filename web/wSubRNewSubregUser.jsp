@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSubRNewSubregUser   Generate Timestamp: 20160531205254975 --%>
+<%-- wSubRNewSubregUser   Generate Timestamp: 20160620105932933 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>

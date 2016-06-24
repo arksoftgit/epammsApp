@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCOrganismClaimsStatement   Generate Timestamp: 20160531205229100 --%>
+<%-- wMLCOrganismClaimsStatement   Generate Timestamp: 20160623085856335 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -1067,16 +1067,6 @@ else
 %>
 
 <%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "CancelAndReturn" );
-   if ( !csrRC.isSet() ) //if ( nRC < 0 )
-   {
-%>
-       <li id="CancelAndReturn" name="CancelAndReturn"><a href="#"  onclick="CancelClaimsStmt()">Cancel & Return</a></li>
-<%
-   }
-%>
-
-<%
    csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "New1" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
@@ -1106,6 +1096,16 @@ else
    }
 %>
 
+<%
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "CancelAndReturn" );
+   if ( !csrRC.isSet() ) //if ( nRC < 0 )
+   {
+%>
+       <li id="CancelAndReturn" name="CancelAndReturn"><a href="#"  onclick="CancelClaimsStmt()">Cancel & Return</a></li>
+<%
+   }
+%>
+
    </ul>
 </div> <!-- sidenavigation -->
 
@@ -1126,13 +1126,14 @@ else
 
 <%
    View mEPA = null;
+   View mMasLC_Root = null;
    View mMasLC = null;
+   View mMasLCIncludeExclude = null;
    View mMasProd = null;
    View mMasProdLST = null;
    View mOrganiz = null;
    View mPrimReg = null;
    View wWebXfer = null;
-   View mMasLCIncludeExclude = null;
    String strRadioGroupValue = "";
    String strComboCurrentValue = "";
    String strAutoComboBoxExternalValue = "";

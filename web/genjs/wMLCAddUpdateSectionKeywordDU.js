@@ -1,4 +1,4 @@
-// wMLCAddUpdateSectionKeywordDU   Generate Timestamp: 20160531205222350
+// wMLCAddUpdateSectionKeywordDU   Generate Timestamp: 20160623085854344
 
 var isWindowClosing = true;
 var timerID = null;
@@ -204,6 +204,21 @@ function AcceptAndReturn( )
       _DisableFormElements( true );
 
       document.wMLCAddUpdateSectionKeywordDU.zAction.value = "AcceptAndReturn";
+      document.wMLCAddUpdateSectionKeywordDU.submit( );
+   }
+}
+
+function AddNewKeyword( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCAddUpdateSectionKeywordDU.zAction.value = "AddNewKeyword";
       document.wMLCAddUpdateSectionKeywordDU.submit( );
    }
 }

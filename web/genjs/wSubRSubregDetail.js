@@ -1,4 +1,4 @@
-// wSubRSubregDetail   Generate Timestamp: 20160531205255131
+// wSubRSubregDetail   Generate Timestamp: 20160620105932970
 
 var isWindowClosing = true;
 var timerID = null;

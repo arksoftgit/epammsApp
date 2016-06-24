@@ -1,4 +1,4 @@
-z1000-Zeidon    EPAMMS   TZZOXOGO 06/03/16   18:26:47 1.0a2   
+z1000-Zeidon    EPAMMS   TZZOXOGO 06/09/16   15:48:24 1.0a2   
 eTZZOXOGO  1
 aNAME      epamms
 
@@ -40,7 +40,11 @@ aDATATYPE  V
 
 ePARAMETER 4
 aNAME      StatementEntity
-aDATATYPE  S
+aDATATYPE  E
+
+ePARAMETER 4
+aNAME      StatementAttribute
+aDATATYPE  A
 
 ePARAMETER 4
 aNAME      KeywordEntity

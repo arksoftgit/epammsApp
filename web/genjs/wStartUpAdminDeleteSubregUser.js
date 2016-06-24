@@ -1,4 +1,4 @@
-// wStartUpAdminDeleteSubregUser   Generate Timestamp: 20160531205248834
+// wStartUpAdminDeleteSubregUser   Generate Timestamp: 20160620105930223
 
 var isWindowClosing = true;
 var timerID = null;

@@ -1,4 +1,4 @@
-//start mSPLDef 2016.05.31 20:31:17
+//start mSPLDef 2016.06.23 09:14:03
 zOPER_EXPORT zSHORT OPERATION
 omSPLDef_GeneratePDF_Label( zVIEW vViewToInstance0 );
 
@@ -169,7 +169,7 @@ zOPER_EXPORT zSHORT OPERATION
 omTempl_BuildDisplayStructure( zVIEW vViewToInstance0 );
 
 //end
-//start mMasLC 2016.05.31 20:31:15
+//start mMasLC 2016.06.23 13:37:42
 zOPER_EXPORT zSHORT OPERATION
 omMasLC_MergeUsageSelectEnts( zVIEW vViewToInstance0 );
 
@@ -220,7 +220,7 @@ zOPER_EXPORT zSHORT OPERATION
 omMasLC_BuildNonGroupEntries( zVIEW vViewToInstance0 );
 
 //end
-//start mSubLC 2016.05.31 20:31:17
+//start mSubLC 2016.06.23 09:14:04
 zOPER_EXPORT zSHORT OPERATION
 omSubLC_BuildNewSLC_Version( zVIEW vViewToInstance0,
                              zVIEW vOriginalSLC1,
@@ -264,7 +264,7 @@ omSubLC_ObjectConstraints( zVIEW vViewtoInstance0,
                            zSHORT nState2 );
 
 //end
-//start DOMAINT 2016.05.31 20:31:13
+//start DOMAINT 2016.06.23 09:13:35
 zOPER_EXPORT zSHORT OPERATION
 oDOMAINT_ActivateDomainList( zPVIEW vViewToInstance0,
                              zVIEW vViewToWindow1 );
@@ -285,7 +285,7 @@ oDOMAINT_PreloadSystemDomains( zVIEW vViewToInstance0,
                                zPCHAR pchInstallApp2 );
 
 //end
-//start lMLCATgt 2016.05.31 20:31:13
+//start lMLCATgt 2016.06.23 09:13:59
 zOPER_EXPORT zSHORT OPERATION
 olMLCATgt_BuildDifferencesMLC( zVIEW vViewToInstance0,
                                zVIEW vSourceCompareObject1 );
@@ -304,7 +304,7 @@ zOPER_EXPORT zSHORT OPERATION
 olMLCATgt_DeleteEmptyTitles( zVIEW vViewToInstance0 );
 
 //end
-//start ZGlobal1 2016.06.03 18:26:47
+//start ZGlobal1 2016.06.09 15:48:24
 zOPER_EXPORT zSHORT OPERATION
 ConvertLineToEntity( zVIEW vEntityView0,
                      zVIEW vXOD_View1,
@@ -314,10 +314,11 @@ ConvertLineToEntity( zVIEW vEntityView0,
 
 zOPER_EXPORT zVOID OPERATION
 ParseStatementForKeywords( zVIEW vmMasLC0,
-                           zPCHAR pchStatementEntity1,
-                           zPCHAR pchKeywordEntity2,
-                           zPCHAR pchKeywordTextEntity3,
-                           zPCHAR pchKeywordSemaphore4 );
+                           zPCHAR eStatementEntity1,
+                           zPCHAR aStatementAttribute2,
+                           zPCHAR pchKeywordEntity3,
+                           zPCHAR pchKeywordTextEntity4,
+                           zPCHAR pchKeywordSemaphore5 );
 
 zOPER_EXPORT zSHORT OPERATION
 GenerateKeywordTextIntoString( zVIEW vKeywordEntityView0,

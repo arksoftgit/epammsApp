@@ -1,4 +1,4 @@
-// wSLCHazardsSection   Generate Timestamp: 20160531205242366
+// wSLCHazardsSection   Generate Timestamp: 20160620105928324
 
 var isWindowClosing = true;
 var timerID = null;

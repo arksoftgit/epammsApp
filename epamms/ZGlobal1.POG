@@ -1,7 +1,7 @@
-z1000-Zeidon    ZGLOBAL1 TZOGSRCO 06/03/16   18:26:47 1.0a2   
+z1000-Zeidon    ZGLOBAL1 TZOGSRCO 06/09/16   15:48:24 1.0a2   
 eGlobalOperationGroup 1
 aZKey      89816452
-aNextZKeyToAssign 110040717
+aNextZKeyToAssign 110040718
 aName      ZGlobal1
 aDesc      Global Operations in C
 aExtension C
@@ -65,10 +65,17 @@ aZKey      110040712
 
 eParameter 3
 aShortDesc StatementEntity
-aDataType  S
+aDataType  E
 aPFlag     N
 aUFlag     N
 aZKey      110040714
+
+eParameter 3
+aShortDesc StatementAttribute
+aDataType  A
+aPFlag     N
+aUFlag     N
+aZKey      110040718
 
 eParameter 3
 aShortDesc KeywordEntity

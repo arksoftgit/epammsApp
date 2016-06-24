@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSPLDSPLD_BlockSpecialFormatDef   Generate Timestamp: 20160531205246677 --%>
+<%-- wSPLDSPLD_BlockSpecialFormatDef   Generate Timestamp: 20160620105929547 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -931,7 +931,7 @@ else
    }
 %>
 
-<input name="MarginTop" id="MarginTop" maxlength="0" style="width:98px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="MarginTop" id="MarginTop" maxlength="20" style="width:98px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 <td valign="top" style="width:128px;">
@@ -988,7 +988,7 @@ else
    }
 %>
 
-<input name="MarginBottom" id="MarginBottom" maxlength="0" style="width:98px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="MarginBottom" id="MarginBottom" maxlength="20" style="width:98px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 <td valign="top" style="width:128px;">
@@ -1045,7 +1045,7 @@ else
    }
 %>
 
-<input name="MarginLeft" id="MarginLeft" maxlength="0" style="width:98px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="MarginLeft" id="MarginLeft" maxlength="20" style="width:98px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 <td valign="top" style="width:128px;">
@@ -1102,7 +1102,7 @@ else
    }
 %>
 
-<input name="MarginRight" id="MarginRight" maxlength="0" style="width:98px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="MarginRight" id="MarginRight" maxlength="20" style="width:98px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 <td valign="top" style="width:128px;">
@@ -1607,7 +1607,7 @@ else
    }
 %>
 
-<input name="TextLineHeight" id="TextLineHeight" maxlength="0" style="width:98px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="TextLineHeight" id="TextLineHeight" maxlength="20" style="width:98px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 <td valign="top" style="width:162px;">

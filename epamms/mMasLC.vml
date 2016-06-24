@@ -905,6 +905,45 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
+//  OPERATION: dDU_SectTitleOrTxtKey
+//
+/////////////////////////////////////////////////////////////////////////////
+DERIVED ATTRIBUTE OPERATION
+dDU_SectTitleOrTxtKey( VIEW mMasLC BASED ON LOD mMasLC,
+                       STRING ( 32 ) InternalEntityStructure,
+                       STRING ( 32 ) InternalAttribStructure,
+                       SHORT GetOrSetFlag )
+
+   STRING ( 1024 ) szDisplayStatement
+
+   CASE GetOrSetFlag
+   OF   zDERIVED_GET:
+
+      // Directions For Use Display Section Title embeds keywords into the Title.
+      szDisplayStatement = mMasLC.M_DirectionsForUseSection.Title
+      IF szDisplayStatement = ""
+         szDisplayStatement = mMasLC.M_DirectionsForUseSection.Subtitle
+      END
+
+      IF szDisplayStatement != ""
+         GenerateKeywordTextIntoString( mMasLC, szDisplayStatement,
+                                        "M_InsertTextKeywordSectionDU", "M_InsertTextSectionDU", ", " )
+      END
+
+      // Store the calculated value in the object.
+      StoreStringInRecord( mMasLC, InternalEntityStructure, InternalAttribStructure, szDisplayStatement )
+      RETURN 0
+
+        /* end zDERIVED_GET */
+   OF   zDERIVED_SET:
+
+        /* end zDERIVED_SET */
+   END  /* case */
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
 //  OPERATION: dDU_SectionTitleKeyword
 //
 /////////////////////////////////////////////////////////////////////////////
@@ -997,13 +1036,8 @@ dDU_StatementTitleText( VIEW mMasLC BASED ON LOD mMasLC,
 
       // Directions For Use Display Statement Text is a combination of Title and Text.
       szStatementText = mMasLC.M_DirectionsForUseStatement.Text
-      IF szStatementText != ""
-         GenerateKeywordTextIntoString( mMasLC, szStatementText,
-                                        "M_InsertTextKeywordDU", "M_InsertTextDU", ", " )
-      END
-
-      IF mMasLC.M_DirectionsForUseStatement.Title != ""
-         szTitle = mMasLC.M_DirectionsForUseStatement.Title
+      szTitle = mMasLC.M_DirectionsForUseStatement.Title
+      IF szTitle != ""
          szDisplayStatement = "<b>" + szTitle + "</b>"
          IF szStatementText != ""
             szDisplayStatement = szDisplayStatement + " --- " + szStatementText
@@ -1014,7 +1048,57 @@ dDU_StatementTitleText( VIEW mMasLC BASED ON LOD mMasLC,
 
       // Store the calculated value in the object.
       StoreStringInRecord( mMasLC, InternalEntityStructure, InternalAttribStructure, szDisplayStatement )
-      RETURN 0
+
+        /* end zDERIVED_GET */
+   OF   zDERIVED_SET:
+
+        /* end zDERIVED_SET */
+   END  /* case */
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: dDU_StmtTitleTxtKey
+//
+/////////////////////////////////////////////////////////////////////////////
+DERIVED ATTRIBUTE OPERATION
+dDU_StmtTitleTxtKey( VIEW mMasLC BASED ON LOD mMasLC,
+                     STRING ( 32 ) InternalEntityStructure,
+                     STRING ( 32 ) InternalAttribStructure,
+                     SHORT GetOrSetFlag )
+
+   STRING ( 1024 ) szDisplayStatement
+   STRING ( 256 )  szStatementTitle
+   STRING ( 1024 ) szStatementText
+
+   CASE GetOrSetFlag
+   OF   zDERIVED_GET:
+
+      // Directions For Use Display Statement Text is a combination of Title/Text/Keywords.
+      szStatementText = mMasLC.M_DirectionsForUseStatement.Text
+      IF szStatementText != ""
+         GenerateKeywordTextIntoString( mMasLC, szStatementText,
+                                        "M_InsertTextKeywordDU", "M_InsertTextDU", ", " )
+      END
+
+      szStatementTitle = mMasLC.M_DirectionsForUseStatement.Title
+      IF szStatementTitle != ""
+         GenerateKeywordTextIntoString( mMasLC, szStatementTitle,
+                                        "M_InsertTextKeywordDU", "M_InsertTextDU", ", " )
+      END
+
+      IF szStatementTitle != ""
+         szDisplayStatement = szStatementTitle
+         IF szStatementText != ""
+            szDisplayStatement = szDisplayStatement + " --- " + szStatementText
+         END
+      ELSE
+         szDisplayStatement = szStatementText
+      END
+
+      // Store the calculated value in the object.
+      StoreStringInRecord( mMasLC, InternalEntityStructure, InternalAttribStructure, szDisplayStatement )
 
         /* end zDERIVED_GET */
    OF   zDERIVED_SET:
@@ -1117,9 +1201,9 @@ dDU_SubStmtTitleText( VIEW mMasLC BASED ON LOD mMasLC,
    OF   zDERIVED_GET:
 
       // Directions For Use Display Statement Text is a combination of Title and Text.
+      szTitle = mMasLC.M_DirectionsForUseSubStatement.Title
       szStatementText = mMasLC.M_DirectionsForUseSubStatement.Text
-      IF mMasLC.M_DirectionsForUseStatement.Title != ""
-         szTitle = mMasLC.M_DirectionsForUseSubStatement.Title
+      IF szTitle != ""
          szDisplayStatement = szTitle + " --- " + szStatementText
       ELSE
          szDisplayStatement = szStatementText
@@ -1128,6 +1212,61 @@ dDU_SubStmtTitleText( VIEW mMasLC BASED ON LOD mMasLC,
       // Store the calculated value in the object.
       StoreStringInRecord( mMasLC, InternalEntityStructure, InternalAttribStructure, szDisplayStatement )
       RETURN 0
+
+        /* end zDERIVED_GET */
+   OF   zDERIVED_SET:
+
+        /* end zDERIVED_SET */
+   END  /* case */
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: dDU_SubStmtTitleTxtKey
+//
+/////////////////////////////////////////////////////////////////////////////
+DERIVED ATTRIBUTE OPERATION
+dDU_SubStmtTitleTxtKey( VIEW mMasLC BASED ON LOD mMasLC,
+                        STRING ( 32 ) InternalEntityStructure,
+                        STRING ( 32 ) InternalAttribStructure,
+                        SHORT GetOrSetFlag )
+
+   STRING ( 1024 ) szDisplayStatement
+   STRING ( 256 )  szStatementTitle
+   STRING ( 1024 ) szStatementText
+
+   CASE GetOrSetFlag
+   OF   zDERIVED_GET:
+
+      // Directions For Use Display Statement Text is a combination of Title/Text/Keywords.
+      SetViewToSubobject( mMasLC, "M_DirectionsForUseSubStatement" )
+      
+      szStatementText = mMasLC.M_DirectionsForUseStatement.Text
+      IF szStatementText != ""
+         GenerateKeywordTextIntoString( mMasLC, szStatementText,
+                                        "M_InsertTextKeywordDU", "M_InsertTextDU", ", " )
+      END
+
+      szStatementTitle = mMasLC.M_DirectionsForUseStatement.Title
+      IF szStatementTitle != ""
+         GenerateKeywordTextIntoString( mMasLC, szStatementTitle,
+                                        "M_InsertTextKeywordDU", "M_InsertTextDU", ", " )
+      END
+
+      IF szStatementTitle != ""
+         szDisplayStatement = szStatementTitle
+         IF szStatementText != ""
+            szDisplayStatement = szDisplayStatement + " --- " + szStatementText
+         END
+      ELSE
+         szDisplayStatement = szStatementText
+      END
+
+      ResetViewFromSubobject( mMasLC )
+
+      // Store the calculated value in the object.
+      StoreStringInRecord( mMasLC, InternalEntityStructure, InternalAttribStructure, szDisplayStatement )
 
         /* end zDERIVED_GET */
    OF   zDERIVED_SET:
@@ -1253,9 +1392,9 @@ dSD_TitleText( VIEW mMasLC BASED ON LOD mMasLC,
    OF   zDERIVED_GET:
 
       // Storage and Disposal Display Statement Text is a combination of Title and Text.
+      szTitle = mMasLC.M_StorageDisposalStatement.Title
       szStatementText = mMasLC.M_StorageDisposalStatement.Text
-      IF mMasLC.M_StorageDisposalStatement.Title != ""
-         szTitle = mMasLC.M_StorageDisposalStatement.Title
+      IF szTitle != ""
          szDisplayStatement = szTitle + " --- " + szStatementText
       ELSE
          szDisplayStatement = szStatementText
@@ -1276,7 +1415,7 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-//  OPERATION: dSD_TitleText
+//  OPERATION: dSD_SubTitleText
 //
 /////////////////////////////////////////////////////////////////////////////
 DERIVED ATTRIBUTE OPERATION
@@ -1293,9 +1432,9 @@ dSD_SubTitleText( VIEW mMasLC BASED ON LOD mMasLC,
    OF   zDERIVED_GET:
 
       // Storage and Disposal Display Statement Text is a combination of Title and Text.
+      szTitle = mMasLC.M_StorageDisposalSubStatement.Title
       szStatementText = mMasLC.M_StorageDisposalSubStatement.Text
-      IF mMasLC.M_StorageDisposalSubStatement.Title != ""
-         szTitle = mMasLC.M_StorageDisposalSubStatement.Title
+      IF szTitle != ""
          szDisplayStatement = szTitle + " --- " + szStatementText
       ELSE
          szDisplayStatement = szStatementText
@@ -1305,6 +1444,176 @@ dSD_SubTitleText( VIEW mMasLC BASED ON LOD mMasLC,
       // Store the calculated value in the object.
       StoreStringInRecord( mMasLC, InternalEntityStructure, InternalAttribStructure, szDisplayStatement )
       RETURN 0
+
+        /* end zDERIVED_GET */
+   OF   zDERIVED_SET:
+
+        /* end zDERIVED_SET */
+   END  /* case */
+
+END
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: dSD_StmtTitleKey
+//
+/////////////////////////////////////////////////////////////////////////////
+DERIVED ATTRIBUTE OPERATION
+dSD_StmtTitleKey( VIEW mMasLC BASED ON LOD mMasLC,
+                  STRING ( 32 ) InternalEntityStructure,
+                  STRING ( 32 ) InternalAttribStructure,
+                  SHORT GetOrSetFlag )
+
+   STRING ( 1024 ) szStatementTitle
+
+   CASE GetOrSetFlag
+   OF   zDERIVED_GET:
+
+      // Storage and Disposal Display Statement Title is a combination of Title/Keywords.
+      szStatementTitle = mMasLC.M_StorageDisposalStatement.Title
+      IF szStatementTitle != ""
+         GenerateKeywordTextIntoString( mMasLC, szStatementTitle,
+                                        "M_InsertTextKeywordSD", "M_InsertTextSD", ", " )
+      END
+
+      // Store the calculated value in the object.
+      StoreStringInRecord( mMasLC, InternalEntityStructure, InternalAttribStructure, szStatementTitle )
+
+        /* end zDERIVED_GET */
+   OF   zDERIVED_SET:
+
+        /* end zDERIVED_SET */
+   END  /* case */
+
+END
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: dSD_StmtTextKey
+//
+/////////////////////////////////////////////////////////////////////////////
+DERIVED ATTRIBUTE OPERATION
+dSD_StmtTextKey( VIEW mMasLC BASED ON LOD mMasLC,
+                 STRING ( 32 ) InternalEntityStructure,
+                 STRING ( 32 ) InternalAttribStructure,
+                 SHORT GetOrSetFlag )
+
+   STRING ( 1024 ) szStatementText
+
+   CASE GetOrSetFlag
+   OF   zDERIVED_GET:
+
+      // Storage and Disposal Display Statement Text is a combination of Text/Keywords.
+      szStatementText = mMasLC.M_StorageDisposalStatement.Text
+      IF szStatementText != ""
+         GenerateKeywordTextIntoString( mMasLC, szStatementText,
+                                        "M_InsertTextKeywordSD", "M_InsertTextSD", ", " )
+      END
+
+      // Store the calculated value in the object.
+      StoreStringInRecord( mMasLC, InternalEntityStructure, InternalAttribStructure, szStatementText )
+
+        /* end zDERIVED_GET */
+   OF   zDERIVED_SET:
+
+        /* end zDERIVED_SET */
+   END  /* case */
+
+END
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: dSD_StmtTitleTxtKey
+//
+/////////////////////////////////////////////////////////////////////////////
+DERIVED ATTRIBUTE OPERATION
+dSD_StmtTitleTxtKey( VIEW mMasLC BASED ON LOD mMasLC,
+                     STRING ( 32 ) InternalEntityStructure,
+                     STRING ( 32 ) InternalAttribStructure,
+                     SHORT GetOrSetFlag )
+
+   STRING ( 1024 ) szDisplayStatement
+   STRING ( 256 )  szStatementTitle
+   STRING ( 1024 ) szStatementText
+
+   CASE GetOrSetFlag
+   OF   zDERIVED_GET:
+
+      // Storage and Disposal Display Statement Text is a combination of Title/Text/Keywords.
+      szStatementText = mMasLC.M_StorageDisposalStatement.Text
+      IF szStatementText != ""
+         GenerateKeywordTextIntoString( mMasLC, szStatementText,
+                                        "M_InsertTextKeywordSD", "M_InsertTextSD", ", " )
+      END
+
+      szStatementTitle = mMasLC.M_StorageDisposalStatement.Title
+      IF szStatementTitle != ""
+         GenerateKeywordTextIntoString( mMasLC, szStatementTitle,
+                                        "M_InsertTextKeywordSD", "M_InsertTextSD", ", " )
+         szDisplayStatement = szStatementTitle
+         IF szStatementText != ""
+            szDisplayStatement = szDisplayStatement + " --- " + szStatementText
+         END
+      ELSE
+         szDisplayStatement = szStatementText
+      END
+
+      // Store the calculated value in the object.
+      StoreStringInRecord( mMasLC, InternalEntityStructure, InternalAttribStructure, szDisplayStatement )
+
+        /* end zDERIVED_GET */
+   OF   zDERIVED_SET:
+
+        /* end zDERIVED_SET */
+   END  /* case */
+
+END
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: dSD_SubStmtTitleTxtKey
+//
+/////////////////////////////////////////////////////////////////////////////
+DERIVED ATTRIBUTE OPERATION
+dSD_SubStmtTitleTxtKey( VIEW mMasLC BASED ON LOD mMasLC,
+                        STRING ( 32 ) InternalEntityStructure,
+                        STRING ( 32 ) InternalAttribStructure,
+                        SHORT GetOrSetFlag )
+
+   STRING ( 1024 ) szDisplayStatement
+   STRING ( 256 )  szStatementTitle
+   STRING ( 1024 ) szStatementText
+
+   CASE GetOrSetFlag
+   OF   zDERIVED_GET:
+
+      // Storage and Disposal Display Statement Text is a combination of Title/Text/Keywords.
+      SetViewToSubobject( mMasLC, "M_StorageDisposalSubStatement" )
+      szStatementText = mMasLC.M_StorageDisposalStatement.Text
+      IF szStatementText != ""
+         GenerateKeywordTextIntoString( mMasLC, szStatementText,
+                                        "M_InsertTextKeywordSD", "M_InsertTextSD", ", " )
+      END
+
+      szStatementTitle = mMasLC.M_StorageDisposalStatement.Title
+      IF szStatementTitle != ""
+         GenerateKeywordTextIntoString( mMasLC, szStatementTitle,
+                                        "M_InsertTextKeywordSD", "M_InsertTextSD", ", " )
+      END
+
+      IF szStatementTitle != ""
+         szDisplayStatement = szStatementTitle
+         IF szStatementText != ""
+            szDisplayStatement = szDisplayStatement + " --- " + szStatementText
+         END
+      ELSE
+         szDisplayStatement = szStatementText
+      END
+
+      ResetViewFromSubobject( mMasLC )
+      
+      // Store the calculated value in the object.
+      StoreStringInRecord( mMasLC, InternalEntityStructure, InternalAttribStructure, szDisplayStatement )
 
         /* end zDERIVED_GET */
    OF   zDERIVED_SET:
@@ -3097,6 +3406,7 @@ BuildUsageKeyEntries( VIEW mMasLC BASED ON LOD mMasLC,
                       STRING ( 1024 ) TextValue,
                       STRING ( 1024 ) TitleValue )
 
+   VIEW mMasLC_Root REGISTERED AS mMasLC_Root
    SHORT nRC1
    SHORT nRC2
 
@@ -3107,25 +3417,25 @@ BuildUsageKeyEntries( VIEW mMasLC BASED ON LOD mMasLC,
    // Then build the actual M_InsertTextKeyword subobject from the selected entries from M_InsertTextKeywordBase.
 
    // Delete any current entries.
-   IF mMasLC.DisplayKeywordText EXISTS
-      DELETE ENTITY mMasLC.DisplayKeywordText
+   IF mMasLC_Root.DisplayKeywordText EXISTS
+      DELETE ENTITY mMasLC_Root.DisplayKeywordText
    END
 
    // Create Display entity containing Text and optionally Title.
-   CREATE ENTITY mMasLC.DisplayKeywordText
-   mMasLC.DisplayKeywordText.Text  = TextValue
-   mMasLC.DisplayKeywordText.Title = TitleValue
+   CREATE ENTITY mMasLC_Root.DisplayKeywordText
+   mMasLC_Root.DisplayKeywordText.Text  = TextValue
+   mMasLC_Root.DisplayKeywordText.Title = TitleValue
 
    // Copy over the basic entities.
    nRC1 = SetCursorFirstEntity( mMasLC, SourceKeywordEntityName, "" )
    LOOP WHILE nRC1 >= zCURSOR_SET
-      CREATE ENTITY mMasLC.M_InsertTextKeywordBase
-      SetMatchingAttributesByName( mMasLC, "M_InsertTextKeywordBase", mMasLC, SourceKeywordEntityName, zSET_ALL )
+      CREATE ENTITY mMasLC_Root.M_InsertTextKeywordBase
+      SetMatchingAttributesByName( mMasLC_Root, "M_InsertTextKeywordBase", mMasLC, SourceKeywordEntityName, zSET_ALL )
 
       nRC2 = SetCursorFirstEntity( mMasLC, SourceTextEntityName, "" )
       LOOP WHILE nRC2 >= zCURSOR_SET
-         CREATE ENTITY mMasLC.M_InsertTextBase
-         SetMatchingAttributesByName( mMasLC, "M_InsertTextBase", mMasLC, SourceTextEntityName, zSET_ALL )
+         CREATE ENTITY mMasLC_Root.M_InsertTextBase
+         SetMatchingAttributesByName( mMasLC_Root, "M_InsertTextBase", mMasLC, SourceTextEntityName, zSET_ALL )
 
          nRC2 = SetCursorNextEntity( mMasLC, SourceTextEntityName, "" )
       END
@@ -3133,26 +3443,26 @@ BuildUsageKeyEntries( VIEW mMasLC BASED ON LOD mMasLC,
    END
 
    // Initialize the selected flags as indicated above.
-   FOR EACH mMasLC.M_InsertTextKeywordBase
-      IF mMasLC.M_InsertTextKeywordBase.Type = "O"
+   FOR EACH mMasLC_Root.M_InsertTextKeywordBase
+      IF mMasLC_Root.M_InsertTextKeywordBase.Type = "O"
          // Set the flag for the first entry.
-         mMasLC.M_InsertTextBase.wSelected = "Y"
+         mMasLC_Root.M_InsertTextBase.wSelected = "Y"
       ELSE
          // Set the flag for all entries.
-         FOR EACH mMasLC.M_InsertTextBase
-            mMasLC.M_InsertTextBase.wSelected = "Y"
+         FOR EACH mMasLC_Root.M_InsertTextBase
+            mMasLC_Root.M_InsertTextBase.wSelected = "Y"
          END
       END
    END
 
    // Build the M_InsertTextKeyword subobject as described above.
-   FOR EACH mMasLC.M_InsertTextKeywordBase
-      CREATE ENTITY mMasLC.M_InsertTextKeyword
-      SetMatchingAttributesByName( mMasLC, "M_InsertTextKeyword", mMasLC, "M_InsertTextKeywordBase", zSET_ALL )
-      FOR EACH mMasLC.M_InsertTextBase
-         IF mMasLC.M_InsertTextBase.wSelected = "Y"
-            CREATE ENTITY mMasLC.M_InsertText
-            SetMatchingAttributesByName( mMasLC, "M_InsertText", mMasLC, "M_InsertTextBase", zSET_ALL )
+   FOR EACH mMasLC_Root.M_InsertTextKeywordBase
+      CREATE ENTITY mMasLC_Root.M_InsertTextKeyword
+      SetMatchingAttributesByName( mMasLC_Root, "M_InsertTextKeyword", mMasLC_Root, "M_InsertTextKeywordBase", zSET_ALL )
+      FOR EACH mMasLC_Root.M_InsertTextBase
+         IF mMasLC_Root.M_InsertTextBase.wSelected = "Y"
+            CREATE ENTITY mMasLC_Root.M_InsertText
+            SetMatchingAttributesByName( mMasLC_Root, "M_InsertText", mMasLC_Root, "M_InsertTextBase", zSET_ALL )
          END
       END
    END
@@ -3193,5 +3503,45 @@ BuildNonGroupEntries( VIEW mMasLC BASED ON LOD mMasLC )
    OrderEntityForView( mMasLC2, "M_UsageNonGroupUsage", "Name A" )
    SET CURSOR FIRST mMasLC.M_UsageGroup WHERE mMasLC.M_UsageGroup.ID = UsageGroupID
    DropView( mMasLC2 )
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: dSpecifiedActiveIngred
+//
+/////////////////////////////////////////////////////////////////////////////
+DERIVED ATTRIBUTE OPERATION
+dSpecifiedActiveIngred( VIEW mMasLC BASED ON LOD mMasLC,
+                        STRING ( 32 ) InternalEntityStructure,
+                        STRING ( 32 ) InternalAttribStructure,
+                        SHORT GetOrSetFlag )
+
+   STRING ( 32 ) Active
+   DECIMAL dTotalActiveIngredients
+   DECIMAL dActiveIngredients
+
+   CASE GetOrSetFlag
+   OF   zDERIVED_GET:
+
+      dTotalActiveIngredients = 0
+      FOR EACH mMasLC.M_IngredientsStatement
+         Active = mMasLC.M_IngredientsStatement.Active
+         IF Active = "A"
+            dActiveIngredients = mMasLC.M_IngredientsStatement.Percent
+            dTotalActiveIngredients = dTotalActiveIngredients + dActiveIngredients
+         END
+      END
+ 
+      // Store the resulting value in the object.
+      Active = dTotalActiveIngredients
+      StoreStringInRecord( mMasLC, InternalEntityStructure, InternalAttribStructure, Active )
+      RETURN 0
+
+        // end zDERIVED_GET
+   OF   zDERIVED_SET:
+
+        // end zDERIVED_SET
+   END  // case
 
 END

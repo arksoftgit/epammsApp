@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSystemUsersDetail   Generate Timestamp: 20160531205300584 --%>
+<%-- wSystemUsersDetail   Generate Timestamp: 20160620105934571 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -684,7 +684,7 @@ else
 <span class="text10"  id="FullName:" name="FullName:" style="width:78px;height:16px;">Full Name:</span>
 
 <% /* FullName:EditBox */ %>
-<input class="text10" name="FullName" id="FullName" maxlength="0" style="width:194px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text10" name="FullName" id="FullName" maxlength="20" style="width:194px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </div>  <!-- End of a new line -->
 

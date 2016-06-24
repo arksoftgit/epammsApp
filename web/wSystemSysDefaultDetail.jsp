@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSystemSysDefaultDetail   Generate Timestamp: 20160531205258850 --%>
+<%-- wSystemSysDefaultDetail   Generate Timestamp: 20160620105934047 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -715,7 +715,7 @@ else
 <span class="text10"  id="Text1" name="Text1" style="width:94px;height:16px;">Name:</span>
 
 <% /* EditBox2:EditBox */ %>
-<input class="text10" name="EditBox2" id="EditBox2" maxlength="0" style="width:194px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text10" name="EditBox2" id="EditBox2" maxlength="20" style="width:194px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </div>  <!-- End of a new line -->
 
@@ -854,7 +854,7 @@ else
 <span class="text10"  id="Text8" name="Text8" style="width:90px;height:16px;">Or Value:</span>
 
 <% /* EditBox3:EditBox */ %>
-<input class="text10" name="EditBox3" id="EditBox3" maxlength="0" style="width:194px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text10" name="EditBox3" id="EditBox3" maxlength="20" style="width:194px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </div>  <!-- End of a new line -->
 

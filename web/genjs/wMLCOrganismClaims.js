@@ -1,4 +1,4 @@
-// wMLCOrganismClaims   Generate Timestamp: 20160531205228944
+// wMLCOrganismClaims   Generate Timestamp: 20160623085856279
 
 var isWindowClosing = true;
 var timerID = null;
@@ -255,21 +255,6 @@ function GOTO_UpdateClaimsStatement( strTagEntityKey )
    }
 }
 
-function smSaveAndReturnMLC( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCOrganismClaims.zAction.value = "smSaveAndReturnMLC";
-      document.wMLCOrganismClaims.submit( );
-   }
-}
-
 function smSaveMLC( )
 {
 
@@ -281,6 +266,21 @@ function smSaveMLC( )
       _DisableFormElements( true );
 
       document.wMLCOrganismClaims.zAction.value = "smSaveMLC";
+      document.wMLCOrganismClaims.submit( );
+   }
+}
+
+function smSaveAndReturnMLC( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCOrganismClaims.zAction.value = "smSaveAndReturnMLC";
       document.wMLCOrganismClaims.submit( );
    }
 }

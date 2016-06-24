@@ -5040,7 +5040,8 @@ public class ZGlobal1_Operation extends VmlOperation
 
    public int
    ParseStatementForKeywords( View     mMasLC,
-                              String   statementEntity,
+                              String   entity,
+                              String   attribute,
                               String   keywordEntity,
                               String   keywordTextEntity,
                               String   keywordSemaphore )
@@ -5061,7 +5062,11 @@ public class ZGlobal1_Operation extends VmlOperation
    // 0.75 oz. of this product per 4 gal. of water {(0.19 oz. per gal. of water)} {(150 ppm active quat)}{(or equivalent use dilution)} 
    // 1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123  << lth = 133
    //          1         2         3         4         5         6         7         8         9        10        11        12        13
-      String szOrigStatement = mMasLC.cursor( statementEntity ).getAttribute( "Text" ).getValue().toString();
+      Object value = mMasLC.cursor( entity ).getAttribute( attribute ).getValue();
+      if ( value == null )
+         return -1;
+      
+      String szOrigStatement = value.toString();
       sbTarget.setLength( 0 );
 
       // Parse the semaphores out of the string.
@@ -5091,7 +5096,7 @@ public class ZGlobal1_Operation extends VmlOperation
       }
 
       sbTarget.append( szOrigStatement.substring( closeSemaphorePos ) ); // append remaining static text in the original source string
-      mMasLC.cursor( statementEntity ).getAttribute( "Text" ).setValue( sbTarget.toString() );
+      mMasLC.cursor( entity ).getAttribute( attribute ).setValue( sbTarget.toString() );
       return( 0 );
    }
 

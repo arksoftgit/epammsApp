@@ -1,4 +1,4 @@
-// wSystemUpdateFungi   Generate Timestamp: 20160531205259772
+// wSystemUpdateFungi   Generate Timestamp: 20160620105934348
 
 var isWindowClosing = true;
 var timerID = null;

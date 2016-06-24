@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCDirectionsForUseSection   Generate Timestamp: 20160531205224865 --%>
+<%-- wMLCDirectionsForUseSection   Generate Timestamp: 20160623085854994 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -36,7 +36,6 @@ public int DoInputMapping( HttpServletRequest request,
    Task task = objectEngine.getTaskById( taskId );
 
    View mMasLC = null;
-   View mMasLCIncludeExclude = null;
    View vGridTmp = null; // temp view to grid view
    View vRepeatingGrp = null; // temp view to repeating group view
    String strDateFormat = "";
@@ -138,21 +137,56 @@ public int DoInputMapping( HttpServletRequest request,
       }
 
       // ComboBox: ComboBoxXOR
-      mMasLCIncludeExclude = task.getViewByName( "mMasLCIncludeExclude" );
-      if ( VmlOperation.isValid( mMasLCIncludeExclude ) )
+      mMasLC = task.getViewByName( "mMasLC" );
+      if ( VmlOperation.isValid( mMasLC ) )
       {
-         nRC = mMasLCIncludeExclude.cursor( "M_DirectionsForUseSection" ).checkExistenceOfEntity( ).toInt();
+         nRC = mMasLC.cursor( "DFU_SectionNames" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
             strMapValue = request.getParameter( "hComboBoxXOR" );
             if ( strMapValue != null )
             {
                nRelPos = java.lang.Integer.parseInt( strMapValue );
-               mMasLCIncludeExclude.cursor( "M_DirectionsForUseSection" ).setPosition( nRelPos, "" );
+               mMasLC.cursor( "DFU_SectionNames" ).setPosition( nRelPos, "" );
             }
          }
 
          }  // checkExistenceofEntity
+      // ComboBox: CMB_Categories
+      mMasLC = task.getViewByName( "mMasLC" );
+      if ( VmlOperation.isValid( mMasLC ) )
+      {
+         nRC = mMasLC.cursor( "DFU_CategoryNames" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            strMapValue = request.getParameter( "hCMB_Categories" );
+            if ( strMapValue != null )
+            {
+               nRelPos = java.lang.Integer.parseInt( strMapValue );
+               mMasLC.cursor( "DFU_CategoryNames" ).setPosition( nRelPos, "" );
+            }
+         }
+
+         }  // checkExistenceofEntity
+      // CheckBox: ExclusiveStatements
+      nRC = mMasLC.cursor( "M_DirectionsForUseSection" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 ) // CursorResult.SET
+      {
+         strMapValue = request.getParameter( "ExclusiveStatements" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "ExclusiveStatements", "", strMapValue );
+            else
+               mMasLC.cursor( "M_DirectionsForUseSection" ).getAttribute( "ExclusiveStatements" ).setValue( strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "ExclusiveStatements", e.getReason( ), strMapValue );
+         }
+      }
+
       // Grid: GridDirectionsUse
       iTableRowCnt = 0;
 
@@ -207,6 +241,22 @@ public int DoInputMapping( HttpServletRequest request,
       }
 
       vGridTmp.drop( );
+      // ComboBox: ComboBox1
+      mMasLC = task.getViewByName( "mMasLC" );
+      if ( VmlOperation.isValid( mMasLC ) )
+      {
+         nRC = mMasLC.cursor( "DFU_SectionNames" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            strMapValue = request.getParameter( "hComboBox1" );
+            if ( strMapValue != null )
+            {
+               nRelPos = java.lang.Integer.parseInt( strMapValue );
+               mMasLC.cursor( "DFU_SectionNames" ).setPosition( nRelPos, "" );
+            }
+         }
+
+         }  // checkExistenceofEntity
       // Grid: GridKeywords
       iTableRowCnt = 0;
 
@@ -225,11 +275,6 @@ public int DoInputMapping( HttpServletRequest request,
       }
 
       vGridTmp.drop( );
-   }
-
-   mMasLCIncludeExclude = task.getViewByName( "mMasLCIncludeExclude" );
-   if ( VmlOperation.isValid( mMasLCIncludeExclude ) )
-   {
    }
 
    if ( webMapping == true )
@@ -361,32 +406,67 @@ if ( strActionToProcess != null )
       if ( nRC < 0 )
          break;
 
-      // Action Auto Object Function
+      // Action Operation
       nRC = 0;
-      try
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCDirectionsForUseSection", "wMLC.AcceptDirectionsForUseSection" );
+      nOptRC = wMLC.AcceptDirectionsForUseSection( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
       {
-         View mMasLCAuto = task.getViewByName( "mMasLC" );
-         EntityCursor cursor = mMasLCAuto.cursor( "M_DirectionsForUseSection" );
-            if ( cursor.isNull() )
-               nRC = 0;
-            else
-            {
-               if ( cursor.isVersioned( ) )
-               {
-                  cursor.acceptSubobject( );
-               }
-            nRC = 0;
-         }
-
-      }
-      catch ( Exception e )
-      {
-         nRC = 2;
-         VmlOperation.CreateMessage( task, "AcceptDirectionsUseSect", e.getMessage( ), "" );
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
          break;
       }
-      // Next Window
-      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReturnToParent, "", "" );
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReturnToParent, "", "" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "ParseSectionText" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCDirectionsForUseSection", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Action Operation
+      nRC = 0;
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCDirectionsForUseSection", "wMLC.ParseDFU_SectionText" );
+      nOptRC = wMLC.ParseDFU_SectionText( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
+      }
+
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
@@ -690,7 +770,45 @@ if ( strActionToProcess != null )
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "IncludeXOR" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "ChangeSectionCategory" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCDirectionsForUseSection", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Action Operation
+      nRC = 0;
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCDirectionsForUseSection", "wMLC.ChangeSectionCategory" );
+      nOptRC = wMLC.ChangeSectionCategory( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "SelectExclusiveOrSection" ) )
    {
       bDone = true;
       VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCDirectionsForUseSection", strActionToProcess );
@@ -704,6 +822,82 @@ if ( strActionToProcess != null )
       nRC = 0;
       VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCDirectionsForUseSection", "wMLC.IncludeExclusiveOrDU_Section" );
       nOptRC = wMLC.IncludeExclusiveOrDU_Section( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "AcceptNext" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCDirectionsForUseSection", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Action Operation
+      nRC = 0;
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCDirectionsForUseSection", "wMLC.AcceptDFU_SectionGoNext" );
+      nOptRC = wMLC.AcceptDFU_SectionGoNext( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "AcceptPrevious" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCDirectionsForUseSection", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Action Operation
+      nRC = 0;
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCDirectionsForUseSection", "wMLC.AcceptDFU_SectionGoPrev" );
+      nOptRC = wMLC.AcceptDFU_SectionGoPrev( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -1217,27 +1411,7 @@ if ( session.getAttribute( "ZeidonError" ) == "Y" )
    session.setAttribute( "ZeidonError", null );
 else
 {
-   VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCDirectionsForUseSection", "wMLC.CreateIncludeExcludeView" );
-   nOptRC = wMLC.CreateIncludeExcludeView( new zVIEW( vKZXMLPGO ) );
-   if ( nOptRC == 2 )
-   {
-      View vView;
-      String strMessage;
-      String strURLParameters;
-
-      vView = task.getViewByName( "wXferO" );
-      strMessage = vView.cursor( "Root" ).getAttribute( "WebReturnMessage" ).getString( "" );
-      strURLParameters = "?CallingPage=wMLCDirectionsForUseSection.jsp" +
-                         "&Message=" + strMessage +
-                         "&DialogName=" + "wMLC" +
-                         "&OperationName=" + "CreateIncludeExcludeView";
-      strURL = response.encodeRedirectURL( "MessageDisplay.jsp" + strURLParameters );
-      response.sendRedirect( strURL );
-      task.log().info( "Pre/Post Redirect to: " + strURL );
-      return;
-   }
 }
-
    csrRC = vKZXMLPGO.cursor( "DynamicBannerName" ).setFirst( "DialogName", "wMLC", "" );
    if ( csrRC.isSet( ) )
       strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString( "" );
@@ -1301,6 +1475,26 @@ else
 %>
 
 <%
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "AcceptNext" );
+   if ( !csrRC.isSet() ) //if ( nRC < 0 )
+   {
+%>
+       <li id="AcceptNext" name="AcceptNext"><a href="#"  onclick="AcceptNext()">Next Section</a></li>
+<%
+   }
+%>
+
+<%
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "AcceptPrev" );
+   if ( !csrRC.isSet() ) //if ( nRC < 0 )
+   {
+%>
+       <li id="AcceptPrev" name="AcceptPrev"><a href="#"  onclick="AcceptPrevious()">Previous Section</a></li>
+<%
+   }
+%>
+
+<%
    csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "CancelAndReturn" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
@@ -1330,13 +1524,14 @@ else
 
 <%
    View mEPA = null;
+   View mMasLC_Root = null;
    View mMasLC = null;
+   View mMasLCIncludeExclude = null;
    View mMasProd = null;
    View mMasProdLST = null;
    View mOrganiz = null;
    View mPrimReg = null;
    View wWebXfer = null;
-   View mMasLCIncludeExclude = null;
    String strRadioGroupValue = "";
    String strComboCurrentValue = "";
    String strAutoComboBoxExternalValue = "";
@@ -1440,17 +1635,17 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:2px;width:100px;"></div>
+<div style="height:14px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
+<div style="height:1px;width:22px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GBStorDispSections2:GroupBox */ %>
 
-<div id="GBStorDispSections2" name="GBStorDispSections2" class="listgroup"   style="float:left;position:relative; width:820px; height:36px;">  <!-- GBStorDispSections2 --> 
+<div id="GBStorDispSections2" name="GBStorDispSections2" class="listgroup"   style="float:left;position:relative; width:798px; height:36px;">  <!-- GBStorDispSections2 --> 
 
 <% /* OrganismClaimsStatements3:Text */ %>
 
-<label class="groupbox"  id="OrganismClaimsStatements3" name="OrganismClaimsStatements3" style="width:238px;height:16px;position:absolute;left:6px;top:12px;">Directions for Use Section</label>
+<label class="groupbox"  id="OrganismClaimsStatements3" name="OrganismClaimsStatements3" style="">Directions for Use Section</label>
 
 
 </div>  <!--  GBStorDispSections2 --> 
@@ -1460,20 +1655,27 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:6px;width:100px;"></div>
+<div style="height:12px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox2:GroupBox */ %>
 <div id="GroupBox2" name="GroupBox2" style="float:left;width:820px;" >
 
-<table cols=2 style="width:820px;"  class="grouptable">
+<table cols=1 style="width:820px;"  class="grouptable">
 
 <tr>
-<td valign="top" style="width:118px;">
+<td valign="top" style="width:800px;">
+<% /* GroupBox7:GroupBox */ %>
+<div id="GroupBox7" name="GroupBox7" style="float:left;width:800px;" >
+
+<table cols=2 style="width:800px;"  class="grouptable">
+
+<tr>
+<td valign="top" style="width:150px;">
 <% /* DirectionsUseName::Text */ %>
 
-<span  id="DirectionsUseName:" name="DirectionsUseName:" style="width:112px;height:16px;">Name:</span>
+<span  id="DirectionsUseName:" name="DirectionsUseName:" style="width:150px;height:16px;" tabindex=-1 >Name:</span>
 
 </td>
 <td valign="top"  class="text12" style="width:280px;">
@@ -1516,15 +1718,15 @@ else
    }
 %>
 
-<input class="text12" name="DirectionsUseName" id="DirectionsUseName" maxlength="254"  title="Required Name to differentiate Directions for Use Sections within a list"style="width:280px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="DirectionsUseName" id="DirectionsUseName" maxlength="254"  title="Required Name to differentiate Directions for Use Sections within a list"style="width:280px;<%=strErrorColor%>" tabindex=-1  type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>
 <tr>
-<td valign="top" style="width:118px;">
+<td valign="top" style="width:150px;">
 <% /* DirectionsForUseTitle::Text */ %>
 
-<span  id="DirectionsForUseTitle:" name="DirectionsForUseTitle:" style="width:112px;height:16px;">Title:</span>
+<span  id="DirectionsForUseTitle:" name="DirectionsForUseTitle:" style="width:150px;height:16px;" tabindex=-1 >Title:</span>
 
 </td>
 <td valign="top"  class="text12" style="width:650px;">
@@ -1560,15 +1762,15 @@ else
    }
 %>
 
-<textarea id="DirectionsForUseTitle" name="DirectionsForUseTitle" class="text12" style="width:650px;height:32px;border:solid;border-width:4px;border-style:groove;" wrap="wrap"><%=strErrorMapValue%></textarea>
+<textarea id="DirectionsForUseTitle" name="DirectionsForUseTitle" class="text12" style="width:650px;height:32px;border:solid;border-width:4px;border-style:groove;" tabindex=-1  wrap="wrap"><%=strErrorMapValue%></textarea>
 
 </td>
 </tr>
 <tr>
-<td valign="top" style="width:118px;">
+<td valign="top" style="width:150px;">
 <% /* Subtitle::Text */ %>
 
-<span  id="Subtitle:" name="Subtitle:" style="width:112px;height:16px;">Subtitle:</span>
+<span  id="Subtitle:" name="Subtitle:" style="width:150px;height:16px;" tabindex=-1 >Subtitle:</span>
 
 </td>
 <td valign="top"  class="text12" style="width:650px;">
@@ -1604,15 +1806,15 @@ else
    }
 %>
 
-<textarea id="Subtitle" name="Subtitle" class="text12" style="width:650px;height:96px;border:solid;border-width:4px;border-style:groove;" wrap="wrap"><%=strErrorMapValue%></textarea>
+<textarea id="Subtitle" name="Subtitle" class="text12" style="width:650px;height:96px;border:solid;border-width:4px;border-style:groove;" tabindex=-1  wrap="wrap"><%=strErrorMapValue%></textarea>
 
 </td>
 </tr>
 <tr>
-<td valign="top" style="width:118px;">
+<td valign="top" style="width:150px;">
 <% /* DirectionsForUseReviewerNote::Text */ %>
 
-<span  id="DirectionsForUseReviewerNote:" name="DirectionsForUseReviewerNote:" style="width:112px;height:16px;">Reviewer Note:</span>
+<span  id="DirectionsForUseReviewerNote:" name="DirectionsForUseReviewerNote:" style="width:150px;height:16px;" tabindex=-1 >Reviewer Note:</span>
 
 </td>
 <td valign="top"  class="text12" style="width:650px;">
@@ -1655,26 +1857,39 @@ else
    }
 %>
 
-<input class="text12" name="DirectionsForUseReviewerNote" id="DirectionsForUseReviewerNote" maxlength="1024"  title="Optional Title to appear with text on generated label"style="width:650px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="DirectionsForUseReviewerNote" id="DirectionsForUseReviewerNote" maxlength="1024"  title="Optional Title to appear with text on generated label"style="width:650px;<%=strErrorColor%>" tabindex=-1  type="text" value="<%=strErrorMapValue%>" >
+
+</td>
+</tr>
+</table>
+
+</div>  <!-- GroupBox7 --> 
 
 </td>
 </tr>
 <tr>
-<td valign="top" style="width:118px;">
+<td valign="top" style="width:782px;">
+<% /* GroupBox1:GroupBox */ %>
+<div id="GroupBox1" name="GroupBox1" style="float:left;width:782px;" >
+
+<table cols=0 style="width:782px;"  class="grouptable">
+
+<tr>
+<td valign="top" style="width:150px;">
 <% /* ExclusiveXOR::Text */ %>
 
-<span  id="ExclusiveXOR:" name="ExclusiveXOR:" style="width:112px;height:16px;">Exclusive To:</span>
+<span  id="ExclusiveXOR:" name="ExclusiveXOR:" style="width:140px;height:16px;" tabindex=-1 >Exclusive To:</span>
 
 </td>
-<td valign="top" style="width:280px;">
+<td valign="top" style="width:226px;">
 <% /* ComboBoxXOR:ComboBox */ %>
 <% strErrorMapValue = "";  %>
 
-<select  name="ComboBoxXOR" id="ComboBoxXOR" size="1"style="width:280px;" onchange="ComboBoxXOROnChange( )">
+<select  name="ComboBoxXOR" id="ComboBoxXOR" size="1"style="width:218px;"  tabindex=-1 onchange="ComboBoxXOROnChange( )">
 
 <%
-   mMasLCIncludeExclude = task.getViewByName( "mMasLCIncludeExclude" );
-   if ( VmlOperation.isValid( mMasLCIncludeExclude ) )
+   mMasLC = task.getViewByName( "mMasLC" );
+   if ( VmlOperation.isValid( mMasLC ) )
    {
          strComboCurrentValue = "";
       View vComboBoxXOR;
@@ -1689,13 +1904,13 @@ else
                strComboCurrentValue = "";
          }
       }
-      vComboBoxXOR = mMasLCIncludeExclude.newView( );
+      vComboBoxXOR = mMasLC.newView( );
       ComboCount = 0;
       strComboSelectedValue = "0";
-      csrRC = vComboBoxXOR.cursor( "M_DirectionsForUseSection" ).setFirst(  );
+      csrRC = vComboBoxXOR.cursor( "DFU_SectionNames" ).setFirst(  );
       while ( csrRC.isSet() )
       {
-         strErrorMapValue = vComboBoxXOR.cursor( "M_DirectionsForUseSection" ).getAttribute( "Name" ).getString( "" );
+         strErrorMapValue = vComboBoxXOR.cursor( "DFU_SectionNames" ).getAttribute( "Name" ).getString( "" );
          if ( strErrorMapValue == null )
             strErrorMapValue = "";
 
@@ -1714,7 +1929,7 @@ else
          }
 
          ComboCount++;
-         csrRC =  vComboBoxXOR.cursor( "M_DirectionsForUseSection" ).setNextContinue( );
+         csrRC =  vComboBoxXOR.cursor( "DFU_SectionNames" ).setNextContinue( );
       }
 
       vComboBoxXOR.drop( );
@@ -1723,6 +1938,77 @@ else
 %>
 </select>
 <input name="hComboBoxXOR" id="hComboBoxXOR" type="hidden" value="<%=strComboSelectedValue%>" >
+
+</td>
+<td valign="top" style="width:172px;">
+<% /* ChangeCategory:Text */ %>
+
+<span  id="ChangeCategory" name="ChangeCategory" style="width:160px;height:16px;" tabindex=-1 >Change Category:</span>
+
+</td>
+<td valign="top" style="width:234px;">
+<% /* CMB_Categories:ComboBox */ %>
+<% strErrorMapValue = "";  %>
+
+<select  name="CMB_Categories" id="CMB_Categories" size="1"style="width:234px;"  tabindex=-1 onchange="CMB_CategoriesOnChange( )">
+
+<%
+   mMasLC = task.getViewByName( "mMasLC" );
+   if ( VmlOperation.isValid( mMasLC ) )
+   {
+         strComboCurrentValue = "";
+      View vCMB_Categories;
+      mMasLC = task.getViewByName( "mMasLC" );
+      if ( VmlOperation.isValid( mMasLC ) )
+      {
+         nRC = mMasLC.cursor( "M_DirectionsForUseCategory" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            strComboCurrentValue = mMasLC.cursor( "M_DirectionsForUseCategory" ).getAttribute( "Name" ).getString( "" );
+            if ( strComboCurrentValue == null )
+               strComboCurrentValue = "";
+         }
+      }
+      vCMB_Categories = mMasLC.newView( );
+      ComboCount = 0;
+      strComboSelectedValue = "0";
+      csrRC = vCMB_Categories.cursor( "DFU_CategoryNames" ).setFirst(  );
+      while ( csrRC.isSet() )
+      {
+         strErrorMapValue = vCMB_Categories.cursor( "DFU_CategoryNames" ).getAttribute( "Name" ).getString( "" );
+         if ( strErrorMapValue == null )
+            strErrorMapValue = "";
+
+         if ( StringUtils.equals( strComboCurrentValue, strErrorMapValue ) )
+         {
+%>
+            <option selected="selected"><%=strErrorMapValue%></option>
+<%
+            strComboSelectedValue = Integer.toString( ComboCount );
+         }
+         else
+         {
+%>
+            <option><%=strErrorMapValue%></option>
+<%
+         }
+
+         ComboCount++;
+         csrRC =  vCMB_Categories.cursor( "DFU_CategoryNames" ).setNextContinue( );
+      }
+
+      vCMB_Categories.drop( );
+
+   }
+%>
+</select>
+<input name="hCMB_Categories" id="hCMB_Categories" type="hidden" value="<%=strComboSelectedValue%>" >
+
+</td>
+</tr>
+</table>
+
+</div>  <!-- GroupBox1 --> 
 
 </td>
 </tr>
@@ -1736,7 +2022,7 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:6px;width:100px;"></div>
+<div style="height:12px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
@@ -1767,10 +2053,30 @@ else
 
 <% /* DFU_Statements:Text */ %>
 
-<label class="listheader"  id="DFU_Statements" name="DFU_Statements" style="width:434px;height:16px;position:absolute;left:4px;top:4px;">Directions for Use Statements</label>
+<label class="listheader"  id="DFU_Statements" name="DFU_Statements" style="">Directions for Use Statements</label>
+
+<% /* ExclusiveStatements:CheckBox */ %>
+<%
+   strErrorMapValue = "";
+   mMasLC = task.getViewByName( "mMasLC" );
+   if ( VmlOperation.isValid( mMasLC ) == false )
+      task.log( ).debug( "Invalid View: " + "ExclusiveStatements" );
+   else
+   {
+      nRC = mMasLC.cursor( "M_DirectionsForUseSection" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+         strRadioGroupValue = mMasLC.cursor( "M_DirectionsForUseSection" ).getAttribute( "ExclusiveStatements" ).getString( );
+   }
+
+   if ( StringUtils.equals( strRadioGroupValue, "Y" ) )
+      strErrorMapValue = "checked=\"checked\"";
+%>
+
+<input type="checkbox" name="ExclusiveStatements" id="ExclusiveStatements"  value="Y" <%=strErrorMapValue%> style="position:absolute;left:402px;top:4px;" tabindex=-1 >
+<span style="width:172px;height:26px;position:absolute;left:432px;top:4px;">Exclusive Statements</span>
 
 <% /* NewStatement:PushBtn */ %>
-<button type="button" class="newbutton"  title="Go to add one orNewStatement" id="NewStatement" value="" onclick="GOTO_DirsForUseStatementAdd( )" style="width:78px;height:26px;position:absolute;left:578px;top:4px;">New</button>
+<button type="button" class="newbutton"  title="Go to add one orNewStatement" id="NewStatement" value="" onclick="GOTO_DirsForUseStatementAdd( )" style="width:78px;height:26px;position:absolute;left:614px;top:4px;" tabindex=-1 >New</button>
 
 
 </div>  <!--  GroupBox9 --> 
@@ -1827,7 +2133,7 @@ try
          nRC = vGridDirectionsUse.cursor( "M_DirectionsForUseStatement" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditDirectionsUse = vGridDirectionsUse.cursor( "M_DirectionsForUseStatement" ).getAttribute( "dDU_StatementTitleText" ).getString( "" );
+            strGridEditDirectionsUse = vGridDirectionsUse.cursor( "M_DirectionsForUseStatement" ).getAttribute( "dDU_StatementTitleTextKeyword" ).getString( "" );
 
             if ( strGridEditDirectionsUse == null )
                strGridEditDirectionsUse = "";
@@ -1891,10 +2197,10 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 
 <% /* Text4:Text */ %>
 
-<label class="listheader"  id="Text4" name="Text4" style="width:628px;height:16px;position:absolute;left:4px;top:4px;">Claims/Applications/Locations that Drive this Section to be Included in the SLC based on this MLC</label>
+<label class="listheader"  id="Text4" name="Text4" style="">Claims/Applications/Locations that Drive this Section to be Included in the SLC based on this MLC</label>
 
 <% /* PushBtn3:PushBtn */ %>
-<button type="button" class="newbutton"  title="Go to add or remPushBtn3" id="PushBtn3" value="" onclick="GOTO_SelectRemoveDrivingDU( )" style="width:130px;height:26px;position:absolute;left:642px;top:4px;">Select/Remove</button>
+<button type="button" class="newbutton"  title="Go to add or remPushBtn3" id="PushBtn3" value="" onclick="GOTO_SelectRemoveDrivingDU( )" style="width:130px;height:26px;position:absolute;left:642px;top:4px;" tabindex=-1 >Select/Remove</button>
 
 
 </div>  <!--  GroupBox8 --> 
@@ -2008,14 +2314,75 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 <script type="text/javascript">Tab1.addTabPage( document.getElementById( "Keywords" ) );</script>
 
 
- <!-- This is added as a line spacer -->
-<div style="height:4px;width:100px;"></div>
+<div>  <!-- Beginning of a new line -->
+<span style="height:180px;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
+<% /* ComboBox1:ComboBox */ %>
+<% strErrorMapValue = "";  %>
+
+<select  name="ComboBox1" id="ComboBox1" size="1"style="width:280px;"  tabindex=-1 onchange="ComboBox1OnChange( )">
+
+<%
+   mMasLC = task.getViewByName( "mMasLC" );
+   if ( VmlOperation.isValid( mMasLC ) )
+   {
+         strComboCurrentValue = "";
+      View vComboBox1;
+      mMasLC = task.getViewByName( "mMasLC" );
+      if ( VmlOperation.isValid( mMasLC ) )
+      {
+         nRC = mMasLC.cursor( "M_DirectionsForUseXOR_Section" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            strComboCurrentValue = mMasLC.cursor( "M_DirectionsForUseXOR_Section" ).getAttribute( "Name" ).getString( "" );
+            if ( strComboCurrentValue == null )
+               strComboCurrentValue = "";
+         }
+      }
+      vComboBox1 = mMasLC.newView( );
+      ComboCount = 0;
+      strComboSelectedValue = "0";
+      csrRC = vComboBox1.cursor( "DFU_SectionNames" ).setFirst(  );
+      while ( csrRC.isSet() )
+      {
+         strErrorMapValue = vComboBox1.cursor( "DFU_SectionNames" ).getAttribute( "Name" ).getString( "" );
+         if ( strErrorMapValue == null )
+            strErrorMapValue = "";
+
+         if ( StringUtils.equals( strComboCurrentValue, strErrorMapValue ) )
+         {
+%>
+            <option selected="selected"><%=strErrorMapValue%></option>
+<%
+            strComboSelectedValue = Integer.toString( ComboCount );
+         }
+         else
+         {
+%>
+            <option><%=strErrorMapValue%></option>
+<%
+         }
+
+         ComboCount++;
+         csrRC =  vComboBox1.cursor( "DFU_SectionNames" ).setNextContinue( );
+      }
+
+      vComboBox1.drop( );
+
+   }
+%>
+</select>
+<input name="hComboBox1" id="hComboBox1" type="hidden" value="<%=strComboSelectedValue%>" >
+
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
 
 <div>  <!-- Beginning of a new line -->
 <span style="height:16px;">&nbsp&nbsp</span>
 <% /* DirectionsForUseTitleKey::Text */ %>
 
-<span  id="DirectionsForUseTitleKey:" name="DirectionsForUseTitleKey:" style="width:70px;height:16px;">Title:</span>
+<span  id="DirectionsForUseTitleKey:" name="DirectionsForUseTitleKey:" style="width:70px;height:16px;" tabindex=-1 >Title:</span>
 
 <span style="height:16px;">&nbsp</span>
 <% /* DirectionsForUseTitleKey:Text */ %>
@@ -2043,7 +2410,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
    }
 %>
 
-<span class="text12"  id="DirectionsForUseTitleKey" name="DirectionsForUseTitleKey"  title="Optional Title to appear with text on generated label" style="width:698px;height:16px;"><%=strTextDisplayValue%></span>
+<span class="text12"  id="DirectionsForUseTitleKey" name="DirectionsForUseTitleKey"  title="Optional Title to appear with text on generated label" style="width:698px;height:16px;" tabindex=-1 ><%=strTextDisplayValue%></span>
 
 </div>  <!-- End of a new line -->
 
@@ -2051,13 +2418,13 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 
 
  <!-- This is added as a line spacer -->
-<div style="height:4px;width:100px;"></div>
+<div style="height:-156px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <span style="height:16px;">&nbsp&nbsp</span>
 <% /* SubtitleKey::Text */ %>
 
-<span  id="SubtitleKey:" name="SubtitleKey:" style="width:70px;height:16px;">Subtitle:</span>
+<span  id="SubtitleKey:" name="SubtitleKey:" style="width:70px;height:16px;" tabindex=-1 >Subtitle:</span>
 
 <span style="height:16px;">&nbsp</span>
 <% /* SubtitleKey:Text */ %>
@@ -2085,7 +2452,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
    }
 %>
 
-<span class="text12"  id="SubtitleKey" name="SubtitleKey"  title="Optional Title to appear with text on generated label" style="width:698px;height:16px;"><%=strTextDisplayValue%></span>
+<span class="text12"  id="SubtitleKey" name="SubtitleKey"  title="Optional Title to appear with text on generated label" style="width:698px;height:16px;" tabindex=-1 ><%=strTextDisplayValue%></span>
 
 </div>  <!-- End of a new line -->
 
@@ -2093,7 +2460,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 
 
  <!-- This is added as a line spacer -->
-<div style="height:6px;width:100px;"></div>
+<div style="height:-134px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
@@ -2110,18 +2477,21 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 
 <div id="GroupBox6" name="GroupBox6"   style="float:left;position:relative; width:756px; height:30px;">  <!-- GroupBox6 --> 
 
-<% /* Show:PushBtn */ %>
-<button type="button" class="newbutton" name="Show" id="Show" value="" onclick="DisplayGeneratedTextDU( )" style="width:158px;height:26px;position:absolute;left:354px;top:4px;">Show Generated Text</button>
+<% /* Refrest:PushBtn */ %>
+<button type="button" class="newbutton" name="Refrest" id="Refrest" value="" onclick="DisplayGeneratedTextDU( )" style="width:76px;height:26px;position:absolute;left:386px;top:4px;" tabindex=-1 >Refresh</button>
+
+<% /* ParseText:PushBtn */ %>
+<button type="button" class="newbutton" name="ParseText" id="ParseText" value="" onclick="ParseSectionText( )" style="width:94px;height:26px;position:absolute;left:474px;top:4px;" tabindex=-1 >Parse Text</button>
 
 <% /* NewKeyword:PushBtn */ %>
-<button type="button" class="newbutton" name="NewKeyword" id="NewKeyword" value="" onclick="ADD_SectionKeywordDU( )" style="width:66px;height:26px;position:absolute;left:586px;top:4px;">New</button>
+<button type="button" class="newbutton" name="NewKeyword" id="NewKeyword" value="" onclick="ADD_SectionKeywordDU( )" style="width:66px;height:26px;position:absolute;left:582px;top:4px;" tabindex=-1 >New</button>
 
 <% /* PBSort:PushBtn */ %>
-<button type="button" class="newbutton" name="PBSort" id="PBSort" value="" onclick="Sort( )" style="width:66px;height:26px;position:absolute;left:678px;top:4px;">Sort</button>
+<button type="button" class="newbutton" name="PBSort" id="PBSort" value="" onclick="Sort( )" style="width:66px;height:26px;position:absolute;left:660px;top:4px;" tabindex=-1 >Sort</button>
 
 <% /* KeywordTextEmbedding:Text */ %>
 
-<label class="listheader"  id="KeywordTextEmbedding" name="KeywordTextEmbedding" style="width:324px;height:16px;position:absolute;left:10px;top:8px;">Keyword text for Embedding in Section Title/Subtitle</label>
+<label class="listheader"  id="KeywordTextEmbedding" name="KeywordTextEmbedding" style="">Keyword text for Embedding in Section Title/Subtitle</label>
 
 
 </div>  <!--  GroupBox6 --> 
@@ -2261,10 +2631,10 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 
 <% /* Note:Text */ %>
 
-<label class="listheader"  id="Note" name="Note" style="width:434px;height:16px;position:absolute;left:4px;top:4px;">Notes to Reviewer</label>
+<label class="listheader"  id="Note" name="Note" style="">Notes to Reviewer</label>
 
 <% /* NewNote:PushBtn */ %>
-<button type="button" class="newbutton"  title="Go to add one orNewNote" id="NewNote" value="" onclick="GOTO_ReviewerNoteAdd( )" style="width:78px;height:26px;position:absolute;left:578px;top:4px;">New</button>
+<button type="button" class="newbutton"  title="Go to add one orNewNote" id="NewNote" value="" onclick="GOTO_ReviewerNoteAdd( )" style="width:78px;height:26px;position:absolute;left:578px;top:4px;" tabindex=-1 >New</button>
 
 
 </div>  <!--  GroupBox4 --> 

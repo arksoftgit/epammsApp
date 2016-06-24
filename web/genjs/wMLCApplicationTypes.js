@@ -1,4 +1,4 @@
-// wMLCApplicationTypes   Generate Timestamp: 20160531205222975
+// wMLCApplicationTypes   Generate Timestamp: 20160623085854380
 
 var isWindowClosing = true;
 var timerID = null;
@@ -330,21 +330,6 @@ function GOTO_UpdateUsageGroup( strTagEntityKey )
    }
 }
 
-function smSaveAndReturnMLC( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCApplicationTypes.zAction.value = "smSaveAndReturnMLC";
-      document.wMLCApplicationTypes.submit( );
-   }
-}
-
 function smSaveMLC( )
 {
 
@@ -356,6 +341,21 @@ function smSaveMLC( )
       _DisableFormElements( true );
 
       document.wMLCApplicationTypes.zAction.value = "smSaveMLC";
+      document.wMLCApplicationTypes.submit( );
+   }
+}
+
+function smSaveAndReturnMLC( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCApplicationTypes.zAction.value = "smSaveAndReturnMLC";
       document.wMLCApplicationTypes.submit( );
    }
 }

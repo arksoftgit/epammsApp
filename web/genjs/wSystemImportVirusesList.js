@@ -1,4 +1,4 @@
-// wSystemImportVirusesList   Generate Timestamp: 20160531205257600
+// wSystemImportVirusesList   Generate Timestamp: 20160620105933637
 
 var isWindowClosing = true;
 var timerID = null;

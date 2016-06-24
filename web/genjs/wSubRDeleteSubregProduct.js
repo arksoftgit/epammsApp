@@ -1,4 +1,4 @@
-// wSubRDeleteSubregProduct   Generate Timestamp: 20160531205253990
+// wSubRDeleteSubregProduct   Generate Timestamp: 20160620105932247
 
 var isWindowClosing = true;
 var timerID = null;

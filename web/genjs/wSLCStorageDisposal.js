@@ -1,4 +1,4 @@
-// wSLCStorageDisposal   Generate Timestamp: 20160531205244536
+// wSLCStorageDisposal   Generate Timestamp: 20160620105928899
 
 var isWindowClosing = true;
 var timerID = null;

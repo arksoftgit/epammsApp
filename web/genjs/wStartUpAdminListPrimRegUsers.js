@@ -1,4 +1,4 @@
-// wStartUpAdminListPrimRegUsers   Generate Timestamp: 20160531205249052
+// wStartUpAdminListPrimRegUsers   Generate Timestamp: 20160620105930291
 
 var isWindowClosing = true;
 var timerID = null;

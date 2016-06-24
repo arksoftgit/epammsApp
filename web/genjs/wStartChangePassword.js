@@ -1,4 +1,4 @@
-// wStartChangePassword   Generate Timestamp: 20160531205247599
+// wStartChangePassword   Generate Timestamp: 20160620105929789
 
 var isWindowClosing = true;
 var timerID = null;

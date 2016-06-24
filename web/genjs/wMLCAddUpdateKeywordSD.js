@@ -1,4 +1,4 @@
-// wMLCAddUpdateKeywordSD   Generate Timestamp: 20160531205222725
+// wMLCAddUpdateKeywordSD   Generate Timestamp: 20160623085854273
 
 var isWindowClosing = true;
 var timerID = null;
@@ -204,6 +204,36 @@ function AcceptAndReturn( )
       _DisableFormElements( true );
 
       document.wMLCAddUpdateKeywordSD.zAction.value = "AcceptAndReturn";
+      document.wMLCAddUpdateKeywordSD.submit( );
+   }
+}
+
+function AcceptNext( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCAddUpdateKeywordSD.zAction.value = "AcceptNext";
+      document.wMLCAddUpdateKeywordSD.submit( );
+   }
+}
+
+function AcceptPrevious( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCAddUpdateKeywordSD.zAction.value = "AcceptPrevious";
       document.wMLCAddUpdateKeywordSD.submit( );
    }
 }

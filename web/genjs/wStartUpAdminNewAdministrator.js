@@ -1,4 +1,4 @@
-// wStartUpAdminNewAdministrator   Generate Timestamp: 20160531205249412
+// wStartUpAdminNewAdministrator   Generate Timestamp: 20160620105930398
 
 var isWindowClosing = true;
 var timerID = null;

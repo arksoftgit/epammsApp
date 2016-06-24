@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wStartSecurityQuestionsUpdate   Generate Timestamp: 20160531205248021 --%>
+<%-- wStartSecurityQuestionsUpdate   Generate Timestamp: 20160620105929872 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -744,7 +744,7 @@ else
 </td>
 <td valign="top"  class="text10" style="width:320px;">
 <% /* EditBox5:EditBox */ %>
-<input class="text10" name="EditBox5" id="EditBox5" maxlength="0" style="width:320px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text10" name="EditBox5" id="EditBox5" maxlength="20" style="width:320px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 <td>&nbsp</td>
@@ -815,7 +815,7 @@ else
 </td>
 <td valign="top"  class="text10" style="width:320px;">
 <% /* EditBox6:EditBox */ %>
-<input class="text10" name="EditBox6" id="EditBox6" maxlength="0" style="width:320px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text10" name="EditBox6" id="EditBox6" maxlength="20" style="width:320px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 <td>&nbsp</td>
@@ -886,7 +886,7 @@ else
 </td>
 <td valign="top"  class="text10" style="width:320px;">
 <% /* EditBox9:EditBox */ %>
-<input class="text10" name="EditBox9" id="EditBox9" maxlength="0" style="width:320px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text10" name="EditBox9" id="EditBox9" maxlength="20" style="width:320px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 <td>&nbsp</td>

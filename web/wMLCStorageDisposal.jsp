@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCStorageDisposal   Generate Timestamp: 20160531205229678 --%>
+<%-- wMLCStorageDisposal   Generate Timestamp: 20160623085856520 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -76,6 +76,25 @@ public int DoInputMapping( HttpServletRequest request,
          {
             nMapError = -16;
             VmlOperation.CreateMessage( task, "MarketingTitle", e.getReason( ), strMapValue );
+         }
+      }
+
+      // EditBox: Text
+      nRC = mMasLC.cursor( "MasterLabelContent" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 ) // CursorResult.SET
+      {
+         strMapValue = request.getParameter( "Text" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "Text", "", strMapValue );
+            else
+               mMasLC.cursor( "MasterLabelContent" ).getAttribute( "TextSAD" ).setValue( strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "Text", e.getReason( ), strMapValue );
          }
       }
 
@@ -507,44 +526,6 @@ if ( strActionToProcess != null )
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "smSaveAndReturnMLC" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCStorageDisposal", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCStorageDisposal", "wMLC.SaveAndReturnMLC" );
-      nOptRC = wMLC.SaveAndReturnMLC( new zVIEW( vKZXMLPGO ) );
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReturnToParent, "", "" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
    while ( bDone == false && StringUtils.equals( strActionToProcess, "smSaveMLC" ) )
    {
       bDone = true;
@@ -576,6 +557,44 @@ if ( strActionToProcess != null )
       {
          // Next Window
          strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "smSaveAndReturnMLC" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCStorageDisposal", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Action Operation
+      nRC = 0;
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCStorageDisposal", "wMLC.SaveAndReturnMLC" );
+      nOptRC = wMLC.SaveAndReturnMLC( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReturnToParent, "", "" );
       }
 
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -1162,21 +1181,21 @@ else
 <div id="sidenavigation">
    <ul id="MLC_SideBar" name="MLC_SideBar">
 <%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "New4" );
-   if ( !csrRC.isSet() ) //if ( nRC < 0 )
-   {
-%>
-       <li id="smNew4" name="smNew4"><a href="#"  onclick="smSaveAndReturnMLC()">Save & Return</a></li>
-<%
-   }
-%>
-
-<%
    csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "New6" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
        <li id="smNew6" name="smNew6"><a href="#"  onclick="smSaveMLC()">Save</a></li>
+<%
+   }
+%>
+
+<%
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "New4" );
+   if ( !csrRC.isSet() ) //if ( nRC < 0 )
+   {
+%>
+       <li id="smNew4" name="smNew4"><a href="#"  onclick="smSaveAndReturnMLC()">Save & Return</a></li>
 <%
    }
 %>
@@ -1236,7 +1255,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="smStorDisp" name="smStorDisp"><a href="#"  class="sideselected"  onclick="smEditStorDispSect()">Storage and Disposal</a></li>
+       <li id="smStorDisp" name="smStorDisp"><a href="#"  class="sideselected"  onclick="smEditStorDispSect()">Storage & Disposal</a></li>
 <%
    }
 %>
@@ -1361,13 +1380,14 @@ else
 
 <%
    View mEPA = null;
+   View mMasLC_Root = null;
    View mMasLC = null;
+   View mMasLCIncludeExclude = null;
    View mMasProd = null;
    View mMasProdLST = null;
    View mOrganiz = null;
    View mPrimReg = null;
    View wWebXfer = null;
-   View mMasLCIncludeExclude = null;
    String strRadioGroupValue = "";
    String strComboCurrentValue = "";
    String strAutoComboBoxExternalValue = "";
@@ -1477,7 +1497,7 @@ else
 <div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GBStorDispSections:GroupBox */ %>
 
-<div id="GBStorDispSections" name="GBStorDispSections"   style="float:left;position:relative; width:780px; height:112px;">  <!-- GBStorDispSections --> 
+<div id="GBStorDispSections" name="GBStorDispSections"   style="float:left;position:relative; width:802px; height:132px;">  <!-- GBStorDispSections --> 
 
 <% /* StorageDisposalStatements:Text */ %>
 
@@ -1485,7 +1505,7 @@ else
 
 <% /* MarketingTitle::Text */ %>
 
-<label  id="MarketingTitle:" name="MarketingTitle:" style="width:110px;height:16px;position:absolute;left:20px;top:26px;">Title:</label>
+<label  id="MarketingTitle:" name="MarketingTitle:" style="width:110px;height:16px;position:absolute;left:14px;top:34px;">Title:</label>
 
 <% /* MarketingTitle:EditBox */ %>
 <%
@@ -1526,11 +1546,56 @@ else
    }
 %>
 
-<input class="text12" name="MarketingTitle" id="MarketingTitle" maxlength="254" style="width:634px;position:absolute;left:130px;top:26px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="MarketingTitle" id="MarketingTitle" maxlength="254" style="width:656px;position:absolute;left:130px;top:34px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+
+<% /* Text::Text */ %>
+
+<label  id="Text:" name="Text:" style="width:110px;height:16px;position:absolute;left:14px;top:56px;">Text:</label>
+
+<% /* Text:EditBox */ %>
+<%
+   strErrorMapValue = VmlOperation.CheckError( "Text", strError );
+   if ( !StringUtils.isBlank( strErrorMapValue ) )
+   {
+      if ( StringUtils.equals( strErrorFlag, "Y" ) )
+         strErrorColor = "color:red;";
+   }
+   else
+   {
+      strErrorColor = "";
+      mMasLC = task.getViewByName( "mMasLC" );
+      if ( VmlOperation.isValid( mMasLC ) == false )
+         task.log( ).debug( "Invalid View: " + "Text" );
+      else
+      {
+         nRC = mMasLC.cursor( "MasterLabelContent" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            try
+            {
+               strErrorMapValue = mMasLC.cursor( "MasterLabelContent" ).getAttribute( "TextSAD" ).getString( "" );
+            }
+            catch (Exception e)
+            {
+               out.println("There is an error on Text: " + e.getMessage());
+               task.log().error( "*** Error on ctrl Text", e );
+            }
+            if ( strErrorMapValue == null )
+               strErrorMapValue = "";
+
+            task.log( ).debug( "MasterLabelContent.TextSAD: " + strErrorMapValue );
+         }
+         else
+            task.log( ).debug( "Entity does not exist for Text: " + "mMasLC.MasterLabelContent" );
+      }
+   }
+%>
+
+<input class="text12" name="Text" id="Text" maxlength="1024" style="width:656px;position:absolute;left:130px;top:56px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* MarketingReviewerNote::Text */ %>
 
-<label  id="MarketingReviewerNote:" name="MarketingReviewerNote:" style="width:110px;height:16px;position:absolute;left:20px;top:52px;">Reviewer Note:</label>
+<label  id="MarketingReviewerNote:" name="MarketingReviewerNote:" style="width:110px;height:16px;position:absolute;left:14px;top:78px;">Reviewer Note:</label>
 
 <% /* MarketingReviewerNote:EditBox */ %>
 <%
@@ -1571,17 +1636,17 @@ else
    }
 %>
 
-<input class="text12" name="MarketingReviewerNote" id="MarketingReviewerNote" maxlength="1024" style="width:634px;position:absolute;left:130px;top:52px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="MarketingReviewerNote" id="MarketingReviewerNote" maxlength="1024" style="width:656px;position:absolute;left:130px;top:78px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* New:PushBtn */ %>
-<button type="button" class="newbutton" name="New" id="New" value="" onclick="GOTO_StorageDispSectionAdd( )" style="width:78px;height:26px;position:absolute;left:586px;top:82px;">New</button>
+<button type="button" class="newbutton" name="New" id="New" value="" onclick="GOTO_StorageDispSectionAdd( )" style="width:78px;height:26px;position:absolute;left:586px;top:102px;">New</button>
 
 <% /* PBSort:PushBtn */ %>
-<button type="button" class="newbutton" name="PBSort" id="PBSort" value="" onclick="Sort( )" style="width:78px;height:26px;position:absolute;left:686px;top:82px;">Sort</button>
+<button type="button" class="newbutton" name="PBSort" id="PBSort" value="" onclick="Sort( )" style="width:78px;height:26px;position:absolute;left:686px;top:102px;">Sort</button>
 
 <% /* StorageAndDisposalSections:Text */ %>
 
-<label class="listheader"  id="StorageAndDisposalSections" name="StorageAndDisposalSections" style="width:232px;height:16px;position:absolute;left:6px;top:92px;">Storage and Disposal Sections</label>
+<label class="listheader"  id="StorageAndDisposalSections" name="StorageAndDisposalSections" style="width:210px;height:16px;position:absolute;left:6px;top:112px;">Storage and Disposal Sections</label>
 
 
 </div>  <!--  GBStorDispSections --> 
@@ -1594,12 +1659,15 @@ else
 <div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox1:GroupBox */ %>
 
-<div id="GroupBox1" name="GroupBox1" class="withborder" style="width:784px;height:244px;float:left;">  <!-- GroupBox1 --> 
+<div id="GroupBox1" name="GroupBox1" class="withborder" style="width:800px;height:244px;float:left;">  <!-- GroupBox1 --> 
 
+
+ <!-- This is added as a line spacer -->
+<div style="height:12px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <% /* GridStorDisp:Grid */ %>
-<table  cols=4 style="width:770px;"  name="GridStorDisp" id="GridStorDisp">
+<table  cols=4 style="width:792px;"  name="GridStorDisp" id="GridStorDisp">
 
 <thead><tr>
 

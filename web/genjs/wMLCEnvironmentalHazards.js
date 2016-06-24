@@ -1,4 +1,4 @@
-// wMLCEnvironmentalHazards   Generate Timestamp: 20160531205225740
+// wMLCEnvironmentalHazards   Generate Timestamp: 20160623085855289
 
 var isWindowClosing = true;
 var timerID = null;
@@ -292,21 +292,6 @@ function GOTO_EnvironmentalSectionUpdate( strTagEntityKey )
    }
 }
 
-function smSaveAndReturnMLC( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCEnvironmentalHazards.zAction.value = "smSaveAndReturnMLC";
-      document.wMLCEnvironmentalHazards.submit( );
-   }
-}
-
 function smSaveMLC( )
 {
 
@@ -318,6 +303,21 @@ function smSaveMLC( )
       _DisableFormElements( true );
 
       document.wMLCEnvironmentalHazards.zAction.value = "smSaveMLC";
+      document.wMLCEnvironmentalHazards.submit( );
+   }
+}
+
+function smSaveAndReturnMLC( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCEnvironmentalHazards.zAction.value = "smSaveAndReturnMLC";
       document.wMLCEnvironmentalHazards.submit( );
    }
 }

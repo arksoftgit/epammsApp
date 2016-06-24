@@ -1,4 +1,4 @@
-// wSubRUpdateSubregLabelContent   Generate Timestamp: 20160531205255912
+// wSubRUpdateSubregLabelContent   Generate Timestamp: 20160620105933146
 
 var isWindowClosing = true;
 var timerID = null;

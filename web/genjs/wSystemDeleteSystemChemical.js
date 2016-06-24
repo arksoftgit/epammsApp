@@ -1,4 +1,4 @@
-// wSystemDeleteSystemChemical   Generate Timestamp: 20160531205256615
+// wSystemDeleteSystemChemical   Generate Timestamp: 20160620105933399
 
 var isWindowClosing = true;
 var timerID = null;

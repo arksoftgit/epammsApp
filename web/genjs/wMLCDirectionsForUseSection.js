@@ -1,4 +1,4 @@
-// wMLCDirectionsForUseSection   Generate Timestamp: 20160531205224865
+// wMLCDirectionsForUseSection   Generate Timestamp: 20160623085854994
 
 var isWindowClosing = true;
 var timerID = null;
@@ -200,9 +200,33 @@ function AcceptDirectionsUseSect( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      // Javascript code entered by user.
+
+if ( document.wMLCDirectionsForUseSection.DirectionsUseName == "" ) {
+   alert( "Section Name is required" );
+   return 0;
+}
+
+      // END of Javascript code entered by user.
+
       _DisableFormElements( true );
 
       document.wMLCDirectionsForUseSection.zAction.value = "AcceptDirectionsUseSect";
+      document.wMLCDirectionsForUseSection.submit( );
+   }
+}
+
+function ParseSectionText( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCDirectionsForUseSection.zAction.value = "ParseSectionText";
       document.wMLCDirectionsForUseSection.submit( );
    }
 }
@@ -330,7 +354,7 @@ function GOTO_MarketingKeywordUpdate( strTagEntityKey )
    }
 }
 
-function IncludeXOR( )
+function ChangeSectionCategory( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -340,12 +364,12 @@ function IncludeXOR( )
    {
       _DisableFormElements( true );
 
-      document.wMLCDirectionsForUseSection.zAction.value = "IncludeXOR";
+      document.wMLCDirectionsForUseSection.zAction.value = "ChangeSectionCategory";
       document.wMLCDirectionsForUseSection.submit( );
    }
 }
 
-function CreateView( )
+function SelectExclusiveOrSection( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -355,7 +379,37 @@ function CreateView( )
    {
       _DisableFormElements( true );
 
-      document.wMLCDirectionsForUseSection.zAction.value = "CreateView";
+      document.wMLCDirectionsForUseSection.zAction.value = "SelectExclusiveOrSection";
+      document.wMLCDirectionsForUseSection.submit( );
+   }
+}
+
+function AcceptNext( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCDirectionsForUseSection.zAction.value = "AcceptNext";
+      document.wMLCDirectionsForUseSection.submit( );
+   }
+}
+
+function AcceptPrevious( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCDirectionsForUseSection.zAction.value = "AcceptPrevious";
       document.wMLCDirectionsForUseSection.submit( );
    }
 }
@@ -524,7 +578,39 @@ function ComboBoxXOROnChange( )
       document.wMLCDirectionsForUseSection.hComboBoxXOR.value = document.wMLCDirectionsForUseSection.ComboBoxXOR.selectedIndex;
       _DisableFormElements( true );
 
-      document.wMLCDirectionsForUseSection.zAction.value = "IncludeXOR";
+      document.wMLCDirectionsForUseSection.zAction.value = "SelectExclusiveOrSection";
+      document.wMLCDirectionsForUseSection.submit( );
+   }
+}
+
+function CMB_CategoriesOnChange( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      document.wMLCDirectionsForUseSection.hCMB_Categories.value = document.wMLCDirectionsForUseSection.CMB_Categories.selectedIndex;
+      _DisableFormElements( true );
+
+      document.wMLCDirectionsForUseSection.zAction.value = "ChangeSectionCategory";
+      document.wMLCDirectionsForUseSection.submit( );
+   }
+}
+
+function ComboBox1OnChange( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      document.wMLCDirectionsForUseSection.hComboBox1.value = document.wMLCDirectionsForUseSection.ComboBox1.selectedIndex;
+      _DisableFormElements( true );
+
+      document.wMLCDirectionsForUseSection.zAction.value = "ChangeSectionCategory";
       document.wMLCDirectionsForUseSection.submit( );
    }
 }

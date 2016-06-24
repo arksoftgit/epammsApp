@@ -1,4 +1,4 @@
-// wStartUpChangePrimRegPassword   Generate Timestamp: 20160531205251615
+// wStartUpChangePrimRegPassword   Generate Timestamp: 20160620105931187
 
 var isWindowClosing = true;
 var timerID = null;

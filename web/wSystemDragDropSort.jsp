@@ -673,7 +673,7 @@ else
 <div style="height:1px;width:18px;float:left;"></div>   <!-- Width Spacer -->
 <% /* SortDragDrop:GroupBox */ %>
 
-<div id="SortDragDrop" name="SortDragDrop" class="divborder"   style="float:left;position:relative; width:958px;">  <!-- SortDragDrop -->
+<div id="SortDragDrop" name="SortDragDrop" class="divborder"   style="float:left;position:relative; width:958px; overflow:hidden;">  <!-- SortDragDrop -->
 
    <h1 id="SortDragDrop" name="SortDragDrop" >Drag &AMP; Drop Sort</h1>&nbsp;&nbsp;
    <%=strTextDisplayValue%>

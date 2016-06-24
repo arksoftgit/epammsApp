@@ -1,4 +1,4 @@
-// wMLCApplicationTypesGroup   Generate Timestamp: 20160531205223178
+// wMLCApplicationTypesGroup   Generate Timestamp: 20160623085854444
 
 var isWindowClosing = true;
 var timerID = null;

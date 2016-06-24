@@ -1,4 +1,4 @@
-// wSubRNewSubregProduct   Generate Timestamp: 20160531205254849
+// wSubRNewSubregProduct   Generate Timestamp: 20160620105932901
 
 var isWindowClosing = true;
 var timerID = null;

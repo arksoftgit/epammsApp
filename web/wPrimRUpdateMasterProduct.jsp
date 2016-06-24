@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wPrimRUpdateMasterProduct   Generate Timestamp: 20160531205238616 --%>
+<%-- wPrimRUpdateMasterProduct   Generate Timestamp: 20160620105842599 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -1632,7 +1632,7 @@ else
    }
 %>
 
-<input name="ESL_Date" id="ESL_Date" maxlength="0" style="width:300px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="ESL_Date" id="ESL_Date" maxlength="20" style="width:300px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </div>  <!-- End of a new line -->
 

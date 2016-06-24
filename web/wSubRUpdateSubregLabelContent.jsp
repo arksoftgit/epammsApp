@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSubRUpdateSubregLabelContent   Generate Timestamp: 20160531205255912 --%>
+<%-- wSubRUpdateSubregLabelContent   Generate Timestamp: 20160620105933146 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -1199,7 +1199,7 @@ else
 
 <span style="height:16px;">&nbsp</span>
 <% /* LabelName:EditBox */ %>
-<input name="LabelName" id="LabelName" maxlength="0" style="width:422px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="LabelName" id="LabelName" maxlength="20" style="width:422px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </div>  <!-- End of a new line -->
 

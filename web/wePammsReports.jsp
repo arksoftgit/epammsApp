@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wePammsReports   Generate Timestamp: 20160531205220771 --%>
+<%-- wePammsReports   Generate Timestamp: 20160620105817325 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -773,7 +773,7 @@ else
 <div>  <!-- Beginning of a new line -->
 <span style="height:16px;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
 <% /* zePammsReportsURL:EditBox */ %>
-<input name="zePammsReportsURL" id="zePammsReportsURL" maxlength="0" style="width:162px;<%=strErrorColor%>" type="hidden" value="<%=strErrorMapValue%>" >
+<input name="zePammsReportsURL" id="zePammsReportsURL" maxlength="20" style="width:162px;<%=strErrorColor%>" type="hidden" value="<%=strErrorMapValue%>" >
 
 </div>  <!-- End of a new line -->
 

@@ -18,9 +18,9 @@ tinymce.init({
    width : "100%",
 // oninit : "resizeTiny",
    plugins: [
-      "charmap"
+      "charmap paste"
    ],
-   toolbar: "charmap | subscript superscript"
+   toolbar: "charmap | subscript superscript | undo redo"
 });
 
 

@@ -1,4 +1,4 @@
-// wePammsHomePage   Generate Timestamp: 20160531205220599
+// wePammsHomePage   Generate Timestamp: 20160620105817269
 
 var isWindowClosing = true;
 var timerID = null;

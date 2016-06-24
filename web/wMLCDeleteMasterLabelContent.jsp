@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCDeleteMasterLabelContent   Generate Timestamp: 20160531205223771 --%>
+<%-- wMLCDeleteMasterLabelContent   Generate Timestamp: 20160623085854620 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -421,13 +421,14 @@ else
 
 <%
    View mEPA = null;
+   View mMasLC_Root = null;
    View mMasLC = null;
+   View mMasLCIncludeExclude = null;
    View mMasProd = null;
    View mMasProdLST = null;
    View mOrganiz = null;
    View mPrimReg = null;
    View wWebXfer = null;
-   View mMasLCIncludeExclude = null;
    String strRadioGroupValue = "";
    String strComboCurrentValue = "";
    String strAutoComboBoxExternalValue = "";
@@ -638,7 +639,7 @@ else
    }
 %>
 
-<input class="text12" name="Revision Date" id="Revision Date" maxlength="0"  disabled style="width:214px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="Revision Date" id="Revision Date" maxlength="20"  disabled style="width:214px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>

@@ -1,4 +1,4 @@
-// wMLCPhysicalChemicalHazardsSection   Generate Timestamp: 20160531205229256
+// wMLCPhysicalChemicalHazardsSection   Generate Timestamp: 20160623085856388
 
 var isWindowClosing = true;
 var timerID = null;
@@ -244,21 +244,6 @@ function GOTO_ChemicalHazardsAdd( )
    }
 }
 
-function smSaveAndReturnMLC( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCPhysicalChemicalHazardsSection.zAction.value = "smSaveAndReturnMLC";
-      document.wMLCPhysicalChemicalHazardsSection.submit( );
-   }
-}
-
 function smSaveMLC( )
 {
 
@@ -270,6 +255,21 @@ function smSaveMLC( )
       _DisableFormElements( true );
 
       document.wMLCPhysicalChemicalHazardsSection.zAction.value = "smSaveMLC";
+      document.wMLCPhysicalChemicalHazardsSection.submit( );
+   }
+}
+
+function smSaveAndReturnMLC( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCPhysicalChemicalHazardsSection.zAction.value = "smSaveAndReturnMLC";
       document.wMLCPhysicalChemicalHazardsSection.submit( );
    }
 }

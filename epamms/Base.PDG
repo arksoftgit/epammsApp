@@ -1,4 +1,4 @@
-z1000-Zeidon    BASE     TZDGSRCO 05/25/16   18:30:27 1.0a2   
+z1000-Zeidon    BASE     TZDGSRCO 06/22/16   16:21:44 1.0a2   
 eDomainGroup 1
 aZKey      68567479
 aNextZKeyToAssign 130001733
@@ -112,7 +112,7 @@ aInternalValue Non-refillable
 eTableEntry 4
 aZKey      110388980
 aExternalValue Bag-In-Box, Non-refillable Packets, Sealed Containers
-aInternalValue Sealed Containers
+aInternalValue Sealed
 
 eDomain    2
 aZKey      110226099
@@ -176,7 +176,7 @@ aInternalValue >=5
 eDomain    2
 aZKey      110059057
 aName      ContainerVolumeStorageDisposal
-aDesc      Storage/Disposal split <=1 or >1
+aDesc      Storage/Disposal split <=5 or >5
 aDomainType T
 aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
 aDataType  S
@@ -190,13 +190,13 @@ aIsDefault Y
 
 eTableEntry 4
 aZKey      110059059
-aExternalValue <= 1 gallon
-aInternalValue <=1
+aExternalValue <= 5 gallon
+aInternalValue <=5
 
 eTableEntry 4
 aZKey      110059060
-aExternalValue > 1 gallon
-aInternalValue >1
+aExternalValue > 5 gallon
+aInternalValue >5
 
 eDomain    2
 aZKey      110006612
@@ -482,18 +482,8 @@ aInternalValue Disposal
 
 eTableEntry 4
 aZKey      3934632
-aExternalValue Container Disposal
-aInternalValue ContainerDisposal
-
-eTableEntry 4
-aZKey      3934633
-aExternalValue Storage and Disposal <=1 gallon
-aInternalValue StorageDisposal1
-
-eTableEntry 4
-aZKey      3934634
-aExternalValue Storage and Disposal >1 gallon
-aInternalValue StorageDisposal2
+aExternalValue Container Handling
+aInternalValue Container
 
 eDomain    2
 aZKey      3898401

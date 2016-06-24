@@ -1,4 +1,4 @@
-// wMLCStorageDisposalStatement   Generate Timestamp: 20160531205230037
+// wMLCStorageDisposalStatement   Generate Timestamp: 20160623140110332
 
 var isWindowClosing = true;
 var timerID = null;
@@ -161,6 +161,9 @@ function _AfterPageLoaded( )
       clearTimeout( timerID );
       timerID = null;
    }
+
+   document.wMLCStorageDisposalStatement.hCBSize.value = document.wMLCStorageDisposalStatement.CBSize.value
+   document.wMLCStorageDisposalStatement.hCBType.value = document.wMLCStorageDisposalStatement.CBType.value
 
    var varTimeout = document.wMLCStorageDisposalStatement.zTimeout.value;
    if ( varTimeout > 0 )
@@ -398,6 +401,30 @@ function PASTE_InsertKeyword( )
 
       document.wMLCStorageDisposalStatement.zAction.value = "PASTE_InsertKeyword";
       document.wMLCStorageDisposalStatement.submit( );
+   }
+}
+
+function CBSizeOnChange( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      document.wMLCStorageDisposalStatement.hCBSize.value = document.wMLCStorageDisposalStatement.CBSize.value;
+   }
+}
+
+function CBTypeOnChange( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      document.wMLCStorageDisposalStatement.hCBType.value = document.wMLCStorageDisposalStatement.CBType.value;
    }
 }
 

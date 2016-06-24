@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wPrimRSplitMasterProductSection   Generate Timestamp: 20160531205237866 --%>
+<%-- wPrimRSplitMasterProductSection   Generate Timestamp: 20160620105841886 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -1253,7 +1253,7 @@ else
 <div>  <!-- Beginning of a new line -->
 <span style="height:16px;">&nbsp&nbsp</span>
 <% /* TextOriginal:EditBox */ %>
-<input name="TextOriginal" id="TextOriginal" maxlength="0" style="width:438px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" onKeyPress="return _OnEnter( event )" >
+<input name="TextOriginal" id="TextOriginal" maxlength="20" style="width:438px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" onKeyPress="return _OnEnter( event )" >
 
 </div>  <!-- End of a new line -->
 

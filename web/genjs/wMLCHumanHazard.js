@@ -1,4 +1,4 @@
-// wMLCHumanHazard   Generate Timestamp: 20160531205226568
+// wMLCHumanHazard   Generate Timestamp: 20160623085855548
 
 var isWindowClosing = true;
 var timerID = null;
@@ -225,21 +225,6 @@ function RefreshFullStatement( )
    }
 }
 
-function smSaveAndReturnMLC( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCHumanHazard.zAction.value = "smSaveAndReturnMLC";
-      document.wMLCHumanHazard.submit( );
-   }
-}
-
 function smSaveMLC( )
 {
 
@@ -251,6 +236,21 @@ function smSaveMLC( )
       _DisableFormElements( true );
 
       document.wMLCHumanHazard.zAction.value = "smSaveMLC";
+      document.wMLCHumanHazard.submit( );
+   }
+}
+
+function smSaveAndReturnMLC( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCHumanHazard.zAction.value = "smSaveAndReturnMLC";
       document.wMLCHumanHazard.submit( );
    }
 }

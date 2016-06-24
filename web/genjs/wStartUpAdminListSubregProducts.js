@@ -1,4 +1,4 @@
-// wStartUpAdminListSubregProducts   Generate Timestamp: 20160531205249287
+// wStartUpAdminListSubregProducts   Generate Timestamp: 20160620105930361
 
 var isWindowClosing = true;
 var timerID = null;

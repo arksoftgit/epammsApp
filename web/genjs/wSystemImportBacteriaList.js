@@ -1,4 +1,4 @@
-// wSystemImportBacteriaList   Generate Timestamp: 20160531205257225
+// wSystemImportBacteriaList   Generate Timestamp: 20160620105933545
 
 var isWindowClosing = true;
 var timerID = null;

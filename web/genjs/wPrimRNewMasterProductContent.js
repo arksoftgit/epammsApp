@@ -1,4 +1,4 @@
-// wPrimRNewMasterProductContent   Generate Timestamp: 20160531205236381
+// wPrimRNewMasterProductContent   Generate Timestamp: 20160620105840477
 
 var isWindowClosing = true;
 var timerID = null;

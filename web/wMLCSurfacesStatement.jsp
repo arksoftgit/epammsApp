@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCSurfacesStatement   Generate Timestamp: 20160531205230600 --%>
+<%-- wMLCSurfacesStatement   Generate Timestamp: 20160623085856813 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -872,21 +872,21 @@ else
 %>
 
 <%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "CancelAndReturn" );
-   if ( !csrRC.isSet() ) //if ( nRC < 0 )
-   {
-%>
-       <li id="CancelAndReturn" name="CancelAndReturn"><a href="#"  onclick="CancelSurfacesStatement()">Cancel & Return</a></li>
-<%
-   }
-%>
-
-<%
    csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "AddSurfacesList" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
        <li id="AddSurfacesList" name="AddSurfacesList"><a href="#"  onclick="InitSurfacesStmtsForInsert()">Add From Surfaces List</a></li>
+<%
+   }
+%>
+
+<%
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "CancelAndReturn" );
+   if ( !csrRC.isSet() ) //if ( nRC < 0 )
+   {
+%>
+       <li id="CancelAndReturn" name="CancelAndReturn"><a href="#"  onclick="CancelSurfacesStatement()">Cancel & Return</a></li>
 <%
    }
 %>
@@ -911,13 +911,14 @@ else
 
 <%
    View mEPA = null;
+   View mMasLC_Root = null;
    View mMasLC = null;
+   View mMasLCIncludeExclude = null;
    View mMasProd = null;
    View mMasProdLST = null;
    View mOrganiz = null;
    View mPrimReg = null;
    View wWebXfer = null;
-   View mMasLCIncludeExclude = null;
    String strRadioGroupValue = "";
    String strComboCurrentValue = "";
    String strAutoComboBoxExternalValue = "";

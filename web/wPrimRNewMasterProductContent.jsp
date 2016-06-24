@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wPrimRNewMasterProductContent   Generate Timestamp: 20160531205236381 --%>
+<%-- wPrimRNewMasterProductContent   Generate Timestamp: 20160620105840477 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -1131,7 +1131,7 @@ else
 
 <span style="height:16px;">&nbsp</span>
 <% /* EBContentDescription:EditBox */ %>
-<input name="EBContentDescription" id="EBContentDescription" maxlength="0" style="width:300px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="EBContentDescription" id="EBContentDescription" maxlength="20" style="width:300px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </div>  <!-- End of a new line -->
 

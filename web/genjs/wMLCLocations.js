@@ -1,4 +1,4 @@
-// wMLCLocations   Generate Timestamp: 20160531205227178
+// wMLCLocations   Generate Timestamp: 20160623085855735
 
 var isWindowClosing = true;
 var timerID = null;
@@ -330,21 +330,6 @@ function GOTO_UpdateUsageGroup( strTagEntityKey )
    }
 }
 
-function smSaveAndReturnMLC( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCLocations.zAction.value = "smSaveAndReturnMLC";
-      document.wMLCLocations.submit( );
-   }
-}
-
 function smSaveMLC( )
 {
 
@@ -356,6 +341,21 @@ function smSaveMLC( )
       _DisableFormElements( true );
 
       document.wMLCLocations.zAction.value = "smSaveMLC";
+      document.wMLCLocations.submit( );
+   }
+}
+
+function smSaveAndReturnMLC( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCLocations.zAction.value = "smSaveAndReturnMLC";
       document.wMLCLocations.submit( );
    }
 }

@@ -1,4 +1,4 @@
-// wSLCIngredients   Generate Timestamp: 20160531205242682
+// wSLCIngredients   Generate Timestamp: 20160620105928414
 
 var isWindowClosing = true;
 var timerID = null;

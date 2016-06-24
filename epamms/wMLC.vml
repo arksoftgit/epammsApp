@@ -250,6 +250,38 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
+//  OPERATION: AcceptSD_KeywordGoPrev
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+AcceptSD_KeywordGoPrev( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+ 
+   AcceptSubobject( mMasLC, "M_InsertTextKeywordSD" )
+   SetCursorPrevEntity( mMasLC, "M_InsertTextKeywordSD", "" )
+   CreateTemporalSubobjectVersion( mMasLC, "M_InsertTextKeywordSD" )
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: AcceptSD_KeywordGoNext
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+AcceptSD_KeywordGoNext( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+ 
+   AcceptSubobject( mMasLC, "M_InsertTextKeywordSD" )
+   SetCursorNextEntity( mMasLC, "M_InsertTextKeywordSD", "" )
+   CreateTemporalSubobjectVersion( mMasLC, "M_InsertTextKeywordSD" )
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
 //  OPERATION: GOTO_StorageDispSectionDelete
 //
 /////////////////////////////////////////////////////////////////////////////
@@ -441,6 +473,22 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
+//  OPERATION: GOTO_DirsForUseCategoryDelete
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+GOTO_DirsForUseCategoryDelete( VIEW ViewToWindow )
+
+   VIEW mMasLC   REGISTERED AS mMasLC
+
+   mMasLC.MasterLabelContent.wDeleteType       = "Directions For Use Category"
+   mMasLC.MasterLabelContent.wDeleteText       = mMasLC.M_DirectionsForUseCategory.Name
+   mMasLC.MasterLabelContent.wDeleteEntityName = "M_DirectionsForUseCategory"
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
 //  OPERATION: GOTO_DirsForUseSectionDelete
 //
 /////////////////////////////////////////////////////////////////////////////
@@ -611,6 +659,30 @@ AcceptAddNewDU_Stmt( VIEW ViewToWindow )
    END
 
    CreateTemporalEntity( mMasLC, "M_DirectionsForUseStatement", zPOS_AFTER )
+
+END
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: AcceptAddNewDU_SectionKeyword
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+AcceptAddNewDU_SectionKeyword( VIEW ViewToWindow )
+
+   VIEW  mMasLC   REGISTERED AS mMasLC
+   SHORT nRC
+
+   // Accept Direction for Use Statement and add new temporal one.
+   nRC = AcceptSubobject( mMasLC, "M_InsertTextKeywordSectionDU" ) 
+   IF nRC < 0
+      MessageSend( ViewToWindow, "", "Accept and Add New Directions for Use Section Keyword",
+                   "Error saving Directions for Use Section Keyword.",
+                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      RETURN 2
+   END
+
+   CreateTemporalEntity( mMasLC, "M_InsertTextKeywordSectionDU", zPOS_AFTER )
+   mMasLC.M_InsertTextKeywordSectionDU.Type = "A"
 
 END
 
@@ -797,6 +869,7 @@ GOTO_UpdateMLC( VIEW ViewToWindow )
 
    VIEW mMasProd REGISTERED AS mMasProd
    VIEW mMasLC   BASED ON LOD  mMasLC
+   VIEW mMasLC_Root BASED ON LOD mMasLC
 
    GET VIEW mMasLC NAMED "mMasLC"
    IF mMasLC != 0
@@ -864,6 +937,9 @@ GOTO_UpdateMLC( VIEW ViewToWindow )
    END
    SET CURSOR FIRST mMasLC.M_UsageType
 
+   CreateViewFromView( mMasLC_Root, mMasLC )
+   NAME VIEW mMasLC_Root "mMasLC_Root"
+
    // Build Usage Group Usage entries.
    BuildUsageGroupEntries( mMasLC )
 
@@ -879,12 +955,15 @@ NEW_MLC( VIEW ViewToWindow )
 
    VIEW mMasProd REGISTERED AS mMasProd
    VIEW mMasLC   BASED ON LOD  mMasLC
+   VIEW mMasLC_Root BASED ON LOD mMasLC
 
    ACTIVATE mMasLC EMPTY
    NAME VIEW mMasLC "mMasLC"
    CREATE ENTITY mMasLC.MasterLabelContent
    INCLUDE mMasLC.MasterProduct FROM mMasProd.MasterProduct
 
+   CreateViewFromView( mMasLC_Root, mMasLC )
+   NAME VIEW mMasLC_Root "mMasLC_Root"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -2856,15 +2935,409 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-//  OPERATION: GOTO_DU_SectionAddBefore
+//  OPERATION: GOTO_DU_CategoryUpdate
 //
 /////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
-GOTO_DU_SectionAddBefore( VIEW ViewToWindow )
+GOTO_DU_CategoryUpdate( VIEW ViewToWindow )
 
    VIEW mMasLC REGISTERED AS mMasLC
 
-   CreateTemporalEntity( mMasLC, "M_DirectionsForUseSection", zPOS_BEFORE )
+   CreateTemporalSubobjectVersion( mMasLC, "M_DirectionsForUseCategory" )
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: GOTO_DU_CategoryAdd
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+GOTO_DU_CategoryAdd( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+
+   CreateTemporalEntity( mMasLC, "M_DirectionsForUseCategory", zPOS_LAST )
+   
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: CreateIncludeExcludeView
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+CreateIncludeExcludeView( VIEW mMasLC )
+
+   VIEW mMasLCIncludeExclude BASED ON LOD mMasLC
+
+   CreateViewFromView( mMasLCIncludeExclude, mMasLC )
+   NAME VIEW mMasLCIncludeExclude "mMasLCIncludeExclude"
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: IncludeExclusiveOrDU_Section
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+ChangeSectionCategory( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+   VIEW mMasLCIncludeExclude REGISTERED AS mMasLCIncludeExclude
+   
+   STRING ( 256 ) szNewCategoryName
+   STRING ( 256 ) szCurrentCategoryName
+   STRING ( 256 ) szNameTarget
+   STRING ( 512 ) szMsg
+   SHORT  nRC
+
+   szNewCategoryName = mMasLC.DFU_CategoryNames.Name
+   szCurrentCategoryName = mMasLC.M_DirectionsForUseCategory.Name
+   TraceLineS( "Attempt to switch to DFU Category: ", szNewCategoryName )
+   TraceLineS( "                from DFU Category: ", szCurrentCategoryName )
+
+   nRC = SetCursorFirstEntityByString( mMasLCIncludeExclude, "M_DirectionsForUseCategory", "Name", szNewCategoryName, "" )
+   IF nRC >= 0
+      // Accept Direction for Use Section to get ready for move.
+      nRC = AcceptSubobject( mMasLC, "M_DirectionsForUseSection" )
+      nRC = AcceptSubobject( mMasLC, "M_DirectionsForUseCategory" )
+      IF nRC < 0
+         MessageSend( ViewToWindow, "", "Change Section Category Directions For Use Section",
+                      "Error saving Directions For Use Section.",
+                      zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+         RETURN 2
+      END
+
+      MoveSubobject( mMasLCIncludeExclude, "M_DirectionsForUseSection",
+                     mMasLC, "M_DirectionsForUseSection", zPOS_LAST, zREPOS_NEXT )
+      SetViewFromView( mMasLC, mMasLCIncludeExclude )
+      CreateTemporalSubobjectVersion( mMasLC, "M_DirectionsForUseCategory" )
+      CreateTemporalSubobjectVersion( mMasLC, "M_DirectionsForUseSection" )
+   ELSE
+      szMsg = "Cannot move section from: " + szCurrentCategoryName
+      szMsg = szMsg + " to: "
+      szMsg = szMsg + szNewCategoryName
+      MessageSend( ViewToWindow, "", "Directions for Use Section", szMsg,
+                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+      RETURN 2
+   END
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: IncludeExclusiveOrDU_Section
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+IncludeExclusiveOrDU_Section( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+   VIEW mMasLCIncludeExclude REGISTERED AS mMasLCIncludeExclude
+   STRING ( 256 ) szNameXOR
+   STRING ( 256 ) szNameCurrent
+   STRING ( 256 ) szNameTarget
+   STRING ( 512 ) szMsg
+
+   szNameXOR = mMasLC.DFU_SectionNames.Name
+   TraceLineS( "Attempt to include DFU Section: ", szNameXOR )
+   
+   // For the moment, we do not permit "XOR Chaining" ... e.g. A XOR B XOR C XOR A.  Not sure we need it ...
+   IF szNameXOR != ""
+      SetCursorFirstEntityByString( mMasLCIncludeExclude, "M_DirectionsForUseSection", "Name", szNameXOR, "" )
+      IF mMasLCIncludeExclude.M_DirectionsForUseXOR_Section EXISTS
+         szNameCurrent = mMasLC.M_DirectionsForUseSection.Name
+         szNameTarget = mMasLCIncludeExclude.M_DirectionsForUseXOR_Section.Name
+         IF szNameCurrent = szNameTarget
+            IF mMasLCIncludeExclude.M_DirectionsForUseXOR_Section EXISTS
+               EXCLUDE mMasLCIncludeExclude.M_DirectionsForUseXOR_Section NONE
+            END
+         ELSE
+            szMsg = szNameXOR + ": Already exclusive to section: "
+            szMsg = szMsg + szNameTarget
+            MessageSend( ViewToWindow, "", "Directions for Use Section", szMsg,
+                         zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+            SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+            RETURN 2
+         END
+      END
+      IF mMasLC.M_DirectionsForUseXOR_Section EXISTS
+         EXCLUDE mMasLC.M_DirectionsForUseXOR_Section NONE
+      END
+      
+      INCLUDE mMasLC.M_DirectionsForUseXOR_Section FROM mMasLCIncludeExclude.M_DirectionsForUseSection 
+      INCLUDE mMasLCIncludeExclude.M_DirectionsForUseXOR_Section FROM mMasLC.M_DirectionsForUseSection 
+   ELSE
+      IF mMasLC.M_DirectionsForUseXOR_Section EXISTS
+         EXCLUDE mMasLC.M_DirectionsForUseXOR_Section NONE
+      END
+   END
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: BuildDFU_CategoryNameList
+//
+/////////////////////////////////////////////////////////////////////////////
+LOCAL OPERATION
+BuildDFU_CategoryNameList( VIEW mMasLC )
+
+   VIEW mMasLCIncludeExclude REGISTERED AS mMasLCIncludeExclude
+   STRING ( 256 ) szCurrentName
+   
+   FOR EACH mMasLC.DFU_CategoryNames
+      DELETE ENTITY mMasLC.DFU_CategoryNames NONE
+   END
+   FOR EACH mMasLCIncludeExclude.M_DirectionsForUseCategory
+      szCurrentName = mMasLCIncludeExclude.M_DirectionsForUseCategory.Name
+      CREATE ENTITY mMasLC.DFU_CategoryNames
+      mMasLC.DFU_CategoryNames.Name = szCurrentName
+   END
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: BuildDFU_SectionNameList
+//
+/////////////////////////////////////////////////////////////////////////////
+LOCAL OPERATION
+BuildDFU_SectionNameList( VIEW mMasLC, STRING ( 256 ) szSectionName )
+
+   VIEW mMasLCIncludeExclude REGISTERED AS mMasLCIncludeExclude
+   STRING ( 256 ) szCurrentName
+
+   SetViewFromView( mMasLCIncludeExclude, mMasLC )
+   FOR EACH mMasLC.DFU_SectionNames
+      DELETE ENTITY mMasLC.DFU_SectionNames NONE
+   END
+   CREATE ENTITY mMasLC.DFU_SectionNames  // entry for blank section name
+   FOR EACH mMasLCIncludeExclude.M_DirectionsForUseSection
+      szCurrentName = mMasLCIncludeExclude.M_DirectionsForUseSection.Name
+      IF szCurrentName != szSectionName
+         CREATE ENTITY mMasLC.DFU_SectionNames
+         mMasLC.DFU_SectionNames.Name = szCurrentName
+      END
+   END
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: GOTO_DU_SectionUpdate
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+GOTO_DU_SectionUpdate( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+   STRING ( 256 ) szName
+
+   CreateIncludeExcludeView( mMasLC )
+   szName = mMasLC.M_DirectionsForUseSection.Name
+   CreateTemporalSubobjectVersion( mMasLC, "M_DirectionsForUseSection" )
+   BuildDFU_CategoryNameList( mMasLC )
+   BuildDFU_SectionNameList( mMasLC, szName )
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: GOTO_DU_SectionAdd
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+GOTO_DU_SectionAdd( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+
+   CreateIncludeExcludeView( mMasLC )
+   CreateTemporalEntity( mMasLC, "M_DirectionsForUseSection", zPOS_LAST )
+   BuildDFU_CategoryNameList( mMasLC )
+   BuildDFU_SectionNameList( mMasLC, "" )
+   
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: AcceptDirectionsForUseSection
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+AcceptDirectionsForUseSection( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+   VIEW mMasLCIncludeExclude REGISTERED AS mMasLCIncludeExclude
+   
+   AcceptSubobject( mMasLC, "M_DirectionsForUseSection" )
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: AcceptDirectionsForUseCategory
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+AcceptDirectionsForUseCategory( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+   VIEW mMasLCIncludeExclude REGISTERED AS mMasLCIncludeExclude
+   
+   AcceptSubobject( mMasLC, "M_DirectionsForUseCategory" )
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: AcceptDFU_CategoryGoNext
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+AcceptDFU_CategoryGoNext( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+
+   AcceptSubobject( mMasLC, "M_DirectionsForUseCategory" )
+   SetCursorNextEntity( mMasLC, "M_DirectionsForUseCategory", "" )
+   CreateTemporalSubobjectVersion( mMasLC, "M_DirectionsForUseCategory" )
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: AcceptDFU_CategoryGoPrev
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+AcceptDFU_CategoryGoPrev( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+
+   AcceptSubobject( mMasLC, "M_DirectionsForUseCategory" )
+   SetCursorPrevEntity( mMasLC, "M_DirectionsForUseCategory", "" )
+   CreateTemporalSubobjectVersion( mMasLC, "M_DirectionsForUseCategory" )
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: AcceptDFU_SectionGoNext
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+AcceptDFU_SectionGoNext( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+   VIEW mMasLCIncludeExclude REGISTERED AS mMasLCIncludeExclude
+   STRING ( 256 ) szName
+
+   AcceptSubobject( mMasLC, "M_DirectionsForUseSection" )
+   SetCursorNextEntity( mMasLC, "M_DirectionsForUseSection", "" )
+   szName = mMasLC.M_DirectionsForUseSection.Name
+   CreateTemporalSubobjectVersion( mMasLC, "M_DirectionsForUseSection" )
+   BuildDFU_SectionNameList( mMasLC, szName )
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: AcceptDFU_SectionGoPrev
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+AcceptDFU_SectionGoPrev( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+   VIEW mMasLCIncludeExclude REGISTERED AS mMasLCIncludeExclude
+   STRING ( 256 ) szName
+
+   AcceptSubobject( mMasLC, "M_DirectionsForUseSection" )
+   SetCursorPrevEntity( mMasLC, "M_DirectionsForUseSection", "" )
+   szName = mMasLC.M_DirectionsForUseSection.Name
+   CreateTemporalSubobjectVersion( mMasLC, "M_DirectionsForUseSection" )
+   BuildDFU_SectionNameList( mMasLC, szName )
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: AcceptDFU_StatementGoNext
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+AcceptDFU_StatementGoNext( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+
+   AcceptSubobject( mMasLC, "M_DirectionsForUseStatement" )
+   SetCursorNextEntity( mMasLC, "M_DirectionsForUseStatement", "" )
+   CreateTemporalSubobjectVersion( mMasLC, "M_DirectionsForUseStatement" )
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: AcceptDFU_StatementGoPrev
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+AcceptDFU_StatementGoPrev( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+
+   AcceptSubobject( mMasLC, "M_DirectionsForUseStatement" )
+   SetCursorPrevEntity( mMasLC, "M_DirectionsForUseStatement", "" )
+   CreateTemporalSubobjectVersion( mMasLC, "M_DirectionsForUseStatement" )
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: AcceptDFU_KeywordGoPrev
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+AcceptDFU_KeywordGoPrev( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+ 
+   AcceptSubobject( mMasLC, "M_InsertTextKeywordDU" )
+   SetCursorPrevEntity( mMasLC, "M_InsertTextKeywordDU", "" )
+   CreateTemporalSubobjectVersion( mMasLC, "M_InsertTextKeywordDU" )
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: AcceptDFU_KeywordGoNext
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+AcceptDFU_KeywordGoNext( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+ 
+   AcceptSubobject( mMasLC, "M_InsertTextKeywordDU" )
+   SetCursorNextEntity( mMasLC, "M_InsertTextKeywordDU", "" )
+   CreateTemporalSubobjectVersion( mMasLC, "M_InsertTextKeywordDU" )
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: AcceptDirectionsForUseSection
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+CancelDirectionsForUseSection( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+   VIEW mMasLCIncludeExclude REGISTERED AS mMasLCIncludeExclude
+   
+   CancelSubobject( mMasLC, "M_DirectionsForUseSection" )
+   DropView( mMasLCIncludeExclude )
 
 END
 
@@ -3339,47 +3812,6 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-//  OPERATION: IncludeExclusiveOrDU_Section
-//
-/////////////////////////////////////////////////////////////////////////////
-DIALOG OPERATION
-IncludeExclusiveOrDU_Section( VIEW ViewToWindow )
-
-   VIEW mMasLC REGISTERED AS mMasLC
-   VIEW mMasLCIncludeExclude REGISTERED AS mMasLC
-   STRING ( 256 ) szName
-   STRING ( 256 ) szNameXOR
-
-   IF mMasLC.M_DirectionsForUseXOR_Section EXISTS
-      EXCLUDE mMasLC.M_DirectionsForUseXOR_Section NONE
-   END
-
-   szNameXOR = mMasLCIncludeExclude.M_DirectionsForUseSection.Name
-   IF szNameXOR != ""
-      szName = mMasLC.M_DirectionsForUseSection.Name
-      IF szNameXOR != szName
-         INCLUDE mMasLC.M_DirectionsForUseXOR_Section FROM mMasLCIncludeExclude.MP_DirectionsForUseSection
-      END
-   END
-END
-
-/////////////////////////////////////////////////////////////////////////////
-//
-//  OPERATION: CreateIncludeExcludeView
-//
-/////////////////////////////////////////////////////////////////////////////
-DIALOG OPERATION
-CreateIncludeExcludeView( VIEW ViewToWindow )
-
-   VIEW mMasLC REGISTERED AS mMasLC
-   VIEW mMasLCIncludeExclude BASED ON LOD mMasLC
-
-   CreateViewFromView( mMasLCIncludeExclude, mMasLC )
-   NAME VIEW mMasLCIncludeExclude "mMasLCIncludeExclude"
-END
-
-/////////////////////////////////////////////////////////////////////////////
-//
 //  OPERATION: ParseDFU_StatementText
 //
 /////////////////////////////////////////////////////////////////////////////
@@ -3387,6 +3819,22 @@ DIALOG OPERATION
 ParseDFU_StatementText( VIEW ViewToWindow )
 
    VIEW mMasLC REGISTERED AS mMasLC
-   ParseStatementForKeywords( mMasLC, "M_DirectionsForUseStatement",
+   ParseStatementForKeywords( mMasLC, "M_DirectionsForUseStatement", "Text",
                               "M_InsertTextKeywordDU", "M_InsertTextDU", "{}" )
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: ParseDFU_SectionText
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+ParseDFU_SectionText( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+   ParseStatementForKeywords( mMasLC, "M_DirectionsForUseSection", "Title",
+                              "M_InsertTextKeywordSectionDU", "M_InsertTextSectionDU", "{}" )
+   ParseStatementForKeywords( mMasLC, "M_DirectionsForUseSection", "Subtitle",
+                              "M_InsertTextKeywordSectionDU", "M_InsertTextSectionDU", "{}" )
+
 END

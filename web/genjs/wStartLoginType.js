@@ -1,4 +1,4 @@
-// wStartLoginType   Generate Timestamp: 20160531205247834
+// wStartLoginType   Generate Timestamp: 20160620105929832
 
 var isWindowClosing = true;
 var timerID = null;

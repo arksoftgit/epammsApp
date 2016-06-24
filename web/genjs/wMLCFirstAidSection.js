@@ -1,4 +1,4 @@
-// wMLCFirstAidSection   Generate Timestamp: 20160531205226022
+// wMLCFirstAidSection   Generate Timestamp: 20160623085855379
 
 var isWindowClosing = true;
 var timerID = null;
@@ -259,21 +259,6 @@ function GOTO_UpdateFirstAidStmt( strTagEntityKey )
    }
 }
 
-function smSaveAndReturnMLC( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCFirstAidSection.zAction.value = "smSaveAndReturnMLC";
-      document.wMLCFirstAidSection.submit( );
-   }
-}
-
 function smSaveMLC( )
 {
 
@@ -285,6 +270,21 @@ function smSaveMLC( )
       _DisableFormElements( true );
 
       document.wMLCFirstAidSection.zAction.value = "smSaveMLC";
+      document.wMLCFirstAidSection.submit( );
+   }
+}
+
+function smSaveAndReturnMLC( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCFirstAidSection.zAction.value = "smSaveAndReturnMLC";
       document.wMLCFirstAidSection.submit( );
    }
 }

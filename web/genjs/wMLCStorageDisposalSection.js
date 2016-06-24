@@ -1,4 +1,4 @@
-// wMLCStorageDisposalSection   Generate Timestamp: 20160531205229850
+// wMLCStorageDisposalSection   Generate Timestamp: 20160623111701256
 
 var isWindowClosing = true;
 var timerID = null;
@@ -162,9 +162,6 @@ function _AfterPageLoaded( )
       timerID = null;
    }
 
-   document.wMLCStorageDisposalSection.hComboBox1.value = document.wMLCStorageDisposalSection.ComboBox1.value
-   document.wMLCStorageDisposalSection.hComboBox2.value = document.wMLCStorageDisposalSection.ComboBox2.value
-
    var varTimeout = document.wMLCStorageDisposalSection.zTimeout.value;
    if ( varTimeout > 0 )
    {
@@ -205,6 +202,51 @@ function AcceptAddNewStorDispSect( )
       _DisableFormElements( true );
 
       document.wMLCStorageDisposalSection.zAction.value = "AcceptAddNewStorDispSect";
+      document.wMLCStorageDisposalSection.submit( );
+   }
+}
+
+function DELETE_DirectionsForUseStatement( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCStorageDisposalSection.zAction.value = "DELETE_DirectionsForUseStatement";
+      document.wMLCStorageDisposalSection.submit( );
+   }
+}
+
+function GOTO_DirsForUseStatementAdd( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCStorageDisposalSection.zAction.value = "GOTO_DirsForUseStatementAdd";
+      document.wMLCStorageDisposalSection.submit( );
+   }
+}
+
+function GOTO_DirsForUseStatementUpdate( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCStorageDisposalSection.zAction.value = "GOTO_DirsForUseStatementUpdate";
       document.wMLCStorageDisposalSection.submit( );
    }
 }
@@ -304,30 +346,6 @@ function GOTO_StorageDispStatementUpdate( strTagEntityKey )
 
       document.wMLCStorageDisposalSection.zAction.value = "GOTO_StorageDispStatementUpdate";
       document.wMLCStorageDisposalSection.submit( );
-   }
-}
-
-function ComboBox1OnChange( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      document.wMLCStorageDisposalSection.hComboBox1.value = document.wMLCStorageDisposalSection.ComboBox1.value;
-   }
-}
-
-function ComboBox2OnChange( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      document.wMLCStorageDisposalSection.hComboBox2.value = document.wMLCStorageDisposalSection.ComboBox2.value;
    }
 }
 

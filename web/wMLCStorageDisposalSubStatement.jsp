@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCStorageDisposalSubStatement   Generate Timestamp: 20160531205230178 --%>
+<%-- wMLCStorageDisposalSubStatement   Generate Timestamp: 20160623140332765 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -35,6 +35,7 @@ public int DoInputMapping( HttpServletRequest request,
    String taskId = (String) session.getAttribute( "ZeidonTaskId" );
    Task task = objectEngine.getTaskById( taskId );
 
+   View mMasLC_Root = null;
    View mMasLC = null;
    View vGridTmp = null; // temp view to grid view
    View vRepeatingGrp = null; // temp view to repeating group view
@@ -56,6 +57,11 @@ public int DoInputMapping( HttpServletRequest request,
 
    if ( webMapping == false )
       session.setAttribute( "ZeidonError", null );
+
+   mMasLC_Root = task.getViewByName( "mMasLC_Root" );
+   if ( VmlOperation.isValid( mMasLC_Root ) )
+   {
+   }
 
    mMasLC = task.getViewByName( "mMasLC" );
    if ( VmlOperation.isValid( mMasLC ) )
@@ -644,29 +650,8 @@ if ( strActionToProcess != null )
       if ( nRC < 0 )
          break;
 
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCStorageDisposalSubStatement", "wMLC.GOTO_DisplayGeneratedTextSD" );
-      nOptRC = wMLC.GOTO_DisplayGeneratedTextSD( new zVIEW( vKZXMLPGO ) );
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "GeneratedTitleTextDisplay" );
-      }
-
+      // Next Window
+      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
@@ -975,13 +960,14 @@ else
 
 <%
    View mEPA = null;
+   View mMasLC_Root = null;
    View mMasLC = null;
+   View mMasLCIncludeExclude = null;
    View mMasProd = null;
    View mMasProdLST = null;
    View mOrganiz = null;
    View mPrimReg = null;
    View wWebXfer = null;
-   View mMasLCIncludeExclude = null;
    String strRadioGroupValue = "";
    String strComboCurrentValue = "";
    String strAutoComboBoxExternalValue = "";
@@ -1097,6 +1083,37 @@ else
 
 <label class="groupbox"  id="StorageDisposalSubStatements" name="StorageDisposalSubStatements" style="width:238px;height:16px;position:absolute;left:6px;top:12px;">Storage & Disposal  Sub-Statement</label>
 
+<% /* StorageDisposalSection1:Text */ %>
+
+<label class="groupbox"  id="StorageDisposalSection1" name="StorageDisposalSection1" style="width:68px;height:16px;position:absolute;left:276px;top:12px;">Section:</label>
+
+<% /* SectionName:Text */ %>
+<% strTextDisplayValue = "";
+   mMasLC_Root = task.getViewByName( "mMasLC_Root" );
+   if ( VmlOperation.isValid( mMasLC_Root ) == false )
+      task.log( ).debug( "Invalid View: " + "SectionName" );
+   else
+   {
+      nRC = mMasLC_Root.cursor( "M_StorageDisposalSection" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+      {
+      try
+      {
+         strTextDisplayValue = mMasLC_Root.cursor( "M_StorageDisposalSection" ).getAttribute( "Name" ).getString( "" );
+      }
+      catch (Exception e)
+      {
+         out.println("There is an error on SectionName: " + e.getMessage());
+         task.log().info( "*** Error on ctrl SectionName" + e.getMessage() );
+      }
+         if ( strTextDisplayValue == null )
+            strTextDisplayValue = "";
+      }
+   }
+%>
+
+<label  id="SectionName" name="SectionName" style="width:402px;height:24px;position:absolute;left:354px;top:12px;"><%=strTextDisplayValue%></label>
+
 
 </div>  <!--  GBStorDispSections3 --> 
 </div>  <!-- End of a new line -->
@@ -1200,13 +1217,13 @@ else
 </td>
 </tr>
 <tr>
-<td valign="top" style="width:128px;">
+<td valign="top" style="width:160px;">
 <% /* ReviewerNote::Text */ %>
 
-<span  id="ReviewerNote:" name="ReviewerNote:" style="width:122px;height:16px;">Reviewer Note:</span>
+<span  id="ReviewerNote:" name="ReviewerNote:" style="width:154px;height:16px;">Reviewer Note:</span>
 
 </td>
-<td valign="top"  class="text12" style="width:592px;">
+<td valign="top"  class="text12" style="width:640px;">
 <% /* Note1:EditBox */ %>
 <%
    strErrorMapValue = VmlOperation.CheckError( "Note1", strError );
@@ -1246,7 +1263,7 @@ else
    }
 %>
 
-<input class="text12" name="Note1" id="Note1" maxlength="1024" style="width:592px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="Note1" id="Note1" maxlength="1024" style="width:640px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>
@@ -1270,15 +1287,99 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:8px;width:100px;"></div>
+<div style="height:14px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<span style="height:16px;">&nbsp&nbsp</span>
+<% /* StorageDisposalTitle::Text */ %>
+
+<span  id="StorageDisposalTitle:" name="StorageDisposalTitle:" style="width:70px;height:16px;">Title:</span>
+
+<span style="height:16px;">&nbsp</span>
+<% /* StorageDisposalTitle:Text */ %>
+<% strTextDisplayValue = "";
+   mMasLC = task.getViewByName( "mMasLC" );
+   if ( VmlOperation.isValid( mMasLC ) == false )
+      task.log( ).debug( "Invalid View: " + "StorageDisposalTitle" );
+   else
+   {
+      nRC = mMasLC.cursor( "M_StorageDisposalStatement" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+      {
+      try
+      {
+         strTextDisplayValue = mMasLC.cursor( "M_StorageDisposalStatement" ).getAttribute( "dSD_TitleKey" ).getString( "" );
+      }
+      catch (Exception e)
+      {
+         out.println("There is an error on StorageDisposalTitle: " + e.getMessage());
+         task.log().info( "*** Error on ctrl StorageDisposalTitle" + e.getMessage() );
+      }
+         if ( strTextDisplayValue == null )
+            strTextDisplayValue = "";
+      }
+   }
+%>
+
+<span class="text12"  id="StorageDisposalTitle" name="StorageDisposalTitle"  title="Optional Title to appear with text on generated label" style="width:730px;height:16px;"><%=strTextDisplayValue%></span>
+
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:4px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<span style="height:16px;">&nbsp&nbsp</span>
+<% /* StorageDisposalText::Text */ %>
+
+<span  id="StorageDisposalText:" name="StorageDisposalText:" style="width:70px;height:16px;">Text:</span>
+
+<span style="height:16px;">&nbsp</span>
+<% /* StorageDisposalText:Text */ %>
+<% strTextDisplayValue = "";
+   mMasLC = task.getViewByName( "mMasLC" );
+   if ( VmlOperation.isValid( mMasLC ) == false )
+      task.log( ).debug( "Invalid View: " + "StorageDisposalText" );
+   else
+   {
+      nRC = mMasLC.cursor( "M_StorageDisposalStatement" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+      {
+      try
+      {
+         strTextDisplayValue = mMasLC.cursor( "M_StorageDisposalStatement" ).getAttribute( "dSD_TextKey" ).getString( "" );
+      }
+      catch (Exception e)
+      {
+         out.println("There is an error on StorageDisposalText: " + e.getMessage());
+         task.log().info( "*** Error on ctrl StorageDisposalText" + e.getMessage() );
+      }
+         if ( strTextDisplayValue == null )
+            strTextDisplayValue = "";
+      }
+   }
+%>
+
+<span class="text12"  id="StorageDisposalText" name="StorageDisposalText"  title="Optional Title to appear with text on generated label" style="width:730px;height:16px;"><%=strTextDisplayValue%></span>
+
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:12px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <% /* GroupBox3:GroupBox */ %>
 
 <div id="GroupBox3" name="GroupBox3"   style="float:left;position:relative; width:756px; height:30px;">  <!-- GroupBox3 --> 
 
-<% /* PushBtn4:PushBtn */ %>
-<button type="button" class="newbutton" name="PushBtn4" id="PushBtn4" value="" onclick="GOTO_DisplayGeneratedTextSD( )" style="width:158px;height:26px;position:absolute;left:354px;top:4px;">Show Generated Text</button>
+<% /* RefreshText:PushBtn */ %>
+<button type="button" class="newbutton" name="RefreshText" id="RefreshText" value="" onclick="GOTO_DisplayGeneratedTextSD( )" style="width:92px;height:26px;position:absolute;left:422px;top:4px;">Refresh</button>
 
 <% /* PushBtn5:PushBtn */ %>
 <button type="button" class="newbutton" name="PushBtn5" id="PushBtn5" value="" onclick="PASTE_InsertKeyword( )" style="width:74px;height:26px;position:absolute;left:530px;top:4px;">Paste</button>

@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSLCDirectionsForUseSection   Generate Timestamp: 20160531205241788 --%>
+<%-- wSLCDirectionsForUseSection   Generate Timestamp: 20160620105928180 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -1022,19 +1022,6 @@ try
 
          if ( StringUtils.isBlank( strGridEditCtl3 ) )
             strGridEditCtl3 = "&nbsp";
-
-         strGridEditCtl4 = "";
-         nRC = vGrid2.cursor( "M_DrivingUsage" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-         {
-            strGridEditCtl4 = vGrid2.cursor( "M_DrivingUsage" ).getAttribute( "dUsageNameFootnote" ).getString( "" );
-
-            if ( strGridEditCtl4 == null )
-               strGridEditCtl4 = "";
-         }
-
-         if ( StringUtils.isBlank( strGridEditCtl4 ) )
-            strGridEditCtl4 = "&nbsp";
 
 %>
 

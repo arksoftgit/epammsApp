@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wStartUpAdminPrimaryRegistrantDetail   Generate Timestamp: 20160531205250271 --%>
+<%-- wStartUpAdminPrimaryRegistrantDetail   Generate Timestamp: 20160620105930644 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -1564,7 +1564,7 @@ else
 <span  id="MoveIncrement:" name="MoveIncrement:" style="width:114px;height:16px;">Move Increment:</span>
 
 <% /* MoveIncrement:EditBox */ %>
-<input name="MoveIncrement" id="MoveIncrement" maxlength="0" style="width:32px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="MoveIncrement" id="MoveIncrement" maxlength="20" style="width:32px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </div>  <!-- End of a new line -->
 

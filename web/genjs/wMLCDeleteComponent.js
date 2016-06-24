@@ -1,4 +1,4 @@
-// wMLCDeleteComponent   Generate Timestamp: 20160531205223678
+// wMLCDeleteComponent   Generate Timestamp: 20160623085854594
 
 var isWindowClosing = true;
 var timerID = null;
