@@ -1,4 +1,4 @@
-// wMLCStorageDisposal   Generate Timestamp: 20160623085856520
+// wMLCStorageDisposal   Generate Timestamp: 20160720112427960
 
 var isWindowClosing = true;
 var timerID = null;
@@ -216,7 +216,7 @@ function Sort( )
    {
       // Javascript code entered by user.
 
-       document.wMLCStorageDisposal.zTableRowSelect.value = buildSortTableHtml( "mMasLC", "M_StorageDisposalSection", "GridStorageDisposal",  ["Name","Title"]  );
+       document.wMLCStorageDisposal.zTableRowSelect.value = buildSortTableHtml( "mMasLC", "M_StorageDisposalSection", "GridStorageDisposal",  ["Name","Section Title"]  );
 
       // END of Javascript code entered by user.
 

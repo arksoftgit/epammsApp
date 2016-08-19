@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCDirectionsForUseCategory   Generate Timestamp: 20160623085854925 --%>
+<%-- wMLCDirectionsForUseCategory   Generate Timestamp: 20160705125129730 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -98,6 +98,25 @@ public int DoInputMapping( HttpServletRequest request,
          }
       }
 
+      // EditBox: DFU_CategoryNote
+      nRC = mMasLC.cursor( "M_DirectionsForUseSection" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 ) // CursorResult.SET
+      {
+         strMapValue = request.getParameter( "DFU_CategoryNote" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "DFU_CategoryNote", "", strMapValue );
+            else
+               mMasLC.cursor( "M_DirectionsForUseSection" ).getAttribute( "HeadNote" ).setValue( strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "DFU_CategoryNote", e.getReason( ), strMapValue );
+         }
+      }
+
       // EditBox: DFU_ReviewerNote
       nRC = mMasLC.cursor( "M_DirectionsForUseCategory" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 ) // CursorResult.SET
@@ -117,7 +136,7 @@ public int DoInputMapping( HttpServletRequest request,
          }
       }
 
-      // Grid: GridDirectionsForUse
+      // Grid: GridDirectionsForUseCategories
       iTableRowCnt = 0;
 
       // We are creating a temp view to the grid view so that if there are 
@@ -314,6 +333,44 @@ if ( strActionToProcess != null )
       {
          // Next Window
          strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "DeleteComponent" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "AddNewDFU_Category" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCDirectionsForUseCategory", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Action Operation
+      nRC = 0;
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCDirectionsForUseCategory", "wMLC.AddNewDFU_Category" );
+      nOptRC = wMLC.AddNewDFU_Category( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
       }
 
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -869,6 +926,16 @@ else
 %>
 
 <%
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "AddNew" );
+   if ( !csrRC.isSet() ) //if ( nRC < 0 )
+   {
+%>
+       <li id="AddNew" name="AddNew"><a href="#"  onclick="AddNewDFU_Category()">Add New</a></li>
+<%
+   }
+%>
+
+<%
    csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "AcceptNext" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
@@ -1035,7 +1102,7 @@ else
 <div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GBDFU_Sections:GroupBox */ %>
 
-<div id="GBDFU_Sections" name="GBDFU_Sections"   style="float:left;position:relative; width:802px; height:132px;">  <!-- GBDFU_Sections --> 
+<div id="GBDFU_Sections" name="GBDFU_Sections"   style="float:left;position:relative; width:802px; height:162px;">  <!-- GBDFU_Sections --> 
 
 <% /* DFU_Categories:Text */ %>
 
@@ -1131,9 +1198,54 @@ else
 
 <input class="text12" name="DFU_CategoryTitle" id="DFU_CategoryTitle" maxlength="254" style="width:656px;position:absolute;left:130px;top:50px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
+<% /* DFU_CategoryNote::Text */ %>
+
+<label  id="DFU_CategoryNote:" name="DFU_CategoryNote:" style="width:110px;height:16px;position:absolute;left:14px;top:74px;">Note:</label>
+
+<% /* DFU_CategoryNote:EditBox */ %>
+<%
+   strErrorMapValue = VmlOperation.CheckError( "DFU_CategoryNote", strError );
+   if ( !StringUtils.isBlank( strErrorMapValue ) )
+   {
+      if ( StringUtils.equals( strErrorFlag, "Y" ) )
+         strErrorColor = "color:red;";
+   }
+   else
+   {
+      strErrorColor = "";
+      mMasLC = task.getViewByName( "mMasLC" );
+      if ( VmlOperation.isValid( mMasLC ) == false )
+         task.log( ).debug( "Invalid View: " + "DFU_CategoryNote" );
+      else
+      {
+         nRC = mMasLC.cursor( "M_DirectionsForUseSection" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            try
+            {
+               strErrorMapValue = mMasLC.cursor( "M_DirectionsForUseSection" ).getAttribute( "HeadNote" ).getString( "" );
+            }
+            catch (Exception e)
+            {
+               out.println("There is an error on DFU_CategoryNote: " + e.getMessage());
+               task.log().error( "*** Error on ctrl DFU_CategoryNote", e );
+            }
+            if ( strErrorMapValue == null )
+               strErrorMapValue = "";
+
+            task.log( ).debug( "M_DirectionsForUseSection.HeadNote: " + strErrorMapValue );
+         }
+         else
+            task.log( ).debug( "Entity does not exist for DFU_CategoryNote: " + "mMasLC.M_DirectionsForUseSection" );
+      }
+   }
+%>
+
+<input class="text12" name="DFU_CategoryNote" id="DFU_CategoryNote" maxlength="2048"  title="Optional Title to appear with text on generated label"style="width:656px;position:absolute;left:130px;top:74px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+
 <% /* DFU_CategoryReviewerNote::Text */ %>
 
-<label  id="DFU_CategoryReviewerNote:" name="DFU_CategoryReviewerNote:" style="width:110px;height:16px;position:absolute;left:14px;top:72px;">Reviewer Note:</label>
+<label  id="DFU_CategoryReviewerNote:" name="DFU_CategoryReviewerNote:" style="width:110px;height:16px;position:absolute;left:14px;top:98px;">Reviewer Note:</label>
 
 <% /* DFU_ReviewerNote:EditBox */ %>
 <%
@@ -1174,17 +1286,17 @@ else
    }
 %>
 
-<input class="text12" name="DFU_ReviewerNote" id="DFU_ReviewerNote" maxlength="1024" style="width:656px;position:absolute;left:130px;top:72px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="DFU_ReviewerNote" id="DFU_ReviewerNote" maxlength="2048" style="width:656px;position:absolute;left:130px;top:98px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* New:PushBtn */ %>
-<button type="button" class="newbutton" name="New" id="New" value="" onclick="GOTO_DU_SectionAdd( )" style="width:78px;height:26px;position:absolute;left:586px;top:102px;">New</button>
+<button type="button" class="newbutton" name="New" id="New" value="" onclick="GOTO_DU_SectionAdd( )" style="width:78px;height:26px;position:absolute;left:586px;top:132px;">New</button>
 
 <% /* PBSort:PushBtn */ %>
-<button type="button" class="newbutton" name="PBSort" id="PBSort" value="" onclick="Sort( )" style="width:78px;height:26px;position:absolute;left:686px;top:102px;">Sort</button>
+<button type="button" class="newbutton" name="PBSort" id="PBSort" value="" onclick="Sort( )" style="width:78px;height:26px;position:absolute;left:686px;top:132px;">Sort</button>
 
 <% /* DirectionsForUseSections:Text */ %>
 
-<label class="listheader"  id="DirectionsForUseSections" name="DirectionsForUseSections" style="width:210px;height:16px;position:absolute;left:6px;top:112px;">Directions For Use Sections</label>
+<label class="listheader"  id="DirectionsForUseSections" name="DirectionsForUseSections" style="width:210px;height:16px;position:absolute;left:6px;top:142px;">Directions For Use Sections</label>
 
 
 </div>  <!--  GBDFU_Sections --> 
@@ -1204,8 +1316,8 @@ else
 <div style="height:12px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
-<% /* GridDirectionsForUse:Grid */ %>
-<table  cols=4 style="width:792px;"  name="GridDirectionsForUse" id="GridDirectionsForUse">
+<% /* GridDirectionsForUseCategories:Grid */ %>
+<table  cols=4 style="width:792px;"  name="GridDirectionsForUseCategories" id="GridDirectionsForUseCategories">
 
 <thead><tr>
 
@@ -1235,21 +1347,21 @@ try
       String strBMBUpdateStorDispSect;
       String strBMBDeleteStorDispSect;
       
-      View vGridDirectionsForUse;
-      vGridDirectionsForUse = mMasLC.newView( );
-      csrRC2 = vGridDirectionsForUse.cursor( "M_DirectionsForUseSection" ).setFirst(  );
+      View vGridDirectionsForUseCategories;
+      vGridDirectionsForUseCategories = mMasLC.newView( );
+      csrRC2 = vGridDirectionsForUseCategories.cursor( "M_DirectionsForUseSection" ).setFirst(  );
       while ( csrRC2.isSet() )
       {
          strOdd = (iTableRowCnt % 2) != 0 ? " class='odd'" : "";
          iTableRowCnt++;
 
-         lEntityKey = vGridDirectionsForUse.cursor( "M_DirectionsForUseSection" ).getEntityKey( );
+         lEntityKey = vGridDirectionsForUseCategories.cursor( "M_DirectionsForUseSection" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
          strName = "";
-         nRC = vGridDirectionsForUse.cursor( "M_DirectionsForUseSection" ).checkExistenceOfEntity( ).toInt();
+         nRC = vGridDirectionsForUseCategories.cursor( "M_DirectionsForUseSection" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strName = vGridDirectionsForUse.cursor( "M_DirectionsForUseSection" ).getAttribute( "Name" ).getString( "" );
+            strName = vGridDirectionsForUseCategories.cursor( "M_DirectionsForUseSection" ).getAttribute( "Name" ).getString( "" );
 
             if ( strName == null )
                strName = "";
@@ -1259,10 +1371,10 @@ try
             strName = "&nbsp";
 
          strTitle = "";
-         nRC = vGridDirectionsForUse.cursor( "M_DirectionsForUseSection" ).checkExistenceOfEntity( ).toInt();
+         nRC = vGridDirectionsForUseCategories.cursor( "M_DirectionsForUseSection" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strTitle = vGridDirectionsForUse.cursor( "M_DirectionsForUseSection" ).getAttribute( "dDU_SectionTitleOrTextKeyword" ).getString( "" );
+            strTitle = vGridDirectionsForUseCategories.cursor( "M_DirectionsForUseSection" ).getAttribute( "dDU_SectionTitleOrTextKeyword" ).getString( "" );
 
             if ( strTitle == null )
                strTitle = "";
@@ -1283,9 +1395,9 @@ try
 </tr>
 
 <%
-         csrRC2 = vGridDirectionsForUse.cursor( "M_DirectionsForUseSection" ).setNextContinue( );
+         csrRC2 = vGridDirectionsForUseCategories.cursor( "M_DirectionsForUseSection" ).setNextContinue( );
       }
-      vGridDirectionsForUse.drop( );
+      vGridDirectionsForUseCategories.drop( );
    }
 }
 catch (Exception e)

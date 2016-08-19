@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCDirectionsForUseSubStatement   Generate Timestamp: 20160623085855133 --%>
+<%-- wMLCDirectionsForUseSubStatement   Generate Timestamp: 20160705163108969 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -95,6 +95,25 @@ public int DoInputMapping( HttpServletRequest request,
          {
             nMapError = -16;
             VmlOperation.CreateMessage( task, "MLEdit2", e.getReason( ), strMapValue );
+         }
+      }
+
+      // CheckBox: ExclusiveToPreviousStatement
+      nRC = mMasLC.cursor( "M_DirectionsForUseStatement" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 ) // CursorResult.SET
+      {
+         strMapValue = request.getParameter( "ExclusiveToPreviousStatement" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "ExclusiveToPreviousStatement", "", strMapValue );
+            else
+               mMasLC.cursor( "M_DirectionsForUseStatement" ).getAttribute( "ExclusiveToPreviousStatement" ).setValue( strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "ExclusiveToPreviousStatement", e.getReason( ), strMapValue );
          }
       }
 
@@ -293,6 +312,44 @@ if ( strActionToProcess != null )
       break;
    }
 
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "AddNewDirectionsSubStatement" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCDirectionsForUseSubStatement", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Action Operation
+      nRC = 0;
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCDirectionsForUseSubStatement", "wMLC.AddNewDirectionsSubStatement" );
+      nOptRC = wMLC.AddNewDirectionsSubStatement( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
    while ( bDone == false && StringUtils.equals( strActionToProcess, "Sort" ) )
    {
       bDone = true;
@@ -393,6 +450,44 @@ if ( strActionToProcess != null )
       break;
    }
 
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "NextDirectionsSubStatement" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCDirectionsForUseSubStatement", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Action Operation
+      nRC = 0;
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCDirectionsForUseSubStatement", "wMLC.NextDirectionsSubStatement" );
+      nOptRC = wMLC.NextDirectionsSubStatement( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
    while ( bDone == false && StringUtils.equals( strActionToProcess, "COPY_InsertKeywordDU" ) )
    {
       bDone = true;
@@ -434,6 +529,44 @@ if ( strActionToProcess != null )
       nRC = 0;
       VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCDirectionsForUseSubStatement", "wMLC.COPY_InsertKeywordDU" );
       nOptRC = wMLC.COPY_InsertKeywordDU( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "PreviousDirectionsSubStatement" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCDirectionsForUseSubStatement", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Action Operation
+      nRC = 0;
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCDirectionsForUseSubStatement", "wMLC.PreviousDirectionsSubStatement" );
+      nOptRC = wMLC.PreviousDirectionsSubStatement( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -863,6 +996,36 @@ else
 %>
 
 <%
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "AddNew" );
+   if ( !csrRC.isSet() ) //if ( nRC < 0 )
+   {
+%>
+       <li id="AddNew" name="AddNew"><a href="#"  onclick="AddNewDirectionsSubStatement()">Add New</a></li>
+<%
+   }
+%>
+
+<%
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "NextStatement" );
+   if ( !csrRC.isSet() ) //if ( nRC < 0 )
+   {
+%>
+       <li id="NextStatement" name="NextStatement"><a href="#"  onclick="NextDirectionsSubStatement()">NextStatement</a></li>
+<%
+   }
+%>
+
+<%
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "PreviousStatement" );
+   if ( !csrRC.isSet() ) //if ( nRC < 0 )
+   {
+%>
+       <li id="PreviousStatement" name="PreviousStatement"><a href="#"  onclick="PreviousDirectionsSubStatement()">Previous Statement</a></li>
+<%
+   }
+%>
+
+<%
    csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "CancelAndReturn" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
@@ -1118,6 +1281,35 @@ else
 
 </td>
 </tr>
+<tr>
+<td valign="top" style="width:54px;">
+<% /* GroupBox1:GroupBox */ %>
+<div id="GroupBox1" name="GroupBox1" style="width:46px;height:18px;float:left;">
+</div>  <!-- GroupBox1 --> 
+</td>
+<td valign="top" style="width:522px;">
+<% /* ExclusiveToPreviousStatement:CheckBox */ %>
+<%
+   strErrorMapValue = "";
+   mMasLC = task.getViewByName( "mMasLC" );
+   if ( VmlOperation.isValid( mMasLC ) == false )
+      task.log( ).debug( "Invalid View: " + "ExclusiveToPreviousStatement" );
+   else
+   {
+      nRC = mMasLC.cursor( "M_DirectionsForUseStatement" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+         strRadioGroupValue = mMasLC.cursor( "M_DirectionsForUseStatement" ).getAttribute( "ExclusiveToPreviousStatement" ).getString( );
+   }
+
+   if ( StringUtils.equals( strRadioGroupValue, "Y" ) )
+      strErrorMapValue = "checked=\"checked\"";
+%>
+
+<input type="checkbox" name="ExclusiveToPreviousStatement" id="ExclusiveToPreviousStatement"  value="Y" <%=strErrorMapValue%> style="">
+<span style="width:522px;height:18px;">&nbsp Exclusive To Previous Statement</span>
+
+</td>
+</tr>
 </table>
 
 </div>  <!-- GroupBox3 --> 
@@ -1366,7 +1558,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 
 
  <!-- This is added as a line spacer -->
-<div style="height:12px;width:100px;"></div>
+<div style="height:6px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->

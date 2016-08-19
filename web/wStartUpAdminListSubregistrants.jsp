@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wStartUpAdminListSubregistrants   Generate Timestamp: 20160620105930329 --%>
+<%-- wStartUpAdminListSubregistrants   Generate Timestamp: 20160706102858671 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -74,7 +74,7 @@ public int DoInputMapping( HttpServletRequest request,
          strEntityKey = Long.toString( lEntityKey );
          iTableRowCnt++;
 
-         strTag = "ACS" + strEntityKey;
+         strTag = "Select" + strEntityKey;
          strMapValue = request.getParameter( strTag );
          // If the checkbox is not checked, then set to the unchecked value.
          if (strMapValue == null || strMapValue.isEmpty() )
@@ -83,7 +83,7 @@ public int DoInputMapping( HttpServletRequest request,
          try
          {
             if ( webMapping )
-               VmlOperation.CreateMessage( task, "ACS", "", strMapValue );
+               VmlOperation.CreateMessage( task, "Select", "", strMapValue );
             else
                if ( strMapValue != null )
                   vGridTmp.cursor( "Subregistrant" ).getAttribute( "wkSelected" ).setValue( strMapValue, "" );
@@ -892,22 +892,10 @@ else
 <table cols=0 style="width:714px;"  class="grouptable">
 
 <tr>
-<td valign="top"  class="groupbox" style="width:136px;">
+<td valign="top"  class="groupbox" style="width:374px;">
 <% /* Subregistrants:Text */ %>
 
 <span class="groupbox"  id="Subregistrants" name="Subregistrants" style="width:102px;height:28px;">Subregistrants</span>
-
-</td>
-<td valign="top" style="width:80px;">
-<% /* HTSelectAll:Text */ %>
-
-<a href="#" id="HTSelectAll" name="HTSelectAll"  onclick="SelectAll( );" style="width:66px;height:16px;">Select All</a>
-
-</td>
-<td valign="top" style="width:158px;">
-<% /* HTClearSelected:Text */ %>
-
-<a href="#" id="HTClearSelected" name="HTClearSelected"  onclick="ClearSelected( );" style="width:108px;height:16px;">Clear Selected</a>
 
 </td>
 <td valign="top"  class="formStylebutton" style="width:252px;">
@@ -940,7 +928,7 @@ else
 
 <thead bgcolor=green><tr>
 
-   <th>Select</th>
+   <th class="gridheading"><input type="checkbox" onclick="CheckAllInGrid(this,'Select')"></th>
    <th>Name</th>
    <th>Description</th>
    <th>Login</th>
@@ -963,8 +951,8 @@ try
       String strButtonName;
       String strOdd;
       String strTag;
-      String strACS;
-      String strACSValue;
+      String strSelect;
+      String strSelectValue;
       String strGESubregistrantName;
       String strGESubregistrantDescription;
       String strGESubregistrantLogin;
@@ -981,25 +969,25 @@ try
 
          lEntityKey = vGridPrimaryRegistrant.cursor( "PrimarySub" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strACS = "";
+         strSelect = "";
          nRC = vGridPrimaryRegistrant.cursor( "Subregistrant" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strACS = vGridPrimaryRegistrant.cursor( "Subregistrant" ).getAttribute( "wkSelected" ).getString( "" );
+            strSelect = vGridPrimaryRegistrant.cursor( "Subregistrant" ).getAttribute( "wkSelected" ).getString( "" );
 
-            if ( strACS == null )
-               strACS = "";
+            if ( strSelect == null )
+               strSelect = "";
          }
 
-         if ( StringUtils.equals( strACS, "Y" ) )
+         if ( StringUtils.equals( strSelect, "Y" ) )
          {
-            strACSValue = "ACS" + strEntityKey;
-            strACS = "<input name='" + strACSValue + "' id='" + strACSValue + "' value='Y' type='checkbox'  CHECKED > ";
+            strSelectValue = "Select" + strEntityKey;
+            strSelect = "<input name='" + strSelectValue + "' id='" + strSelectValue + "' value='Y' type='checkbox'  CHECKED > ";
          }
          else
          {
-            strACSValue = "ACS" + strEntityKey;
-            strACS = "<input name='" + strACSValue + "' id='" + strACSValue + "' value='Y' type='checkbox' > ";
+            strSelectValue = "Select" + strEntityKey;
+            strSelect = "<input name='" + strSelectValue + "' id='" + strSelectValue + "' value='Y' type='checkbox' > ";
          }
 
          strGESubregistrantName = "";
@@ -1045,7 +1033,7 @@ try
 
 <tr<%=strOdd%>>
 
-   <td nowrap><%=strACS%></td>
+   <td nowrap><%=strSelect%></td>
    <td nowrap><a href="#" onclick="SelectSubregistrantForUpdate( this.id )" id="GESubregistrantName::<%=strEntityKey%>"><%=strGESubregistrantName%></a></td>
    <td nowrap><a href="#" onclick="SelectSubregistrantForUpdate( this.id )" id="GESubregistrantDescription::<%=strEntityKey%>"><%=strGESubregistrantDescription%></a></td>
    <td nowrap><a href="#" onclick="SelectSubregistrantForUpdate( this.id )" id="GESubregistrantLogin::<%=strEntityKey%>"><%=strGESubregistrantLogin%></a></td>

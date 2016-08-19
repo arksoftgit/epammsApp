@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCEnvironmentalHazardsSection   Generate Timestamp: 20160623085855343 --%>
+<%-- wMLCEnvironmentalHazardsSection   Generate Timestamp: 20160624211244296 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -60,41 +60,60 @@ public int DoInputMapping( HttpServletRequest request,
    mMasLC = task.getViewByName( "mMasLC" );
    if ( VmlOperation.isValid( mMasLC ) )
    {
-      // EditBox: DirectionsUseTitle2
+      // EditBox: EnvironmentalHazardsName
       nRC = mMasLC.cursor( "M_GeneralSubsection" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 ) // CursorResult.SET
       {
-         strMapValue = request.getParameter( "DirectionsUseTitle2" );
+         strMapValue = request.getParameter( "EnvironmentalHazardsName" );
          try
          {
             if ( webMapping )
-               VmlOperation.CreateMessage( task, "DirectionsUseTitle2", "", strMapValue );
+               VmlOperation.CreateMessage( task, "EnvironmentalHazardsName", "", strMapValue );
             else
                mMasLC.cursor( "M_GeneralSubsection" ).getAttribute( "Name" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
             nMapError = -16;
-            VmlOperation.CreateMessage( task, "DirectionsUseTitle2", e.getReason( ), strMapValue );
+            VmlOperation.CreateMessage( task, "EnvironmentalHazardsName", e.getReason( ), strMapValue );
          }
       }
 
-      // EditBox: EditBox3
+      // EditBox: EnvironmentalHazardsTitle
       nRC = mMasLC.cursor( "M_GeneralSubsection" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 ) // CursorResult.SET
       {
-         strMapValue = request.getParameter( "EditBox3" );
+         strMapValue = request.getParameter( "EnvironmentalHazardsTitle" );
          try
          {
             if ( webMapping )
-               VmlOperation.CreateMessage( task, "EditBox3", "", strMapValue );
+               VmlOperation.CreateMessage( task, "EnvironmentalHazardsTitle", "", strMapValue );
             else
                mMasLC.cursor( "M_GeneralSubsection" ).getAttribute( "Title" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
             nMapError = -16;
-            VmlOperation.CreateMessage( task, "EditBox3", e.getReason( ), strMapValue );
+            VmlOperation.CreateMessage( task, "EnvironmentalHazardsTitle", e.getReason( ), strMapValue );
+         }
+      }
+
+      // EditBox: ReviewerNote
+      nRC = mMasLC.cursor( "M_GeneralSubsection" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 ) // CursorResult.SET
+      {
+         strMapValue = request.getParameter( "ReviewerNote" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "ReviewerNote", "", strMapValue );
+            else
+               mMasLC.cursor( "M_GeneralSubsection" ).getAttribute( "ReviewerNote" ).setValue( strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "ReviewerNote", e.getReason( ), strMapValue );
          }
       }
 
@@ -117,21 +136,21 @@ public int DoInputMapping( HttpServletRequest request,
          }
       }
 
-      // Grid: GridDirectionsUse1
+      // Grid: GridDirectionsUse
       iTableRowCnt = 0;
 
       // We are creating a temp view to the grid view so that if there are 
       // grids on the same window with the same view we do not mess up the 
       // entity positions. 
       vGridTmp = mMasLC.newView( );
-      csrRC = vGridTmp.cursor( "M_GeneralStatement" ).setFirst(  );
+      csrRC = vGridTmp.cursor( "M_GeneralSubStatement" ).setFirst(  );
       while ( csrRC.isSet() )
       {
-         lEntityKey = vGridTmp.cursor( "M_GeneralStatement" ).getEntityKey( );
+         lEntityKey = vGridTmp.cursor( "M_GeneralSubStatement" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
          iTableRowCnt++;
 
-         csrRC = vGridTmp.cursor( "M_GeneralStatement" ).setNextContinue( );
+         csrRC = vGridTmp.cursor( "M_GeneralSubStatement" ).setNextContinue( );
       }
 
       vGridTmp.drop( );
@@ -350,14 +369,14 @@ if ( strActionToProcess != null )
       if ( VmlOperation.isValid( mMasLC ) )
       {
          lEKey = java.lang.Long.parseLong( strEntityKey );
-         csrRC = mMasLC.cursor( "M_GeneralStatement" ).setByEntityKey( lEKey );
+         csrRC = mMasLC.cursor( "M_GeneralSubStatement" ).setByEntityKey( lEKey );
          if ( !csrRC.isSet() )
          {
             boolean bFound = false;
-            csrRCk = mMasLC.cursor( "M_GeneralStatement" ).setFirst( );
+            csrRCk = mMasLC.cursor( "M_GeneralSubStatement" ).setFirst( );
             while ( csrRCk.isSet() && !bFound )
             {
-               lEKey = mMasLC.cursor( "M_GeneralStatement" ).getEntityKey( );
+               lEKey = mMasLC.cursor( "M_GeneralSubStatement" ).getEntityKey( );
                strKey = Long.toString( lEKey );
                if ( StringUtils.equals( strKey, strEntityKey ) )
                {
@@ -365,7 +384,7 @@ if ( strActionToProcess != null )
                   bFound = true;
                }
                else
-                  csrRCk = mMasLC.cursor( "M_GeneralStatement" ).setNextContinue( );
+                  csrRCk = mMasLC.cursor( "M_GeneralSubStatement" ).setNextContinue( );
             } // Grid
          }
       }
@@ -414,14 +433,14 @@ if ( strActionToProcess != null )
       if ( VmlOperation.isValid( mMasLC ) )
       {
          lEKey = java.lang.Long.parseLong( strEntityKey );
-         csrRC = mMasLC.cursor( "M_GeneralStatement" ).setByEntityKey( lEKey );
+         csrRC = mMasLC.cursor( "M_GeneralSubStatement" ).setByEntityKey( lEKey );
          if ( !csrRC.isSet() )
          {
             boolean bFound = false;
-            csrRCk = mMasLC.cursor( "M_GeneralStatement" ).setFirst( );
+            csrRCk = mMasLC.cursor( "M_GeneralSubStatement" ).setFirst( );
             while ( csrRCk.isSet() && !bFound )
             {
-               lEKey = mMasLC.cursor( "M_GeneralStatement" ).getEntityKey( );
+               lEKey = mMasLC.cursor( "M_GeneralSubStatement" ).getEntityKey( );
                strKey = Long.toString( lEKey );
                if ( StringUtils.equals( strKey, strEntityKey ) )
                {
@@ -429,7 +448,7 @@ if ( strActionToProcess != null )
                   bFound = true;
                }
                else
-                  csrRCk = mMasLC.cursor( "M_GeneralStatement" ).setNextContinue( );
+                  csrRCk = mMasLC.cursor( "M_GeneralSubStatement" ).setNextContinue( );
             } // Grid
          }
       }
@@ -449,7 +468,7 @@ if ( strActionToProcess != null )
          break;
       }
       // Next Window
-      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "HazardsStatement" );
+      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "EnvironmentalHazardsStatement" );
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
@@ -481,7 +500,7 @@ if ( strActionToProcess != null )
          break;
       }
       // Next Window
-      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "HazardsStatement" );
+      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "EnvironmentalHazardsStatement" );
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
@@ -792,16 +811,16 @@ else
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GBStorDispSections2:GroupBox */ %>
+<% /* GBEnvironmentalHazards:GroupBox */ %>
 
-<div id="GBStorDispSections2" name="GBStorDispSections2" class="listgroup"   style="float:left;position:relative; width:780px; height:36px;">  <!-- GBStorDispSections2 --> 
+<div id="GBEnvironmentalHazards" name="GBEnvironmentalHazards" class="listgroup"   style="float:left;position:relative; width:780px; height:36px;">  <!-- GBEnvironmentalHazards --> 
 
 <% /* EnvironmentalHazardsSection:Text */ %>
 
 <label class="groupbox"  id="EnvironmentalHazardsSection" name="EnvironmentalHazardsSection" style="width:238px;height:16px;position:absolute;left:6px;top:12px;">Environmental Hazards Section</label>
 
 
-</div>  <!--  GBStorDispSections2 --> 
+</div>  <!--  GBEnvironmentalHazards --> 
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
@@ -809,9 +828,9 @@ else
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
-<% /* MarketingSection2:GroupBox */ %>
+<% /* EnvironmentalHazards:GroupBox */ %>
 
-<div id="MarketingSection2" name="MarketingSection2" class="withborder" style="width:780px;height:82px;float:left;">  <!-- MarketingSection2 --> 
+<div id="EnvironmentalHazards" name="EnvironmentalHazards" class="withborder" style="width:780px;height:88px;float:left;">  <!-- EnvironmentalHazards --> 
 
 
  <!-- This is added as a line spacer -->
@@ -825,16 +844,16 @@ else
 <table cols=2 style="width:754px;"  class="grouptable">
 
 <tr>
-<td valign="top" style="width:62px;">
-<% /* DirectionsUseTitle:2:Text */ %>
+<td valign="top" style="width:134px;">
+<% /* EnvironmentalHazardsName::Text */ %>
 
-<span  id="DirectionsUseTitle:2" name="DirectionsUseTitle:2" style="width:56px;height:16px;">Name:</span>
+<span  id="EnvironmentalHazardsName:" name="EnvironmentalHazardsName:" style="width:128px;height:16px;">Name:</span>
 
 </td>
 <td valign="top"  class="text12" style="width:592px;">
-<% /* DirectionsUseTitle2:EditBox */ %>
+<% /* EnvironmentalHazardsName:EditBox */ %>
 <%
-   strErrorMapValue = VmlOperation.CheckError( "DirectionsUseTitle2", strError );
+   strErrorMapValue = VmlOperation.CheckError( "EnvironmentalHazardsName", strError );
    if ( !StringUtils.isBlank( strErrorMapValue ) )
    {
       if ( StringUtils.equals( strErrorFlag, "Y" ) )
@@ -845,7 +864,7 @@ else
       strErrorColor = "";
       mMasLC = task.getViewByName( "mMasLC" );
       if ( VmlOperation.isValid( mMasLC ) == false )
-         task.log( ).debug( "Invalid View: " + "DirectionsUseTitle2" );
+         task.log( ).debug( "Invalid View: " + "EnvironmentalHazardsName" );
       else
       {
          nRC = mMasLC.cursor( "M_GeneralSubsection" ).checkExistenceOfEntity( ).toInt();
@@ -857,8 +876,8 @@ else
             }
             catch (Exception e)
             {
-               out.println("There is an error on DirectionsUseTitle2: " + e.getMessage());
-               task.log().error( "*** Error on ctrl DirectionsUseTitle2", e );
+               out.println("There is an error on EnvironmentalHazardsName: " + e.getMessage());
+               task.log().error( "*** Error on ctrl EnvironmentalHazardsName", e );
             }
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
@@ -866,26 +885,26 @@ else
             task.log( ).debug( "M_GeneralSubsection.Name: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist for DirectionsUseTitle2: " + "mMasLC.M_GeneralSubsection" );
+            task.log( ).debug( "Entity does not exist for EnvironmentalHazardsName: " + "mMasLC.M_GeneralSubsection" );
       }
    }
 %>
 
-<input class="text12" name="DirectionsUseTitle2" id="DirectionsUseTitle2" maxlength="254" style="width:592px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="EnvironmentalHazardsName" id="EnvironmentalHazardsName" maxlength="254" style="width:592px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>
 <tr>
-<td valign="top" style="width:62px;">
-<% /* Text4:Text */ %>
+<td valign="top" style="width:134px;">
+<% /* EnvironmentalHazardsTitle::Text */ %>
 
-<span  id="Text4" name="Text4" style="width:56px;height:16px;">Title:</span>
+<span  id="EnvironmentalHazardsTitle:" name="EnvironmentalHazardsTitle:" style="width:128px;height:16px;">Title:</span>
 
 </td>
 <td valign="top"  class="text12" style="width:592px;">
-<% /* EditBox3:EditBox */ %>
+<% /* EnvironmentalHazardsTitle:EditBox */ %>
 <%
-   strErrorMapValue = VmlOperation.CheckError( "EditBox3", strError );
+   strErrorMapValue = VmlOperation.CheckError( "EnvironmentalHazardsTitle", strError );
    if ( !StringUtils.isBlank( strErrorMapValue ) )
    {
       if ( StringUtils.equals( strErrorFlag, "Y" ) )
@@ -896,7 +915,7 @@ else
       strErrorColor = "";
       mMasLC = task.getViewByName( "mMasLC" );
       if ( VmlOperation.isValid( mMasLC ) == false )
-         task.log( ).debug( "Invalid View: " + "EditBox3" );
+         task.log( ).debug( "Invalid View: " + "EnvironmentalHazardsTitle" );
       else
       {
          nRC = mMasLC.cursor( "M_GeneralSubsection" ).checkExistenceOfEntity( ).toInt();
@@ -908,8 +927,8 @@ else
             }
             catch (Exception e)
             {
-               out.println("There is an error on EditBox3: " + e.getMessage());
-               task.log().error( "*** Error on ctrl EditBox3", e );
+               out.println("There is an error on EnvironmentalHazardsTitle: " + e.getMessage());
+               task.log().error( "*** Error on ctrl EnvironmentalHazardsTitle", e );
             }
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
@@ -917,12 +936,63 @@ else
             task.log( ).debug( "M_GeneralSubsection.Title: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist for EditBox3: " + "mMasLC.M_GeneralSubsection" );
+            task.log( ).debug( "Entity does not exist for EnvironmentalHazardsTitle: " + "mMasLC.M_GeneralSubsection" );
       }
    }
 %>
 
-<input class="text12" name="EditBox3" id="EditBox3" maxlength="254" style="width:592px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="EnvironmentalHazardsTitle" id="EnvironmentalHazardsTitle" maxlength="254" style="width:592px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+
+</td>
+</tr>
+<tr>
+<td valign="top" style="width:134px;">
+<% /* ReviewerNote::Text */ %>
+
+<span  id="ReviewerNote:" name="ReviewerNote:" style="width:128px;height:16px;">Reviewer Note:</span>
+
+</td>
+<td valign="top"  class="text12" style="width:592px;">
+<% /* ReviewerNote:EditBox */ %>
+<%
+   strErrorMapValue = VmlOperation.CheckError( "ReviewerNote", strError );
+   if ( !StringUtils.isBlank( strErrorMapValue ) )
+   {
+      if ( StringUtils.equals( strErrorFlag, "Y" ) )
+         strErrorColor = "color:red;";
+   }
+   else
+   {
+      strErrorColor = "";
+      mMasLC = task.getViewByName( "mMasLC" );
+      if ( VmlOperation.isValid( mMasLC ) == false )
+         task.log( ).debug( "Invalid View: " + "ReviewerNote" );
+      else
+      {
+         nRC = mMasLC.cursor( "M_GeneralSubsection" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            try
+            {
+               strErrorMapValue = mMasLC.cursor( "M_GeneralSubsection" ).getAttribute( "ReviewerNote" ).getString( "" );
+            }
+            catch (Exception e)
+            {
+               out.println("There is an error on ReviewerNote: " + e.getMessage());
+               task.log().error( "*** Error on ctrl ReviewerNote", e );
+            }
+            if ( strErrorMapValue == null )
+               strErrorMapValue = "";
+
+            task.log( ).debug( "M_GeneralSubsection.ReviewerNote: " + strErrorMapValue );
+         }
+         else
+            task.log( ).debug( "Entity does not exist for ReviewerNote: " + "mMasLC.M_GeneralSubsection" );
+      }
+   }
+%>
+
+<input class="text12" name="ReviewerNote" id="ReviewerNote" maxlength="1024" style="width:592px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>
@@ -933,11 +1003,14 @@ else
 </div>  <!-- End of a new line -->
 
 
-</div>  <!--  MarketingSection2 --> 
+</div>  <!--  EnvironmentalHazards --> 
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
 
+
+ <!-- This is added as a line spacer -->
+<div style="height:4px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
@@ -1067,8 +1140,8 @@ else
 
 <label class="listheader"  id="Text5" name="Text5" style="width:434px;height:16px;position:absolute;left:6px;top:4px;">Environmental Hazards Statements</label>
 
-<% /* PushBtn4:PushBtn */ %>
-<button type="button" class="newbutton" name="PushBtn4" id="PushBtn4" value="" onclick="GOTO_EnvironmentHazardsAdd( )" style="width:78px;height:26px;position:absolute;left:560px;top:4px;">New</button>
+<% /* New:PushBtn */ %>
+<button type="button" class="newbutton" name="New" id="New" value="" onclick="GOTO_EnvironmentHazardsAdd( )" style="width:78px;height:26px;position:absolute;left:560px;top:4px;">New</button>
 
 
 </div>  <!--  GroupBox7 --> 
@@ -1079,9 +1152,9 @@ else
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GBDirectionsUseStatements1:GroupBox */ %>
+<% /* GBDirectionsUseStatements:GroupBox */ %>
 
-<div id="GBDirectionsUseStatements1" name="GBDirectionsUseStatements1" style="width:780px;float:left;">  <!-- GBDirectionsUseStatements1 --> 
+<div id="GBDirectionsUseStatements" name="GBDirectionsUseStatements" style="width:780px;float:left;">  <!-- GBDirectionsUseStatements --> 
 
 
  <!-- This is added as a line spacer -->
@@ -1089,8 +1162,8 @@ else
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GridDirectionsUse1:Grid */ %>
-<table  cols=3 style=""  name="GridDirectionsUse1" id="GridDirectionsUse1">
+<% /* GridDirectionsUse:Grid */ %>
+<table  cols=3 style=""  name="GridDirectionsUse" id="GridDirectionsUse">
 
 <thead><tr>
 
@@ -1114,47 +1187,47 @@ try
       String strButtonName;
       String strOdd;
       String strTag;
-      String strGridEditDirectionsUse1;
-      String strBMBUpdateDirectionsUseStatement1;
-      String strBMBDeleteEnvironmentalSt;
+      String strGridEditDirectionsUse;
+      String strBMBUpdateDirectionsUseStatement;
+      String strBMBDeleteEnvironmentalStatement;
       
-      View vGridDirectionsUse1;
-      vGridDirectionsUse1 = mMasLC.newView( );
-      csrRC2 = vGridDirectionsUse1.cursor( "M_GeneralStatement" ).setFirst(  );
+      View vGridDirectionsUse;
+      vGridDirectionsUse = mMasLC.newView( );
+      csrRC2 = vGridDirectionsUse.cursor( "M_GeneralSubStatement" ).setFirst(  );
       while ( csrRC2.isSet() )
       {
          strOdd = (iTableRowCnt % 2) != 0 ? " class='odd'" : "";
          iTableRowCnt++;
 
-         lEntityKey = vGridDirectionsUse1.cursor( "M_GeneralStatement" ).getEntityKey( );
+         lEntityKey = vGridDirectionsUse.cursor( "M_GeneralSubStatement" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strGridEditDirectionsUse1 = "";
-         nRC = vGridDirectionsUse1.cursor( "M_GeneralStatement" ).checkExistenceOfEntity( ).toInt();
+         strGridEditDirectionsUse = "";
+         nRC = vGridDirectionsUse.cursor( "M_GeneralSubStatement" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditDirectionsUse1 = vGridDirectionsUse1.cursor( "M_GeneralStatement" ).getAttribute( "Text" ).getString( "" );
+            strGridEditDirectionsUse = vGridDirectionsUse.cursor( "M_GeneralSubStatement" ).getAttribute( "Text" ).getString( "" );
 
-            if ( strGridEditDirectionsUse1 == null )
-               strGridEditDirectionsUse1 = "";
+            if ( strGridEditDirectionsUse == null )
+               strGridEditDirectionsUse = "";
          }
 
-         if ( StringUtils.isBlank( strGridEditDirectionsUse1 ) )
-            strGridEditDirectionsUse1 = "&nbsp";
+         if ( StringUtils.isBlank( strGridEditDirectionsUse ) )
+            strGridEditDirectionsUse = "&nbsp";
 
 %>
 
 <tr<%=strOdd%>>
 
-   <td><a href="#" onclick="GOTO_EnvironmentalHazardsUpdate( this.id )" id="GridEditDirectionsUse1::<%=strEntityKey%>"><%=strGridEditDirectionsUse1%></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateDirectionsUseStatement1" onclick="GOTO_EnvironmentalHazardsUpdate( this.id )" id="BMBUpdateDirectionsUseStatement1::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteEnvironmentalSt" onclick="DELETE_EnvironmentalHazardsStmt( this.id )" id="BMBDeleteEnvironmentalSt::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
+   <td><a href="#" onclick="GOTO_EnvironmentalHazardsUpdate( this.id )" id="GridEditDirectionsUse::<%=strEntityKey%>"><%=strGridEditDirectionsUse%></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateDirectionsUseStatement" onclick="GOTO_EnvironmentalHazardsUpdate( this.id )" id="BMBUpdateDirectionsUseStatement::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteEnvironmentalStatement" onclick="DELETE_EnvironmentalHazardsStmt( this.id )" id="BMBDeleteEnvironmentalStatement::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
 
 </tr>
 
 <%
-         csrRC2 = vGridDirectionsUse1.cursor( "M_GeneralStatement" ).setNextContinue( );
+         csrRC2 = vGridDirectionsUse.cursor( "M_GeneralSubStatement" ).setNextContinue( );
       }
-      vGridDirectionsUse1.drop( );
+      vGridDirectionsUse.drop( );
    }
 }
 catch (Exception e)
@@ -1169,7 +1242,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 </div>  <!-- End of a new line -->
 
 
-</div>  <!--  GBDirectionsUseStatements1 --> 
+</div>  <!--  GBDirectionsUseStatements --> 
 </div>  <!-- End of a new line -->
 
 

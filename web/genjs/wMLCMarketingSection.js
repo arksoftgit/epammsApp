@@ -1,4 +1,4 @@
-// wMLCMarketingSection   Generate Timestamp: 20160623085856073
+// wMLCMarketingSection   Generate Timestamp: 20160706211722584
 
 var isWindowClosing = true;
 var timerID = null;
@@ -192,7 +192,7 @@ function CheckAllInGrid(id, CheckBoxName) // triggered by no text checkbox
    }
 }
 
-function SaveMarketingSectionReturn( )
+function AcceptNext( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -202,12 +202,12 @@ function SaveMarketingSectionReturn( )
    {
       _DisableFormElements( true );
 
-      document.wMLCMarketingSection.zAction.value = "SaveMarketingSectionReturn";
+      document.wMLCMarketingSection.zAction.value = "AcceptNext";
       document.wMLCMarketingSection.submit( );
    }
 }
 
-function SaveMarketingSection( )
+function AcceptPrevious( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -217,7 +217,7 @@ function SaveMarketingSection( )
    {
       _DisableFormElements( true );
 
-      document.wMLCMarketingSection.zAction.value = "SaveMarketingSection";
+      document.wMLCMarketingSection.zAction.value = "AcceptPrevious";
       document.wMLCMarketingSection.submit( );
    }
 }
@@ -359,6 +359,36 @@ function GOTO_ReviewerNoteUpdate( strTagEntityKey )
       _DisableFormElements( true );
 
       document.wMLCMarketingSection.zAction.value = "GOTO_ReviewerNoteUpdate";
+      document.wMLCMarketingSection.submit( );
+   }
+}
+
+function SaveMarketingSection( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCMarketingSection.zAction.value = "SaveMarketingSection";
+      document.wMLCMarketingSection.submit( );
+   }
+}
+
+function SaveMarketingSectionReturn( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCMarketingSection.zAction.value = "SaveMarketingSectionReturn";
       document.wMLCMarketingSection.submit( );
    }
 }

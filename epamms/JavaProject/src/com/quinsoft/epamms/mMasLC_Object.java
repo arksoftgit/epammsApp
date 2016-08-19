@@ -49,7 +49,7 @@ public class mMasLC_Object extends VmlObjectOperations
 //:                 STRING ( 32 ) InternalAttribStructure,
 //:                 SHORT GetOrSetFlag )
 
-//:   STRING ( 1024 ) szString
+//:   STRING ( 2048 ) szString
 public int 
 omMasLC_dIngredientName( View     mMasLC,
                          String InternalEntityStructure,
@@ -79,11 +79,11 @@ omMasLC_dIngredientName( View     mMasLC,
                sb_szString = new StringBuilder( 32 );
             else
                sb_szString = new StringBuilder( szString );
-                         GetVariableFromAttribute( sb_szString, mi_lTempInteger_1, 'S', 1025, mMasLC, "M_IngredientsStatement", "CommonName", "", 0 );
+                         GetVariableFromAttribute( sb_szString, mi_lTempInteger_1, 'S', 2049, mMasLC, "M_IngredientsStatement", "CommonName", "", 0 );
             lTempInteger_1 = mi_lTempInteger_1.intValue( );
             szString = sb_szString.toString( );}
             //:IF szString = ""
-            if ( ZeidonStringCompare( szString, 1, 0, "", 1, 0, 1025 ) == 0 )
+            if ( ZeidonStringCompare( szString, 1, 0, "", 1, 0, 2049 ) == 0 )
             { 
                //:szString = mMasLC.M_IngredientsStatement.ChemicalName
                {MutableInt mi_lTempInteger_2 = new MutableInt( lTempInteger_2 );
@@ -92,7 +92,7 @@ omMasLC_dIngredientName( View     mMasLC,
                   sb_szString = new StringBuilder( 32 );
                else
                   sb_szString = new StringBuilder( szString );
-                               GetVariableFromAttribute( sb_szString, mi_lTempInteger_2, 'S', 1025, mMasLC, "M_IngredientsStatement", "ChemicalName", "", 0 );
+                               GetVariableFromAttribute( sb_szString, mi_lTempInteger_2, 'S', 2049, mMasLC, "M_IngredientsStatement", "ChemicalName", "", 0 );
                lTempInteger_2 = mi_lTempInteger_2.intValue( );
                szString = sb_szString.toString( );}
             } 
@@ -108,7 +108,7 @@ omMasLC_dIngredientName( View     mMasLC,
                sb_szString = new StringBuilder( 32 );
             else
                sb_szString = new StringBuilder( szString );
-                        ZeidonStringCopy( sb_szString, 1, 0, "", 1, 0, 1025 );
+                        ZeidonStringCopy( sb_szString, 1, 0, "", 1, 0, 2049 );
             szString = sb_szString.toString( );}
          } 
 
@@ -139,7 +139,7 @@ omMasLC_dIngredientName( View     mMasLC,
    //:                  STRING ( 32 ) InternalAttribStructure,
    //:                  SHORT GetOrSetFlag )
 
-   //:STRING ( 1024 ) szDisplayStatement
+   //:STRING ( 2048 ) szDisplayStatement
 public int 
 omMasLC_dDU_StmtTitleTxtKey( View     mMasLC,
                              String InternalEntityStructure,
@@ -149,7 +149,7 @@ omMasLC_dDU_StmtTitleTxtKey( View     mMasLC,
    String   szDisplayStatement = null;
    //:STRING ( 256 )  szStatementTitle
    String   szStatementTitle = null;
-   //:STRING ( 1024 ) szStatementText
+   //:STRING ( 2048 ) szStatementText
    String   szStatementText = null;
    int      lTempInteger_0 = 0;
    int      lTempInteger_1 = 0;
@@ -169,11 +169,11 @@ omMasLC_dDU_StmtTitleTxtKey( View     mMasLC,
             sb_szStatementText = new StringBuilder( 32 );
          else
             sb_szStatementText = new StringBuilder( szStatementText );
-                   GetVariableFromAttribute( sb_szStatementText, mi_lTempInteger_0, 'S', 1025, mMasLC, "M_DirectionsForUseStatement", "Text", "", 0 );
+                   GetVariableFromAttribute( sb_szStatementText, mi_lTempInteger_0, 'S', 2049, mMasLC, "M_DirectionsForUseStatement", "Text", "", 0 );
          lTempInteger_0 = mi_lTempInteger_0.intValue( );
          szStatementText = sb_szStatementText.toString( );}
          //:IF szStatementText != ""
-         if ( ZeidonStringCompare( szStatementText, 1, 0, "", 1, 0, 1025 ) != 0 )
+         if ( ZeidonStringCompare( szStatementText, 1, 0, "", 1, 0, 2049 ) != 0 )
          { 
             //:GenerateKeywordTextIntoString( mMasLC, szStatementText,
             //:                            "M_InsertTextKeywordDU", "M_InsertTextDU", ", " )
@@ -231,10 +231,10 @@ omMasLC_dDU_StmtTitleTxtKey( View     mMasLC,
                sb_szDisplayStatement = new StringBuilder( 32 );
             else
                sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
-                        ZeidonStringCopy( sb_szDisplayStatement, 1, 0, szStatementTitle, 1, 0, 1025 );
+                        ZeidonStringCopy( sb_szDisplayStatement, 1, 0, szStatementTitle, 1, 0, 2049 );
             szDisplayStatement = sb_szDisplayStatement.toString( );}
             //:IF szStatementText != ""
-            if ( ZeidonStringCompare( szStatementText, 1, 0, "", 1, 0, 1025 ) != 0 )
+            if ( ZeidonStringCompare( szStatementText, 1, 0, "", 1, 0, 2049 ) != 0 )
             { 
                //:szDisplayStatement = szDisplayStatement + " --- " + szStatementText
                 {StringBuilder sb_szDisplayStatement;
@@ -242,14 +242,14 @@ omMasLC_dDU_StmtTitleTxtKey( View     mMasLC,
                   sb_szDisplayStatement = new StringBuilder( 32 );
                else
                   sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
-                              ZeidonStringConcat( sb_szDisplayStatement, 1, 0, " --- ", 1, 0, 1025 );
+                              ZeidonStringConcat( sb_szDisplayStatement, 1, 0, " --- ", 1, 0, 2049 );
                szDisplayStatement = sb_szDisplayStatement.toString( );}
                 {StringBuilder sb_szDisplayStatement;
                if ( szDisplayStatement == null )
                   sb_szDisplayStatement = new StringBuilder( 32 );
                else
                   sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
-                              ZeidonStringConcat( sb_szDisplayStatement, 1, 0, szStatementText, 1, 0, 1025 );
+                              ZeidonStringConcat( sb_szDisplayStatement, 1, 0, szStatementText, 1, 0, 2049 );
                szDisplayStatement = sb_szDisplayStatement.toString( );}
             } 
 
@@ -264,7 +264,7 @@ omMasLC_dDU_StmtTitleTxtKey( View     mMasLC,
                sb_szDisplayStatement = new StringBuilder( 32 );
             else
                sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
-                        ZeidonStringCopy( sb_szDisplayStatement, 1, 0, szStatementText, 1, 0, 1025 );
+                        ZeidonStringCopy( sb_szDisplayStatement, 1, 0, szStatementText, 1, 0, 2049 );
             szDisplayStatement = sb_szDisplayStatement.toString( );}
          } 
 
@@ -295,7 +295,7 @@ omMasLC_dDU_StmtTitleTxtKey( View     mMasLC,
 //:                       STRING ( 32 ) InternalAttribStructure,
 //:                       SHORT GetOrSetFlag )
 
-//:   STRING ( 1024 ) szString
+//:   STRING ( 2048 ) szString
 public int 
 omMasLC_dMasterProductNameNbr( View     mMasLC,
                                String InternalEntityStructure,
@@ -335,7 +335,7 @@ omMasLC_dMasterProductNameNbr( View     mMasLC,
                sb_szString = new StringBuilder( 32 );
             else
                sb_szString = new StringBuilder( szString );
-                        ZeidonStringConcat( sb_szString, 1, 0, " (", 1, 0, 1025 );
+                        ZeidonStringConcat( sb_szString, 1, 0, " (", 1, 0, 2049 );
             szString = sb_szString.toString( );}
             {MutableInt mi_lTempInteger_1 = new MutableInt( lTempInteger_1 );
             StringBuilder sb_szTempString_0;
@@ -351,14 +351,14 @@ omMasLC_dMasterProductNameNbr( View     mMasLC,
                sb_szString = new StringBuilder( 32 );
             else
                sb_szString = new StringBuilder( szString );
-                        ZeidonStringConcat( sb_szString, 1, 0, szTempString_0, 1, 0, 1025 );
+                        ZeidonStringConcat( sb_szString, 1, 0, szTempString_0, 1, 0, 2049 );
             szString = sb_szString.toString( );}
              {StringBuilder sb_szString;
             if ( szString == null )
                sb_szString = new StringBuilder( 32 );
             else
                sb_szString = new StringBuilder( szString );
-                        ZeidonStringConcat( sb_szString, 1, 0, "-", 1, 0, 1025 );
+                        ZeidonStringConcat( sb_szString, 1, 0, "-", 1, 0, 2049 );
             szString = sb_szString.toString( );}
             {MutableInt mi_lTempInteger_2 = new MutableInt( lTempInteger_2 );
             StringBuilder sb_szTempString_1;
@@ -374,14 +374,14 @@ omMasLC_dMasterProductNameNbr( View     mMasLC,
                sb_szString = new StringBuilder( 32 );
             else
                sb_szString = new StringBuilder( szString );
-                        ZeidonStringConcat( sb_szString, 1, 0, szTempString_1, 1, 0, 1025 );
+                        ZeidonStringConcat( sb_szString, 1, 0, szTempString_1, 1, 0, 2049 );
             szString = sb_szString.toString( );}
              {StringBuilder sb_szString;
             if ( szString == null )
                sb_szString = new StringBuilder( 32 );
             else
                sb_szString = new StringBuilder( szString );
-                        ZeidonStringConcat( sb_szString, 1, 0, ")", 1, 0, 1025 );
+                        ZeidonStringConcat( sb_szString, 1, 0, ")", 1, 0, 2049 );
             szString = sb_szString.toString( );}
             //:ELSE
          } 
@@ -393,7 +393,7 @@ omMasLC_dMasterProductNameNbr( View     mMasLC,
                sb_szString = new StringBuilder( 32 );
             else
                sb_szString = new StringBuilder( szString );
-                        ZeidonStringCopy( sb_szString, 1, 0, "", 1, 0, 1025 );
+                        ZeidonStringCopy( sb_szString, 1, 0, "", 1, 0, 2049 );
             szString = sb_szString.toString( );}
          } 
 
@@ -424,7 +424,7 @@ omMasLC_dMasterProductNameNbr( View     mMasLC,
    //:                STRING ( 32 ) InternalAttribStructure,
    //:                SHORT GetOrSetFlag )
 
-   //:STRING ( 1024 ) szString
+   //:STRING ( 2048 ) szString
 public int 
 omMasLC_dRegistrantNameID( View     mMasLC,
                            String InternalEntityStructure,
@@ -455,7 +455,7 @@ omMasLC_dRegistrantNameID( View     mMasLC,
                sb_szString = new StringBuilder( 32 );
             else
                sb_szString = new StringBuilder( szString );
-                         GetVariableFromAttribute( sb_szString, mi_lTempInteger_1, 'S', 1025, mMasLC, "Organization", "Name", "", 0 );
+                         GetVariableFromAttribute( sb_szString, mi_lTempInteger_1, 'S', 2049, mMasLC, "Organization", "Name", "", 0 );
             lTempInteger_1 = mi_lTempInteger_1.intValue( );
             szString = sb_szString.toString( );}
             //:IF mMasLC.PrimaryRegistrant.EPA_CompanyNumber = ""
@@ -467,7 +467,7 @@ omMasLC_dRegistrantNameID( View     mMasLC,
                   sb_szString = new StringBuilder( 32 );
                else
                   sb_szString = new StringBuilder( szString );
-                              ZeidonStringConcat( sb_szString, 1, 0, " (Non EPA)", 1, 0, 1025 );
+                              ZeidonStringConcat( sb_szString, 1, 0, " (Non EPA)", 1, 0, 2049 );
                szString = sb_szString.toString( );}
                //:ELSE
             } 
@@ -479,7 +479,7 @@ omMasLC_dRegistrantNameID( View     mMasLC,
                   sb_szString = new StringBuilder( 32 );
                else
                   sb_szString = new StringBuilder( szString );
-                              ZeidonStringConcat( sb_szString, 1, 0, " (", 1, 0, 1025 );
+                              ZeidonStringConcat( sb_szString, 1, 0, " (", 1, 0, 2049 );
                szString = sb_szString.toString( );}
                {MutableInt mi_lTempInteger_2 = new MutableInt( lTempInteger_2 );
                StringBuilder sb_szTempString_0;
@@ -495,14 +495,14 @@ omMasLC_dRegistrantNameID( View     mMasLC,
                   sb_szString = new StringBuilder( 32 );
                else
                   sb_szString = new StringBuilder( szString );
-                              ZeidonStringConcat( sb_szString, 1, 0, szTempString_0, 1, 0, 1025 );
+                              ZeidonStringConcat( sb_szString, 1, 0, szTempString_0, 1, 0, 2049 );
                szString = sb_szString.toString( );}
                 {StringBuilder sb_szString;
                if ( szString == null )
                   sb_szString = new StringBuilder( 32 );
                else
                   sb_szString = new StringBuilder( szString );
-                              ZeidonStringConcat( sb_szString, 1, 0, ")", 1, 0, 1025 );
+                              ZeidonStringConcat( sb_szString, 1, 0, ")", 1, 0, 2049 );
                szString = sb_szString.toString( );}
             } 
 
@@ -517,7 +517,7 @@ omMasLC_dRegistrantNameID( View     mMasLC,
                sb_szString = new StringBuilder( 32 );
             else
                sb_szString = new StringBuilder( szString );
-                        ZeidonStringCopy( sb_szString, 1, 0, "", 1, 0, 1025 );
+                        ZeidonStringCopy( sb_szString, 1, 0, "", 1, 0, 2049 );
             szString = sb_szString.toString( );}
          } 
 
@@ -2347,7 +2347,7 @@ omMasLC_dUsgTextSubUsageNames( View     mMasLC,
                                Integer   GetOrSetFlag )
 {
    zVIEW    mMasLC2 = new zVIEW( );
-   //:STRING ( 1024 ) szDisplayStatement
+   //:STRING ( 2048 ) szDisplayStatement
    String   szDisplayStatement = null;
    //:STRING ( 100 ) szUsageName
    String   szUsageName = null;
@@ -2381,7 +2381,7 @@ omMasLC_dUsgTextSubUsageNames( View     mMasLC,
                sb_szDisplayStatement = new StringBuilder( 32 );
             else
                sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
-                         GetVariableFromAttribute( sb_szDisplayStatement, mi_lTempInteger_1, 'S', 1025, mMasLC, "M_Usage", "Name", "", 0 );
+                         GetVariableFromAttribute( sb_szDisplayStatement, mi_lTempInteger_1, 'S', 2049, mMasLC, "M_Usage", "Name", "", 0 );
             lTempInteger_1 = mi_lTempInteger_1.intValue( );
             szDisplayStatement = sb_szDisplayStatement.toString( );}
             //:InsertOptionalSubUsages( mMasLC, szDisplayStatement, "M_SubUsage", 1 )
@@ -2445,7 +2445,7 @@ omMasLC_dUsgTextSubUsageNames( View     mMasLC,
                      sb_szTempString_1 = new StringBuilder( 32 );
                   else
                      sb_szTempString_1 = new StringBuilder( szTempString_1 );
-                                     GetVariableFromAttribute( sb_szTempString_1, mi_lTempInteger_4, 'S', 1025, mMasLC2, "M_InsertTextUsage", "Text", "", 0 );
+                                     GetVariableFromAttribute( sb_szTempString_1, mi_lTempInteger_4, 'S', 2049, mMasLC2, "M_InsertTextUsage", "Text", "", 0 );
                   lTempInteger_4 = mi_lTempInteger_4.intValue( );
                   szTempString_1 = sb_szTempString_1.toString( );}
                    {StringBuilder sb_szUsageText;
@@ -2469,13 +2469,13 @@ omMasLC_dUsgTextSubUsageNames( View     mMasLC,
                      sb_szUsageText = new StringBuilder( szUsageText );
                                     ZeidonStringConcat( sb_szUsageText, 1, 0, "</b>", 1, 0, 101 );
                   szUsageText = sb_szUsageText.toString( );}
-                  //:zSearchAndReplace( szDisplayStatement, 1024, szUsageName, szUsageText )
+                  //:zSearchAndReplace( szDisplayStatement, 2048, szUsageName, szUsageText )
                   {StringBuilder sb_szDisplayStatement;
                   if ( szDisplayStatement == null )
                      sb_szDisplayStatement = new StringBuilder( 32 );
                   else
                      sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
-                                     zSearchAndReplace( sb_szDisplayStatement, 1024, szUsageName, szUsageText );
+                                     zSearchAndReplace( sb_szDisplayStatement, 2048, szUsageName, szUsageText );
                   szDisplayStatement = sb_szDisplayStatement.toString( );}
                   RESULT = SetCursorNextEntity( mMasLC2, "M_InsertTextKeywordUsage", "" );
                } 
@@ -2496,7 +2496,7 @@ omMasLC_dUsgTextSubUsageNames( View     mMasLC,
                sb_szDisplayStatement = new StringBuilder( 32 );
             else
                sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
-                        ZeidonStringCopy( sb_szDisplayStatement, 1, 0, "", 1, 0, 1025 );
+                        ZeidonStringCopy( sb_szDisplayStatement, 1, 0, "", 1, 0, 2049 );
             szDisplayStatement = sb_szDisplayStatement.toString( );}
          } 
 
@@ -2527,7 +2527,7 @@ omMasLC_dUsgTextSubUsageNames( View     mMasLC,
 //:                        STRING ( 32 ) InternalAttribStructure,
 //:                        SHORT GetOrSetFlag )
 
-//:   STRING ( 1024 ) szDisplayStatement
+//:   STRING ( 2048 ) szDisplayStatement
 public int 
 omMasLC_dDU_StatementTitleText( View     mMasLC,
                                 String InternalEntityStructure,
@@ -2535,7 +2535,7 @@ omMasLC_dDU_StatementTitleText( View     mMasLC,
                                 Integer   GetOrSetFlag )
 {
    String   szDisplayStatement = null;
-   //:STRING ( 1024 ) szStatementText
+   //:STRING ( 2048 ) szStatementText
    String   szStatementText = null;
    //:STRING ( 256 )  szTitle
    String   szTitle = null;
@@ -2557,7 +2557,7 @@ omMasLC_dDU_StatementTitleText( View     mMasLC,
             sb_szStatementText = new StringBuilder( 32 );
          else
             sb_szStatementText = new StringBuilder( szStatementText );
-                   GetVariableFromAttribute( sb_szStatementText, mi_lTempInteger_0, 'S', 1025, mMasLC, "M_DirectionsForUseStatement", "Text", "", 0 );
+                   GetVariableFromAttribute( sb_szStatementText, mi_lTempInteger_0, 'S', 2049, mMasLC, "M_DirectionsForUseStatement", "Text", "", 0 );
          lTempInteger_0 = mi_lTempInteger_0.intValue( );
          szStatementText = sb_szStatementText.toString( );}
          //:szTitle = mMasLC.M_DirectionsForUseStatement.Title
@@ -2579,24 +2579,24 @@ omMasLC_dDU_StatementTitleText( View     mMasLC,
                sb_szDisplayStatement = new StringBuilder( 32 );
             else
                sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
-                        ZeidonStringCopy( sb_szDisplayStatement, 1, 0, "<b>", 1, 0, 1025 );
+                        ZeidonStringCopy( sb_szDisplayStatement, 1, 0, "<b>", 1, 0, 2049 );
             szDisplayStatement = sb_szDisplayStatement.toString( );}
              {StringBuilder sb_szDisplayStatement;
             if ( szDisplayStatement == null )
                sb_szDisplayStatement = new StringBuilder( 32 );
             else
                sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
-                        ZeidonStringConcat( sb_szDisplayStatement, 1, 0, szTitle, 1, 0, 1025 );
+                        ZeidonStringConcat( sb_szDisplayStatement, 1, 0, szTitle, 1, 0, 2049 );
             szDisplayStatement = sb_szDisplayStatement.toString( );}
              {StringBuilder sb_szDisplayStatement;
             if ( szDisplayStatement == null )
                sb_szDisplayStatement = new StringBuilder( 32 );
             else
                sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
-                        ZeidonStringConcat( sb_szDisplayStatement, 1, 0, "</b>", 1, 0, 1025 );
+                        ZeidonStringConcat( sb_szDisplayStatement, 1, 0, "</b>", 1, 0, 2049 );
             szDisplayStatement = sb_szDisplayStatement.toString( );}
             //:IF szStatementText != ""
-            if ( ZeidonStringCompare( szStatementText, 1, 0, "", 1, 0, 1025 ) != 0 )
+            if ( ZeidonStringCompare( szStatementText, 1, 0, "", 1, 0, 2049 ) != 0 )
             { 
                //:szDisplayStatement = szDisplayStatement + " --- " + szStatementText
                 {StringBuilder sb_szDisplayStatement;
@@ -2604,14 +2604,14 @@ omMasLC_dDU_StatementTitleText( View     mMasLC,
                   sb_szDisplayStatement = new StringBuilder( 32 );
                else
                   sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
-                              ZeidonStringConcat( sb_szDisplayStatement, 1, 0, " --- ", 1, 0, 1025 );
+                              ZeidonStringConcat( sb_szDisplayStatement, 1, 0, " --- ", 1, 0, 2049 );
                szDisplayStatement = sb_szDisplayStatement.toString( );}
                 {StringBuilder sb_szDisplayStatement;
                if ( szDisplayStatement == null )
                   sb_szDisplayStatement = new StringBuilder( 32 );
                else
                   sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
-                              ZeidonStringConcat( sb_szDisplayStatement, 1, 0, szStatementText, 1, 0, 1025 );
+                              ZeidonStringConcat( sb_szDisplayStatement, 1, 0, szStatementText, 1, 0, 2049 );
                szDisplayStatement = sb_szDisplayStatement.toString( );}
             } 
 
@@ -2626,7 +2626,7 @@ omMasLC_dDU_StatementTitleText( View     mMasLC,
                sb_szDisplayStatement = new StringBuilder( 32 );
             else
                sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
-                        ZeidonStringCopy( sb_szDisplayStatement, 1, 0, szStatementText, 1, 0, 1025 );
+                        ZeidonStringCopy( sb_szDisplayStatement, 1, 0, szStatementText, 1, 0, 2049 );
             szDisplayStatement = sb_szDisplayStatement.toString( );}
          } 
 
@@ -2657,7 +2657,7 @@ omMasLC_dDU_StatementTitleText( View     mMasLC,
 //:                      STRING ( 32 ) InternalAttribStructure,
 //:                      SHORT GetOrSetFlag )
 
-//:   STRING ( 1024 ) szDisplayStatement
+//:   STRING ( 2048 ) szDisplayStatement
 public int 
 omMasLC_dDU_StmtTitleKeyword( View     mMasLC,
                               String InternalEntityStructure,
@@ -2682,12 +2682,12 @@ omMasLC_dDU_StmtTitleKeyword( View     mMasLC,
             sb_szDisplayStatement = new StringBuilder( 32 );
          else
             sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
-                   GetVariableFromAttribute( sb_szDisplayStatement, mi_lTempInteger_0, 'S', 1025, mMasLC, "M_DirectionsForUseStatement", "Title", "", 0 );
+                   GetVariableFromAttribute( sb_szDisplayStatement, mi_lTempInteger_0, 'S', 2049, mMasLC, "M_DirectionsForUseStatement", "Title", "", 0 );
          lTempInteger_0 = mi_lTempInteger_0.intValue( );
          szDisplayStatement = sb_szDisplayStatement.toString( );}
 
          //:IF szDisplayStatement != ""
-         if ( ZeidonStringCompare( szDisplayStatement, 1, 0, "", 1, 0, 1025 ) != 0 )
+         if ( ZeidonStringCompare( szDisplayStatement, 1, 0, "", 1, 0, 2049 ) != 0 )
          { 
             //:GenerateKeywordTextIntoString( mMasLC, szDisplayStatement,
             //:                            "M_InsertTextKeywordDU", "M_InsertTextDU", ", " )
@@ -2731,7 +2731,7 @@ omMasLC_dDU_StmtTitleKeyword( View     mMasLC,
    //:                  STRING ( 32 ) InternalAttribStructure,
    //:                  SHORT GetOrSetFlag )
 
-   //:STRING ( 1024 ) szDisplayStatement
+   //:STRING ( 2048 ) szDisplayStatement
 public int 
 omMasLC_dDU_StmtTextKeyword( View     mMasLC,
                              String InternalEntityStructure,
@@ -2739,7 +2739,7 @@ omMasLC_dDU_StmtTextKeyword( View     mMasLC,
                              Integer   GetOrSetFlag )
 {
    String   szDisplayStatement = null;
-   //:STRING ( 1024 ) szStatementText
+   //:STRING ( 2048 ) szStatementText
    String   szStatementText = null;
    //:STRING ( 256 )  szTitle
    String   szTitle = null;
@@ -2760,12 +2760,12 @@ omMasLC_dDU_StmtTextKeyword( View     mMasLC,
             sb_szDisplayStatement = new StringBuilder( 32 );
          else
             sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
-                   GetVariableFromAttribute( sb_szDisplayStatement, mi_lTempInteger_0, 'S', 1025, mMasLC, "M_DirectionsForUseStatement", "Text", "", 0 );
+                   GetVariableFromAttribute( sb_szDisplayStatement, mi_lTempInteger_0, 'S', 2049, mMasLC, "M_DirectionsForUseStatement", "Text", "", 0 );
          lTempInteger_0 = mi_lTempInteger_0.intValue( );
          szDisplayStatement = sb_szDisplayStatement.toString( );}
 
          //:IF szDisplayStatement != ""
-         if ( ZeidonStringCompare( szDisplayStatement, 1, 0, "", 1, 0, 1025 ) != 0 )
+         if ( ZeidonStringCompare( szDisplayStatement, 1, 0, "", 1, 0, 2049 ) != 0 )
          { 
             //:GenerateKeywordTextIntoString( mMasLC, szDisplayStatement,
             //:                            "M_InsertTextKeywordDU", "M_InsertTextDU", ", " )
@@ -2809,7 +2809,7 @@ omMasLC_dDU_StmtTextKeyword( View     mMasLC,
    //:                   STRING ( 32 ) InternalAttribStructure,
    //:                   SHORT GetOrSetFlag )
 
-   //:STRING ( 1024 ) szDisplayStatement
+   //:STRING ( 2048 ) szDisplayStatement
 public int 
 omMasLC_dDU_SubStmtTitleText( View     mMasLC,
                               String InternalEntityStructure,
@@ -2817,7 +2817,7 @@ omMasLC_dDU_SubStmtTitleText( View     mMasLC,
                               Integer   GetOrSetFlag )
 {
    String   szDisplayStatement = null;
-   //:STRING ( 1024 ) szStatementText
+   //:STRING ( 2048 ) szStatementText
    String   szStatementText = null;
    //:STRING ( 256 )  szTitle
    String   szTitle = null;
@@ -2849,7 +2849,7 @@ omMasLC_dDU_SubStmtTitleText( View     mMasLC,
             sb_szStatementText = new StringBuilder( 32 );
          else
             sb_szStatementText = new StringBuilder( szStatementText );
-                   GetVariableFromAttribute( sb_szStatementText, mi_lTempInteger_1, 'S', 1025, mMasLC, "M_DirectionsForUseSubStatement", "Text", "", 0 );
+                   GetVariableFromAttribute( sb_szStatementText, mi_lTempInteger_1, 'S', 2049, mMasLC, "M_DirectionsForUseSubStatement", "Text", "", 0 );
          lTempInteger_1 = mi_lTempInteger_1.intValue( );
          szStatementText = sb_szStatementText.toString( );}
          //:IF szTitle != ""
@@ -2861,21 +2861,21 @@ omMasLC_dDU_SubStmtTitleText( View     mMasLC,
                sb_szDisplayStatement = new StringBuilder( 32 );
             else
                sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
-                        ZeidonStringCopy( sb_szDisplayStatement, 1, 0, szTitle, 1, 0, 1025 );
+                        ZeidonStringCopy( sb_szDisplayStatement, 1, 0, szTitle, 1, 0, 2049 );
             szDisplayStatement = sb_szDisplayStatement.toString( );}
              {StringBuilder sb_szDisplayStatement;
             if ( szDisplayStatement == null )
                sb_szDisplayStatement = new StringBuilder( 32 );
             else
                sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
-                        ZeidonStringConcat( sb_szDisplayStatement, 1, 0, " --- ", 1, 0, 1025 );
+                        ZeidonStringConcat( sb_szDisplayStatement, 1, 0, " --- ", 1, 0, 2049 );
             szDisplayStatement = sb_szDisplayStatement.toString( );}
              {StringBuilder sb_szDisplayStatement;
             if ( szDisplayStatement == null )
                sb_szDisplayStatement = new StringBuilder( 32 );
             else
                sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
-                        ZeidonStringConcat( sb_szDisplayStatement, 1, 0, szStatementText, 1, 0, 1025 );
+                        ZeidonStringConcat( sb_szDisplayStatement, 1, 0, szStatementText, 1, 0, 2049 );
             szDisplayStatement = sb_szDisplayStatement.toString( );}
             //:ELSE
          } 
@@ -2887,7 +2887,7 @@ omMasLC_dDU_SubStmtTitleText( View     mMasLC,
                sb_szDisplayStatement = new StringBuilder( 32 );
             else
                sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
-                        ZeidonStringCopy( sb_szDisplayStatement, 1, 0, szStatementText, 1, 0, 1025 );
+                        ZeidonStringCopy( sb_szDisplayStatement, 1, 0, szStatementText, 1, 0, 2049 );
             szDisplayStatement = sb_szDisplayStatement.toString( );}
          } 
 
@@ -2928,7 +2928,7 @@ omMasLC_dDU_DrivingUsgTxtNames( View     mMasLC,
    zVIEW    mMasLC1 = new zVIEW( );
    //:VIEW mMasLC2 BASED ON LOD mMasLC
    zVIEW    mMasLC2 = new zVIEW( );
-   //:STRING ( 1024 ) szDisplayStatement
+   //:STRING ( 2048 ) szDisplayStatement
    String   szDisplayStatement = null;
    //:STRING ( 100 )  szUsageName
    String   szUsageName = null;
@@ -2972,7 +2972,7 @@ omMasLC_dDU_DrivingUsgTxtNames( View     mMasLC,
                sb_szDisplayStatement = new StringBuilder( 32 );
             else
                sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
-                         GetVariableFromAttribute( sb_szDisplayStatement, mi_lTempInteger_1, 'S', 1025, mMasLC1, "M_Usage", "Name", "", 0 );
+                         GetVariableFromAttribute( sb_szDisplayStatement, mi_lTempInteger_1, 'S', 2049, mMasLC1, "M_Usage", "Name", "", 0 );
             lTempInteger_1 = mi_lTempInteger_1.intValue( );
             szDisplayStatement = sb_szDisplayStatement.toString( );}
             //:InsertOptionalSubUsages( mMasLC1, szDisplayStatement, "M_SubUsage", 1 )
@@ -3037,7 +3037,7 @@ omMasLC_dDU_DrivingUsgTxtNames( View     mMasLC,
                      sb_szTempString_1 = new StringBuilder( 32 );
                   else
                      sb_szTempString_1 = new StringBuilder( szTempString_1 );
-                                     GetVariableFromAttribute( sb_szTempString_1, mi_lTempInteger_4, 'S', 1025, mMasLC2, "M_InsertTextUsage", "Text", "", 0 );
+                                     GetVariableFromAttribute( sb_szTempString_1, mi_lTempInteger_4, 'S', 2049, mMasLC2, "M_InsertTextUsage", "Text", "", 0 );
                   lTempInteger_4 = mi_lTempInteger_4.intValue( );
                   szTempString_1 = sb_szTempString_1.toString( );}
                    {StringBuilder sb_szUsageText;
@@ -3061,13 +3061,13 @@ omMasLC_dDU_DrivingUsgTxtNames( View     mMasLC,
                      sb_szUsageText = new StringBuilder( szUsageText );
                                     ZeidonStringConcat( sb_szUsageText, 1, 0, "</b>", 1, 0, 101 );
                   szUsageText = sb_szUsageText.toString( );}
-                  //:zSearchAndReplace( szDisplayStatement, 1024, szUsageName, szUsageText )
+                  //:zSearchAndReplace( szDisplayStatement, 2048, szUsageName, szUsageText )
                   {StringBuilder sb_szDisplayStatement;
                   if ( szDisplayStatement == null )
                      sb_szDisplayStatement = new StringBuilder( 32 );
                   else
                      sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
-                                     zSearchAndReplace( sb_szDisplayStatement, 1024, szUsageName, szUsageText );
+                                     zSearchAndReplace( sb_szDisplayStatement, 2048, szUsageName, szUsageText );
                   szDisplayStatement = sb_szDisplayStatement.toString( );}
                   RESULT = SetCursorNextEntity( mMasLC2, "M_InsertTextKeywordUsage", "" );
                } 
@@ -3091,7 +3091,7 @@ omMasLC_dDU_DrivingUsgTxtNames( View     mMasLC,
                sb_szDisplayStatement = new StringBuilder( 32 );
             else
                sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
-                        ZeidonStringCopy( sb_szDisplayStatement, 1, 0, "", 1, 0, 1025 );
+                        ZeidonStringCopy( sb_szDisplayStatement, 1, 0, "", 1, 0, 2049 );
             szDisplayStatement = sb_szDisplayStatement.toString( );}
          } 
 
@@ -3218,7 +3218,7 @@ omMasLC_dDU_DrvUsgClaimClass( View     mMasLC,
 //:               STRING ( 32 ) InternalAttribStructure,
 //:               SHORT GetOrSetFlag )
 
-//:   STRING ( 1024 ) szDisplayStatement
+//:   STRING ( 2048 ) szDisplayStatement
 public int 
 omMasLC_dSD_TitleText( View     mMasLC,
                        String InternalEntityStructure,
@@ -3226,7 +3226,7 @@ omMasLC_dSD_TitleText( View     mMasLC,
                        Integer   GetOrSetFlag )
 {
    String   szDisplayStatement = null;
-   //:STRING ( 1024 ) szStatementText
+   //:STRING ( 2048 ) szStatementText
    String   szStatementText = null;
    //:STRING ( 256 )  szTitle
    String   szTitle = null;
@@ -3258,7 +3258,7 @@ omMasLC_dSD_TitleText( View     mMasLC,
             sb_szStatementText = new StringBuilder( 32 );
          else
             sb_szStatementText = new StringBuilder( szStatementText );
-                   GetVariableFromAttribute( sb_szStatementText, mi_lTempInteger_1, 'S', 1025, mMasLC, "M_StorageDisposalStatement", "Text", "", 0 );
+                   GetVariableFromAttribute( sb_szStatementText, mi_lTempInteger_1, 'S', 2049, mMasLC, "M_StorageDisposalStatement", "Text", "", 0 );
          lTempInteger_1 = mi_lTempInteger_1.intValue( );
          szStatementText = sb_szStatementText.toString( );}
          //:IF szTitle != ""
@@ -3270,21 +3270,21 @@ omMasLC_dSD_TitleText( View     mMasLC,
                sb_szDisplayStatement = new StringBuilder( 32 );
             else
                sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
-                        ZeidonStringCopy( sb_szDisplayStatement, 1, 0, szTitle, 1, 0, 1025 );
+                        ZeidonStringCopy( sb_szDisplayStatement, 1, 0, szTitle, 1, 0, 2049 );
             szDisplayStatement = sb_szDisplayStatement.toString( );}
              {StringBuilder sb_szDisplayStatement;
             if ( szDisplayStatement == null )
                sb_szDisplayStatement = new StringBuilder( 32 );
             else
                sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
-                        ZeidonStringConcat( sb_szDisplayStatement, 1, 0, " --- ", 1, 0, 1025 );
+                        ZeidonStringConcat( sb_szDisplayStatement, 1, 0, " --- ", 1, 0, 2049 );
             szDisplayStatement = sb_szDisplayStatement.toString( );}
              {StringBuilder sb_szDisplayStatement;
             if ( szDisplayStatement == null )
                sb_szDisplayStatement = new StringBuilder( 32 );
             else
                sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
-                        ZeidonStringConcat( sb_szDisplayStatement, 1, 0, szStatementText, 1, 0, 1025 );
+                        ZeidonStringConcat( sb_szDisplayStatement, 1, 0, szStatementText, 1, 0, 2049 );
             szDisplayStatement = sb_szDisplayStatement.toString( );}
             //:ELSE
          } 
@@ -3296,7 +3296,7 @@ omMasLC_dSD_TitleText( View     mMasLC,
                sb_szDisplayStatement = new StringBuilder( 32 );
             else
                sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
-                        ZeidonStringCopy( sb_szDisplayStatement, 1, 0, szStatementText, 1, 0, 1025 );
+                        ZeidonStringCopy( sb_szDisplayStatement, 1, 0, szStatementText, 1, 0, 2049 );
             szDisplayStatement = sb_szDisplayStatement.toString( );}
          } 
 
@@ -3328,7 +3328,7 @@ omMasLC_dSD_TitleText( View     mMasLC,
    //:               STRING ( 32 ) InternalAttribStructure,
    //:               SHORT GetOrSetFlag )
 
-   //:STRING ( 1024 ) szDisplayStatement
+   //:STRING ( 2048 ) szDisplayStatement
 public int 
 omMasLC_dSD_SubTitleText( View     mMasLC,
                           String InternalEntityStructure,
@@ -3336,7 +3336,7 @@ omMasLC_dSD_SubTitleText( View     mMasLC,
                           Integer   GetOrSetFlag )
 {
    String   szDisplayStatement = null;
-   //:STRING ( 1024 ) szStatementText
+   //:STRING ( 2048 ) szStatementText
    String   szStatementText = null;
    //:STRING ( 256 )  szTitle
    String   szTitle = null;
@@ -3368,7 +3368,7 @@ omMasLC_dSD_SubTitleText( View     mMasLC,
             sb_szStatementText = new StringBuilder( 32 );
          else
             sb_szStatementText = new StringBuilder( szStatementText );
-                   GetVariableFromAttribute( sb_szStatementText, mi_lTempInteger_1, 'S', 1025, mMasLC, "M_StorageDisposalSubStatement", "Text", "", 0 );
+                   GetVariableFromAttribute( sb_szStatementText, mi_lTempInteger_1, 'S', 2049, mMasLC, "M_StorageDisposalSubStatement", "Text", "", 0 );
          lTempInteger_1 = mi_lTempInteger_1.intValue( );
          szStatementText = sb_szStatementText.toString( );}
          //:IF szTitle != ""
@@ -3380,21 +3380,21 @@ omMasLC_dSD_SubTitleText( View     mMasLC,
                sb_szDisplayStatement = new StringBuilder( 32 );
             else
                sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
-                        ZeidonStringCopy( sb_szDisplayStatement, 1, 0, szTitle, 1, 0, 1025 );
+                        ZeidonStringCopy( sb_szDisplayStatement, 1, 0, szTitle, 1, 0, 2049 );
             szDisplayStatement = sb_szDisplayStatement.toString( );}
              {StringBuilder sb_szDisplayStatement;
             if ( szDisplayStatement == null )
                sb_szDisplayStatement = new StringBuilder( 32 );
             else
                sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
-                        ZeidonStringConcat( sb_szDisplayStatement, 1, 0, " --- ", 1, 0, 1025 );
+                        ZeidonStringConcat( sb_szDisplayStatement, 1, 0, " --- ", 1, 0, 2049 );
             szDisplayStatement = sb_szDisplayStatement.toString( );}
              {StringBuilder sb_szDisplayStatement;
             if ( szDisplayStatement == null )
                sb_szDisplayStatement = new StringBuilder( 32 );
             else
                sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
-                        ZeidonStringConcat( sb_szDisplayStatement, 1, 0, szStatementText, 1, 0, 1025 );
+                        ZeidonStringConcat( sb_szDisplayStatement, 1, 0, szStatementText, 1, 0, 2049 );
             szDisplayStatement = sb_szDisplayStatement.toString( );}
             //:ELSE
          } 
@@ -3406,7 +3406,7 @@ omMasLC_dSD_SubTitleText( View     mMasLC,
                sb_szDisplayStatement = new StringBuilder( 32 );
             else
                sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
-                        ZeidonStringCopy( sb_szDisplayStatement, 1, 0, szStatementText, 1, 0, 1025 );
+                        ZeidonStringCopy( sb_szDisplayStatement, 1, 0, szStatementText, 1, 0, 2049 );
             szDisplayStatement = sb_szDisplayStatement.toString( );}
          } 
 
@@ -3438,7 +3438,7 @@ omMasLC_dSD_SubTitleText( View     mMasLC,
    //:               STRING ( 32 ) InternalAttribStructure,
    //:               SHORT GetOrSetFlag )
 
-   //:STRING ( 1024 ) szStatementTitle
+   //:STRING ( 2048 ) szStatementTitle
 public int 
 omMasLC_dSD_StmtTitleKey( View     mMasLC,
                           String InternalEntityStructure,
@@ -3463,11 +3463,11 @@ omMasLC_dSD_StmtTitleKey( View     mMasLC,
             sb_szStatementTitle = new StringBuilder( 32 );
          else
             sb_szStatementTitle = new StringBuilder( szStatementTitle );
-                   GetVariableFromAttribute( sb_szStatementTitle, mi_lTempInteger_0, 'S', 1025, mMasLC, "M_StorageDisposalStatement", "Title", "", 0 );
+                   GetVariableFromAttribute( sb_szStatementTitle, mi_lTempInteger_0, 'S', 2049, mMasLC, "M_StorageDisposalStatement", "Title", "", 0 );
          lTempInteger_0 = mi_lTempInteger_0.intValue( );
          szStatementTitle = sb_szStatementTitle.toString( );}
          //:IF szStatementTitle != ""
-         if ( ZeidonStringCompare( szStatementTitle, 1, 0, "", 1, 0, 1025 ) != 0 )
+         if ( ZeidonStringCompare( szStatementTitle, 1, 0, "", 1, 0, 2049 ) != 0 )
          { 
             //:GenerateKeywordTextIntoString( mMasLC, szStatementTitle,
             //:                            "M_InsertTextKeywordSD", "M_InsertTextSD", ", " )
@@ -3511,7 +3511,7 @@ omMasLC_dSD_StmtTitleKey( View     mMasLC,
 //:                 STRING ( 32 ) InternalAttribStructure,
 //:                 SHORT GetOrSetFlag )
 
-//:   STRING ( 1024 ) szStatementText
+//:   STRING ( 2048 ) szStatementText
 public int 
 omMasLC_dSD_StmtTextKey( View     mMasLC,
                          String InternalEntityStructure,
@@ -3536,11 +3536,11 @@ omMasLC_dSD_StmtTextKey( View     mMasLC,
             sb_szStatementText = new StringBuilder( 32 );
          else
             sb_szStatementText = new StringBuilder( szStatementText );
-                   GetVariableFromAttribute( sb_szStatementText, mi_lTempInteger_0, 'S', 1025, mMasLC, "M_StorageDisposalStatement", "Text", "", 0 );
+                   GetVariableFromAttribute( sb_szStatementText, mi_lTempInteger_0, 'S', 2049, mMasLC, "M_StorageDisposalStatement", "Text", "", 0 );
          lTempInteger_0 = mi_lTempInteger_0.intValue( );
          szStatementText = sb_szStatementText.toString( );}
          //:IF szStatementText != ""
-         if ( ZeidonStringCompare( szStatementText, 1, 0, "", 1, 0, 1025 ) != 0 )
+         if ( ZeidonStringCompare( szStatementText, 1, 0, "", 1, 0, 2049 ) != 0 )
          { 
             //:GenerateKeywordTextIntoString( mMasLC, szStatementText,
             //:                            "M_InsertTextKeywordSD", "M_InsertTextSD", ", " )
@@ -3584,7 +3584,7 @@ omMasLC_dSD_StmtTextKey( View     mMasLC,
 //:                     STRING ( 32 ) InternalAttribStructure,
 //:                     SHORT GetOrSetFlag )
 
-//:   STRING ( 1024 ) szDisplayStatement
+//:   STRING ( 2048 ) szDisplayStatement
 public int 
 omMasLC_dSD_StmtTitleTxtKey( View     mMasLC,
                              String InternalEntityStructure,
@@ -3594,7 +3594,7 @@ omMasLC_dSD_StmtTitleTxtKey( View     mMasLC,
    String   szDisplayStatement = null;
    //:STRING ( 256 )  szStatementTitle
    String   szStatementTitle = null;
-   //:STRING ( 1024 ) szStatementText
+   //:STRING ( 2048 ) szStatementText
    String   szStatementText = null;
    int      lTempInteger_0 = 0;
    int      lTempInteger_1 = 0;
@@ -3614,11 +3614,11 @@ omMasLC_dSD_StmtTitleTxtKey( View     mMasLC,
             sb_szStatementText = new StringBuilder( 32 );
          else
             sb_szStatementText = new StringBuilder( szStatementText );
-                   GetVariableFromAttribute( sb_szStatementText, mi_lTempInteger_0, 'S', 1025, mMasLC, "M_StorageDisposalStatement", "Text", "", 0 );
+                   GetVariableFromAttribute( sb_szStatementText, mi_lTempInteger_0, 'S', 2049, mMasLC, "M_StorageDisposalStatement", "Text", "", 0 );
          lTempInteger_0 = mi_lTempInteger_0.intValue( );
          szStatementText = sb_szStatementText.toString( );}
          //:IF szStatementText != ""
-         if ( ZeidonStringCompare( szStatementText, 1, 0, "", 1, 0, 1025 ) != 0 )
+         if ( ZeidonStringCompare( szStatementText, 1, 0, "", 1, 0, 2049 ) != 0 )
          { 
             //:GenerateKeywordTextIntoString( mMasLC, szStatementText,
             //:                            "M_InsertTextKeywordSD", "M_InsertTextSD", ", " )
@@ -3669,10 +3669,10 @@ omMasLC_dSD_StmtTitleTxtKey( View     mMasLC,
                sb_szDisplayStatement = new StringBuilder( 32 );
             else
                sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
-                        ZeidonStringCopy( sb_szDisplayStatement, 1, 0, szStatementTitle, 1, 0, 1025 );
+                        ZeidonStringCopy( sb_szDisplayStatement, 1, 0, szStatementTitle, 1, 0, 2049 );
             szDisplayStatement = sb_szDisplayStatement.toString( );}
             //:IF szStatementText != ""
-            if ( ZeidonStringCompare( szStatementText, 1, 0, "", 1, 0, 1025 ) != 0 )
+            if ( ZeidonStringCompare( szStatementText, 1, 0, "", 1, 0, 2049 ) != 0 )
             { 
                //:szDisplayStatement = szDisplayStatement + " --- " + szStatementText
                 {StringBuilder sb_szDisplayStatement;
@@ -3680,14 +3680,14 @@ omMasLC_dSD_StmtTitleTxtKey( View     mMasLC,
                   sb_szDisplayStatement = new StringBuilder( 32 );
                else
                   sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
-                              ZeidonStringConcat( sb_szDisplayStatement, 1, 0, " --- ", 1, 0, 1025 );
+                              ZeidonStringConcat( sb_szDisplayStatement, 1, 0, " --- ", 1, 0, 2049 );
                szDisplayStatement = sb_szDisplayStatement.toString( );}
                 {StringBuilder sb_szDisplayStatement;
                if ( szDisplayStatement == null )
                   sb_szDisplayStatement = new StringBuilder( 32 );
                else
                   sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
-                              ZeidonStringConcat( sb_szDisplayStatement, 1, 0, szStatementText, 1, 0, 1025 );
+                              ZeidonStringConcat( sb_szDisplayStatement, 1, 0, szStatementText, 1, 0, 2049 );
                szDisplayStatement = sb_szDisplayStatement.toString( );}
             } 
 
@@ -3702,7 +3702,7 @@ omMasLC_dSD_StmtTitleTxtKey( View     mMasLC,
                sb_szDisplayStatement = new StringBuilder( 32 );
             else
                sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
-                        ZeidonStringCopy( sb_szDisplayStatement, 1, 0, szStatementText, 1, 0, 1025 );
+                        ZeidonStringCopy( sb_szDisplayStatement, 1, 0, szStatementText, 1, 0, 2049 );
             szDisplayStatement = sb_szDisplayStatement.toString( );}
          } 
 
@@ -3733,7 +3733,7 @@ omMasLC_dSD_StmtTitleTxtKey( View     mMasLC,
 //:                        STRING ( 32 ) InternalAttribStructure,
 //:                        SHORT GetOrSetFlag )
 
-//:   STRING ( 1024 ) szDisplayStatement
+//:   STRING ( 2048 ) szDisplayStatement
 public int 
 omMasLC_dSD_SubStmtTitleTxtKey( View     mMasLC,
                                 String InternalEntityStructure,
@@ -3743,7 +3743,7 @@ omMasLC_dSD_SubStmtTitleTxtKey( View     mMasLC,
    String   szDisplayStatement = null;
    //:STRING ( 256 )  szStatementTitle
    String   szStatementTitle = null;
-   //:STRING ( 1024 ) szStatementText
+   //:STRING ( 2048 ) szStatementText
    String   szStatementText = null;
    int      lTempInteger_0 = 0;
    int      lTempInteger_1 = 0;
@@ -3765,11 +3765,11 @@ omMasLC_dSD_SubStmtTitleTxtKey( View     mMasLC,
             sb_szStatementText = new StringBuilder( 32 );
          else
             sb_szStatementText = new StringBuilder( szStatementText );
-                   GetVariableFromAttribute( sb_szStatementText, mi_lTempInteger_0, 'S', 1025, mMasLC, "M_StorageDisposalStatement", "Text", "", 0 );
+                   GetVariableFromAttribute( sb_szStatementText, mi_lTempInteger_0, 'S', 2049, mMasLC, "M_StorageDisposalStatement", "Text", "", 0 );
          lTempInteger_0 = mi_lTempInteger_0.intValue( );
          szStatementText = sb_szStatementText.toString( );}
          //:IF szStatementText != ""
-         if ( ZeidonStringCompare( szStatementText, 1, 0, "", 1, 0, 1025 ) != 0 )
+         if ( ZeidonStringCompare( szStatementText, 1, 0, "", 1, 0, 2049 ) != 0 )
          { 
             //:GenerateKeywordTextIntoString( mMasLC, szStatementText,
             //:                            "M_InsertTextKeywordSD", "M_InsertTextSD", ", " )
@@ -3827,10 +3827,10 @@ omMasLC_dSD_SubStmtTitleTxtKey( View     mMasLC,
                sb_szDisplayStatement = new StringBuilder( 32 );
             else
                sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
-                        ZeidonStringCopy( sb_szDisplayStatement, 1, 0, szStatementTitle, 1, 0, 1025 );
+                        ZeidonStringCopy( sb_szDisplayStatement, 1, 0, szStatementTitle, 1, 0, 2049 );
             szDisplayStatement = sb_szDisplayStatement.toString( );}
             //:IF szStatementText != ""
-            if ( ZeidonStringCompare( szStatementText, 1, 0, "", 1, 0, 1025 ) != 0 )
+            if ( ZeidonStringCompare( szStatementText, 1, 0, "", 1, 0, 2049 ) != 0 )
             { 
                //:szDisplayStatement = szDisplayStatement + " --- " + szStatementText
                 {StringBuilder sb_szDisplayStatement;
@@ -3838,14 +3838,14 @@ omMasLC_dSD_SubStmtTitleTxtKey( View     mMasLC,
                   sb_szDisplayStatement = new StringBuilder( 32 );
                else
                   sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
-                              ZeidonStringConcat( sb_szDisplayStatement, 1, 0, " --- ", 1, 0, 1025 );
+                              ZeidonStringConcat( sb_szDisplayStatement, 1, 0, " --- ", 1, 0, 2049 );
                szDisplayStatement = sb_szDisplayStatement.toString( );}
                 {StringBuilder sb_szDisplayStatement;
                if ( szDisplayStatement == null )
                   sb_szDisplayStatement = new StringBuilder( 32 );
                else
                   sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
-                              ZeidonStringConcat( sb_szDisplayStatement, 1, 0, szStatementText, 1, 0, 1025 );
+                              ZeidonStringConcat( sb_szDisplayStatement, 1, 0, szStatementText, 1, 0, 2049 );
                szDisplayStatement = sb_szDisplayStatement.toString( );}
             } 
 
@@ -3860,7 +3860,7 @@ omMasLC_dSD_SubStmtTitleTxtKey( View     mMasLC,
                sb_szDisplayStatement = new StringBuilder( 32 );
             else
                sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
-                        ZeidonStringCopy( sb_szDisplayStatement, 1, 0, szStatementText, 1, 0, 1025 );
+                        ZeidonStringCopy( sb_szDisplayStatement, 1, 0, szStatementText, 1, 0, 2049 );
             szDisplayStatement = sb_szDisplayStatement.toString( );}
          } 
 
@@ -5378,7 +5378,7 @@ omMasLC_SetMLC_SelectedFlags( View     mMasLC,
 //:                   STRING ( 32 ) InternalAttribStructure,
 //:                   SHORT GetOrSetFlag )
 
-//:   STRING ( 1024 ) szGeneratedString
+//:   STRING ( 2048 ) szGeneratedString
 public int 
 omMasLC_dUsageKeywordText( View     mMasLC,
                            String InternalEntityStructure,
@@ -5405,14 +5405,14 @@ omMasLC_dUsageKeywordText( View     mMasLC,
             sb_szGeneratedString = new StringBuilder( 32 );
          else
             sb_szGeneratedString = new StringBuilder( szGeneratedString );
-                  ZeidonStringCopy( sb_szGeneratedString, 1, 0, "", 1, 0, 1025 );
+                  ZeidonStringCopy( sb_szGeneratedString, 1, 0, "", 1, 0, 2049 );
          szGeneratedString = sb_szGeneratedString.toString( );}
          //:FOR EACH mMasLC.M_InsertTextUsage
          RESULT = SetCursorFirstEntity( mMasLC, "M_InsertTextUsage", "" );
          while ( RESULT > zCURSOR_UNCHANGED )
          { 
             //:IF szGeneratedString = ""
-            if ( ZeidonStringCompare( szGeneratedString, 1, 0, "", 1, 0, 1025 ) == 0 )
+            if ( ZeidonStringCompare( szGeneratedString, 1, 0, "", 1, 0, 2049 ) == 0 )
             { 
                //:szGeneratedString = mMasLC.M_InsertTextUsage.Text
                {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
@@ -5421,7 +5421,7 @@ omMasLC_dUsageKeywordText( View     mMasLC,
                   sb_szGeneratedString = new StringBuilder( 32 );
                else
                   sb_szGeneratedString = new StringBuilder( szGeneratedString );
-                               GetVariableFromAttribute( sb_szGeneratedString, mi_lTempInteger_0, 'S', 1025, mMasLC, "M_InsertTextUsage", "Text", "", 0 );
+                               GetVariableFromAttribute( sb_szGeneratedString, mi_lTempInteger_0, 'S', 2049, mMasLC, "M_InsertTextUsage", "Text", "", 0 );
                lTempInteger_0 = mi_lTempInteger_0.intValue( );
                szGeneratedString = sb_szGeneratedString.toString( );}
                //:ELSE
@@ -5434,7 +5434,7 @@ omMasLC_dUsageKeywordText( View     mMasLC,
                   sb_szGeneratedString = new StringBuilder( 32 );
                else
                   sb_szGeneratedString = new StringBuilder( szGeneratedString );
-                              ZeidonStringConcat( sb_szGeneratedString, 1, 0, ", ", 1, 0, 1025 );
+                              ZeidonStringConcat( sb_szGeneratedString, 1, 0, ", ", 1, 0, 2049 );
                szGeneratedString = sb_szGeneratedString.toString( );}
                {MutableInt mi_lTempInteger_1 = new MutableInt( lTempInteger_1 );
                StringBuilder sb_szTempString_0;
@@ -5442,7 +5442,7 @@ omMasLC_dUsageKeywordText( View     mMasLC,
                   sb_szTempString_0 = new StringBuilder( 32 );
                else
                   sb_szTempString_0 = new StringBuilder( szTempString_0 );
-                               GetVariableFromAttribute( sb_szTempString_0, mi_lTempInteger_1, 'S', 1025, mMasLC, "M_InsertTextUsage", "Text", "", 0 );
+                               GetVariableFromAttribute( sb_szTempString_0, mi_lTempInteger_1, 'S', 2049, mMasLC, "M_InsertTextUsage", "Text", "", 0 );
                lTempInteger_1 = mi_lTempInteger_1.intValue( );
                szTempString_0 = sb_szTempString_0.toString( );}
                 {StringBuilder sb_szGeneratedString;
@@ -5450,7 +5450,7 @@ omMasLC_dUsageKeywordText( View     mMasLC,
                   sb_szGeneratedString = new StringBuilder( 32 );
                else
                   sb_szGeneratedString = new StringBuilder( szGeneratedString );
-                              ZeidonStringConcat( sb_szGeneratedString, 1, 0, szTempString_0, 1, 0, 1025 );
+                              ZeidonStringConcat( sb_szGeneratedString, 1, 0, szTempString_0, 1, 0, 2049 );
                szGeneratedString = sb_szGeneratedString.toString( );}
             } 
 
@@ -5485,7 +5485,7 @@ omMasLC_dUsageKeywordText( View     mMasLC,
    //:                    STRING ( 32 ) InternalAttribStructure,
    //:                    SHORT GetOrSetFlag )
 
-   //:STRING ( 1024 ) szGeneratedString
+   //:STRING ( 2048 ) szGeneratedString
 public int 
 omMasLC_dUsageKeywordStmtText( View     mMasLC,
                                String InternalEntityStructure,
@@ -5511,11 +5511,11 @@ omMasLC_dUsageKeywordStmtText( View     mMasLC,
             sb_szGeneratedString = new StringBuilder( 32 );
          else
             sb_szGeneratedString = new StringBuilder( szGeneratedString );
-                   GetVariableFromAttribute( sb_szGeneratedString, mi_lTempInteger_0, 'S', 1025, mMasLC, "DisplayKeywordText", "Text", "", 0 );
+                   GetVariableFromAttribute( sb_szGeneratedString, mi_lTempInteger_0, 'S', 2049, mMasLC, "DisplayKeywordText", "Text", "", 0 );
          lTempInteger_0 = mi_lTempInteger_0.intValue( );
          szGeneratedString = sb_szGeneratedString.toString( );}
          //:IF szGeneratedString != ""
-         if ( ZeidonStringCompare( szGeneratedString, 1, 0, "", 1, 0, 1025 ) != 0 )
+         if ( ZeidonStringCompare( szGeneratedString, 1, 0, "", 1, 0, 2049 ) != 0 )
          { 
             //:GenerateKeywordTextIntoString( mMasLC, szGeneratedString,
             //:                            "M_InsertTextKeyword", "M_InsertText", ", " )
@@ -5559,7 +5559,7 @@ omMasLC_dUsageKeywordStmtText( View     mMasLC,
    //:                    STRING ( 32 ) InternalAttribStructure,
    //:                    SHORT GetOrSetFlag )
 
-   //:STRING ( 1024 ) szGeneratedString
+   //:STRING ( 2048 ) szGeneratedString
 public int 
 omMasLC_dFullKeywordTitleText( View     mMasLC,
                                String InternalEntityStructure,
@@ -5585,11 +5585,11 @@ omMasLC_dFullKeywordTitleText( View     mMasLC,
             sb_szGeneratedString = new StringBuilder( 32 );
          else
             sb_szGeneratedString = new StringBuilder( szGeneratedString );
-                   GetVariableFromAttribute( sb_szGeneratedString, mi_lTempInteger_0, 'S', 1025, mMasLC, "DisplayKeywordText", "Title", "", 0 );
+                   GetVariableFromAttribute( sb_szGeneratedString, mi_lTempInteger_0, 'S', 2049, mMasLC, "DisplayKeywordText", "Title", "", 0 );
          lTempInteger_0 = mi_lTempInteger_0.intValue( );
          szGeneratedString = sb_szGeneratedString.toString( );}
          //:IF szGeneratedString != ""
-         if ( ZeidonStringCompare( szGeneratedString, 1, 0, "", 1, 0, 1025 ) != 0 )
+         if ( ZeidonStringCompare( szGeneratedString, 1, 0, "", 1, 0, 2049 ) != 0 )
          { 
             //:GenerateKeywordTextIntoString( mMasLC, szGeneratedString,
             //:                            "M_InsertTextKeyword", "M_InsertText", ", " )
@@ -5893,7 +5893,7 @@ omMasLC_dUsageNameFootnote( View     mMasLC,
                   sb_szTempString_1 = new StringBuilder( 32 );
                else
                   sb_szTempString_1 = new StringBuilder( szTempString_1 );
-                               GetVariableFromAttribute( sb_szTempString_1, mi_lTempInteger_6, 'S', 1025, mMasLC2, "M_InsertTextUsage", "Text", "", 0 );
+                               GetVariableFromAttribute( sb_szTempString_1, mi_lTempInteger_6, 'S', 2049, mMasLC2, "M_InsertTextUsage", "Text", "", 0 );
                lTempInteger_6 = mi_lTempInteger_6.intValue( );
                szTempString_1 = sb_szTempString_1.toString( );}
                 {StringBuilder sb_szClassification;
@@ -6177,7 +6177,7 @@ omMasLC_dPathogenNameKeyFoot( View     mMasLC,
                   sb_szTempString_1 = new StringBuilder( 32 );
                else
                   sb_szTempString_1 = new StringBuilder( szTempString_1 );
-                               GetVariableFromAttribute( sb_szTempString_1, mi_lTempInteger_6, 'S', 1025, mMasLC2, "M_InsertTextUsage", "Text", "", 0 );
+                               GetVariableFromAttribute( sb_szTempString_1, mi_lTempInteger_6, 'S', 2049, mMasLC2, "M_InsertTextUsage", "Text", "", 0 );
                lTempInteger_6 = mi_lTempInteger_6.intValue( );
                szTempString_1 = sb_szTempString_1.toString( );}
                 {StringBuilder sb_szClassification;
@@ -6461,7 +6461,7 @@ omMasLC_dMarketUsgNameFootnote( View     mMasLC,
                   sb_szTempString_1 = new StringBuilder( 32 );
                else
                   sb_szTempString_1 = new StringBuilder( szTempString_1 );
-                               GetVariableFromAttribute( sb_szTempString_1, mi_lTempInteger_6, 'S', 1025, mMasLC2, "M_InsertTextMarketUsage", "Text", "", 0 );
+                               GetVariableFromAttribute( sb_szTempString_1, mi_lTempInteger_6, 'S', 2049, mMasLC2, "M_InsertTextMarketUsage", "Text", "", 0 );
                lTempInteger_6 = mi_lTempInteger_6.intValue( );
                szTempString_1 = sb_szTempString_1.toString( );}
                 {StringBuilder sb_szClassification;
@@ -6536,7 +6536,7 @@ omMasLC_dGenStmtTitleText( View     mMasLC,
                            Integer   GetOrSetFlag )
 {
    zVIEW    mMasLC2 = new zVIEW( );
-   //:STRING ( 1024 ) szCombinedText
+   //:STRING ( 2048 ) szCombinedText
    String   szCombinedText = null;
    String   szTempString_0 = null;
    int      lTempInteger_0 = 0;
@@ -6576,21 +6576,21 @@ omMasLC_dGenStmtTitleText( View     mMasLC,
                   sb_szCombinedText = new StringBuilder( 32 );
                else
                   sb_szCombinedText = new StringBuilder( szCombinedText );
-                              ZeidonStringCopy( sb_szCombinedText, 1, 0, "<b>", 1, 0, 1025 );
+                              ZeidonStringCopy( sb_szCombinedText, 1, 0, "<b>", 1, 0, 2049 );
                szCombinedText = sb_szCombinedText.toString( );}
                 {StringBuilder sb_szCombinedText;
                if ( szCombinedText == null )
                   sb_szCombinedText = new StringBuilder( 32 );
                else
                   sb_szCombinedText = new StringBuilder( szCombinedText );
-                              ZeidonStringConcat( sb_szCombinedText, 1, 0, szTempString_0, 1, 0, 1025 );
+                              ZeidonStringConcat( sb_szCombinedText, 1, 0, szTempString_0, 1, 0, 2049 );
                szCombinedText = sb_szCombinedText.toString( );}
                 {StringBuilder sb_szCombinedText;
                if ( szCombinedText == null )
                   sb_szCombinedText = new StringBuilder( 32 );
                else
                   sb_szCombinedText = new StringBuilder( szCombinedText );
-                              ZeidonStringConcat( sb_szCombinedText, 1, 0, "</b>", 1, 0, 1025 );
+                              ZeidonStringConcat( sb_szCombinedText, 1, 0, "</b>", 1, 0, 2049 );
                szCombinedText = sb_szCombinedText.toString( );}
                //:ELSE
             } 
@@ -6603,7 +6603,7 @@ omMasLC_dGenStmtTitleText( View     mMasLC,
                   sb_szCombinedText = new StringBuilder( 32 );
                else
                   sb_szCombinedText = new StringBuilder( szCombinedText );
-                               GetVariableFromAttribute( sb_szCombinedText, mi_lTempInteger_1, 'S', 1025, mMasLC, "M_GeneralStatement", "Title", "", 0 );
+                               GetVariableFromAttribute( sb_szCombinedText, mi_lTempInteger_1, 'S', 2049, mMasLC, "M_GeneralStatement", "Title", "", 0 );
                lTempInteger_1 = mi_lTempInteger_1.intValue( );
                szCombinedText = sb_szCombinedText.toString( );}
             } 
@@ -6621,7 +6621,7 @@ omMasLC_dGenStmtTitleText( View     mMasLC,
                sb_szCombinedText = new StringBuilder( 32 );
             else
                sb_szCombinedText = new StringBuilder( szCombinedText );
-                        ZeidonStringConcat( sb_szCombinedText, 1, 0, "<b> ", 1, 0, 1025 );
+                        ZeidonStringConcat( sb_szCombinedText, 1, 0, "<b> ", 1, 0, 2049 );
             szCombinedText = sb_szCombinedText.toString( );}
             {MutableInt mi_lTempInteger_2 = new MutableInt( lTempInteger_2 );
             StringBuilder sb_szTempString_1;
@@ -6629,7 +6629,7 @@ omMasLC_dGenStmtTitleText( View     mMasLC,
                sb_szTempString_1 = new StringBuilder( 32 );
             else
                sb_szTempString_1 = new StringBuilder( szTempString_1 );
-                         GetVariableFromAttribute( sb_szTempString_1, mi_lTempInteger_2, 'S', 1025, mMasLC, "M_GeneralStatement", "Text", "", 0 );
+                         GetVariableFromAttribute( sb_szTempString_1, mi_lTempInteger_2, 'S', 2049, mMasLC, "M_GeneralStatement", "Text", "", 0 );
             lTempInteger_2 = mi_lTempInteger_2.intValue( );
             szTempString_1 = sb_szTempString_1.toString( );}
              {StringBuilder sb_szCombinedText;
@@ -6637,14 +6637,14 @@ omMasLC_dGenStmtTitleText( View     mMasLC,
                sb_szCombinedText = new StringBuilder( 32 );
             else
                sb_szCombinedText = new StringBuilder( szCombinedText );
-                        ZeidonStringConcat( sb_szCombinedText, 1, 0, szTempString_1, 1, 0, 1025 );
+                        ZeidonStringConcat( sb_szCombinedText, 1, 0, szTempString_1, 1, 0, 2049 );
             szCombinedText = sb_szCombinedText.toString( );}
              {StringBuilder sb_szCombinedText;
             if ( szCombinedText == null )
                sb_szCombinedText = new StringBuilder( 32 );
             else
                sb_szCombinedText = new StringBuilder( szCombinedText );
-                        ZeidonStringConcat( sb_szCombinedText, 1, 0, "</b>", 1, 0, 1025 );
+                        ZeidonStringConcat( sb_szCombinedText, 1, 0, "</b>", 1, 0, 2049 );
             szCombinedText = sb_szCombinedText.toString( );}
             //:ELSE
          } 
@@ -6656,7 +6656,7 @@ omMasLC_dGenStmtTitleText( View     mMasLC,
                sb_szCombinedText = new StringBuilder( 32 );
             else
                sb_szCombinedText = new StringBuilder( szCombinedText );
-                        ZeidonStringConcat( sb_szCombinedText, 1, 0, " ", 1, 0, 1025 );
+                        ZeidonStringConcat( sb_szCombinedText, 1, 0, " ", 1, 0, 2049 );
             szCombinedText = sb_szCombinedText.toString( );}
             {MutableInt mi_lTempInteger_3 = new MutableInt( lTempInteger_3 );
             StringBuilder sb_szTempString_2;
@@ -6664,7 +6664,7 @@ omMasLC_dGenStmtTitleText( View     mMasLC,
                sb_szTempString_2 = new StringBuilder( 32 );
             else
                sb_szTempString_2 = new StringBuilder( szTempString_2 );
-                         GetVariableFromAttribute( sb_szTempString_2, mi_lTempInteger_3, 'S', 1025, mMasLC, "M_GeneralStatement", "Text", "", 0 );
+                         GetVariableFromAttribute( sb_szTempString_2, mi_lTempInteger_3, 'S', 2049, mMasLC, "M_GeneralStatement", "Text", "", 0 );
             lTempInteger_3 = mi_lTempInteger_3.intValue( );
             szTempString_2 = sb_szTempString_2.toString( );}
              {StringBuilder sb_szCombinedText;
@@ -6672,7 +6672,7 @@ omMasLC_dGenStmtTitleText( View     mMasLC,
                sb_szCombinedText = new StringBuilder( 32 );
             else
                sb_szCombinedText = new StringBuilder( szCombinedText );
-                        ZeidonStringConcat( sb_szCombinedText, 1, 0, szTempString_2, 1, 0, 1025 );
+                        ZeidonStringConcat( sb_szCombinedText, 1, 0, szTempString_2, 1, 0, 2049 );
             szCombinedText = sb_szCombinedText.toString( );}
          } 
 
@@ -6703,7 +6703,7 @@ omMasLC_dGenStmtTitleText( View     mMasLC,
 //:                       STRING ( 32 ) InternalAttribStructure,
 //:                       SHORT GetOrSetFlag )
 
-//:   STRING ( 1024 ) szKeyValue
+//:   STRING ( 2048 ) szKeyValue
 public int 
 omMasLC_dMarketingKeywordText( View     mMasLC,
                                String InternalEntityStructure,
@@ -6731,14 +6731,14 @@ omMasLC_dMarketingKeywordText( View     mMasLC,
             sb_szKeyValue = new StringBuilder( 32 );
          else
             sb_szKeyValue = new StringBuilder( szKeyValue );
-                  ZeidonStringCopy( sb_szKeyValue, 1, 0, "", 1, 0, 1025 );
+                  ZeidonStringCopy( sb_szKeyValue, 1, 0, "", 1, 0, 2049 );
          szKeyValue = sb_szKeyValue.toString( );}
          //:FOR EACH mMasLC.M_InsertTextMarketing
          RESULT = SetCursorFirstEntity( mMasLC, "M_InsertTextMarketing", "" );
          while ( RESULT > zCURSOR_UNCHANGED )
          { 
             //:IF szKeyValue = ""
-            if ( ZeidonStringCompare( szKeyValue, 1, 0, "", 1, 0, 1025 ) == 0 )
+            if ( ZeidonStringCompare( szKeyValue, 1, 0, "", 1, 0, 2049 ) == 0 )
             { 
                //:szKeyValue = "<b>" + mMasLC.M_InsertTextMarketing.Text
                {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
@@ -6747,7 +6747,7 @@ omMasLC_dMarketingKeywordText( View     mMasLC,
                   sb_szTempString_0 = new StringBuilder( 32 );
                else
                   sb_szTempString_0 = new StringBuilder( szTempString_0 );
-                               GetVariableFromAttribute( sb_szTempString_0, mi_lTempInteger_0, 'S', 1025, mMasLC, "M_InsertTextMarketing", "Text", "", 0 );
+                               GetVariableFromAttribute( sb_szTempString_0, mi_lTempInteger_0, 'S', 2049, mMasLC, "M_InsertTextMarketing", "Text", "", 0 );
                lTempInteger_0 = mi_lTempInteger_0.intValue( );
                szTempString_0 = sb_szTempString_0.toString( );}
                 {StringBuilder sb_szKeyValue;
@@ -6755,14 +6755,14 @@ omMasLC_dMarketingKeywordText( View     mMasLC,
                   sb_szKeyValue = new StringBuilder( 32 );
                else
                   sb_szKeyValue = new StringBuilder( szKeyValue );
-                              ZeidonStringCopy( sb_szKeyValue, 1, 0, "<b>", 1, 0, 1025 );
+                              ZeidonStringCopy( sb_szKeyValue, 1, 0, "<b>", 1, 0, 2049 );
                szKeyValue = sb_szKeyValue.toString( );}
                 {StringBuilder sb_szKeyValue;
                if ( szKeyValue == null )
                   sb_szKeyValue = new StringBuilder( 32 );
                else
                   sb_szKeyValue = new StringBuilder( szKeyValue );
-                              ZeidonStringConcat( sb_szKeyValue, 1, 0, szTempString_0, 1, 0, 1025 );
+                              ZeidonStringConcat( sb_szKeyValue, 1, 0, szTempString_0, 1, 0, 2049 );
                szKeyValue = sb_szKeyValue.toString( );}
                //:ELSE
             } 
@@ -6774,7 +6774,7 @@ omMasLC_dMarketingKeywordText( View     mMasLC,
                   sb_szKeyValue = new StringBuilder( 32 );
                else
                   sb_szKeyValue = new StringBuilder( szKeyValue );
-                              ZeidonStringConcat( sb_szKeyValue, 1, 0, ", ", 1, 0, 1025 );
+                              ZeidonStringConcat( sb_szKeyValue, 1, 0, ", ", 1, 0, 2049 );
                szKeyValue = sb_szKeyValue.toString( );}
                {MutableInt mi_lTempInteger_1 = new MutableInt( lTempInteger_1 );
                StringBuilder sb_szTempString_1;
@@ -6782,7 +6782,7 @@ omMasLC_dMarketingKeywordText( View     mMasLC,
                   sb_szTempString_1 = new StringBuilder( 32 );
                else
                   sb_szTempString_1 = new StringBuilder( szTempString_1 );
-                               GetVariableFromAttribute( sb_szTempString_1, mi_lTempInteger_1, 'S', 1025, mMasLC, "M_InsertTextMarketing", "Text", "", 0 );
+                               GetVariableFromAttribute( sb_szTempString_1, mi_lTempInteger_1, 'S', 2049, mMasLC, "M_InsertTextMarketing", "Text", "", 0 );
                lTempInteger_1 = mi_lTempInteger_1.intValue( );
                szTempString_1 = sb_szTempString_1.toString( );}
                 {StringBuilder sb_szKeyValue;
@@ -6790,7 +6790,7 @@ omMasLC_dMarketingKeywordText( View     mMasLC,
                   sb_szKeyValue = new StringBuilder( 32 );
                else
                   sb_szKeyValue = new StringBuilder( szKeyValue );
-                              ZeidonStringConcat( sb_szKeyValue, 1, 0, szTempString_1, 1, 0, 1025 );
+                              ZeidonStringConcat( sb_szKeyValue, 1, 0, szTempString_1, 1, 0, 2049 );
                szKeyValue = sb_szKeyValue.toString( );}
             } 
 
@@ -6800,7 +6800,7 @@ omMasLC_dMarketingKeywordText( View     mMasLC,
 
          //:END
          //:IF szKeyValue != ""
-         if ( ZeidonStringCompare( szKeyValue, 1, 0, "", 1, 0, 1025 ) != 0 )
+         if ( ZeidonStringCompare( szKeyValue, 1, 0, "", 1, 0, 2049 ) != 0 )
          { 
             //:szKeyValue = szKeyValue  + "</b>"
              {StringBuilder sb_szKeyValue;
@@ -6808,7 +6808,7 @@ omMasLC_dMarketingKeywordText( View     mMasLC,
                sb_szKeyValue = new StringBuilder( 32 );
             else
                sb_szKeyValue = new StringBuilder( szKeyValue );
-                        ZeidonStringConcat( sb_szKeyValue, 1, 0, "</b>", 1, 0, 1025 );
+                        ZeidonStringConcat( sb_szKeyValue, 1, 0, "</b>", 1, 0, 2049 );
             szKeyValue = sb_szKeyValue.toString( );}
          } 
 
@@ -6847,7 +6847,7 @@ omMasLC_dMarketingTitleKeyword( View     mMasLC,
                                 Integer   GetOrSetFlag )
 {
    String   szEntityName = null;
-   //:STRING ( 1024 ) szDisplayStatement
+   //:STRING ( 2048 ) szDisplayStatement
    String   szDisplayStatement = null;
 
 
@@ -6880,7 +6880,7 @@ omMasLC_dMarketingTitleKeyword( View     mMasLC,
          szDisplayStatement = sb_szDisplayStatement.toString( );}
 
          //:IF szDisplayStatement != ""
-         if ( ZeidonStringCompare( szDisplayStatement, 1, 0, "", 1, 0, 1025 ) != 0 )
+         if ( ZeidonStringCompare( szDisplayStatement, 1, 0, "", 1, 0, 2049 ) != 0 )
          { 
             //:GenerateKeywordTextIntoString( mMasLC, szDisplayStatement,
             //:                            "M_InsertTextKeywordMarketing", "M_InsertTextMarketing", ", " )
@@ -6932,7 +6932,7 @@ omMasLC_dMarketingTextKeyword( View     mMasLC,
                                Integer   GetOrSetFlag )
 {
    String   szEntityName = null;
-   //:STRING ( 1024 ) szDisplayStatement
+   //:STRING ( 2048 ) szDisplayStatement
    String   szDisplayStatement = null;
 
 
@@ -6965,7 +6965,7 @@ omMasLC_dMarketingTextKeyword( View     mMasLC,
          szDisplayStatement = sb_szDisplayStatement.toString( );}
 
          //:IF szDisplayStatement != ""
-         if ( ZeidonStringCompare( szDisplayStatement, 1, 0, "", 1, 0, 1025 ) != 0 )
+         if ( ZeidonStringCompare( szDisplayStatement, 1, 0, "", 1, 0, 2049 ) != 0 )
          { 
             //:GenerateKeywordTextIntoString( mMasLC, szDisplayStatement,
             //:                            "M_InsertTextKeywordMarketing", "M_InsertTextMarketing", ", " )
@@ -7009,7 +7009,7 @@ omMasLC_dMarketingTextKeyword( View     mMasLC,
    //:              STRING ( 32 ) InternalAttribStructure,
    //:              SHORT GetOrSetFlag )
 
-   //:STRING ( 1024 ) szKeyValue
+   //:STRING ( 2048 ) szKeyValue
 public int 
 omMasLC_dDU_KeywordText( View     mMasLC,
                          String InternalEntityStructure,
@@ -7036,14 +7036,14 @@ omMasLC_dDU_KeywordText( View     mMasLC,
             sb_szKeyValue = new StringBuilder( 32 );
          else
             sb_szKeyValue = new StringBuilder( szKeyValue );
-                  ZeidonStringCopy( sb_szKeyValue, 1, 0, "", 1, 0, 1025 );
+                  ZeidonStringCopy( sb_szKeyValue, 1, 0, "", 1, 0, 2049 );
          szKeyValue = sb_szKeyValue.toString( );}
          //:FOR EACH mMasLC.M_InsertTextDU
          RESULT = SetCursorFirstEntity( mMasLC, "M_InsertTextDU", "" );
          while ( RESULT > zCURSOR_UNCHANGED )
          { 
             //:IF szKeyValue = ""
-            if ( ZeidonStringCompare( szKeyValue, 1, 0, "", 1, 0, 1025 ) == 0 )
+            if ( ZeidonStringCompare( szKeyValue, 1, 0, "", 1, 0, 2049 ) == 0 )
             { 
                //:szKeyValue = mMasLC.M_InsertTextDU.Text
                {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
@@ -7052,7 +7052,7 @@ omMasLC_dDU_KeywordText( View     mMasLC,
                   sb_szKeyValue = new StringBuilder( 32 );
                else
                   sb_szKeyValue = new StringBuilder( szKeyValue );
-                               GetVariableFromAttribute( sb_szKeyValue, mi_lTempInteger_0, 'S', 1025, mMasLC, "M_InsertTextDU", "Text", "", 0 );
+                               GetVariableFromAttribute( sb_szKeyValue, mi_lTempInteger_0, 'S', 2049, mMasLC, "M_InsertTextDU", "Text", "", 0 );
                lTempInteger_0 = mi_lTempInteger_0.intValue( );
                szKeyValue = sb_szKeyValue.toString( );}
                //:ELSE
@@ -7065,7 +7065,7 @@ omMasLC_dDU_KeywordText( View     mMasLC,
                   sb_szKeyValue = new StringBuilder( 32 );
                else
                   sb_szKeyValue = new StringBuilder( szKeyValue );
-                              ZeidonStringConcat( sb_szKeyValue, 1, 0, ", ", 1, 0, 1025 );
+                              ZeidonStringConcat( sb_szKeyValue, 1, 0, ", ", 1, 0, 2049 );
                szKeyValue = sb_szKeyValue.toString( );}
                {MutableInt mi_lTempInteger_1 = new MutableInt( lTempInteger_1 );
                StringBuilder sb_szTempString_0;
@@ -7073,7 +7073,7 @@ omMasLC_dDU_KeywordText( View     mMasLC,
                   sb_szTempString_0 = new StringBuilder( 32 );
                else
                   sb_szTempString_0 = new StringBuilder( szTempString_0 );
-                               GetVariableFromAttribute( sb_szTempString_0, mi_lTempInteger_1, 'S', 1025, mMasLC, "M_InsertTextDU", "Text", "", 0 );
+                               GetVariableFromAttribute( sb_szTempString_0, mi_lTempInteger_1, 'S', 2049, mMasLC, "M_InsertTextDU", "Text", "", 0 );
                lTempInteger_1 = mi_lTempInteger_1.intValue( );
                szTempString_0 = sb_szTempString_0.toString( );}
                 {StringBuilder sb_szKeyValue;
@@ -7081,7 +7081,7 @@ omMasLC_dDU_KeywordText( View     mMasLC,
                   sb_szKeyValue = new StringBuilder( 32 );
                else
                   sb_szKeyValue = new StringBuilder( szKeyValue );
-                              ZeidonStringConcat( sb_szKeyValue, 1, 0, szTempString_0, 1, 0, 1025 );
+                              ZeidonStringConcat( sb_szKeyValue, 1, 0, szTempString_0, 1, 0, 2049 );
                szKeyValue = sb_szKeyValue.toString( );}
             } 
 
@@ -7116,7 +7116,7 @@ omMasLC_dDU_KeywordText( View     mMasLC,
    //:              STRING ( 32 ) InternalAttribStructure,
    //:              SHORT GetOrSetFlag )
 
-   //:STRING ( 1024 ) szGeneratedString
+   //:STRING ( 2048 ) szGeneratedString
 public int 
 omMasLC_dSD_KeywordText( View     mMasLC,
                          String InternalEntityStructure,
@@ -7143,14 +7143,14 @@ omMasLC_dSD_KeywordText( View     mMasLC,
             sb_szGeneratedString = new StringBuilder( 32 );
          else
             sb_szGeneratedString = new StringBuilder( szGeneratedString );
-                  ZeidonStringCopy( sb_szGeneratedString, 1, 0, "", 1, 0, 1025 );
+                  ZeidonStringCopy( sb_szGeneratedString, 1, 0, "", 1, 0, 2049 );
          szGeneratedString = sb_szGeneratedString.toString( );}
          //:FOR EACH mMasLC.M_InsertTextSD
          RESULT = SetCursorFirstEntity( mMasLC, "M_InsertTextSD", "" );
          while ( RESULT > zCURSOR_UNCHANGED )
          { 
             //:IF szGeneratedString = ""
-            if ( ZeidonStringCompare( szGeneratedString, 1, 0, "", 1, 0, 1025 ) == 0 )
+            if ( ZeidonStringCompare( szGeneratedString, 1, 0, "", 1, 0, 2049 ) == 0 )
             { 
                //:szGeneratedString = mMasLC.M_InsertTextSD.Text
                {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
@@ -7159,7 +7159,7 @@ omMasLC_dSD_KeywordText( View     mMasLC,
                   sb_szGeneratedString = new StringBuilder( 32 );
                else
                   sb_szGeneratedString = new StringBuilder( szGeneratedString );
-                               GetVariableFromAttribute( sb_szGeneratedString, mi_lTempInteger_0, 'S', 1025, mMasLC, "M_InsertTextSD", "Text", "", 0 );
+                               GetVariableFromAttribute( sb_szGeneratedString, mi_lTempInteger_0, 'S', 2049, mMasLC, "M_InsertTextSD", "Text", "", 0 );
                lTempInteger_0 = mi_lTempInteger_0.intValue( );
                szGeneratedString = sb_szGeneratedString.toString( );}
                //:ELSE
@@ -7172,7 +7172,7 @@ omMasLC_dSD_KeywordText( View     mMasLC,
                   sb_szGeneratedString = new StringBuilder( 32 );
                else
                   sb_szGeneratedString = new StringBuilder( szGeneratedString );
-                              ZeidonStringConcat( sb_szGeneratedString, 1, 0, ", ", 1, 0, 1025 );
+                              ZeidonStringConcat( sb_szGeneratedString, 1, 0, ", ", 1, 0, 2049 );
                szGeneratedString = sb_szGeneratedString.toString( );}
                {MutableInt mi_lTempInteger_1 = new MutableInt( lTempInteger_1 );
                StringBuilder sb_szTempString_0;
@@ -7180,7 +7180,7 @@ omMasLC_dSD_KeywordText( View     mMasLC,
                   sb_szTempString_0 = new StringBuilder( 32 );
                else
                   sb_szTempString_0 = new StringBuilder( szTempString_0 );
-                               GetVariableFromAttribute( sb_szTempString_0, mi_lTempInteger_1, 'S', 1025, mMasLC, "M_InsertTextSD", "Text", "", 0 );
+                               GetVariableFromAttribute( sb_szTempString_0, mi_lTempInteger_1, 'S', 2049, mMasLC, "M_InsertTextSD", "Text", "", 0 );
                lTempInteger_1 = mi_lTempInteger_1.intValue( );
                szTempString_0 = sb_szTempString_0.toString( );}
                 {StringBuilder sb_szGeneratedString;
@@ -7188,7 +7188,7 @@ omMasLC_dSD_KeywordText( View     mMasLC,
                   sb_szGeneratedString = new StringBuilder( 32 );
                else
                   sb_szGeneratedString = new StringBuilder( szGeneratedString );
-                              ZeidonStringConcat( sb_szGeneratedString, 1, 0, szTempString_0, 1, 0, 1025 );
+                              ZeidonStringConcat( sb_szGeneratedString, 1, 0, szTempString_0, 1, 0, 2049 );
                szGeneratedString = sb_szGeneratedString.toString( );}
             } 
 
@@ -7223,7 +7223,7 @@ omMasLC_dSD_KeywordText( View     mMasLC,
    //:                  STRING ( 32 ) InternalAttribStructure,
    //:                  SHORT GetOrSetFlag )
 
-   //:STRING ( 1024 ) szGeneratedString
+   //:STRING ( 2048 ) szGeneratedString
 public int 
 omMasLC_dGeneralKeywordText( View     mMasLC,
                              String InternalEntityStructure,
@@ -7250,14 +7250,14 @@ omMasLC_dGeneralKeywordText( View     mMasLC,
             sb_szGeneratedString = new StringBuilder( 32 );
          else
             sb_szGeneratedString = new StringBuilder( szGeneratedString );
-                  ZeidonStringCopy( sb_szGeneratedString, 1, 0, "", 1, 0, 1025 );
+                  ZeidonStringCopy( sb_szGeneratedString, 1, 0, "", 1, 0, 2049 );
          szGeneratedString = sb_szGeneratedString.toString( );}
          //:FOR EACH mMasLC.M_InsertTextGeneral
          RESULT = SetCursorFirstEntity( mMasLC, "M_InsertTextGeneral", "" );
          while ( RESULT > zCURSOR_UNCHANGED )
          { 
             //:IF szGeneratedString = ""
-            if ( ZeidonStringCompare( szGeneratedString, 1, 0, "", 1, 0, 1025 ) == 0 )
+            if ( ZeidonStringCompare( szGeneratedString, 1, 0, "", 1, 0, 2049 ) == 0 )
             { 
                //:szGeneratedString = mMasLC.M_InsertTextGeneral.Text
                {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
@@ -7266,7 +7266,7 @@ omMasLC_dGeneralKeywordText( View     mMasLC,
                   sb_szGeneratedString = new StringBuilder( 32 );
                else
                   sb_szGeneratedString = new StringBuilder( szGeneratedString );
-                               GetVariableFromAttribute( sb_szGeneratedString, mi_lTempInteger_0, 'S', 1025, mMasLC, "M_InsertTextGeneral", "Text", "", 0 );
+                               GetVariableFromAttribute( sb_szGeneratedString, mi_lTempInteger_0, 'S', 2049, mMasLC, "M_InsertTextGeneral", "Text", "", 0 );
                lTempInteger_0 = mi_lTempInteger_0.intValue( );
                szGeneratedString = sb_szGeneratedString.toString( );}
                //:ELSE
@@ -7279,7 +7279,7 @@ omMasLC_dGeneralKeywordText( View     mMasLC,
                   sb_szGeneratedString = new StringBuilder( 32 );
                else
                   sb_szGeneratedString = new StringBuilder( szGeneratedString );
-                              ZeidonStringConcat( sb_szGeneratedString, 1, 0, ", ", 1, 0, 1025 );
+                              ZeidonStringConcat( sb_szGeneratedString, 1, 0, ", ", 1, 0, 2049 );
                szGeneratedString = sb_szGeneratedString.toString( );}
                {MutableInt mi_lTempInteger_1 = new MutableInt( lTempInteger_1 );
                StringBuilder sb_szTempString_0;
@@ -7287,7 +7287,7 @@ omMasLC_dGeneralKeywordText( View     mMasLC,
                   sb_szTempString_0 = new StringBuilder( 32 );
                else
                   sb_szTempString_0 = new StringBuilder( szTempString_0 );
-                               GetVariableFromAttribute( sb_szTempString_0, mi_lTempInteger_1, 'S', 1025, mMasLC, "M_InsertTextGeneral", "Text", "", 0 );
+                               GetVariableFromAttribute( sb_szTempString_0, mi_lTempInteger_1, 'S', 2049, mMasLC, "M_InsertTextGeneral", "Text", "", 0 );
                lTempInteger_1 = mi_lTempInteger_1.intValue( );
                szTempString_0 = sb_szTempString_0.toString( );}
                 {StringBuilder sb_szGeneratedString;
@@ -7295,7 +7295,7 @@ omMasLC_dGeneralKeywordText( View     mMasLC,
                   sb_szGeneratedString = new StringBuilder( 32 );
                else
                   sb_szGeneratedString = new StringBuilder( szGeneratedString );
-                              ZeidonStringConcat( sb_szGeneratedString, 1, 0, szTempString_0, 1, 0, 1025 );
+                              ZeidonStringConcat( sb_szGeneratedString, 1, 0, szTempString_0, 1, 0, 2049 );
                szGeneratedString = sb_szGeneratedString.toString( );}
             } 
 
@@ -7330,7 +7330,7 @@ omMasLC_dGeneralKeywordText( View     mMasLC,
    //:                  STRING ( 32 ) InternalAttribStructure,
    //:                  SHORT GetOrSetFlag )
 
-   //:STRING ( 1024 ) szTitle
+   //:STRING ( 2048 ) szTitle
 public int 
 omMasLC_dMarketTitleTextKey( View     mMasLC,
                              String InternalEntityStructure,
@@ -7338,7 +7338,7 @@ omMasLC_dMarketTitleTextKey( View     mMasLC,
                              Integer   GetOrSetFlag )
 {
    String   szTitle = null;
-   //:STRING ( 1024 ) szText
+   //:STRING ( 2048 ) szText
    String   szText = null;
    //:STRING ( 2048 ) szDisplayStatement
    String   szDisplayStatement = null;
@@ -7361,7 +7361,7 @@ omMasLC_dMarketTitleTextKey( View     mMasLC,
             sb_szTitle = new StringBuilder( 32 );
          else
             sb_szTitle = new StringBuilder( szTitle );
-                   GetVariableFromAttribute( sb_szTitle, mi_lTempInteger_0, 'S', 1025, mMasLC, "M_MarketingStatement", "Title", "", 0 );
+                   GetVariableFromAttribute( sb_szTitle, mi_lTempInteger_0, 'S', 2049, mMasLC, "M_MarketingStatement", "Title", "", 0 );
          lTempInteger_0 = mi_lTempInteger_0.intValue( );
          szTitle = sb_szTitle.toString( );}
          //:szText = mMasLC.M_MarketingStatement.Text
@@ -7371,12 +7371,12 @@ omMasLC_dMarketTitleTextKey( View     mMasLC,
             sb_szText = new StringBuilder( 32 );
          else
             sb_szText = new StringBuilder( szText );
-                   GetVariableFromAttribute( sb_szText, mi_lTempInteger_1, 'S', 1025, mMasLC, "M_MarketingStatement", "Text", "", 0 );
+                   GetVariableFromAttribute( sb_szText, mi_lTempInteger_1, 'S', 2049, mMasLC, "M_MarketingStatement", "Text", "", 0 );
          lTempInteger_1 = mi_lTempInteger_1.intValue( );
          szText = sb_szText.toString( );}
 
          //:IF szTitle != ""
-         if ( ZeidonStringCompare( szTitle, 1, 0, "", 1, 0, 1025 ) != 0 )
+         if ( ZeidonStringCompare( szTitle, 1, 0, "", 1, 0, 2049 ) != 0 )
          { 
             //:GenerateKeywordTextIntoString( mMasLC, szTitle,
             //:                            "M_InsertTextKeywordMarketing", "M_InsertTextMarketing", ", " )
@@ -7417,7 +7417,7 @@ omMasLC_dMarketTitleTextKey( View     mMasLC,
 
          //:END
          //:IF szText != ""
-         if ( ZeidonStringCompare( szText, 1, 0, "", 1, 0, 1025 ) != 0 )
+         if ( ZeidonStringCompare( szText, 1, 0, "", 1, 0, 2049 ) != 0 )
          { 
             //:GenerateKeywordTextIntoString( mMasLC, szText,
             //:                            "M_InsertTextKeywordMarketing", "M_InsertTextMarketing", ", " )
@@ -7476,7 +7476,7 @@ omMasLC_dMarketTitleTextKey( View     mMasLC,
    //:                    STRING ( 32 ) InternalAttribStructure,
    //:                    SHORT GetOrSetFlag )
 
-   //:STRING ( 1024 ) szCombinedText
+   //:STRING ( 2048 ) szCombinedText
 public int 
 omMasLC_dSubUsageCombinedText( View     mMasLC,
                                String InternalEntityStructure,
@@ -7504,14 +7504,14 @@ omMasLC_dSubUsageCombinedText( View     mMasLC,
             sb_szCombinedText = new StringBuilder( 32 );
          else
             sb_szCombinedText = new StringBuilder( szCombinedText );
-                  ZeidonStringCopy( sb_szCombinedText, 1, 0, "", 1, 0, 1025 );
+                  ZeidonStringCopy( sb_szCombinedText, 1, 0, "", 1, 0, 2049 );
          szCombinedText = sb_szCombinedText.toString( );}
          //:FOR EACH mMasLC.M_UsageGroupUsage
          RESULT = SetCursorFirstEntity( mMasLC, "M_UsageGroupUsage", "" );
          while ( RESULT > zCURSOR_UNCHANGED )
          { 
             //:IF szCombinedText = ""
-            if ( ZeidonStringCompare( szCombinedText, 1, 0, "", 1, 0, 1025 ) == 0 )
+            if ( ZeidonStringCompare( szCombinedText, 1, 0, "", 1, 0, 2049 ) == 0 )
             { 
                //:szCombinedText = mMasLC.M_UsageGroupUsage.Name
                {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
@@ -7520,7 +7520,7 @@ omMasLC_dSubUsageCombinedText( View     mMasLC,
                   sb_szCombinedText = new StringBuilder( 32 );
                else
                   sb_szCombinedText = new StringBuilder( szCombinedText );
-                               GetVariableFromAttribute( sb_szCombinedText, mi_lTempInteger_0, 'S', 1025, mMasLC, "M_UsageGroupUsage", "Name", "", 0 );
+                               GetVariableFromAttribute( sb_szCombinedText, mi_lTempInteger_0, 'S', 2049, mMasLC, "M_UsageGroupUsage", "Name", "", 0 );
                lTempInteger_0 = mi_lTempInteger_0.intValue( );
                szCombinedText = sb_szCombinedText.toString( );}
                //:ELSE
@@ -7533,7 +7533,7 @@ omMasLC_dSubUsageCombinedText( View     mMasLC,
                   sb_szCombinedText = new StringBuilder( 32 );
                else
                   sb_szCombinedText = new StringBuilder( szCombinedText );
-                              ZeidonStringConcat( sb_szCombinedText, 1, 0, ", ", 1, 0, 1025 );
+                              ZeidonStringConcat( sb_szCombinedText, 1, 0, ", ", 1, 0, 2049 );
                szCombinedText = sb_szCombinedText.toString( );}
                {MutableInt mi_lTempInteger_1 = new MutableInt( lTempInteger_1 );
                StringBuilder sb_szTempString_0;
@@ -7549,7 +7549,7 @@ omMasLC_dSubUsageCombinedText( View     mMasLC,
                   sb_szCombinedText = new StringBuilder( 32 );
                else
                   sb_szCombinedText = new StringBuilder( szCombinedText );
-                              ZeidonStringConcat( sb_szCombinedText, 1, 0, szTempString_0, 1, 0, 1025 );
+                              ZeidonStringConcat( sb_szCombinedText, 1, 0, szTempString_0, 1, 0, 2049 );
                szCombinedText = sb_szCombinedText.toString( );}
             } 
 
@@ -7677,8 +7677,8 @@ omMasLC_BuildUsageGroupEntries( View     mMasLC )
 //:BuildUsageKeyEntries( VIEW mMasLC BASED ON LOD mMasLC,
 //:                      STRING ( 32 ) SourceKeywordEntityName,
 //:                      STRING ( 32 ) SourceTextEntityName,
-//:                      STRING ( 1024 ) TextValue,
-//:                      STRING ( 1024 ) TitleValue )
+//:                      STRING ( 2048 ) TextValue,
+//:                      STRING ( 2048 ) TitleValue )
 
 //:   VIEW mMasLC_Root REGISTERED AS mMasLC_Root
 public int 
@@ -7998,7 +7998,7 @@ omMasLC_dUsageClaimClass( View     mMasLC,
 //:                      STRING ( 32 ) InternalAttribStructure,
 //:                      SHORT GetOrSetFlag )
 
-//:   STRING ( 1024 ) szDisplayStatement
+//:   STRING ( 2048 ) szDisplayStatement
 public int 
 omMasLC_dUsgFullEmbeddedName( View     mMasLC,
                               String InternalEntityStructure,
@@ -8023,7 +8023,7 @@ omMasLC_dUsgFullEmbeddedName( View     mMasLC,
             sb_szDisplayStatement = new StringBuilder( 32 );
          else
             sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
-                   GetVariableFromAttribute( sb_szDisplayStatement, mi_lTempInteger_0, 'S', 1025, mMasLC, "M_Usage", "Name", "", 0 );
+                   GetVariableFromAttribute( sb_szDisplayStatement, mi_lTempInteger_0, 'S', 2049, mMasLC, "M_Usage", "Name", "", 0 );
          lTempInteger_0 = mi_lTempInteger_0.intValue( );
          szDisplayStatement = sb_szDisplayStatement.toString( );}
          //:InsertOptionalSubUsages( mMasLC, szDisplayStatement, "M_SubUsage", 0 )
@@ -8084,7 +8084,7 @@ omMasLC_dUsgListFullEmbedName( View     mMasLC,
                                Integer   GetOrSetFlag )
 {
    zVIEW    mMasLC2 = new zVIEW( );
-   //:STRING ( 1024 ) szDisplayStatement
+   //:STRING ( 2048 ) szDisplayStatement
    String   szDisplayStatement = null;
    int      lTempInteger_0 = 0;
 
@@ -8106,7 +8106,7 @@ omMasLC_dUsgListFullEmbedName( View     mMasLC,
             sb_szDisplayStatement = new StringBuilder( 32 );
          else
             sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
-                   GetVariableFromAttribute( sb_szDisplayStatement, mi_lTempInteger_0, 'S', 1025, mMasLC2, "M_Usage", "Name", "", 0 );
+                   GetVariableFromAttribute( sb_szDisplayStatement, mi_lTempInteger_0, 'S', 2049, mMasLC2, "M_Usage", "Name", "", 0 );
          lTempInteger_0 = mi_lTempInteger_0.intValue( );
          szDisplayStatement = sb_szDisplayStatement.toString( );}
 
@@ -8169,7 +8169,7 @@ omMasLC_dUsgNonGroupSubUsages( View     mMasLC,
                                Integer   GetOrSetFlag )
 {
    zVIEW    mMasLC2 = new zVIEW( );
-   //:STRING ( 1024 ) szDisplayStatement
+   //:STRING ( 2048 ) szDisplayStatement
    String   szDisplayStatement = null;
    int      lTempInteger_0 = 0;
 
@@ -8191,7 +8191,7 @@ omMasLC_dUsgNonGroupSubUsages( View     mMasLC,
             sb_szDisplayStatement = new StringBuilder( 32 );
          else
             sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
-                   GetVariableFromAttribute( sb_szDisplayStatement, mi_lTempInteger_0, 'S', 1025, mMasLC2, "M_Usage", "Name", "", 0 );
+                   GetVariableFromAttribute( sb_szDisplayStatement, mi_lTempInteger_0, 'S', 2049, mMasLC2, "M_Usage", "Name", "", 0 );
          lTempInteger_0 = mi_lTempInteger_0.intValue( );
          szDisplayStatement = sb_szDisplayStatement.toString( );}
 
@@ -8246,7 +8246,7 @@ omMasLC_dUsgNonGroupSubUsages( View     mMasLC,
 //:                         STRING ( 32 ) InternalAttribStructure,
 //:                         SHORT GetOrSetFlag )
 
-//:   STRING ( 1024 ) szDisplayStatement
+//:   STRING ( 2048 ) szDisplayStatement
 public int 
 omMasLC_dDU_SectionTitleKeyword( View     mMasLC,
                                  String InternalEntityStructure,
@@ -8271,12 +8271,12 @@ omMasLC_dDU_SectionTitleKeyword( View     mMasLC,
             sb_szDisplayStatement = new StringBuilder( 32 );
          else
             sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
-                   GetVariableFromAttribute( sb_szDisplayStatement, mi_lTempInteger_0, 'S', 1025, mMasLC, "M_DirectionsForUseSection", "Title", "", 0 );
+                   GetVariableFromAttribute( sb_szDisplayStatement, mi_lTempInteger_0, 'S', 2049, mMasLC, "M_DirectionsForUseSection", "Title", "", 0 );
          lTempInteger_0 = mi_lTempInteger_0.intValue( );
          szDisplayStatement = sb_szDisplayStatement.toString( );}
 
          //:IF szDisplayStatement != ""
-         if ( ZeidonStringCompare( szDisplayStatement, 1, 0, "", 1, 0, 1025 ) != 0 )
+         if ( ZeidonStringCompare( szDisplayStatement, 1, 0, "", 1, 0, 2049 ) != 0 )
          { 
             //:GenerateKeywordTextIntoString( mMasLC, szDisplayStatement,
             //:                            "M_InsertTextKeywordSectionDU", "M_InsertTextSectionDU", ", " )
@@ -8320,7 +8320,7 @@ omMasLC_dDU_SectionTitleKeyword( View     mMasLC,
    //:                     STRING ( 32 ) InternalAttribStructure,
    //:                     SHORT GetOrSetFlag )
 
-   //:STRING ( 1024 ) szDisplayStatement
+   //:STRING ( 2048 ) szDisplayStatement
 public int 
 omMasLC_dDU_SectionTextKeyword( View     mMasLC,
                                 String InternalEntityStructure,
@@ -8328,7 +8328,7 @@ omMasLC_dDU_SectionTextKeyword( View     mMasLC,
                                 Integer   GetOrSetFlag )
 {
    String   szDisplayStatement = null;
-   //:STRING ( 1024 ) szStatementText
+   //:STRING ( 2048 ) szStatementText
    String   szStatementText = null;
    //:STRING ( 256 )  szTitle
    String   szTitle = null;
@@ -8349,12 +8349,12 @@ omMasLC_dDU_SectionTextKeyword( View     mMasLC,
             sb_szDisplayStatement = new StringBuilder( 32 );
          else
             sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
-                   GetVariableFromAttribute( sb_szDisplayStatement, mi_lTempInteger_0, 'S', 1025, mMasLC, "M_DirectionsForUseSection", "Subtitle", "", 0 );
+                   GetVariableFromAttribute( sb_szDisplayStatement, mi_lTempInteger_0, 'S', 2049, mMasLC, "M_DirectionsForUseSection", "Subtitle", "", 0 );
          lTempInteger_0 = mi_lTempInteger_0.intValue( );
          szDisplayStatement = sb_szDisplayStatement.toString( );}
 
          //:IF szDisplayStatement != ""
-         if ( ZeidonStringCompare( szDisplayStatement, 1, 0, "", 1, 0, 1025 ) != 0 )
+         if ( ZeidonStringCompare( szDisplayStatement, 1, 0, "", 1, 0, 2049 ) != 0 )
          { 
             //:GenerateKeywordTextIntoString( mMasLC, szDisplayStatement,
             //:                            "M_InsertTextKeywordSectionDU", "M_InsertTextSectionDU", ", " )
@@ -8398,7 +8398,7 @@ omMasLC_dDU_SectionTextKeyword( View     mMasLC,
    //:                    STRING ( 32 ) InternalAttribStructure,
    //:                    SHORT GetOrSetFlag )
 
-   //:STRING ( 1024 ) szDisplayStatement
+   //:STRING ( 2048 ) szDisplayStatement
 public int 
 omMasLC_dDU_SectTitleOrTxtKey( View     mMasLC,
                                String InternalEntityStructure,
@@ -8424,11 +8424,11 @@ omMasLC_dDU_SectTitleOrTxtKey( View     mMasLC,
             sb_szDisplayStatement = new StringBuilder( 32 );
          else
             sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
-                   GetVariableFromAttribute( sb_szDisplayStatement, mi_lTempInteger_0, 'S', 1025, mMasLC, "M_DirectionsForUseSection", "Title", "", 0 );
+                   GetVariableFromAttribute( sb_szDisplayStatement, mi_lTempInteger_0, 'S', 2049, mMasLC, "M_DirectionsForUseSection", "Title", "", 0 );
          lTempInteger_0 = mi_lTempInteger_0.intValue( );
          szDisplayStatement = sb_szDisplayStatement.toString( );}
          //:IF szDisplayStatement = ""
-         if ( ZeidonStringCompare( szDisplayStatement, 1, 0, "", 1, 0, 1025 ) == 0 )
+         if ( ZeidonStringCompare( szDisplayStatement, 1, 0, "", 1, 0, 2049 ) == 0 )
          { 
             //:szDisplayStatement = mMasLC.M_DirectionsForUseSection.Subtitle
             {MutableInt mi_lTempInteger_1 = new MutableInt( lTempInteger_1 );
@@ -8437,7 +8437,7 @@ omMasLC_dDU_SectTitleOrTxtKey( View     mMasLC,
                sb_szDisplayStatement = new StringBuilder( 32 );
             else
                sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
-                         GetVariableFromAttribute( sb_szDisplayStatement, mi_lTempInteger_1, 'S', 1025, mMasLC, "M_DirectionsForUseSection", "Subtitle", "", 0 );
+                         GetVariableFromAttribute( sb_szDisplayStatement, mi_lTempInteger_1, 'S', 2049, mMasLC, "M_DirectionsForUseSection", "Subtitle", "", 0 );
             lTempInteger_1 = mi_lTempInteger_1.intValue( );
             szDisplayStatement = sb_szDisplayStatement.toString( );}
          } 
@@ -8445,7 +8445,7 @@ omMasLC_dDU_SectTitleOrTxtKey( View     mMasLC,
          //:END
 
          //:IF szDisplayStatement != ""
-         if ( ZeidonStringCompare( szDisplayStatement, 1, 0, "", 1, 0, 1025 ) != 0 )
+         if ( ZeidonStringCompare( szDisplayStatement, 1, 0, "", 1, 0, 2049 ) != 0 )
          { 
             //:GenerateKeywordTextIntoString( mMasLC, szDisplayStatement,
             //:                            "M_InsertTextKeywordSectionDU", "M_InsertTextSectionDU", ", " )
@@ -8497,7 +8497,7 @@ omMasLC_dMarkUsgTxtSubUsgNames( View     mMasLC,
                                 Integer   GetOrSetFlag )
 {
    zVIEW    mMasLC2 = new zVIEW( );
-   //:STRING ( 1024 ) szDisplayStatement
+   //:STRING ( 2048 ) szDisplayStatement
    String   szDisplayStatement = null;
    //:STRING ( 100 ) szUsageName
    String   szUsageName = null;
@@ -8526,7 +8526,7 @@ omMasLC_dMarkUsgTxtSubUsgNames( View     mMasLC,
             sb_szDisplayStatement = new StringBuilder( 32 );
          else
             sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
-                   GetVariableFromAttribute( sb_szDisplayStatement, mi_lTempInteger_0, 'S', 1025, mMasLC, "M_MarketingUsage", "Name", "", 0 );
+                   GetVariableFromAttribute( sb_szDisplayStatement, mi_lTempInteger_0, 'S', 2049, mMasLC, "M_MarketingUsage", "Name", "", 0 );
          lTempInteger_0 = mi_lTempInteger_0.intValue( );
          szDisplayStatement = sb_szDisplayStatement.toString( );}
          //:InsertOptionalSubUsages( mMasLC, szDisplayStatement, "M_MarketingSubUsage", 1 )
@@ -8590,7 +8590,7 @@ omMasLC_dMarkUsgTxtSubUsgNames( View     mMasLC,
                   sb_szTempString_1 = new StringBuilder( 32 );
                else
                   sb_szTempString_1 = new StringBuilder( szTempString_1 );
-                               GetVariableFromAttribute( sb_szTempString_1, mi_lTempInteger_3, 'S', 1025, mMasLC2, "M_InsertTextMarketUsage", "Text", "", 0 );
+                               GetVariableFromAttribute( sb_szTempString_1, mi_lTempInteger_3, 'S', 2049, mMasLC2, "M_InsertTextMarketUsage", "Text", "", 0 );
                lTempInteger_3 = mi_lTempInteger_3.intValue( );
                szTempString_1 = sb_szTempString_1.toString( );}
                 {StringBuilder sb_szUsageText;
@@ -8614,13 +8614,13 @@ omMasLC_dMarkUsgTxtSubUsgNames( View     mMasLC,
                   sb_szUsageText = new StringBuilder( szUsageText );
                               ZeidonStringConcat( sb_szUsageText, 1, 0, "</b>", 1, 0, 101 );
                szUsageText = sb_szUsageText.toString( );}
-               //:zSearchAndReplace( szDisplayStatement, 1024, szUsageName, szUsageText )
+               //:zSearchAndReplace( szDisplayStatement, 2048, szUsageName, szUsageText )
                {StringBuilder sb_szDisplayStatement;
                if ( szDisplayStatement == null )
                   sb_szDisplayStatement = new StringBuilder( 32 );
                else
                   sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
-                               zSearchAndReplace( sb_szDisplayStatement, 1024, szUsageName, szUsageText );
+                               zSearchAndReplace( sb_szDisplayStatement, 2048, szUsageName, szUsageText );
                szDisplayStatement = sb_szDisplayStatement.toString( );}
                RESULT = SetCursorNextEntity( mMasLC2, "M_InsertTextKeywordMarketUsage", "" );
             } 
@@ -8657,7 +8657,7 @@ omMasLC_dMarkUsgTxtSubUsgNames( View     mMasLC,
 //:                        STRING ( 32 ) InternalAttribStructure,
 //:                        SHORT GetOrSetFlag )
 
-//:   STRING ( 1024 ) szDisplayStatement
+//:   STRING ( 2048 ) szDisplayStatement
 public int 
 omMasLC_dDU_SubStmtTitleTxtKey( View     mMasLC,
                                 String InternalEntityStructure,
@@ -8667,7 +8667,7 @@ omMasLC_dDU_SubStmtTitleTxtKey( View     mMasLC,
    String   szDisplayStatement = null;
    //:STRING ( 256 )  szStatementTitle
    String   szStatementTitle = null;
-   //:STRING ( 1024 ) szStatementText
+   //:STRING ( 2048 ) szStatementText
    String   szStatementText = null;
    int      lTempInteger_0 = 0;
    int      lTempInteger_1 = 0;
@@ -8690,11 +8690,11 @@ omMasLC_dDU_SubStmtTitleTxtKey( View     mMasLC,
             sb_szStatementText = new StringBuilder( 32 );
          else
             sb_szStatementText = new StringBuilder( szStatementText );
-                   GetVariableFromAttribute( sb_szStatementText, mi_lTempInteger_0, 'S', 1025, mMasLC, "M_DirectionsForUseStatement", "Text", "", 0 );
+                   GetVariableFromAttribute( sb_szStatementText, mi_lTempInteger_0, 'S', 2049, mMasLC, "M_DirectionsForUseStatement", "Text", "", 0 );
          lTempInteger_0 = mi_lTempInteger_0.intValue( );
          szStatementText = sb_szStatementText.toString( );}
          //:IF szStatementText != ""
-         if ( ZeidonStringCompare( szStatementText, 1, 0, "", 1, 0, 1025 ) != 0 )
+         if ( ZeidonStringCompare( szStatementText, 1, 0, "", 1, 0, 2049 ) != 0 )
          { 
             //:GenerateKeywordTextIntoString( mMasLC, szStatementText,
             //:                            "M_InsertTextKeywordDU", "M_InsertTextDU", ", " )
@@ -8752,10 +8752,10 @@ omMasLC_dDU_SubStmtTitleTxtKey( View     mMasLC,
                sb_szDisplayStatement = new StringBuilder( 32 );
             else
                sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
-                        ZeidonStringCopy( sb_szDisplayStatement, 1, 0, szStatementTitle, 1, 0, 1025 );
+                        ZeidonStringCopy( sb_szDisplayStatement, 1, 0, szStatementTitle, 1, 0, 2049 );
             szDisplayStatement = sb_szDisplayStatement.toString( );}
             //:IF szStatementText != ""
-            if ( ZeidonStringCompare( szStatementText, 1, 0, "", 1, 0, 1025 ) != 0 )
+            if ( ZeidonStringCompare( szStatementText, 1, 0, "", 1, 0, 2049 ) != 0 )
             { 
                //:szDisplayStatement = szDisplayStatement + " --- " + szStatementText
                 {StringBuilder sb_szDisplayStatement;
@@ -8763,14 +8763,14 @@ omMasLC_dDU_SubStmtTitleTxtKey( View     mMasLC,
                   sb_szDisplayStatement = new StringBuilder( 32 );
                else
                   sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
-                              ZeidonStringConcat( sb_szDisplayStatement, 1, 0, " --- ", 1, 0, 1025 );
+                              ZeidonStringConcat( sb_szDisplayStatement, 1, 0, " --- ", 1, 0, 2049 );
                szDisplayStatement = sb_szDisplayStatement.toString( );}
                 {StringBuilder sb_szDisplayStatement;
                if ( szDisplayStatement == null )
                   sb_szDisplayStatement = new StringBuilder( 32 );
                else
                   sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
-                              ZeidonStringConcat( sb_szDisplayStatement, 1, 0, szStatementText, 1, 0, 1025 );
+                              ZeidonStringConcat( sb_szDisplayStatement, 1, 0, szStatementText, 1, 0, 2049 );
                szDisplayStatement = sb_szDisplayStatement.toString( );}
             } 
 
@@ -8785,7 +8785,7 @@ omMasLC_dDU_SubStmtTitleTxtKey( View     mMasLC,
                sb_szDisplayStatement = new StringBuilder( 32 );
             else
                sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
-                        ZeidonStringCopy( sb_szDisplayStatement, 1, 0, szStatementText, 1, 0, 1025 );
+                        ZeidonStringCopy( sb_szDisplayStatement, 1, 0, szStatementText, 1, 0, 2049 );
             szDisplayStatement = sb_szDisplayStatement.toString( );}
          } 
 

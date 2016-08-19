@@ -1,4 +1,4 @@
-// wMLCDirectionsForUseCategory   Generate Timestamp: 20160623085854925
+// wMLCDirectionsForUseCategory   Generate Timestamp: 20160705125129730
 
 var isWindowClosing = true;
 var timerID = null;
@@ -210,6 +210,21 @@ function GOTO_DirsForUseSectionDelete( strTagEntityKey )
    }
 }
 
+function AddNewDFU_Category( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCDirectionsForUseCategory.zAction.value = "AddNewDFU_Category";
+      document.wMLCDirectionsForUseCategory.submit( );
+   }
+}
+
 function GOTO_DirsForUseSectionUpdate( strTagEntityKey )
 {
 
@@ -254,7 +269,7 @@ function Sort( )
    {
       // Javascript code entered by user.
 
-       document.wMLCDirectionsForUse.zTableRowSelect.value = buildSortTableHtml( "mMasLC", "M_DirectionsForUseSection", "GridDirectionsForUse",  ["Name","Title"]  );
+       document.wMLCDirectionsForUseCategory.zTableRowSelect.value = buildSortTableHtml( "mMasLC", "M_DirectionsForUseSection", "GridDirectionsForUseCategories",  ["Name","Title"]  );
 
       // END of Javascript code entered by user.
 

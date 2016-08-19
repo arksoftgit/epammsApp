@@ -1,4 +1,4 @@
-// wMLCDirectionsForUseSubStatement   Generate Timestamp: 20160623085855133
+// wMLCDirectionsForUseSubStatement   Generate Timestamp: 20160705163108969
 
 var isWindowClosing = true;
 var timerID = null;
@@ -206,6 +206,21 @@ function AcceptDirectionsSubStatement( )
    }
 }
 
+function AddNewDirectionsSubStatement( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCDirectionsForUseSubStatement.zAction.value = "AddNewDirectionsSubStatement";
+      document.wMLCDirectionsForUseSubStatement.submit( );
+   }
+}
+
 function Sort( )
 {
 
@@ -257,6 +272,21 @@ function PASTE_InsertKeywordDU( )
    }
 }
 
+function NextDirectionsSubStatement( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCDirectionsForUseSubStatement.zAction.value = "NextDirectionsSubStatement";
+      document.wMLCDirectionsForUseSubStatement.submit( );
+   }
+}
+
 function COPY_InsertKeywordDU( strTagEntityKey )
 {
 
@@ -272,6 +302,21 @@ function COPY_InsertKeywordDU( strTagEntityKey )
       _DisableFormElements( true );
 
       document.wMLCDirectionsForUseSubStatement.zAction.value = "COPY_InsertKeywordDU";
+      document.wMLCDirectionsForUseSubStatement.submit( );
+   }
+}
+
+function PreviousDirectionsSubStatement( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCDirectionsForUseSubStatement.zAction.value = "PreviousDirectionsSubStatement";
       document.wMLCDirectionsForUseSubStatement.submit( );
    }
 }

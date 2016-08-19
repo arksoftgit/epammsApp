@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCDirectionsForUseStatement   Generate Timestamp: 20160623085855069 --%>
+<%-- wMLCDirectionsForUseStatement   Generate Timestamp: 20160705163116839 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -95,6 +95,44 @@ public int DoInputMapping( HttpServletRequest request,
          {
             nMapError = -16;
             VmlOperation.CreateMessage( task, "MLEText", e.getReason( ), strMapValue );
+         }
+      }
+
+      // EditBox: DFU_ReviewerNote
+      nRC = mMasLC.cursor( "M_DirectionsForUseStatement" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 ) // CursorResult.SET
+      {
+         strMapValue = request.getParameter( "DFU_ReviewerNote" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "DFU_ReviewerNote", "", strMapValue );
+            else
+               mMasLC.cursor( "M_DirectionsForUseStatement" ).getAttribute( "ReviewerNote" ).setValue( strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "DFU_ReviewerNote", e.getReason( ), strMapValue );
+         }
+      }
+
+      // CheckBox: ExclusiveToPreviousStatement
+      nRC = mMasLC.cursor( "M_DirectionsForUseStatement" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 ) // CursorResult.SET
+      {
+         strMapValue = request.getParameter( "ExclusiveToPreviousStatement" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "ExclusiveToPreviousStatement", "", strMapValue );
+            else
+               mMasLC.cursor( "M_DirectionsForUseStatement" ).getAttribute( "ExclusiveToPreviousStatement" ).setValue( strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "ExclusiveToPreviousStatement", e.getReason( ), strMapValue );
          }
       }
 
@@ -1493,13 +1531,13 @@ else
 <table cols=2 style="width:846px;"  class="grouptable">
 
 <tr>
-<td valign="top" style="width:54px;">
+<td valign="top" style="width:120px;">
 <% /* Title::Text */ %>
 
-<span  id="Title:" name="Title:" style="width:46px;height:18px;">Title:</span>
+<span  id="Title:" name="Title:" style="width:110px;height:18px;">Title:</span>
 
 </td>
-<td valign="top" style="width:762px;">
+<td valign="top" style="width:702px;">
 <% /* MLETitle:MLEdit */ %>
 <%
    // MLEdit: MLETitle
@@ -1532,18 +1570,18 @@ else
    }
 %>
 
-<textarea id="MLETitle" name="MLETitle" class="" style="width:762px;height:34px;border:solid;border-width:4px;border-style:groove;" wrap="wrap"><%=strErrorMapValue%></textarea>
+<textarea id="MLETitle" name="MLETitle" class="" style="width:702px;height:34px;border:solid;border-width:4px;border-style:groove;" wrap="wrap"><%=strErrorMapValue%></textarea>
 
 </td>
 </tr>
 <tr>
-<td valign="top" style="width:54px;">
+<td valign="top" style="width:120px;">
 <% /* Text::Text */ %>
 
-<span  id="Text:" name="Text:" style="width:46px;height:18px;">Text:</span>
+<span  id="Text:" name="Text:" style="width:110px;height:18px;">Text:</span>
 
 </td>
-<td valign="top" style="width:762px;">
+<td valign="top" style="width:702px;">
 <% /* MLEText:MLEdit */ %>
 <%
    // MLEdit: MLEText
@@ -1576,7 +1614,87 @@ else
    }
 %>
 
-<textarea id="MLEText" name="MLEText" class="" style="width:762px;height:128px;border:solid;border-width:4px;border-style:groove;" wrap="wrap"><%=strErrorMapValue%></textarea>
+<textarea id="MLEText" name="MLEText" class="" style="width:702px;height:128px;border:solid;border-width:4px;border-style:groove;" wrap="wrap"><%=strErrorMapValue%></textarea>
+
+</td>
+</tr>
+<tr>
+<td valign="top" style="width:120px;">
+<% /* DFU_CategoryReviewerNote::Text */ %>
+
+<span  id="DFU_CategoryReviewerNote:" name="DFU_CategoryReviewerNote:" style="width:110px;height:18px;">Reviewer Note:</span>
+
+</td>
+<td valign="top"  class="text12" style="width:702px;">
+<% /* DFU_ReviewerNote:EditBox */ %>
+<%
+   strErrorMapValue = VmlOperation.CheckError( "DFU_ReviewerNote", strError );
+   if ( !StringUtils.isBlank( strErrorMapValue ) )
+   {
+      if ( StringUtils.equals( strErrorFlag, "Y" ) )
+         strErrorColor = "color:red;";
+   }
+   else
+   {
+      strErrorColor = "";
+      mMasLC = task.getViewByName( "mMasLC" );
+      if ( VmlOperation.isValid( mMasLC ) == false )
+         task.log( ).debug( "Invalid View: " + "DFU_ReviewerNote" );
+      else
+      {
+         nRC = mMasLC.cursor( "M_DirectionsForUseStatement" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            try
+            {
+               strErrorMapValue = mMasLC.cursor( "M_DirectionsForUseStatement" ).getAttribute( "ReviewerNote" ).getString( "" );
+            }
+            catch (Exception e)
+            {
+               out.println("There is an error on DFU_ReviewerNote: " + e.getMessage());
+               task.log().error( "*** Error on ctrl DFU_ReviewerNote", e );
+            }
+            if ( strErrorMapValue == null )
+               strErrorMapValue = "";
+
+            task.log( ).debug( "M_DirectionsForUseStatement.ReviewerNote: " + strErrorMapValue );
+         }
+         else
+            task.log( ).debug( "Entity does not exist for DFU_ReviewerNote: " + "mMasLC.M_DirectionsForUseStatement" );
+      }
+   }
+%>
+
+<input class="text12" name="DFU_ReviewerNote" id="DFU_ReviewerNote" maxlength="2048" style="width:702px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+
+</td>
+</tr>
+<tr>
+<td valign="top" style="width:120px;">
+<% /* GroupBox1:GroupBox */ %>
+<div id="GroupBox1" name="GroupBox1" style="width:110px;height:18px;float:left;">
+</div>  <!-- GroupBox1 --> 
+</td>
+<td valign="top" style="width:638px;">
+<% /* ExclusiveToPreviousStatement:CheckBox */ %>
+<%
+   strErrorMapValue = "";
+   mMasLC = task.getViewByName( "mMasLC" );
+   if ( VmlOperation.isValid( mMasLC ) == false )
+      task.log( ).debug( "Invalid View: " + "ExclusiveToPreviousStatement" );
+   else
+   {
+      nRC = mMasLC.cursor( "M_DirectionsForUseStatement" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+         strRadioGroupValue = mMasLC.cursor( "M_DirectionsForUseStatement" ).getAttribute( "ExclusiveToPreviousStatement" ).getString( );
+   }
+
+   if ( StringUtils.equals( strRadioGroupValue, "Y" ) )
+      strErrorMapValue = "checked=\"checked\"";
+%>
+
+<input type="checkbox" name="ExclusiveToPreviousStatement" id="ExclusiveToPreviousStatement"  value="Y" <%=strErrorMapValue%> style="">
+<span style="width:638px;height:18px;">&nbsp Exclusive To Previous Statement</span>
 
 </td>
 </tr>
@@ -1588,9 +1706,6 @@ else
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
 
-
- <!-- This is added as a line spacer -->
-<div style="height:4px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
@@ -1826,9 +1941,6 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
 
-
- <!-- This is added as a line spacer -->
-<div style="height:12px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->

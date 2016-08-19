@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCStorageDisposalStatement   Generate Timestamp: 20160623140110332 --%>
+<%-- wMLCStorageDisposalStatement   Generate Timestamp: 20160715182322947 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -1398,7 +1398,7 @@ else
    }
 %>
 
-<input class="text12" name="ReviewerNote" id="ReviewerNote" maxlength="1024" style="width:626px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="ReviewerNote" id="ReviewerNote" maxlength="2048" style="width:626px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>
@@ -1838,7 +1838,7 @@ try
    <td><a href="#" onclick="GOTO_DU_KeywordUpdate( this.id )" id="Keyword::<%=strEntityKey%>"><%=strKeyword%></a></td>
    <td><%=strKewordText%></td>
    <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateSD_Keyword" onclick="GOTO_DU_KeywordUpdate( this.id )" id="BMBUpdateSD_Keyword::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBCopySD_Keyword" onclick="COPY_InsertKeyword( this.id )" id="BMBCopySD_Keyword::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Copy"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBCopySD_Keyword" onclick="COPY_InsertKeyword( this.id )" id="BMBCopySD_Keyword::<%=strEntityKey%>"><img src="./images/ePammsCopy.png" alt="Copy"></a></td>
    <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BitmapDeleteSD_Keyword" onclick="DELETE_DS_StatementKeyword( this.id )" id="BitmapDeleteSD_Keyword::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
 
 </tr>

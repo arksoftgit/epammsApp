@@ -1,4 +1,4 @@
-// wMLCMarketingStatement   Generate Timestamp: 20160623085856159
+// wMLCMarketingStatement   Generate Timestamp: 20160708172649429
 
 var isWindowClosing = true;
 var timerID = null;
@@ -206,6 +206,36 @@ function AcceptMarketingStatement( )
    }
 }
 
+function AcceptNext( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCMarketingStatement.zAction.value = "AcceptNext";
+      document.wMLCMarketingStatement.submit( );
+   }
+}
+
+function AcceptPrevious( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCMarketingStatement.zAction.value = "AcceptPrevious";
+      document.wMLCMarketingStatement.submit( );
+   }
+}
+
 function ADD_MarketingStatementKeyword( )
 {
 
@@ -255,6 +285,21 @@ function COPY_InsertKeyword( strTagEntityKey )
    }
 }
 
+function DELETE_DirectionsForUseStatement( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCMarketingStatement.zAction.value = "DELETE_DirectionsForUseStatement";
+      document.wMLCMarketingStatement.submit( );
+   }
+}
+
 function DELETE_MarketingStatementKeyword( strTagEntityKey )
 {
 
@@ -267,19 +312,39 @@ function DELETE_MarketingStatementKeyword( strTagEntityKey )
       var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
 
       document.wMLCMarketingStatement.zTableRowSelect.value = strEntityKey;
-      // Javascript code entered by user.
-
-// Confirmation of  Delete.
-if (!confirm("OK to delete selected entry?"))
-{
-   return;
-}
-
-      // END of Javascript code entered by user.
-
       _DisableFormElements( true );
 
       document.wMLCMarketingStatement.zAction.value = "DELETE_MarketingStatementKeyword";
+      document.wMLCMarketingStatement.submit( );
+   }
+}
+
+function GOTO_DirsForUseStatementAdd( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCMarketingStatement.zAction.value = "GOTO_DirsForUseStatementAdd";
+      document.wMLCMarketingStatement.submit( );
+   }
+}
+
+function GOTO_DirsForUseStatementUpdate( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCMarketingStatement.zAction.value = "GOTO_DirsForUseStatementUpdate";
       document.wMLCMarketingStatement.submit( );
    }
 }
@@ -295,6 +360,36 @@ function GOTO_DisplayGeneratedTextMktg( )
       _DisableFormElements( true );
 
       document.wMLCMarketingStatement.zAction.value = "GOTO_DisplayGeneratedTextMktg";
+      document.wMLCMarketingStatement.submit( );
+   }
+}
+
+function RefreshMarketing( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCMarketingStatement.zAction.value = "RefreshMarketing";
+      document.wMLCMarketingStatement.submit( );
+   }
+}
+
+function ParseStatementText( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCMarketingStatement.zAction.value = "ParseStatementText";
       document.wMLCMarketingStatement.submit( );
    }
 }
@@ -351,6 +446,27 @@ function PASTE_InsertKeyword( )
       _DisableFormElements( true );
 
       document.wMLCMarketingStatement.zAction.value = "PASTE_InsertKeyword";
+      document.wMLCMarketingStatement.submit( );
+   }
+}
+
+function Sort( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      // Javascript code entered by user.
+
+       document.wMLCMarketingStatement.zTableRowSelect.value = buildSortTableHtml( "mMasLC", "M_InsertTextKeywordMarketing", "GridKeywords",  ["Keyword","Keyword Text"]  );
+
+      // END of Javascript code entered by user.
+
+      _DisableFormElements( true );
+
+      document.wMLCMarketingStatement.zAction.value = "Sort";
       document.wMLCMarketingStatement.submit( );
    }
 }

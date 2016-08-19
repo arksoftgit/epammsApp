@@ -1,4 +1,4 @@
-// wMLCDirectionsForUseSection   Generate Timestamp: 20160623085854994
+// wMLCDirectionsForUseSection   Generate Timestamp: 20160706164205817
 
 var isWindowClosing = true;
 var timerID = null;
@@ -216,6 +216,21 @@ if ( document.wMLCDirectionsForUseSection.DirectionsUseName == "" ) {
    }
 }
 
+function CopyAndAddSection( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCDirectionsForUseSection.zAction.value = "CopyAndAddSection";
+      document.wMLCDirectionsForUseSection.submit( );
+   }
+}
+
 function ParseSectionText( )
 {
 
@@ -241,13 +256,28 @@ function Sort( )
    {
       // Javascript code entered by user.
 
-       document.wMLCDirectionsForUseSection.zTableRowSelect.value = buildSortTableHtml( "mMasLC", "M_InsertTextKeywordSectionDU", "GridKeywords",  ["Keyword","Keyword Text"]  );
+       document.wMLCDirectionsForUseSection.zTableRowSelect.value = buildSortTableHtml( "mMasLC", "M_InsertTextKeywordSectionDU", "GridDFU_SectionKeywords",  ["Keyword", "Keyword Text"]  );
 
       // END of Javascript code entered by user.
 
       _DisableFormElements( true );
 
       document.wMLCDirectionsForUseSection.zAction.value = "Sort";
+      document.wMLCDirectionsForUseSection.submit( );
+   }
+}
+
+function AddNewDFU_Section( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCDirectionsForUseSection.zAction.value = "AddNewDFU_Section";
       document.wMLCDirectionsForUseSection.submit( );
    }
 }
@@ -592,22 +622,6 @@ function CMB_CategoriesOnChange( )
    if ( _IsDocDisabled( ) == false )
    {
       document.wMLCDirectionsForUseSection.hCMB_Categories.value = document.wMLCDirectionsForUseSection.CMB_Categories.selectedIndex;
-      _DisableFormElements( true );
-
-      document.wMLCDirectionsForUseSection.zAction.value = "ChangeSectionCategory";
-      document.wMLCDirectionsForUseSection.submit( );
-   }
-}
-
-function ComboBox1OnChange( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      document.wMLCDirectionsForUseSection.hComboBox1.value = document.wMLCDirectionsForUseSection.ComboBox1.selectedIndex;
       _DisableFormElements( true );
 
       document.wMLCDirectionsForUseSection.zAction.value = "ChangeSectionCategory";

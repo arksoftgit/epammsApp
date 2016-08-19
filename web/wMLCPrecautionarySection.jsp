@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCPrecautionarySection   Generate Timestamp: 20160623085856440 --%>
+<%-- wMLCPrecautionarySection   Generate Timestamp: 20160624173819957 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -95,6 +95,63 @@ public int DoInputMapping( HttpServletRequest request,
          {
             nMapError = -16;
             VmlOperation.CreateMessage( task, "PrecautionarySubtitle", e.getReason( ), strMapValue );
+         }
+      }
+
+      // CheckBox: Combine
+      nRC = mMasLC.cursor( "M_GeneralSection" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 ) // CursorResult.SET
+      {
+         strMapValue = request.getParameter( "Combine" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "Combine", "", strMapValue );
+            else
+               mMasLC.cursor( "M_GeneralSection" ).getAttribute( "Combined" ).setValue( strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "Combine", e.getReason( ), strMapValue );
+         }
+      }
+
+      // CheckBox: BoldTitle
+      nRC = mMasLC.cursor( "M_GeneralSection" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 ) // CursorResult.SET
+      {
+         strMapValue = request.getParameter( "BoldTitle" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "BoldTitle", "", strMapValue );
+            else
+               mMasLC.cursor( "M_GeneralSection" ).getAttribute( "BoldTitle" ).setValue( strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "BoldTitle", e.getReason( ), strMapValue );
+         }
+      }
+
+      // CheckBox: BoldText
+      nRC = mMasLC.cursor( "M_GeneralSection" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 ) // CursorResult.SET
+      {
+         strMapValue = request.getParameter( "BoldText" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "BoldText", "", strMapValue );
+            else
+               mMasLC.cursor( "M_GeneralSection" ).getAttribute( "BoldText" ).setValue( strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "BoldText", e.getReason( ), strMapValue );
          }
       }
 
@@ -264,6 +321,23 @@ if ( strActionToProcess != null )
       }
       // Next Window
       strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "PrecautionaryStatement" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "Refresh" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCPrecautionarySection", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Next Window
+      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
@@ -1372,17 +1446,17 @@ else
 <div style="height:2px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GBStorDispSections2:GroupBox */ %>
+<div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GroupBox3:GroupBox */ %>
 
-<div id="GBStorDispSections2" name="GBStorDispSections2" class="listgroup"   style="float:left;position:relative; width:780px; height:36px;">  <!-- GBStorDispSections2 --> 
+<div id="GroupBox3" name="GroupBox3"   style="float:left;position:relative; width:730px; height:28px;">  <!-- GroupBox3 --> 
 
-<% /* OrganismClaimsStatements3:Text */ %>
+<% /* PrecautionarySection:Text */ %>
 
-<label class="groupbox"  id="OrganismClaimsStatements3" name="OrganismClaimsStatements3" style="width:238px;height:16px;position:absolute;left:6px;top:12px;">Precautionary Section</label>
+<label class="groupbox"  id="PrecautionarySection" name="PrecautionarySection" style="width:338px;height:16px;position:absolute;left:6px;top:6px;">Precautionary Section</label>
 
 
-</div>  <!--  GBStorDispSections2 --> 
+</div>  <!--  GroupBox3 --> 
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
@@ -1392,24 +1466,21 @@ else
 <div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GBPrecautionarySection:GroupBox */ %>
 
-<div id="GBPrecautionarySection" name="GBPrecautionarySection" class="withborder" style="width:730px;height:62px;float:left;">  <!-- GBPrecautionarySection --> 
+<div id="GBPrecautionarySection" name="GBPrecautionarySection" class="withborder"   style="float:left;position:relative; width:730px; height:100px;">  <!-- GBPrecautionarySection --> 
 
-
-<div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:8px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox1:GroupBox */ %>
-<div id="GroupBox1" name="GroupBox1" style="float:left;width:640px;" >
+<div id="GroupBox1" name="GroupBox1" style="float:left;width:712px;" >
 
-<table cols=2 style="width:640px;"  class="grouptable">
+<table cols=2 style="width:712px;"  class="grouptable">
 
 <tr>
-<td valign="top" style="width:66px;">
+<td valign="top" style="width:112px;">
 <% /* PrecautionaryTitle::Text */ %>
 
-<span  id="PrecautionaryTitle:" name="PrecautionaryTitle:" style="width:66px;height:16px;">Title:</span>
+<label  id="PrecautionaryTitle:" name="PrecautionaryTitle:" style="width:106px;height:16px;position:absolute;left:6px;top:14px;">Title:</label>
 
 </td>
-<td valign="top"  class="text12" style="width:550px;">
+<td valign="top"  class="text12" style="width:582px;">
 <% /* PrecautionaryTitle:EditBox */ %>
 <%
    strErrorMapValue = VmlOperation.CheckError( "PrecautionaryTitle", strError );
@@ -1449,18 +1520,18 @@ else
    }
 %>
 
-<input class="text12" name="PrecautionaryTitle" id="PrecautionaryTitle" maxlength="254" style="width:550px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="PrecautionaryTitle" id="PrecautionaryTitle" maxlength="254" style="width:582px;position:absolute;left:118px;top:14px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>
 <tr>
-<td valign="top" style="width:66px;">
+<td valign="top" style="width:112px;">
 <% /* PrecautionarySubtitle::Text */ %>
 
-<span  id="PrecautionarySubtitle:" name="PrecautionarySubtitle:" style="width:66px;height:16px;">Subtitle:</span>
+<label  id="PrecautionarySubtitle:" name="PrecautionarySubtitle:" style="width:106px;height:16px;position:absolute;left:6px;top:36px;">Subtitle:</label>
 
 </td>
-<td valign="top"  class="text12" style="width:550px;">
+<td valign="top"  class="text12" style="width:582px;">
 <% /* PrecautionarySubtitle:EditBox */ %>
 <%
    strErrorMapValue = VmlOperation.CheckError( "PrecautionarySubtitle", strError );
@@ -1500,7 +1571,7 @@ else
    }
 %>
 
-<input class="text12" name="PrecautionarySubtitle" id="PrecautionarySubtitle" maxlength="1024" style="width:550px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="PrecautionarySubtitle" id="PrecautionarySubtitle" maxlength="1024" style="width:582px;position:absolute;left:118px;top:36px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>
@@ -1508,8 +1579,88 @@ else
 
 </div>  <!-- GroupBox1 --> 
 
-</div>  <!-- End of a new line -->
+<% /* GBPrecautionaryStatements:GroupBox */ %>
 
+<div id="GBPrecautionaryStatements" name="GBPrecautionaryStatements" class="listgroup" style="width:708px;height:28px;position:absolute;left:8px;top:78px;">  <!-- GBPrecautionaryStatements --> 
+
+<% /* PrecautionaryStatements:Text */ %>
+
+<label class="listheader"  id="PrecautionaryStatements" name="PrecautionaryStatements" style="width:190px;height:26px;position:absolute;left:10px;top:2px;">Precautionary Statements</label>
+
+<% /* RefreshStatements:PushBtn */ %>
+<button type="button" class="newbutton" name="RefreshStatements" id="RefreshStatements" value="" onclick="Refresh( )" style="width:78px;height:26px;position:absolute;left:536px;top:2px;">Refresh</button>
+
+<% /* New:PushBtn */ %>
+<button type="button" class="newbutton" name="New" id="New" value="" onclick="GOTO_AddPrecautionaryStatement( )" style="width:78px;height:26px;position:absolute;left:620px;top:2px;">New</button>
+
+<% /* GroupBox4:GroupBox */ %>
+
+<div id="GroupBox4" name="GroupBox4" style="width:314px;height:18px;position:absolute;left:218px;top:10px;">  <!-- GroupBox4 --> 
+
+<% /* Combine:CheckBox */ %>
+<%
+   strErrorMapValue = "";
+   mMasLC = task.getViewByName( "mMasLC" );
+   if ( VmlOperation.isValid( mMasLC ) == false )
+      task.log( ).debug( "Invalid View: " + "Combine" );
+   else
+   {
+      nRC = mMasLC.cursor( "M_GeneralSection" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+         strRadioGroupValue = mMasLC.cursor( "M_GeneralSection" ).getAttribute( "Combined" ).getString( );
+   }
+
+   if ( StringUtils.equals( strRadioGroupValue, "Y" ) )
+      strErrorMapValue = "checked=\"checked\"";
+%>
+
+<input type="checkbox" name="Combine" id="Combine"  value="Y" <%=strErrorMapValue%> style="position:absolute;left:2px;top:0px;">
+<span style="width:102px;height:18px;position:absolute;left:32px;top:0px;">Combine</span>
+
+<% /* BoldTitle:CheckBox */ %>
+<%
+   strErrorMapValue = "";
+   mMasLC = task.getViewByName( "mMasLC" );
+   if ( VmlOperation.isValid( mMasLC ) == false )
+      task.log( ).debug( "Invalid View: " + "BoldTitle" );
+   else
+   {
+      nRC = mMasLC.cursor( "M_GeneralSection" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+         strRadioGroupValue = mMasLC.cursor( "M_GeneralSection" ).getAttribute( "BoldTitle" ).getString( );
+   }
+
+   if ( StringUtils.equals( strRadioGroupValue, "Y" ) )
+      strErrorMapValue = "checked=\"checked\"";
+%>
+
+<input type="checkbox" name="BoldTitle" id="BoldTitle"  value="Y" <%=strErrorMapValue%> style="position:absolute;left:104px;top:0px;">
+<span style="width:102px;height:18px;position:absolute;left:134px;top:0px;">Bold Title</span>
+
+<% /* BoldText:CheckBox */ %>
+<%
+   strErrorMapValue = "";
+   mMasLC = task.getViewByName( "mMasLC" );
+   if ( VmlOperation.isValid( mMasLC ) == false )
+      task.log( ).debug( "Invalid View: " + "BoldText" );
+   else
+   {
+      nRC = mMasLC.cursor( "M_GeneralSection" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+         strRadioGroupValue = mMasLC.cursor( "M_GeneralSection" ).getAttribute( "BoldText" ).getString( );
+   }
+
+   if ( StringUtils.equals( strRadioGroupValue, "Y" ) )
+      strErrorMapValue = "checked=\"checked\"";
+%>
+
+<input type="checkbox" name="BoldText" id="BoldText"  value="Y" <%=strErrorMapValue%> style="position:absolute;left:206px;top:0px;">
+<span style="width:102px;height:18px;position:absolute;left:236px;top:0px;">Bold Text</span>
+
+
+</div>  <!--  GroupBox4 --> 
+
+</div>  <!--  GBPrecautionaryStatements --> 
 
 </div>  <!--  GBPrecautionarySection --> 
 </div>  <!-- End of a new line -->
@@ -1517,46 +1668,18 @@ else
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
 
 
- <!-- This is added as a line spacer -->
-<div style="height:4px;width:100px;"></div>
-
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox2:GroupBox */ %>
 
-<div id="GroupBox2" name="GroupBox2"   style="float:left;position:relative; width:730px; height:34px;">  <!-- GroupBox2 --> 
-
-<% /* GBPrecautionaryStatements:GroupBox */ %>
-<div id="GBPrecautionaryStatements" name="GBPrecautionaryStatements" style="float:left;width:668px;"  class="listgroup">
-
-<table cols=0 style="width:668px;"  class="grouptable">
-
-<tr>
-<td valign="top"  class="listheader" style="width:554px;">
-<% /* PrecautionaryStatements:Text */ %>
-
-<label class="listheader"  id="PrecautionaryStatements" name="PrecautionaryStatements" style="width:238px;height:16px;position:absolute;left:10px;top:2px;">Precautionary Statements</label>
-
-</td>
-<td valign="top"  class="newbutton" style="width:78px;">
-<% /* New:PushBtn */ %>
-<button type="button" class="newbutton"  id="New" name="New" value="New" onclick="GOTO_AddPrecautionaryStatement( )"  style="width:78px;height:26px;">New</button>
-
-</td>
-</tr>
-</table>
-
-</div>  <!-- GBPrecautionaryStatements --> 
+<div id="GroupBox2" name="GroupBox2" style="width:730px;float:left;">  <!-- GroupBox2 --> 
 
 
-</div>  <!--  GroupBox2 --> 
-</div>  <!-- End of a new line -->
-
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
-
+ <!-- This is added as a line spacer -->
+<div style="height:14px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
+<div style="height:1px;width:2px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GridPrecautionary:Grid */ %>
 <table  cols=3 style="width:710px;"  name="GridPrecautionary" id="GridPrecautionary">
 
@@ -1600,7 +1723,7 @@ try
          nRC = vGridPrecautionary.cursor( "M_GeneralStatement" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditPrecautionary = vGridPrecautionary.cursor( "M_GeneralStatement" ).getAttribute( "Text" ).getString( "" );
+            strGridEditPrecautionary = vGridPrecautionary.cursor( "M_GeneralStatement" ).getAttribute( "dGenStmtCombinedTitleText" ).getString( "" );
 
             if ( strGridEditPrecautionary == null )
                strGridEditPrecautionary = "";
@@ -1634,6 +1757,10 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 </tbody>
 </table>
 
+</div>  <!-- End of a new line -->
+
+
+</div>  <!--  GroupBox2 --> 
 </div>  <!-- End of a new line -->
 
 

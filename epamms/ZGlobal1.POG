@@ -1,4 +1,4 @@
-z1000-Zeidon    ZGLOBAL1 TZOGSRCO 06/09/16   15:48:24 1.0a2   
+z1000-Zeidon    ZGLOBAL1 TZOGSRCO 06/29/16   10:40:27 1.0a2   
 eGlobalOperationGroup 1
 aZKey      89816452
 aNextZKeyToAssign 110040718
@@ -480,14 +480,14 @@ aZKey      69214770
 eParameter 3
 aShortDesc lMaxLth
 aDataType  L
-aPFlag     N
+aPFlag     Y
 aUFlag     N
 aZKey      69214772
 
 eParameter 3
 aShortDesc NumberedText
 aDataType  S
-aPFlag     N
+aPFlag     Y
 aUFlag     N
 aZKey      69214771
 

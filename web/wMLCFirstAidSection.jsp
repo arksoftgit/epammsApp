@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCFirstAidSection   Generate Timestamp: 20160623085855379 --%>
+<%-- wMLCFirstAidSection   Generate Timestamp: 20160624173825553 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -60,22 +60,22 @@ public int DoInputMapping( HttpServletRequest request,
    mMasLC = task.getViewByName( "mMasLC" );
    if ( VmlOperation.isValid( mMasLC ) )
    {
-      // EditBox: PrecautionaryTitle
+      // EditBox: FirstAidTitle
       nRC = mMasLC.cursor( "M_GeneralSection" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 ) // CursorResult.SET
       {
-         strMapValue = request.getParameter( "PrecautionaryTitle" );
+         strMapValue = request.getParameter( "FirstAidTitle" );
          try
          {
             if ( webMapping )
-               VmlOperation.CreateMessage( task, "PrecautionaryTitle", "", strMapValue );
+               VmlOperation.CreateMessage( task, "FirstAidTitle", "", strMapValue );
             else
                mMasLC.cursor( "M_GeneralSection" ).getAttribute( "Title" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
             nMapError = -16;
-            VmlOperation.CreateMessage( task, "PrecautionaryTitle", e.getReason( ), strMapValue );
+            VmlOperation.CreateMessage( task, "FirstAidTitle", e.getReason( ), strMapValue );
          }
       }
 
@@ -155,7 +155,7 @@ public int DoInputMapping( HttpServletRequest request,
          }
       }
 
-      // Grid: GridPrecautionary
+      // Grid: GridFirstAid
       iTableRowCnt = 0;
 
       // We are creating a temp view to the grid view so that if there are 
@@ -1457,9 +1457,9 @@ else
 
 <div id="GroupBox3" name="GroupBox3"   style="float:left;position:relative; width:730px; height:28px;">  <!-- GroupBox3 --> 
 
-<% /* PrecautionarySection:Text */ %>
+<% /* FirstAidSection:Text */ %>
 
-<label class="groupbox"  id="PrecautionarySection" name="PrecautionarySection" style="width:338px;height:16px;position:absolute;left:6px;top:6px;">First Aid Section</label>
+<label class="groupbox"  id="FirstAidSection" name="FirstAidSection" style="width:338px;height:16px;position:absolute;left:6px;top:6px;">First Aid Section</label>
 
 
 </div>  <!--  GroupBox3 --> 
@@ -1470,9 +1470,9 @@ else
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GBPrecautionarySection:GroupBox */ %>
+<% /* GBFirstAidSection:GroupBox */ %>
 
-<div id="GBPrecautionarySection" name="GBPrecautionarySection" class="withborder"   style="float:left;position:relative; width:730px; height:100px;">  <!-- GBPrecautionarySection --> 
+<div id="GBFirstAidSection" name="GBFirstAidSection" class="withborder"   style="float:left;position:relative; width:730px; height:100px;">  <!-- GBFirstAidSection --> 
 
 <% /* GroupBox1:GroupBox */ %>
 <div id="GroupBox1" name="GroupBox1" style="float:left;width:712px;" >
@@ -1481,15 +1481,15 @@ else
 
 <tr>
 <td valign="top" style="width:112px;">
-<% /* PrecautionaryTitle::Text */ %>
+<% /* FirstAidTitle::Text */ %>
 
-<label  id="PrecautionaryTitle:" name="PrecautionaryTitle:" style="width:106px;height:16px;position:absolute;left:6px;top:14px;">Title:</label>
+<label  id="FirstAidTitle:" name="FirstAidTitle:" style="width:106px;height:16px;position:absolute;left:6px;top:14px;">Title:</label>
 
 </td>
 <td valign="top"  class="text12" style="width:582px;">
-<% /* PrecautionaryTitle:EditBox */ %>
+<% /* FirstAidTitle:EditBox */ %>
 <%
-   strErrorMapValue = VmlOperation.CheckError( "PrecautionaryTitle", strError );
+   strErrorMapValue = VmlOperation.CheckError( "FirstAidTitle", strError );
    if ( !StringUtils.isBlank( strErrorMapValue ) )
    {
       if ( StringUtils.equals( strErrorFlag, "Y" ) )
@@ -1500,7 +1500,7 @@ else
       strErrorColor = "";
       mMasLC = task.getViewByName( "mMasLC" );
       if ( VmlOperation.isValid( mMasLC ) == false )
-         task.log( ).debug( "Invalid View: " + "PrecautionaryTitle" );
+         task.log( ).debug( "Invalid View: " + "FirstAidTitle" );
       else
       {
          nRC = mMasLC.cursor( "M_GeneralSection" ).checkExistenceOfEntity( ).toInt();
@@ -1512,8 +1512,8 @@ else
             }
             catch (Exception e)
             {
-               out.println("There is an error on PrecautionaryTitle: " + e.getMessage());
-               task.log().error( "*** Error on ctrl PrecautionaryTitle", e );
+               out.println("There is an error on FirstAidTitle: " + e.getMessage());
+               task.log().error( "*** Error on ctrl FirstAidTitle", e );
             }
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
@@ -1521,12 +1521,12 @@ else
             task.log( ).debug( "M_GeneralSection.Title: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist for PrecautionaryTitle: " + "mMasLC.M_GeneralSection" );
+            task.log( ).debug( "Entity does not exist for FirstAidTitle: " + "mMasLC.M_GeneralSection" );
       }
    }
 %>
 
-<input class="text12" name="PrecautionaryTitle" id="PrecautionaryTitle" maxlength="254" style="width:582px;position:absolute;left:118px;top:14px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="FirstAidTitle" id="FirstAidTitle" maxlength="254" style="width:582px;position:absolute;left:118px;top:14px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>
@@ -1585,23 +1585,23 @@ else
 
 </div>  <!-- GroupBox1 --> 
 
-<% /* GBPrecautionaryStatements:GroupBox */ %>
+<% /* GBFirstAidStatements:GroupBox */ %>
 
-<div id="GBPrecautionaryStatements" name="GBPrecautionaryStatements" class="listgroup" style="width:708px;height:28px;position:absolute;left:8px;top:78px;">  <!-- GBPrecautionaryStatements --> 
+<div id="GBFirstAidStatements" name="GBFirstAidStatements" class="listgroup" style="width:708px;height:28px;position:absolute;left:8px;top:78px;">  <!-- GBFirstAidStatements --> 
 
 <% /* FirstAidStatements:Text */ %>
 
-<label class="listheader"  id="FirstAidStatements" name="FirstAidStatements" style="width:158px;height:26px;position:absolute;left:10px;top:2px;">First Aid Statements</label>
+<label class="listheader"  id="FirstAidStatements" name="FirstAidStatements" style="width:190px;height:26px;position:absolute;left:10px;top:2px;">First Aid Statements</label>
 
 <% /* RefreshStatements:PushBtn */ %>
-<button type="button" class="newbutton" name="RefreshStatements" id="RefreshStatements" value="" onclick="Refresh( )" style="width:78px;height:26px;position:absolute;left:518px;top:2px;">Refresh</button>
+<button type="button" class="newbutton" name="RefreshStatements" id="RefreshStatements" value="" onclick="Refresh( )" style="width:78px;height:26px;position:absolute;left:536px;top:2px;">Refresh</button>
 
 <% /* New:PushBtn */ %>
-<button type="button" class="newbutton" name="New" id="New" value="" onclick="GOTO_AddFirstAidStatement( )" style="width:78px;height:26px;position:absolute;left:614px;top:2px;">New</button>
+<button type="button" class="newbutton" name="New" id="New" value="" onclick="GOTO_AddFirstAidStatement( )" style="width:78px;height:26px;position:absolute;left:620px;top:2px;">New</button>
 
 <% /* GroupBox4:GroupBox */ %>
 
-<div id="GroupBox4" name="GroupBox4" style="width:314px;height:18px;position:absolute;left:190px;top:10px;">  <!-- GroupBox4 --> 
+<div id="GroupBox4" name="GroupBox4" style="width:314px;height:18px;position:absolute;left:212px;top:10px;">  <!-- GroupBox4 --> 
 
 <% /* Combine:CheckBox */ %>
 <%
@@ -1666,9 +1666,9 @@ else
 
 </div>  <!--  GroupBox4 --> 
 
-</div>  <!--  GBPrecautionaryStatements --> 
+</div>  <!--  GBFirstAidStatements --> 
 
-</div>  <!--  GBPrecautionarySection --> 
+</div>  <!--  GBFirstAidSection --> 
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
@@ -1686,8 +1686,8 @@ else
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:2px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GridPrecautionary:Grid */ %>
-<table  cols=3 style="width:710px;"  name="GridPrecautionary" id="GridPrecautionary">
+<% /* GridFirstAid:Grid */ %>
+<table  cols=3 style="width:710px;"  name="GridFirstAid" id="GridFirstAid">
 
 <thead><tr>
 
@@ -1711,47 +1711,47 @@ try
       String strButtonName;
       String strOdd;
       String strTag;
-      String strGridEditPrecautionary;
-      String strBMBUpdatePrecautionaryStatement;
-      String strBMBDeletePrecautionaryStatement;
+      String strGridEditFirstAid;
+      String strBMBUpdateFirstAidStatement;
+      String strBMBDeleteFirstAidStatement;
       
-      View vGridPrecautionary;
-      vGridPrecautionary = mMasLC.newView( );
-      csrRC2 = vGridPrecautionary.cursor( "M_GeneralStatement" ).setFirst(  );
+      View vGridFirstAid;
+      vGridFirstAid = mMasLC.newView( );
+      csrRC2 = vGridFirstAid.cursor( "M_GeneralStatement" ).setFirst(  );
       while ( csrRC2.isSet() )
       {
          strOdd = (iTableRowCnt % 2) != 0 ? " class='odd'" : "";
          iTableRowCnt++;
 
-         lEntityKey = vGridPrecautionary.cursor( "M_GeneralStatement" ).getEntityKey( );
+         lEntityKey = vGridFirstAid.cursor( "M_GeneralStatement" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strGridEditPrecautionary = "";
-         nRC = vGridPrecautionary.cursor( "M_GeneralStatement" ).checkExistenceOfEntity( ).toInt();
+         strGridEditFirstAid = "";
+         nRC = vGridFirstAid.cursor( "M_GeneralStatement" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditPrecautionary = vGridPrecautionary.cursor( "M_GeneralStatement" ).getAttribute( "dGenStmtCombinedTitleText" ).getString( "" );
+            strGridEditFirstAid = vGridFirstAid.cursor( "M_GeneralStatement" ).getAttribute( "dGenStmtCombinedTitleText" ).getString( "" );
 
-            if ( strGridEditPrecautionary == null )
-               strGridEditPrecautionary = "";
+            if ( strGridEditFirstAid == null )
+               strGridEditFirstAid = "";
          }
 
-         if ( StringUtils.isBlank( strGridEditPrecautionary ) )
-            strGridEditPrecautionary = "&nbsp";
+         if ( StringUtils.isBlank( strGridEditFirstAid ) )
+            strGridEditFirstAid = "&nbsp";
 
 %>
 
 <tr<%=strOdd%>>
 
-   <td><a href="#" onclick="GOTO_UpdateFirstAidStmt( this.id )" id="GridEditPrecautionary::<%=strEntityKey%>"><%=strGridEditPrecautionary%></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdatePrecautionaryStatement" onclick="GOTO_UpdateFirstAidStmt( this.id )" id="BMBUpdatePrecautionaryStatement::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeletePrecautionaryStatement" onclick="GOTO_FirstAidStmtDelete( this.id )" id="BMBDeletePrecautionaryStatement::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
+   <td><a href="#" onclick="GOTO_UpdateFirstAidStmt( this.id )" id="GridEditFirstAid::<%=strEntityKey%>"><%=strGridEditFirstAid%></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateFirstAidStatement" onclick="GOTO_UpdateFirstAidStmt( this.id )" id="BMBUpdateFirstAidStatement::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteFirstAidStatement" onclick="GOTO_FirstAidStmtDelete( this.id )" id="BMBDeleteFirstAidStatement::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
 
 </tr>
 
 <%
-         csrRC2 = vGridPrecautionary.cursor( "M_GeneralStatement" ).setNextContinue( );
+         csrRC2 = vGridFirstAid.cursor( "M_GeneralStatement" ).setNextContinue( );
       }
-      vGridPrecautionary.drop( );
+      vGridFirstAid.drop( );
    }
 }
 catch (Exception e)

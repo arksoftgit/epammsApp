@@ -617,6 +617,77 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
+//  OPERATION: AddNewDirectionsSubStatement
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+AddNewDirectionsSubStatement( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+   SHORT nRC
+
+   nRC = AcceptSubobject( mMasLC, "M_DirectionsForUseStatement" )
+   IF nRC < 0
+      MessageSend( ViewToWindow, "", "Accept Directions For Use Sub-statement",
+                   "The Directions For Use Sub-Statement (Accept) contains errors.",
+                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+      RETURN nRC
+   END
+   CreateTemporalEntity( mMasLC, "M_DirectionsForUseStatement", zPOS_AFTER )
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: NextDirectionsSubStatement
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+NextDirectionsSubStatement( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+   SHORT nRC
+
+   nRC = AcceptSubobject( mMasLC, "M_DirectionsForUseStatement" )
+   IF nRC < 0
+      MessageSend( ViewToWindow, "", "Accept Directions For Use Sub-statement",
+                   "The Directions For Use Sub-Statement (Accept) contains errors.",
+                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+      RETURN nRC
+   END
+   SET CURSOR NEXT mMasLC.M_DirectionsForUseStatement
+   CreateTemporalSubobjectVersion( mMasLC, "M_DirectionsForUseStatement" )
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: PreviousDirectionsSubStatement
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+PreviousDirectionsSubStatement( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+   SHORT nRC
+
+   nRC = AcceptSubobject( mMasLC, "M_DirectionsForUseStatement" )
+   IF nRC < 0
+      MessageSend( ViewToWindow, "", "Accept Directions For Use Sub-statement",
+                   "The Directions For Use Sub-Statement (Accept) contains errors.",
+                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+      RETURN nRC
+   END
+   SET CURSOR PREVIOUS mMasLC.M_DirectionsForUseStatement
+   CreateTemporalSubobjectVersion( mMasLC, "M_DirectionsForUseStatement" )
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
 //  OPERATION: CancelDirectionsSubStatement
 //
 /////////////////////////////////////////////////////////////////////////////
@@ -652,8 +723,8 @@ AcceptAddNewDU_Stmt( VIEW ViewToWindow )
    // Accept Direction for Use Statement and add new temporal one.
    nRC = AcceptSubobject( mMasLC, "M_DirectionsForUseStatement" )
    IF nRC < 0
-      MessageSend( ViewToWindow, "", "Save And Add New Dirs for Use Statement",
-                   "Error saving Dirs for Use statement.",
+      MessageSend( ViewToWindow, "", "Add New Directions for Use Statement",
+                   "Error saving Directions for Use statement.",
                    zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
       RETURN 2
    END
@@ -661,6 +732,55 @@ AcceptAddNewDU_Stmt( VIEW ViewToWindow )
    CreateTemporalEntity( mMasLC, "M_DirectionsForUseStatement", zPOS_AFTER )
 
 END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: AddNewDFU_Section
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+AddNewDFU_Section( VIEW ViewToWindow )
+
+   VIEW  mMasLC   REGISTERED AS mMasLC
+   SHORT nRC
+
+   // Accept Direction for Use Section and add new temporal one.
+   nRC = AcceptSubobject( mMasLC, "M_DirectionsForUseSection" )
+   IF nRC < 0
+      MessageSend( ViewToWindow, "", "Add New Directions for Use Section",
+                   "Error saving Directions for Use section.",
+                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      RETURN 2
+   END
+
+   CreateTemporalEntity( mMasLC, "M_DirectionsForUseSection", zPOS_AFTER )
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: AddNewDFU_Category
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+AddNewDFU_Category( VIEW ViewToWindow )
+
+   VIEW  mMasLC   REGISTERED AS mMasLC
+   SHORT nRC
+
+   // Accept Direction for Use Section and add new temporal one.
+   nRC = AcceptSubobject( mMasLC, "M_DirectionsForUseCategory" )
+   IF nRC < 0
+      MessageSend( ViewToWindow, "", "Add New Directions for Use Category",
+                   "Error saving Directions for Use category.",
+                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      RETURN 2
+   END
+
+   CreateTemporalEntity( mMasLC, "M_DirectionsForUseCategory", zPOS_AFTER )
+
+END
+
 /////////////////////////////////////////////////////////////////////////////
 //
 //  OPERATION: AcceptAddNewDU_SectionKeyword
@@ -2731,6 +2851,46 @@ COPY_InsertKeywordTitleDU( VIEW ViewToWindow )
 
 END
 
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: CopyAndAddSectionDU
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+CopyAndAddSectionDU( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+   VIEW mMasLC2 BASED ON LOD mMasLC
+   STRING ( 254 ) szName
+   SHORT  nRC
+   
+   nRC = AcceptSubobject( mMasLC, "M_DirectionsForUseSection" )
+   IF nRC < 0
+      MessageSend( ViewToWindow, "", "Copy Directions For Use Section",
+                   "Error saving Directions For Use Section.",
+                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      RETURN 2
+   END
+
+   CreateViewFromView( mMasLC2, mMasLC )
+   CreateTemporalEntity( mMasLC, "M_DirectionsForUseSection", zPOS_LAST )
+   SetMatchingAttributesByName( mMasLC, "M_DirectionsForUseSection", mMasLC2, "M_DirectionsForUseSection", zSET_NULL )
+   szName = mMasLC2.M_DirectionsForUseSection.Name + " - copy"
+   mMasLC.M_DirectionsForUseSection.Name = szName
+
+   FOR EACH mMasLC2.M_InsertTextKeywordSectionDU
+      CREATE ENTITY mMasLC.M_InsertTextKeywordSectionDU
+      SetMatchingAttributesByName( mMasLC, "M_InsertTextKeywordSectionDU", mMasLC2, "M_InsertTextKeywordSectionDU", zSET_NULL )
+      FOR EACH mMasLC2.M_InsertTextSectionDU 
+         CREATE ENTITY mMasLC.M_InsertTextSectionDU
+         SetMatchingAttributesByName( mMasLC, "M_InsertTextSectionDU", mMasLC2, "M_InsertTextSectionDU", zSET_NULL )
+      END
+   END
+   DropView( mMasLC2 )
+END
+
+
 /////////////////////////////////////////////////////////////////////////////
 //
 //  OPERATION: COPY_InsertKeywordSD
@@ -3812,6 +3972,19 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
+//  OPERATION: ParseMarketingStatementText
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+ParseMarketingStatementText( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+   ParseStatementForKeywords( mMasLC, "M_MarketingStatement", "Text",
+                              "M_InsertTextKeywordMarketing", "M_InsertTextMarketing", "{}" )
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
 //  OPERATION: ParseDFU_StatementText
 //
 /////////////////////////////////////////////////////////////////////////////
@@ -3836,5 +4009,69 @@ ParseDFU_SectionText( VIEW ViewToWindow )
                               "M_InsertTextKeywordSectionDU", "M_InsertTextSectionDU", "{}" )
    ParseStatementForKeywords( mMasLC, "M_DirectionsForUseSection", "Subtitle",
                               "M_InsertTextKeywordSectionDU", "M_InsertTextSectionDU", "{}" )
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: AcceptMarketingStatementGoNext
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+AcceptMarketingStatementGoNext( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+ 
+   AcceptSubobject( mMasLC, "M_MarketingStatement" )
+   SetCursorNextEntity( mMasLC, "M_MarketingStatement", "" )
+   CreateTemporalSubobjectVersion( mMasLC, "M_MarketingStatement" )
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: AcceptMarketingStatementGoPrev
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+AcceptMarketingStatementGoPrev( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+ 
+   AcceptSubobject( mMasLC, "M_MarketingStatement" )
+   SetCursorPrevEntity( mMasLC, "M_MarketingStatement", "" )
+   CreateTemporalSubobjectVersion( mMasLC, "M_MarketingStatement" )
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: AcceptMarketingSectionGoNext
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+AcceptMarketingSectionGoNext( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+ 
+   AcceptSubobject( mMasLC, "M_MarketingSection" )
+   SetCursorNextEntity( mMasLC, "M_MarketingSection", "" )
+   CreateTemporalSubobjectVersion( mMasLC, "M_MarketingSection" )
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: AcceptMarketingSectionGoPrev
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+AcceptMarketingSectionGoPrev( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+ 
+   AcceptSubobject( mMasLC, "M_MarketingSection" )
+   SetCursorPrevEntity( mMasLC, "M_MarketingSection", "" )
+   CreateTemporalSubobjectVersion( mMasLC, "M_MarketingSection" )
 
 END

@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCMarketingSection   Generate Timestamp: 20160623085856073 --%>
+<%-- wMLCMarketingSection   Generate Timestamp: 20160706211722584 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -293,7 +293,7 @@ if ( strActionToProcess != null )
 
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "SaveMarketingSectionReturn" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "AcceptNext" ) )
    {
       bDone = true;
       VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCMarketingSection", strActionToProcess );
@@ -305,8 +305,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCMarketingSection", "wMLC.SaveMarketingSection" );
-      nOptRC = wMLC.SaveMarketingSection( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCMarketingSection", "wMLC.AcceptMarketingSectionGoNext" );
+      nOptRC = wMLC.AcceptMarketingSectionGoNext( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -323,7 +323,7 @@ if ( strActionToProcess != null )
       if ( strNextJSP_Name.equals( "" ) )
       {
          // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReturnToParent, "", "" );
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
       }
 
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -331,7 +331,7 @@ if ( strActionToProcess != null )
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "SaveMarketingSection" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "AcceptPrevious" ) )
    {
       bDone = true;
       VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCMarketingSection", strActionToProcess );
@@ -343,8 +343,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCMarketingSection", "wMLC.SaveMarketingSectionVersion" );
-      nOptRC = wMLC.SaveMarketingSectionVersion( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCMarketingSection", "wMLC.AcceptMarketingSectionGoPrev" );
+      nOptRC = wMLC.AcceptMarketingSectionGoPrev( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -719,6 +719,82 @@ if ( strActionToProcess != null )
       break;
    }
 
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "SaveMarketingSection" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCMarketingSection", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Action Operation
+      nRC = 0;
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCMarketingSection", "wMLC.SaveMarketingSectionVersion" );
+      nOptRC = wMLC.SaveMarketingSectionVersion( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "SaveMarketingSectionReturn" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCMarketingSection", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Action Operation
+      nRC = 0;
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCMarketingSection", "wMLC.SaveMarketingSection" );
+      nOptRC = wMLC.SaveMarketingSection( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReturnToParent, "", "" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
    while ( bDone == false && strActionToProcess.equals( "ZEIDON_ComboBoxSubmit" ) )
    {
       bDone = true;
@@ -893,6 +969,26 @@ else
    {
 %>
        <li id="SaveAndReturn" name="SaveAndReturn"><a href="#"  onclick="SaveMarketingSectionReturn()">Save and Return</a></li>
+<%
+   }
+%>
+
+<%
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "AcceptNext" );
+   if ( !csrRC.isSet() ) //if ( nRC < 0 )
+   {
+%>
+       <li id="AcceptNext" name="AcceptNext"><a href="#"  onclick="AcceptNext()">Next Section</a></li>
+<%
+   }
+%>
+
+<%
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "PreviousSection" );
+   if ( !csrRC.isSet() ) //if ( nRC < 0 )
+   {
+%>
+       <li id="PreviousSection" name="PreviousSection"><a href="#"  onclick="AcceptPrevious()">Previous Section</a></li>
 <%
    }
 %>
@@ -1216,7 +1312,7 @@ else
    }
 %>
 
-<input class="text12" name="Subtitle" id="Subtitle" maxlength="1024" style="width:592px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="Subtitle" id="Subtitle" maxlength="2048" style="width:592px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>
@@ -1267,7 +1363,7 @@ else
    }
 %>
 
-<input class="text12" name="Note" id="Note" maxlength="1024" style="width:592px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="Note" id="Note" maxlength="2048" style="width:592px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>

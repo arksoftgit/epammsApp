@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCStorageDisposal   Generate Timestamp: 20160623085856520 --%>
+<%-- wMLCStorageDisposal   Generate Timestamp: 20160720112427960 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -117,7 +117,7 @@ public int DoInputMapping( HttpServletRequest request,
          }
       }
 
-      // Grid: GridStorDisp
+      // Grid: GridStorageDisposal
       iTableRowCnt = 0;
 
       // We are creating a temp view to the grid view so that if there are 
@@ -1591,7 +1591,7 @@ else
    }
 %>
 
-<input class="text12" name="Text" id="Text" maxlength="1024" style="width:656px;position:absolute;left:130px;top:56px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="Text" id="Text" maxlength="2048" style="width:656px;position:absolute;left:130px;top:56px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* MarketingReviewerNote::Text */ %>
 
@@ -1636,7 +1636,7 @@ else
    }
 %>
 
-<input class="text12" name="MarketingReviewerNote" id="MarketingReviewerNote" maxlength="1024" style="width:656px;position:absolute;left:130px;top:78px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="MarketingReviewerNote" id="MarketingReviewerNote" maxlength="2048" style="width:656px;position:absolute;left:130px;top:78px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* New:PushBtn */ %>
 <button type="button" class="newbutton" name="New" id="New" value="" onclick="GOTO_StorageDispSectionAdd( )" style="width:78px;height:26px;position:absolute;left:586px;top:102px;">New</button>
@@ -1666,8 +1666,8 @@ else
 <div style="height:12px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
-<% /* GridStorDisp:Grid */ %>
-<table  cols=4 style="width:792px;"  name="GridStorDisp" id="GridStorDisp">
+<% /* GridStorageDisposal:Grid */ %>
+<table  cols=4 style="width:792px;"  name="GridStorageDisposal" id="GridStorageDisposal">
 
 <thead><tr>
 
@@ -1692,62 +1692,62 @@ try
       String strButtonName;
       String strOdd;
       String strTag;
-      String strGridEditStorDisp;
-      String strGridEditVolume;
+      String strGridEditName;
+      String strGridEditSectionTitle;
       String strBMBUpdateStorDispSect;
       String strBMBDeleteStorDispSect;
       
-      View vGridStorDisp;
-      vGridStorDisp = mMasLC.newView( );
-      csrRC2 = vGridStorDisp.cursor( "M_StorageDisposalSection" ).setFirst(  );
+      View vGridStorageDisposal;
+      vGridStorageDisposal = mMasLC.newView( );
+      csrRC2 = vGridStorageDisposal.cursor( "M_StorageDisposalSection" ).setFirst(  );
       while ( csrRC2.isSet() )
       {
          strOdd = (iTableRowCnt % 2) != 0 ? " class='odd'" : "";
          iTableRowCnt++;
 
-         lEntityKey = vGridStorDisp.cursor( "M_StorageDisposalSection" ).getEntityKey( );
+         lEntityKey = vGridStorageDisposal.cursor( "M_StorageDisposalSection" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strGridEditStorDisp = "";
-         nRC = vGridStorDisp.cursor( "M_StorageDisposalSection" ).checkExistenceOfEntity( ).toInt();
+         strGridEditName = "";
+         nRC = vGridStorageDisposal.cursor( "M_StorageDisposalSection" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditStorDisp = vGridStorDisp.cursor( "M_StorageDisposalSection" ).getAttribute( "Name" ).getString( "" );
+            strGridEditName = vGridStorageDisposal.cursor( "M_StorageDisposalSection" ).getAttribute( "Name" ).getString( "" );
 
-            if ( strGridEditStorDisp == null )
-               strGridEditStorDisp = "";
+            if ( strGridEditName == null )
+               strGridEditName = "";
          }
 
-         if ( StringUtils.isBlank( strGridEditStorDisp ) )
-            strGridEditStorDisp = "&nbsp";
+         if ( StringUtils.isBlank( strGridEditName ) )
+            strGridEditName = "&nbsp";
 
-         strGridEditVolume = "";
-         nRC = vGridStorDisp.cursor( "M_StorageDisposalSection" ).checkExistenceOfEntity( ).toInt();
+         strGridEditSectionTitle = "";
+         nRC = vGridStorageDisposal.cursor( "M_StorageDisposalSection" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditVolume = vGridStorDisp.cursor( "M_StorageDisposalSection" ).getAttribute( "Title" ).getString( "" );
+            strGridEditSectionTitle = vGridStorageDisposal.cursor( "M_StorageDisposalSection" ).getAttribute( "Title" ).getString( "" );
 
-            if ( strGridEditVolume == null )
-               strGridEditVolume = "";
+            if ( strGridEditSectionTitle == null )
+               strGridEditSectionTitle = "";
          }
 
-         if ( StringUtils.isBlank( strGridEditVolume ) )
-            strGridEditVolume = "&nbsp";
+         if ( StringUtils.isBlank( strGridEditSectionTitle ) )
+            strGridEditSectionTitle = "&nbsp";
 
 %>
 
 <tr<%=strOdd%>>
 
-   <td><a href="#" onclick="GOTO_StorageDispSectionUpdate( this.id )" id="GridEditStorDisp::<%=strEntityKey%>"><%=strGridEditStorDisp%></a></td>
-   <td><a href="#" onclick="GOTO_StorageDispSectionUpdate( this.id )" id="GridEditVolume::<%=strEntityKey%>"><%=strGridEditVolume%></a></td>
+   <td><a href="#" onclick="GOTO_StorageDispSectionUpdate( this.id )" id="GridEditName::<%=strEntityKey%>"><%=strGridEditName%></a></td>
+   <td><a href="#" onclick="GOTO_StorageDispSectionUpdate( this.id )" id="GridEditSectionTitle::<%=strEntityKey%>"><%=strGridEditSectionTitle%></a></td>
    <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateStorDispSect" onclick="GOTO_StorageDispSectionUpdate( this.id )" id="BMBUpdateStorDispSect::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
    <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteStorDispSect" onclick="GOTO_StorageDispSectionDelete( this.id )" id="BMBDeleteStorDispSect::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
 
 </tr>
 
 <%
-         csrRC2 = vGridStorDisp.cursor( "M_StorageDisposalSection" ).setNextContinue( );
+         csrRC2 = vGridStorageDisposal.cursor( "M_StorageDisposalSection" ).setNextContinue( );
       }
-      vGridStorDisp.drop( );
+      vGridStorageDisposal.drop( );
    }
 }
 catch (Exception e)

@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCMarketingStatement   Generate Timestamp: 20160623085856159 --%>
+<%-- wMLCMarketingStatement   Generate Timestamp: 20160708172649429 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -60,7 +60,70 @@ public int DoInputMapping( HttpServletRequest request,
    mMasLC = task.getViewByName( "mMasLC" );
    if ( VmlOperation.isValid( mMasLC ) )
    {
-      // Grid: Grid3
+      // MLEdit: Title
+      nRC = mMasLC.cursor( "M_MarketingStatement" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 ) // CursorResult.SET
+      {
+         strMapValue = request.getParameter( "Title" );
+         task.log().debug( "Title prior to TrimTinyHtml: " + strMapValue );
+         strMapValue = VmlOperation.TrimTinyHtml( strMapValue );
+         task.log().debug( "Title after TrimTinyHtml: '" + strMapValue + "'" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "Title", "", strMapValue );
+            else
+               mMasLC.cursor( "M_MarketingStatement" ).getAttribute( "Title" ).setValue( strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "Title", e.getReason( ), strMapValue );
+         }
+      }
+
+      // MLEdit: Text
+      nRC = mMasLC.cursor( "M_MarketingStatement" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 ) // CursorResult.SET
+      {
+         strMapValue = request.getParameter( "Text" );
+         task.log().debug( "Text prior to TrimTinyHtml: " + strMapValue );
+         strMapValue = VmlOperation.TrimTinyHtml( strMapValue );
+         task.log().debug( "Text after TrimTinyHtml: '" + strMapValue + "'" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "Text", "", strMapValue );
+            else
+               mMasLC.cursor( "M_MarketingStatement" ).getAttribute( "Text" ).setValue( strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "Text", e.getReason( ), strMapValue );
+         }
+      }
+
+      // MLEdit: ReviewerNote
+      nRC = mMasLC.cursor( "M_MarketingStatement" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 ) // CursorResult.SET
+      {
+         strMapValue = request.getParameter( "ReviewerNote" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "ReviewerNote", "", strMapValue );
+            else
+               mMasLC.cursor( "M_MarketingStatement" ).getAttribute( "ReviewerNote" ).setValue( strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "ReviewerNote", e.getReason( ), strMapValue );
+         }
+      }
+
+      // Grid: GridKeywords
       iTableRowCnt = 0;
 
       // We are creating a temp view to the grid view so that if there are 
@@ -258,6 +321,82 @@ if ( strActionToProcess != null )
       break;
    }
 
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "AcceptNext" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCMarketingStatement", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Action Operation
+      nRC = 0;
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCMarketingStatement", "wMLC.AcceptMarketingStatementGoNext" );
+      nOptRC = wMLC.AcceptMarketingStatementGoNext( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "AcceptPrevious" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCMarketingStatement", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Action Operation
+      nRC = 0;
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCMarketingStatement", "wMLC.AcceptMarketingStatementGoPrev" );
+      nOptRC = wMLC.AcceptMarketingStatementGoPrev( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
    while ( bDone == false && StringUtils.equals( strActionToProcess, "ADD_MarketingStatementKeyword" ) )
    {
       bDone = true;
@@ -391,6 +530,44 @@ if ( strActionToProcess != null )
       break;
    }
 
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "DELETE_DirectionsForUseStatement" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCMarketingStatement", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Action Operation
+      nRC = 0;
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCMarketingStatement", "wMLC.DELETE_DirectionsForUseStatement" );
+      nOptRC = wMLC.DELETE_DirectionsForUseStatement( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
    while ( bDone == false && StringUtils.equals( strActionToProcess, "DELETE_MarketingStatementKeyword" ) )
    {
       bDone = true;
@@ -455,6 +632,76 @@ if ( strActionToProcess != null )
       break;
    }
 
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_DirsForUseStatementAdd" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCMarketingStatement", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Action Operation
+      nRC = 0;
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCMarketingStatement", "wMLC.GOTO_DirsForUseStatementAdd" );
+      nOptRC = wMLC.GOTO_DirsForUseStatementAdd( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "DirectionsForUseStatement" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_DirsForUseStatementUpdate" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCMarketingStatement", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Action Auto Object Function
+      nRC = 0;
+      try
+      {
+         View mMasLCAuto = task.getViewByName( "mMasLC" );
+         EntityCursor cursor = mMasLCAuto.cursor( "M_DirectionsForUseStatement" );
+         cursor.createTemporalSubobjectVersion( );
+
+      }
+      catch ( Exception e )
+      {
+         nRC = 2;
+         VmlOperation.CreateMessage( task, "GOTO_DirsForUseStatementUpdate", e.getMessage( ), "" );
+         break;
+      }
+      // Next Window
+      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "DirectionsForUseStatement" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
    while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_DisplayGeneratedTextMktg" ) )
    {
       bDone = true;
@@ -486,6 +733,61 @@ if ( strActionToProcess != null )
       {
          // Next Window
          strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "EncodedTitleTextUpdate" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "RefreshMarketing" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCMarketingStatement", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Next Window
+      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "ParseStatementText" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCMarketingStatement", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Action Operation
+      nRC = 0;
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCMarketingStatement", "wMLC.ParseMarketingStatementText" );
+      nOptRC = wMLC.ParseMarketingStatementText( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
       }
 
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -627,6 +929,30 @@ if ( strActionToProcess != null )
       break;
    }
 
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "Sort" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCMarketingStatement", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Next Window
+      // We are borrowing zTableRowSelect and this code is hardwired for the moment.  javascript code similar to the following must be added to the action:
+      // document.wSLCMarketingStatement.zTableRowSelect.value = buildSortTableHtml( "mSubLC", "S_MarketingUsageOrdering", "GridMarketingUsage", ["Usage Type","Usage Name"] );
+      wWebXA = task.getViewByName( "wWebXfer" );
+      String strHtml = (String) request.getParameter( "zTableRowSelect" );
+      wWebXA.cursor( "Root" ).getAttribute( "HTML" ).setValue( strHtml, "" );
+      // We are borrowing zTableRowSelect and the code above is hardwired for the moment
+
+      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wSystem", "DragDropSort" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
    while ( bDone == false && strActionToProcess.equals( "ZEIDON_ComboBoxSubmit" ) )
    {
       bDone = true;
@@ -757,9 +1083,17 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/common.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/css.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/sts.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/jsoeUtils.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/jsoe.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
+
+<!-- TinyMCE -->
+<script language="JavaScript" type="text/javascript" src="./js/tinymce/js/tinymce/tinymce.min.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/TinyMCE.js"></script>
+<!-- /TinyMCE -->
+
 <script language="JavaScript" type="text/javascript" src="./genjs/wMLCMarketingStatement.js"></script>
 
 </head>
@@ -790,6 +1124,26 @@ else
    {
 %>
        <li id="AcceptAndReturn" name="AcceptAndReturn"><a href="#"  onclick="AcceptMarketingStatement()">Accept & Return</a></li>
+<%
+   }
+%>
+
+<%
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "NextStatement" );
+   if ( !csrRC.isSet() ) //if ( nRC < 0 )
+   {
+%>
+       <li id="NextStatement" name="NextStatement"><a href="#"  onclick="AcceptNext()">Next Statement</a></li>
+<%
+   }
+%>
+
+<%
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "PreviousStatement" );
+   if ( !csrRC.isSet() ) //if ( nRC < 0 )
+   {
+%>
+       <li id="PreviousStatement" name="PreviousStatement"><a href="#"  onclick="AcceptPrevious()">Previous Statement</a></li>
 <%
    }
 %>
@@ -940,39 +1294,72 @@ else
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GBStorDispSections2:GroupBox */ %>
+<% /* GBMarketingStatement:GroupBox */ %>
 
-<div id="GBStorDispSections2" name="GBStorDispSections2" class="listgroup"   style="float:left;position:relative; width:780px; height:36px;">  <!-- GBStorDispSections2 --> 
+<div id="GBMarketingStatement" name="GBMarketingStatement" class="listgroup"   style="float:left;position:relative; width:822px; height:36px;">  <!-- GBMarketingStatement --> 
 
 <% /* OrganismClaimsStatements3:Text */ %>
 
 <label class="groupbox"  id="OrganismClaimsStatements3" name="OrganismClaimsStatements3" style="width:238px;height:16px;position:absolute;left:6px;top:12px;">Marketing Statement</label>
 
+<% /* Section:Text */ %>
 
-</div>  <!--  GBStorDispSections2 --> 
+<label class="text12lightright"  id="Section" name="Section" style="width:90px;height:16px;position:absolute;left:270px;top:12px;">  ... Section:</label>
+
+<% /* MarketingSectionName:Text */ %>
+<% strTextDisplayValue = "";
+   mMasLC = task.getViewByName( "mMasLC" );
+   if ( VmlOperation.isValid( mMasLC ) == false )
+      task.log( ).debug( "Invalid View: " + "MarketingSectionName" );
+   else
+   {
+      nRC = mMasLC.cursor( "M_MarketingSection" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+      {
+      try
+      {
+         strTextDisplayValue = mMasLC.cursor( "M_MarketingSection" ).getAttribute( "Name" ).getString( "" );
+      }
+      catch (Exception e)
+      {
+         out.println("There is an error on MarketingSectionName: " + e.getMessage());
+         task.log().info( "*** Error on ctrl MarketingSectionName" + e.getMessage() );
+      }
+         if ( strTextDisplayValue == null )
+            strTextDisplayValue = "";
+      }
+   }
+%>
+
+<label class="text12light"  id="MarketingSectionName" name="MarketingSectionName" style="width:430px;height:16px;position:absolute;left:366px;top:12px;"><%=strTextDisplayValue%></label>
+
+
+</div>  <!--  GBMarketingStatement --> 
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
 
 
+ <!-- This is added as a line spacer -->
+<div style="height:2px;width:100px;"></div>
+
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox3:GroupBox */ %>
-<div id="GroupBox3" name="GroupBox3" style="float:left;width:832px;" >
 
-<table cols=2 style="width:832px;"  class="grouptable">
+<div id="GroupBox3" name="GroupBox3"   style="float:left;position:relative; width:832px; height:200px;">  <!-- GroupBox3 --> 
 
-<tr>
-<td valign="top" style="width:112px;">
 <% /* Title::Text */ %>
 
-<span  id="Title:" name="Title:" style="width:78px;height:18px;">Title:</span>
+<label  id="Title:" name="Title:" style="width:78px;height:18px;position:absolute;left:10px;top:12px;">Title:</label>
 
-</td>
-<td valign="top" style="width:696px;">
+<% /* GroupBox6:GroupBox */ %>
+
+<div id="GroupBox6" name="GroupBox6" style="width:696px;height:54px;position:absolute;left:122px;top:12px;">  <!-- GroupBox6 --> 
+
 <% /* Title:MLEdit */ %>
 <%
-   // MLEdit: Title
+   // : Title
    strErrorMapValue = VmlOperation.CheckError( "Title", strError );
    if ( !StringUtils.isBlank( strErrorMapValue ) )
    {
@@ -984,39 +1371,40 @@ else
       strErrorColor = "";
       mMasLC = task.getViewByName( "mMasLC" );
       if ( VmlOperation.isValid( mMasLC ) == false )
-         task.log( ).debug( "Invalid View: " + "Title" );
+         task.log( ).info( "Invalid View: " + "Title" );
       else
       {
          nRC = mMasLC.cursor( "M_MarketingStatement" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strErrorMapValue = mMasLC.cursor( "M_MarketingStatement" ).getAttribute( "dMarketingTitleKeyword" ).getString( "" );
+            strErrorMapValue = mMasLC.cursor( "M_MarketingStatement" ).getAttribute( "Title" ).getString( "" );
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
 
-            task.log( ).debug( "M_MarketingStatement.dMarketingTitleKeyword: " + strErrorMapValue );
+            task.log( ).info( "M_MarketingStatement.Title: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist for Title: " + "mMasLC.M_MarketingStatement" );
+            task.log( ).info( "Entity does not exist for Title: " + "mMasLC.M_MarketingStatement" );
       }
    }
 %>
 
-<div id="Title" name="Title" class="" style="width:696px;height:54px;border:solid;border-width:4px;border-style:groove;text-overflow:hidden;background-color:lightgray;" wrap="wrap"><%=strErrorMapValue%></div>
+<div style="background-color:#eee;border:1px solid #042;width:696px;height:54px;position:absolute;left:0px;top:0px;overflow:auto;">
+<div class="mceSimpleZeidonSpecialCharacters" name="Title" id="Title" style="width:696px;height:54px;position:absolute;left:0px;top:0px;"><%=strErrorMapValue%></div></div>
 
-</td>
-</tr>
-<tr>
-<td valign="top" style="width:112px;">
+
+</div>  <!--  GroupBox6 --> 
 <% /* Text::Text */ %>
 
-<span  id="Text:" name="Text:" style="width:78px;height:18px;">Text:</span>
+<label  id="Text:" name="Text:" style="width:78px;height:18px;position:absolute;left:10px;top:76px;">Text:</label>
 
-</td>
-<td valign="top" style="width:696px;">
+<% /* GroupBox5:GroupBox */ %>
+
+<div id="GroupBox5" name="GroupBox5" style="width:696px;height:76px;position:absolute;left:122px;top:76px;">  <!-- GroupBox5 --> 
+
 <% /* Text:MLEdit */ %>
 <%
-   // MLEdit: Text
+   // : Text
    strErrorMapValue = VmlOperation.CheckError( "Text", strError );
    if ( !StringUtils.isBlank( strErrorMapValue ) )
    {
@@ -1028,39 +1416,36 @@ else
       strErrorColor = "";
       mMasLC = task.getViewByName( "mMasLC" );
       if ( VmlOperation.isValid( mMasLC ) == false )
-         task.log( ).debug( "Invalid View: " + "Text" );
+         task.log( ).info( "Invalid View: " + "Text" );
       else
       {
          nRC = mMasLC.cursor( "M_MarketingStatement" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strErrorMapValue = mMasLC.cursor( "M_MarketingStatement" ).getAttribute( "dMarketingTextKeyword" ).getString( "" );
+            strErrorMapValue = mMasLC.cursor( "M_MarketingStatement" ).getAttribute( "Text" ).getString( "" );
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
 
-            task.log( ).debug( "M_MarketingStatement.dMarketingTextKeyword: " + strErrorMapValue );
+            task.log( ).info( "M_MarketingStatement.Text: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist for Text: " + "mMasLC.M_MarketingStatement" );
+            task.log( ).info( "Entity does not exist for Text: " + "mMasLC.M_MarketingStatement" );
       }
    }
 %>
 
-<div id="Text" name="Text" class="" style="width:696px;height:76px;border:solid;border-width:4px;border-style:groove;text-overflow:hidden;background-color:lightgray;" wrap="wrap"><%=strErrorMapValue%></div>
+<div style="background-color:#eee;border:1px solid #042;width:696px;height:76px;position:absolute;left:0px;top:0px;overflow:auto;">
+<div class="mceSimpleZeidonSpecialCharacters" name="Text" id="Text" style="width:696px;height:76px;position:absolute;left:0px;top:0px;"><%=strErrorMapValue%></div></div>
 
-</td>
-</tr>
-<tr>
-<td valign="top" style="width:112px;">
+
+</div>  <!--  GroupBox5 --> 
 <% /* ReviewerNote::Text */ %>
 
-<span  id="ReviewerNote:" name="ReviewerNote:" style="width:106px;height:18px;">Reviewer Note:</span>
+<label  id="ReviewerNote:" name="ReviewerNote:" style="width:106px;height:18px;position:absolute;left:10px;top:160px;">Reviewer Note:</label>
 
-</td>
-<td valign="top" style="width:696px;">
 <% /* ReviewerNote:MLEdit */ %>
 <%
-   // MLEdit: ReviewerNote
+   // : ReviewerNote
    strErrorMapValue = VmlOperation.CheckError( "ReviewerNote", strError );
    if ( !StringUtils.isBlank( strErrorMapValue ) )
    {
@@ -1072,7 +1457,7 @@ else
       strErrorColor = "";
       mMasLC = task.getViewByName( "mMasLC" );
       if ( VmlOperation.isValid( mMasLC ) == false )
-         task.log( ).debug( "Invalid View: " + "ReviewerNote" );
+         task.log( ).info( "Invalid View: " + "ReviewerNote" );
       else
       {
          nRC = mMasLC.cursor( "M_MarketingStatement" ).checkExistenceOfEntity( ).toInt();
@@ -1082,21 +1467,111 @@ else
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
 
-            task.log( ).debug( "M_MarketingStatement.ReviewerNote: " + strErrorMapValue );
+            task.log( ).info( "M_MarketingStatement.ReviewerNote: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist for ReviewerNote: " + "mMasLC.M_MarketingStatement" );
+            task.log( ).info( "Entity does not exist for ReviewerNote: " + "mMasLC.M_MarketingStatement" );
       }
    }
 %>
 
-<div id="ReviewerNote" name="ReviewerNote" class="" style="width:696px;height:34px;border:solid;border-width:4px;border-style:groove;text-overflow:hidden;background-color:lightgray;" wrap="wrap"><%=strErrorMapValue%></div>
+<textarea name="ReviewerNote" id="ReviewerNote" style="width:696px;height:34px;position:absolute;left:122px;top:160px;border:solid;border-width:4px;border-style:groove;" wrap="wrap"><%=strErrorMapValue%></textarea>
 
-</td>
-</tr>
-</table>
 
-</div>  <!-- GroupBox3 --> 
+</div>  <!--  GroupBox3 --> 
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:4px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GroupBox7:GroupBox */ %>
+
+<div id="GroupBox7" name="GroupBox7" style="width:832px;float:left;">  <!-- GroupBox7 --> 
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:14px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<span style="height:16px;">&nbsp&nbsp</span>
+<% /* MarketingStatementTitle::Text */ %>
+
+<span  id="MarketingStatementTitle:" name="MarketingStatementTitle:" style="width:70px;height:16px;">Title:</span>
+
+<span style="height:16px;">&nbsp</span>
+<% /* MarketingStatementTitle:Text */ %>
+<% strTextDisplayValue = "";
+   mMasLC = task.getViewByName( "mMasLC" );
+   if ( VmlOperation.isValid( mMasLC ) == false )
+      task.log( ).debug( "Invalid View: " + "MarketingStatementTitle" );
+   else
+   {
+      nRC = mMasLC.cursor( "M_MarketingStatement" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+      {
+      try
+      {
+         strTextDisplayValue = mMasLC.cursor( "M_MarketingStatement" ).getAttribute( "dMarketingTitleKeyword" ).getString( "" );
+      }
+      catch (Exception e)
+      {
+         out.println("There is an error on MarketingStatementTitle: " + e.getMessage());
+         task.log().info( "*** Error on ctrl MarketingStatementTitle" + e.getMessage() );
+      }
+         if ( strTextDisplayValue == null )
+            strTextDisplayValue = "";
+      }
+   }
+%>
+
+<span class="text12"  id="MarketingStatementTitle" name="MarketingStatementTitle"  title="Optional Title to appear with text on generated label" style="width:730px;height:16px;"><%=strTextDisplayValue%></span>
+
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:4px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<span style="height:16px;">&nbsp&nbsp</span>
+<% /* MarketingStatementText::Text */ %>
+
+<span  id="MarketingStatementText:" name="MarketingStatementText:" style="width:70px;height:16px;">Text:</span>
+
+<span style="height:16px;">&nbsp</span>
+<% /* MarketingStatementText:Text */ %>
+<% strTextDisplayValue = "";
+   mMasLC = task.getViewByName( "mMasLC" );
+   if ( VmlOperation.isValid( mMasLC ) == false )
+      task.log( ).debug( "Invalid View: " + "MarketingStatementText" );
+   else
+   {
+      nRC = mMasLC.cursor( "M_MarketingStatement" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+      {
+      try
+      {
+         strTextDisplayValue = mMasLC.cursor( "M_MarketingStatement" ).getAttribute( "dMarketingTextKeyword" ).getString( "" );
+      }
+      catch (Exception e)
+      {
+         out.println("There is an error on MarketingStatementText: " + e.getMessage());
+         task.log().info( "*** Error on ctrl MarketingStatementText" + e.getMessage() );
+      }
+         if ( strTextDisplayValue == null )
+            strTextDisplayValue = "";
+      }
+   }
+%>
+
+<span class="text12"  id="MarketingStatementText" name="MarketingStatementText"  title="Optional Title to appear with text on generated label" style="width:730px;height:16px;"><%=strTextDisplayValue%></span>
 
 </div>  <!-- End of a new line -->
 
@@ -1107,28 +1582,24 @@ else
 <div style="height:8px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GroupBox7:GroupBox */ %>
-
-<div id="GroupBox7" name="GroupBox7" style="width:832px;float:left;">  <!-- GroupBox7 --> 
-
-
- <!-- This is added as a line spacer -->
-<div style="height:8px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
 <% /* GroupBox2:GroupBox */ %>
 
-<div id="GroupBox2" name="GroupBox2"   style="float:left;position:relative; width:756px; height:30px;">  <!-- GroupBox2 --> 
+<div id="GroupBox2" name="GroupBox2"   style="float:left;position:relative; width:796px; height:30px;">  <!-- GroupBox2 --> 
 
-<% /* UpdateStatement:PushBtn */ %>
-<button type="button" class="newbutton" name="UpdateStatement" id="UpdateStatement" value="" onclick="GOTO_DisplayGeneratedTextMktg( )" style="width:158px;height:26px;position:absolute;left:354px;top:4px;">Update Statement</button>
+<% /* Refresh:PushBtn */ %>
+<button type="button" class="newbutton" name="Refresh" id="Refresh" value="" onclick="RefreshMarketing( )" style="width:84px;height:26px;position:absolute;left:354px;top:4px;">Refresh</button>
 
 <% /* Paste:PushBtn */ %>
-<button type="button" class="newbutton" name="Paste" id="Paste" value="" onclick="PASTE_InsertKeyword( )" style="width:74px;height:26px;position:absolute;left:530px;top:4px;">Paste</button>
+<button type="button" class="newbutton" name="Paste" id="Paste" value="" onclick="PASTE_InsertKeyword( )" style="width:74px;height:26px;position:absolute;left:446px;top:4px;">Paste</button>
+
+<% /* ParseText:PushBtn */ %>
+<button type="button" class="newbutton" name="ParseText" id="ParseText" value="" onclick="ParseStatementText( )" style="width:94px;height:26px;position:absolute;left:530px;top:4px;">Parse Text</button>
 
 <% /* New:PushBtn */ %>
-<button type="button" class="newbutton" name="New" id="New" value="" onclick="ADD_MarketingStatementKeyword( )" style="width:66px;height:26px;position:absolute;left:618px;top:4px;">New</button>
+<button type="button" class="newbutton" name="New" id="New" value="" onclick="ADD_MarketingStatementKeyword( )" style="width:66px;height:26px;position:absolute;left:632px;top:4px;">New</button>
+
+<% /* PBSort:PushBtn */ %>
+<button type="button" class="newbutton" name="PBSort" id="PBSort" value="" onclick="Sort( )" style="width:66px;height:26px;position:absolute;left:706px;top:4px;">Sort</button>
 
 <% /* KeywordTextEmbedded:Text */ %>
 
@@ -1142,14 +1613,14 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:8px;width:100px;"></div>
+<div style="height:6px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
-<% /* Grid3:Grid */ %>
-<table class="sortable"  cols=5 style=""  name="Grid3" id="Grid3">
+<% /* GridKeywords:Grid */ %>
+<table  cols=5 style=""  name="GridKeywords" id="GridKeywords">
 
-<thead bgcolor=green><tr>
+<thead><tr>
 
    <th>Keyword</th>
    <th>Keyword Text</th>
@@ -1179,21 +1650,21 @@ try
       String strCopy;
       String strDelete;
       
-      View vGrid3;
-      vGrid3 = mMasLC.newView( );
-      csrRC2 = vGrid3.cursor( "M_InsertTextKeywordMarketing" ).setFirst(  );
+      View vGridKeywords;
+      vGridKeywords = mMasLC.newView( );
+      csrRC2 = vGridKeywords.cursor( "M_InsertTextKeywordMarketing" ).setFirst(  );
       while ( csrRC2.isSet() )
       {
          strOdd = (iTableRowCnt % 2) != 0 ? " class='odd'" : "";
          iTableRowCnt++;
 
-         lEntityKey = vGrid3.cursor( "M_InsertTextKeywordMarketing" ).getEntityKey( );
+         lEntityKey = vGridKeywords.cursor( "M_InsertTextKeywordMarketing" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
          strKeyword = "";
-         nRC = vGrid3.cursor( "M_InsertTextKeywordMarketing" ).checkExistenceOfEntity( ).toInt();
+         nRC = vGridKeywords.cursor( "M_InsertTextKeywordMarketing" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strKeyword = vGrid3.cursor( "M_InsertTextKeywordMarketing" ).getAttribute( "Name" ).getString( "" );
+            strKeyword = vGridKeywords.cursor( "M_InsertTextKeywordMarketing" ).getAttribute( "Name" ).getString( "" );
 
             if ( strKeyword == null )
                strKeyword = "";
@@ -1203,10 +1674,10 @@ try
             strKeyword = "&nbsp";
 
          strKeywordText = "";
-         nRC = vGrid3.cursor( "M_InsertTextKeywordMarketing" ).checkExistenceOfEntity( ).toInt();
+         nRC = vGridKeywords.cursor( "M_InsertTextKeywordMarketing" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strKeywordText = vGrid3.cursor( "M_InsertTextKeywordMarketing" ).getAttribute( "dMarketingKeywordText" ).getString( "" );
+            strKeywordText = vGridKeywords.cursor( "M_InsertTextKeywordMarketing" ).getAttribute( "dMarketingKeywordText" ).getString( "" );
 
             if ( strKeywordText == null )
                strKeywordText = "";
@@ -1228,9 +1699,9 @@ try
 </tr>
 
 <%
-         csrRC2 = vGrid3.cursor( "M_InsertTextKeywordMarketing" ).setNextContinue( );
+         csrRC2 = vGridKeywords.cursor( "M_InsertTextKeywordMarketing" ).setNextContinue( );
       }
-      vGrid3.drop( );
+      vGridKeywords.drop( );
    }
 }
 catch (Exception e)
@@ -1252,7 +1723,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 
 
  <!-- This is added as a line spacer -->
-<div style="height:6px;width:100px;"></div>
+<div style="height:2px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->

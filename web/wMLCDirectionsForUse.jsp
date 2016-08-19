@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCDirectionsForUse   Generate Timestamp: 20160623085854865 --%>
+<%-- wMLCDirectionsForUse   Generate Timestamp: 20160722100100250 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -98,7 +98,7 @@ public int DoInputMapping( HttpServletRequest request,
          }
       }
 
-      // EditBox: DFU_ReviewerNote
+      // MLEdit: DFU_ReviewerNote
       nRC = mMasLC.cursor( "MasterLabelContent" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 ) // CursorResult.SET
       {
@@ -1433,7 +1433,7 @@ else
 <div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GBDFU_Sections:GroupBox */ %>
 
-<div id="GBDFU_Sections" name="GBDFU_Sections"   style="float:left;position:relative; width:802px; height:132px;">  <!-- GBDFU_Sections --> 
+<div id="GBDFU_Sections" name="GBDFU_Sections"   style="float:left;position:relative; width:802px; height:156px;">  <!-- GBDFU_Sections --> 
 
 <% /* DFU_Statements:Text */ %>
 
@@ -1527,14 +1527,15 @@ else
    }
 %>
 
-<input class="text12" name="Text" id="Text" maxlength="1024" style="width:656px;position:absolute;left:130px;top:56px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="Text" id="Text" maxlength="2048" style="width:656px;position:absolute;left:130px;top:56px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* DFU_ReviewerNote::Text */ %>
 
 <label  id="DFU_ReviewerNote:" name="DFU_ReviewerNote:" style="width:110px;height:16px;position:absolute;left:14px;top:78px;">Reviewer Note:</label>
 
-<% /* DFU_ReviewerNote:EditBox */ %>
+<% /* DFU_ReviewerNote:MLEdit */ %>
 <%
+   // : DFU_ReviewerNote
    strErrorMapValue = VmlOperation.CheckError( "DFU_ReviewerNote", strError );
    if ( !StringUtils.isBlank( strErrorMapValue ) )
    {
@@ -1546,43 +1547,35 @@ else
       strErrorColor = "";
       mMasLC = task.getViewByName( "mMasLC" );
       if ( VmlOperation.isValid( mMasLC ) == false )
-         task.log( ).debug( "Invalid View: " + "DFU_ReviewerNote" );
+         task.log( ).info( "Invalid View: " + "DFU_ReviewerNote" );
       else
       {
          nRC = mMasLC.cursor( "MasterLabelContent" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            try
-            {
-               strErrorMapValue = mMasLC.cursor( "MasterLabelContent" ).getAttribute( "ReviewerNoteDFU" ).getString( "" );
-            }
-            catch (Exception e)
-            {
-               out.println("There is an error on DFU_ReviewerNote: " + e.getMessage());
-               task.log().error( "*** Error on ctrl DFU_ReviewerNote", e );
-            }
+            strErrorMapValue = mMasLC.cursor( "MasterLabelContent" ).getAttribute( "ReviewerNoteDFU" ).getString( "" );
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
 
-            task.log( ).debug( "MasterLabelContent.ReviewerNoteDFU: " + strErrorMapValue );
+            task.log( ).info( "MasterLabelContent.ReviewerNoteDFU: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist for DFU_ReviewerNote: " + "mMasLC.MasterLabelContent" );
+            task.log( ).info( "Entity does not exist for DFU_ReviewerNote: " + "mMasLC.MasterLabelContent" );
       }
    }
 %>
 
-<input class="text12" name="DFU_ReviewerNote" id="DFU_ReviewerNote" maxlength="1024" style="width:656px;position:absolute;left:130px;top:78px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<textarea name="DFU_ReviewerNote" id="DFU_ReviewerNote" style="width:656px;height:50px;position:absolute;left:130px;top:78px;border:solid;border-width:4px;border-style:groove;" class="text12" wrap="wrap"><%=strErrorMapValue%></textarea>
 
 <% /* New:PushBtn */ %>
-<button type="button" class="newbutton" name="New" id="New" value="" onclick="GOTO_DU_CategoryAdd( )" style="width:78px;height:26px;position:absolute;left:586px;top:102px;">New</button>
+<button type="button" class="newbutton" name="New" id="New" value="" onclick="GOTO_DU_CategoryAdd( )" style="width:78px;height:26px;position:absolute;left:586px;top:126px;">New</button>
 
 <% /* PBSort:PushBtn */ %>
-<button type="button" class="newbutton" name="PBSort" id="PBSort" value="" onclick="Sort( )" style="width:78px;height:26px;position:absolute;left:686px;top:102px;">Sort</button>
+<button type="button" class="newbutton" name="PBSort" id="PBSort" value="" onclick="Sort( )" style="width:78px;height:26px;position:absolute;left:686px;top:126px;">Sort</button>
 
 <% /* DirectionsForUseCategories:Text */ %>
 
-<label class="listheader"  id="DirectionsForUseCategories" name="DirectionsForUseCategories" style="width:210px;height:16px;position:absolute;left:6px;top:112px;">Directions For Use Categories</label>
+<label class="listheader"  id="DirectionsForUseCategories" name="DirectionsForUseCategories" style="width:210px;height:16px;position:absolute;left:6px;top:136px;">Directions For Use Categories</label>
 
 
 </div>  <!--  GBDFU_Sections --> 

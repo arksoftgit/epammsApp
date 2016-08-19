@@ -1,4 +1,4 @@
-z1000-Zeidon    TZAPDMAA TZDGSRCO 03/25/16   16:27:51 1.0a2   
+z1000-Zeidon    TZAPDMAA TZDGSRCO 06/30/16   20:42:19 1.0a2   
 eDomainGroup 1
 aZKey      68568067
 aNextZKeyToAssign 68568088
@@ -37,7 +37,7 @@ aDesc      Long text
 aDomainType A
 aJavaClass com.quinsoft.zeidon.domains.StringDomain
 aDataType  S
-aMaxStringLth 1024
+aMaxStringLth 2048
 aContextRestriction N
 
 eContext   3

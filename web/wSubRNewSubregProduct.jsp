@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSubRNewSubregProduct   Generate Timestamp: 20160620105932901 --%>
+<%-- wSubRNewSubregProduct   Generate Timestamp: 20160706125724170 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -859,7 +859,7 @@ else
 <span style="height:24px;">&nbsp&nbsp</span>
 <% /* Registrant:Text */ %>
 
-<span class="groupbox"  id="Registrant" name="Registrant" style="width:114px;height:24px;">Registrant</span>
+<label class="groupbox"  id="Registrant" name="Registrant" style="width:114px;height:24px;">Registrant</label>
 
 </div>  <!-- End of a new line -->
 
@@ -940,7 +940,7 @@ else
 <span style="height:24px;">&nbsp&nbsp</span>
 <% /* Product:Text */ %>
 
-<span class="groupbox"  id="Product" name="Product" style="width:114px;height:24px;">Product</span>
+<label class="groupbox"  id="Product" name="Product" style="width:114px;height:24px;">Product</label>
 
 </div>  <!-- End of a new line -->
 
@@ -951,7 +951,7 @@ else
 <div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GBProduct:GroupBox */ %>
 
-<div id="GBProduct" name="GBProduct" style="width:624px;height:180px;float:left;">  <!-- GBProduct --> 
+<div id="GBProduct" name="GBProduct" style="width:624px;height:192px;float:left;">  <!-- GBProduct --> 
 
 
  <!-- This is added as a line spacer -->
@@ -1062,7 +1062,7 @@ else
    }
 %>
 
-<input name="Description" id="Description" maxlength="1024" style="width:422px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="Description" id="Description" maxlength="2048" style="width:422px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>
@@ -1229,13 +1229,13 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:26px;width:100px;"></div>
+<div style="height:14px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <span style="height:24px;">&nbsp&nbsp</span>
 <% /* MasterProducts:Text */ %>
 
-<span class="groupbox"  id="MasterProducts" name="MasterProducts" style="width:114px;height:24px;">Master Products</span>
+<label class="groupbox"  id="MasterProducts" name="MasterProducts" style="width:114px;height:24px;">Master Products</label>
 
 </div>  <!-- End of a new line -->
 
@@ -1246,7 +1246,7 @@ else
 <div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GBMasterProducts:GroupBox */ %>
 
-<div id="GBMasterProducts" name="GBMasterProducts" style="width:624px;height:240px;float:left;">  <!-- GBMasterProducts --> 
+<div id="GBMasterProducts" name="GBMasterProducts" style="width:624px;float:left;">  <!-- GBMasterProducts --> 
 
 
  <!-- This is added as a line spacer -->
@@ -1255,7 +1255,7 @@ else
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GridMasterProducts:Grid */ %>
-<table  cols=4 style=""  name="GridMasterProducts" id="GridMasterProducts">
+<table  cols=4 style="width:602px;"  name="GridMasterProducts" id="GridMasterProducts">
 
 <thead><tr>
 

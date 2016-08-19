@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSubRUpdateSubregProduct   Generate Timestamp: 20160620105933176 --%>
+<%-- wSubRUpdateSubregProduct   Generate Timestamp: 20160706122801786 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -1076,7 +1076,7 @@ else
    }
 %>
 
-<input name="Description" id="Description" maxlength="1024" style="width:422px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="Description" id="Description" maxlength="2048" style="width:422px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </div>  <!-- End of a new line -->
 
@@ -1289,7 +1289,7 @@ else
 
    <th>Name</th>
    <th>Description</th>
-   <th>Update</th>
+   <th>Design</th>
 
 </tr></thead>
 
@@ -1309,7 +1309,7 @@ try
       String strTag;
       String strGridLabelName;
       String strGridContentDescription;
-      String strBMBUpdateProductSection;
+      String strGSUpdateProductSection;
       
       View vGridLabels;
       vGridLabels = mSubreg.newView( );
@@ -1353,7 +1353,7 @@ try
 
    <td nowrap><a href="#" onclick="UpdateProdLabelContent( this.id )" id="GridLabelName::<%=strEntityKey%>"><%=strGridLabelName%></a></td>
    <td><a href="#" onclick="UpdateProdLabelContent( this.id )" id="GridContentDescription::<%=strEntityKey%>"><%=strGridContentDescription%></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateProductSection" onclick="UpdateProdLabelContent( this.id )" id="BMBUpdateProductSection::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="GSUpdateProductSection" onclick="UpdateProdLabelContent( this.id )" id="GSUpdateProductSection::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Design"></a></td>
 
 </tr>
 

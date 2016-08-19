@@ -57,7 +57,7 @@ dIngredientName( VIEW mMasLC BASED ON LOD mMasLC,
                  STRING ( 32 ) InternalAttribStructure,
                  SHORT GetOrSetFlag )
 
-   STRING ( 1024 ) szString
+   STRING ( 2048 ) szString
 
    CASE GetOrSetFlag
    OF   zDERIVED_GET:
@@ -94,7 +94,7 @@ dMasterProductNameNbr( VIEW mMasLC BASED ON LOD mMasLC,
                        STRING ( 32 ) InternalAttribStructure,
                        SHORT GetOrSetFlag )
 
-   STRING ( 1024 ) szString
+   STRING ( 2048 ) szString
 
    CASE GetOrSetFlag
    OF   zDERIVED_GET:
@@ -131,7 +131,7 @@ dRegistrantNameID( VIEW mMasLC BASED ON LOD mMasLC,
                    STRING ( 32 ) InternalAttribStructure,
                    SHORT GetOrSetFlag )
 
-   STRING ( 1024 ) szString
+   STRING ( 2048 ) szString
 
    CASE GetOrSetFlag
    OF   zDERIVED_GET:
@@ -717,7 +717,7 @@ dUsgTextSubUsageNames( VIEW mMasLC BASED ON LOD mMasLC,
                        SHORT GetOrSetFlag )
 
    VIEW mMasLC2 BASED ON LOD mMasLC
-   STRING ( 1024 ) szDisplayStatement
+   STRING ( 2048 ) szDisplayStatement
    STRING ( 100 ) szUsageName
    STRING ( 100 ) szUsageText
 
@@ -734,7 +734,7 @@ dUsgTextSubUsageNames( VIEW mMasLC BASED ON LOD mMasLC,
             FOR EACH mMasLC2.M_InsertTextKeywordUsage
                szUsageName = "{" + mMasLC2.M_InsertTextKeywordUsage.Name + "}"
                szUsageText = "<b>" + mMasLC2.M_InsertTextUsage.Text + "</b>"
-               zSearchAndReplace( szDisplayStatement, 1024, szUsageName, szUsageText )
+               zSearchAndReplace( szDisplayStatement, 2048, szUsageName, szUsageText )
             END
             DropView( mMasLC2 )
          END
@@ -767,7 +767,7 @@ dMarkUsgTxtSubUsgNames( VIEW mMasLC BASED ON LOD mMasLC,
                         SHORT GetOrSetFlag )
 
    VIEW mMasLC2 BASED ON LOD mMasLC
-   STRING ( 1024 ) szDisplayStatement
+   STRING ( 2048 ) szDisplayStatement
    STRING ( 100 ) szUsageName
    STRING ( 100 ) szUsageText
 
@@ -783,7 +783,7 @@ dMarkUsgTxtSubUsgNames( VIEW mMasLC BASED ON LOD mMasLC,
          FOR EACH mMasLC2.M_InsertTextKeywordMarketUsage
             szUsageName = "{" + mMasLC2.M_InsertTextKeywordMarketUsage.Name + "}"
             szUsageText = "<b>" + mMasLC2.M_InsertTextMarketUsage.Text + "</b>"
-            zSearchAndReplace( szDisplayStatement, 1024, szUsageName, szUsageText )
+            zSearchAndReplace( szDisplayStatement, 2048, szUsageName, szUsageText )
          END
          DropView( mMasLC2 )
       END
@@ -810,7 +810,7 @@ dUsgFullEmbeddedName( VIEW mMasLC BASED ON LOD mMasLC,
                       STRING ( 32 ) InternalAttribStructure,
                       SHORT GetOrSetFlag )
 
-   STRING ( 1024 ) szDisplayStatement
+   STRING ( 2048 ) szDisplayStatement
 
    CASE GetOrSetFlag
    OF   zDERIVED_GET:
@@ -843,7 +843,7 @@ dUsgListFullEmbedName( VIEW mMasLC BASED ON LOD mMasLC,
                        SHORT GetOrSetFlag )
 
    VIEW mMasLC2 BASED ON LOD mMasLC
-   STRING ( 1024 ) szDisplayStatement
+   STRING ( 2048 ) szDisplayStatement
 
    CASE GetOrSetFlag
    OF   zDERIVED_GET:
@@ -879,7 +879,7 @@ dUsgNonGroupSubUsages( VIEW mMasLC BASED ON LOD mMasLC,
                        SHORT GetOrSetFlag )
 
    VIEW mMasLC2 BASED ON LOD mMasLC
-   STRING ( 1024 ) szDisplayStatement
+   STRING ( 2048 ) szDisplayStatement
 
    CASE GetOrSetFlag
    OF   zDERIVED_GET:
@@ -914,7 +914,7 @@ dDU_SectTitleOrTxtKey( VIEW mMasLC BASED ON LOD mMasLC,
                        STRING ( 32 ) InternalAttribStructure,
                        SHORT GetOrSetFlag )
 
-   STRING ( 1024 ) szDisplayStatement
+   STRING ( 2048 ) szDisplayStatement
 
    CASE GetOrSetFlag
    OF   zDERIVED_GET:
@@ -953,7 +953,7 @@ dDU_SectionTitleKeyword( VIEW mMasLC BASED ON LOD mMasLC,
                          STRING ( 32 ) InternalAttribStructure,
                          SHORT GetOrSetFlag )
 
-   STRING ( 1024 ) szDisplayStatement
+   STRING ( 2048 ) szDisplayStatement
 
    CASE GetOrSetFlag
    OF   zDERIVED_GET:
@@ -989,8 +989,8 @@ dDU_SectionTextKeyword( VIEW mMasLC BASED ON LOD mMasLC,
                         STRING ( 32 ) InternalAttribStructure,
                         SHORT GetOrSetFlag )
 
-   STRING ( 1024 ) szDisplayStatement
-   STRING ( 1024 ) szStatementText
+   STRING ( 2048 ) szDisplayStatement
+   STRING ( 2048 ) szStatementText
    STRING ( 256 )  szTitle
 
    CASE GetOrSetFlag
@@ -1027,8 +1027,8 @@ dDU_StatementTitleText( VIEW mMasLC BASED ON LOD mMasLC,
                         STRING ( 32 ) InternalAttribStructure,
                         SHORT GetOrSetFlag )
 
-   STRING ( 1024 ) szDisplayStatement
-   STRING ( 1024 ) szStatementText
+   STRING ( 2048 ) szDisplayStatement
+   STRING ( 2048 ) szStatementText
    STRING ( 256 )  szTitle
 
    CASE GetOrSetFlag
@@ -1068,9 +1068,9 @@ dDU_StmtTitleTxtKey( VIEW mMasLC BASED ON LOD mMasLC,
                      STRING ( 32 ) InternalAttribStructure,
                      SHORT GetOrSetFlag )
 
-   STRING ( 1024 ) szDisplayStatement
+   STRING ( 2048 ) szDisplayStatement
    STRING ( 256 )  szStatementTitle
-   STRING ( 1024 ) szStatementText
+   STRING ( 2048 ) szStatementText
 
    CASE GetOrSetFlag
    OF   zDERIVED_GET:
@@ -1119,7 +1119,7 @@ dDU_StmtTitleKeyword( VIEW mMasLC BASED ON LOD mMasLC,
                       STRING ( 32 ) InternalAttribStructure,
                       SHORT GetOrSetFlag )
 
-   STRING ( 1024 ) szDisplayStatement
+   STRING ( 2048 ) szDisplayStatement
 
    CASE GetOrSetFlag
    OF   zDERIVED_GET:
@@ -1155,8 +1155,8 @@ dDU_StmtTextKeyword( VIEW mMasLC BASED ON LOD mMasLC,
                      STRING ( 32 ) InternalAttribStructure,
                      SHORT GetOrSetFlag )
 
-   STRING ( 1024 ) szDisplayStatement
-   STRING ( 1024 ) szStatementText
+   STRING ( 2048 ) szDisplayStatement
+   STRING ( 2048 ) szStatementText
    STRING ( 256 )  szTitle
 
    CASE GetOrSetFlag
@@ -1193,8 +1193,8 @@ dDU_SubStmtTitleText( VIEW mMasLC BASED ON LOD mMasLC,
                       STRING ( 32 ) InternalAttribStructure,
                       SHORT GetOrSetFlag )
 
-   STRING ( 1024 ) szDisplayStatement
-   STRING ( 1024 ) szStatementText
+   STRING ( 2048 ) szDisplayStatement
+   STRING ( 2048 ) szStatementText
    STRING ( 256 )  szTitle
 
    CASE GetOrSetFlag
@@ -1232,9 +1232,9 @@ dDU_SubStmtTitleTxtKey( VIEW mMasLC BASED ON LOD mMasLC,
                         STRING ( 32 ) InternalAttribStructure,
                         SHORT GetOrSetFlag )
 
-   STRING ( 1024 ) szDisplayStatement
+   STRING ( 2048 ) szDisplayStatement
    STRING ( 256 )  szStatementTitle
-   STRING ( 1024 ) szStatementText
+   STRING ( 2048 ) szStatementText
 
    CASE GetOrSetFlag
    OF   zDERIVED_GET:
@@ -1290,7 +1290,7 @@ dDU_DrivingUsgTxtNames( VIEW mMasLC BASED ON LOD mMasLC,
 
    VIEW mMasLC1 BASED ON LOD mMasLC
    VIEW mMasLC2 BASED ON LOD mMasLC
-   STRING ( 1024 ) szDisplayStatement
+   STRING ( 2048 ) szDisplayStatement
    STRING ( 100 )  szUsageName
    STRING ( 100 )  szUsageText
 
@@ -1315,7 +1315,7 @@ dDU_DrivingUsgTxtNames( VIEW mMasLC BASED ON LOD mMasLC,
             FOR EACH mMasLC2.M_InsertTextKeywordUsage
                szUsageName = "{" + mMasLC2.M_InsertTextKeywordUsage.Name + "}"
                szUsageText = "<b>" + mMasLC2.M_InsertTextUsage.Text + "</b>"
-               zSearchAndReplace( szDisplayStatement, 1024, szUsageName, szUsageText )
+               zSearchAndReplace( szDisplayStatement, 2048, szUsageName, szUsageText )
             END
             DropView( mMasLC2 )
          END
@@ -1384,8 +1384,8 @@ dSD_TitleText( VIEW mMasLC BASED ON LOD mMasLC,
                STRING ( 32 ) InternalAttribStructure,
                SHORT GetOrSetFlag )
 
-   STRING ( 1024 ) szDisplayStatement
-   STRING ( 1024 ) szStatementText
+   STRING ( 2048 ) szDisplayStatement
+   STRING ( 2048 ) szStatementText
    STRING ( 256 )  szTitle
 
    CASE GetOrSetFlag
@@ -1424,8 +1424,8 @@ dSD_SubTitleText( VIEW mMasLC BASED ON LOD mMasLC,
                   STRING ( 32 ) InternalAttribStructure,
                   SHORT GetOrSetFlag )
 
-   STRING ( 1024 ) szDisplayStatement
-   STRING ( 1024 ) szStatementText
+   STRING ( 2048 ) szDisplayStatement
+   STRING ( 2048 ) szStatementText
    STRING ( 256 )  szTitle
 
    CASE GetOrSetFlag
@@ -1464,7 +1464,7 @@ dSD_StmtTitleKey( VIEW mMasLC BASED ON LOD mMasLC,
                   STRING ( 32 ) InternalAttribStructure,
                   SHORT GetOrSetFlag )
 
-   STRING ( 1024 ) szStatementTitle
+   STRING ( 2048 ) szStatementTitle
 
    CASE GetOrSetFlag
    OF   zDERIVED_GET:
@@ -1498,7 +1498,7 @@ dSD_StmtTextKey( VIEW mMasLC BASED ON LOD mMasLC,
                  STRING ( 32 ) InternalAttribStructure,
                  SHORT GetOrSetFlag )
 
-   STRING ( 1024 ) szStatementText
+   STRING ( 2048 ) szStatementText
 
    CASE GetOrSetFlag
    OF   zDERIVED_GET:
@@ -1532,9 +1532,9 @@ dSD_StmtTitleTxtKey( VIEW mMasLC BASED ON LOD mMasLC,
                      STRING ( 32 ) InternalAttribStructure,
                      SHORT GetOrSetFlag )
 
-   STRING ( 1024 ) szDisplayStatement
+   STRING ( 2048 ) szDisplayStatement
    STRING ( 256 )  szStatementTitle
-   STRING ( 1024 ) szStatementText
+   STRING ( 2048 ) szStatementText
 
    CASE GetOrSetFlag
    OF   zDERIVED_GET:
@@ -1580,9 +1580,9 @@ dSD_SubStmtTitleTxtKey( VIEW mMasLC BASED ON LOD mMasLC,
                         STRING ( 32 ) InternalAttribStructure,
                         SHORT GetOrSetFlag )
 
-   STRING ( 1024 ) szDisplayStatement
+   STRING ( 2048 ) szDisplayStatement
    STRING ( 256 )  szStatementTitle
-   STRING ( 1024 ) szStatementText
+   STRING ( 2048 ) szStatementText
 
    CASE GetOrSetFlag
    OF   zDERIVED_GET:
@@ -1636,7 +1636,7 @@ dTitleText( VIEW mMasLC BASED ON LOD mMasLC,
             STRING ( 32 ) InternalAttribStructure,
             SHORT GetOrSetFlag )
 
-   STRING ( 1024 ) szString
+   STRING ( 2048 ) szString
    STRING ( 256 ) szTitle
 
    CASE GetOrSetFlag
@@ -1979,7 +1979,7 @@ dGenStmtTitleText( VIEW mMasLC BASED ON LOD mMasLC,
                    SHORT GetOrSetFlag )
 
    VIEW mMasLC2 BASED ON LOD mMasLC
-   STRING ( 1024 ) szCombinedText
+   STRING ( 2048 ) szCombinedText
 
    CASE GetOrSetFlag
    OF   zDERIVED_GET:
@@ -2021,7 +2021,7 @@ dUsageKeywordStmtText( VIEW mMasLC BASED ON LOD mMasLC,
                        STRING ( 32 ) InternalAttribStructure,
                        SHORT GetOrSetFlag )
 
-   STRING ( 1024 ) szGeneratedString
+   STRING ( 2048 ) szGeneratedString
 
    CASE GetOrSetFlag
    OF   zDERIVED_GET:
@@ -2057,7 +2057,7 @@ dFullKeywordTitleText( VIEW mMasLC BASED ON LOD mMasLC,
                        STRING ( 32 ) InternalAttribStructure,
                        SHORT GetOrSetFlag )
 
-   STRING ( 1024 ) szGeneratedString
+   STRING ( 2048 ) szGeneratedString
 
    CASE GetOrSetFlag
    OF   zDERIVED_GET:
@@ -2093,7 +2093,7 @@ dMarketingKeywordText( VIEW mMasLC BASED ON LOD mMasLC,
                        STRING ( 32 ) InternalAttribStructure,
                        SHORT GetOrSetFlag )
 
-   STRING ( 1024 ) szKeyValue
+   STRING ( 2048 ) szKeyValue
 
    CASE GetOrSetFlag
    OF   zDERIVED_GET:
@@ -2134,7 +2134,7 @@ dDU_KeywordText( VIEW mMasLC BASED ON LOD mMasLC,
                  STRING ( 32 ) InternalAttribStructure,
                  SHORT GetOrSetFlag )
 
-   STRING ( 1024 ) szKeyValue
+   STRING ( 2048 ) szKeyValue
 
    CASE GetOrSetFlag
    OF   zDERIVED_GET:
@@ -2172,7 +2172,7 @@ dSD_KeywordText( VIEW mMasLC BASED ON LOD mMasLC,
                  STRING ( 32 ) InternalAttribStructure,
                  SHORT GetOrSetFlag )
 
-   STRING ( 1024 ) szGeneratedString
+   STRING ( 2048 ) szGeneratedString
 
    CASE GetOrSetFlag
    OF   zDERIVED_GET:
@@ -2210,7 +2210,7 @@ dGeneralKeywordText( VIEW mMasLC BASED ON LOD mMasLC,
                      STRING ( 32 ) InternalAttribStructure,
                      SHORT GetOrSetFlag )
 
-   STRING ( 1024 ) szGeneratedString
+   STRING ( 2048 ) szGeneratedString
 
    CASE GetOrSetFlag
    OF   zDERIVED_GET:
@@ -2252,8 +2252,8 @@ dMarketingTitleKeyword( VIEW mMasLC BASED ON LOD mMasLC,
    VIEW mMasLC2 BASED ON LOD mMasLC
    STRING ( 32 )  szEntityName
    STRING ( 100 ) szKeyword
-   STRING ( 1024 ) szKeyValue
-   STRING ( 1024 ) szCombinedName
+   STRING ( 2048 ) szKeyValue
+   STRING ( 2048 ) szCombinedName
 
    CASE GetOrSetFlag
    OF   zDERIVED_GET:
@@ -2282,7 +2282,7 @@ dMarketingTitleKeyword( VIEW mMasLC BASED ON LOD mMasLC,
          // TraceLineS( "Searching Title: ", szCombinedName )
          // TraceLineS( "      for: ", szKeyword )
          // TraceLineS( "  Replace: ", szKeyValue )
-            zSearchAndReplace( szCombinedName, 1024, szKeyword, szKeyValue )
+            zSearchAndReplace( szCombinedName, 2048, szKeyword, szKeyValue )
          END
          DropView( mMasLC2 )
       END
@@ -2306,7 +2306,7 @@ dMarketingTitleKeyword( VIEW mMasLC BASED ON LOD mMasLC,
                         SHORT GetOrSetFlag )
 
    STRING ( 32 )  szEntityName
-   STRING ( 1024 ) szDisplayStatement
+   STRING ( 2048 ) szDisplayStatement
 
    CASE GetOrSetFlag
    OF   zDERIVED_GET:
@@ -2347,8 +2347,8 @@ dMarketingTextKeyword( VIEW mMasLC BASED ON LOD mMasLC,
    VIEW mMasLC2 BASED ON LOD mMasLC
    STRING ( 32 )  szEntityName
    STRING ( 100 ) szKeyword
-   STRING ( 1024 ) szKeyValue
-   STRING ( 1024 ) szCombinedName
+   STRING ( 2048 ) szKeyValue
+   STRING ( 2048 ) szCombinedName
 
    CASE GetOrSetFlag
    OF   zDERIVED_GET:
@@ -2377,7 +2377,7 @@ dMarketingTextKeyword( VIEW mMasLC BASED ON LOD mMasLC,
          // TraceLineS( "Searching Text: ", szCombinedName )
          // TraceLineS( "      for: ", szKeyword )
          // TraceLineS( "  Replace: ", szKeyValue )
-            zSearchAndReplace( szCombinedName, 1024, szKeyword, szKeyValue )
+            zSearchAndReplace( szCombinedName, 2048, szKeyword, szKeyValue )
          END
          DropView( mMasLC2 )
       END
@@ -2401,7 +2401,7 @@ dMarketingTextKeyword( VIEW mMasLC BASED ON LOD mMasLC,
                        SHORT GetOrSetFlag )
 
    STRING ( 32 )  szEntityName
-   STRING ( 1024 ) szDisplayStatement
+   STRING ( 2048 ) szDisplayStatement
 
    CASE GetOrSetFlag
    OF   zDERIVED_GET:
@@ -2442,9 +2442,9 @@ dMarketTitleTextKey( VIEW mMasLC BASED ON LOD mMasLC,
    VIEW mMasLC2 BASED ON LOD mMasLC
    STRING ( 32 )  szEntityName
    STRING ( 100 ) szKeyword
-   STRING ( 1024 ) szKeyValue
-   STRING ( 1024 ) szTitle
-   STRING ( 1024 ) szText
+   STRING ( 2048 ) szKeyValue
+   STRING ( 2048 ) szTitle
+   STRING ( 2048 ) szText
    STRING ( 2048 ) szGeneratedString
 
    CASE GetOrSetFlag
@@ -2473,8 +2473,8 @@ dMarketTitleTextKey( VIEW mMasLC BASED ON LOD mMasLC,
                szKeyValue = szKeyValue  + ")}"
             END
 
-            zSearchAndReplace( szTitle, 1024, szKeyword, szKeyValue )
-            zSearchAndReplace( szText, 1024, szKeyword, szKeyValue )
+            zSearchAndReplace( szTitle, 2048, szKeyword, szKeyValue )
+            zSearchAndReplace( szText, 2048, szKeyword, szKeyValue )
          END
          DropView( mMasLC2 )
       END
@@ -2503,8 +2503,8 @@ dMarketTitleTextKey( VIEW mMasLC BASED ON LOD mMasLC,
                      STRING ( 32 ) InternalAttribStructure,
                      SHORT GetOrSetFlag )
 
-   STRING ( 1024 ) szTitle
-   STRING ( 1024 ) szText
+   STRING ( 2048 ) szTitle
+   STRING ( 2048 ) szText
    STRING ( 2048 ) szDisplayStatement
 
    CASE GetOrSetFlag
@@ -3290,7 +3290,7 @@ dUsageKeywordText( VIEW mMasLC BASED ON LOD mMasLC,
                    STRING ( 32 ) InternalAttribStructure,
                    SHORT GetOrSetFlag )
 
-   STRING ( 1024 ) szGeneratedString
+   STRING ( 2048 ) szGeneratedString
 
    CASE GetOrSetFlag
    OF   zDERIVED_GET:
@@ -3328,7 +3328,7 @@ dSubUsageCombinedText( VIEW mMasLC BASED ON LOD mMasLC,
                        STRING ( 32 ) InternalAttribStructure,
                        SHORT GetOrSetFlag )
 
-   STRING ( 1024 ) szCombinedText
+   STRING ( 2048 ) szCombinedText
 
    CASE GetOrSetFlag
    OF   zDERIVED_GET:
@@ -3403,8 +3403,8 @@ TRANSFORMATION OPERATION
 BuildUsageKeyEntries( VIEW mMasLC BASED ON LOD mMasLC,
                       STRING ( 32 ) SourceKeywordEntityName,
                       STRING ( 32 ) SourceTextEntityName,
-                      STRING ( 1024 ) TextValue,
-                      STRING ( 1024 ) TitleValue )
+                      STRING ( 2048 ) TextValue,
+                      STRING ( 2048 ) TitleValue )
 
    VIEW mMasLC_Root REGISTERED AS mMasLC_Root
    SHORT nRC1
