@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCClaimsFootnoteStatement   Generate Timestamp: 20160531205223553 --%>
+<%-- wMLCClaimsFootnoteStatement   Generate Timestamp: 20160824153937566 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -683,7 +683,7 @@ else
    }
 %>
 
-<input name="Footnote" id="Footnote" maxlength="1024" style="width:594px;position:absolute;left:70px;top:6px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="Footnote" id="Footnote" maxlength="2048" style="width:594px;position:absolute;left:70px;top:6px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* Symbol::Text */ %>
 

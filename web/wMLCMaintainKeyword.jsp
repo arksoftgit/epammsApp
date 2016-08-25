@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCMaintainKeyword   Generate Timestamp: 20160623085855912 --%>
+<%-- wMLCMaintainKeyword   Generate Timestamp: 20160824153941705 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -637,7 +637,7 @@ else
    }
 %>
 
-<input class="groupbox" name="KeywordValue" id="KeywordValue" maxlength="1024"  placeholder="Keyword Value"style="width:746px;position:absolute;left:6px;top:32px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="groupbox" name="KeywordValue" id="KeywordValue" maxlength="2048"  placeholder="Keyword Value"style="width:746px;position:absolute;left:6px;top:32px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 
 </div>  <!--  GB1 --> 

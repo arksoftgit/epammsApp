@@ -1,4 +1,4 @@
-// wMLCNetContents   Generate Timestamp: 20160623085856245
+// wMLCTableMaintenance   Generate Timestamp: 20160825154848400
 
 var isWindowClosing = true;
 var timerID = null;
@@ -45,8 +45,8 @@ function _OnAlmostTimeout()
       // If the time is less than one minute, resubmit the page.  Otherwise, go to the timeout window.
       if (tDiff < 60000)
       {
-         document.wMLCNetContents.zAction.value = "_OnResubmitPage";
-         document.wMLCNetContents.submit( );
+         document.wMLCTableMaintenance.zAction.value = "_OnResubmitPage";
+         document.wMLCTableMaintenance.submit( );
       }
       else
       {
@@ -61,8 +61,8 @@ function _OnTimeout( )
    {
       _DisableFormElements( true );
 
-      document.wMLCNetContents.zAction.value = "_OnTimeout";
-      document.wMLCNetContents.submit( );
+      document.wMLCTableMaintenance.zAction.value = "_OnTimeout";
+      document.wMLCTableMaintenance.submit( );
    }
 }
 
@@ -76,8 +76,8 @@ function _BeforePageUnload( )
       // If the user clicked the window close box, unregister zeidon.
       if (isWindowClosing)
       {
-         document.wMLCNetContents.zAction.value = "_OnUnload";
-         document.wMLCNetContents.submit( );
+         document.wMLCTableMaintenance.zAction.value = "_OnUnload";
+         document.wMLCTableMaintenance.submit( );
       }
    }
 }
@@ -130,16 +130,16 @@ function _AfterPageLoaded( )
 {
 // _DisableFormElements( false );
 
-   var szFocusCtrl = document.wMLCNetContents.zFocusCtrl.value;
+   var szFocusCtrl = document.wMLCTableMaintenance.zFocusCtrl.value;
    if ( szFocusCtrl != "" && szFocusCtrl != "null" )
-      eval( 'document.wMLCNetContents.' + szFocusCtrl + '.focus( )' );
+      eval( 'document.wMLCTableMaintenance.' + szFocusCtrl + '.focus( )' );
 
    // This is where we put out a message from the previous iteration on this window
-   var szMsg = document.wMLCNetContents.zError.value;
+   var szMsg = document.wMLCTableMaintenance.zError.value;
    if ( szMsg != "" )
       alert( szMsg ); // "Houston ... We have a problem"
 
-   szMsg = document.wMLCNetContents.zOpenFile.value;
+   szMsg = document.wMLCTableMaintenance.zOpenFile.value;
    if ( szMsg != "" )
    {
       var NewWin = window.open( szMsg );
@@ -151,10 +151,10 @@ function _AfterPageLoaded( )
       }
    }
 
-   var LoginName = document.wMLCNetContents.zLoginName.value;
-   var keyRole = document.wMLCNetContents.zKeyRole.value;
-   document.wMLCNetContents.zError.value = "";
-   document.wMLCNetContents.zOpenFile.value = "";
+   var LoginName = document.wMLCTableMaintenance.zLoginName.value;
+   var keyRole = document.wMLCTableMaintenance.zKeyRole.value;
+   document.wMLCTableMaintenance.zError.value = "";
+   document.wMLCTableMaintenance.zOpenFile.value = "";
 
    if ( timerID != null )
    {
@@ -162,7 +162,7 @@ function _AfterPageLoaded( )
       timerID = null;
    }
 
-   var varTimeout = document.wMLCNetContents.zTimeout.value;
+   var varTimeout = document.wMLCTableMaintenance.zTimeout.value;
    if ( varTimeout > 0 )
    {
       var varDelay = 60000 * varTimeout;  // Timeout value in timeout.inc
@@ -191,7 +191,7 @@ function CheckAllInGrid(id, CheckBoxName) // triggered by no text checkbox
    }
 }
 
-function GOTO_AddFirstAidStatement( )
+function ADD_Table( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -201,12 +201,12 @@ function GOTO_AddFirstAidStatement( )
    {
       _DisableFormElements( true );
 
-      document.wMLCNetContents.zAction.value = "GOTO_AddFirstAidStatement";
-      document.wMLCNetContents.submit( );
+      document.wMLCTableMaintenance.zAction.value = "ADD_Table";
+      document.wMLCTableMaintenance.submit( );
    }
 }
 
-function SaveReturn( )
+function ADD_TableColumn( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -216,12 +216,12 @@ function SaveReturn( )
    {
       _DisableFormElements( true );
 
-      document.wMLCNetContents.zAction.value = "SaveReturn";
-      document.wMLCNetContents.submit( );
+      document.wMLCTableMaintenance.zAction.value = "ADD_TableColumn";
+      document.wMLCTableMaintenance.submit( );
    }
 }
 
-function Cancel( )
+function AltF4( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -231,12 +231,12 @@ function Cancel( )
    {
       _DisableFormElements( true );
 
-      document.wMLCNetContents.zAction.value = "Cancel";
-      document.wMLCNetContents.submit( );
+      document.wMLCTableMaintenance.zAction.value = "Alt-F4";
+      document.wMLCTableMaintenance.submit( );
    }
 }
 
-function GOTO_FirstAidStmtDelete( )
+function DELETE_Table( strTagEntityKey )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -244,14 +244,18 @@ function GOTO_FirstAidStmtDelete( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      var nIdx = strTagEntityKey.lastIndexOf( '::' );
+      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
+
+      document.wMLCTableMaintenance.zTableRowSelect.value = strEntityKey;
       _DisableFormElements( true );
 
-      document.wMLCNetContents.zAction.value = "GOTO_FirstAidStmtDelete";
-      document.wMLCNetContents.submit( );
+      document.wMLCTableMaintenance.zAction.value = "DELETE_Table";
+      document.wMLCTableMaintenance.submit( );
    }
 }
 
-function GOTO_UpdateFirstAidStmt( )
+function ESC( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -261,12 +265,12 @@ function GOTO_UpdateFirstAidStmt( )
    {
       _DisableFormElements( true );
 
-      document.wMLCNetContents.zAction.value = "GOTO_UpdateFirstAidStmt";
-      document.wMLCNetContents.submit( );
+      document.wMLCTableMaintenance.zAction.value = "ESC";
+      document.wMLCTableMaintenance.submit( );
    }
 }
 
-function smSaveReturn( )
+function Return( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -276,12 +280,33 @@ function smSaveReturn( )
    {
       _DisableFormElements( true );
 
-      document.wMLCNetContents.zAction.value = "smSaveReturn";
-      document.wMLCNetContents.submit( );
+      document.wMLCTableMaintenance.zAction.value = "Return";
+      document.wMLCTableMaintenance.submit( );
    }
 }
 
-function smCancel( )
+function Sort( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      // Javascript code entered by user.
+
+       document.wMLCTableMaintenance.zTableRowSelect.value = buildSortTableHtml( "mMasLC", "M_MetaTable", "GridTables",  ["GE_TableName", "GE_TableDescription", "GE_ColumnCnt"]  );
+
+      // END of Javascript code entered by user.
+
+      _DisableFormElements( true );
+
+      document.wMLCTableMaintenance.zAction.value = "Sort";
+      document.wMLCTableMaintenance.submit( );
+   }
+}
+
+function TOC( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -291,8 +316,46 @@ function smCancel( )
    {
       _DisableFormElements( true );
 
-      document.wMLCNetContents.zAction.value = "smCancel";
-      document.wMLCNetContents.submit( );
+      document.wMLCTableMaintenance.zAction.value = "TOC";
+      document.wMLCTableMaintenance.submit( );
+   }
+}
+
+function UPDATE_TableData( strTagEntityKey )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      var nIdx = strTagEntityKey.lastIndexOf( '::' );
+      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
+
+      document.wMLCTableMaintenance.zTableRowSelect.value = strEntityKey;
+      _DisableFormElements( true );
+
+      document.wMLCTableMaintenance.zAction.value = "UPDATE_TableData";
+      document.wMLCTableMaintenance.submit( );
+   }
+}
+
+function UPDATE_TableSpecifications( strTagEntityKey )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      var nIdx = strTagEntityKey.lastIndexOf( '::' );
+      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
+
+      document.wMLCTableMaintenance.zTableRowSelect.value = strEntityKey;
+      _DisableFormElements( true );
+
+      document.wMLCTableMaintenance.zAction.value = "UPDATE_TableSpecifications";
+      document.wMLCTableMaintenance.submit( );
    }
 }
 

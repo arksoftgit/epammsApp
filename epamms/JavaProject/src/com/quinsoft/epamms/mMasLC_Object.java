@@ -8901,5 +8901,208 @@ omMasLC_dSpecifiedActiveIngred( View     mMasLC,
    } 
 
 
+   //:DERIVED ATTRIBUTE OPERATION
+   //:dSpecifiedInertIngred( VIEW mMasLC BASED ON LOD mMasLC,
+   //:                    STRING ( 32 ) InternalEntityStructure,
+   //:                    STRING ( 32 ) InternalAttribStructure,
+   //:                    SHORT GetOrSetFlag )
+
+   //:STRING ( 32 ) Active
+public int 
+omMasLC_dSpecifiedInertIngred( View     mMasLC,
+                               String InternalEntityStructure,
+                               String InternalAttribStructure,
+                               Integer   GetOrSetFlag )
+{
+   String   Active = null;
+   //:DECIMAL dTotalInertIngredients
+   double  dTotalInertIngredients = 0.0;
+   //:DECIMAL dInertIngredients
+   double  dInertIngredients = 0.0;
+   int      RESULT = 0;
+   int      lTempInteger_0 = 0;
+
+
+   //:CASE GetOrSetFlag
+   switch( GetOrSetFlag )
+   { 
+      //:OF   zDERIVED_GET:
+      case zDERIVED_GET :
+
+         //:dTotalInertIngredients = 0
+         dTotalInertIngredients = 0;
+         //:FOR EACH mMasLC.M_IngredientsStatement
+         RESULT = SetCursorFirstEntity( mMasLC, "M_IngredientsStatement", "" );
+         while ( RESULT > zCURSOR_UNCHANGED )
+         { 
+            //:Active = mMasLC.M_IngredientsStatement.Active
+            {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
+            StringBuilder sb_Active;
+            if ( Active == null )
+               sb_Active = new StringBuilder( 32 );
+            else
+               sb_Active = new StringBuilder( Active );
+                         GetVariableFromAttribute( sb_Active, mi_lTempInteger_0, 'S', 33, mMasLC, "M_IngredientsStatement", "Active", "", 0 );
+            lTempInteger_0 = mi_lTempInteger_0.intValue( );
+            Active = sb_Active.toString( );}
+            //:IF Active != "A"
+            if ( ZeidonStringCompare( Active, 1, 0, "A", 1, 0, 33 ) != 0 )
+            { 
+               //:dInertIngredients = mMasLC.M_IngredientsStatement.Percent
+               {MutableDouble md_dInertIngredients = new MutableDouble( dInertIngredients );
+                               GetDecimalFromAttribute( md_dInertIngredients, mMasLC, "M_IngredientsStatement", "Percent" );
+               dInertIngredients = md_dInertIngredients.doubleValue( );}
+               //:dTotalInertIngredients = dTotalInertIngredients + dInertIngredients
+               dTotalInertIngredients = dTotalInertIngredients + dInertIngredients;
+            } 
+
+            RESULT = SetCursorNextEntity( mMasLC, "M_IngredientsStatement", "" );
+            //:END
+         } 
+
+         //:END
+
+         //:// Store the resulting value in the object.
+         //:Active = dTotalInertIngredients
+          {StringBuilder sb_Active;
+         if ( Active == null )
+            sb_Active = new StringBuilder( 32 );
+         else
+            sb_Active = new StringBuilder( Active );
+                  ZeidonStringConvertFromNumber( sb_Active, 1, 0, 32, 0, dTotalInertIngredients, "D" );
+         Active = sb_Active.toString( );}
+         //:StoreStringInRecord( mMasLC, InternalEntityStructure, InternalAttribStructure, Active )
+         StoreStringInRecord( mMasLC, InternalEntityStructure, InternalAttribStructure, Active );
+         //:RETURN 0
+         if(8==8)return( 0 );
+
+         //:// end zDERIVED_GET
+         //:OF   zDERIVED_SET:
+         case zDERIVED_SET :
+            break ;
+      } 
+
+
+      //:  // end zDERIVED_SET
+      //:END  // case
+      return( 0 );
+   } 
+
+
+   //:DERIVED ATTRIBUTE OPERATION
+   //:dSymbolText( VIEW mMasLC BASED ON LOD mMasLC,
+   //:          STRING ( 32 ) InternalEntityStructure,
+   //:          STRING ( 32 ) InternalAttribStructure,
+   //:          SHORT GetOrSetFlag )
+
+   //:STRING ( 32 )  szEntityName
+public int 
+omMasLC_dSymbolText( View     mMasLC,
+                     String InternalEntityStructure,
+                     String InternalAttribStructure,
+                     Integer   GetOrSetFlag )
+{
+   String   szEntityName = null;
+   //:STRING ( 3000 ) Text
+   String   Text = null;
+   //:STRING ( 2048 ) Footnote
+   String   Footnote = null;
+   //:STRING ( 32 ) Symbol
+   String   Symbol = null;
+
+
+   //:CASE GetOrSetFlag
+   switch( GetOrSetFlag )
+   { 
+      //:OF   zDERIVED_GET:
+      case zDERIVED_GET :
+
+         //:GetEntityNameFromStructure( InternalEntityStructure, szEntityName )
+         {
+          ZGlobal1_Operation m_ZGlobal1_Operation = new ZGlobal1_Operation( mMasLC );
+          {StringBuilder sb_szEntityName;
+         if ( szEntityName == null )
+            sb_szEntityName = new StringBuilder( 32 );
+         else
+            sb_szEntityName = new StringBuilder( szEntityName );
+                   m_ZGlobal1_Operation.GetEntityNameFromStructure( InternalEntityStructure, sb_szEntityName );
+         szEntityName = sb_szEntityName.toString( );}
+          // m_ZGlobal1_Operation = null;  // permit gc  (unnecessary)
+         }
+         //:GetStringFromAttribute( Symbol, mMasLC, szEntityName, "Symbol" )
+         {StringBuilder sb_Symbol;
+         if ( Symbol == null )
+            sb_Symbol = new StringBuilder( 32 );
+         else
+            sb_Symbol = new StringBuilder( Symbol );
+                   GetStringFromAttribute( sb_Symbol, mMasLC, szEntityName, "Symbol" );
+         Symbol = sb_Symbol.toString( );}
+         //:GetStringFromAttribute( Footnote, mMasLC, szEntityName, "Text" )
+         {StringBuilder sb_Footnote;
+         if ( Footnote == null )
+            sb_Footnote = new StringBuilder( 32 );
+         else
+            sb_Footnote = new StringBuilder( Footnote );
+                   GetStringFromAttribute( sb_Footnote, mMasLC, szEntityName, "Text" );
+         Footnote = sb_Footnote.toString( );}
+         //:IF Symbol = ""
+         if ( ZeidonStringCompare( Symbol, 1, 0, "", 1, 0, 33 ) == 0 )
+         { 
+            //:Text = Footnote
+             {StringBuilder sb_Text;
+            if ( Text == null )
+               sb_Text = new StringBuilder( 32 );
+            else
+               sb_Text = new StringBuilder( Text );
+                        ZeidonStringCopy( sb_Text, 1, 0, Footnote, 1, 0, 3001 );
+            Text = sb_Text.toString( );}
+            //:ELSE
+         } 
+         else
+         { 
+            //:Text = Symbol + " - " + Footnote
+             {StringBuilder sb_Text;
+            if ( Text == null )
+               sb_Text = new StringBuilder( 32 );
+            else
+               sb_Text = new StringBuilder( Text );
+                        ZeidonStringCopy( sb_Text, 1, 0, Symbol, 1, 0, 3001 );
+            Text = sb_Text.toString( );}
+             {StringBuilder sb_Text;
+            if ( Text == null )
+               sb_Text = new StringBuilder( 32 );
+            else
+               sb_Text = new StringBuilder( Text );
+                        ZeidonStringConcat( sb_Text, 1, 0, " - ", 1, 0, 3001 );
+            Text = sb_Text.toString( );}
+             {StringBuilder sb_Text;
+            if ( Text == null )
+               sb_Text = new StringBuilder( 32 );
+            else
+               sb_Text = new StringBuilder( Text );
+                        ZeidonStringConcat( sb_Text, 1, 0, Footnote, 1, 0, 3001 );
+            Text = sb_Text.toString( );}
+         } 
+
+         //:END
+
+         //:StoreStringInRecord( mMasLC, InternalEntityStructure, InternalAttribStructure, Text )
+         StoreStringInRecord( mMasLC, InternalEntityStructure, InternalAttribStructure, Text );
+         //:RETURN 0
+         if(8==8)return( 0 );
+
+         //:// end zDERIVED_GET
+         //:OF   zDERIVED_SET:
+         case zDERIVED_SET :
+            break ;
+      } 
+
+
+      //:  // end zDERIVED_SET
+      //:END  // case
+      return( 0 );
+   } 
+
+
 
 }

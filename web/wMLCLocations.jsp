@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCLocations   Generate Timestamp: 20160623085855735 --%>
+<%-- wMLCLocations   Generate Timestamp: 20160824153941116 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -100,6 +100,46 @@ public int DoInputMapping( HttpServletRequest request,
       }
 
       vGridTmp.drop( );
+      // Grid: GridLocationGroup
+      iTableRowCnt = 0;
+
+      // We are creating a temp view to the grid view so that if there are 
+      // grids on the same window with the same view we do not mess up the 
+      // entity positions. 
+      vGridTmp = mMasLC.newView( );
+      csrRC = vGridTmp.cursor( "M_UsageGroup" ).setFirst(  );
+      while ( csrRC.isSet() )
+      {
+         lEntityKey = vGridTmp.cursor( "M_UsageGroup" ).getEntityKey( );
+         strEntityKey = Long.toString( lEntityKey );
+         iTableRowCnt++;
+
+         strTag = "GS_SelectLocationGroup" + strEntityKey;
+         strMapValue = request.getParameter( strTag );
+         // If the checkbox is not checked, then set to the unchecked value.
+         if (strMapValue == null || strMapValue.isEmpty() )
+            strMapValue = "N";
+
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "GS_SelectLocationGroup", "", strMapValue );
+            else
+               if ( strMapValue != null )
+                  vGridTmp.cursor( "M_UsageGroup" ).getAttribute( "wSelected" ).setValue( strMapValue, "" );
+               else
+                  vGridTmp.cursor( "M_UsageGroup" ).getAttribute( "wSelected" ).setValue( "", "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, strTag, e.getReason( ), strMapValue );
+         }
+
+         csrRC = vGridTmp.cursor( "M_UsageGroup" ).setNextContinue( );
+      }
+
+      vGridTmp.drop( );
       // Grid: GridNonGroupLocations
       iTableRowCnt = 0;
 
@@ -156,46 +196,6 @@ public int DoInputMapping( HttpServletRequest request,
          }
       }
 
-      // Grid: GridLocationGroup
-      iTableRowCnt = 0;
-
-      // We are creating a temp view to the grid view so that if there are 
-      // grids on the same window with the same view we do not mess up the 
-      // entity positions. 
-      vGridTmp = mMasLC.newView( );
-      csrRC = vGridTmp.cursor( "M_UsageGroup" ).setFirst(  );
-      while ( csrRC.isSet() )
-      {
-         lEntityKey = vGridTmp.cursor( "M_UsageGroup" ).getEntityKey( );
-         strEntityKey = Long.toString( lEntityKey );
-         iTableRowCnt++;
-
-         strTag = "GS_SelectLocationGroup" + strEntityKey;
-         strMapValue = request.getParameter( strTag );
-         // If the checkbox is not checked, then set to the unchecked value.
-         if (strMapValue == null || strMapValue.isEmpty() )
-            strMapValue = "N";
-
-         try
-         {
-            if ( webMapping )
-               VmlOperation.CreateMessage( task, "GS_SelectLocationGroup", "", strMapValue );
-            else
-               if ( strMapValue != null )
-                  vGridTmp.cursor( "M_UsageGroup" ).getAttribute( "wSelected" ).setValue( strMapValue, "" );
-               else
-                  vGridTmp.cursor( "M_UsageGroup" ).getAttribute( "wSelected" ).setValue( "", "" );
-         }
-         catch ( InvalidAttributeValueException e )
-         {
-            nMapError = -16;
-            VmlOperation.CreateMessage( task, strTag, e.getReason( ), strMapValue );
-         }
-
-         csrRC = vGridTmp.cursor( "M_UsageGroup" ).setNextContinue( );
-      }
-
-      vGridTmp.drop( );
    }
 
    if ( webMapping == true )
@@ -2099,7 +2099,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
    }
 %>
 
-<input name="ReviewerNote" id="ReviewerNote" maxlength="1024" style="width:466px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="ReviewerNote" id="ReviewerNote" maxlength="2048" style="width:466px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>

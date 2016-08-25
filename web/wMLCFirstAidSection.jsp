@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCFirstAidSection   Generate Timestamp: 20160624173825553 --%>
+<%-- wMLCFirstAidSection   Generate Timestamp: 20160824153940023 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -1577,7 +1577,7 @@ else
    }
 %>
 
-<input class="text12" name="ReviewerNote" id="ReviewerNote" maxlength="1024" style="width:582px;position:absolute;left:118px;top:36px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="ReviewerNote" id="ReviewerNote" maxlength="2048" style="width:582px;position:absolute;left:118px;top:36px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>

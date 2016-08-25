@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCTOC_Entry   Generate Timestamp: 20160623085857004 --%>
+<%-- wMLCTOC_Entry   Generate Timestamp: 20160824153945197 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -61,7 +61,7 @@ public int DoInputMapping( HttpServletRequest request,
    if ( VmlOperation.isValid( mMasLC ) )
    {
       // EditBox: SurfaceText
-      nRC = mMasLC.cursor( "TOC" ).checkExistenceOfEntity( ).toInt();
+      nRC = mMasLC.cursor( "M_TOC" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 ) // CursorResult.SET
       {
          strMapValue = request.getParameter( "SurfaceText" );
@@ -70,7 +70,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "SurfaceText", "", strMapValue );
             else
-               mMasLC.cursor( "TOC" ).getAttribute( "Title" ).setValue( strMapValue, "" );
+               mMasLC.cursor( "M_TOC" ).getAttribute( "Title" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -215,7 +215,7 @@ if ( strActionToProcess != null )
       try
       {
          View mMasLCAuto = task.getViewByName( "mMasLC" );
-         EntityCursor cursor = mMasLCAuto.cursor( "TOC" );
+         EntityCursor cursor = mMasLCAuto.cursor( "M_TOC" );
             if ( cursor.isNull() )
                nRC = 0;
             else
@@ -251,7 +251,7 @@ if ( strActionToProcess != null )
       try
       {
          View mMasLCAuto = task.getViewByName( "mMasLC" );
-         EntityCursor cursor = mMasLCAuto.cursor( "TOC" );
+         EntityCursor cursor = mMasLCAuto.cursor( "M_TOC" );
             if ( cursor.isNull() )
                nRC = 0;
             else
@@ -691,12 +691,12 @@ else
          task.log( ).debug( "Invalid View: " + "SurfaceText" );
       else
       {
-         nRC = mMasLC.cursor( "TOC" ).checkExistenceOfEntity( ).toInt();
+         nRC = mMasLC.cursor( "M_TOC" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
             try
             {
-               strErrorMapValue = mMasLC.cursor( "TOC" ).getAttribute( "Title" ).getString( "" );
+               strErrorMapValue = mMasLC.cursor( "M_TOC" ).getAttribute( "Title" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -706,10 +706,10 @@ else
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
 
-            task.log( ).debug( "TOC.Title: " + strErrorMapValue );
+            task.log( ).debug( "M_TOC.Title: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist for SurfaceText: " + "mMasLC.TOC" );
+            task.log( ).debug( "Entity does not exist for SurfaceText: " + "mMasLC.M_TOC" );
       }
    }
 %>

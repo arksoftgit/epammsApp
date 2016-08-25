@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCDeleteMasterProduct   Generate Timestamp: 20160623085854647 --%>
+<%-- wMLCDeleteMasterProduct   Generate Timestamp: 20160824153937748 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>

@@ -4075,3 +4075,227 @@ AcceptMarketingSectionGoPrev( VIEW ViewToWindow )
    CreateTemporalSubobjectVersion( mMasLC, "M_MarketingSection" )
 
 END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: CancelTableUpdate
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+CancelTableUpdate( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+   VIEW wWebXfer REGISTERED AS wWebXfer
+
+   FOR EACH wWebXfer.Work
+      DELETE ENTITY wWebXfer.Work NONE
+   END
+   CancelSubobject( mMasLC, "M_MetaTable" )
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: SetCursorNextWithData
+//
+/////////////////////////////////////////////////////////////////////////////
+LOCAL OPERATION
+SetCursorNextWithData( VIEW wWebXfer,
+                       STRING ( 256 ) szText )
+
+   INTEGER nRC
+
+   nRC = zCURSOR_SET
+   LOOP WHILE nRC >= zCURSOR_SET
+      nRC = SetCursorNextEntity( wWebXfer, "Work", "" )
+      IF nRC >= zCURSOR_SET
+         GetStringFromAttribute( szText, wWebXfer, "Work", "Text" )
+         IF szText != ""
+            RETURN nRC
+         END
+      END
+   END
+   RETURN -1
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: SaveTableColumns
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+SaveTableColumns( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+   VIEW wWebXfer REGISTERED AS wWebXfer
+   STRING ( 256 ) szText
+   SHORT  nCnt
+   SHORT  nRC
+
+   mMasLC.M_MetaTable.Title1 = ""
+   mMasLC.M_MetaTable.Title2 = ""
+   mMasLC.M_MetaTable.Title3 = ""
+   mMasLC.M_MetaTable.Title4 = ""
+   mMasLC.M_MetaTable.Title5 = ""
+   mMasLC.M_MetaTable.Title6 = ""
+   mMasLC.M_MetaTable.Title7 = ""
+   mMasLC.M_MetaTable.Title8 = ""
+   mMasLC.M_MetaTable.Title9 = ""
+   mMasLC.M_MetaTable.Title10 = ""
+
+   nCnt = 0
+   nRC = SetCursorFirstEntity( wWebXfer, "Work", "" )
+   IF nRC >= zCURSOR_SET
+      szText = wWebXfer.Work.Text
+      IF szText = ""
+         nRC = SetCursorNextWithData( wWebXfer, szText )
+         IF nRC >= zCURSOR_SET 
+            nCnt = 1
+            mMasLC.M_MetaTable.Title1 = szText
+         END
+      ELSE
+         mMasLC.M_MetaTable.Title1 = szText
+      END
+   END
+
+   // Indentation below is whacked for readability.
+   nRC = SetCursorNextWithData( wWebXfer, szText )
+   IF nRC >= zCURSOR_SET
+      nCnt = 2
+      mMasLC.M_MetaTable.Title2 = szText
+      nRC = SetCursorNextWithData( wWebXfer, szText )
+   IF nRC >= zCURSOR_SET
+      nCnt = 3
+      mMasLC.M_MetaTable.Title3 = szText
+      nRC = SetCursorNextWithData( wWebXfer, szText )
+   IF nRC >= zCURSOR_SET
+      nCnt = 4
+      mMasLC.M_MetaTable.Title4 = szText
+      nRC = SetCursorNextWithData( wWebXfer, szText )
+   IF nRC >= zCURSOR_SET
+      nCnt = 5
+      mMasLC.M_MetaTable.Title5 = szText
+      nRC = SetCursorNextWithData( wWebXfer, szText )
+   IF nRC >= zCURSOR_SET
+      nCnt = 6
+      mMasLC.M_MetaTable.Title6 = szText
+      nRC = SetCursorNextWithData( wWebXfer, szText )
+   IF nRC >= zCURSOR_SET
+      nCnt = 7
+      mMasLC.M_MetaTable.Title7 = szText
+      nRC = SetCursorNextWithData( wWebXfer, szText )
+   IF nRC >= zCURSOR_SET
+      nCnt = 8
+      mMasLC.M_MetaTable.Title8 = szText
+      nRC = SetCursorNextWithData( wWebXfer, szText )
+   IF nRC >= zCURSOR_SET
+      nCnt = 9
+      mMasLC.M_MetaTable.Title9 = szText
+      nRC = SetCursorNextWithData( wWebXfer, szText )
+   IF nRC >= zCURSOR_SET
+      nCnt = 10
+      mMasLC.M_MetaTable.Title10 = szText
+   END
+   END
+   END
+   END
+   END
+   END
+   END
+   END
+   END
+
+   mMasLC.M_MetaTable.Columns = nCnt
+   FOR EACH wWebXfer.Work
+      DELETE ENTITY wWebXfer.Work NONE
+   END
+   AcceptSubobject( mMasLC, "M_MetaTable" )
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: InitTableColumns
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+InitTableColumns( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+   VIEW wWebXfer REGISTERED AS wWebXfer
+   SHORT nRC
+
+   FOR EACH wWebXfer.Work
+      DELETE ENTITY wWebXfer.Work NONE
+   END
+   IF mMasLC.M_MetaTable.Title1 != ""
+      CreateEntity( wWebXfer, "Work", zPOS_LAST )
+      wWebXfer.Work.Text = mMasLC.M_MetaTable.Title1
+   END
+   IF mMasLC.M_MetaTable.Title2 != ""
+      CreateEntity( wWebXfer, "Work", zPOS_LAST )
+      wWebXfer.Work.Text = mMasLC.M_MetaTable.Title2
+   END
+   IF mMasLC.M_MetaTable.Title3 != ""
+      CreateEntity( wWebXfer, "Work", zPOS_LAST )
+      wWebXfer.Work.Text = mMasLC.M_MetaTable.Title3
+   END
+   IF mMasLC.M_MetaTable.Title4 != ""
+      CreateEntity( wWebXfer, "Work", zPOS_LAST )
+      wWebXfer.Work.Text = mMasLC.M_MetaTable.Title4
+   END
+   IF mMasLC.M_MetaTable.Title5 != ""
+      CreateEntity( wWebXfer, "Work", zPOS_LAST )
+      wWebXfer.Work.Text = mMasLC.M_MetaTable.Title5
+   END
+   IF mMasLC.M_MetaTable.Title6 != ""
+      CreateEntity( wWebXfer, "Work", zPOS_LAST )
+      wWebXfer.Work.Text = mMasLC.M_MetaTable.Title6
+   END
+   IF mMasLC.M_MetaTable.Title7 != ""
+      CreateEntity( wWebXfer, "Work", zPOS_LAST )
+      wWebXfer.Work.Text = mMasLC.M_MetaTable.Title7
+   END
+   IF mMasLC.M_MetaTable.Title8 != ""
+      CreateEntity( wWebXfer, "Work", zPOS_LAST )
+      wWebXfer.Work.Text = mMasLC.M_MetaTable.Title8
+   END
+   IF mMasLC.M_MetaTable.Title9 != ""
+      CreateEntity( wWebXfer, "Work", zPOS_LAST )
+      wWebXfer.Work.Text = mMasLC.M_MetaTable.Title9
+   END
+   IF mMasLC.M_MetaTable.Title10 != ""
+      CreateEntity( wWebXfer, "Work", zPOS_LAST )
+      wWebXfer.Work.Text = mMasLC.M_MetaTable.Title10
+   END
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: AddTable
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+AddTable( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+
+   CreateTemporalEntity( mMasLC, "M_MetaTable", zPOS_AFTER )
+   InitTableColumns( ViewToWindow )
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: UpdateTable
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+UpdateTable( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+
+   CreateTemporalSubobjectVersion( mMasLC, "M_MetaTable" )
+   InitTableColumns( ViewToWindow )
+
+END

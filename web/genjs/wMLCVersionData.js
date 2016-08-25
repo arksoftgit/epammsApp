@@ -1,4 +1,4 @@
-// wMLCVersionData   Generate Timestamp: 20160623085857141
+// wMLCVersionData   Generate Timestamp: 20160825091702666
 
 var isWindowClosing = true;
 var timerID = null;
@@ -216,7 +216,7 @@ if ( rc != true )
    }
 }
 
-function TOC( )
+function Tables( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -226,7 +226,7 @@ function TOC( )
    {
       _DisableFormElements( true );
 
-      document.wMLCVersionData.zAction.value = "TOC";
+      document.wMLCVersionData.zAction.value = "Tables";
       document.wMLCVersionData.submit( );
    }
 }

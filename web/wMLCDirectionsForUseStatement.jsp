@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCDirectionsForUseStatement   Generate Timestamp: 20160705163116839 --%>
+<%-- wMLCDirectionsForUseStatement   Generate Timestamp: 20160824153939041 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -1531,13 +1531,13 @@ else
 <table cols=2 style="width:846px;"  class="grouptable">
 
 <tr>
-<td valign="top" style="width:120px;">
+<td valign="top" style="width:116px;">
 <% /* Title::Text */ %>
 
 <span  id="Title:" name="Title:" style="width:110px;height:18px;">Title:</span>
 
 </td>
-<td valign="top" style="width:702px;">
+<td valign="top" style="width:708px;">
 <% /* MLETitle:MLEdit */ %>
 <%
    // MLEdit: MLETitle
@@ -1570,18 +1570,18 @@ else
    }
 %>
 
-<textarea id="MLETitle" name="MLETitle" class="" style="width:702px;height:34px;border:solid;border-width:4px;border-style:groove;" wrap="wrap"><%=strErrorMapValue%></textarea>
+<textarea id="MLETitle" name="MLETitle" class="" style="width:708px;height:34px;border:solid;border-width:4px;border-style:groove;" wrap="wrap"><%=strErrorMapValue%></textarea>
 
 </td>
 </tr>
 <tr>
-<td valign="top" style="width:120px;">
+<td valign="top" style="width:116px;">
 <% /* Text::Text */ %>
 
 <span  id="Text:" name="Text:" style="width:110px;height:18px;">Text:</span>
 
 </td>
-<td valign="top" style="width:702px;">
+<td valign="top" style="width:708px;">
 <% /* MLEText:MLEdit */ %>
 <%
    // MLEdit: MLEText
@@ -1614,18 +1614,18 @@ else
    }
 %>
 
-<textarea id="MLEText" name="MLEText" class="" style="width:702px;height:128px;border:solid;border-width:4px;border-style:groove;" wrap="wrap"><%=strErrorMapValue%></textarea>
+<textarea id="MLEText" name="MLEText" class="" style="width:708px;height:128px;border:solid;border-width:4px;border-style:groove;" wrap="wrap"><%=strErrorMapValue%></textarea>
 
 </td>
 </tr>
 <tr>
-<td valign="top" style="width:120px;">
+<td valign="top" style="width:116px;">
 <% /* DFU_CategoryReviewerNote::Text */ %>
 
 <span  id="DFU_CategoryReviewerNote:" name="DFU_CategoryReviewerNote:" style="width:110px;height:18px;">Reviewer Note:</span>
 
 </td>
-<td valign="top"  class="text12" style="width:702px;">
+<td valign="top"  class="text12" style="width:708px;">
 <% /* DFU_ReviewerNote:EditBox */ %>
 <%
    strErrorMapValue = VmlOperation.CheckError( "DFU_ReviewerNote", strError );
@@ -1665,17 +1665,17 @@ else
    }
 %>
 
-<input class="text12" name="DFU_ReviewerNote" id="DFU_ReviewerNote" maxlength="2048" style="width:702px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="DFU_ReviewerNote" id="DFU_ReviewerNote" maxlength="2048" style="width:708px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>
 <tr>
-<td valign="top" style="width:120px;">
+<td valign="top" style="width:116px;">
 <% /* GroupBox1:GroupBox */ %>
 <div id="GroupBox1" name="GroupBox1" style="width:110px;height:18px;float:left;">
 </div>  <!-- GroupBox1 --> 
 </td>
-<td valign="top" style="width:638px;">
+<td valign="top" style="width:644px;">
 <% /* ExclusiveToPreviousStatement:CheckBox */ %>
 <%
    strErrorMapValue = "";
@@ -1694,7 +1694,7 @@ else
 %>
 
 <input type="checkbox" name="ExclusiveToPreviousStatement" id="ExclusiveToPreviousStatement"  value="Y" <%=strErrorMapValue%> style="">
-<span style="width:638px;height:18px;">&nbsp Exclusive To Previous Statement</span>
+<span style="width:644px;height:18px;">&nbsp Exclusive To Previous Statement</span>
 
 </td>
 </tr>

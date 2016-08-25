@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCStorageDisposalSection   Generate Timestamp: 20160623111701256 --%>
+<%-- wMLCStorageDisposalSection   Generate Timestamp: 20160824153943788 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -1246,7 +1246,7 @@ else
    }
 %>
 
-<input class="text12" name="ReviewerNote" id="ReviewerNote" maxlength="1024" style="width:576px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="ReviewerNote" id="ReviewerNote" maxlength="2048" style="width:576px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>

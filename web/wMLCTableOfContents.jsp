@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCTableOfContents   Generate Timestamp: 20160623085856968 --%>
+<%-- wMLCTableOfContents   Generate Timestamp: 20160824153945098 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -105,14 +105,14 @@ public int DoInputMapping( HttpServletRequest request,
       // grids on the same window with the same view we do not mess up the 
       // entity positions. 
       vGridTmp = mMasLC.newView( );
-      csrRC = vGridTmp.cursor( "TOC" ).setFirst(  );
+      csrRC = vGridTmp.cursor( "M_TOC" ).setFirst(  );
       while ( csrRC.isSet() )
       {
-         lEntityKey = vGridTmp.cursor( "TOC" ).getEntityKey( );
+         lEntityKey = vGridTmp.cursor( "M_TOC" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
          iTableRowCnt++;
 
-         csrRC = vGridTmp.cursor( "TOC" ).setNextContinue( );
+         csrRC = vGridTmp.cursor( "M_TOC" ).setNextContinue( );
       }
 
       vGridTmp.drop( );
@@ -252,7 +252,7 @@ if ( strActionToProcess != null )
       try
       {
          View mMasLCAuto = task.getViewByName( "mMasLC" );
-         EntityCursor cursor = mMasLCAuto.cursor( "TOC" );
+         EntityCursor cursor = mMasLCAuto.cursor( "M_TOC" );
          cursor.createTemporalEntity( );
 
       }
@@ -360,14 +360,14 @@ if ( strActionToProcess != null )
       if ( VmlOperation.isValid( mMasLC ) )
       {
          lEKey = java.lang.Long.parseLong( strEntityKey );
-         csrRC = mMasLC.cursor( "TOC" ).setByEntityKey( lEKey );
+         csrRC = mMasLC.cursor( "M_TOC" ).setByEntityKey( lEKey );
          if ( !csrRC.isSet() )
          {
             boolean bFound = false;
-            csrRCk = mMasLC.cursor( "TOC" ).setFirst( );
+            csrRCk = mMasLC.cursor( "M_TOC" ).setFirst( );
             while ( csrRCk.isSet() && !bFound )
             {
-               lEKey = mMasLC.cursor( "TOC" ).getEntityKey( );
+               lEKey = mMasLC.cursor( "M_TOC" ).getEntityKey( );
                strKey = Long.toString( lEKey );
                if ( StringUtils.equals( strKey, strEntityKey ) )
                {
@@ -375,7 +375,7 @@ if ( strActionToProcess != null )
                   bFound = true;
                }
                else
-                  csrRCk = mMasLC.cursor( "TOC" ).setNextContinue( );
+                  csrRCk = mMasLC.cursor( "M_TOC" ).setNextContinue( );
             } // Grid
          }
       }
@@ -384,7 +384,7 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-         EntityCursor cursor = mMasLC.cursor( "TOC" );
+         EntityCursor cursor = mMasLC.cursor( "M_TOC" );
             if ( cursor.isNull() )
                nRC = 0;
             else
@@ -424,14 +424,14 @@ if ( strActionToProcess != null )
       if ( VmlOperation.isValid( mMasLC ) )
       {
          lEKey = java.lang.Long.parseLong( strEntityKey );
-         csrRC = mMasLC.cursor( "TOC" ).setByEntityKey( lEKey );
+         csrRC = mMasLC.cursor( "M_TOC" ).setByEntityKey( lEKey );
          if ( !csrRC.isSet() )
          {
             boolean bFound = false;
-            csrRCk = mMasLC.cursor( "TOC" ).setFirst( );
+            csrRCk = mMasLC.cursor( "M_TOC" ).setFirst( );
             while ( csrRCk.isSet() && !bFound )
             {
-               lEKey = mMasLC.cursor( "TOC" ).getEntityKey( );
+               lEKey = mMasLC.cursor( "M_TOC" ).getEntityKey( );
                strKey = Long.toString( lEKey );
                if ( StringUtils.equals( strKey, strEntityKey ) )
                {
@@ -439,7 +439,7 @@ if ( strActionToProcess != null )
                   bFound = true;
                }
                else
-                  csrRCk = mMasLC.cursor( "TOC" ).setNextContinue( );
+                  csrRCk = mMasLC.cursor( "M_TOC" ).setNextContinue( );
             } // Grid
          }
       }
@@ -448,7 +448,7 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-         EntityCursor cursor = mMasLC.cursor( "TOC" );
+         EntityCursor cursor = mMasLC.cursor( "M_TOC" );
          cursor.createTemporalSubobjectVersion( );
 
       }
@@ -868,7 +868,7 @@ else
    }
 %>
 
-<input class="text12" name="TOC_ReviewerNote" id="TOC_ReviewerNote" maxlength="1024" style="width:634px;position:absolute;left:130px;top:52px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="TOC_ReviewerNote" id="TOC_ReviewerNote" maxlength="2048" style="width:634px;position:absolute;left:130px;top:52px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* New:PushBtn */ %>
 <button type="button" class="newbutton" name="New" id="New" value="" onclick="GOTO_AddTableOfContentsEntry( )" style="width:78px;height:26px;position:absolute;left:586px;top:82px;">New</button>
@@ -926,19 +926,19 @@ try
       
       View vGridTOC;
       vGridTOC = mMasLC.newView( );
-      csrRC2 = vGridTOC.cursor( "TOC" ).setFirst(  );
+      csrRC2 = vGridTOC.cursor( "M_TOC" ).setFirst(  );
       while ( csrRC2.isSet() )
       {
          strOdd = (iTableRowCnt % 2) != 0 ? " class='odd'" : "";
          iTableRowCnt++;
 
-         lEntityKey = vGridTOC.cursor( "TOC" ).getEntityKey( );
+         lEntityKey = vGridTOC.cursor( "M_TOC" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
          strGridEditTitle = "";
-         nRC = vGridTOC.cursor( "TOC" ).checkExistenceOfEntity( ).toInt();
+         nRC = vGridTOC.cursor( "M_TOC" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditTitle = vGridTOC.cursor( "TOC" ).getAttribute( "Title" ).getString( "" );
+            strGridEditTitle = vGridTOC.cursor( "M_TOC" ).getAttribute( "Title" ).getString( "" );
 
             if ( strGridEditTitle == null )
                strGridEditTitle = "";
@@ -958,7 +958,7 @@ try
 </tr>
 
 <%
-         csrRC2 = vGridTOC.cursor( "TOC" ).setNextContinue( );
+         csrRC2 = vGridTOC.cursor( "M_TOC" ).setNextContinue( );
       }
       vGridTOC.drop( );
    }

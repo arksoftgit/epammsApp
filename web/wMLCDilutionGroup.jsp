@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCDilutionGroup   Generate Timestamp: 20160623085854785 --%>
+<%-- wMLCDilutionGroup   Generate Timestamp: 20160824153938127 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -1396,7 +1396,7 @@ else
    }
 %>
 
-<input name="ReviewerNote" id="ReviewerNote" maxlength="1024" style="width:574px;position:absolute;left:164px;top:146px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="ReviewerNote" id="ReviewerNote" maxlength="2048" style="width:574px;position:absolute;left:164px;top:146px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* ReviewerNoteTable::Text */ %>
 
@@ -1441,7 +1441,7 @@ else
    }
 %>
 
-<input name="ReviewerNoteTable" id="ReviewerNoteTable" maxlength="1024" style="width:574px;position:absolute;left:164px;top:168px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="ReviewerNoteTable" id="ReviewerNoteTable" maxlength="2048" style="width:574px;position:absolute;left:164px;top:168px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 
 </div>  <!--  GBDilution --> 

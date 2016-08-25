@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCNetContents   Generate Timestamp: 20160623085856245 --%>
+<%-- wMLCTableSpecifications   Generate Timestamp: 20160825154142044 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -36,6 +36,7 @@ public int DoInputMapping( HttpServletRequest request,
    Task task = objectEngine.getTaskById( taskId );
 
    View mMasLC = null;
+   View wWebXfer = null;
    View vGridTmp = null; // temp view to grid view
    View vRepeatingGrp = null; // temp view to repeating group view
    String strDateFormat = "";
@@ -60,39 +61,36 @@ public int DoInputMapping( HttpServletRequest request,
    mMasLC = task.getViewByName( "mMasLC" );
    if ( VmlOperation.isValid( mMasLC ) )
    {
-      // EditBox: NetContentsTitle
-      nRC = mMasLC.cursor( "NetContents" ).checkExistenceOfEntity( ).toInt();
+      // EditBox: TableName
+      nRC = mMasLC.cursor( "M_MetaTable" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 ) // CursorResult.SET
       {
-         strMapValue = request.getParameter( "NetContentsTitle" );
+         strMapValue = request.getParameter( "TableName" );
          try
          {
             if ( webMapping )
-               VmlOperation.CreateMessage( task, "NetContentsTitle", "", strMapValue );
+               VmlOperation.CreateMessage( task, "TableName", "", strMapValue );
             else
-               mMasLC.cursor( "NetContents" ).getAttribute( "Title" ).setValue( strMapValue, "" );
+               mMasLC.cursor( "M_MetaTable" ).getAttribute( "Name" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
             nMapError = -16;
-            VmlOperation.CreateMessage( task, "NetContentsTitle", e.getReason( ), strMapValue );
+            VmlOperation.CreateMessage( task, "TableName", e.getReason( ), strMapValue );
          }
       }
 
-      // MLEdit: Description
-      nRC = mMasLC.cursor( "NetContents" ).checkExistenceOfEntity( ).toInt();
+      // EditBox: Description
+      nRC = mMasLC.cursor( "M_MetaTable" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 ) // CursorResult.SET
       {
          strMapValue = request.getParameter( "Description" );
-         task.log().debug( "Description prior to TrimTinyHtml: " + strMapValue );
-         strMapValue = VmlOperation.TrimTinyHtml( strMapValue );
-         task.log().debug( "Description after TrimTinyHtml: '" + strMapValue + "'" );
          try
          {
             if ( webMapping )
                VmlOperation.CreateMessage( task, "Description", "", strMapValue );
             else
-               mMasLC.cursor( "NetContents" ).getAttribute( "Description" ).setValue( strMapValue, "" );
+               mMasLC.cursor( "M_MetaTable" ).getAttribute( "Description" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -101,28 +99,47 @@ public int DoInputMapping( HttpServletRequest request,
          }
       }
 
-      // MLEdit: Text
-      nRC = mMasLC.cursor( "NetContents" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 ) // CursorResult.SET
+   }
+
+   wWebXfer = task.getViewByName( "wWebXfer" );
+   if ( VmlOperation.isValid( wWebXfer ) )
+   {
+      // Grid: GridTable
+      iTableRowCnt = 0;
+
+      // We are creating a temp view to the grid view so that if there are 
+      // grids on the same window with the same view we do not mess up the 
+      // entity positions. 
+      vGridTmp = wWebXfer.newView( );
+      csrRC = vGridTmp.cursor( "Work" ).setFirst(  );
+      while ( csrRC.isSet() )
       {
-         strMapValue = request.getParameter( "Text" );
-         task.log().debug( "Text prior to TrimTinyHtml: " + strMapValue );
-         strMapValue = VmlOperation.TrimTinyHtml( strMapValue );
-         task.log().debug( "Text after TrimTinyHtml: '" + strMapValue + "'" );
-         try
+         lEntityKey = vGridTmp.cursor( "Work" ).getEntityKey( );
+         strEntityKey = Long.toString( lEntityKey );
+         iTableRowCnt++;
+
+         strTag = "GridCtrlColumnName::" + strEntityKey;
+         strMapValue = request.getParameter( strTag );
+         if ( strMapValue != null ) 
          {
-            if ( webMapping )
-               VmlOperation.CreateMessage( task, "Text", "", strMapValue );
-            else
-               mMasLC.cursor( "NetContents" ).getAttribute( "Text" ).setValue( strMapValue, "" );
-         }
-         catch ( InvalidAttributeValueException e )
-         {
-            nMapError = -16;
-            VmlOperation.CreateMessage( task, "Text", e.getReason( ), strMapValue );
+            try
+            {
+               if ( webMapping )
+                  VmlOperation.CreateMessage( task, "GridCtrlColumnName", "", strMapValue );
+               else
+                  vGridTmp.cursor( "Work" ).getAttribute( "Text" ).setValue( strMapValue, "" );
+            }
+            catch ( InvalidAttributeValueException e )
+            {
+               nMapError = -16;
+               VmlOperation.CreateMessage( task, strTag, e.getReason( ), strMapValue );
          }
       }
 
+         csrRC = vGridTmp.cursor( "Work" ).setNextContinue( );
+      }
+
+      vGridTmp.drop( );
    }
 
    if ( webMapping == true )
@@ -188,7 +205,7 @@ if ( StringUtils.isBlank( strLastWindow ) )
 
 strLastAction = (String) session.getAttribute( "ZeidonAction" );
 
-if ( strLastWindow.equals("wMLCNetContents") && StringUtils.isBlank( strActionToProcess ) && StringUtils.isBlank( strLastAction ) )
+if ( strLastWindow.equals("wMLCTableSpecifications") && StringUtils.isBlank( strActionToProcess ) && StringUtils.isBlank( strLastAction ) )
 {
    strURL = response.encodeRedirectURL( "logout.jsp" );
    response.sendRedirect( strURL );
@@ -226,9 +243,9 @@ strURL = "";
 bDone = false;
 nRC = 0;
 
-task.log().info("*** wMLCNetContents strActionToProcess *** " + strActionToProcess );
-task.log().info("*** wMLCNetContents LastWindow *** " + strLastWindow );
-task.log().info("*** wMLCNetContents LastAction *** " + strLastAction );
+task.log().info("*** wMLCTableSpecifications strActionToProcess *** " + strActionToProcess );
+task.log().info("*** wMLCTableSpecifications LastWindow *** " + strLastWindow );
+task.log().info("*** wMLCTableSpecifications LastAction *** " + strLastAction );
 
 if ( strActionToProcess != null )
 {
@@ -244,10 +261,10 @@ if ( strActionToProcess != null )
 
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_AddFirstAidStatement" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "AcceptTableUpdate" ) )
    {
       bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCNetContents", strActionToProcess );
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCTableSpecifications", strActionToProcess );
 
       // Input Mapping
       nRC = DoInputMapping( request, session, application, false );
@@ -256,46 +273,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCNetContents", "wMLC.GOTO_AddFirstAidStatements" );
-      nOptRC = wMLC.GOTO_AddFirstAidStatements( new zVIEW( vKZXMLPGO ) );
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "AddItemsMultiple" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "SaveReturn" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCNetContents", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCNetContents", "wMLC.SaveNetContents" );
-      nOptRC = wMLC.SaveNetContents( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCTableSpecifications", "wMLC.SaveTableColumns" );
+      nOptRC = wMLC.SaveTableColumns( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -320,10 +299,68 @@ if ( strActionToProcess != null )
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "Cancel" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "ADD_TableColumn" ) )
    {
       bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCNetContents", strActionToProcess );
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCTableSpecifications", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Position on the entity that was selected in the grid.
+      String strEntityKey = (String) request.getParameter( "zTableRowSelect" );
+      View wWebXfer;
+      wWebXfer = task.getViewByName( "wWebXfer" );
+      if ( VmlOperation.isValid( wWebXfer ) )
+      {
+         lEKey = java.lang.Long.parseLong( strEntityKey );
+         csrRC = wWebXfer.cursor( "Work" ).setByEntityKey( lEKey );
+         if ( !csrRC.isSet() )
+         {
+            boolean bFound = false;
+            csrRCk = wWebXfer.cursor( "Work" ).setFirst( );
+            while ( csrRCk.isSet() && !bFound )
+            {
+               lEKey = wWebXfer.cursor( "Work" ).getEntityKey( );
+               strKey = Long.toString( lEKey );
+               if ( StringUtils.equals( strKey, strEntityKey ) )
+               {
+                  // Stop while loop because we have positioned on the correct entity.
+                  bFound = true;
+               }
+               else
+                  csrRCk = wWebXfer.cursor( "Work" ).setNextContinue( );
+            } // Grid
+         }
+      }
+
+      // Action Auto Object Function
+      nRC = 0;
+      try
+      {
+         EntityCursor cursor = wWebXfer.cursor( "Work" );
+         cursor.createTemporalEntity( );
+
+      }
+      catch ( Exception e )
+      {
+         nRC = 2;
+         VmlOperation.CreateMessage( task, "ADD_TableColumn", e.getMessage( ), "" );
+         break;
+      }
+      // Next Window
+      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "AddBlankTableColumn" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCTableSpecifications", strActionToProcess );
 
       // Input Mapping
       nRC = DoInputMapping( request, session, application, false );
@@ -334,37 +371,28 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-         View mMasLCAuto = task.getViewByName( "mMasLC" );
-         EntityCursor cursor = mMasLCAuto.cursor( "NetContents" );
-            if ( cursor.isNull() )
-               nRC = 0;
-            else
-            {
-               if ( cursor.isVersioned( ) )
-               {
-                  cursor.cancelSubobject( );
-               }
-            nRC = 0;
-         }
+         View wWebXferAuto = task.getViewByName( "wWebXfer" );
+         EntityCursor cursor = wWebXferAuto.cursor( "Work" );
+         cursor.createTemporalEntity( );
 
       }
       catch ( Exception e )
       {
          nRC = 2;
-         VmlOperation.CreateMessage( task, "Cancel", e.getMessage( ), "" );
+         VmlOperation.CreateMessage( task, "AddBlankTableColumn", e.getMessage( ), "" );
          break;
       }
       // Next Window
-      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReturnToParent, "", "" );
+      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_FirstAidStmtDelete" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "CancelTableUpdate" ) )
    {
       bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCNetContents", strActionToProcess );
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCTableSpecifications", strActionToProcess );
 
       // Input Mapping
       nRC = DoInputMapping( request, session, application, false );
@@ -373,8 +401,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCNetContents", "wMLC.GOTO_FirstAidStmtDelete" );
-      nOptRC = wMLC.GOTO_FirstAidStmtDelete( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCTableSpecifications", "wMLC.CancelTableUpdate" );
+      nOptRC = wMLC.CancelTableUpdate( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -391,7 +419,7 @@ if ( strActionToProcess != null )
       if ( strNextJSP_Name.equals( "" ) )
       {
          // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "DeleteComponent" );
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReturnToParent, "", "" );
       }
 
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -399,33 +427,89 @@ if ( strActionToProcess != null )
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_UpdateFirstAidStmt" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "DELETE_TableColumn" ) )
    {
       bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCNetContents", strActionToProcess );
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCTableSpecifications", strActionToProcess );
 
       // Input Mapping
       nRC = DoInputMapping( request, session, application, false );
       if ( nRC < 0 )
          break;
 
+      // Position on the entity that was selected in the grid.
+      String strEntityKey = (String) request.getParameter( "zTableRowSelect" );
+      View wWebXfer;
+      wWebXfer = task.getViewByName( "wWebXfer" );
+      if ( VmlOperation.isValid( wWebXfer ) )
+      {
+         lEKey = java.lang.Long.parseLong( strEntityKey );
+         csrRC = wWebXfer.cursor( "Work" ).setByEntityKey( lEKey );
+         if ( !csrRC.isSet() )
+         {
+            boolean bFound = false;
+            csrRCk = wWebXfer.cursor( "Work" ).setFirst( );
+            while ( csrRCk.isSet() && !bFound )
+            {
+               lEKey = wWebXfer.cursor( "Work" ).getEntityKey( );
+               strKey = Long.toString( lEKey );
+               if ( StringUtils.equals( strKey, strEntityKey ) )
+               {
+                  // Stop while loop because we have positioned on the correct entity.
+                  bFound = true;
+               }
+               else
+                  csrRCk = wWebXfer.cursor( "Work" ).setNextContinue( );
+            } // Grid
+         }
+      }
+
       // Action Auto Object Function
       nRC = 0;
       try
       {
-         View mMasLCAuto = task.getViewByName( "mMasLC" );
-         EntityCursor cursor = mMasLCAuto.cursor( "M_GeneralStatement" );
-         cursor.createTemporalSubobjectVersion( );
+         EntityCursor cursor = wWebXfer.cursor( "Work" );
+            if ( cursor.isNull() )
+               nRC = 0;
+            else
+            {
+               cursor.deleteEntity( CursorPosition.NEXT );
+            nRC = 0;
+         }
 
       }
       catch ( Exception e )
       {
          nRC = 2;
-         VmlOperation.CreateMessage( task, "GOTO_UpdateFirstAidStmt", e.getMessage( ), "" );
+         VmlOperation.CreateMessage( task, "DELETE_TableColumn", e.getMessage( ), "" );
          break;
       }
       // Next Window
-      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "FirstAidStatement" );
+      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "Sort" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCTableSpecifications", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Next Window
+      // We are borrowing zTableRowSelect and this code is hardwired for the moment.  javascript code similar to the following must be added to the action:
+      // document.wSLCMarketingStatement.zTableRowSelect.value = buildSortTableHtml( "mSubLC", "S_MarketingUsageOrdering", "GridMarketingUsage", ["Usage Type","Usage Name"] );
+      wWebXA = task.getViewByName( "wWebXfer" );
+      String strHtml = (String) request.getParameter( "zTableRowSelect" );
+      wWebXA.cursor( "Root" ).getAttribute( "HTML" ).setValue( strHtml, "" );
+      // We are borrowing zTableRowSelect and the code above is hardwired for the moment
+
+      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wSystem", "DragDropSort" );
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
@@ -445,91 +529,12 @@ if ( strActionToProcess != null )
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "smSaveReturn" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCNetContents", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCNetContents", "wMLC.SaveNetContents" );
-      nOptRC = wMLC.SaveNetContents( new zVIEW( vKZXMLPGO ) );
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReturnToParent, "", "" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "smCancel" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCNetContents", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Auto Object Function
-      nRC = 0;
-      try
-      {
-         View mMasLCAuto = task.getViewByName( "mMasLC" );
-         EntityCursor cursor = mMasLCAuto.cursor( "NetContents" );
-            if ( cursor.isNull() )
-               nRC = 0;
-            else
-            {
-               if ( cursor.isVersioned( ) )
-               {
-                  cursor.cancelSubobject( );
-               }
-            nRC = 0;
-         }
-
-      }
-      catch ( Exception e )
-      {
-         nRC = 2;
-         VmlOperation.CreateMessage( task, "Cancel", e.getMessage( ), "" );
-         break;
-      }
-      // Next Window
-      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReturnToParent, "", "" );
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
    while ( bDone == false && strActionToProcess.equals( "_OnUnload" ) )
    {
       bDone = true;
       if ( task != null )
       {
-         task.log().info( "OnUnload UnregisterZeidonApplication: ----->>> " + "wMLCNetContents" );
+         task.log().info( "OnUnload UnregisterZeidonApplication: ----->>> " + "wMLCTableSpecifications" );
          task.dropTask();
          task = null;
          session.setAttribute( "ZeidonTaskId", task );
@@ -546,7 +551,7 @@ if ( strActionToProcess != null )
       bDone = true;
       if ( task != null )
       {
-         task.log().info( "OnUnload UnregisterZeidonApplication: ------->>> " + "wMLCNetContents" );
+         task.log().info( "OnUnload UnregisterZeidonApplication: ------->>> " + "wMLCTableSpecifications" );
          task.dropTask();
          task = null;
          session.setAttribute( "ZeidonTaskId", task );
@@ -561,14 +566,14 @@ if ( strActionToProcess != null )
    while ( bDone == false && strActionToProcess.equals( "_OnResubmitPage" ) )
    {
       bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCNetContents", strActionToProcess );
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCTableSpecifications", strActionToProcess );
 
       // Input Mapping
       nRC = DoInputMapping( request, session, application, false );
       if ( nRC < 0 )
          break;
 
-      strURL = response.encodeRedirectURL( "wMLCNetContents.jsp" );
+      strURL = response.encodeRedirectURL( "wMLCTableSpecifications.jsp" );
       nRC = 1;  //do the redirection
       break;
    }
@@ -579,11 +584,11 @@ if ( strActionToProcess != null )
       {
          if ( nRC > 1 )
          {
-            strURL = response.encodeRedirectURL( "wMLCNetContents.jsp" );
+            strURL = response.encodeRedirectURL( "wMLCTableSpecifications.jsp" );
             task.log().info( "Action Error Redirect to: " + strURL );
          }
 
-         if ( ! strURL.equals("wMLCNetContents.jsp") ) 
+         if ( ! strURL.equals("wMLCTableSpecifications.jsp") ) 
          {
             response.sendRedirect( strURL );
             // If we are redirecting to a new page, then we need this return so that the rest of this page doesn't get built.
@@ -594,7 +599,7 @@ if ( strActionToProcess != null )
       {
          if ( nRC > -128 )
          {
-            strURL = response.encodeRedirectURL( "wMLCNetContents.jsp" );
+            strURL = response.encodeRedirectURL( "wMLCTableSpecifications.jsp" );
             task.log().info( "Mapping Error Redirect to: " + strURL );
          }
          else
@@ -622,7 +627,7 @@ else
    if ( VmlOperation.isValid( wWebXA ) )
    {
       wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wMLC", "" );
-      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "NetContents", "" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "TableSpecifications", "" );
    }
 
 %>
@@ -630,7 +635,7 @@ else
 <html>
 <head>
 
-<title>Net Contents</title>
+<title>Table Definition</title>
 
 <%@ include file="./include/head.inc" %>
 <!-- Timeout.inc has a value for nTimeout which is used to determine when to -->
@@ -638,16 +643,12 @@ else
 <%@ include file="./include/timeout.inc" %>
 <link rel="stylesheet" type="text/css" href="./css/print.css" media="print" />
 <script language="JavaScript" type="text/javascript" src="./js/common.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/jsoeUtils.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/jsoe.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
-
-<!-- TinyMCE -->
-<script language="JavaScript" type="text/javascript" src="./js/tinymce/js/tinymce/tinymce.min.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/TinyMCE.js"></script>
-<!-- /TinyMCE -->
-
-<script language="JavaScript" type="text/javascript" src="./genjs/wMLCNetContents.js"></script>
+<script language="JavaScript" type="text/javascript" src="./genjs/wMLCTableSpecifications.js"></script>
 
 </head>
 
@@ -667,11 +668,11 @@ else
 <div id="sidenavigation">
    <ul id="Return" name="Return">
 <%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "Save" );
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "Accept" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="smSave" name="smSave"><a href="#"  onclick="smSaveReturn()">Save & Return</a></li>
+       <li id="Accept" name="Accept"><a href="#"  onclick="AcceptTableUpdate()">Accept</a></li>
 <%
    }
 %>
@@ -681,7 +682,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="smCancel" name="smCancel"><a href="#"  onclick="smCancel()">Cancel & Return</a></li>
+       <li id="Cancel" name="Cancel"><a href="#"  onclick="CancelTableUpdate()">Cancel</a></li>
 <%
    }
 %>
@@ -692,6 +693,7 @@ else
 </div>  <!-- leftcontent -->
 
 <div id="content">
+
 <!--System Maintenance-->
 
 <%@ include file="./include/systemmaintenance.inc" %>
@@ -699,7 +701,7 @@ else
 <!-- END System Maintenance-->
 
 
-<form name="wMLCNetContents" id="wMLCNetContents" method="post">
+<form name="wMLCTableSpecifications" id="wMLCTableSpecifications" method="post">
    <input name="zAction" id="zAction" type="hidden" value="NOVALUE">
    <input name="zTableRowSelect" id="zTableRowSelect" type="hidden" value="NOVALUE">
    <input name="zDisable" id="zDisable" type="hidden" value="NOVALUE">
@@ -779,7 +781,7 @@ else
 
    strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString( "" );
 
-   strFocusCtrl = VmlOperation.GetFocusCtrl( task, "wMLC", "NetContents" );
+   strFocusCtrl = VmlOperation.GetFocusCtrl( task, "wMLC", "TableSpecifications" );
    strOpenFile = VmlOperation.FindOpenFile( task );
    strDateFormat = "YYYY.MM.DD";
 
@@ -821,43 +823,21 @@ else
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GroupBox3:GroupBox */ %>
+<% /* GroupBox4:GroupBox */ %>
 
-<div id="GroupBox3" name="GroupBox3"   style="float:left;position:relative; width:750px; height:28px;">  <!-- GroupBox3 --> 
+<div id="GroupBox4" name="GroupBox4"   style="float:left;position:relative; width:694px; height:234px;">  <!-- GroupBox4 --> 
 
-<% /* NetContents:Text */ %>
+<% /* Table:Text */ %>
 
-<label class="groupbox"  id="NetContents" name="NetContents" style="width:338px;height:16px;position:absolute;left:6px;top:6px;">Net Contents</label>
+<label class="groupbox"  id="Table" name="Table" style="width:338px;height:16px;position:absolute;left:6px;top:6px;">Table</label>
 
+<% /* Name::Text */ %>
 
-</div>  <!--  GroupBox3 --> 
-</div>  <!-- End of a new line -->
+<label  id="Name:" name="Name:" style="width:110px;height:16px;position:absolute;left:20px;top:26px;">Name:</label>
 
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
-
-
-<div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GBPrecautionarySection:GroupBox */ %>
-
-<div id="GBPrecautionarySection" name="GBPrecautionarySection" class="withborder"   style="float:left;position:relative; width:784px; height:238px;">  <!-- GBPrecautionarySection --> 
-
-<% /* GroupBox1:GroupBox */ %>
-<div id="GroupBox1" name="GroupBox1" style="float:left;width:758px;" >
-
-<table cols=0 style="width:758px;"  class="grouptable">
-
-<tr>
-<td valign="top" style="width:96px;">
-<% /* NetContentsTitle::Text */ %>
-
-<label  id="NetContentsTitle:" name="NetContentsTitle:" style="width:86px;height:16px;position:absolute;left:6px;top:14px;">Title:</label>
-
-</td>
-<td valign="top"  class="text12" style="width:650px;">
-<% /* NetContentsTitle:EditBox */ %>
+<% /* TableName:EditBox */ %>
 <%
-   strErrorMapValue = VmlOperation.CheckError( "NetContentsTitle", strError );
+   strErrorMapValue = VmlOperation.CheckError( "TableName", strError );
    if ( !StringUtils.isBlank( strErrorMapValue ) )
    {
       if ( StringUtils.equals( strErrorFlag, "Y" ) )
@@ -868,56 +848,40 @@ else
       strErrorColor = "";
       mMasLC = task.getViewByName( "mMasLC" );
       if ( VmlOperation.isValid( mMasLC ) == false )
-         task.log( ).debug( "Invalid View: " + "NetContentsTitle" );
+         task.log( ).debug( "Invalid View: " + "TableName" );
       else
       {
-         nRC = mMasLC.cursor( "NetContents" ).checkExistenceOfEntity( ).toInt();
+         nRC = mMasLC.cursor( "M_MetaTable" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
             try
             {
-               strErrorMapValue = mMasLC.cursor( "NetContents" ).getAttribute( "Title" ).getString( "" );
+               strErrorMapValue = mMasLC.cursor( "M_MetaTable" ).getAttribute( "Name" ).getString( "" );
             }
             catch (Exception e)
             {
-               out.println("There is an error on NetContentsTitle: " + e.getMessage());
-               task.log().error( "*** Error on ctrl NetContentsTitle", e );
+               out.println("There is an error on TableName: " + e.getMessage());
+               task.log().error( "*** Error on ctrl TableName", e );
             }
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
 
-            task.log( ).debug( "NetContents.Title: " + strErrorMapValue );
+            task.log( ).debug( "M_MetaTable.Name: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist for NetContentsTitle: " + "mMasLC.NetContents" );
+            task.log( ).debug( "Entity does not exist for TableName: " + "mMasLC.M_MetaTable" );
       }
    }
 %>
 
-<input class="text12" name="NetContentsTitle" id="NetContentsTitle" maxlength="254" style="width:650px;position:absolute;left:102px;top:14px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
-
-</td>
-</tr>
-</table>
-
-</div>  <!-- GroupBox1 --> 
-
-<% /* GroupBox4:GroupBox */ %>
-
-<div id="GroupBox4" name="GroupBox4" style="width:766px;height:164px;position:absolute;left:12px;top:44px;">  <!-- GroupBox4 --> 
+<input class="text12" name="TableName" id="TableName" maxlength="128" style="width:528px;position:absolute;left:130px;top:26px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* Description::Text */ %>
 
-<label  id="Description:" name="Description:" style="width:88px;height:16px;position:absolute;left:0px;top:0px;">Description:</label>
+<label  id="Description:" name="Description:" style="width:110px;height:16px;position:absolute;left:20px;top:52px;">Description:</label>
 
-<% /* GroupBox5:GroupBox */ %>
-
-<div id="GroupBox5" name="GroupBox5" style="width:658px;height:60px;position:absolute;left:98px;top:0px;">  <!-- GroupBox5 --> 
-
-<div  id="GroupBox5" name="GroupBox5" >GroupBox5</div>
-<% /* Description:MLEdit */ %>
+<% /* Description:EditBox */ %>
 <%
-   // : Description
    strErrorMapValue = VmlOperation.CheckError( "Description", strError );
    if ( !StringUtils.isBlank( strErrorMapValue ) )
    {
@@ -929,78 +893,162 @@ else
       strErrorColor = "";
       mMasLC = task.getViewByName( "mMasLC" );
       if ( VmlOperation.isValid( mMasLC ) == false )
-         task.log( ).info( "Invalid View: " + "Description" );
+         task.log( ).debug( "Invalid View: " + "Description" );
       else
       {
-         nRC = mMasLC.cursor( "NetContents" ).checkExistenceOfEntity( ).toInt();
+         nRC = mMasLC.cursor( "M_MetaTable" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strErrorMapValue = mMasLC.cursor( "NetContents" ).getAttribute( "Description" ).getString( "" );
+            try
+            {
+               strErrorMapValue = mMasLC.cursor( "M_MetaTable" ).getAttribute( "Description" ).getString( "" );
+            }
+            catch (Exception e)
+            {
+               out.println("There is an error on Description: " + e.getMessage());
+               task.log().error( "*** Error on ctrl Description", e );
+            }
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
 
-            task.log( ).info( "NetContents.Description: " + strErrorMapValue );
+            task.log( ).debug( "M_MetaTable.Description: " + strErrorMapValue );
          }
          else
-            task.log( ).info( "Entity does not exist for Description: " + "mMasLC.NetContents" );
+            task.log( ).debug( "Entity does not exist for Description: " + "mMasLC.M_MetaTable" );
       }
    }
 %>
 
-<div style="background-color:#eee;border:1px solid #042;width:654px;height:70px;position:absolute;left:0px;top:0px;overflow:auto;">
-<div class="mceSimpleZeidon" name="Description" id="Description" style="width:654px;height:70px;position:absolute;left:0px;top:0px;"><%=strErrorMapValue%></div></div>
+<input class="text12" name="Description" id="Description" maxlength="254" style="width:528px;position:absolute;left:130px;top:52px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
+<% /* Columns::Text */ %>
 
-</div>  <!--  GroupBox5 --> 
-<% /* Text::Text */ %>
+<label  id="Columns:" name="Columns:" style="width:110px;height:16px;position:absolute;left:20px;top:78px;">Columns:</label>
 
-<label  id="Text:" name="Text:" style="width:88px;height:16px;position:absolute;left:0px;top:74px;">Text:</label>
-
-<% /* GroupBox2:GroupBox */ %>
-
-<div id="GroupBox2" name="GroupBox2" style="width:658px;height:60px;position:absolute;left:98px;top:74px;">  <!-- GroupBox2 --> 
-
-<% /* Text:MLEdit */ %>
-<%
-   // : Text
-   strErrorMapValue = VmlOperation.CheckError( "Text", strError );
-   if ( !StringUtils.isBlank( strErrorMapValue ) )
-   {
-      if ( StringUtils.equals( strErrorFlag, "Y" ) )
-         strErrorColor = "color:red;";
-   }
+<% /* Columns:Text */ %>
+<% strTextDisplayValue = "";
+   wWebXfer = task.getViewByName( "wWebXfer" );
+   if ( VmlOperation.isValid( wWebXfer ) == false )
+      task.log( ).debug( "Invalid View: " + "Columns" );
    else
    {
-      strErrorColor = "";
-      mMasLC = task.getViewByName( "mMasLC" );
-      if ( VmlOperation.isValid( mMasLC ) == false )
-         task.log( ).info( "Invalid View: " + "Text" );
-      else
+      nRC = wWebXfer.cursor( "Work" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
       {
-         nRC = mMasLC.cursor( "NetContents" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-         {
-            strErrorMapValue = mMasLC.cursor( "NetContents" ).getAttribute( "Text" ).getString( "" );
-            if ( strErrorMapValue == null )
-               strErrorMapValue = "";
-
-            task.log( ).info( "NetContents.Text: " + strErrorMapValue );
-         }
-         else
-            task.log( ).info( "Entity does not exist for Text: " + "mMasLC.NetContents" );
+      try
+      {
+         strTextDisplayValue = wWebXfer.cursor( "Work" ).getAttribute( "dColumnCnt" ).getString( "" );
+      }
+      catch (Exception e)
+      {
+         out.println("There is an error on Columns: " + e.getMessage());
+         task.log().info( "*** Error on ctrl Columns" + e.getMessage() );
+      }
+         if ( strTextDisplayValue == null )
+            strTextDisplayValue = "";
       }
    }
 %>
 
-<div style="background-color:#eee;border:1px solid #042;width:654px;height:70px;position:absolute;left:0px;top:0px;overflow:auto;">
-<div class="mceSimpleZeidon" name="Text" id="Text" style="width:654px;height:70px;position:absolute;left:0px;top:0px;"><%=strErrorMapValue%></div></div>
+<label class="text12"  id="Columns" name="Columns" style="width:62px;height:24px;position:absolute;left:130px;top:78px;"><%=strTextDisplayValue%></label>
 
+<% /* AddBlank:PushBtn */ %>
+<button type="button" class="newbutton" name="AddBlank" id="AddBlank" value="" onclick="AddBlankTableColumn( )" style="width:120px;height:26px;position:absolute;left:404px;top:78px;">Add Blank Entry</button>
 
-</div>  <!--  GroupBox2 --> 
+<% /* PBSort:PushBtn */ %>
+<button type="button" class="newbutton" name="PBSort" id="PBSort" value="" onclick="Sort( )" style="width:66px;height:26px;position:absolute;left:536px;top:78px;">Sort</button>
+
+<% /* GridTable:Grid */ %>
+<table  cols=3 style="position:absolute;top:112px;left:8px;"  name="GridTable" id="GridTable">
+
+<thead><tr>
+
+   <th>Column Name</th>
+   <th>Add</th>
+   <th>Delete</th>
+
+</tr></thead>
+
+<tbody>
+
+<%
+try
+{
+   iTableRowCnt = 0;
+   wWebXfer = task.getViewByName( "wWebXfer" );
+   if ( VmlOperation.isValid( wWebXfer ) )
+   {
+      long   lEntityKey;
+      String strEntityKey;
+      String strButtonName;
+      String strOdd;
+      String strTag;
+      String strGridCtrlColumnName;
+      String strGridCtrlColumnNameErrorColor;
+      String strAddBtn;
+      String strDeleteBtn;
+      
+      View vGridTable;
+      vGridTable = wWebXfer.newView( );
+      csrRC2 = vGridTable.cursor( "Work" ).setFirst(  );
+      while ( csrRC2.isSet() )
+      {
+         strOdd = (iTableRowCnt % 2) != 0 ? " class='odd'" : "";
+         iTableRowCnt++;
+
+         lEntityKey = vGridTable.cursor( "Work" ).getEntityKey( );
+         strEntityKey = Long.toString( lEntityKey );
+         strGridCtrlColumnName = "";
+         strGridCtrlColumnNameErrorColor = "";
+         nRC = vGridTable.cursor( "Work" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            strTag = "GridCtrlColumnName::" + strEntityKey;
+            strErrorMapValue = VmlOperation.CheckError( strTag, strError );
+            if ( !StringUtils.isBlank( strErrorMapValue ) )
+            {
+               if ( StringUtils.equals( strErrorFlag, "Y" ) )
+                  strGridCtrlColumnNameErrorColor = " style='color:red'";
+                  strGridCtrlColumnName = strErrorMapValue;
+            }
+            else
+            {
+               strGridCtrlColumnName = vGridTable.cursor( "Work" ).getAttribute( "Text" ).getString( "" );
+               if ( strGridCtrlColumnName == null )
+                  strGridCtrlColumnName = "";
+            }
+         }
+
+         if ( StringUtils.isBlank( strGridCtrlColumnName ) )
+            strGridCtrlColumnName = "";
+
+%>
+
+<tr<%=strOdd%>>
+
+   <td><input size="88" value="<%=strGridCtrlColumnName%>"<%=strGridCtrlColumnNameErrorColor%> name="GridCtrlColumnName::<%=strEntityKey%>" id="GridCtrlColumnName::<%=strEntityKey%>" ></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="AddBtn" onclick="ADD_TableColumn( this.id )" id="AddBtn::<%=strEntityKey%>"><img src="./images/ePammsNew.png" alt="Add"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="DeleteBtn" onclick="DELETE_TableColumn( this.id )" id="DeleteBtn::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
+
+</tr>
+
+<%
+         csrRC2 = vGridTable.cursor( "Work" ).setNextContinue( );
+      }
+      vGridTable.drop( );
+   }
+}
+catch (Exception e)
+{
+out.println("There is an error in grid: " + e.getMessage());
+task.log().info( "*** Error in grid" + e.getMessage() );
+}
+%>
+</tbody>
+</table>
+
 
 </div>  <!--  GroupBox4 --> 
-
-</div>  <!--  GBPrecautionarySection --> 
 </div>  <!-- End of a new line -->
 
 
@@ -1033,7 +1081,7 @@ else
 <script type="text/javascript">animatedcollapse.init();</script>
 </html>
 <%
-   session.setAttribute( "ZeidonWindow", "wMLCNetContents" );
+   session.setAttribute( "ZeidonWindow", "wMLCTableSpecifications" );
    session.setAttribute( "ZeidonAction", null );
 
    strActionToProcess = "";

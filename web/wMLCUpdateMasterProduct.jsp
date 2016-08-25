@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCUpdateMasterProduct   Generate Timestamp: 20160623085857033 --%>
+<%-- wMLCUpdateMasterProduct   Generate Timestamp: 20160824153945259 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -1349,7 +1349,7 @@ else
    }
 %>
 
-<input class="text12" name="ReviewerNote" id="ReviewerNote" maxlength="1024"  title="Product Number within this Registrant"style="width:578px;position:absolute;left:198px;top:134px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="ReviewerNote" id="ReviewerNote" maxlength="2048"  title="Product Number within this Registrant"style="width:578px;position:absolute;left:198px;top:134px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* GroupBox1:GroupBox */ %>
 

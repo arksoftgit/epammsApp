@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCVersionData   Generate Timestamp: 20160623085857141 --%>
+<%-- wMLCVersionData   Generate Timestamp: 20160825091702666 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -118,6 +118,69 @@ public int DoInputMapping( HttpServletRequest request,
          {
             nMapError = -16;
             VmlOperation.CreateMessage( task, "ReviewerNote", e.getReason( ), strMapValue );
+         }
+      }
+
+      // EditBox: NetContentsTitle
+      nRC = mMasLC.cursor( "NetContents" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 ) // CursorResult.SET
+      {
+         strMapValue = request.getParameter( "NetContentsTitle" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "NetContentsTitle", "", strMapValue );
+            else
+               mMasLC.cursor( "NetContents" ).getAttribute( "Title" ).setValue( strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "NetContentsTitle", e.getReason( ), strMapValue );
+         }
+      }
+
+      // MLEdit: NetContentsDescription
+      nRC = mMasLC.cursor( "NetContents" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 ) // CursorResult.SET
+      {
+         strMapValue = request.getParameter( "NetContentsDescription" );
+         task.log().debug( "NetContentsDescription prior to TrimTinyHtml: " + strMapValue );
+         strMapValue = VmlOperation.TrimTinyHtml( strMapValue );
+         task.log().debug( "NetContentsDescription after TrimTinyHtml: '" + strMapValue + "'" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "NetContentsDescription", "", strMapValue );
+            else
+               mMasLC.cursor( "NetContents" ).getAttribute( "Description" ).setValue( strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "NetContentsDescription", e.getReason( ), strMapValue );
+         }
+      }
+
+      // MLEdit: NetContentsText
+      nRC = mMasLC.cursor( "NetContents" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 ) // CursorResult.SET
+      {
+         strMapValue = request.getParameter( "NetContentsText" );
+         task.log().debug( "NetContentsText prior to TrimTinyHtml: " + strMapValue );
+         strMapValue = VmlOperation.TrimTinyHtml( strMapValue );
+         task.log().debug( "NetContentsText after TrimTinyHtml: '" + strMapValue + "'" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "NetContentsText", "", strMapValue );
+            else
+               mMasLC.cursor( "NetContents" ).getAttribute( "Text" ).setValue( strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "NetContentsText", e.getReason( ), strMapValue );
          }
       }
 
@@ -285,7 +348,7 @@ if ( strActionToProcess != null )
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "TOC" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "Tables" ) )
    {
       bDone = true;
       VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCVersionData", strActionToProcess );
@@ -296,7 +359,7 @@ if ( strActionToProcess != null )
          break;
 
       // Next Window
-      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "TableOfContents" );
+      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "TableMaintenance" );
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
@@ -1213,21 +1276,11 @@ else
 %>
 
 <%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "NetContents" );
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "Tables" );
    if ( !csrRC.isSet( ) )
    {
 %>
-       <li id="Marketing" name="Marketing"><a href="#"  onclick="NetContents()">Net Contents</a></li>
-<%
-   }
-%>
-
-<%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "TOC" );
-   if ( !csrRC.isSet( ) )
-   {
-%>
-       <li id="Marketing" name="Marketing"><a href="#"  onclick="TOC()">Table of Contents</a></li>
+       <li id="Marketing" name="Marketing"><a href="#"  onclick="Tables()">Tables</a></li>
 <%
    }
 %>
@@ -1373,13 +1426,13 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:10px;width:100px;"></div>
+<div style="height:12px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
+<div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
 <% /* MasterLabelContent:GroupBox */ %>
 
-<div id="MasterLabelContent" name="MasterLabelContent" class="withborder"   style="float:left;position:relative; width:756px; height:300px;">  <!-- MasterLabelContent --> 
+<div id="MasterLabelContent" name="MasterLabelContent" class="withborder"   style="float:left;position:relative; width:784px; height:300px;">  <!-- MasterLabelContent --> 
 
 <% /* PrimaryRegistrant:Text */ %>
 <% strTextDisplayValue = "";
@@ -1531,7 +1584,7 @@ else
       {
       try
       {
-         strTextDisplayValue = mMasLC.cursor( "MasterLabelContent" ).getAttribute( "RevisionDate" ).getString( "REVMMDDYY" );
+         strTextDisplayValue = mMasLC.cursor( "MasterLabelContent" ).getAttribute( "RevisionDate" ).getString( "" );
       }
       catch (Exception e)
       {
@@ -1640,7 +1693,7 @@ else
    }
 %>
 
-<input class="text12" name="ReviewerNote" id="ReviewerNote" maxlength="1024" style="width:572px;position:absolute;left:172px;top:226px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="ReviewerNote" id="ReviewerNote" maxlength="2048" style="width:572px;position:absolute;left:172px;top:226px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* Status::Text */ %>
 
@@ -1675,6 +1728,199 @@ else
 
 
 </div>  <!--  MasterLabelContent --> 
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:8px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:22px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GroupBox7:GroupBox */ %>
+
+<div id="GroupBox7" name="GroupBox7"   style="float:left;position:relative; width:774px; height:28px;">  <!-- GroupBox7 --> 
+
+<% /* GBNetContents:Text */ %>
+
+<label class="groupbox"  id="GBNetContents" name="GBNetContents" style="width:338px;height:16px;position:absolute;left:6px;top:6px;">Net Contents</label>
+
+
+</div>  <!--  GroupBox7 --> 
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:2px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:22px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GBPrecautionarySection:GroupBox */ %>
+
+<div id="GBPrecautionarySection" name="GBPrecautionarySection" class="withborder"   style="float:left;position:relative; width:774px; height:238px;">  <!-- GBPrecautionarySection --> 
+
+<% /* GroupBox3:GroupBox */ %>
+<div id="GroupBox3" name="GroupBox3" style="float:left;width:758px;" >
+
+<table cols=0 style="width:758px;"  class="grouptable">
+
+<tr>
+<td valign="top" style="width:96px;">
+<% /* NetContentsTitle::Text */ %>
+
+<label  id="NetContentsTitle:" name="NetContentsTitle:" style="width:86px;height:16px;position:absolute;left:6px;top:14px;">Title:</label>
+
+</td>
+<td valign="top"  class="text12" style="width:650px;">
+<% /* NetContentsTitle:EditBox */ %>
+<%
+   strErrorMapValue = VmlOperation.CheckError( "NetContentsTitle", strError );
+   if ( !StringUtils.isBlank( strErrorMapValue ) )
+   {
+      if ( StringUtils.equals( strErrorFlag, "Y" ) )
+         strErrorColor = "color:red;";
+   }
+   else
+   {
+      strErrorColor = "";
+      mMasLC = task.getViewByName( "mMasLC" );
+      if ( VmlOperation.isValid( mMasLC ) == false )
+         task.log( ).debug( "Invalid View: " + "NetContentsTitle" );
+      else
+      {
+         nRC = mMasLC.cursor( "NetContents" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            try
+            {
+               strErrorMapValue = mMasLC.cursor( "NetContents" ).getAttribute( "Title" ).getString( "" );
+            }
+            catch (Exception e)
+            {
+               out.println("There is an error on NetContentsTitle: " + e.getMessage());
+               task.log().error( "*** Error on ctrl NetContentsTitle", e );
+            }
+            if ( strErrorMapValue == null )
+               strErrorMapValue = "";
+
+            task.log( ).debug( "NetContents.Title: " + strErrorMapValue );
+         }
+         else
+            task.log( ).debug( "Entity does not exist for NetContentsTitle: " + "mMasLC.NetContents" );
+      }
+   }
+%>
+
+<input class="text12" name="NetContentsTitle" id="NetContentsTitle" maxlength="254" style="width:650px;position:absolute;left:102px;top:14px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+
+</td>
+</tr>
+</table>
+
+</div>  <!-- GroupBox3 --> 
+
+<% /* GroupBox5:GroupBox */ %>
+
+<div id="GroupBox5" name="GroupBox5" style="width:766px;height:164px;position:absolute;left:12px;top:44px;">  <!-- GroupBox5 --> 
+
+<% /* NetContentsDescription::Text */ %>
+
+<label  id="NetContentsDescription:" name="NetContentsDescription:" style="width:88px;height:16px;position:absolute;left:0px;top:0px;">Description:</label>
+
+<% /* GroupBox6:GroupBox */ %>
+
+<div id="GroupBox6" name="GroupBox6" style="width:658px;height:60px;position:absolute;left:98px;top:0px;">  <!-- GroupBox6 --> 
+
+<div  id="GroupBox6" name="GroupBox6" >GroupBox5</div>
+<% /* NetContentsDescription:MLEdit */ %>
+<%
+   // : NetContentsDescription
+   strErrorMapValue = VmlOperation.CheckError( "NetContentsDescription", strError );
+   if ( !StringUtils.isBlank( strErrorMapValue ) )
+   {
+      if ( StringUtils.equals( strErrorFlag, "Y" ) )
+         strErrorColor = "color:red;";
+   }
+   else
+   {
+      strErrorColor = "";
+      mMasLC = task.getViewByName( "mMasLC" );
+      if ( VmlOperation.isValid( mMasLC ) == false )
+         task.log( ).info( "Invalid View: " + "NetContentsDescription" );
+      else
+      {
+         nRC = mMasLC.cursor( "NetContents" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            strErrorMapValue = mMasLC.cursor( "NetContents" ).getAttribute( "Description" ).getString( "" );
+            if ( strErrorMapValue == null )
+               strErrorMapValue = "";
+
+            task.log( ).info( "NetContents.Description: " + strErrorMapValue );
+         }
+         else
+            task.log( ).info( "Entity does not exist for NetContentsDescription: " + "mMasLC.NetContents" );
+      }
+   }
+%>
+
+<div style="background-color:#eee;border:1px solid #042;width:654px;height:70px;position:absolute;left:0px;top:0px;overflow:auto;">
+<div class="mceSimpleZeidon" name="NetContentsDescription" id="NetContentsDescription" style="width:654px;height:70px;position:absolute;left:0px;top:0px;"><%=strErrorMapValue%></div></div>
+
+
+</div>  <!--  GroupBox6 --> 
+<% /* NetContentsText::Text */ %>
+
+<label  id="NetContentsText:" name="NetContentsText:" style="width:88px;height:16px;position:absolute;left:0px;top:74px;">Text:</label>
+
+<% /* GroupBox4:GroupBox */ %>
+
+<div id="GroupBox4" name="GroupBox4" style="width:658px;height:60px;position:absolute;left:98px;top:74px;">  <!-- GroupBox4 --> 
+
+<% /* NetContentsText:MLEdit */ %>
+<%
+   // : NetContentsText
+   strErrorMapValue = VmlOperation.CheckError( "NetContentsText", strError );
+   if ( !StringUtils.isBlank( strErrorMapValue ) )
+   {
+      if ( StringUtils.equals( strErrorFlag, "Y" ) )
+         strErrorColor = "color:red;";
+   }
+   else
+   {
+      strErrorColor = "";
+      mMasLC = task.getViewByName( "mMasLC" );
+      if ( VmlOperation.isValid( mMasLC ) == false )
+         task.log( ).info( "Invalid View: " + "NetContentsText" );
+      else
+      {
+         nRC = mMasLC.cursor( "NetContents" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            strErrorMapValue = mMasLC.cursor( "NetContents" ).getAttribute( "Text" ).getString( "" );
+            if ( strErrorMapValue == null )
+               strErrorMapValue = "";
+
+            task.log( ).info( "NetContents.Text: " + strErrorMapValue );
+         }
+         else
+            task.log( ).info( "Entity does not exist for NetContentsText: " + "mMasLC.NetContents" );
+      }
+   }
+%>
+
+<div style="background-color:#eee;border:1px solid #042;width:654px;height:70px;position:absolute;left:0px;top:0px;overflow:auto;">
+<div class="mceSimpleZeidon" name="NetContentsText" id="NetContentsText" style="width:654px;height:70px;position:absolute;left:0px;top:0px;"><%=strErrorMapValue%></div></div>
+
+
+</div>  <!--  GroupBox4 --> 
+
+</div>  <!--  GroupBox5 --> 
+
+</div>  <!--  GBPrecautionarySection --> 
 </div>  <!-- End of a new line -->
 
 

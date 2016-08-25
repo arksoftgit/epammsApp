@@ -74,6 +74,63 @@ GOTO_PrecautionaryStmtDelete( View     ViewToWindow )
 
 
 private int 
+o_fnLocalBuildQual_13( View     vSubtask,
+                       zVIEW    vQualObject,
+                       int      lTempInteger_0 )
+{
+   int      RESULT = 0;
+
+   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
+   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "MasterLabelContent" );
+   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "MasterLabelContent" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
+   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_0 );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+   return( 0 );
+} 
+
+
+private int 
+o_fnLocalBuildQual_3( View     vSubtask,
+                      zVIEW    vQualObject,
+                      int      lTempInteger_0 )
+{
+   int      RESULT = 0;
+
+   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
+   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "MasterProduct" );
+   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "PrimaryRegistrant" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
+   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_0 );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+   return( 0 );
+} 
+
+
+private int 
+o_fnLocalBuildQual_4( View     vSubtask,
+                      zVIEW    vQualObject,
+                      int      lTempInteger_0 )
+{
+   int      RESULT = 0;
+
+   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
+   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "MasterLabelContent" );
+   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "MasterLabelContent" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
+   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_0 );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+   return( 0 );
+} 
+
+
+private int 
 o_fnLocalBuildQual_5( View     vSubtask,
                       zVIEW    vQualObject,
                       int      lTempInteger_0 )
@@ -226,25 +283,6 @@ o_fnLocalBuildQual_12( View     vSubtask,
 
 
 private int 
-o_fnLocalBuildQual_13( View     vSubtask,
-                       zVIEW    vQualObject,
-                       int      lTempInteger_0 )
-{
-   int      RESULT = 0;
-
-   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
-   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "MasterLabelContent" );
-   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "MasterLabelContent" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
-   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_0 );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
-   return( 0 );
-} 
-
-
-private int 
 o_fnLocalBuildQual_0( View     vSubtask,
                       zVIEW    vQualObject,
                       int      MasProdID )
@@ -301,41 +339,24 @@ o_fnLocalBuildQual_2( View     vSubtask,
 } 
 
 
-private int 
-o_fnLocalBuildQual_3( View     vSubtask,
-                      zVIEW    vQualObject,
-                      int      lTempInteger_0 )
+//:DIALOG OPERATION
+//:UpdateTable( VIEW ViewToWindow )
+
+//:   VIEW mMasLC REGISTERED AS mMasLC
+public int 
+UpdateTable( View     ViewToWindow )
 {
+   zVIEW    mMasLC = new zVIEW( );
    int      RESULT = 0;
 
-   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
-   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "MasterProduct" );
-   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "PrimaryRegistrant" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
-   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_0 );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+   RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
+
+   //:CreateTemporalSubobjectVersion( mMasLC, "M_MetaTable" )
+   CreateTemporalSubobjectVersion( mMasLC, "M_MetaTable" );
+   //:InitTableColumns( ViewToWindow )
+   InitTableColumns( ViewToWindow );
    return( 0 );
-} 
-
-
-private int 
-o_fnLocalBuildQual_4( View     vSubtask,
-                      zVIEW    vQualObject,
-                      int      lTempInteger_0 )
-{
-   int      RESULT = 0;
-
-   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
-   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "MasterLabelContent" );
-   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "MasterLabelContent" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
-   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_0 );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
-   return( 0 );
+// END
 } 
 
 
@@ -7998,6 +8019,512 @@ AcceptMarketingSectionGoPrev( View     ViewToWindow )
    SetCursorPrevEntity( mMasLC, "M_MarketingSection", "" );
    //:CreateTemporalSubobjectVersion( mMasLC, "M_MarketingSection" )
    CreateTemporalSubobjectVersion( mMasLC, "M_MarketingSection" );
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:CancelTableUpdate( VIEW ViewToWindow )
+
+//:   VIEW mMasLC REGISTERED AS mMasLC
+public int 
+CancelTableUpdate( View     ViewToWindow )
+{
+   zVIEW    mMasLC = new zVIEW( );
+   int      RESULT = 0;
+   //:VIEW wWebXfer REGISTERED AS wWebXfer
+   zVIEW    wWebXfer = new zVIEW( );
+
+   RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
+   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
+
+   //:FOR EACH wWebXfer.Work
+   RESULT = SetCursorFirstEntity( wWebXfer, "Work", "" );
+   while ( RESULT > zCURSOR_UNCHANGED )
+   { 
+      //:DELETE ENTITY wWebXfer.Work NONE
+      RESULT = DeleteEntity( wWebXfer, "Work", zREPOS_NONE );
+      RESULT = SetCursorNextEntity( wWebXfer, "Work", "" );
+   } 
+
+   //:END
+   //:CancelSubobject( mMasLC, "M_MetaTable" )
+   CancelSubobject( mMasLC, "M_MetaTable" );
+   return( 0 );
+// END
+} 
+
+
+//:LOCAL OPERATION
+//:SetCursorNextWithData( VIEW wWebXfer,
+//:                       STRING ( 256 ) szText )
+
+//:   INTEGER nRC
+private int 
+o_SetCursorNextWithData( View     wWebXfer,
+                         StringBuilder   szText )
+{
+   int      nRC = 0;
+
+
+   //:nRC = zCURSOR_SET
+   nRC = zCURSOR_SET;
+   //:LOOP WHILE nRC >= zCURSOR_SET
+   while ( nRC >= zCURSOR_SET )
+   { 
+      //:nRC = SetCursorNextEntity( wWebXfer, "Work", "" )
+      nRC = SetCursorNextEntity( wWebXfer, "Work", "" );
+      //:IF nRC >= zCURSOR_SET
+      if ( nRC >= zCURSOR_SET )
+      { 
+         //:GetStringFromAttribute( szText, wWebXfer, "Work", "Text" )
+         GetStringFromAttribute( szText, wWebXfer, "Work", "Text" );
+         //:IF szText != ""
+         if ( ZeidonStringCompare( szText.toString( ), 1, 0, "", 1, 0, 257 ) != 0 )
+         { 
+            //:RETURN nRC
+            if(8==8)return( nRC );
+         } 
+
+         //:END
+      } 
+
+      //:END
+   } 
+
+   //:END
+   //:RETURN -1
+   return( -1 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:SaveTableColumns( VIEW ViewToWindow )
+
+//:   VIEW mMasLC REGISTERED AS mMasLC
+public int 
+SaveTableColumns( View     ViewToWindow )
+{
+   zVIEW    mMasLC = new zVIEW( );
+   int      RESULT = 0;
+   //:VIEW wWebXfer REGISTERED AS wWebXfer
+   zVIEW    wWebXfer = new zVIEW( );
+   //:STRING ( 256 ) szText
+   String   szText = null;
+   //:SHORT  nCnt
+   int      nCnt = 0;
+   //:SHORT  nRC
+   int      nRC = 0;
+   int      lTempInteger_0 = 0;
+
+   RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
+   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
+
+   //:mMasLC.M_MetaTable.Title1 = ""
+   SetAttributeFromString( mMasLC, "M_MetaTable", "Title1", "" );
+   //:mMasLC.M_MetaTable.Title2 = ""
+   SetAttributeFromString( mMasLC, "M_MetaTable", "Title2", "" );
+   //:mMasLC.M_MetaTable.Title3 = ""
+   SetAttributeFromString( mMasLC, "M_MetaTable", "Title3", "" );
+   //:mMasLC.M_MetaTable.Title4 = ""
+   SetAttributeFromString( mMasLC, "M_MetaTable", "Title4", "" );
+   //:mMasLC.M_MetaTable.Title5 = ""
+   SetAttributeFromString( mMasLC, "M_MetaTable", "Title5", "" );
+   //:mMasLC.M_MetaTable.Title6 = ""
+   SetAttributeFromString( mMasLC, "M_MetaTable", "Title6", "" );
+   //:mMasLC.M_MetaTable.Title7 = ""
+   SetAttributeFromString( mMasLC, "M_MetaTable", "Title7", "" );
+   //:mMasLC.M_MetaTable.Title8 = ""
+   SetAttributeFromString( mMasLC, "M_MetaTable", "Title8", "" );
+   //:mMasLC.M_MetaTable.Title9 = ""
+   SetAttributeFromString( mMasLC, "M_MetaTable", "Title9", "" );
+   //:mMasLC.M_MetaTable.Title10 = ""
+   SetAttributeFromString( mMasLC, "M_MetaTable", "Title10", "" );
+
+   //:nCnt = 0
+   nCnt = 0;
+   //:nRC = SetCursorFirstEntity( wWebXfer, "Work", "" )
+   nRC = SetCursorFirstEntity( wWebXfer, "Work", "" );
+   //:IF nRC >= zCURSOR_SET
+   if ( nRC >= zCURSOR_SET )
+   { 
+      //:szText = wWebXfer.Work.Text
+      {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
+      StringBuilder sb_szText;
+      if ( szText == null )
+         sb_szText = new StringBuilder( 32 );
+      else
+         sb_szText = new StringBuilder( szText );
+             GetVariableFromAttribute( sb_szText, mi_lTempInteger_0, 'S', 257, wWebXfer, "Work", "Text", "", 0 );
+      lTempInteger_0 = mi_lTempInteger_0.intValue( );
+      szText = sb_szText.toString( );}
+      //:IF szText = ""
+      if ( ZeidonStringCompare( szText, 1, 0, "", 1, 0, 257 ) == 0 )
+      { 
+         //:nRC = SetCursorNextWithData( wWebXfer, szText )
+         {StringBuilder sb_szText;
+         if ( szText == null )
+            sb_szText = new StringBuilder( 32 );
+         else
+            sb_szText = new StringBuilder( szText );
+                   nRC = o_SetCursorNextWithData( wWebXfer, sb_szText );
+         szText = sb_szText.toString( );}
+         //:IF nRC >= zCURSOR_SET 
+         if ( nRC >= zCURSOR_SET )
+         { 
+            //:nCnt = 1
+            nCnt = 1;
+            //:mMasLC.M_MetaTable.Title1 = szText
+            SetAttributeFromString( mMasLC, "M_MetaTable", "Title1", szText );
+         } 
+
+         //:END
+         //:ELSE
+      } 
+      else
+      { 
+         //:mMasLC.M_MetaTable.Title1 = szText
+         SetAttributeFromString( mMasLC, "M_MetaTable", "Title1", szText );
+      } 
+
+      //:END
+   } 
+
+   //:END
+
+   //:// Indentation below is whacked for readability.
+   //:nRC = SetCursorNextWithData( wWebXfer, szText )
+   {StringBuilder sb_szText;
+   if ( szText == null )
+      sb_szText = new StringBuilder( 32 );
+   else
+      sb_szText = new StringBuilder( szText );
+       nRC = o_SetCursorNextWithData( wWebXfer, sb_szText );
+   szText = sb_szText.toString( );}
+   //:IF nRC >= zCURSOR_SET
+   if ( nRC >= zCURSOR_SET )
+   { 
+      //:nCnt = 2
+      nCnt = 2;
+      //:mMasLC.M_MetaTable.Title2 = szText
+      SetAttributeFromString( mMasLC, "M_MetaTable", "Title2", szText );
+      //:nRC = SetCursorNextWithData( wWebXfer, szText )
+      {StringBuilder sb_szText;
+      if ( szText == null )
+         sb_szText = new StringBuilder( 32 );
+      else
+         sb_szText = new StringBuilder( szText );
+             nRC = o_SetCursorNextWithData( wWebXfer, sb_szText );
+      szText = sb_szText.toString( );}
+      //:IF nRC >= zCURSOR_SET
+      if ( nRC >= zCURSOR_SET )
+      { 
+         //:nCnt = 3
+         nCnt = 3;
+         //:mMasLC.M_MetaTable.Title3 = szText
+         SetAttributeFromString( mMasLC, "M_MetaTable", "Title3", szText );
+         //:nRC = SetCursorNextWithData( wWebXfer, szText )
+         {StringBuilder sb_szText;
+         if ( szText == null )
+            sb_szText = new StringBuilder( 32 );
+         else
+            sb_szText = new StringBuilder( szText );
+                   nRC = o_SetCursorNextWithData( wWebXfer, sb_szText );
+         szText = sb_szText.toString( );}
+         //:IF nRC >= zCURSOR_SET
+         if ( nRC >= zCURSOR_SET )
+         { 
+            //:nCnt = 4
+            nCnt = 4;
+            //:mMasLC.M_MetaTable.Title4 = szText
+            SetAttributeFromString( mMasLC, "M_MetaTable", "Title4", szText );
+            //:nRC = SetCursorNextWithData( wWebXfer, szText )
+            {StringBuilder sb_szText;
+            if ( szText == null )
+               sb_szText = new StringBuilder( 32 );
+            else
+               sb_szText = new StringBuilder( szText );
+                         nRC = o_SetCursorNextWithData( wWebXfer, sb_szText );
+            szText = sb_szText.toString( );}
+            //:IF nRC >= zCURSOR_SET
+            if ( nRC >= zCURSOR_SET )
+            { 
+               //:nCnt = 5
+               nCnt = 5;
+               //:mMasLC.M_MetaTable.Title5 = szText
+               SetAttributeFromString( mMasLC, "M_MetaTable", "Title5", szText );
+               //:nRC = SetCursorNextWithData( wWebXfer, szText )
+               {StringBuilder sb_szText;
+               if ( szText == null )
+                  sb_szText = new StringBuilder( 32 );
+               else
+                  sb_szText = new StringBuilder( szText );
+                               nRC = o_SetCursorNextWithData( wWebXfer, sb_szText );
+               szText = sb_szText.toString( );}
+               //:IF nRC >= zCURSOR_SET
+               if ( nRC >= zCURSOR_SET )
+               { 
+                  //:nCnt = 6
+                  nCnt = 6;
+                  //:mMasLC.M_MetaTable.Title6 = szText
+                  SetAttributeFromString( mMasLC, "M_MetaTable", "Title6", szText );
+                  //:nRC = SetCursorNextWithData( wWebXfer, szText )
+                  {StringBuilder sb_szText;
+                  if ( szText == null )
+                     sb_szText = new StringBuilder( 32 );
+                  else
+                     sb_szText = new StringBuilder( szText );
+                                     nRC = o_SetCursorNextWithData( wWebXfer, sb_szText );
+                  szText = sb_szText.toString( );}
+                  //:IF nRC >= zCURSOR_SET
+                  if ( nRC >= zCURSOR_SET )
+                  { 
+                     //:nCnt = 7
+                     nCnt = 7;
+                     //:mMasLC.M_MetaTable.Title7 = szText
+                     SetAttributeFromString( mMasLC, "M_MetaTable", "Title7", szText );
+                     //:nRC = SetCursorNextWithData( wWebXfer, szText )
+                     {StringBuilder sb_szText;
+                     if ( szText == null )
+                        sb_szText = new StringBuilder( 32 );
+                     else
+                        sb_szText = new StringBuilder( szText );
+                                           nRC = o_SetCursorNextWithData( wWebXfer, sb_szText );
+                     szText = sb_szText.toString( );}
+                     //:IF nRC >= zCURSOR_SET
+                     if ( nRC >= zCURSOR_SET )
+                     { 
+                        //:nCnt = 8
+                        nCnt = 8;
+                        //:mMasLC.M_MetaTable.Title8 = szText
+                        SetAttributeFromString( mMasLC, "M_MetaTable", "Title8", szText );
+                        //:nRC = SetCursorNextWithData( wWebXfer, szText )
+                        {StringBuilder sb_szText;
+                        if ( szText == null )
+                           sb_szText = new StringBuilder( 32 );
+                        else
+                           sb_szText = new StringBuilder( szText );
+                                                 nRC = o_SetCursorNextWithData( wWebXfer, sb_szText );
+                        szText = sb_szText.toString( );}
+                        //:IF nRC >= zCURSOR_SET
+                        if ( nRC >= zCURSOR_SET )
+                        { 
+                           //:nCnt = 9
+                           nCnt = 9;
+                           //:mMasLC.M_MetaTable.Title9 = szText
+                           SetAttributeFromString( mMasLC, "M_MetaTable", "Title9", szText );
+                           //:nRC = SetCursorNextWithData( wWebXfer, szText )
+                           {StringBuilder sb_szText;
+                           if ( szText == null )
+                              sb_szText = new StringBuilder( 32 );
+                           else
+                              sb_szText = new StringBuilder( szText );
+                                                       nRC = o_SetCursorNextWithData( wWebXfer, sb_szText );
+                           szText = sb_szText.toString( );}
+                           //:IF nRC >= zCURSOR_SET
+                           if ( nRC >= zCURSOR_SET )
+                           { 
+                              //:nCnt = 10
+                              nCnt = 10;
+                              //:mMasLC.M_MetaTable.Title10 = szText
+                              SetAttributeFromString( mMasLC, "M_MetaTable", "Title10", szText );
+                           } 
+
+                           //:END
+                        } 
+
+                        //:END
+                     } 
+
+                     //:END
+                  } 
+
+                  //:END
+               } 
+
+               //:END
+            } 
+
+            //:END
+         } 
+
+         //:END
+      } 
+
+      //:END
+   } 
+
+   //:END
+
+   //:mMasLC.M_MetaTable.Columns = nCnt
+   SetAttributeFromInteger( mMasLC, "M_MetaTable", "Columns", nCnt );
+   //:FOR EACH wWebXfer.Work
+   RESULT = SetCursorFirstEntity( wWebXfer, "Work", "" );
+   while ( RESULT > zCURSOR_UNCHANGED )
+   { 
+      //:DELETE ENTITY wWebXfer.Work NONE
+      RESULT = DeleteEntity( wWebXfer, "Work", zREPOS_NONE );
+      RESULT = SetCursorNextEntity( wWebXfer, "Work", "" );
+   } 
+
+   //:END
+   //:AcceptSubobject( mMasLC, "M_MetaTable" )
+   AcceptSubobject( mMasLC, "M_MetaTable" );
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:InitTableColumns( VIEW ViewToWindow )
+
+//:   VIEW mMasLC REGISTERED AS mMasLC
+public int 
+InitTableColumns( View     ViewToWindow )
+{
+   zVIEW    mMasLC = new zVIEW( );
+   int      RESULT = 0;
+   //:VIEW wWebXfer REGISTERED AS wWebXfer
+   zVIEW    wWebXfer = new zVIEW( );
+   //:SHORT nRC
+   int      nRC = 0;
+
+   RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
+   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
+
+   //:FOR EACH wWebXfer.Work
+   RESULT = SetCursorFirstEntity( wWebXfer, "Work", "" );
+   while ( RESULT > zCURSOR_UNCHANGED )
+   { 
+      //:DELETE ENTITY wWebXfer.Work NONE
+      RESULT = DeleteEntity( wWebXfer, "Work", zREPOS_NONE );
+      RESULT = SetCursorNextEntity( wWebXfer, "Work", "" );
+   } 
+
+   //:END
+   //:IF mMasLC.M_MetaTable.Title1 != ""
+   if ( CompareAttributeToString( mMasLC, "M_MetaTable", "Title1", "" ) != 0 )
+   { 
+      //:CreateEntity( wWebXfer, "Work", zPOS_LAST )
+      CreateEntity( wWebXfer, "Work", zPOS_LAST );
+      //:wWebXfer.Work.Text = mMasLC.M_MetaTable.Title1
+      SetAttributeFromAttribute( wWebXfer, "Work", "Text", mMasLC, "M_MetaTable", "Title1" );
+   } 
+
+   //:END
+   //:IF mMasLC.M_MetaTable.Title2 != ""
+   if ( CompareAttributeToString( mMasLC, "M_MetaTable", "Title2", "" ) != 0 )
+   { 
+      //:CreateEntity( wWebXfer, "Work", zPOS_LAST )
+      CreateEntity( wWebXfer, "Work", zPOS_LAST );
+      //:wWebXfer.Work.Text = mMasLC.M_MetaTable.Title2
+      SetAttributeFromAttribute( wWebXfer, "Work", "Text", mMasLC, "M_MetaTable", "Title2" );
+   } 
+
+   //:END
+   //:IF mMasLC.M_MetaTable.Title3 != ""
+   if ( CompareAttributeToString( mMasLC, "M_MetaTable", "Title3", "" ) != 0 )
+   { 
+      //:CreateEntity( wWebXfer, "Work", zPOS_LAST )
+      CreateEntity( wWebXfer, "Work", zPOS_LAST );
+      //:wWebXfer.Work.Text = mMasLC.M_MetaTable.Title3
+      SetAttributeFromAttribute( wWebXfer, "Work", "Text", mMasLC, "M_MetaTable", "Title3" );
+   } 
+
+   //:END
+   //:IF mMasLC.M_MetaTable.Title4 != ""
+   if ( CompareAttributeToString( mMasLC, "M_MetaTable", "Title4", "" ) != 0 )
+   { 
+      //:CreateEntity( wWebXfer, "Work", zPOS_LAST )
+      CreateEntity( wWebXfer, "Work", zPOS_LAST );
+      //:wWebXfer.Work.Text = mMasLC.M_MetaTable.Title4
+      SetAttributeFromAttribute( wWebXfer, "Work", "Text", mMasLC, "M_MetaTable", "Title4" );
+   } 
+
+   //:END
+   //:IF mMasLC.M_MetaTable.Title5 != ""
+   if ( CompareAttributeToString( mMasLC, "M_MetaTable", "Title5", "" ) != 0 )
+   { 
+      //:CreateEntity( wWebXfer, "Work", zPOS_LAST )
+      CreateEntity( wWebXfer, "Work", zPOS_LAST );
+      //:wWebXfer.Work.Text = mMasLC.M_MetaTable.Title5
+      SetAttributeFromAttribute( wWebXfer, "Work", "Text", mMasLC, "M_MetaTable", "Title5" );
+   } 
+
+   //:END
+   //:IF mMasLC.M_MetaTable.Title6 != ""
+   if ( CompareAttributeToString( mMasLC, "M_MetaTable", "Title6", "" ) != 0 )
+   { 
+      //:CreateEntity( wWebXfer, "Work", zPOS_LAST )
+      CreateEntity( wWebXfer, "Work", zPOS_LAST );
+      //:wWebXfer.Work.Text = mMasLC.M_MetaTable.Title6
+      SetAttributeFromAttribute( wWebXfer, "Work", "Text", mMasLC, "M_MetaTable", "Title6" );
+   } 
+
+   //:END
+   //:IF mMasLC.M_MetaTable.Title7 != ""
+   if ( CompareAttributeToString( mMasLC, "M_MetaTable", "Title7", "" ) != 0 )
+   { 
+      //:CreateEntity( wWebXfer, "Work", zPOS_LAST )
+      CreateEntity( wWebXfer, "Work", zPOS_LAST );
+      //:wWebXfer.Work.Text = mMasLC.M_MetaTable.Title7
+      SetAttributeFromAttribute( wWebXfer, "Work", "Text", mMasLC, "M_MetaTable", "Title7" );
+   } 
+
+   //:END
+   //:IF mMasLC.M_MetaTable.Title8 != ""
+   if ( CompareAttributeToString( mMasLC, "M_MetaTable", "Title8", "" ) != 0 )
+   { 
+      //:CreateEntity( wWebXfer, "Work", zPOS_LAST )
+      CreateEntity( wWebXfer, "Work", zPOS_LAST );
+      //:wWebXfer.Work.Text = mMasLC.M_MetaTable.Title8
+      SetAttributeFromAttribute( wWebXfer, "Work", "Text", mMasLC, "M_MetaTable", "Title8" );
+   } 
+
+   //:END
+   //:IF mMasLC.M_MetaTable.Title9 != ""
+   if ( CompareAttributeToString( mMasLC, "M_MetaTable", "Title9", "" ) != 0 )
+   { 
+      //:CreateEntity( wWebXfer, "Work", zPOS_LAST )
+      CreateEntity( wWebXfer, "Work", zPOS_LAST );
+      //:wWebXfer.Work.Text = mMasLC.M_MetaTable.Title9
+      SetAttributeFromAttribute( wWebXfer, "Work", "Text", mMasLC, "M_MetaTable", "Title9" );
+   } 
+
+   //:END
+   //:IF mMasLC.M_MetaTable.Title10 != ""
+   if ( CompareAttributeToString( mMasLC, "M_MetaTable", "Title10", "" ) != 0 )
+   { 
+      //:CreateEntity( wWebXfer, "Work", zPOS_LAST )
+      CreateEntity( wWebXfer, "Work", zPOS_LAST );
+      //:wWebXfer.Work.Text = mMasLC.M_MetaTable.Title10
+      SetAttributeFromAttribute( wWebXfer, "Work", "Text", mMasLC, "M_MetaTable", "Title10" );
+   } 
+
+   //:END
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:AddTable( VIEW ViewToWindow )
+
+//:   VIEW mMasLC REGISTERED AS mMasLC
+public int 
+AddTable( View     ViewToWindow )
+{
+   zVIEW    mMasLC = new zVIEW( );
+   int      RESULT = 0;
+
+   RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
+
+   //:CreateTemporalEntity( mMasLC, "M_MetaTable", zPOS_AFTER )
+   CreateTemporalEntity( mMasLC, "M_MetaTable", zPOS_AFTER );
+   //:InitTableColumns( ViewToWindow )
+   InitTableColumns( ViewToWindow );
    return( 0 );
 // END
 } 

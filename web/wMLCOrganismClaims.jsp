@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCOrganismClaims   Generate Timestamp: 20160623085856279 --%>
+<%-- wMLCOrganismClaims   Generate Timestamp: 20160824153942767 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -1501,7 +1501,7 @@ else
    }
 %>
 
-<input name="ReviewerNote" id="ReviewerNote" maxlength="1024" style="width:512px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="ReviewerNote" id="ReviewerNote" maxlength="2048" style="width:512px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>

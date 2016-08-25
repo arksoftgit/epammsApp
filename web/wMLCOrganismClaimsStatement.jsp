@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCOrganismClaimsStatement   Generate Timestamp: 20160623085856335 --%>
+<%-- wMLCOrganismClaimsStatement   Generate Timestamp: 20160824153942960 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -122,8 +122,8 @@ public int DoInputMapping( HttpServletRequest request,
                if ( nRC >= 0 )
                {
                   // Only do the automatic include if this is a different entity
-                  strTemp = mMasLC.cursor( "M_UsageFootnoteUsed" ).getAttribute( "Text" ).getString( "" );
-                  if ( !StringUtils.equals( strTemp, mMasLC.cursor( "M_UsageFootnote" ).getAttribute( "Text" ).getString( "" ) ) )
+                  strTemp = mMasLC.cursor( "M_UsageFootnoteUsed" ).getAttribute( "dSymbolText" ).getString( "" );
+                  if ( !StringUtils.equals( strTemp, mMasLC.cursor( "M_UsageFootnote" ).getAttribute( "dSymbolText" ).getString( "" ) ) )
                   {
                      mMasLC.cursor( "M_UsageFootnoteUsed" ).excludeEntity( CursorPosition.NONE );
                      mMasLC.cursor( "M_UsageFootnoteUsed" ).includeSubobject( mMasLC.cursor( "M_UsageFootnote" ), CursorPosition.NEXT );
@@ -1268,7 +1268,7 @@ else
 <div style="height:1px;width:18px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GBPrecautionarySection:GroupBox */ %>
 
-<div id="GBPrecautionarySection" name="GBPrecautionarySection" class="withborder" style="width:810px;height:96px;float:left;">  <!-- GBPrecautionarySection --> 
+<div id="GBPrecautionarySection" name="GBPrecautionarySection" class="withborder" style="width:810px;height:88px;float:left;">  <!-- GBPrecautionarySection --> 
 
 
 <div>  <!-- Beginning of a new line -->
@@ -1444,7 +1444,7 @@ else
          nRC = mMasLC.cursor( "M_UsageFootnoteUsed" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strComboCurrentValue = mMasLC.cursor( "M_UsageFootnoteUsed" ).getAttribute( "Text" ).getString( "" );
+            strComboCurrentValue = mMasLC.cursor( "M_UsageFootnoteUsed" ).getAttribute( "dSymbolText" ).getString( "" );
             if ( strComboCurrentValue == null )
                strComboCurrentValue = "";
          }
@@ -1471,7 +1471,7 @@ else
       csrRC = vUsageFootnote.cursor( "M_UsageFootnote" ).setFirst(  );
       while ( csrRC.isSet() )
       {
-         strErrorMapValue = vUsageFootnote.cursor( "M_UsageFootnote" ).getAttribute( "Text" ).getString( "" );
+         strErrorMapValue = vUsageFootnote.cursor( "M_UsageFootnote" ).getAttribute( "dSymbolText" ).getString( "" );
          if ( strErrorMapValue == null )
             strErrorMapValue = "";
 
@@ -1516,7 +1516,7 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:8px;width:100px;"></div>
+<div style="height:6px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:18px;float:left;"></div>   <!-- Width Spacer -->

@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCIngredients   Generate Timestamp: 20160623085855614 --%>
+<%-- wMLCIngredients   Generate Timestamp: 20160824153940766 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -114,25 +114,6 @@ public int DoInputMapping( HttpServletRequest request,
          {
             nMapError = -16;
             VmlOperation.CreateMessage( task, "GeneralInertPercentage", e.getReason( ), strMapValue );
-         }
-      }
-
-      // EditBox: EditBox1
-      nRC = mMasLC.cursor( "M_IngredientsSection" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 ) // CursorResult.SET
-      {
-         strMapValue = request.getParameter( "EditBox1" );
-         try
-         {
-            if ( webMapping )
-               VmlOperation.CreateMessage( task, "EditBox1", "", strMapValue );
-            else
-               mMasLC.cursor( "M_IngredientsSection" ).getAttribute( "dSpecifiedActiveIngredients" ).setValue( strMapValue, "" );
-         }
-         catch ( InvalidAttributeValueException e )
-         {
-            nMapError = -16;
-            VmlOperation.CreateMessage( task, "EditBox1", e.getReason( ), strMapValue );
          }
       }
 
@@ -1502,7 +1483,7 @@ else
    }
 %>
 
-<input class="text12" name="ActiveTitle" id="ActiveTitle" maxlength="254" style="width:620px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="ActiveTitle" id="ActiveTitle" maxlength="254" style="width:630px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </div>  <!-- End of a new line -->
 
@@ -1558,7 +1539,7 @@ else
    }
 %>
 
-<input class="text12" name="InertTitle" id="InertTitle" maxlength="254" style="width:620px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="InertTitle" id="InertTitle" maxlength="254" style="width:630px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </div>  <!-- End of a new line -->
 
@@ -1572,9 +1553,8 @@ else
 <span style="height:16px;">&nbsp&nbsp</span>
 <% /* UnspecifiedInertPercentage::Text */ %>
 
-<span  id="UnspecifiedInertPercentage:" name="UnspecifiedInertPercentage:" style="width:210px;height:16px;">Unspecified Inert Percentage:</span>
+<span  id="UnspecifiedInertPercentage:" name="UnspecifiedInertPercentage:" style="width:198px;height:16px;">Unspecified Inert Percentage:</span>
 
-<span style="height:16px;">&nbsp&nbsp</span>
 <% /* GeneralInertPercentage:EditBox */ %>
 <%
    strErrorMapValue = VmlOperation.CheckError( "GeneralInertPercentage", strError );
@@ -1616,52 +1596,71 @@ else
 
 <input class="text12" name="GeneralInertPercentage" id="GeneralInertPercentage" maxlength="20" style="width:50px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
-<span style="height:16px;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
+<span style="height:16px;">&nbsp&nbsp&nbsp&nbsp</span>
 <% /* SpecifiedActivePercentage::Text */ %>
 
-<span  id="SpecifiedActivePercentage:" name="SpecifiedActivePercentage:" style="width:210px;height:16px;">Specified Active Percentage:</span>
+<span  id="SpecifiedActivePercentage:" name="SpecifiedActivePercentage:" style="width:190px;height:16px;">Specified Active Percentage:</span>
 
-<span style="height:16px;">&nbsp&nbsp</span>
-<% /* EditBox1:EditBox */ %>
-<%
-   strErrorMapValue = VmlOperation.CheckError( "EditBox1", strError );
-   if ( !StringUtils.isBlank( strErrorMapValue ) )
-   {
-      if ( StringUtils.equals( strErrorFlag, "Y" ) )
-         strErrorColor = "color:red;";
-   }
+<span style="height:16px;">&nbsp</span>
+<% /* SpecifiedActivePercentage:Text */ %>
+<% strTextDisplayValue = "";
+   mMasLC = task.getViewByName( "mMasLC" );
+   if ( VmlOperation.isValid( mMasLC ) == false )
+      task.log( ).debug( "Invalid View: " + "SpecifiedActivePercentage" );
    else
    {
-      strErrorColor = "";
-      mMasLC = task.getViewByName( "mMasLC" );
-      if ( VmlOperation.isValid( mMasLC ) == false )
-         task.log( ).debug( "Invalid View: " + "EditBox1" );
-      else
+      nRC = mMasLC.cursor( "M_IngredientsSection" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
       {
-         nRC = mMasLC.cursor( "M_IngredientsSection" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-         {
-            try
-            {
-               strErrorMapValue = mMasLC.cursor( "M_IngredientsSection" ).getAttribute( "dSpecifiedActiveIngredients" ).getString( "" );
-            }
-            catch (Exception e)
-            {
-               out.println("There is an error on EditBox1: " + e.getMessage());
-               task.log().error( "*** Error on ctrl EditBox1", e );
-            }
-            if ( strErrorMapValue == null )
-               strErrorMapValue = "";
-
-            task.log( ).debug( "M_IngredientsSection.dSpecifiedActiveIngredients: " + strErrorMapValue );
-         }
-         else
-            task.log( ).debug( "Entity does not exist for EditBox1: " + "mMasLC.M_IngredientsSection" );
+      try
+      {
+         strTextDisplayValue = mMasLC.cursor( "M_IngredientsSection" ).getAttribute( "dSpecifiedActiveIngredients" ).getString( "" );
+      }
+      catch (Exception e)
+      {
+         out.println("There is an error on SpecifiedActivePercentage: " + e.getMessage());
+         task.log().info( "*** Error on ctrl SpecifiedActivePercentage" + e.getMessage() );
+      }
+         if ( strTextDisplayValue == null )
+            strTextDisplayValue = "";
       }
    }
 %>
 
-<input class="text12" name="EditBox1" id="EditBox1" maxlength="20" style="width:50px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<span class="text12"  id="SpecifiedActivePercentage" name="SpecifiedActivePercentage" style="width:34px;height:16px;"><%=strTextDisplayValue%></span>
+
+<span style="height:16px;">&nbsp&nbsp&nbsp&nbsp</span>
+<% /* SpecifiedInertPercentage::Text */ %>
+
+<span  id="SpecifiedInertPercentage:" name="SpecifiedInertPercentage:" style="width:178px;height:16px;">Specified Inert Percentage:</span>
+
+<span style="height:16px;">&nbsp</span>
+<% /* SpecifiedActivePercentage1:Text */ %>
+<% strTextDisplayValue = "";
+   mMasLC = task.getViewByName( "mMasLC" );
+   if ( VmlOperation.isValid( mMasLC ) == false )
+      task.log( ).debug( "Invalid View: " + "SpecifiedActivePercentage1" );
+   else
+   {
+      nRC = mMasLC.cursor( "M_IngredientsSection" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+      {
+      try
+      {
+         strTextDisplayValue = mMasLC.cursor( "M_IngredientsSection" ).getAttribute( "dSpecifiedInertIngredients" ).getString( "" );
+      }
+      catch (Exception e)
+      {
+         out.println("There is an error on SpecifiedActivePercentage1: " + e.getMessage());
+         task.log().info( "*** Error on ctrl SpecifiedActivePercentage1" + e.getMessage() );
+      }
+         if ( strTextDisplayValue == null )
+            strTextDisplayValue = "";
+      }
+   }
+%>
+
+<span class="text12"  id="SpecifiedActivePercentage1" name="SpecifiedActivePercentage1" style="width:34px;height:16px;"><%=strTextDisplayValue%></span>
 
 </div>  <!-- End of a new line -->
 

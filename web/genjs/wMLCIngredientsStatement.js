@@ -1,4 +1,4 @@
-// wMLCIngredientsStatement   Generate Timestamp: 20160623085855671
+// wMLCIngredientsStatement   Generate Timestamp: 20160824153940954
 
 var isWindowClosing = true;
 var timerID = null;
@@ -201,6 +201,17 @@ function AcceptAddNewIngredient( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      // Javascript code entered by user.
+
+if ( $('#ChemicalName').text() == "" ||
+     document.wMLCIngredientsStatement.IngredientsActive.value == "" ||
+     document.wMLCIngredientsStatement.Percent.value == "" ) {
+   alert( "Chemical Name and Active/Inert and Percent are required" );
+   return;
+}  //dks check tinymce input
+
+      // END of Javascript code entered by user.
+
       _DisableFormElements( true );
 
       document.wMLCIngredientsStatement.zAction.value = "AcceptAddNewIngredient";
@@ -216,6 +227,17 @@ function AcceptIngredientsStmt( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      // Javascript code entered by user.
+
+if ( $('#ChemicalName').text() == "" ||
+     document.wMLCIngredientsStatement.IngredientsActive.value == "" ||
+     document.wMLCIngredientsStatement.Percent.value == "" ) {
+   alert( "Chemical Name and Active/Inert and Percent are required" );
+   return;
+}  //dks check tinymce input
+
+      // END of Javascript code entered by user.
+
       _DisableFormElements( true );
 
       document.wMLCIngredientsStatement.zAction.value = "AcceptIngredientsStmt";

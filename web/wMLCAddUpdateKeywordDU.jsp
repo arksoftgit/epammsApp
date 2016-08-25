@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCAddUpdateKeywordDU   Generate Timestamp: 20160623085854168 --%>
+<%-- wMLCAddUpdateKeywordDU   Generate Timestamp: 20160824153936149 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -98,7 +98,7 @@ public int DoInputMapping( HttpServletRequest request,
          }
       }
 
-      // Grid: GridM_InsertTextMarketing1
+      // Grid: GridM_InsertTextMarketing
       iTableRowCnt = 0;
 
       // We are creating a temp view to the grid view so that if there are 
@@ -1074,9 +1074,9 @@ else
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:2px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GroupBox7:GroupBox */ %>
+<% /* dks - add blank entry to grid:GroupBox */ %>
 
-<div id="GroupBox7" name="GroupBox7"   style="float:left;position:relative; width:718px; height:30px;">  <!-- GroupBox7 --> 
+<div id="dks - add blank entry to grid" name="dks - add blank entry to grid"   style="float:left;position:relative; width:718px; height:30px;">  <!-- dks - add blank entry to grid --> 
 
 <% /* TextItems:Text */ %>
 
@@ -1086,7 +1086,7 @@ else
 <button type="button" class="newbutton" name="AddBlank" id="AddBlank" value="" onclick="ADD_DU_KeywordTextItemInit( )" style="width:120px;height:26px;position:absolute;left:514px;top:4px;">Add Blank Entry</button>
 
 
-</div>  <!--  GroupBox7 --> 
+</div>  <!--  dks - add blank entry to grid --> 
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
@@ -1097,8 +1097,8 @@ else
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:8px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GridM_InsertTextMarketing1:Grid */ %>
-<table  cols=3 style=""  name="GridM_InsertTextMarketing1" id="GridM_InsertTextMarketing1">
+<% /* GridM_InsertTextMarketing:Grid */ %>
+<table  cols=3 style=""  name="GridM_InsertTextMarketing" id="GridM_InsertTextMarketing">
 
 <thead><tr>
 
@@ -1127,19 +1127,19 @@ try
       String strAddBtn;
       String strDeleteBtn;
       
-      View vGridM_InsertTextMarketing1;
-      vGridM_InsertTextMarketing1 = mMasLC.newView( );
-      csrRC2 = vGridM_InsertTextMarketing1.cursor( "M_InsertTextDU" ).setFirst(  );
+      View vGridM_InsertTextMarketing;
+      vGridM_InsertTextMarketing = mMasLC.newView( );
+      csrRC2 = vGridM_InsertTextMarketing.cursor( "M_InsertTextDU" ).setFirst(  );
       while ( csrRC2.isSet() )
       {
          strOdd = (iTableRowCnt % 2) != 0 ? " class='odd'" : "";
          iTableRowCnt++;
 
-         lEntityKey = vGridM_InsertTextMarketing1.cursor( "M_InsertTextDU" ).getEntityKey( );
+         lEntityKey = vGridM_InsertTextMarketing.cursor( "M_InsertTextDU" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
          strGridCtrlText = "";
          strGridCtrlTextErrorColor = "";
-         nRC = vGridM_InsertTextMarketing1.cursor( "M_InsertTextDU" ).checkExistenceOfEntity( ).toInt();
+         nRC = vGridM_InsertTextMarketing.cursor( "M_InsertTextDU" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
             strTag = "GridCtrlText::" + strEntityKey;
@@ -1152,7 +1152,7 @@ try
             }
             else
             {
-               strGridCtrlText = vGridM_InsertTextMarketing1.cursor( "M_InsertTextDU" ).getAttribute( "Text" ).getString( "" );
+               strGridCtrlText = vGridM_InsertTextMarketing.cursor( "M_InsertTextDU" ).getAttribute( "Text" ).getString( "" );
                if ( strGridCtrlText == null )
                   strGridCtrlText = "";
             }
@@ -1172,9 +1172,9 @@ try
 </tr>
 
 <%
-         csrRC2 = vGridM_InsertTextMarketing1.cursor( "M_InsertTextDU" ).setNextContinue( );
+         csrRC2 = vGridM_InsertTextMarketing.cursor( "M_InsertTextDU" ).setNextContinue( );
       }
-      vGridM_InsertTextMarketing1.drop( );
+      vGridM_InsertTextMarketing.drop( );
    }
 }
 catch (Exception e)

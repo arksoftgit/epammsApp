@@ -226,5 +226,59 @@ owWebXfer_dCurrentDateTime( View     wWebXfer,
 } 
 
 
+//:DERIVED ATTRIBUTE OPERATION
+//:dColumnCnt( VIEW wWebXfer BASED ON LOD wWebXfer,
+//:            STRING ( 32 ) InternalEntityStructure,
+//:            STRING ( 32 ) InternalAttribStructure,
+//:            SHORT GetOrSetFlag )
+
+//:   STRING ( 32 ) Count
+public int 
+owWebXfer_dColumnCnt( View     wWebXfer,
+                      String InternalEntityStructure,
+                      String InternalAttribStructure,
+                      Integer   GetOrSetFlag )
+{
+   String   Count = null;
+   //:INTEGER nCols
+   int      nCols = 0;
+
+
+   //:CASE GetOrSetFlag
+   switch( GetOrSetFlag )
+   { 
+      //:OF   zDERIVED_GET:
+      case zDERIVED_GET :
+
+         //:nCols = CountEntitiesForView( wWebXfer, "Work" )
+         nCols = CountEntitiesForView( wWebXfer, "Work" );
+
+         //:// Store the resulting value in the object.
+         //:Count = nCols
+          {StringBuilder sb_Count;
+         if ( Count == null )
+            sb_Count = new StringBuilder( 32 );
+         else
+            sb_Count = new StringBuilder( Count );
+                  ZeidonStringConvertFromNumber( sb_Count, 1, 0, 32, nCols, (double) 0.0, "I" );
+         Count = sb_Count.toString( );}
+         //:StoreStringInRecord( wWebXfer, InternalEntityStructure, InternalAttribStructure, Count )
+         StoreStringInRecord( wWebXfer, InternalEntityStructure, InternalAttribStructure, Count );
+         //:RETURN 0
+         if(8==8)return( 0 );
+
+         //:// end zDERIVED_GET
+         //:OF   zDERIVED_SET:
+         case zDERIVED_SET :
+            break ;
+      } 
+
+
+      //:  // end zDERIVED_SET
+      //:END  // case
+      return( 0 );
+   } 
+
+
 
 }
