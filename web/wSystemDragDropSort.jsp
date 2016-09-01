@@ -13,7 +13,7 @@
 <%@ page import="com.quinsoft.zeidon.domains.*" %>
 <%@ page import="com.quinsoft.epamms.*" %>
 
-<%! 
+<%!
 
 ObjectEngine objectEngine = com.quinsoft.epamms.ZeidonObjectEngineConfiguration.getObjectEngine();
 
@@ -231,7 +231,7 @@ String strInputFileName = "";
 strActionToProcess = (String) request.getParameter( "zAction" );
 
 strLastWindow = (String) session.getAttribute( "ZeidonWindow" );
-if ( StringUtils.isBlank( strLastWindow ) ) 
+if ( StringUtils.isBlank( strLastWindow ) )
    strLastWindow = "NoLastWindow";
 
 strLastAction = (String) session.getAttribute( "ZeidonAction" );
@@ -443,7 +443,7 @@ if ( strActionToProcess != null )
             task.log().info( "Action Error Redirect to: " + strURL );
          }
 
-         if ( ! strURL.equals("wSystemDragDropSort.jsp") ) 
+         if ( ! strURL.equals("wSystemDragDropSort.jsp") )
          {
             response.sendRedirect( strURL );
             // If we are redirecting to a new page, then we need this return so that the rest of this page doesn't get built.
@@ -524,8 +524,8 @@ else
 <!-- Main Navigation *********************** -->
 <div id="mainnavigation">
    <ul id="Exit" name="Exit" >
-       <li id="lmApplySortOrder" name="lmApplySortOrder" ><a href="#" onclick="mApplySortOrder()">Apply Sort Order  </a></li>
-       <li id="lmCancelSortDiv" name="lmCancelSortDiv" ><a href="#" onclick="mCancelSortDiv()">  Cancel  </a></li>
+       <li id="lmApplySortOrder" name="lmApplySortOrder"><a href="#" onclick="mApplySortOrder()">Apply Sort Order  </a></li>
+       <li id="lmCancelSortDiv" name="lmCancelSortDiv"><a href="#" onclick="mCancelSortDiv()">  Cancel  </a></li>
        <li id="lmLogout" name="lmLogout" ><a href="#" onclick="mLogout()">Logout</a></li>
    </ul>
 </div>  <!-- end Navigation Bar -->
@@ -629,16 +629,16 @@ else
 
    wWebXA = task.getViewByName( "wWebXfer" );
 
-   // this is hand coded!!!
-   strTextDisplayValue = wWebXA.cursor( "Root" ).getAttribute( "HTML" ).getString();
-   wWebXA.cursor( "Root" ).getAttribute( "HTML" ).setValue( "" ); // done with it
-   // this is hand coded!!!
-
    if ( VmlOperation.isValid( wWebXA ) )
    {
       nRC = wWebXA.cursor( "Root" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
+         // this is hand coded!!!
+         strTextDisplayValue = wWebXA.cursor( "Root" ).getAttribute( "HTML" ).getString();
+         wWebXA.cursor( "Root" ).getAttribute( "HTML" ).setValue( "" ); // done with it
+         // this is hand coded!!!
+
          strLoginName = wWebXA.cursor( "Root" ).getAttribute( "LoginName" ).getString( "LoginName" );
          if ( strLoginName == null )
             strLoginName = "";
@@ -675,9 +675,9 @@ else
 
 <div id="SortDragDrop" name="SortDragDrop" class="divborder"   style="float:left;position:relative; width:958px; overflow:hidden;">  <!-- SortDragDrop -->
 
-   <h1 id="SortDragDrop" name="SortDragDrop" >Drag &AMP; Drop Sort</h1>&nbsp;&nbsp;
+   <h1 id="hSortDragDrop" name="hSortDragDrop" >Drag &AMP; Drop Sort</h1>&nbsp;&nbsp;
    <%=strTextDisplayValue%>
-</div>  <!--  SortDragDrop --> 
+</div>  <!--  SortDragDrop -->
 </div>  <!-- End of a new line -->
 
 

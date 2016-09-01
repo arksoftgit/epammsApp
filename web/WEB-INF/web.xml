@@ -16,6 +16,14 @@
        <servlet-name>SortOrderServlet</servlet-name>
        <url-pattern>/sortorder</url-pattern>
     </servlet-mapping>
+    <servlet>
+       <servlet-name>QueryDatabaseServlet</servlet-name>
+       <servlet-class>com.ajax.QueryDatabaseServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+       <servlet-name>QueryDatabaseServlet</servlet-name>
+       <url-pattern>/querydb</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
          30

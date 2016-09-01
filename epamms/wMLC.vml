@@ -4154,6 +4154,7 @@ SaveTableColumns( VIEW ViewToWindow )
             mMasLC.M_MetaTable.Title1 = szText
          END
       ELSE
+         nCnt = 1
          mMasLC.M_MetaTable.Title1 = szText
       END
    END

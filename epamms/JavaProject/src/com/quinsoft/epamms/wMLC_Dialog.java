@@ -8185,6 +8185,8 @@ SaveTableColumns( View     ViewToWindow )
       } 
       else
       { 
+         //:nCnt = 1
+         nCnt = 1;
          //:mMasLC.M_MetaTable.Title1 = szText
          SetAttributeFromString( mMasLC, "M_MetaTable", "Title1", szText );
       } 

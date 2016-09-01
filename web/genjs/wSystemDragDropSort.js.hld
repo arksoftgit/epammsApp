@@ -231,6 +231,7 @@ function ApplySortOrder( )
 
    if ( _IsDocDisabled( ) == false )
    {
+
       // Javascript code entered by user.
 
       // Need some javascript here to apply the sort order

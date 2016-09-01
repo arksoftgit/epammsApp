@@ -629,16 +629,16 @@ else
 
    wWebXA = task.getViewByName( "wWebXfer" );
 
-   // this is hand coded!!!
-   strTextDisplayValue = wWebXA.cursor( "Root" ).getAttribute( "HTML" ).getString();
-   wWebXA.cursor( "Root" ).getAttribute( "HTML" ).setValue( "" ); // done with it
-   // this is hand coded!!!
-
    if ( VmlOperation.isValid( wWebXA ) )
    {
       nRC = wWebXA.cursor( "Root" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
+         // this is hand coded!!!
+         strTextDisplayValue = wWebXA.cursor( "Root" ).getAttribute( "HTML" ).getString();
+         wWebXA.cursor( "Root" ).getAttribute( "HTML" ).setValue( "" ); // done with it
+         // this is hand coded!!!
+
          strLoginName = wWebXA.cursor( "Root" ).getAttribute( "LoginName" ).getString( "LoginName" );
          if ( strLoginName == null )
             strLoginName = "";
@@ -675,7 +675,7 @@ else
 
 <div id="SortDragDrop" name="SortDragDrop" class="divborder"   style="float:left;position:relative; width:958px; overflow:hidden;">  <!-- SortDragDrop -->
 
-   <h1 id="SortDragDrop" name="SortDragDrop" >Drag &AMP; Drop Sort</h1>&nbsp;&nbsp;
+   <h1 id="hSortDragDrop" name="hSortDragDrop" >Drag &AMP; Drop Sort</h1>&nbsp;&nbsp;
    <%=strTextDisplayValue%>
 </div>  <!--  SortDragDrop -->
 </div>  <!-- End of a new line -->
@@ -713,6 +713,6 @@ else
    session.setAttribute( "ZeidonWindow", "wSystemDragDropSort" );
    session.setAttribute( "ZeidonAction", null );
 
-     strActionToProcess = "";
+   strActionToProcess = "";
 
 %>

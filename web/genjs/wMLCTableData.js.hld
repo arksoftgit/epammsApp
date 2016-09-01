@@ -1,4 +1,4 @@
-// wMLCClaimsFootnoteStatement   Generate Timestamp: 20160824153937566
+// wMLCTableData   Generate Timestamp: 20160901122601301
 
 var isWindowClosing = true;
 var timerID = null;
@@ -45,8 +45,8 @@ function _OnAlmostTimeout()
       // If the time is less than one minute, resubmit the page.  Otherwise, go to the timeout window.
       if (tDiff < 60000)
       {
-         document.wMLCClaimsFootnoteStatement.zAction.value = "_OnResubmitPage";
-         document.wMLCClaimsFootnoteStatement.submit( );
+         document.wMLCTableData.zAction.value = "_OnResubmitPage";
+         document.wMLCTableData.submit( );
       }
       else
       {
@@ -61,8 +61,8 @@ function _OnTimeout( )
    {
       _DisableFormElements( true );
 
-      document.wMLCClaimsFootnoteStatement.zAction.value = "_OnTimeout";
-      document.wMLCClaimsFootnoteStatement.submit( );
+      document.wMLCTableData.zAction.value = "_OnTimeout";
+      document.wMLCTableData.submit( );
    }
 }
 
@@ -76,8 +76,8 @@ function _BeforePageUnload( )
       // If the user clicked the window close box, unregister zeidon.
       if (isWindowClosing)
       {
-         document.wMLCClaimsFootnoteStatement.zAction.value = "_OnUnload";
-         document.wMLCClaimsFootnoteStatement.submit( );
+         document.wMLCTableData.zAction.value = "_OnUnload";
+         document.wMLCTableData.submit( );
       }
    }
 }
@@ -130,16 +130,16 @@ function _AfterPageLoaded( )
 {
 // _DisableFormElements( false );
 
-   var szFocusCtrl = document.wMLCClaimsFootnoteStatement.zFocusCtrl.value;
+   var szFocusCtrl = document.wMLCTableData.zFocusCtrl.value;
    if ( szFocusCtrl != "" && szFocusCtrl != "null" )
-      eval( 'document.wMLCClaimsFootnoteStatement.' + szFocusCtrl + '.focus( )' );
+      eval( 'document.wMLCTableData.' + szFocusCtrl + '.focus( )' );
 
    // This is where we put out a message from the previous iteration on this window
-   var szMsg = document.wMLCClaimsFootnoteStatement.zError.value;
+   var szMsg = document.wMLCTableData.zError.value;
    if ( szMsg != "" )
       alert( szMsg ); // "Houston ... We have a problem"
 
-   szMsg = document.wMLCClaimsFootnoteStatement.zOpenFile.value;
+   szMsg = document.wMLCTableData.zOpenFile.value;
    if ( szMsg != "" )
    {
       var NewWin = window.open( szMsg );
@@ -151,10 +151,10 @@ function _AfterPageLoaded( )
       }
    }
 
-   var LoginName = document.wMLCClaimsFootnoteStatement.zLoginName.value;
-   var keyRole = document.wMLCClaimsFootnoteStatement.zKeyRole.value;
-   document.wMLCClaimsFootnoteStatement.zError.value = "";
-   document.wMLCClaimsFootnoteStatement.zOpenFile.value = "";
+   var LoginName = document.wMLCTableData.zLoginName.value;
+   var keyRole = document.wMLCTableData.zKeyRole.value;
+   document.wMLCTableData.zError.value = "";
+   document.wMLCTableData.zOpenFile.value = "";
 
    if ( timerID != null )
    {
@@ -162,7 +162,7 @@ function _AfterPageLoaded( )
       timerID = null;
    }
 
-   var varTimeout = document.wMLCClaimsFootnoteStatement.zTimeout.value;
+   var varTimeout = document.wMLCTableData.zTimeout.value;
    if ( varTimeout > 0 )
    {
       var varDelay = 60000 * varTimeout;  // Timeout value in timeout.inc
@@ -171,7 +171,9 @@ function _AfterPageLoaded( )
    else
       timerID = null; // No timeout specified
 
-   var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title ); }
+   // Postbuild action that has javascript code.
+   HideColumns( );
+var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title ); }
    isWindowClosing = true;
 }
 
@@ -191,7 +193,7 @@ function CheckAllInGrid(id, CheckBoxName) // triggered by no text checkbox
    }
 }
 
-function AcceptFootnoteStatement( )
+function AcceptTableData( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -201,12 +203,84 @@ function AcceptFootnoteStatement( )
    {
       _DisableFormElements( true );
 
-      document.wMLCClaimsFootnoteStatement.zAction.value = "AcceptFootnoteStatement";
-      document.wMLCClaimsFootnoteStatement.submit( );
+      document.wMLCTableData.zAction.value = "AcceptTableData";
+      document.wMLCTableData.submit( );
    }
 }
 
-function CancelFootnoteStatement( )
+function HideColumns( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      // Javascript code entered by user.
+
+      //var cols = document.wMLCTableData.Columns.value;
+      var cols = document.wMLCTableData.zColumnCnt.value;
+      var colList = document.wMLCTableData.zColumnList.value;
+      var tableHeader;
+      var tableReplace = colList.split( "," );
+      var s;
+      var k;
+      for ( k = 1; k <= cols; k++ )
+      {
+         tableHeader = "t" + k;
+         s = tableReplace[ k - 1 ];
+         $('table th').eq(k - 1).text( s );
+      }
+      switch( cols ) {
+         case "1":
+            $('td:nth-child(2),th:nth-child(2)').hide();
+         case "2":
+            $('td:nth-child(3),th:nth-child(3)').hide();
+         case "3":
+            $('td:nth-child(4),th:nth-child(4)').hide();
+         case "4":
+            $('td:nth-child(5),th:nth-child(5)').hide();
+         case "5":
+            $('td:nth-child(6),th:nth-child(6)').hide();
+         case "6":
+            $('td:nth-child(7),th:nth-child(7)').hide();
+         case "7":
+            $('td:nth-child(8),th:nth-child(8)').hide();
+         case "8":
+            $('td:nth-child(9),th:nth-child(9)').hide();
+         case "9":
+            $('td:nth-child(10),th:nth-child(10)').hide();
+      }
+      return;
+
+
+      // END of Javascript code entered by user.
+
+      document.wMLCTableData.zAction.value = "HideColumns";
+      document.wMLCTableData.submit( );
+   }
+}
+
+function ADD_TableData( strTagEntityKey )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      var nIdx = strTagEntityKey.lastIndexOf( '::' );
+      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
+
+      document.wMLCTableData.zTableRowSelect.value = strEntityKey;
+      _DisableFormElements( true );
+
+      document.wMLCTableData.zAction.value = "ADD_TableData";
+      document.wMLCTableData.submit( );
+   }
+}
+
+function AddBlankTableData( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -216,8 +290,66 @@ function CancelFootnoteStatement( )
    {
       _DisableFormElements( true );
 
-      document.wMLCClaimsFootnoteStatement.zAction.value = "CancelFootnoteStatement";
-      document.wMLCClaimsFootnoteStatement.submit( );
+      document.wMLCTableData.zAction.value = "AddBlankTableData";
+      document.wMLCTableData.submit( );
+   }
+}
+
+function CancelTableData( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCTableData.zAction.value = "CancelTableData";
+      document.wMLCTableData.submit( );
+   }
+}
+
+function DELETE_TableRow( strTagEntityKey )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      var nIdx = strTagEntityKey.lastIndexOf( '::' );
+      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
+
+      document.wMLCTableData.zTableRowSelect.value = strEntityKey;
+      _DisableFormElements( true );
+
+      document.wMLCTableData.zAction.value = "DELETE_TableRow";
+      document.wMLCTableData.submit( );
+   }
+}
+
+function Sort( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      // Javascript code entered by user.
+
+      var colList = document.wMLCTableData.zColumnList.value;
+      var tableReplace = colList.split( "," );
+
+      document.wMLCTableData.zTableRowSelect.value = buildSortTableHtml( "mMasLC", "M_Rows", "GridTable", tableReplace, "Y" );
+
+      // END of Javascript code entered by user.
+
+      _DisableFormElements( true );
+
+      document.wMLCTableData.zAction.value = "Sort";
+      document.wMLCTableData.submit( );
    }
 }
 

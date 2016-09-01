@@ -1,4 +1,4 @@
-// wMLCTableData   Generate Timestamp: 20160825154147580
+// wMLCTableData   Generate Timestamp: 20160901160518346
 
 var isWindowClosing = true;
 var timerID = null;
@@ -171,6 +171,8 @@ function _AfterPageLoaded( )
    else
       timerID = null; // No timeout specified
 
+   // Postbuild action that has javascript code.
+   HideColumns( );
 var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title ); }
    isWindowClosing = true;
 }
@@ -191,7 +193,7 @@ function CheckAllInGrid(id, CheckBoxName) // triggered by no text checkbox
    }
 }
 
-function AcceptTableUpdate( )
+function AcceptTableData( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -201,12 +203,65 @@ function AcceptTableUpdate( )
    {
       _DisableFormElements( true );
 
-      document.wMLCTableData.zAction.value = "AcceptTableUpdate";
+      document.wMLCTableData.zAction.value = "AcceptTableData";
       document.wMLCTableData.submit( );
    }
 }
 
-function ADD_TableRow( strTagEntityKey )
+function HideColumns( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      // Javascript code entered by user.
+
+      //var cols = document.wMLCTableData.Columns.value;
+      var cols = document.wMLCTableData.zColumnCnt.value;
+      var colList = document.wMLCTableData.zColumnList.value;
+      var tableHeader;
+      var tableReplace = colList.split( "," );
+      var s;
+      var k;
+      for ( k = 1; k <= cols; k++ )
+      {
+         tableHeader = "t" + k;
+         s = tableReplace[ k - 1 ];
+         $('table th').eq(k - 1).text( s );
+      }
+      switch( cols ) {
+         case "1":
+            $('td:nth-child(2),th:nth-child(2)').hide();
+         case "2":
+            $('td:nth-child(3),th:nth-child(3)').hide();
+         case "3":
+            $('td:nth-child(4),th:nth-child(4)').hide();
+         case "4":
+            $('td:nth-child(5),th:nth-child(5)').hide();
+         case "5":
+            $('td:nth-child(6),th:nth-child(6)').hide();
+         case "6":
+            $('td:nth-child(7),th:nth-child(7)').hide();
+         case "7":
+            $('td:nth-child(8),th:nth-child(8)').hide();
+         case "8":
+            $('td:nth-child(9),th:nth-child(9)').hide();
+         case "9":
+            $('td:nth-child(10),th:nth-child(10)').hide();
+      }
+      return;
+
+
+      // END of Javascript code entered by user.
+
+      document.wMLCTableData.zAction.value = "HideColumns";
+      document.wMLCTableData.submit( );
+   }
+}
+
+function ADD_TableData( strTagEntityKey )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -220,12 +275,12 @@ function ADD_TableRow( strTagEntityKey )
       document.wMLCTableData.zTableRowSelect.value = strEntityKey;
       _DisableFormElements( true );
 
-      document.wMLCTableData.zAction.value = "ADD_TableRow";
+      document.wMLCTableData.zAction.value = "ADD_TableData";
       document.wMLCTableData.submit( );
    }
 }
 
-function AddBlankTableRow( )
+function AddBlankTableData( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -235,12 +290,12 @@ function AddBlankTableRow( )
    {
       _DisableFormElements( true );
 
-      document.wMLCTableData.zAction.value = "AddBlankTableRow";
+      document.wMLCTableData.zAction.value = "AddBlankTableData";
       document.wMLCTableData.submit( );
    }
 }
 
-function CancelTableUpdate( )
+function CancelTableData( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -250,7 +305,7 @@ function CancelTableUpdate( )
    {
       _DisableFormElements( true );
 
-      document.wMLCTableData.zAction.value = "CancelTableUpdate";
+      document.wMLCTableData.zAction.value = "CancelTableData";
       document.wMLCTableData.submit( );
    }
 }
@@ -284,7 +339,22 @@ function Sort( )
    {
       // Javascript code entered by user.
 
-       document.wMLCTableSpecifications.zTableRowSelect.value = buildSortTableHtml( "wWebXfer", "Work", "GridTable",  ["Column Name"]  );
+      var cols = document.wMLCTableData.zColumnCnt.value;
+      var colList = document.wMLCTableData.zColumnList.value;
+      var tableHeader = "[";
+      var tableReplace = colList.split( "," );
+      var s;
+      var k;
+      for ( k = 0; k < cols; k++ )
+      {
+         tableHeader += tableReplace[ k ];
+         if ( k < cols - 1 )
+            tableHeader += ",";
+      }
+      tableHeader += "]";
+
+
+       document.wMLCTableData.zTableRowSelect.value = buildSortTableHtml( "mMasLC", "M_Rows", "GridTable", tableHeader );
 
       // END of Javascript code entered by user.
 
