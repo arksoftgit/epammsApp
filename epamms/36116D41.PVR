@@ -1,0 +1,13 @@
+z1000-Zeidon    36116D41 TZWDVORO                         09/07/16   11:18:01 1.0a2   
+eViewObjRef 1
+aZKey      907111745
+aNextZKeyToAssign 907111745
+aName      mMasLC_Root
+
+eLOD       2
+aZKey      69033382
+aName      mMasLC
+aDesc      Master Label Content Maintenance
+aDLL_Name  mMasLC
+aActivateConstraint Y
+

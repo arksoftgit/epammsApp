@@ -1,4 +1,4 @@
-// wMLCTableSpecifications   Generate Timestamp: 20160825175538438
+// wMLCTableSpecifications   Generate Timestamp: 20160914113529438
 
 var isWindowClosing = true;
 var timerID = null;
@@ -284,7 +284,7 @@ function Sort( )
    {
       // Javascript code entered by user.
 
-       document.wMLCTableSpecifications.zTableRowSelect.value = buildSortTableHtml( "wWebXfer", "Work", "GridTable",  ["Column Name"]  );
+       document.wMLCTableSpecifications.zTableRowSelect.value = buildSortTableHtml( "wWebXfer", "Work", "GridTable",  ["Column Name"], "Y"  );
 
       // END of Javascript code entered by user.
 

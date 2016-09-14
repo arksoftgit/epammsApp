@@ -89,8 +89,8 @@ public int DoInputMapping( HttpServletRequest request,
             {
                nMapError = -16;
                VmlOperation.CreateMessage( task, strTag, e.getReason( ), strMapValue );
-            }
          }
+      }
 
          strTag = "x2::" + strEntityKey;
          strMapValue = request.getParameter( strTag );
@@ -107,8 +107,8 @@ public int DoInputMapping( HttpServletRequest request,
             {
                nMapError = -16;
                VmlOperation.CreateMessage( task, strTag, e.getReason( ), strMapValue );
-            }
          }
+      }
 
          strTag = "x3::" + strEntityKey;
          strMapValue = request.getParameter( strTag );
@@ -125,8 +125,8 @@ public int DoInputMapping( HttpServletRequest request,
             {
                nMapError = -16;
                VmlOperation.CreateMessage( task, strTag, e.getReason( ), strMapValue );
-            }
          }
+      }
 
          strTag = "x4::" + strEntityKey;
          strMapValue = request.getParameter( strTag );
@@ -143,8 +143,8 @@ public int DoInputMapping( HttpServletRequest request,
             {
                nMapError = -16;
                VmlOperation.CreateMessage( task, strTag, e.getReason( ), strMapValue );
-            }
          }
+      }
 
          strTag = "x5::" + strEntityKey;
          strMapValue = request.getParameter( strTag );
@@ -161,8 +161,8 @@ public int DoInputMapping( HttpServletRequest request,
             {
                nMapError = -16;
                VmlOperation.CreateMessage( task, strTag, e.getReason( ), strMapValue );
-            }
          }
+      }
 
          strTag = "x6::" + strEntityKey;
          strMapValue = request.getParameter( strTag );
@@ -179,8 +179,8 @@ public int DoInputMapping( HttpServletRequest request,
             {
                nMapError = -16;
                VmlOperation.CreateMessage( task, strTag, e.getReason( ), strMapValue );
-            }
          }
+      }
 
          strTag = "x7::" + strEntityKey;
          strMapValue = request.getParameter( strTag );
@@ -197,8 +197,8 @@ public int DoInputMapping( HttpServletRequest request,
             {
                nMapError = -16;
                VmlOperation.CreateMessage( task, strTag, e.getReason( ), strMapValue );
-            }
          }
+      }
 
          strTag = "x8::" + strEntityKey;
          strMapValue = request.getParameter( strTag );
@@ -215,8 +215,8 @@ public int DoInputMapping( HttpServletRequest request,
             {
                nMapError = -16;
                VmlOperation.CreateMessage( task, strTag, e.getReason( ), strMapValue );
-            }
          }
+      }
 
          strTag = "x9::" + strEntityKey;
          strMapValue = request.getParameter( strTag );
@@ -233,8 +233,8 @@ public int DoInputMapping( HttpServletRequest request,
             {
                nMapError = -16;
                VmlOperation.CreateMessage( task, strTag, e.getReason( ), strMapValue );
-            }
          }
+      }
 
          strTag = "x10::" + strEntityKey;
          strMapValue = request.getParameter( strTag );
@@ -251,8 +251,8 @@ public int DoInputMapping( HttpServletRequest request,
             {
                nMapError = -16;
                VmlOperation.CreateMessage( task, strTag, e.getReason( ), strMapValue );
-            }
          }
+      }
 
          csrRC = vGridTmp.cursor( "M_Rows" ).setNextContinue( );
       }

@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCVersionData   Generate Timestamp: 20160825091702666 --%>
+<%-- wMLCVersionData   Generate Timestamp: 20160913084222160 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -1584,7 +1584,7 @@ else
       {
       try
       {
-         strTextDisplayValue = mMasLC.cursor( "MasterLabelContent" ).getAttribute( "RevisionDate" ).getString( "" );
+         strTextDisplayValue = mMasLC.cursor( "MasterLabelContent" ).getAttribute( "RevisionDate" ).getString( "REVMMDDYY" );
       }
       catch (Exception e)
       {

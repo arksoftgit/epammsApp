@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCEnvironmentalHazardsSection   Generate Timestamp: 20160824153939925 --%>
+<%-- wMLCEnvironmentalHazardsSection   Generate Timestamp: 20160913091645038 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -98,22 +98,22 @@ public int DoInputMapping( HttpServletRequest request,
          }
       }
 
-      // EditBox: ReviewerNote
+      // EditBox: EnvironmentalHazardReviewerNote
       nRC = mMasLC.cursor( "M_GeneralSubsection" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 ) // CursorResult.SET
       {
-         strMapValue = request.getParameter( "ReviewerNote" );
+         strMapValue = request.getParameter( "EnvironmentalHazardReviewerNote" );
          try
          {
             if ( webMapping )
-               VmlOperation.CreateMessage( task, "ReviewerNote", "", strMapValue );
+               VmlOperation.CreateMessage( task, "EnvironmentalHazardReviewerNote", "", strMapValue );
             else
                mMasLC.cursor( "M_GeneralSubsection" ).getAttribute( "ReviewerNote" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
             nMapError = -16;
-            VmlOperation.CreateMessage( task, "ReviewerNote", e.getReason( ), strMapValue );
+            VmlOperation.CreateMessage( task, "EnvironmentalHazardReviewerNote", e.getReason( ), strMapValue );
          }
       }
 
@@ -136,21 +136,21 @@ public int DoInputMapping( HttpServletRequest request,
          }
       }
 
-      // Grid: GridDirectionsUse
+      // Grid: GridEnvironmentalHazards
       iTableRowCnt = 0;
 
       // We are creating a temp view to the grid view so that if there are 
       // grids on the same window with the same view we do not mess up the 
       // entity positions. 
       vGridTmp = mMasLC.newView( );
-      csrRC = vGridTmp.cursor( "M_GeneralSubStatement" ).setFirst(  );
+      csrRC = vGridTmp.cursor( "M_GeneralStatement" ).setFirst(  );
       while ( csrRC.isSet() )
       {
-         lEntityKey = vGridTmp.cursor( "M_GeneralSubStatement" ).getEntityKey( );
+         lEntityKey = vGridTmp.cursor( "M_GeneralStatement" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
          iTableRowCnt++;
 
-         csrRC = vGridTmp.cursor( "M_GeneralSubStatement" ).setNextContinue( );
+         csrRC = vGridTmp.cursor( "M_GeneralStatement" ).setNextContinue( );
       }
 
       vGridTmp.drop( );
@@ -369,14 +369,14 @@ if ( strActionToProcess != null )
       if ( VmlOperation.isValid( mMasLC ) )
       {
          lEKey = java.lang.Long.parseLong( strEntityKey );
-         csrRC = mMasLC.cursor( "M_GeneralSubStatement" ).setByEntityKey( lEKey );
+         csrRC = mMasLC.cursor( "M_GeneralStatement" ).setByEntityKey( lEKey );
          if ( !csrRC.isSet() )
          {
             boolean bFound = false;
-            csrRCk = mMasLC.cursor( "M_GeneralSubStatement" ).setFirst( );
+            csrRCk = mMasLC.cursor( "M_GeneralStatement" ).setFirst( );
             while ( csrRCk.isSet() && !bFound )
             {
-               lEKey = mMasLC.cursor( "M_GeneralSubStatement" ).getEntityKey( );
+               lEKey = mMasLC.cursor( "M_GeneralStatement" ).getEntityKey( );
                strKey = Long.toString( lEKey );
                if ( StringUtils.equals( strKey, strEntityKey ) )
                {
@@ -384,7 +384,7 @@ if ( strActionToProcess != null )
                   bFound = true;
                }
                else
-                  csrRCk = mMasLC.cursor( "M_GeneralSubStatement" ).setNextContinue( );
+                  csrRCk = mMasLC.cursor( "M_GeneralStatement" ).setNextContinue( );
             } // Grid
          }
       }
@@ -433,14 +433,14 @@ if ( strActionToProcess != null )
       if ( VmlOperation.isValid( mMasLC ) )
       {
          lEKey = java.lang.Long.parseLong( strEntityKey );
-         csrRC = mMasLC.cursor( "M_GeneralSubStatement" ).setByEntityKey( lEKey );
+         csrRC = mMasLC.cursor( "M_GeneralStatement" ).setByEntityKey( lEKey );
          if ( !csrRC.isSet() )
          {
             boolean bFound = false;
-            csrRCk = mMasLC.cursor( "M_GeneralSubStatement" ).setFirst( );
+            csrRCk = mMasLC.cursor( "M_GeneralStatement" ).setFirst( );
             while ( csrRCk.isSet() && !bFound )
             {
-               lEKey = mMasLC.cursor( "M_GeneralSubStatement" ).getEntityKey( );
+               lEKey = mMasLC.cursor( "M_GeneralStatement" ).getEntityKey( );
                strKey = Long.toString( lEKey );
                if ( StringUtils.equals( strKey, strEntityKey ) )
                {
@@ -448,7 +448,7 @@ if ( strActionToProcess != null )
                   bFound = true;
                }
                else
-                  csrRCk = mMasLC.cursor( "M_GeneralSubStatement" ).setNextContinue( );
+                  csrRCk = mMasLC.cursor( "M_GeneralStatement" ).setNextContinue( );
             } // Grid
          }
       }
@@ -947,15 +947,15 @@ else
 </tr>
 <tr>
 <td valign="top" style="width:134px;">
-<% /* ReviewerNote::Text */ %>
+<% /* EnvironmentalHazardReviewerNote::Text */ %>
 
-<span  id="ReviewerNote:" name="ReviewerNote:" style="width:128px;height:16px;">Reviewer Note:</span>
+<span  id="EnvironmentalHazardReviewerNote:" name="EnvironmentalHazardReviewerNote:" style="width:128px;height:16px;">Reviewer Note:</span>
 
 </td>
 <td valign="top"  class="text12" style="width:592px;">
-<% /* ReviewerNote:EditBox */ %>
+<% /* EnvironmentalHazardReviewerNote:EditBox */ %>
 <%
-   strErrorMapValue = VmlOperation.CheckError( "ReviewerNote", strError );
+   strErrorMapValue = VmlOperation.CheckError( "EnvironmentalHazardReviewerNote", strError );
    if ( !StringUtils.isBlank( strErrorMapValue ) )
    {
       if ( StringUtils.equals( strErrorFlag, "Y" ) )
@@ -966,7 +966,7 @@ else
       strErrorColor = "";
       mMasLC = task.getViewByName( "mMasLC" );
       if ( VmlOperation.isValid( mMasLC ) == false )
-         task.log( ).debug( "Invalid View: " + "ReviewerNote" );
+         task.log( ).debug( "Invalid View: " + "EnvironmentalHazardReviewerNote" );
       else
       {
          nRC = mMasLC.cursor( "M_GeneralSubsection" ).checkExistenceOfEntity( ).toInt();
@@ -978,8 +978,8 @@ else
             }
             catch (Exception e)
             {
-               out.println("There is an error on ReviewerNote: " + e.getMessage());
-               task.log().error( "*** Error on ctrl ReviewerNote", e );
+               out.println("There is an error on EnvironmentalHazardReviewerNote: " + e.getMessage());
+               task.log().error( "*** Error on ctrl EnvironmentalHazardReviewerNote", e );
             }
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
@@ -987,12 +987,12 @@ else
             task.log( ).debug( "M_GeneralSubsection.ReviewerNote: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist for ReviewerNote: " + "mMasLC.M_GeneralSubsection" );
+            task.log( ).debug( "Entity does not exist for EnvironmentalHazardReviewerNote: " + "mMasLC.M_GeneralSubsection" );
       }
    }
 %>
 
-<input class="text12" name="ReviewerNote" id="ReviewerNote" maxlength="2048" style="width:592px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="EnvironmentalHazardReviewerNote" id="EnvironmentalHazardReviewerNote" maxlength="2048" style="width:592px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>
@@ -1152,9 +1152,9 @@ else
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GBDirectionsUseStatements:GroupBox */ %>
+<% /* GBEnvironmentalHazardsStatements:GroupBox */ %>
 
-<div id="GBDirectionsUseStatements" name="GBDirectionsUseStatements" style="width:780px;float:left;">  <!-- GBDirectionsUseStatements --> 
+<div id="GBEnvironmentalHazardsStatements" name="GBEnvironmentalHazardsStatements" style="width:780px;float:left;">  <!-- GBEnvironmentalHazardsStatements --> 
 
 
  <!-- This is added as a line spacer -->
@@ -1162,8 +1162,8 @@ else
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GridDirectionsUse:Grid */ %>
-<table  cols=3 style=""  name="GridDirectionsUse" id="GridDirectionsUse">
+<% /* GridEnvironmentalHazards:Grid */ %>
+<table  cols=3 style=""  name="GridEnvironmentalHazards" id="GridEnvironmentalHazards">
 
 <thead><tr>
 
@@ -1187,47 +1187,47 @@ try
       String strButtonName;
       String strOdd;
       String strTag;
-      String strGridEditDirectionsUse;
-      String strBMBUpdateDirectionsUseStatement;
+      String strGridEditEnvironmentalHazards;
+      String strBMBUpdateEnvironmentalHStatement;
       String strBMBDeleteEnvironmentalStatement;
       
-      View vGridDirectionsUse;
-      vGridDirectionsUse = mMasLC.newView( );
-      csrRC2 = vGridDirectionsUse.cursor( "M_GeneralSubStatement" ).setFirst(  );
+      View vGridEnvironmentalHazards;
+      vGridEnvironmentalHazards = mMasLC.newView( );
+      csrRC2 = vGridEnvironmentalHazards.cursor( "M_GeneralStatement" ).setFirst(  );
       while ( csrRC2.isSet() )
       {
          strOdd = (iTableRowCnt % 2) != 0 ? " class='odd'" : "";
          iTableRowCnt++;
 
-         lEntityKey = vGridDirectionsUse.cursor( "M_GeneralSubStatement" ).getEntityKey( );
+         lEntityKey = vGridEnvironmentalHazards.cursor( "M_GeneralStatement" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strGridEditDirectionsUse = "";
-         nRC = vGridDirectionsUse.cursor( "M_GeneralSubStatement" ).checkExistenceOfEntity( ).toInt();
+         strGridEditEnvironmentalHazards = "";
+         nRC = vGridEnvironmentalHazards.cursor( "M_GeneralSubStatement" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditDirectionsUse = vGridDirectionsUse.cursor( "M_GeneralSubStatement" ).getAttribute( "Text" ).getString( "" );
+            strGridEditEnvironmentalHazards = vGridEnvironmentalHazards.cursor( "M_GeneralSubStatement" ).getAttribute( "Text" ).getString( "" );
 
-            if ( strGridEditDirectionsUse == null )
-               strGridEditDirectionsUse = "";
+            if ( strGridEditEnvironmentalHazards == null )
+               strGridEditEnvironmentalHazards = "";
          }
 
-         if ( StringUtils.isBlank( strGridEditDirectionsUse ) )
-            strGridEditDirectionsUse = "&nbsp";
+         if ( StringUtils.isBlank( strGridEditEnvironmentalHazards ) )
+            strGridEditEnvironmentalHazards = "&nbsp";
 
 %>
 
 <tr<%=strOdd%>>
 
-   <td><a href="#" onclick="GOTO_EnvironmentalHazardsUpdate( this.id )" id="GridEditDirectionsUse::<%=strEntityKey%>"><%=strGridEditDirectionsUse%></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateDirectionsUseStatement" onclick="GOTO_EnvironmentalHazardsUpdate( this.id )" id="BMBUpdateDirectionsUseStatement::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
+   <td><a href="#" onclick="GOTO_EnvironmentalHazardsUpdate( this.id )" id="GridEditEnvironmentalHazards::<%=strEntityKey%>"><%=strGridEditEnvironmentalHazards%></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateEnvironmentalHStatement" onclick="GOTO_EnvironmentalHazardsUpdate( this.id )" id="BMBUpdateEnvironmentalHStatement::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
    <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteEnvironmentalStatement" onclick="DELETE_EnvironmentalHazardsStmt( this.id )" id="BMBDeleteEnvironmentalStatement::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
 
 </tr>
 
 <%
-         csrRC2 = vGridDirectionsUse.cursor( "M_GeneralSubStatement" ).setNextContinue( );
+         csrRC2 = vGridEnvironmentalHazards.cursor( "M_GeneralStatement" ).setNextContinue( );
       }
-      vGridDirectionsUse.drop( );
+      vGridEnvironmentalHazards.drop( );
    }
 }
 catch (Exception e)
@@ -1242,7 +1242,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 </div>  <!-- End of a new line -->
 
 
-</div>  <!--  GBDirectionsUseStatements --> 
+</div>  <!--  GBEnvironmentalHazardsStatements --> 
 </div>  <!-- End of a new line -->
 
 

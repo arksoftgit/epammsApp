@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCDirectionsForUseSubStatement   Generate Timestamp: 20160824153939282 --%>
+<%-- wMLCDirectionsForUseSubStatement   Generate Timestamp: 20160913085510020 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -1010,7 +1010,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="NextStatement" name="NextStatement"><a href="#"  onclick="NextDirectionsSubStatement()">NextStatement</a></li>
+       <li id="NextStatement" name="NextStatement"><a href="#"  onclick="NextDirectionsSubStatement()">Next Statement</a></li>
 <%
    }
 %>

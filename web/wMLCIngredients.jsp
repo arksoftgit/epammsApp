@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCIngredients   Generate Timestamp: 20160824153940766 --%>
+<%-- wMLCIngredients   Generate Timestamp: 20160913093244309 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -1635,11 +1635,11 @@ else
 <span  id="SpecifiedInertPercentage:" name="SpecifiedInertPercentage:" style="width:178px;height:16px;">Specified Inert Percentage:</span>
 
 <span style="height:16px;">&nbsp</span>
-<% /* SpecifiedActivePercentage1:Text */ %>
+<% /* SpecifiedInertPercentage:Text */ %>
 <% strTextDisplayValue = "";
    mMasLC = task.getViewByName( "mMasLC" );
    if ( VmlOperation.isValid( mMasLC ) == false )
-      task.log( ).debug( "Invalid View: " + "SpecifiedActivePercentage1" );
+      task.log( ).debug( "Invalid View: " + "SpecifiedInertPercentage" );
    else
    {
       nRC = mMasLC.cursor( "M_IngredientsSection" ).checkExistenceOfEntity( ).toInt();
@@ -1651,8 +1651,8 @@ else
       }
       catch (Exception e)
       {
-         out.println("There is an error on SpecifiedActivePercentage1: " + e.getMessage());
-         task.log().info( "*** Error on ctrl SpecifiedActivePercentage1" + e.getMessage() );
+         out.println("There is an error on SpecifiedInertPercentage: " + e.getMessage());
+         task.log().info( "*** Error on ctrl SpecifiedInertPercentage" + e.getMessage() );
       }
          if ( strTextDisplayValue == null )
             strTextDisplayValue = "";
@@ -1660,7 +1660,7 @@ else
    }
 %>
 
-<span class="text12"  id="SpecifiedActivePercentage1" name="SpecifiedActivePercentage1" style="width:34px;height:16px;"><%=strTextDisplayValue%></span>
+<span class="text12"  id="SpecifiedInertPercentage" name="SpecifiedInertPercentage" style="width:34px;height:16px;"><%=strTextDisplayValue%></span>
 
 </div>  <!-- End of a new line -->
 

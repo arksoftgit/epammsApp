@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCStorageDisposalSubStatement   Generate Timestamp: 20160824153944070 --%>
+<%-- wMLCStorageDisposalSubStatement   Generate Timestamp: 20160913094759644 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -120,6 +120,44 @@ public int DoInputMapping( HttpServletRequest request,
          {
             nMapError = -16;
             VmlOperation.CreateMessage( task, "Note1", e.getReason( ), strMapValue );
+         }
+      }
+
+      // ComboBox: CBSize
+      nRC = mMasLC.cursor( "M_StorageDisposalStatement" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+      {
+         strMapValue = request.getParameter( "hCBSize" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "CBSize", "", strMapValue );
+            else
+               mMasLC.cursor( "M_StorageDisposalStatement" ).getAttribute( "ContainerVolume" ).setValue( strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "CBSize", e.getReason( ), strMapValue );
+         }
+      }
+
+      // ComboBox: CBType
+      nRC = mMasLC.cursor( "M_StorageDisposalStatement" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+      {
+         strMapValue = request.getParameter( "hCBType" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "CBType", "", strMapValue );
+            else
+               mMasLC.cursor( "M_StorageDisposalStatement" ).getAttribute( "ContainerType" ).setValue( strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "CBType", e.getReason( ), strMapValue );
          }
       }
 
@@ -1276,8 +1314,232 @@ else
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
 
 
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GroupBox5:GroupBox */ %>
+
+<div id="GroupBox5" name="GroupBox5" class="listgroup"   style="float:left;position:relative; width:780px; height:30px;">  <!-- GroupBox5 --> 
+
+<% /* Text9:Text */ %>
+
+<label class="groupbox"  id="Text9" name="Text9" style="width:364px;height:16px;position:absolute;left:6px;top:12px;">Container Volume and Size Driving this Statement</label>
+
+
+</div>  <!--  GroupBox5 --> 
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GroupBox6:GroupBox */ %>
+
+<div id="GroupBox6" name="GroupBox6" class="withborder" style="width:780px;height:66px;float:left;">  <!-- GroupBox6 --> 
+
+
  <!-- This is added as a line spacer -->
 <div style="height:6px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GroupBox7:GroupBox */ %>
+<div id="GroupBox7" name="GroupBox7" style="float:left;width:754px;" >
+
+<table cols=2 style="width:754px;"  class="grouptable">
+
+<tr>
+<td valign="top" style="width:64px;">
+<% /* Size::Text */ %>
+
+<span  id="Size:" name="Size:" style="width:56px;height:16px;">Size:</span>
+
+</td>
+<td valign="top" style="width:592px;">
+<% /* CBSize:ComboBox */ %>
+<% strErrorMapValue = "";  %>
+
+<select  name="CBSize" id="CBSize" size="1" style="width:592px;" onchange="CBSizeOnChange( )">
+
+<%
+   boolean inListCBSize = false;
+
+   mMasLC = task.getViewByName( "mMasLC" );
+   if ( VmlOperation.isValid( mMasLC ) )
+   {
+      List<TableEntry> list = JspWebUtils.getTableDomainValues( mMasLC , "M_StorageDisposalStatement", "ContainerVolume", "" );
+
+      nRC = mMasLC.cursor( "M_StorageDisposalStatement" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+      {
+         strComboCurrentValue = mMasLC.cursor( "M_StorageDisposalStatement" ).getAttribute( "ContainerVolume" ).getString( "" );
+         if ( strComboCurrentValue == null )
+            strComboCurrentValue = "";
+      }
+      else
+      {
+         strComboCurrentValue = "";
+      }
+
+      // Code for NOT required attribute, which makes sure a blank entry exists.
+      if ( strComboCurrentValue == "" )
+      {
+         inListCBSize = true;
+%>
+         <option selected="selected" value=""></option>
+<%
+      }
+      else
+      {
+%>
+         <option value=""></option>
+<%
+      }
+      for ( TableEntry entry : list )
+      {
+         String internalValue = entry.getInternalValue( );
+         String externalValue = entry.getExternalValue( );
+         // Perhaps getInternalValue and getExternalValue should return an empty string, 
+         // but currently it returns null.  Set to empty string. 
+         if ( externalValue == null )
+         {
+            internalValue = "";
+            externalValue = "";
+         }
+
+         if ( !StringUtils.isBlank( externalValue ) )
+         {
+            if ( StringUtils.equals( strComboCurrentValue, externalValue ) )
+            {
+               inListCBSize = true;
+%>
+               <option selected="selected" value="<%=externalValue%>"><%=externalValue%></option>
+<%
+            }
+            else
+            {
+%>
+               <option value="<%=externalValue%>"><%=externalValue%></option>
+<%
+            }
+         }
+      }  // for ( TableEntry entry
+      // The value from the database isn't in the domain, add it to the list as disabled.
+      if ( !inListCBSize )
+      {
+%>
+         <option disabled selected="selected" value="<%=strComboCurrentValue%>"><%=strComboCurrentValue%></option>
+<%
+      }
+   }  // if view != null
+%>
+</select>
+
+<input name="hCBSize" id="hCBSize" type="hidden" value="<%=strComboCurrentValue%>" >
+</td>
+</tr>
+<tr>
+<td valign="top" style="width:64px;">
+<% /* Type::Text */ %>
+
+<span  id="Type:" name="Type:" style="width:56px;height:16px;">Type:</span>
+
+</td>
+<td valign="top" style="width:592px;">
+<% /* CBType:ComboBox */ %>
+<% strErrorMapValue = "";  %>
+
+<select  name="CBType" id="CBType" size="1" style="width:592px;" onchange="CBTypeOnChange( )">
+
+<%
+   boolean inListCBType = false;
+
+   mMasLC = task.getViewByName( "mMasLC" );
+   if ( VmlOperation.isValid( mMasLC ) )
+   {
+      List<TableEntry> list = JspWebUtils.getTableDomainValues( mMasLC , "M_StorageDisposalStatement", "ContainerType", "" );
+
+      nRC = mMasLC.cursor( "M_StorageDisposalStatement" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+      {
+         strComboCurrentValue = mMasLC.cursor( "M_StorageDisposalStatement" ).getAttribute( "ContainerType" ).getString( "" );
+         if ( strComboCurrentValue == null )
+            strComboCurrentValue = "";
+      }
+      else
+      {
+         strComboCurrentValue = "";
+      }
+
+      // Code for NOT required attribute, which makes sure a blank entry exists.
+      if ( strComboCurrentValue == "" )
+      {
+         inListCBType = true;
+%>
+         <option selected="selected" value=""></option>
+<%
+      }
+      else
+      {
+%>
+         <option value=""></option>
+<%
+      }
+      for ( TableEntry entry : list )
+      {
+         String internalValue = entry.getInternalValue( );
+         String externalValue = entry.getExternalValue( );
+         // Perhaps getInternalValue and getExternalValue should return an empty string, 
+         // but currently it returns null.  Set to empty string. 
+         if ( externalValue == null )
+         {
+            internalValue = "";
+            externalValue = "";
+         }
+
+         if ( !StringUtils.isBlank( externalValue ) )
+         {
+            if ( StringUtils.equals( strComboCurrentValue, externalValue ) )
+            {
+               inListCBType = true;
+%>
+               <option selected="selected" value="<%=externalValue%>"><%=externalValue%></option>
+<%
+            }
+            else
+            {
+%>
+               <option value="<%=externalValue%>"><%=externalValue%></option>
+<%
+            }
+         }
+      }  // for ( TableEntry entry
+      // The value from the database isn't in the domain, add it to the list as disabled.
+      if ( !inListCBType )
+      {
+%>
+         <option disabled selected="selected" value="<%=strComboCurrentValue%>"><%=strComboCurrentValue%></option>
+<%
+      }
+   }  // if view != null
+%>
+</select>
+
+<input name="hCBType" id="hCBType" type="hidden" value="<%=strComboCurrentValue%>" >
+</td>
+</tr>
+</table>
+
+</div>  <!-- GroupBox7 --> 
+
+</div>  <!-- End of a new line -->
+
+
+</div>  <!--  GroupBox6 --> 
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->

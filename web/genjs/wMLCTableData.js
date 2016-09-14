@@ -1,4 +1,4 @@
-// wMLCTableData   Generate Timestamp: 20160901160518346
+// wMLCTableData   Generate Timestamp: 20160901122601301
 
 var isWindowClosing = true;
 var timerID = null;
@@ -339,22 +339,10 @@ function Sort( )
    {
       // Javascript code entered by user.
 
-      var cols = document.wMLCTableData.zColumnCnt.value;
       var colList = document.wMLCTableData.zColumnList.value;
-      var tableHeader = "[";
       var tableReplace = colList.split( "," );
-      var s;
-      var k;
-      for ( k = 0; k < cols; k++ )
-      {
-         tableHeader += tableReplace[ k ];
-         if ( k < cols - 1 )
-            tableHeader += ",";
-      }
-      tableHeader += "]";
 
-
-       document.wMLCTableData.zTableRowSelect.value = buildSortTableHtml( "mMasLC", "M_Rows", "GridTable", tableHeader );
+      document.wMLCTableData.zTableRowSelect.value = buildSortTableHtml( "mMasLC", "M_Rows", "GridTable", tableReplace, "Y" );
 
       // END of Javascript code entered by user.
 

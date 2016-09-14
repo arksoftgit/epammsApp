@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCEnvironmentalHazardsStatement   Generate Timestamp: 20160824153940486 --%>
+<%-- wMLCEnvironmentalHazardsStatement   Generate Timestamp: 20160913092032406 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -61,7 +61,7 @@ public int DoInputMapping( HttpServletRequest request,
    if ( VmlOperation.isValid( mMasLC ) )
    {
       // MLEdit: StatementText
-      nRC = mMasLC.cursor( "M_GeneralSubStatement" ).checkExistenceOfEntity( ).toInt();
+      nRC = mMasLC.cursor( "M_GeneralStatement" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 ) // CursorResult.SET
       {
          strMapValue = request.getParameter( "StatementText" );
@@ -70,7 +70,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "StatementText", "", strMapValue );
             else
-               mMasLC.cursor( "M_GeneralSubStatement" ).getAttribute( "Text" ).setValue( strMapValue, "" );
+               mMasLC.cursor( "M_GeneralStatement" ).getAttribute( "Text" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -215,7 +215,7 @@ if ( strActionToProcess != null )
       try
       {
          View mMasLCAuto = task.getViewByName( "mMasLC" );
-         EntityCursor cursor = mMasLCAuto.cursor( "M_GeneralSubStatement" );
+         EntityCursor cursor = mMasLCAuto.cursor( "M_GeneralStatement" );
             if ( cursor.isNull() )
                nRC = 0;
             else
@@ -251,7 +251,7 @@ if ( strActionToProcess != null )
       try
       {
          View mMasLCAuto = task.getViewByName( "mMasLC" );
-         EntityCursor cursor = mMasLCAuto.cursor( "M_GeneralSubStatement" );
+         EntityCursor cursor = mMasLCAuto.cursor( "M_GeneralStatement" );
             if ( cursor.isNull() )
                nRC = 0;
             else
@@ -619,17 +619,17 @@ else
          task.log( ).info( "Invalid View: " + "StatementText" );
       else
       {
-         nRC = mMasLC.cursor( "M_GeneralSubStatement" ).checkExistenceOfEntity( ).toInt();
+         nRC = mMasLC.cursor( "M_GeneralStatement" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strErrorMapValue = mMasLC.cursor( "M_GeneralSubStatement" ).getAttribute( "Text" ).getString( "" );
+            strErrorMapValue = mMasLC.cursor( "M_GeneralStatement" ).getAttribute( "Text" ).getString( "" );
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
 
-            task.log( ).info( "M_GeneralSubStatement.Text: " + strErrorMapValue );
+            task.log( ).info( "M_GeneralStatement.Text: " + strErrorMapValue );
          }
          else
-            task.log( ).info( "Entity does not exist for StatementText: " + "mMasLC.M_GeneralSubStatement" );
+            task.log( ).info( "Entity does not exist for StatementText: " + "mMasLC.M_GeneralStatement" );
       }
    }
 %>
