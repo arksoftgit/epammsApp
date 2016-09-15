@@ -1,4 +1,4 @@
-z1000-Zeidon    MMASLC   TZZOLODO                         08/24/16   17:55:50 1.0a2   
+z1000-Zeidon    MMASLC   TZZOLODO                         09/15/16   11:57:00 1.0a2   
 eLOD       1
 aZKey      69033382
 aNextZKeyToAssign 130003380
@@ -2763,6 +2763,7 @@ aUpdate    Y
 eER_AttributeRec 5
 aName      ExclusiveStatements
 aZKey      120387673
+aDesc      Statements within the section are mutually exclusive
 
 eDomainRec 6
 
@@ -7893,9 +7894,12 @@ aER_DiagramPosY 127
 
 eER_RelLinkRec 5
 aName      has
+aAutoSeq   Y
+aHangingForeignKeyEntity N
 aZKey      120387589
 aCardMin   0
 aCardMax   m
+aTE_NoForeignKeyPrefix N
 
 eER_RelTypeRec 6
 aZKey      120387588

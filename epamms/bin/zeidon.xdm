@@ -1227,6 +1227,48 @@ aInternalValue N
 
 eDomain    2
 aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
+aZKey      4322633
+aName      BorderStyle
+aDomainType T
+aDataType  S
+aMaxStringLth 20
+aContextRestriction N
+
+eContext   3
+aZKey      4322634
+aName      BorderStyle
+aIsDefault Y
+
+eTableEntry 4
+aZKey      120162452
+
+eTableEntry 4
+aZKey      4322635
+aExternalValue Solid
+aInternalValue solid
+
+eTableEntry 4
+aZKey      4322637
+aExternalValue Dotted
+aInternalValue dotted
+
+eTableEntry 4
+aZKey      4322638
+aExternalValue Dashed
+aInternalValue dashed
+
+eTableEntry 4
+aZKey      4322639
+aExternalValue Double
+aInternalValue double
+
+eTableEntry 4
+aZKey      4322640
+aExternalValue Groove
+aInternalValue groove
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
 aZKey      4322642
 aName      Color
 aDomainType T
