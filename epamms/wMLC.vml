@@ -505,6 +505,20 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
+//  OPERATION: DELETE_DirectionsForUseSection
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+DELETE_DirectionsForUseSection( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+   
+   DELETE ENTITY mMasLC.M_DirectionsForUseSection NONE
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
 //  OPERATION: DELETE_DirectionsForUseStatement
 //
 /////////////////////////////////////////////////////////////////////////////
@@ -1001,6 +1015,10 @@ GOTO_UpdateMLC( VIEW ViewToWindow )
    OrderEntityForView( mMasLC, "M_Usage", "UsageType A ClaimsClassification A Name A" )
    SET CURSOR FIRST mMasLC.M_Usage
 
+   // Create NetContent section if it doesn't already exist.
+   IF mMasLC.NetContents DOES NOT EXIST
+      CREATE ENTITY mMasLC.NetContents
+   END
    // Create/Include Hazard, Precautionary and First Aid derived sections.
 
    // First Aid
@@ -2000,6 +2018,30 @@ GOTO_DilutionChartItemDelete( VIEW ViewToWindow )
    mMasLC.MasterLabelContent.wDeleteType       = "Dilution Chart Item"
    mMasLC.MasterLabelContent.wDeleteText       = mMasLC.M_DilutionChartEntry.Use
    mMasLC.MasterLabelContent.wDeleteEntityName = "M_DilutionChartEntry"
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: AcceptAddNewDilutionChartEntry
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+AcceptAddNewDilutionChartEntry( VIEW ViewToWindow )
+
+   VIEW  mMasLC   REGISTERED AS mMasLC
+   SHORT nRC
+
+   // Accept Ingredients Statement and add new temporal one.
+   nRC = AcceptSubobject( mMasLC, "M_DilutionChartEntry" )
+   IF nRC < 0
+      MessageSend( ViewToWindow, "", "Save And Add New Dilution Chart Entry",
+                   "Error saving Dilution Chart Entry.",
+                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      RETURN 2
+   END
+
+   CreateTemporalEntity( mMasLC, "M_DilutionChartEntry", zPOS_AFTER )
 
 END
 

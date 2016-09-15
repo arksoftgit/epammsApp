@@ -1,4 +1,4 @@
-z1000-Zeidon    BASE     TZDGSRCO 06/22/16   16:21:44 1.0a2   
+z1000-Zeidon    BASE     TZDGSRCO                         09/13/16   19:39:46 1.0a2   
 eDomainGroup 1
 aZKey      68567479
 aNextZKeyToAssign 130001733
@@ -190,12 +190,12 @@ aIsDefault Y
 
 eTableEntry 4
 aZKey      110059059
-aExternalValue <= 5 gallon
+aExternalValue <= 5 gallons
 aInternalValue <=5
 
 eTableEntry 4
 aZKey      110059060
-aExternalValue > 5 gallon
+aExternalValue > 5 gallons
 aInternalValue >5
 
 eDomain    2
@@ -1228,6 +1228,48 @@ eTableEntry 4
 aZKey      1518818
 aExternalValue No
 aInternalValue N
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
+aZKey      4322633
+aName      BorderStyle
+aDomainType T
+aDataType  S
+aMaxStringLth 20
+aContextRestriction N
+
+eContext   3
+aZKey      4322634
+aName      BorderStyle
+aIsDefault Y
+
+eTableEntry 4
+aZKey      120162452
+
+eTableEntry 4
+aZKey      4322635
+aExternalValue Solid
+aInternalValue solid
+
+eTableEntry 4
+aZKey      4322637
+aExternalValue Dotted
+aInternalValue dotted
+
+eTableEntry 4
+aZKey      4322638
+aExternalValue Dashed
+aInternalValue dashed
+
+eTableEntry 4
+aZKey      4322639
+aExternalValue Double
+aInternalValue double
+
+eTableEntry 4
+aZKey      4322640
+aExternalValue Groove
+aInternalValue groove
 
 eOperation 2
 aName      dEPA_RegistrationNumber

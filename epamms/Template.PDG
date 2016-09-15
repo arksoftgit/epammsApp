@@ -1,4 +1,4 @@
-z1000-Zeidon    TEMPLATE TZDGSRCO 04/06/16   13:43:40 1.0a2   
+z1000-Zeidon    TEMPLATE TZDGSRCO                         09/14/16   10:43:33 1.0a2   
 eDomainGroup 1
 aZKey      69081339
 aName      Template
@@ -462,7 +462,7 @@ aExternalValue Green
 aInternalValue green
 
 eDomain    2
-aZKey      4322633
+aZKey      4322634
 aName      BorderStyle
 aDomainType T
 aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain

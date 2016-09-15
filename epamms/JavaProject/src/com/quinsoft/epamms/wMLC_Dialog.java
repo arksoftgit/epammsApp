@@ -74,63 +74,6 @@ GOTO_PrecautionaryStmtDelete( View     ViewToWindow )
 
 
 private int 
-o_fnLocalBuildQual_13( View     vSubtask,
-                       zVIEW    vQualObject,
-                       int      lTempInteger_0 )
-{
-   int      RESULT = 0;
-
-   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
-   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "MasterLabelContent" );
-   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "MasterLabelContent" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
-   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_0 );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
-   return( 0 );
-} 
-
-
-private int 
-o_fnLocalBuildQual_3( View     vSubtask,
-                      zVIEW    vQualObject,
-                      int      lTempInteger_0 )
-{
-   int      RESULT = 0;
-
-   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
-   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "MasterProduct" );
-   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "PrimaryRegistrant" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
-   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_0 );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
-   return( 0 );
-} 
-
-
-private int 
-o_fnLocalBuildQual_4( View     vSubtask,
-                      zVIEW    vQualObject,
-                      int      lTempInteger_0 )
-{
-   int      RESULT = 0;
-
-   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
-   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "MasterLabelContent" );
-   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "MasterLabelContent" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
-   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_0 );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
-   return( 0 );
-} 
-
-
-private int 
 o_fnLocalBuildQual_5( View     vSubtask,
                       zVIEW    vQualObject,
                       int      lTempInteger_0 )
@@ -283,6 +226,25 @@ o_fnLocalBuildQual_12( View     vSubtask,
 
 
 private int 
+o_fnLocalBuildQual_13( View     vSubtask,
+                       zVIEW    vQualObject,
+                       int      lTempInteger_0 )
+{
+   int      RESULT = 0;
+
+   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
+   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "MasterLabelContent" );
+   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "MasterLabelContent" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
+   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_0 );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+   return( 0 );
+} 
+
+
+private int 
 o_fnLocalBuildQual_0( View     vSubtask,
                       zVIEW    vQualObject,
                       int      MasProdID )
@@ -332,6 +294,44 @@ o_fnLocalBuildQual_2( View     vSubtask,
    SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "MasterProduct" );
    CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
    SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "MasterProduct" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
+   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_0 );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+   return( 0 );
+} 
+
+
+private int 
+o_fnLocalBuildQual_3( View     vSubtask,
+                      zVIEW    vQualObject,
+                      int      lTempInteger_0 )
+{
+   int      RESULT = 0;
+
+   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
+   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "MasterProduct" );
+   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "PrimaryRegistrant" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
+   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_0 );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+   return( 0 );
+} 
+
+
+private int 
+o_fnLocalBuildQual_4( View     vSubtask,
+                      zVIEW    vQualObject,
+                      int      lTempInteger_0 )
+{
+   int      RESULT = 0;
+
+   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
+   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "MasterLabelContent" );
+   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "MasterLabelContent" );
    SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
    SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_0 );
    SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
@@ -1809,6 +1809,43 @@ GOTO_DilutionChartItemDelete( View     ViewToWindow )
    SetAttributeFromAttribute( mMasLC, "MasterLabelContent", "wDeleteText", mMasLC, "M_DilutionChartEntry", "Use" );
    //:mMasLC.MasterLabelContent.wDeleteEntityName = "M_DilutionChartEntry"
    SetAttributeFromString( mMasLC, "MasterLabelContent", "wDeleteEntityName", "M_DilutionChartEntry" );
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:AcceptAddNewDilutionChartEntry( VIEW ViewToWindow )
+
+//:   VIEW  mMasLC   REGISTERED AS mMasLC
+public int 
+AcceptAddNewDilutionChartEntry( View     ViewToWindow )
+{
+   zVIEW    mMasLC = new zVIEW( );
+   int      RESULT = 0;
+   //:SHORT nRC
+   int      nRC = 0;
+
+   RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
+
+   //:// Accept Ingredients Statement and add new temporal one.
+   //:nRC = AcceptSubobject( mMasLC, "M_DilutionChartEntry" )
+   nRC = AcceptSubobject( mMasLC, "M_DilutionChartEntry" );
+   //:IF nRC < 0
+   if ( nRC < 0 )
+   { 
+      //:MessageSend( ViewToWindow, "", "Save And Add New Dilution Chart Entry",
+      //:             "Error saving Dilution Chart Entry.",
+      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      MessageSend( ViewToWindow, "", "Save And Add New Dilution Chart Entry", "Error saving Dilution Chart Entry.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+      //:RETURN 2
+      if(8==8)return( 2 );
+   } 
+
+   //:END
+
+   //:CreateTemporalEntity( mMasLC, "M_DilutionChartEntry", zPOS_AFTER )
+   CreateTemporalEntity( mMasLC, "M_DilutionChartEntry", zPOS_AFTER );
    return( 0 );
 // END
 } 
@@ -3429,8 +3466,9 @@ GOTO_UpdateMLC( View     ViewToWindow )
    zVIEW    mMasLC_Root = new zVIEW( );
    int      lTempInteger_0 = 0;
    zVIEW    vTempViewVar_0 = new zVIEW( );
-   String   szTempString_0 = null;
    int      lTempInteger_1 = 0;
+   String   szTempString_0 = null;
+   int      lTempInteger_2 = 0;
 
    RESULT = GetViewByName( mMasProd, "mMasProd", ViewToWindow, zLEVEL_TASK );
 
@@ -3459,6 +3497,16 @@ GOTO_UpdateMLC( View     ViewToWindow )
    //:SET CURSOR FIRST mMasLC.M_Usage
    RESULT = SetCursorFirstEntity( mMasLC, "M_Usage", "" );
 
+   //:// Create NetContent section if it doesn't already exist.
+   //:IF mMasLC.NetContents DOES NOT EXIST
+   lTempInteger_1 = CheckExistenceOfEntity( mMasLC, "NetContents" );
+   if ( lTempInteger_1 != 0 )
+   { 
+      //:CREATE ENTITY mMasLC.NetContents
+      RESULT = CreateEntity( mMasLC, "NetContents", zPOS_AFTER );
+   } 
+
+   //:END
    //:// Create/Include Hazard, Precautionary and First Aid derived sections.
 
    //:// First Aid
@@ -3560,8 +3608,8 @@ GOTO_UpdateMLC( View     ViewToWindow )
          while ( RESULT > zCURSOR_UNCHANGED )
          { 
             //:IF mMasLC.M_DirectionsUsage DOES NOT EXIST
-            lTempInteger_1 = CheckExistenceOfEntity( mMasLC, "M_DirectionsUsage" );
-            if ( lTempInteger_1 != 0 )
+            lTempInteger_2 = CheckExistenceOfEntity( mMasLC, "M_DirectionsUsage" );
+            if ( lTempInteger_2 != 0 )
             { 
                //:DELETE ENTITY mMasLC.M_DirectionsUsageOrdering NONE
                RESULT = DeleteEntity( mMasLC, "M_DirectionsUsageOrdering", zREPOS_NONE );
@@ -5105,6 +5153,25 @@ GOTO_DirsForUseSectionDelete( View     ViewToWindow )
    SetAttributeFromAttribute( mMasLC, "MasterLabelContent", "wDeleteText", mMasLC, "M_DirectionsForUseSection", "Name" );
    //:mMasLC.MasterLabelContent.wDeleteEntityName = "M_DirectionsForUseSection"
    SetAttributeFromString( mMasLC, "MasterLabelContent", "wDeleteEntityName", "M_DirectionsForUseSection" );
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:DELETE_DirectionsForUseSection( VIEW ViewToWindow )
+
+//:   VIEW mMasLC REGISTERED AS mMasLC
+public int 
+DELETE_DirectionsForUseSection( View     ViewToWindow )
+{
+   zVIEW    mMasLC = new zVIEW( );
+   int      RESULT = 0;
+
+   RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
+
+   //:DELETE ENTITY mMasLC.M_DirectionsForUseSection NONE
+   RESULT = DeleteEntity( mMasLC, "M_DirectionsForUseSection", zREPOS_NONE );
    return( 0 );
 // END
 } 

@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCDirectionsForUse   Generate Timestamp: 20160913084219501 --%>
+<%-- wMLCDirectionsForUse   Generate Timestamp: 20160914171019349 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -1433,7 +1433,7 @@ else
 <div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GBDFU_Sections:GroupBox */ %>
 
-<div id="GBDFU_Sections" name="GBDFU_Sections"   style="float:left;position:relative; width:802px; height:156px;">  <!-- GBDFU_Sections --> 
+<div id="GBDFU_Sections" name="GBDFU_Sections"   style="float:left;position:relative; width:802px; height:194px;">  <!-- GBDFU_Sections --> 
 
 <% /* DFU_Statements:Text */ %>
 
@@ -1565,17 +1565,17 @@ else
    }
 %>
 
-<textarea name="DFU_ReviewerNote" id="DFU_ReviewerNote" style="width:656px;height:50px;position:absolute;left:130px;top:78px;border:solid;border-width:4px;border-style:groove;" class="text12" wrap="wrap"><%=strErrorMapValue%></textarea>
+<textarea name="DFU_ReviewerNote" id="DFU_ReviewerNote" style="width:656px;height:76px;position:absolute;left:130px;top:78px;border:solid;border-width:4px;border-style:groove;" class="text12" wrap="wrap"><%=strErrorMapValue%></textarea>
 
 <% /* New:PushBtn */ %>
-<button type="button" class="newbutton" name="New" id="New" value="" onclick="GOTO_DU_CategoryAdd( )" style="width:78px;height:26px;position:absolute;left:586px;top:126px;">New</button>
+<button type="button" class="newbutton" name="New" id="New" value="" onclick="GOTO_DU_CategoryAdd( )" style="width:78px;height:26px;position:absolute;left:586px;top:168px;">New</button>
 
 <% /* PBSort:PushBtn */ %>
-<button type="button" class="newbutton" name="PBSort" id="PBSort" value="" onclick="Sort( )" style="width:78px;height:26px;position:absolute;left:686px;top:126px;">Sort</button>
+<button type="button" class="newbutton" name="PBSort" id="PBSort" value="" onclick="Sort( )" style="width:78px;height:26px;position:absolute;left:686px;top:168px;">Sort</button>
 
 <% /* DirectionsForUseCategories:Text */ %>
 
-<label class="listheader"  id="DirectionsForUseCategories" name="DirectionsForUseCategories" style="width:210px;height:16px;position:absolute;left:6px;top:136px;">Directions For Use Categories</label>
+<label class="listheader"  id="DirectionsForUseCategories" name="DirectionsForUseCategories" style="width:210px;height:16px;position:absolute;left:6px;top:178px;">Directions For Use Categories</label>
 
 
 </div>  <!--  GBDFU_Sections --> 

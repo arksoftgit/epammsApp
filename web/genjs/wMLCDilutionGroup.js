@@ -1,4 +1,4 @@
-// wMLCDilutionGroup   Generate Timestamp: 20160824153938127
+// wMLCDilutionGroup   Generate Timestamp: 20160914193417149
 
 var isWindowClosing = true;
 var timerID = null;
@@ -300,6 +300,27 @@ function GOTO_DilutionChartItemUpdate( strTagEntityKey )
       _DisableFormElements( true );
 
       document.wMLCDilutionGroup.zAction.value = "GOTO_DilutionChartItemUpdate";
+      document.wMLCDilutionGroup.submit( );
+   }
+}
+
+function Sort( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      // Javascript code entered by user.
+
+       document.wMLCDilutionGroup.zTableRowSelect.value = buildSortTableHtml( "mMasLC", "M_DilutionChartEntry", "GridDilutionGroupItems",  ["Use"]  );
+
+      // END of Javascript code entered by user.
+
+      _DisableFormElements( true );
+
+      document.wMLCDilutionGroup.zAction.value = "Sort";
       document.wMLCDilutionGroup.submit( );
    }
 }

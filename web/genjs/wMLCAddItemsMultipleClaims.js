@@ -1,4 +1,4 @@
-// wMLCAddItemsMultipleClaims   Generate Timestamp: 20160824153935730
+// wMLCAddItemsMultipleClaims   Generate Timestamp: 20160914154443136
 
 var isWindowClosing = true;
 var timerID = null;

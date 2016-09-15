@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCDilutionChartItem   Generate Timestamp: 20160913084219381 --%>
+<%-- wMLCDilutionChartItem   Generate Timestamp: 20160914191356013 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -298,6 +298,44 @@ if ( strActionToProcess != null )
       break;
    }
 
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "AddNewDilutionChartEntry" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCDilutionChartItem", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Action Operation
+      nRC = 0;
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCDilutionChartItem", "wMLC.AcceptAddNewDilutionChartEntry" );
+      nOptRC = wMLC.AcceptAddNewDilutionChartEntry( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
    while ( bDone == false && StringUtils.equals( strActionToProcess, "CancelChartEntryItem" ) )
    {
       bDone = true;
@@ -490,6 +528,16 @@ else
    {
 %>
        <li id="AcceptAndReturn" name="AcceptAndReturn"><a href="#"  onclick="AcceptChartEntryItem()">Accept & Return</a></li>
+<%
+   }
+%>
+
+<%
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "AcceptAddNewChartEntry" );
+   if ( !csrRC.isSet() ) //if ( nRC < 0 )
+   {
+%>
+       <li id="AcceptAddNewChartEntry" name="AcceptAddNewChartEntry"><a href="#"  onclick="AddNewDilutionChartEntry()">Add New</a></li>
 <%
    }
 %>

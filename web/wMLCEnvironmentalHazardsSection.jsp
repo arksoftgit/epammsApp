@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCEnvironmentalHazardsSection   Generate Timestamp: 20160913091645038 --%>
+<%-- wMLCEnvironmentalHazardsSection   Generate Timestamp: 20160914172945346 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -143,14 +143,14 @@ public int DoInputMapping( HttpServletRequest request,
       // grids on the same window with the same view we do not mess up the 
       // entity positions. 
       vGridTmp = mMasLC.newView( );
-      csrRC = vGridTmp.cursor( "M_GeneralStatement" ).setFirst(  );
+      csrRC = vGridTmp.cursor( "M_GeneralSubStatement" ).setFirst(  );
       while ( csrRC.isSet() )
       {
-         lEntityKey = vGridTmp.cursor( "M_GeneralStatement" ).getEntityKey( );
+         lEntityKey = vGridTmp.cursor( "M_GeneralSubStatement" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
          iTableRowCnt++;
 
-         csrRC = vGridTmp.cursor( "M_GeneralStatement" ).setNextContinue( );
+         csrRC = vGridTmp.cursor( "M_GeneralSubStatement" ).setNextContinue( );
       }
 
       vGridTmp.drop( );
@@ -369,14 +369,14 @@ if ( strActionToProcess != null )
       if ( VmlOperation.isValid( mMasLC ) )
       {
          lEKey = java.lang.Long.parseLong( strEntityKey );
-         csrRC = mMasLC.cursor( "M_GeneralStatement" ).setByEntityKey( lEKey );
+         csrRC = mMasLC.cursor( "M_GeneralSubStatement" ).setByEntityKey( lEKey );
          if ( !csrRC.isSet() )
          {
             boolean bFound = false;
-            csrRCk = mMasLC.cursor( "M_GeneralStatement" ).setFirst( );
+            csrRCk = mMasLC.cursor( "M_GeneralSubStatement" ).setFirst( );
             while ( csrRCk.isSet() && !bFound )
             {
-               lEKey = mMasLC.cursor( "M_GeneralStatement" ).getEntityKey( );
+               lEKey = mMasLC.cursor( "M_GeneralSubStatement" ).getEntityKey( );
                strKey = Long.toString( lEKey );
                if ( StringUtils.equals( strKey, strEntityKey ) )
                {
@@ -384,7 +384,7 @@ if ( strActionToProcess != null )
                   bFound = true;
                }
                else
-                  csrRCk = mMasLC.cursor( "M_GeneralStatement" ).setNextContinue( );
+                  csrRCk = mMasLC.cursor( "M_GeneralSubStatement" ).setNextContinue( );
             } // Grid
          }
       }
@@ -433,14 +433,14 @@ if ( strActionToProcess != null )
       if ( VmlOperation.isValid( mMasLC ) )
       {
          lEKey = java.lang.Long.parseLong( strEntityKey );
-         csrRC = mMasLC.cursor( "M_GeneralStatement" ).setByEntityKey( lEKey );
+         csrRC = mMasLC.cursor( "M_GeneralSubStatement" ).setByEntityKey( lEKey );
          if ( !csrRC.isSet() )
          {
             boolean bFound = false;
-            csrRCk = mMasLC.cursor( "M_GeneralStatement" ).setFirst( );
+            csrRCk = mMasLC.cursor( "M_GeneralSubStatement" ).setFirst( );
             while ( csrRCk.isSet() && !bFound )
             {
-               lEKey = mMasLC.cursor( "M_GeneralStatement" ).getEntityKey( );
+               lEKey = mMasLC.cursor( "M_GeneralSubStatement" ).getEntityKey( );
                strKey = Long.toString( lEKey );
                if ( StringUtils.equals( strKey, strEntityKey ) )
                {
@@ -448,7 +448,7 @@ if ( strActionToProcess != null )
                   bFound = true;
                }
                else
-                  csrRCk = mMasLC.cursor( "M_GeneralStatement" ).setNextContinue( );
+                  csrRCk = mMasLC.cursor( "M_GeneralSubStatement" ).setNextContinue( );
             } // Grid
          }
       }
@@ -1193,13 +1193,13 @@ try
       
       View vGridEnvironmentalHazards;
       vGridEnvironmentalHazards = mMasLC.newView( );
-      csrRC2 = vGridEnvironmentalHazards.cursor( "M_GeneralStatement" ).setFirst(  );
+      csrRC2 = vGridEnvironmentalHazards.cursor( "M_GeneralSubStatement" ).setFirst(  );
       while ( csrRC2.isSet() )
       {
          strOdd = (iTableRowCnt % 2) != 0 ? " class='odd'" : "";
          iTableRowCnt++;
 
-         lEntityKey = vGridEnvironmentalHazards.cursor( "M_GeneralStatement" ).getEntityKey( );
+         lEntityKey = vGridEnvironmentalHazards.cursor( "M_GeneralSubStatement" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
          strGridEditEnvironmentalHazards = "";
          nRC = vGridEnvironmentalHazards.cursor( "M_GeneralSubStatement" ).checkExistenceOfEntity( ).toInt();
@@ -1225,7 +1225,7 @@ try
 </tr>
 
 <%
-         csrRC2 = vGridEnvironmentalHazards.cursor( "M_GeneralStatement" ).setNextContinue( );
+         csrRC2 = vGridEnvironmentalHazards.cursor( "M_GeneralSubStatement" ).setNextContinue( );
       }
       vGridEnvironmentalHazards.drop( );
    }

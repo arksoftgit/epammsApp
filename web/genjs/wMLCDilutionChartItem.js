@@ -1,4 +1,4 @@
-// wMLCDilutionChartItem   Generate Timestamp: 20160824153938057
+// wMLCDilutionChartItem   Generate Timestamp: 20160914191356013
 
 var isWindowClosing = true;
 var timerID = null;
@@ -202,6 +202,21 @@ function AcceptChartEntryItem( )
       _DisableFormElements( true );
 
       document.wMLCDilutionChartItem.zAction.value = "AcceptChartEntryItem";
+      document.wMLCDilutionChartItem.submit( );
+   }
+}
+
+function AddNewDilutionChartEntry( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCDilutionChartItem.zAction.value = "AddNewDilutionChartEntry";
       document.wMLCDilutionChartItem.submit( );
    }
 }

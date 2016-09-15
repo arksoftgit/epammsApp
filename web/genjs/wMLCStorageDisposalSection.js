@@ -1,4 +1,4 @@
-// wMLCStorageDisposalSection   Generate Timestamp: 20160824153943788
+// wMLCStorageDisposalSection   Generate Timestamp: 20160914154446171
 
 var isWindowClosing = true;
 var timerID = null;
@@ -202,51 +202,6 @@ function AcceptAddNewStorDispSect( )
       _DisableFormElements( true );
 
       document.wMLCStorageDisposalSection.zAction.value = "AcceptAddNewStorDispSect";
-      document.wMLCStorageDisposalSection.submit( );
-   }
-}
-
-function DELETE_DirectionsForUseStatement( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCStorageDisposalSection.zAction.value = "DELETE_DirectionsForUseStatement";
-      document.wMLCStorageDisposalSection.submit( );
-   }
-}
-
-function GOTO_DirsForUseStatementAdd( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCStorageDisposalSection.zAction.value = "GOTO_DirsForUseStatementAdd";
-      document.wMLCStorageDisposalSection.submit( );
-   }
-}
-
-function GOTO_DirsForUseStatementUpdate( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCStorageDisposalSection.zAction.value = "GOTO_DirsForUseStatementUpdate";
       document.wMLCStorageDisposalSection.submit( );
    }
 }
