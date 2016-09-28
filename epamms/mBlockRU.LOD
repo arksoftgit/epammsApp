@@ -1,4 +1,4 @@
-z1000-Zeidon    MBLOCKRU TZZOLODO 05/26/16   12:37:11 1.0a2   
+z1000-Zeidon    MBLOCKRU TZZOLODO                         09/20/16   15:22:58 1.0a2   
 eLOD       1
 aZKey      110030723
 aName      mBlockRU
@@ -59,8 +59,8 @@ eER_EntityRec 4
 aName      Subregistrant
 aZKey      68568355
 aPurpose   F
-aER_DiagramPosX 94
-aER_DiagramPosY 34
+aER_DiagramPosX 108
+aER_DiagramPosY 37
 
 eER_RelLinkRec 4
 aName      for
@@ -71,12 +71,12 @@ aCardMax   1
 eER_RelTypeRec 5
 aZKey      110030383
 aFact      Added thru ER Dialog
-aER_DiagramBendPosX 99
-aER_DiagramBendPosY 47
-aER_DiagramE1PosX 99
-aER_DiagramE1PosY 39
-aER_DiagramE2PosX 159
-aER_DiagramE2PosY 47
+aER_DiagramBendPosX 200
+aER_DiagramBendPosY 40
+aER_DiagramE1PosX 117
+aER_DiagramE1PosY 40
+aER_DiagramE2PosX 200
+aER_DiagramE2PosY 45
 
 eLOD_EntityChild 3
 aName      LLD_Block
@@ -620,8 +620,8 @@ eER_EntityRec 5
 aName      LLD_Block
 aZKey      69021553
 aPurpose   A
-aER_DiagramPosX 207
-aER_DiagramPosY 44
+aER_DiagramPosX 243
+aER_DiagramPosY 45
 
 eER_RelLinkRec 5
 aName      is linked to
@@ -635,12 +635,12 @@ aTE_NoForeignKeyPrefix N
 eER_RelTypeRec 6
 aZKey      4495116
 aFact      Added thru ER Dialog
-aER_DiagramBendPosX 219
-aER_DiagramBendPosY 40
-aER_DiagramE1PosX 213
-aER_DiagramE1PosY 43
-aER_DiagramE2PosX 216
-aER_DiagramE2PosY 44
+aER_DiagramBendPosX 255
+aER_DiagramBendPosY 41
+aER_DiagramE1PosX 249
+aER_DiagramE1PosY 44
+aER_DiagramE2PosX 252
+aER_DiagramE2PosY 45
 
 eLOD_EntityChild 4
 aName      LLD_SpecialSectionAttribute
@@ -780,8 +780,8 @@ aName      Color
 aZKey      110004748
 aPurpose   F
 aDesc      RGB CMYK Graphic
-aER_DiagramPosX 187
-aER_DiagramPosY 32
+aER_DiagramPosX 214
+aER_DiagramPosY 25
 
 eER_RelLinkRec 7
 aName      has Text
@@ -796,6 +796,12 @@ aTE_NoForeignKeyPrefix N
 eER_RelTypeRec 8
 aZKey      110030242
 aFact      Added thru ER Dialog
+aER_DiagramBendPosX 214
+aER_DiagramBendPosY 47
+aER_DiagramE1PosX 214
+aER_DiagramE1PosY 30
+aER_DiagramE2PosX 242
+aER_DiagramE2PosY 47
 
 ePOD_Entity 7
 aSQL_JoinWithParent Y
@@ -1161,12 +1167,12 @@ aTE_NoForeignKeyPrefix N
 eER_RelTypeRec 7
 aZKey      4322593
 aFact      Added thru ER Dialog
-aER_DiagramBendPosX 196
-aER_DiagramBendPosY 46
-aER_DiagramE1PosX 206
-aER_DiagramE1PosY 46
-aER_DiagramE2PosX 196
-aER_DiagramE2PosY 51
+aER_DiagramBendPosX 249
+aER_DiagramBendPosY 59
+aER_DiagramE1PosX 249
+aER_DiagramE1PosY 50
+aER_DiagramE2PosX 238
+aER_DiagramE2PosY 59
 
 ePOD_Entity 6
 aSQL_JoinWithParent Y
@@ -1196,8 +1202,8 @@ eER_EntityRec 5
 aName      LLD_SpecialSectionAttribute
 aZKey      4322587
 aPurpose   A
-aER_DiagramPosX 192
-aER_DiagramPosY 52
+aER_DiagramPosX 229
+aER_DiagramPosY 55
 
 eER_RelLinkRec 5
 aName      contains
@@ -1212,12 +1218,12 @@ aTE_NoForeignKeyPrefix N
 eER_RelTypeRec 6
 aZKey      4322590
 aFact      Added thru ER Dialog
-aER_DiagramBendPosX 211
-aER_DiagramBendPosY 54
-aER_DiagramE1PosX 211
-aER_DiagramE1PosY 49
-aER_DiagramE2PosX 201
-aER_DiagramE2PosY 54
+aER_DiagramBendPosX 247
+aER_DiagramBendPosY 57
+aER_DiagramE1PosX 247
+aER_DiagramE1PosY 50
+aER_DiagramE2PosX 238
+aER_DiagramE2PosY 57
 
 eLOD_EntityChild 4
 aName      BlockBackgroundColor
@@ -1310,6 +1316,12 @@ aTE_NoForeignKeyPrefix N
 eER_RelTypeRec 6
 aZKey      110030236
 aFact      Added thru ER Dialog
+aER_DiagramBendPosX 216
+aER_DiagramBendPosY 46
+aER_DiagramE1PosX 216
+aER_DiagramE1PosY 30
+aER_DiagramE2PosX 242
+aER_DiagramE2PosY 46
 
 ePOD_Entity 5
 aSQL_JoinWithParent Y
@@ -1407,6 +1419,12 @@ aTE_NoForeignKeyPrefix N
 eER_RelTypeRec 6
 aZKey      110030239
 aFact      Added thru ER Dialog
+aER_DiagramBendPosX 218
+aER_DiagramBendPosY 45
+aER_DiagramE1PosX 218
+aER_DiagramE1PosY 30
+aER_DiagramE2PosX 242
+aER_DiagramE2PosY 45
 
 ePOD_Entity 5
 aSQL_JoinWithParent Y
@@ -1749,6 +1767,12 @@ aTE_NoForeignKeyPrefix N
 eER_RelTypeRec 5
 aZKey      110030386
 aFact      Added thru ER Dialog
+aER_DiagramBendPosX 0
+aER_DiagramBendPosY 0
+aER_DiagramE1PosX 242
+aER_DiagramE1PosY 49
+aER_DiagramE2PosX 205
+aER_DiagramE2PosY 49
 
 ePOD_Entity 4
 aSQL_JoinWithParent Y
@@ -1787,7 +1811,7 @@ aZKey      68568087
 aName      TextDescription
 aDomainType A
 aDataType  S
-aMaxStringLth 1024
+aMaxStringLth 2048
 aDesc      Long text
 aContextRestriction N
 
@@ -1804,8 +1828,8 @@ eER_EntityRec 3
 aName      ReusableBlockDefinition
 aZKey      110030377
 aPurpose   A
-aER_DiagramPosX 160
-aER_DiagramPosY 45
+aER_DiagramPosX 196
+aER_DiagramPosY 46
 
 eLOD_Entity 2
 

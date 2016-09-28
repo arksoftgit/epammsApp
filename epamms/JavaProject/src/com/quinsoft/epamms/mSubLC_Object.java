@@ -936,7 +936,7 @@ omSubLC_BuildNewSLC_Version( View     NewSLC,
                   sb_szMessageComponent = new StringBuilder( szMessageComponent );
                                GetStringFromAttributeByContext( sb_szMessageComponent, PreviousSLC, "S_Usage", "Name", "", 50 );
                szMessageComponent = sb_szMessageComponent.toString( );}
-               //:NewSLC.S_VersionChangeMessage.ChangeText = "Deleted " + szMessageSubComponent + " Usage: " + szMessageComponent
+               //:NewSLC.S_VersionChangeMessage.ChangeNote = "Deleted " + szMessageSubComponent + " Usage: " + szMessageComponent
                 {StringBuilder sb_szTempString_1;
                if ( szTempString_1 == null )
                   sb_szTempString_1 = new StringBuilder( 32 );
@@ -965,7 +965,7 @@ omSubLC_BuildNewSLC_Version( View     NewSLC,
                   sb_szTempString_1 = new StringBuilder( szTempString_1 );
                               ZeidonStringConcat( sb_szTempString_1, 1, 0, szMessageComponent, 1, 0, 32001 );
                szTempString_1 = sb_szTempString_1.toString( );}
-               SetAttributeFromString( NewSLC, "S_VersionChangeMessage", "ChangeText", szTempString_1 );
+               SetAttributeFromString( NewSLC, "S_VersionChangeMessage", "ChangeNote", szTempString_1 );
                //:CREATE ENTITY NewSLC.S_VersionChangeMessage   // Skip a line
                RESULT = CreateEntity( NewSLC, "S_VersionChangeMessage", zPOS_AFTER );
             } 
@@ -1101,7 +1101,7 @@ omSubLC_BuildNewSLC_Version( View     NewSLC,
             sb_szMessageComponent = new StringBuilder( szMessageComponent );
                    GetStringFromAttributeByContext( sb_szMessageComponent, PreviousSLC, "S_StorageDisposalSection", "ContainerVolume", "", 50 );
          szMessageComponent = sb_szMessageComponent.toString( );}
-         //:NewSLC.S_VersionChangeMessage.ChangeText = "Deleted Storage and Disposal Section, " + szMessageComponent
+         //:NewSLC.S_VersionChangeMessage.ChangeNote = "Deleted Storage and Disposal Section, " + szMessageComponent
           {StringBuilder sb_szTempString_2;
          if ( szTempString_2 == null )
             sb_szTempString_2 = new StringBuilder( 32 );
@@ -1116,7 +1116,7 @@ omSubLC_BuildNewSLC_Version( View     NewSLC,
             sb_szTempString_2 = new StringBuilder( szTempString_2 );
                   ZeidonStringConcat( sb_szTempString_2, 1, 0, szMessageComponent, 1, 0, 32001 );
          szTempString_2 = sb_szTempString_2.toString( );}
-         SetAttributeFromString( NewSLC, "S_VersionChangeMessage", "ChangeText", szTempString_2 );
+         SetAttributeFromString( NewSLC, "S_VersionChangeMessage", "ChangeNote", szTempString_2 );
          //:CREATE ENTITY NewSLC.S_VersionChangeMessage   // Skip a line
          RESULT = CreateEntity( NewSLC, "S_VersionChangeMessage", zPOS_AFTER );
       } 
@@ -1160,7 +1160,7 @@ omSubLC_BuildNewSLC_Version( View     NewSLC,
             sb_szMessageComponent = new StringBuilder( szMessageComponent );
                    GetStringFromAttributeByContext( sb_szMessageComponent, PreviousSLC, "S_DirectionsForUseSection", "Name", "", 50 );
          szMessageComponent = sb_szMessageComponent.toString( );}
-         //:NewSLC.S_VersionChangeMessage.ChangeText = "Deleted Directions For Use Section, " + szMessageComponent
+         //:NewSLC.S_VersionChangeMessage.ChangeNote = "Deleted Directions For Use Section, " + szMessageComponent
           {StringBuilder sb_szTempString_3;
          if ( szTempString_3 == null )
             sb_szTempString_3 = new StringBuilder( 32 );
@@ -1175,7 +1175,7 @@ omSubLC_BuildNewSLC_Version( View     NewSLC,
             sb_szTempString_3 = new StringBuilder( szTempString_3 );
                   ZeidonStringConcat( sb_szTempString_3, 1, 0, szMessageComponent, 1, 0, 32001 );
          szTempString_3 = sb_szTempString_3.toString( );}
-         SetAttributeFromString( NewSLC, "S_VersionChangeMessage", "ChangeText", szTempString_3 );
+         SetAttributeFromString( NewSLC, "S_VersionChangeMessage", "ChangeNote", szTempString_3 );
          //:CREATE ENTITY NewSLC.S_VersionChangeMessage   // Skip a line
          RESULT = CreateEntity( NewSLC, "S_VersionChangeMessage", zPOS_AFTER );
          //:ELSE
@@ -1289,7 +1289,7 @@ omSubLC_BuildNewSLC_Version( View     NewSLC,
             sb_szMessageComponent = new StringBuilder( szMessageComponent );
                    GetStringFromAttributeByContext( sb_szMessageComponent, PreviousSLC, "S_MarketingSection", "Name", "", 50 );
          szMessageComponent = sb_szMessageComponent.toString( );}
-         //:NewSLC.S_VersionChangeMessage.ChangeText = "Deleted Marketing Section, " + szMessageComponent
+         //:NewSLC.S_VersionChangeMessage.ChangeNote = "Deleted Marketing Section, " + szMessageComponent
           {StringBuilder sb_szTempString_4;
          if ( szTempString_4 == null )
             sb_szTempString_4 = new StringBuilder( 32 );
@@ -1304,7 +1304,7 @@ omSubLC_BuildNewSLC_Version( View     NewSLC,
             sb_szTempString_4 = new StringBuilder( szTempString_4 );
                   ZeidonStringConcat( sb_szTempString_4, 1, 0, szMessageComponent, 1, 0, 32001 );
          szTempString_4 = sb_szTempString_4.toString( );}
-         SetAttributeFromString( NewSLC, "S_VersionChangeMessage", "ChangeText", szTempString_4 );
+         SetAttributeFromString( NewSLC, "S_VersionChangeMessage", "ChangeNote", szTempString_4 );
          //:CREATE ENTITY NewSLC.S_VersionChangeMessage   // Skip a line
          RESULT = CreateEntity( NewSLC, "S_VersionChangeMessage", zPOS_AFTER );
          //:ELSE
@@ -1343,7 +1343,7 @@ omSubLC_BuildNewSLC_Version( View     NewSLC,
                sb_szMessageSubComponent = new StringBuilder( szMessageSubComponent );
                          GetStringFromAttributeByContext( sb_szMessageSubComponent, PreviousSLC, "S_MarketingSection", "Title", "", 50 );
             szMessageSubComponent = sb_szMessageSubComponent.toString( );}
-            //:NewSLC.S_VersionChangeMessage.ChangeText = "Marketing Section Title has changed from '" + szMessageSubComponent +
+            //:NewSLC.S_VersionChangeMessage.ChangeNote = "Marketing Section Title has changed from '" + szMessageSubComponent +
             //:                                           "' to: '" + szMessageComponent + "'"
              {StringBuilder sb_szTempString_5;
             if ( szTempString_5 == null )
@@ -1380,7 +1380,7 @@ omSubLC_BuildNewSLC_Version( View     NewSLC,
                sb_szTempString_5 = new StringBuilder( szTempString_5 );
                         ZeidonStringConcat( sb_szTempString_5, 1, 0, "'", 1, 0, 32001 );
             szTempString_5 = sb_szTempString_5.toString( );}
-            SetAttributeFromString( NewSLC, "S_VersionChangeMessage", "ChangeText", szTempString_5 );
+            SetAttributeFromString( NewSLC, "S_VersionChangeMessage", "ChangeNote", szTempString_5 );
             //:CREATE ENTITY NewSLC.S_VersionChangeMessage   // Skip a line
             RESULT = CreateEntity( NewSLC, "S_VersionChangeMessage", zPOS_AFTER );
          } 
@@ -1425,7 +1425,7 @@ omSubLC_BuildNewSLC_Version( View     NewSLC,
                   sb_szMessageComponent = new StringBuilder( szMessageComponent );
                                GetStringFromAttributeByContext( sb_szMessageComponent, PreviousSLC, "S_MarketingStatement", "Text", "", 50 );
                szMessageComponent = sb_szMessageComponent.toString( );}
-               //:NewSLC.S_VersionChangeMessage.ChangeText = "Deleted Marketing Statement, " + NEW_LINE + NEW_LINE + szMessageComponent
+               //:NewSLC.S_VersionChangeMessage.ChangeNote = "Deleted Marketing Statement, " + NEW_LINE + NEW_LINE + szMessageComponent
                 {StringBuilder sb_szTempString_6;
                if ( szTempString_6 == null )
                   sb_szTempString_6 = new StringBuilder( 32 );
@@ -1454,7 +1454,7 @@ omSubLC_BuildNewSLC_Version( View     NewSLC,
                   sb_szTempString_6 = new StringBuilder( szTempString_6 );
                               ZeidonStringConcat( sb_szTempString_6, 1, 0, szMessageComponent, 1, 0, 32001 );
                szTempString_6 = sb_szTempString_6.toString( );}
-               SetAttributeFromString( NewSLC, "S_VersionChangeMessage", "ChangeText", szTempString_6 );
+               SetAttributeFromString( NewSLC, "S_VersionChangeMessage", "ChangeNote", szTempString_6 );
                //:CREATE ENTITY NewSLC.S_VersionChangeMessage   // Skip a line
                RESULT = CreateEntity( NewSLC, "S_VersionChangeMessage", zPOS_AFTER );
                //:ELSE
@@ -1484,7 +1484,7 @@ omSubLC_BuildNewSLC_Version( View     NewSLC,
                      sb_szMessageComponent = new StringBuilder( szMessageComponent );
                                      GetStringFromAttributeByContext( sb_szMessageComponent, NewSLC, "S_MarketingStatement", "Title", "", 50 );
                   szMessageComponent = sb_szMessageComponent.toString( );}
-                  //:NewSLC.S_VersionChangeMessage.ChangeText = "Marketing Statement Title has changed to: " + szMessageComponent
+                  //:NewSLC.S_VersionChangeMessage.ChangeNote = "Marketing Statement Title has changed to: " + szMessageComponent
                    {StringBuilder sb_szTempString_7;
                   if ( szTempString_7 == null )
                      sb_szTempString_7 = new StringBuilder( 32 );
@@ -1499,7 +1499,7 @@ omSubLC_BuildNewSLC_Version( View     NewSLC,
                      sb_szTempString_7 = new StringBuilder( szTempString_7 );
                                     ZeidonStringConcat( sb_szTempString_7, 1, 0, szMessageComponent, 1, 0, 32001 );
                   szTempString_7 = sb_szTempString_7.toString( );}
-                  SetAttributeFromString( NewSLC, "S_VersionChangeMessage", "ChangeText", szTempString_7 );
+                  SetAttributeFromString( NewSLC, "S_VersionChangeMessage", "ChangeNote", szTempString_7 );
                   //:CREATE ENTITY NewSLC.S_VersionChangeMessage   // Skip a line
                   RESULT = CreateEntity( NewSLC, "S_VersionChangeMessage", zPOS_AFTER );
                } 
@@ -1510,8 +1510,8 @@ omSubLC_BuildNewSLC_Version( View     NewSLC,
                { 
                   //:CREATE ENTITY NewSLC.S_VersionChangeMessage
                   RESULT = CreateEntity( NewSLC, "S_VersionChangeMessage", zPOS_AFTER );
-                  //:NewSLC.S_VersionChangeMessage.ChangeText = "Marketing Statement Text has changed from the first statement to the second: "
-                  SetAttributeFromString( NewSLC, "S_VersionChangeMessage", "ChangeText", "Marketing Statement Text has changed from the first statement to the second: " );
+                  //:NewSLC.S_VersionChangeMessage.ChangeNote = "Marketing Statement Text has changed from the first statement to the second: "
+                  SetAttributeFromString( NewSLC, "S_VersionChangeMessage", "ChangeNote", "Marketing Statement Text has changed from the first statement to the second: " );
                   //:GetStringFromAttributeByContext( szMessageComponent, PreviousSLC, "S_MarketingStatement", "Text", "", 50 )
                   {StringBuilder sb_szMessageComponent;
                   if ( szMessageComponent == null )
@@ -1522,8 +1522,8 @@ omSubLC_BuildNewSLC_Version( View     NewSLC,
                   szMessageComponent = sb_szMessageComponent.toString( );}
                   //:CREATE ENTITY NewSLC.S_VersionChangeMessage
                   RESULT = CreateEntity( NewSLC, "S_VersionChangeMessage", zPOS_AFTER );
-                  //:NewSLC.S_VersionChangeMessage.ChangeText = szMessageComponent
-                  SetAttributeFromString( NewSLC, "S_VersionChangeMessage", "ChangeText", szMessageComponent );
+                  //:NewSLC.S_VersionChangeMessage.ChangeNote = szMessageComponent
+                  SetAttributeFromString( NewSLC, "S_VersionChangeMessage", "ChangeNote", szMessageComponent );
                   //:GetStringFromAttributeByContext( szMessageComponent, NewSLC, "S_MarketingStatement", "Text", "", 50 )
                   {StringBuilder sb_szMessageComponent;
                   if ( szMessageComponent == null )
@@ -1534,8 +1534,8 @@ omSubLC_BuildNewSLC_Version( View     NewSLC,
                   szMessageComponent = sb_szMessageComponent.toString( );}
                   //:CREATE ENTITY NewSLC.S_VersionChangeMessage
                   RESULT = CreateEntity( NewSLC, "S_VersionChangeMessage", zPOS_AFTER );
-                  //:NewSLC.S_VersionChangeMessage.ChangeText = szMessageComponent
-                  SetAttributeFromString( NewSLC, "S_VersionChangeMessage", "ChangeText", szMessageComponent );
+                  //:NewSLC.S_VersionChangeMessage.ChangeNote = szMessageComponent
+                  SetAttributeFromString( NewSLC, "S_VersionChangeMessage", "ChangeNote", szMessageComponent );
                   //:CREATE ENTITY NewSLC.S_VersionChangeMessage   // Skip a line
                   RESULT = CreateEntity( NewSLC, "S_VersionChangeMessage", zPOS_AFTER );
                } 
@@ -1666,7 +1666,7 @@ omSubLC_DuplicateSLC( View     NewSLC,
       sb_szTempString_0 = new StringBuilder( 32 );
    else
       sb_szTempString_0 = new StringBuilder( szTempString_0 );
-      ZeidonStringConcat( sb_szTempString_0, 1, 0, " (Duplicate)", 1, 0, 255 );
+      ZeidonStringConcat( sb_szTempString_0, 1, 0, " (Duplicate)", 1, 0, 2049 );
    szTempString_0 = sb_szTempString_0.toString( );}
    SetAttributeFromString( NewSLC, "SubregLabelContent", "Description", szTempString_0 );
    //:INCLUDE NewSLC.SubregProduct FROM PreviousSLC.SubregProduct
@@ -2016,6 +2016,74 @@ omSubLC_DuplicateSLC( View     NewSLC,
 } 
 
 
+//:LOCAL OPERATION
+private int 
+omSubLC_CopyStorageDisposalStmts( View     NewSLC,
+                                  View     SourceMLC )
+{
+   int      RESULT = 0;
+
+   //:CopyStorageDisposalStmts( VIEW NewSLC, VIEW SourceMLC )
+
+   //:FOR EACH SourceMLC.M_StorageDisposalStatement
+   RESULT = SetCursorFirstEntity( SourceMLC, "M_StorageDisposalStatement", "" );
+   while ( RESULT > zCURSOR_UNCHANGED )
+   { 
+      //:CREATE ENTITY NewSLC.S_StorageDisposalStatement
+      RESULT = CreateEntity( NewSLC, "S_StorageDisposalStatement", zPOS_AFTER );
+      //:SetMatchingAttributesByName( NewSLC, "S_StorageDisposalStatement", SourceMLC, "M_StorageDisposalStatement", zSET_NULL )
+      SetMatchingAttributesByName( NewSLC, "S_StorageDisposalStatement", SourceMLC, "M_StorageDisposalStatement", zSET_NULL );
+      //:FOR EACH SourceMLC.M_StorageDisposalSubStatement
+      RESULT = SetCursorFirstEntity( SourceMLC, "M_StorageDisposalSubStatement", "" );
+      while ( RESULT > zCURSOR_UNCHANGED )
+      { 
+         //:SetViewToSubobject( SourceMLC, "M_StorageDisposalSubStatement" )
+         SetViewToSubobject( SourceMLC, "M_StorageDisposalSubStatement" );
+         //:SetViewToSubobject( NewSLC, "S_StorageDisposalSubStatement" )
+         SetViewToSubobject( NewSLC, "S_StorageDisposalSubStatement" );
+         //:CopyStorageDisposalStmts( NewSLC, SourceMLC )
+         omSubLC_CopyStorageDisposalStmts( NewSLC, SourceMLC );
+         //:ResetViewFromSubobject( NewSLC )
+         ResetViewFromSubobject( NewSLC );
+         //:ResetViewFromSubobject( SourceMLC )
+         ResetViewFromSubobject( SourceMLC );
+         RESULT = SetCursorNextEntity( SourceMLC, "M_StorageDisposalSubStatement", "" );
+      } 
+
+      //:END
+      //:FOR EACH SourceMLC.M_InsertTextKeywordSD
+      RESULT = SetCursorFirstEntity( SourceMLC, "M_InsertTextKeywordSD", "" );
+      while ( RESULT > zCURSOR_UNCHANGED )
+      { 
+         //:CREATE ENTITY NewSLC.S_InsertTextKeywordSD
+         RESULT = CreateEntity( NewSLC, "S_InsertTextKeywordSD", zPOS_AFTER );
+         //:SetMatchingAttributesByName( NewSLC, "S_InsertTextKeywordSD", SourceMLC, "M_InsertTextKeywordSD", zSET_NULL )
+         SetMatchingAttributesByName( NewSLC, "S_InsertTextKeywordSD", SourceMLC, "M_InsertTextKeywordSD", zSET_NULL );
+         //:FOR EACH SourceMLC.M_InsertTextSD
+         RESULT = SetCursorFirstEntity( SourceMLC, "M_InsertTextSD", "" );
+         while ( RESULT > zCURSOR_UNCHANGED )
+         { 
+            //:CREATE ENTITY NewSLC.S_InsertTextSD
+            RESULT = CreateEntity( NewSLC, "S_InsertTextSD", zPOS_AFTER );
+            //:SetMatchingAttributesByName( NewSLC, "S_InsertTextSD", SourceMLC, "M_InsertTextSD", zSET_NULL )
+            SetMatchingAttributesByName( NewSLC, "S_InsertTextSD", SourceMLC, "M_InsertTextSD", zSET_NULL );
+            RESULT = SetCursorNextEntity( SourceMLC, "M_InsertTextSD", "" );
+         } 
+
+         RESULT = SetCursorNextEntity( SourceMLC, "M_InsertTextKeywordSD", "" );
+         //:END
+      } 
+
+      RESULT = SetCursorNextEntity( SourceMLC, "M_StorageDisposalStatement", "" );
+      //:END
+   } 
+
+   //:END
+   return( 0 );
+// END
+} 
+
+
 //:TRANSFORMATION OPERATION
 //:BuildSLC_FromMLC( VIEW NewSLC    BASED ON LOD mSubLC,
 //:                  VIEW SourceMLC BASED ON LOD mMasLC )
@@ -2110,42 +2178,37 @@ omSubLC_BuildSLC_FromMLC( View     NewSLC,
    //:END
 
    //:// StorageDisposal Section
-   //:// Select the Storage & Disposal Section based on Container Size, which is stored as a work attribute in NewSLC.
-   //:IF NewSLC.SubregLabelContent.wContainerSize > 1
-   if ( CompareAttributeToInteger( NewSLC, "SubregLabelContent", "wContainerSize", 1 ) > 0 )
-   { 
-      //:SET CURSOR FIRST SourceMLC.M_StorageDisposalSection WHERE SourceMLC.M_StorageDisposalSection.ContainerVolume = ">1"
-      RESULT = SetCursorFirstEntityByString( SourceMLC, "M_StorageDisposalSection", "ContainerVolume", ">1", "" );
-      //:ELSE
-   } 
-   else
-   { 
-      //:SET CURSOR FIRST SourceMLC.M_StorageDisposalSection WHERE SourceMLC.M_StorageDisposalSection.ContainerVolume = "<=1"
-      RESULT = SetCursorFirstEntityByString( SourceMLC, "M_StorageDisposalSection", "ContainerVolume", "<=1", "" );
-   } 
-
-   //:END
-   //:CREATE ENTITY NewSLC.S_StorageDisposalSection
-   RESULT = CreateEntity( NewSLC, "S_StorageDisposalSection", zPOS_AFTER );
-   //:SetMatchingAttributesByName( NewSLC, "S_StorageDisposalSection", SourceMLC, "M_StorageDisposalSection", zSET_NULL )
-   SetMatchingAttributesByName( NewSLC, "S_StorageDisposalSection", SourceMLC, "M_StorageDisposalSection", zSET_NULL );
-   //:NewSLC.S_StorageDisposalSection.PrimaryMLC_ID = SourceMLC.M_StorageDisposalSection.ID
-   SetAttributeFromAttribute( NewSLC, "S_StorageDisposalSection", "PrimaryMLC_ID", SourceMLC, "M_StorageDisposalSection", "ID" );
-   //:FOR EACH SourceMLC.M_StorageDisposalStatement
-   RESULT = SetCursorFirstEntity( SourceMLC, "M_StorageDisposalStatement", "" );
+   //:// For the moment, copy all Storage & Disposal Sections with child entities.
+   //:FOR EACH SourceMLC.M_StorageDisposalSection
+   RESULT = SetCursorFirstEntity( SourceMLC, "M_StorageDisposalSection", "" );
    while ( RESULT > zCURSOR_UNCHANGED )
    { 
-      //:CREATE ENTITY NewSLC.S_StorageDisposalStatement
-      RESULT = CreateEntity( NewSLC, "S_StorageDisposalStatement", zPOS_AFTER );
-      //:SetMatchingAttributesByName( NewSLC, "S_StorageDisposalStatement", SourceMLC, "M_StorageDisposalStatement", zSET_NULL )
-      SetMatchingAttributesByName( NewSLC, "S_StorageDisposalStatement", SourceMLC, "M_StorageDisposalStatement", zSET_NULL );
-      //:NewSLC.S_StorageDisposalStatement.PrimaryMLC_ID = SourceMLC.M_StorageDisposalStatement.ID
-      SetAttributeFromAttribute( NewSLC, "S_StorageDisposalStatement", "PrimaryMLC_ID", SourceMLC, "M_StorageDisposalStatement", "ID" );
-      RESULT = SetCursorNextEntity( SourceMLC, "M_StorageDisposalStatement", "" );
+      //:CREATE ENTITY NewSLC.S_StorageDisposalSection
+      RESULT = CreateEntity( NewSLC, "S_StorageDisposalSection", zPOS_AFTER );
+      //:SetMatchingAttributesByName( NewSLC, "S_StorageDisposalSection", SourceMLC, "M_StorageDisposalSection", zSET_NULL )
+      SetMatchingAttributesByName( NewSLC, "S_StorageDisposalSection", SourceMLC, "M_StorageDisposalSection", zSET_NULL );
+      //:CopyStorageDisposalStmts( NewSLC, SourceMLC )
+      omSubLC_CopyStorageDisposalStmts( NewSLC, SourceMLC );
+      RESULT = SetCursorNextEntity( SourceMLC, "M_StorageDisposalSection", "" );
    } 
 
    //:END
-
+   //:/*
+   //:// Select the Storage & Disposal Section based on Container Size, which is stored as a work attribute in NewSLC.
+   //:IF NewSLC.SubregLabelContent.wContainerSize > 5
+   //:   SET CURSOR FIRST SourceMLC.M_StorageDisposalSection WHERE SourceMLC.M_StorageDisposalSection.ContainerVolume = ">5"
+   //:ELSE
+   //:   SET CURSOR FIRST SourceMLC.M_StorageDisposalSection WHERE SourceMLC.M_StorageDisposalSection.ContainerVolume = "<=5"
+   //:END
+   //:CREATE ENTITY NewSLC.S_StorageDisposalSection
+   //:SetMatchingAttributesByName( NewSLC, "S_StorageDisposalSection", SourceMLC, "M_StorageDisposalSection", zSET_NULL )
+   //:NewSLC.S_StorageDisposalSection.PrimaryMLC_ID = SourceMLC.M_StorageDisposalSection.ID
+   //:FOR EACH SourceMLC.M_StorageDisposalStatement
+   //:   CREATE ENTITY NewSLC.S_StorageDisposalStatement
+   //:   SetMatchingAttributesByName( NewSLC, "S_StorageDisposalStatement", SourceMLC, "M_StorageDisposalStatement", zSET_NULL )
+   //:   NewSLC.S_StorageDisposalStatement.PrimaryMLC_ID = SourceMLC.M_StorageDisposalStatement.ID
+   //:END
+   //:*/
    //:// HumanHazard Section
    //:FOR EACH SourceMLC.M_HumanHazardSection
    RESULT = SetCursorFirstEntity( SourceMLC, "M_HumanHazardSection", "" );
@@ -2163,20 +2226,32 @@ omSubLC_BuildSLC_FromMLC( View     NewSLC,
    //:END
 
    //:// Add any Directions For Use Sections that aren't driven by Usage entries.
-   //:FOR EACH SourceMLC.M_DirectionsForUseSection
-   RESULT = SetCursorFirstEntity( SourceMLC, "M_DirectionsForUseSection", "" );
+   //:FOR EACH SourceMLC.M_DirectionsForUseCategory
+   RESULT = SetCursorFirstEntity( SourceMLC, "M_DirectionsForUseCategory", "" );
    while ( RESULT > zCURSOR_UNCHANGED )
    { 
-      //:IF SourceMLC.M_DrivingUsage DOES NOT EXIST
-      lTempInteger_1 = CheckExistenceOfEntity( SourceMLC, "M_DrivingUsage" );
-      if ( lTempInteger_1 != 0 )
+      //:CREATE ENTITY NewSLC.S_DirectionsForUseCategory
+      RESULT = CreateEntity( NewSLC, "S_DirectionsForUseCategory", zPOS_AFTER );
+      //:SetMatchingAttributesByName( NewSLC, "S_DirectionsForUseCategory", SourceMLC, "M_DirectionsForUseCategory", zSET_NULL )
+      SetMatchingAttributesByName( NewSLC, "S_DirectionsForUseCategory", SourceMLC, "M_DirectionsForUseCategory", zSET_NULL );
+      //:FOR EACH SourceMLC.M_DirectionsForUseSection
+      RESULT = SetCursorFirstEntity( SourceMLC, "M_DirectionsForUseSection", "" );
+      while ( RESULT > zCURSOR_UNCHANGED )
       { 
-         //:// No Driving Usage entry exists, so always copy the section.
-         //:CopyDirsForUseSection( NewSLC, SourceMLC )
-         omSubLC_CopyDirsForUseSection( NewSLC, SourceMLC );
+         //:IF SourceMLC.M_DrivingUsage DOES NOT EXIST
+         lTempInteger_1 = CheckExistenceOfEntity( SourceMLC, "M_DrivingUsage" );
+         if ( lTempInteger_1 != 0 )
+         { 
+            //:// No Driving Usage entry exists, so always copy the section.
+            //:CopyDirsForUseSection( NewSLC, SourceMLC )
+            omSubLC_CopyDirsForUseSection( NewSLC, SourceMLC );
+         } 
+
+         RESULT = SetCursorNextEntity( SourceMLC, "M_DirectionsForUseSection", "" );
+         //:END
       } 
 
-      RESULT = SetCursorNextEntity( SourceMLC, "M_DirectionsForUseSection", "" );
+      RESULT = SetCursorNextEntity( SourceMLC, "M_DirectionsForUseCategory", "" );
       //:END
    } 
 
@@ -2287,6 +2362,89 @@ omSubLC_BuildDirsForUseSects( View     NewSLC,
       } 
 
       RESULT = SetCursorNextEntity( SourceMLC, "M_DirectionsForUseSection", "" );
+      //:END
+   } 
+
+   //:END
+   return( 0 );
+// END
+} 
+
+
+//:LOCAL OPERATION
+private int 
+omSubLC_CopyDirsForUseStatements( View     NewSLC,
+                                  View     SourceMLC )
+{
+   int      RESULT = 0;
+   int      lTempInteger_0 = 0;
+   int      lTempInteger_1 = 0;
+
+   //:CopyDirsForUseStatements( VIEW NewSLC    BASED ON LOD mSubLC,
+   //:                       VIEW SourceMLC BASED ON LOD mMasLC )
+
+   //:FOR EACH SourceMLC.M_DirectionsForUseStatement
+   RESULT = SetCursorFirstEntity( SourceMLC, "M_DirectionsForUseStatement", "" );
+   while ( RESULT > zCURSOR_UNCHANGED )
+   { 
+      //:CREATE ENTITY NewSLC.S_DirectionsForUseStatement
+      RESULT = CreateEntity( NewSLC, "S_DirectionsForUseStatement", zPOS_AFTER );
+      //:SetMatchingAttributesByName( NewSLC,    "S_DirectionsForUseStatement",
+      //:                             SourceMLC, "M_DirectionsForUseStatement", zSET_NULL )
+      SetMatchingAttributesByName( NewSLC, "S_DirectionsForUseStatement", SourceMLC, "M_DirectionsForUseStatement", zSET_NULL );
+      //:NewSLC.S_DirectionsForUseStatement.PrimaryMLC_ID = SourceMLC.M_DirectionsForUseStatement.ID
+      SetAttributeFromAttribute( NewSLC, "S_DirectionsForUseStatement", "PrimaryMLC_ID", SourceMLC, "M_DirectionsForUseStatement", "ID" );
+      //:IF NewSLC.S_DirectionsForUseStatement.NotForUseType = ""
+      if ( CompareAttributeToString( NewSLC, "S_DirectionsForUseStatement", "NotForUseType", "" ) == 0 )
+      { 
+         //:NewSLC.S_DirectionsForUseStatement.NotForUseType = "NA"
+         SetAttributeFromString( NewSLC, "S_DirectionsForUseStatement", "NotForUseType", "NA" );
+      } 
+
+      //:END
+      //:FOR EACH SourceMLC.M_DirectionsUsageOrdering
+      RESULT = SetCursorFirstEntity( SourceMLC, "M_DirectionsUsageOrdering", "" );
+      while ( RESULT > zCURSOR_UNCHANGED )
+      { 
+         //:SET CURSOR FIRST NewSLC.S_Usage WITHIN NewSLC.SubregLabelContent
+         //:           WHERE NewSLC.S_Usage.PrimaryMLC_ID = SourceMLC.M_DirectionsUsage.ID
+         {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
+                   GetIntegerFromAttribute( mi_lTempInteger_0, SourceMLC, "M_DirectionsUsage", "ID" );
+         lTempInteger_0 = mi_lTempInteger_0.intValue( );}
+         RESULT = SetCursorFirstEntityByInteger( NewSLC, "S_Usage", "PrimaryMLC_ID", lTempInteger_0, "SubregLabelContent" );
+         //:IF RESULT >= zCURSOR_SET
+         if ( RESULT >= zCURSOR_SET )
+         { 
+            //:CREATE ENTITY NewSLC.S_DirectionsUsageOrdering
+            RESULT = CreateEntity( NewSLC, "S_DirectionsUsageOrdering", zPOS_AFTER );
+            //:NewSLC.S_DirectionsUsageOrdering.PrimaryMLC_ID = SourceMLC.M_DirectionsUsageOrdering.ID
+            SetAttributeFromAttribute( NewSLC, "S_DirectionsUsageOrdering", "PrimaryMLC_ID", SourceMLC, "M_DirectionsUsageOrdering", "ID" );
+            //:INCLUDE NewSLC.S_DirectionsUsage FROM NewSLC.S_Usage
+            RESULT = IncludeSubobjectFromSubobject( NewSLC, "S_DirectionsUsage", NewSLC, "S_Usage", zPOS_AFTER );
+         } 
+
+         RESULT = SetCursorNextEntity( SourceMLC, "M_DirectionsUsageOrdering", "" );
+         //:END
+      } 
+
+      //:END
+      //:IF SourceMLC.M_DirectionsForUseSubStatement EXISTS
+      lTempInteger_1 = CheckExistenceOfEntity( SourceMLC, "M_DirectionsForUseSubStatement" );
+      if ( lTempInteger_1 == 0 )
+      { 
+         //:SetViewToSubobject( SourceMLC, "M_DirectionsForUseSubStatement" )
+         SetViewToSubobject( SourceMLC, "M_DirectionsForUseSubStatement" );
+         //:SetViewToSubobject( NewSLC, "S_DirectionsForUseSubStatement" )
+         SetViewToSubobject( NewSLC, "S_DirectionsForUseSubStatement" );
+         //:CopyDirsForUseStatements( NewSLC, SourceMLC )
+         omSubLC_CopyDirsForUseStatements( NewSLC, SourceMLC );
+         //:ResetViewFromSubobject( NewSLC )
+         ResetViewFromSubobject( NewSLC );
+         //:ResetViewFromSubobject( SourceMLC )
+         ResetViewFromSubobject( SourceMLC );
+      } 
+
+      RESULT = SetCursorNextEntity( SourceMLC, "M_DirectionsForUseStatement", "" );
       //:END
    } 
 
@@ -2465,6 +2623,14 @@ omSubLC_dFullHazardStatement( View     mSubLC,
    int      lTempInteger_11 = 0;
    int      lTempInteger_12 = 0;
    int      lTempInteger_13 = 0;
+   int      lTempInteger_14 = 0;
+   int      lTempInteger_15 = 0;
+   int      lTempInteger_16 = 0;
+   int      lTempInteger_17 = 0;
+   int      lTempInteger_18 = 0;
+   int      lTempInteger_19 = 0;
+   int      lTempInteger_20 = 0;
+   int      lTempInteger_21 = 0;
 
 
    //:CASE GetOrSetFlag
@@ -2798,6 +2964,162 @@ omSubLC_dFullHazardStatement( View     mSubLC,
 
                //:END
 
+               //:szLocation = mSubLC.S_HumanHazardSection.PanelLoc6
+               {MutableInt mi_lTempInteger_9 = new MutableInt( lTempInteger_9 );
+               StringBuilder sb_szLocation;
+               if ( szLocation == null )
+                  sb_szLocation = new StringBuilder( 32 );
+               else
+                  sb_szLocation = new StringBuilder( szLocation );
+                               GetVariableFromAttribute( sb_szLocation, mi_lTempInteger_9, 'S', 257, mSubLC, "S_HumanHazardSection", "PanelLoc6", "", 0 );
+               lTempInteger_9 = mi_lTempInteger_9.intValue( );
+               szLocation = sb_szLocation.toString( );}
+               //:IF szLocation != ""
+               if ( ZeidonStringCompare( szLocation, 1, 0, "", 1, 0, 257 ) != 0 )
+               { 
+                  //:szReplaceString = szReplaceString + szOpenSeparator + szLocation + szCloseSeparator
+                   {StringBuilder sb_szReplaceString;
+                  if ( szReplaceString == null )
+                     sb_szReplaceString = new StringBuilder( 32 );
+                  else
+                     sb_szReplaceString = new StringBuilder( szReplaceString );
+                                    ZeidonStringConcat( sb_szReplaceString, 1, 0, szOpenSeparator, 1, 0, 257 );
+                  szReplaceString = sb_szReplaceString.toString( );}
+                   {StringBuilder sb_szReplaceString;
+                  if ( szReplaceString == null )
+                     sb_szReplaceString = new StringBuilder( 32 );
+                  else
+                     sb_szReplaceString = new StringBuilder( szReplaceString );
+                                    ZeidonStringConcat( sb_szReplaceString, 1, 0, szLocation, 1, 0, 257 );
+                  szReplaceString = sb_szReplaceString.toString( );}
+                   {StringBuilder sb_szReplaceString;
+                  if ( szReplaceString == null )
+                     sb_szReplaceString = new StringBuilder( 32 );
+                  else
+                     sb_szReplaceString = new StringBuilder( szReplaceString );
+                                    ZeidonStringConcat( sb_szReplaceString, 1, 0, szCloseSeparator, 1, 0, 257 );
+                  szReplaceString = sb_szReplaceString.toString( );}
+               } 
+
+               //:END
+
+               //:szLocation = mSubLC.S_HumanHazardSection.PanelLoc7
+               {MutableInt mi_lTempInteger_10 = new MutableInt( lTempInteger_10 );
+               StringBuilder sb_szLocation;
+               if ( szLocation == null )
+                  sb_szLocation = new StringBuilder( 32 );
+               else
+                  sb_szLocation = new StringBuilder( szLocation );
+                               GetVariableFromAttribute( sb_szLocation, mi_lTempInteger_10, 'S', 257, mSubLC, "S_HumanHazardSection", "PanelLoc7", "", 0 );
+               lTempInteger_10 = mi_lTempInteger_10.intValue( );
+               szLocation = sb_szLocation.toString( );}
+               //:IF szLocation != ""
+               if ( ZeidonStringCompare( szLocation, 1, 0, "", 1, 0, 257 ) != 0 )
+               { 
+                  //:szReplaceString = szReplaceString + szOpenSeparator + szLocation + szCloseSeparator
+                   {StringBuilder sb_szReplaceString;
+                  if ( szReplaceString == null )
+                     sb_szReplaceString = new StringBuilder( 32 );
+                  else
+                     sb_szReplaceString = new StringBuilder( szReplaceString );
+                                    ZeidonStringConcat( sb_szReplaceString, 1, 0, szOpenSeparator, 1, 0, 257 );
+                  szReplaceString = sb_szReplaceString.toString( );}
+                   {StringBuilder sb_szReplaceString;
+                  if ( szReplaceString == null )
+                     sb_szReplaceString = new StringBuilder( 32 );
+                  else
+                     sb_szReplaceString = new StringBuilder( szReplaceString );
+                                    ZeidonStringConcat( sb_szReplaceString, 1, 0, szLocation, 1, 0, 257 );
+                  szReplaceString = sb_szReplaceString.toString( );}
+                   {StringBuilder sb_szReplaceString;
+                  if ( szReplaceString == null )
+                     sb_szReplaceString = new StringBuilder( 32 );
+                  else
+                     sb_szReplaceString = new StringBuilder( szReplaceString );
+                                    ZeidonStringConcat( sb_szReplaceString, 1, 0, szCloseSeparator, 1, 0, 257 );
+                  szReplaceString = sb_szReplaceString.toString( );}
+               } 
+
+               //:END
+
+               //:szLocation = mSubLC.S_HumanHazardSection.PanelLoc8
+               {MutableInt mi_lTempInteger_11 = new MutableInt( lTempInteger_11 );
+               StringBuilder sb_szLocation;
+               if ( szLocation == null )
+                  sb_szLocation = new StringBuilder( 32 );
+               else
+                  sb_szLocation = new StringBuilder( szLocation );
+                               GetVariableFromAttribute( sb_szLocation, mi_lTempInteger_11, 'S', 257, mSubLC, "S_HumanHazardSection", "PanelLoc8", "", 0 );
+               lTempInteger_11 = mi_lTempInteger_11.intValue( );
+               szLocation = sb_szLocation.toString( );}
+               //:IF szLocation != ""
+               if ( ZeidonStringCompare( szLocation, 1, 0, "", 1, 0, 257 ) != 0 )
+               { 
+                  //:szReplaceString = szReplaceString + szOpenSeparator + szLocation + szCloseSeparator
+                   {StringBuilder sb_szReplaceString;
+                  if ( szReplaceString == null )
+                     sb_szReplaceString = new StringBuilder( 32 );
+                  else
+                     sb_szReplaceString = new StringBuilder( szReplaceString );
+                                    ZeidonStringConcat( sb_szReplaceString, 1, 0, szOpenSeparator, 1, 0, 257 );
+                  szReplaceString = sb_szReplaceString.toString( );}
+                   {StringBuilder sb_szReplaceString;
+                  if ( szReplaceString == null )
+                     sb_szReplaceString = new StringBuilder( 32 );
+                  else
+                     sb_szReplaceString = new StringBuilder( szReplaceString );
+                                    ZeidonStringConcat( sb_szReplaceString, 1, 0, szLocation, 1, 0, 257 );
+                  szReplaceString = sb_szReplaceString.toString( );}
+                   {StringBuilder sb_szReplaceString;
+                  if ( szReplaceString == null )
+                     sb_szReplaceString = new StringBuilder( 32 );
+                  else
+                     sb_szReplaceString = new StringBuilder( szReplaceString );
+                                    ZeidonStringConcat( sb_szReplaceString, 1, 0, szCloseSeparator, 1, 0, 257 );
+                  szReplaceString = sb_szReplaceString.toString( );}
+               } 
+
+               //:END
+
+               //:szLocation = mSubLC.S_HumanHazardSection.PanelLoc9
+               {MutableInt mi_lTempInteger_12 = new MutableInt( lTempInteger_12 );
+               StringBuilder sb_szLocation;
+               if ( szLocation == null )
+                  sb_szLocation = new StringBuilder( 32 );
+               else
+                  sb_szLocation = new StringBuilder( szLocation );
+                               GetVariableFromAttribute( sb_szLocation, mi_lTempInteger_12, 'S', 257, mSubLC, "S_HumanHazardSection", "PanelLoc9", "", 0 );
+               lTempInteger_12 = mi_lTempInteger_12.intValue( );
+               szLocation = sb_szLocation.toString( );}
+               //:IF szLocation != ""
+               if ( ZeidonStringCompare( szLocation, 1, 0, "", 1, 0, 257 ) != 0 )
+               { 
+                  //:szReplaceString = szReplaceString + szOpenSeparator + szLocation + szCloseSeparator
+                   {StringBuilder sb_szReplaceString;
+                  if ( szReplaceString == null )
+                     sb_szReplaceString = new StringBuilder( 32 );
+                  else
+                     sb_szReplaceString = new StringBuilder( szReplaceString );
+                                    ZeidonStringConcat( sb_szReplaceString, 1, 0, szOpenSeparator, 1, 0, 257 );
+                  szReplaceString = sb_szReplaceString.toString( );}
+                   {StringBuilder sb_szReplaceString;
+                  if ( szReplaceString == null )
+                     sb_szReplaceString = new StringBuilder( 32 );
+                  else
+                     sb_szReplaceString = new StringBuilder( szReplaceString );
+                                    ZeidonStringConcat( sb_szReplaceString, 1, 0, szLocation, 1, 0, 257 );
+                  szReplaceString = sb_szReplaceString.toString( );}
+                   {StringBuilder sb_szReplaceString;
+                  if ( szReplaceString == null )
+                     sb_szReplaceString = new StringBuilder( 32 );
+                  else
+                     sb_szReplaceString = new StringBuilder( szReplaceString );
+                                    ZeidonStringConcat( sb_szReplaceString, 1, 0, szCloseSeparator, 1, 0, 257 );
+                  szReplaceString = sb_szReplaceString.toString( );}
+               } 
+
+               //:END
+
                //:zReplaceSubString( szString, nPosStart, nPosEnd, szReplaceString )
                {StringBuilder sb_szString;
                if ( szString == null )
@@ -2827,14 +3149,14 @@ omSubLC_dFullHazardStatement( View     mSubLC,
                               ZeidonStringCopy( sb_szReplaceString, 1, 0, "", 1, 0, 257 );
                szReplaceString = sb_szReplaceString.toString( );}
                //:szLocation = mSubLC.S_HumanHazardSection.LabelLoc1
-               {MutableInt mi_lTempInteger_9 = new MutableInt( lTempInteger_9 );
+               {MutableInt mi_lTempInteger_13 = new MutableInt( lTempInteger_13 );
                StringBuilder sb_szLocation;
                if ( szLocation == null )
                   sb_szLocation = new StringBuilder( 32 );
                else
                   sb_szLocation = new StringBuilder( szLocation );
-                               GetVariableFromAttribute( sb_szLocation, mi_lTempInteger_9, 'S', 257, mSubLC, "S_HumanHazardSection", "LabelLoc1", "", 0 );
-               lTempInteger_9 = mi_lTempInteger_9.intValue( );
+                               GetVariableFromAttribute( sb_szLocation, mi_lTempInteger_13, 'S', 257, mSubLC, "S_HumanHazardSection", "LabelLoc1", "", 0 );
+               lTempInteger_13 = mi_lTempInteger_13.intValue( );
                szLocation = sb_szLocation.toString( );}
                //:IF szLocation != ""
                if ( ZeidonStringCompare( szLocation, 1, 0, "", 1, 0, 257 ) != 0 )
@@ -2884,14 +3206,14 @@ omSubLC_dFullHazardStatement( View     mSubLC,
                //:END
 
                //:szLocation = mSubLC.S_HumanHazardSection.LabelLoc2
-               {MutableInt mi_lTempInteger_10 = new MutableInt( lTempInteger_10 );
+               {MutableInt mi_lTempInteger_14 = new MutableInt( lTempInteger_14 );
                StringBuilder sb_szLocation;
                if ( szLocation == null )
                   sb_szLocation = new StringBuilder( 32 );
                else
                   sb_szLocation = new StringBuilder( szLocation );
-                               GetVariableFromAttribute( sb_szLocation, mi_lTempInteger_10, 'S', 257, mSubLC, "S_HumanHazardSection", "LabelLoc2", "", 0 );
-               lTempInteger_10 = mi_lTempInteger_10.intValue( );
+                               GetVariableFromAttribute( sb_szLocation, mi_lTempInteger_14, 'S', 257, mSubLC, "S_HumanHazardSection", "LabelLoc2", "", 0 );
+               lTempInteger_14 = mi_lTempInteger_14.intValue( );
                szLocation = sb_szLocation.toString( );}
                //:IF szLocation != ""
                if ( ZeidonStringCompare( szLocation, 1, 0, "", 1, 0, 257 ) != 0 )
@@ -2923,14 +3245,14 @@ omSubLC_dFullHazardStatement( View     mSubLC,
                //:END
 
                //:szLocation = mSubLC.S_HumanHazardSection.LabelLoc3
-               {MutableInt mi_lTempInteger_11 = new MutableInt( lTempInteger_11 );
+               {MutableInt mi_lTempInteger_15 = new MutableInt( lTempInteger_15 );
                StringBuilder sb_szLocation;
                if ( szLocation == null )
                   sb_szLocation = new StringBuilder( 32 );
                else
                   sb_szLocation = new StringBuilder( szLocation );
-                               GetVariableFromAttribute( sb_szLocation, mi_lTempInteger_11, 'S', 257, mSubLC, "S_HumanHazardSection", "LabelLoc3", "", 0 );
-               lTempInteger_11 = mi_lTempInteger_11.intValue( );
+                               GetVariableFromAttribute( sb_szLocation, mi_lTempInteger_15, 'S', 257, mSubLC, "S_HumanHazardSection", "LabelLoc3", "", 0 );
+               lTempInteger_15 = mi_lTempInteger_15.intValue( );
                szLocation = sb_szLocation.toString( );}
                //:IF szLocation != ""
                if ( ZeidonStringCompare( szLocation, 1, 0, "", 1, 0, 257 ) != 0 )
@@ -2962,14 +3284,14 @@ omSubLC_dFullHazardStatement( View     mSubLC,
                //:END
 
                //:szLocation = mSubLC.S_HumanHazardSection.LabelLoc4
-               {MutableInt mi_lTempInteger_12 = new MutableInt( lTempInteger_12 );
+               {MutableInt mi_lTempInteger_16 = new MutableInt( lTempInteger_16 );
                StringBuilder sb_szLocation;
                if ( szLocation == null )
                   sb_szLocation = new StringBuilder( 32 );
                else
                   sb_szLocation = new StringBuilder( szLocation );
-                               GetVariableFromAttribute( sb_szLocation, mi_lTempInteger_12, 'S', 257, mSubLC, "S_HumanHazardSection", "LabelLoc4", "", 0 );
-               lTempInteger_12 = mi_lTempInteger_12.intValue( );
+                               GetVariableFromAttribute( sb_szLocation, mi_lTempInteger_16, 'S', 257, mSubLC, "S_HumanHazardSection", "LabelLoc4", "", 0 );
+               lTempInteger_16 = mi_lTempInteger_16.intValue( );
                szLocation = sb_szLocation.toString( );}
                //:IF szLocation != ""
                if ( ZeidonStringCompare( szLocation, 1, 0, "", 1, 0, 257 ) != 0 )
@@ -3001,14 +3323,170 @@ omSubLC_dFullHazardStatement( View     mSubLC,
                //:END
 
                //:szLocation = mSubLC.S_HumanHazardSection.LabelLoc5
-               {MutableInt mi_lTempInteger_13 = new MutableInt( lTempInteger_13 );
+               {MutableInt mi_lTempInteger_17 = new MutableInt( lTempInteger_17 );
                StringBuilder sb_szLocation;
                if ( szLocation == null )
                   sb_szLocation = new StringBuilder( 32 );
                else
                   sb_szLocation = new StringBuilder( szLocation );
-                               GetVariableFromAttribute( sb_szLocation, mi_lTempInteger_13, 'S', 257, mSubLC, "S_HumanHazardSection", "LabelLoc5", "", 0 );
-               lTempInteger_13 = mi_lTempInteger_13.intValue( );
+                               GetVariableFromAttribute( sb_szLocation, mi_lTempInteger_17, 'S', 257, mSubLC, "S_HumanHazardSection", "LabelLoc5", "", 0 );
+               lTempInteger_17 = mi_lTempInteger_17.intValue( );
+               szLocation = sb_szLocation.toString( );}
+               //:IF szLocation != ""
+               if ( ZeidonStringCompare( szLocation, 1, 0, "", 1, 0, 257 ) != 0 )
+               { 
+                  //:szReplaceString = szReplaceString + szOpenSeparator + szLocation + szCloseSeparator
+                   {StringBuilder sb_szReplaceString;
+                  if ( szReplaceString == null )
+                     sb_szReplaceString = new StringBuilder( 32 );
+                  else
+                     sb_szReplaceString = new StringBuilder( szReplaceString );
+                                    ZeidonStringConcat( sb_szReplaceString, 1, 0, szOpenSeparator, 1, 0, 257 );
+                  szReplaceString = sb_szReplaceString.toString( );}
+                   {StringBuilder sb_szReplaceString;
+                  if ( szReplaceString == null )
+                     sb_szReplaceString = new StringBuilder( 32 );
+                  else
+                     sb_szReplaceString = new StringBuilder( szReplaceString );
+                                    ZeidonStringConcat( sb_szReplaceString, 1, 0, szLocation, 1, 0, 257 );
+                  szReplaceString = sb_szReplaceString.toString( );}
+                   {StringBuilder sb_szReplaceString;
+                  if ( szReplaceString == null )
+                     sb_szReplaceString = new StringBuilder( 32 );
+                  else
+                     sb_szReplaceString = new StringBuilder( szReplaceString );
+                                    ZeidonStringConcat( sb_szReplaceString, 1, 0, szCloseSeparator, 1, 0, 257 );
+                  szReplaceString = sb_szReplaceString.toString( );}
+               } 
+
+               //:END
+
+               //:szLocation = mSubLC.S_HumanHazardSection.LabelLoc6
+               {MutableInt mi_lTempInteger_18 = new MutableInt( lTempInteger_18 );
+               StringBuilder sb_szLocation;
+               if ( szLocation == null )
+                  sb_szLocation = new StringBuilder( 32 );
+               else
+                  sb_szLocation = new StringBuilder( szLocation );
+                               GetVariableFromAttribute( sb_szLocation, mi_lTempInteger_18, 'S', 257, mSubLC, "S_HumanHazardSection", "LabelLoc6", "", 0 );
+               lTempInteger_18 = mi_lTempInteger_18.intValue( );
+               szLocation = sb_szLocation.toString( );}
+               //:IF szLocation != ""
+               if ( ZeidonStringCompare( szLocation, 1, 0, "", 1, 0, 257 ) != 0 )
+               { 
+                  //:szReplaceString = szReplaceString + szOpenSeparator + szLocation + szCloseSeparator
+                   {StringBuilder sb_szReplaceString;
+                  if ( szReplaceString == null )
+                     sb_szReplaceString = new StringBuilder( 32 );
+                  else
+                     sb_szReplaceString = new StringBuilder( szReplaceString );
+                                    ZeidonStringConcat( sb_szReplaceString, 1, 0, szOpenSeparator, 1, 0, 257 );
+                  szReplaceString = sb_szReplaceString.toString( );}
+                   {StringBuilder sb_szReplaceString;
+                  if ( szReplaceString == null )
+                     sb_szReplaceString = new StringBuilder( 32 );
+                  else
+                     sb_szReplaceString = new StringBuilder( szReplaceString );
+                                    ZeidonStringConcat( sb_szReplaceString, 1, 0, szLocation, 1, 0, 257 );
+                  szReplaceString = sb_szReplaceString.toString( );}
+                   {StringBuilder sb_szReplaceString;
+                  if ( szReplaceString == null )
+                     sb_szReplaceString = new StringBuilder( 32 );
+                  else
+                     sb_szReplaceString = new StringBuilder( szReplaceString );
+                                    ZeidonStringConcat( sb_szReplaceString, 1, 0, szCloseSeparator, 1, 0, 257 );
+                  szReplaceString = sb_szReplaceString.toString( );}
+               } 
+
+               //:END
+
+               //:szLocation = mSubLC.S_HumanHazardSection.LabelLoc7
+               {MutableInt mi_lTempInteger_19 = new MutableInt( lTempInteger_19 );
+               StringBuilder sb_szLocation;
+               if ( szLocation == null )
+                  sb_szLocation = new StringBuilder( 32 );
+               else
+                  sb_szLocation = new StringBuilder( szLocation );
+                               GetVariableFromAttribute( sb_szLocation, mi_lTempInteger_19, 'S', 257, mSubLC, "S_HumanHazardSection", "LabelLoc7", "", 0 );
+               lTempInteger_19 = mi_lTempInteger_19.intValue( );
+               szLocation = sb_szLocation.toString( );}
+               //:IF szLocation != ""
+               if ( ZeidonStringCompare( szLocation, 1, 0, "", 1, 0, 257 ) != 0 )
+               { 
+                  //:szReplaceString = szReplaceString + szOpenSeparator + szLocation + szCloseSeparator
+                   {StringBuilder sb_szReplaceString;
+                  if ( szReplaceString == null )
+                     sb_szReplaceString = new StringBuilder( 32 );
+                  else
+                     sb_szReplaceString = new StringBuilder( szReplaceString );
+                                    ZeidonStringConcat( sb_szReplaceString, 1, 0, szOpenSeparator, 1, 0, 257 );
+                  szReplaceString = sb_szReplaceString.toString( );}
+                   {StringBuilder sb_szReplaceString;
+                  if ( szReplaceString == null )
+                     sb_szReplaceString = new StringBuilder( 32 );
+                  else
+                     sb_szReplaceString = new StringBuilder( szReplaceString );
+                                    ZeidonStringConcat( sb_szReplaceString, 1, 0, szLocation, 1, 0, 257 );
+                  szReplaceString = sb_szReplaceString.toString( );}
+                   {StringBuilder sb_szReplaceString;
+                  if ( szReplaceString == null )
+                     sb_szReplaceString = new StringBuilder( 32 );
+                  else
+                     sb_szReplaceString = new StringBuilder( szReplaceString );
+                                    ZeidonStringConcat( sb_szReplaceString, 1, 0, szCloseSeparator, 1, 0, 257 );
+                  szReplaceString = sb_szReplaceString.toString( );}
+               } 
+
+               //:END
+
+               //:szLocation = mSubLC.S_HumanHazardSection.LabelLoc8
+               {MutableInt mi_lTempInteger_20 = new MutableInt( lTempInteger_20 );
+               StringBuilder sb_szLocation;
+               if ( szLocation == null )
+                  sb_szLocation = new StringBuilder( 32 );
+               else
+                  sb_szLocation = new StringBuilder( szLocation );
+                               GetVariableFromAttribute( sb_szLocation, mi_lTempInteger_20, 'S', 257, mSubLC, "S_HumanHazardSection", "LabelLoc8", "", 0 );
+               lTempInteger_20 = mi_lTempInteger_20.intValue( );
+               szLocation = sb_szLocation.toString( );}
+               //:IF szLocation != ""
+               if ( ZeidonStringCompare( szLocation, 1, 0, "", 1, 0, 257 ) != 0 )
+               { 
+                  //:szReplaceString = szReplaceString + szOpenSeparator + szLocation + szCloseSeparator
+                   {StringBuilder sb_szReplaceString;
+                  if ( szReplaceString == null )
+                     sb_szReplaceString = new StringBuilder( 32 );
+                  else
+                     sb_szReplaceString = new StringBuilder( szReplaceString );
+                                    ZeidonStringConcat( sb_szReplaceString, 1, 0, szOpenSeparator, 1, 0, 257 );
+                  szReplaceString = sb_szReplaceString.toString( );}
+                   {StringBuilder sb_szReplaceString;
+                  if ( szReplaceString == null )
+                     sb_szReplaceString = new StringBuilder( 32 );
+                  else
+                     sb_szReplaceString = new StringBuilder( szReplaceString );
+                                    ZeidonStringConcat( sb_szReplaceString, 1, 0, szLocation, 1, 0, 257 );
+                  szReplaceString = sb_szReplaceString.toString( );}
+                   {StringBuilder sb_szReplaceString;
+                  if ( szReplaceString == null )
+                     sb_szReplaceString = new StringBuilder( 32 );
+                  else
+                     sb_szReplaceString = new StringBuilder( szReplaceString );
+                                    ZeidonStringConcat( sb_szReplaceString, 1, 0, szCloseSeparator, 1, 0, 257 );
+                  szReplaceString = sb_szReplaceString.toString( );}
+               } 
+
+               //:END
+
+               //:szLocation = mSubLC.S_HumanHazardSection.LabelLoc9
+               {MutableInt mi_lTempInteger_21 = new MutableInt( lTempInteger_21 );
+               StringBuilder sb_szLocation;
+               if ( szLocation == null )
+                  sb_szLocation = new StringBuilder( 32 );
+               else
+                  sb_szLocation = new StringBuilder( szLocation );
+                               GetVariableFromAttribute( sb_szLocation, mi_lTempInteger_21, 'S', 257, mSubLC, "S_HumanHazardSection", "LabelLoc9", "", 0 );
+               lTempInteger_21 = mi_lTempInteger_21.intValue( );
                szLocation = sb_szLocation.toString( );}
                //:IF szLocation != ""
                if ( ZeidonStringCompare( szLocation, 1, 0, "", 1, 0, 257 ) != 0 )
@@ -4106,7 +4584,6 @@ omSubLC_CopyDirsForUseSection( View     NewSLC,
                                View     SourceMLC )
 {
    int      RESULT = 0;
-   int      lTempInteger_0 = 0;
 
    //:CopyDirsForUseSection( VIEW NewSLC    BASED ON LOD mSubLC,
    //:                    VIEW SourceMLC BASED ON LOD mMasLC )
@@ -4120,55 +4597,8 @@ omSubLC_CopyDirsForUseSection( View     NewSLC,
    SetMatchingAttributesByName( NewSLC, "S_DirectionsForUseSection", SourceMLC, "M_DirectionsForUseSection", zSET_NULL );
    //:NewSLC.S_DirectionsForUseSection.PrimaryMLC_ID = SourceMLC.M_DirectionsForUseSection.ID
    SetAttributeFromAttribute( NewSLC, "S_DirectionsForUseSection", "PrimaryMLC_ID", SourceMLC, "M_DirectionsForUseSection", "ID" );
-   //:FOR EACH SourceMLC.M_DirectionsForUseStatement
-   RESULT = SetCursorFirstEntity( SourceMLC, "M_DirectionsForUseStatement", "" );
-   while ( RESULT > zCURSOR_UNCHANGED )
-   { 
-      //:CREATE ENTITY NewSLC.S_DirectionsForUseStatement
-      RESULT = CreateEntity( NewSLC, "S_DirectionsForUseStatement", zPOS_AFTER );
-      //:SetMatchingAttributesByName( NewSLC,    "S_DirectionsForUseStatement",
-      //:                             SourceMLC, "M_DirectionsForUseStatement", zSET_NULL )
-      SetMatchingAttributesByName( NewSLC, "S_DirectionsForUseStatement", SourceMLC, "M_DirectionsForUseStatement", zSET_NULL );
-      //:NewSLC.S_DirectionsForUseStatement.PrimaryMLC_ID = SourceMLC.M_DirectionsForUseStatement.ID
-      SetAttributeFromAttribute( NewSLC, "S_DirectionsForUseStatement", "PrimaryMLC_ID", SourceMLC, "M_DirectionsForUseStatement", "ID" );
-      //:IF NewSLC.S_DirectionsForUseStatement.NotForUseType = ""
-      if ( CompareAttributeToString( NewSLC, "S_DirectionsForUseStatement", "NotForUseType", "" ) == 0 )
-      { 
-         //:NewSLC.S_DirectionsForUseStatement.NotForUseType = "NA"
-         SetAttributeFromString( NewSLC, "S_DirectionsForUseStatement", "NotForUseType", "NA" );
-      } 
-
-      //:END
-      //:FOR EACH SourceMLC.M_DirectionsUsageOrdering
-      RESULT = SetCursorFirstEntity( SourceMLC, "M_DirectionsUsageOrdering", "" );
-      while ( RESULT > zCURSOR_UNCHANGED )
-      { 
-         //:SET CURSOR FIRST NewSLC.S_Usage WITHIN NewSLC.SubregLabelContent
-         //:           WHERE NewSLC.S_Usage.PrimaryMLC_ID = SourceMLC.M_DirectionsUsage.ID
-         {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
-                   GetIntegerFromAttribute( mi_lTempInteger_0, SourceMLC, "M_DirectionsUsage", "ID" );
-         lTempInteger_0 = mi_lTempInteger_0.intValue( );}
-         RESULT = SetCursorFirstEntityByInteger( NewSLC, "S_Usage", "PrimaryMLC_ID", lTempInteger_0, "SubregLabelContent" );
-         //:IF RESULT >= zCURSOR_SET
-         if ( RESULT >= zCURSOR_SET )
-         { 
-            //:CREATE ENTITY NewSLC.S_DirectionsUsageOrdering
-            RESULT = CreateEntity( NewSLC, "S_DirectionsUsageOrdering", zPOS_AFTER );
-            //:NewSLC.S_DirectionsUsageOrdering.PrimaryMLC_ID = SourceMLC.M_DirectionsUsageOrdering.ID
-            SetAttributeFromAttribute( NewSLC, "S_DirectionsUsageOrdering", "PrimaryMLC_ID", SourceMLC, "M_DirectionsUsageOrdering", "ID" );
-            //:INCLUDE NewSLC.S_DirectionsUsage FROM NewSLC.S_Usage
-            RESULT = IncludeSubobjectFromSubobject( NewSLC, "S_DirectionsUsage", NewSLC, "S_Usage", zPOS_AFTER );
-         } 
-
-         RESULT = SetCursorNextEntity( SourceMLC, "M_DirectionsUsageOrdering", "" );
-         //:END
-      } 
-
-      RESULT = SetCursorNextEntity( SourceMLC, "M_DirectionsForUseStatement", "" );
-      //:END
-   } 
-
-   //:END
+   //:CopyDirsForUseStatements( NewSLC, SourceMLC )
+   omSubLC_CopyDirsForUseStatements( NewSLC, SourceMLC );
    return( 0 );
 // END
 } 

@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSLCStorageDisposal   Generate Timestamp: 20160620105928899 --%>
+<%-- wSLCStorageDisposal   Generate Timestamp: 20160927181943144 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -67,14 +67,14 @@ public int DoInputMapping( HttpServletRequest request,
       // grids on the same window with the same view we do not mess up the 
       // entity positions. 
       vGridTmp = mSubLC.newView( );
-      csrRC = vGridTmp.cursor( "S_StorageDisposalStatement" ).setFirst(  );
+      csrRC = vGridTmp.cursor( "S_StorageDisposalSection" ).setFirst(  );
       while ( csrRC.isSet() )
       {
-         lEntityKey = vGridTmp.cursor( "S_StorageDisposalStatement" ).getEntityKey( );
+         lEntityKey = vGridTmp.cursor( "S_StorageDisposalSection" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
          iTableRowCnt++;
 
-         csrRC = vGridTmp.cursor( "S_StorageDisposalStatement" ).setNextContinue( );
+         csrRC = vGridTmp.cursor( "S_StorageDisposalSection" ).setNextContinue( );
       }
 
       vGridTmp.drop( );
@@ -197,6 +197,50 @@ if ( strActionToProcess != null )
          vMsgQ.drop( );
       }
 
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_StorageDisposalSection" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wSLCStorageDisposal", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Position on the entity that was selected in the grid.
+      String strEntityKey = (String) request.getParameter( "zTableRowSelect" );
+      View mSubLC;
+      mSubLC = task.getViewByName( "mSubLC" );
+      if ( VmlOperation.isValid( mSubLC ) )
+      {
+         lEKey = java.lang.Long.parseLong( strEntityKey );
+         csrRC = mSubLC.cursor( "S_StorageDisposalSection" ).setByEntityKey( lEKey );
+         if ( !csrRC.isSet() )
+         {
+            boolean bFound = false;
+            csrRCk = mSubLC.cursor( "S_StorageDisposalSection" ).setFirst( );
+            while ( csrRCk.isSet() && !bFound )
+            {
+               lEKey = mSubLC.cursor( "S_StorageDisposalSection" ).getEntityKey( );
+               strKey = Long.toString( lEKey );
+               if ( StringUtils.equals( strKey, strEntityKey ) )
+               {
+                  // Stop while loop because we have positioned on the correct entity.
+                  bFound = true;
+               }
+               else
+                  csrRCk = mSubLC.cursor( "S_StorageDisposalSection" ).setNextContinue( );
+            } // Grid
+         }
+      }
+
+      // Next Window
+      strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_StartModalSubwindow, "wSLC", "StorageDisposalSection" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
    }
 
    while ( bDone == false && strActionToProcess.equals( "ZEIDON_ComboBoxSubmit" ) )
@@ -1127,11 +1171,11 @@ else
 <div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GBStorDispSections:GroupBox */ %>
 
-<div id="GBStorDispSections" name="GBStorDispSections" class="listgroup"   style="float:left;position:relative; width:830px; height:36px;">  <!-- GBStorDispSections --> 
+<div id="GBStorDispSections" name="GBStorDispSections" class="listgroup"   style="float:left;position:relative; width:794px; height:36px;">  <!-- GBStorDispSections --> 
 
-<% /* OrganismClaimsStatements1:Text */ %>
+<% /* StorageDisposalSections:Text */ %>
 
-<label class="groupbox"  id="OrganismClaimsStatements1" name="OrganismClaimsStatements1" style="width:330px;height:16px;position:absolute;left:6px;top:12px;">Storage and Disposal Statements</label>
+<label class="groupbox"  id="StorageDisposalSections" name="StorageDisposalSections" style="width:330px;height:16px;position:absolute;left:6px;top:12px;">Storage and Disposal Statements</label>
 
 <% /* Text1:Text */ %>
 
@@ -1177,12 +1221,13 @@ else
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GridStorDisp:Grid */ %>
-<table  cols=2 style="width:792px;"  name="GridStorDisp" id="GridStorDisp">
+<table  cols=3 style="width:792px;"  name="GridStorDisp" id="GridStorDisp">
 
 <thead><tr>
 
-   <th>Statement Title</th>
-   <th>Statement Text</th>
+   <th>Section Name</th>
+   <th>Section Title</th>
+   <th>Display</th>
 
 </tr></thead>
 
@@ -1200,56 +1245,58 @@ try
       String strButtonName;
       String strOdd;
       String strTag;
-      String strGridEditStorDisp;
-      String strGridEditVolume;
+      String strGridEditStorDispName;
+      String strGridEditStorDispTitle;
+      String strBMBDisplaySD_Section;
       
       View vGridStorDisp;
       vGridStorDisp = mSubLC.newView( );
-      csrRC2 = vGridStorDisp.cursor( "S_StorageDisposalStatement" ).setFirst(  );
+      csrRC2 = vGridStorDisp.cursor( "S_StorageDisposalSection" ).setFirst(  );
       while ( csrRC2.isSet() )
       {
          strOdd = (iTableRowCnt % 2) != 0 ? " class='odd'" : "";
          iTableRowCnt++;
 
-         lEntityKey = vGridStorDisp.cursor( "S_StorageDisposalStatement" ).getEntityKey( );
+         lEntityKey = vGridStorDisp.cursor( "S_StorageDisposalSection" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strGridEditStorDisp = "";
-         nRC = vGridStorDisp.cursor( "S_StorageDisposalStatement" ).checkExistenceOfEntity( ).toInt();
+         strGridEditStorDispName = "";
+         nRC = vGridStorDisp.cursor( "S_StorageDisposalSection" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditStorDisp = vGridStorDisp.cursor( "S_StorageDisposalStatement" ).getAttribute( "Title" ).getString( "" );
+            strGridEditStorDispName = vGridStorDisp.cursor( "S_StorageDisposalSection" ).getAttribute( "Name" ).getString( "" );
 
-            if ( strGridEditStorDisp == null )
-               strGridEditStorDisp = "";
+            if ( strGridEditStorDispName == null )
+               strGridEditStorDispName = "";
          }
 
-         if ( StringUtils.isBlank( strGridEditStorDisp ) )
-            strGridEditStorDisp = "&nbsp";
+         if ( StringUtils.isBlank( strGridEditStorDispName ) )
+            strGridEditStorDispName = "&nbsp";
 
-         strGridEditVolume = "";
-         nRC = vGridStorDisp.cursor( "S_StorageDisposalStatement" ).checkExistenceOfEntity( ).toInt();
+         strGridEditStorDispTitle = "";
+         nRC = vGridStorDisp.cursor( "S_StorageDisposalSection" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditVolume = vGridStorDisp.cursor( "S_StorageDisposalStatement" ).getAttribute( "Text" ).getString( "" );
+            strGridEditStorDispTitle = vGridStorDisp.cursor( "S_StorageDisposalSection" ).getAttribute( "Title" ).getString( "" );
 
-            if ( strGridEditVolume == null )
-               strGridEditVolume = "";
+            if ( strGridEditStorDispTitle == null )
+               strGridEditStorDispTitle = "";
          }
 
-         if ( StringUtils.isBlank( strGridEditVolume ) )
-            strGridEditVolume = "&nbsp";
+         if ( StringUtils.isBlank( strGridEditStorDispTitle ) )
+            strGridEditStorDispTitle = "&nbsp";
 
 %>
 
 <tr<%=strOdd%>>
 
-   <td><%=strGridEditStorDisp%></td>
-   <td><%=strGridEditVolume%></td>
+   <td><a href="#" onclick="GOTO_StorageDisposalSection( this.id )" id="GridEditStorDispName::<%=strEntityKey%>"><%=strGridEditStorDispName%></a></td>
+   <td><a href="#" onclick="GOTO_StorageDisposalSection( this.id )" id="GridEditStorDispTitle::<%=strEntityKey%>"><%=strGridEditStorDispTitle%></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDisplaySD_Section" onclick="GOTO_StorageDisposalSection( this.id )" id="BMBDisplaySD_Section::<%=strEntityKey%>"><img src="./images/ePammsDisplay.png" alt="Display"></a></td>
 
 </tr>
 
 <%
-         csrRC2 = vGridStorDisp.cursor( "S_StorageDisposalStatement" ).setNextContinue( );
+         csrRC2 = vGridStorDisp.cursor( "S_StorageDisposalSection" ).setNextContinue( );
       }
       vGridStorDisp.drop( );
    }

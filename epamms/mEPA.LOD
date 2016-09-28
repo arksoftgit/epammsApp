@@ -1,4 +1,4 @@
-z1000-Zeidon    MEPA     TZZOLODO 05/26/16   12:37:11 1.0a2   
+z1000-Zeidon    MEPA     TZZOLODO                         09/20/16   15:22:58 1.0a2   
 eLOD       1
 aZKey      1178878
 aName      mEPA
@@ -229,9 +229,9 @@ aZKey      1178445
 aFact      Added thru ER Dialog
 aER_DiagramBendPosX 0
 aER_DiagramBendPosY 0
-aER_DiagramE1PosX 4
-aER_DiagramE1PosY 38
-aER_DiagramE2PosX 4
+aER_DiagramE1PosX 3
+aER_DiagramE1PosY 37
+aER_DiagramE2PosX 3
 aER_DiagramE2PosY 54
 
 eLOD_EntityChild 4
@@ -313,10 +313,10 @@ aTE_NoForeignKeyPrefix N
 eER_RelTypeRec 6
 aZKey      1178452
 aFact      Added thru ER Dialog
-aER_DiagramBendPosX 8
+aER_DiagramBendPosX 7
 aER_DiagramBendPosY 29
-aER_DiagramE1PosX 8
-aER_DiagramE1PosY 32
+aER_DiagramE1PosX 7
+aER_DiagramE1PosY 31
 aER_DiagramE2PosX 16
 aER_DiagramE2PosY 29
 
@@ -391,7 +391,7 @@ aZKey      1178459
 aFact      Added thru ER Dialog
 aER_DiagramBendPosX 0
 aER_DiagramBendPosY 0
-aER_DiagramE1PosX 13
+aER_DiagramE1PosX 12
 aER_DiagramE1PosY 35
 aER_DiagramE2PosX 16
 aER_DiagramE2PosY 35
@@ -467,10 +467,10 @@ aTE_NoForeignKeyPrefix N
 eER_RelTypeRec 6
 aZKey      2344458
 aFact      Added thru ER Dialog
-aER_DiagramBendPosX 8
+aER_DiagramBendPosX 7
 aER_DiagramBendPosY 44
-aER_DiagramE1PosX 8
-aER_DiagramE1PosY 38
+aER_DiagramE1PosX 7
+aER_DiagramE1PosY 37
 aER_DiagramE2PosX 16
 aER_DiagramE2PosY 44
 
@@ -638,10 +638,10 @@ aTE_NoForeignKeyPrefix N
 eER_RelTypeRec 6
 aZKey      1178469
 aFact      Added thru ER Dialog
-aER_DiagramBendPosX 6
+aER_DiagramBendPosX 5
 aER_DiagramBendPosY 51
-aER_DiagramE1PosX 6
-aER_DiagramE1PosY 38
+aER_DiagramE1PosX 5
+aER_DiagramE1PosY 37
 aER_DiagramE2PosX 16
 aER_DiagramE2PosY 51
 
@@ -699,8 +699,8 @@ aName      EPA_ChemicalFamily
 aZKey      1178444
 aPurpose   F
 aDesc      Disinfectants, Pesticides, ...
-aER_DiagramPosX 4
-aER_DiagramPosY 33
+aER_DiagramPosX 3
+aER_DiagramPosY 32
 
 eER_RelLinkRec 4
 aName      has
@@ -719,7 +719,7 @@ aER_DiagramBendPosY 0
 aER_DiagramE1PosX 6
 aER_DiagramE1PosY 15
 aER_DiagramE2PosX 6
-aER_DiagramE2PosY 32
+aER_DiagramE2PosY 31
 
 eLOD_AttributeRec 3
 aZKey      2348764

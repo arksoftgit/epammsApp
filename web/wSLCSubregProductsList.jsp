@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSLCSubregProductsList   Generate Timestamp: 20160620105928940 --%>
+<%-- wSLCSubregProductsList   Generate Timestamp: 20160926143732615 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -918,26 +918,29 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:16px;width:100px;"></div>
+<div style="height:6px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
 <% /* SubregProducts:GroupBox */ %>
 
-<div id="SubregProducts" name="SubregProducts" style="width:866px;height:174px;float:left;">  <!-- SubregProducts --> 
+<div id="SubregProducts" name="SubregProducts" style="width:866px;height:186px;float:left;">  <!-- SubregProducts --> 
 
+
+ <!-- This is added as a line spacer -->
+<div style="height:4px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <% /* GroupBox4:GroupBox */ %>
 
-<div id="GroupBox4" name="GroupBox4" style="width:10px;height:40px;float:left;">  <!-- GroupBox4 --> 
+<div id="GroupBox4" name="GroupBox4" style="width:10px;height:36px;float:left;">  <!-- GroupBox4 --> 
 
 
 </div>  <!--  GroupBox4 --> 
 <div style="height:1px;width:4px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox2:GroupBox */ %>
 
-<div id="GroupBox2" name="GroupBox2" style="width:572px;height:40px;float:left;">  <!-- GroupBox2 --> 
+<div id="GroupBox2" name="GroupBox2" style="width:572px;height:36px;float:left;">  <!-- GroupBox2 --> 
 
 
  <!-- This is added as a line spacer -->
@@ -955,11 +958,11 @@ else
 <div style="height:1px;width:8px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox3:GroupBox */ %>
 
-<div id="GroupBox3" name="GroupBox3" style="width:146px;height:40px;float:left;">  <!-- GroupBox3 --> 
+<div id="GroupBox3" name="GroupBox3" style="width:146px;height:36px;float:left;">  <!-- GroupBox3 --> 
 
 
  <!-- This is added as a line spacer -->
-<div style="height:4px;width:100px;"></div>
+<div style="height:8px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <span style="height:28px;">&nbsp</span>
@@ -976,7 +979,7 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:4px;width:100px;"></div>
+<div style="height:20px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
@@ -1082,14 +1085,11 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
 
 
- <!-- This is added as a line spacer -->
-<div style="height:8px;width:100px;"></div>
-
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox8:GroupBox */ %>
 
-<div id="GroupBox8" name="GroupBox8" style="width:130px;height:24px;float:left;">  <!-- GroupBox8 --> 
+<div id="GroupBox8" name="GroupBox8" style="width:130px;height:18px;float:left;">  <!-- GroupBox8 --> 
 
 
 </div>  <!--  GroupBox8 --> 
@@ -1097,9 +1097,6 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
 
-
- <!-- This is added as a line spacer -->
-<div style="height:4px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->

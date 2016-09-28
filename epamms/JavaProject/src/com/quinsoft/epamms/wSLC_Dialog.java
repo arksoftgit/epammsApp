@@ -829,6 +829,7 @@ SelectMarketingKeywordEntries( View     ViewToWindow )
    //:VIEW mMasLC REGISTERED AS mMasLC
    zVIEW    mMasLC = new zVIEW( );
    String   szTempString_0 = null;
+   String   szTempString_1 = null;
 
    RESULT = GetViewByName( mSubLC, "mSubLC", ViewToWindow, zLEVEL_TASK );
    RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
@@ -865,14 +866,14 @@ SelectMarketingKeywordEntries( View     ViewToWindow )
          //:END
          //:SET CURSOR FIRST mSubLC.S_InsertTextMarketing
          //:           WHERE mSubLC.S_InsertTextMarketing.Text = mMasLC.M_InsertTextMarketing.Text
-         {StringBuilder sb_szTempString_0;
-         if ( szTempString_0 == null )
-            sb_szTempString_0 = new StringBuilder( 32 );
+         {StringBuilder sb_szTempString_1;
+         if ( szTempString_1 == null )
+            sb_szTempString_1 = new StringBuilder( 32 );
          else
-            sb_szTempString_0 = new StringBuilder( szTempString_0 );
-                   GetStringFromAttribute( sb_szTempString_0, mMasLC, "M_InsertTextMarketing", "Text" );
-         szTempString_0 = sb_szTempString_0.toString( );}
-         RESULT = SetCursorFirstEntityByString( mSubLC, "S_InsertTextMarketing", "Text", szTempString_0, "" );
+            sb_szTempString_1 = new StringBuilder( szTempString_1 );
+                   GetStringFromAttribute( sb_szTempString_1, mMasLC, "M_InsertTextMarketing", "Text" );
+         szTempString_1 = sb_szTempString_1.toString( );}
+         RESULT = SetCursorFirstEntityByString( mSubLC, "S_InsertTextMarketing", "Text", szTempString_1, "" );
          //:IF RESULT < zCURSOR_SET
          if ( RESULT < zCURSOR_SET )
          { 
@@ -2701,8 +2702,22 @@ SaveSLC( View     ViewToWindow )
 {
    zVIEW    mSubLC = new zVIEW( );
    int      RESULT = 0;
+   //:VIEW mSubProd REGISTERED AS mSubProd
+   zVIEW    mSubProd = new zVIEW( );
+   int      lTempInteger_0 = 0;
 
    RESULT = GetViewByName( mSubLC, "mSubLC", ViewToWindow, zLEVEL_TASK );
+   RESULT = GetViewByName( mSubProd, "mSubProd", ViewToWindow, zLEVEL_TASK );
+
+   //:SET CURSOR FIRST mSubProd.SubregLabelContent WHERE mSubProd.SubregLabelContent.ID = mSubLC.SubregLabelContent.ID
+   {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
+       GetIntegerFromAttribute( mi_lTempInteger_0, mSubLC, "SubregLabelContent", "ID" );
+   lTempInteger_0 = mi_lTempInteger_0.intValue( );}
+   RESULT = SetCursorFirstEntityByInteger( mSubProd, "SubregLabelContent", "ID", lTempInteger_0, "" );
+   //:mSubProd.SubregLabelContent.Description = mSubLC.SubregLabelContent.Description
+   SetAttributeFromAttribute( mSubProd, "SubregLabelContent", "Description", mSubLC, "SubregLabelContent", "Description" );
+   //:mSubProd.SubregLabelContent.Version = mSubLC.SubregLabelContent.Version
+   SetAttributeFromAttribute( mSubProd, "SubregLabelContent", "Version", mSubLC, "SubregLabelContent", "Version" );
 
    //:// Temporary code to set MLC pointers from included MLC entities.
    //:FOR EACH mSubLC.S_GeneralSection

@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSLCDirectionsForUse   Generate Timestamp: 20160620105928136 --%>
+<%-- wSLCDirectionsForUse   Generate Timestamp: 20160927164754088 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -67,14 +67,14 @@ public int DoInputMapping( HttpServletRequest request,
       // grids on the same window with the same view we do not mess up the 
       // entity positions. 
       vGridTmp = mSubLC.newView( );
-      csrRC = vGridTmp.cursor( "S_DirectionsForUseSection" ).setFirst(  );
+      csrRC = vGridTmp.cursor( "S_DirectionsForUseCategory" ).setFirst(  );
       while ( csrRC.isSet() )
       {
-         lEntityKey = vGridTmp.cursor( "S_DirectionsForUseSection" ).getEntityKey( );
+         lEntityKey = vGridTmp.cursor( "S_DirectionsForUseCategory" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
          iTableRowCnt++;
 
-         csrRC = vGridTmp.cursor( "S_DirectionsForUseSection" ).setNextContinue( );
+         csrRC = vGridTmp.cursor( "S_DirectionsForUseCategory" ).setNextContinue( );
       }
 
       vGridTmp.drop( );
@@ -199,7 +199,7 @@ if ( strActionToProcess != null )
 
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_DirsForUseSectionDetail" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_DirectionsForUseCategory" ) )
    {
       bDone = true;
       VmlOperation.SetZeidonSessionAttribute( session, task, "wSLCDirectionsForUse", strActionToProcess );
@@ -216,14 +216,14 @@ if ( strActionToProcess != null )
       if ( VmlOperation.isValid( mSubLC ) )
       {
          lEKey = java.lang.Long.parseLong( strEntityKey );
-         csrRC = mSubLC.cursor( "S_DirectionsForUseSection" ).setByEntityKey( lEKey );
+         csrRC = mSubLC.cursor( "S_DirectionsForUseCategory" ).setByEntityKey( lEKey );
          if ( !csrRC.isSet() )
          {
             boolean bFound = false;
-            csrRCk = mSubLC.cursor( "S_DirectionsForUseSection" ).setFirst( );
+            csrRCk = mSubLC.cursor( "S_DirectionsForUseCategory" ).setFirst( );
             while ( csrRCk.isSet() && !bFound )
             {
-               lEKey = mSubLC.cursor( "S_DirectionsForUseSection" ).getEntityKey( );
+               lEKey = mSubLC.cursor( "S_DirectionsForUseCategory" ).getEntityKey( );
                strKey = Long.toString( lEKey );
                if ( StringUtils.equals( strKey, strEntityKey ) )
                {
@@ -231,13 +231,13 @@ if ( strActionToProcess != null )
                   bFound = true;
                }
                else
-                  csrRCk = mSubLC.cursor( "S_DirectionsForUseSection" ).setNextContinue( );
+                  csrRCk = mSubLC.cursor( "S_DirectionsForUseCategory" ).setNextContinue( );
             } // Grid
          }
       }
 
       // Next Window
-      strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_StartModalSubwindow, "wSLC", "DirectionsForUseSection" );
+      strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_StartModalSubwindow, "wSLC", "DirectionsForUseCategory" );
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
@@ -1169,16 +1169,16 @@ else
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GBStorDispSections:GroupBox */ %>
+<% /* GBDFU_Sections:GroupBox */ %>
 
-<div id="GBStorDispSections" name="GBStorDispSections" class="listgroup"   style="float:left;position:relative; width:830px; height:36px;">  <!-- GBStorDispSections --> 
+<div id="GBDFU_Sections" name="GBDFU_Sections" class="listgroup"   style="float:left;position:relative; width:798px; height:36px;">  <!-- GBDFU_Sections --> 
 
-<% /* OrganismClaimsStatements1:Text */ %>
+<% /* DirectionsForUse:Text */ %>
 
-<label class="groupbox"  id="OrganismClaimsStatements1" name="OrganismClaimsStatements1" style="width:238px;height:16px;position:absolute;left:6px;top:12px;">Directions for Use</label>
+<label class="groupbox"  id="DirectionsForUse" name="DirectionsForUse" style="width:238px;height:16px;position:absolute;left:6px;top:12px;">Directions for Use</label>
 
 
-</div>  <!--  GBStorDispSections --> 
+</div>  <!--  GBDFU_Sections --> 
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
@@ -1188,7 +1188,17 @@ else
 <div style="height:10px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:22px;float:left;"></div>   <!-- Width Spacer -->
+<div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
+<% /* DFU_Categories:GroupBox */ %>
+
+<div id="DFU_Categories" name="DFU_Categories" class="listgroup" style="width:798px;height:244px;float:left;">  <!-- DFU_Categories --> 
+
+<div  id="DFU_Categories" name="DFU_Categories" >Directions for Use Categories</div>
+
+ <!-- This is added as a line spacer -->
+<div style="height:24px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
 <% /* GridStorDisp:Grid */ %>
 <table  cols=3 style="width:792px;"  name="GridStorDisp" id="GridStorDisp">
 
@@ -1216,23 +1226,23 @@ try
       String strTag;
       String strName;
       String strTitle;
-      String strBMBUpdateStorDispSect;
+      String strBMBUpdateDFU_Category;
       
       View vGridStorDisp;
       vGridStorDisp = mSubLC.newView( );
-      csrRC2 = vGridStorDisp.cursor( "S_DirectionsForUseSection" ).setFirst(  );
+      csrRC2 = vGridStorDisp.cursor( "S_DirectionsForUseCategory" ).setFirst(  );
       while ( csrRC2.isSet() )
       {
          strOdd = (iTableRowCnt % 2) != 0 ? " class='odd'" : "";
          iTableRowCnt++;
 
-         lEntityKey = vGridStorDisp.cursor( "S_DirectionsForUseSection" ).getEntityKey( );
+         lEntityKey = vGridStorDisp.cursor( "S_DirectionsForUseCategory" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
          strName = "";
-         nRC = vGridStorDisp.cursor( "S_DirectionsForUseSection" ).checkExistenceOfEntity( ).toInt();
+         nRC = vGridStorDisp.cursor( "S_DirectionsForUseCategory" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strName = vGridStorDisp.cursor( "S_DirectionsForUseSection" ).getAttribute( "Name" ).getString( "" );
+            strName = vGridStorDisp.cursor( "S_DirectionsForUseCategory" ).getAttribute( "Name" ).getString( "" );
 
             if ( strName == null )
                strName = "";
@@ -1242,10 +1252,10 @@ try
             strName = "&nbsp";
 
          strTitle = "";
-         nRC = vGridStorDisp.cursor( "S_DirectionsForUseSection" ).checkExistenceOfEntity( ).toInt();
+         nRC = vGridStorDisp.cursor( "S_DirectionsForUseCategory" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strTitle = vGridStorDisp.cursor( "S_DirectionsForUseSection" ).getAttribute( "Title" ).getString( "" );
+            strTitle = vGridStorDisp.cursor( "S_DirectionsForUseCategory" ).getAttribute( "Title" ).getString( "" );
 
             if ( strTitle == null )
                strTitle = "";
@@ -1258,14 +1268,14 @@ try
 
 <tr<%=strOdd%>>
 
-   <td><a href="#" onclick="GOTO_DirsForUseSectionDetail( this.id )" id="Name::<%=strEntityKey%>"><%=strName%></a></td>
-   <td><a href="#" onclick="GOTO_DirsForUseSectionDetail( this.id )" id="Title::<%=strEntityKey%>"><%=strTitle%></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateStorDispSect" onclick="GOTO_DirsForUseSectionDetail( this.id )" id="BMBUpdateStorDispSect::<%=strEntityKey%>"><img src="./images/ePammsDisplay.png" alt="Display"></a></td>
+   <td><a href="#" onclick="GOTO_DirectionsForUseCategory( this.id )" id="Name::<%=strEntityKey%>"><%=strName%></a></td>
+   <td><a href="#" onclick="GOTO_DirectionsForUseCategory( this.id )" id="Title::<%=strEntityKey%>"><%=strTitle%></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateDFU_Category" onclick="GOTO_DirectionsForUseCategory( this.id )" id="BMBUpdateDFU_Category::<%=strEntityKey%>"><img src="./images/ePammsDisplay.png" alt="Display"></a></td>
 
 </tr>
 
 <%
-         csrRC2 = vGridStorDisp.cursor( "S_DirectionsForUseSection" ).setNextContinue( );
+         csrRC2 = vGridStorDisp.cursor( "S_DirectionsForUseCategory" ).setNextContinue( );
       }
       vGridStorDisp.drop( );
    }
@@ -1279,6 +1289,10 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 </tbody>
 </table>
 
+</div>  <!-- End of a new line -->
+
+
+</div>  <!--  DFU_Categories --> 
 </div>  <!-- End of a new line -->
 
 

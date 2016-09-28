@@ -22,7 +22,12 @@ DIALOG OPERATION
 SaveSLC( VIEW ViewToWindow )
 
    VIEW mSubLC REGISTERED AS mSubLC
-
+   VIEW mSubProd REGISTERED AS mSubProd
+   
+   SET CURSOR FIRST mSubProd.SubregLabelContent WHERE mSubProd.SubregLabelContent.ID = mSubLC.SubregLabelContent.ID
+   mSubProd.SubregLabelContent.Description = mSubLC.SubregLabelContent.Description
+   mSubProd.SubregLabelContent.Version = mSubLC.SubregLabelContent.Version
+ 
    // Temporary code to set MLC pointers from included MLC entities.
    FOR EACH mSubLC.S_GeneralSection
       mSubLC.S_GeneralSection.PrimaryMLC_ID = mSubLC.M_GeneralSection.ID

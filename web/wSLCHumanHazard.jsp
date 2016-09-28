@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSLCHumanHazard   Generate Timestamp: 20160620105928366 --%>
+<%-- wSLCHumanHazard   Generate Timestamp: 20160927123859135 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -1140,7 +1140,7 @@ else
 <div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox1:GroupBox */ %>
 
-<div id="GroupBox1" name="GroupBox1"   style="float:left;position:relative; width:692px; height:258px;">  <!-- GroupBox1 --> 
+<div id="GroupBox1" name="GroupBox1"   style="float:left;position:relative; width:692px; height:366px;">  <!-- GroupBox1 --> 
 
 <% /* HazardText::Text */ %>
 
@@ -1202,7 +1202,7 @@ else
    }
 %>
 
-<label  id="Text1" name="Text1" style="width:130px;height:16px;position:absolute;left:130px;top:32px;"><%=strTextDisplayValue%></label>
+<label  id="Text1" name="Text1" style="width:130px;height:16px;position:absolute;left:134px;top:32px;"><%=strTextDisplayValue%></label>
 
 <% /* Statement::Text */ %>
 
@@ -1233,7 +1233,7 @@ else
    }
 %>
 
-<label  id="Text4" name="Text4" style="width:522px;height:50px;position:absolute;left:130px;top:70px;"><%=strTextDisplayValue%></label>
+<label  id="Text4" name="Text4" style="width:522px;height:50px;position:absolute;left:134px;top:70px;"><%=strTextDisplayValue%></label>
 
 <% /* PanelLocation1::Text */ %>
 
@@ -1264,11 +1264,11 @@ else
    }
 %>
 
-<label  id="PanelLocation1" name="PanelLocation1" style="width:130px;height:16px;position:absolute;left:130px;top:130px;"><%=strTextDisplayValue%></label>
+<label  id="PanelLocation1" name="PanelLocation1" style="width:178px;height:16px;position:absolute;left:134px;top:130px;"><%=strTextDisplayValue%></label>
 
 <% /* LabelLocation1::Text */ %>
 
-<label  id="LabelLocation1:" name="LabelLocation1:" style="width:130px;height:16px;position:absolute;left:298px;top:130px;">Label Location:</label>
+<label  id="LabelLocation1:" name="LabelLocation1:" style="width:130px;height:16px;position:absolute;left:330px;top:130px;">Label Location:</label>
 
 <% /* LabelLocation1:Text */ %>
 <% strTextDisplayValue = "";
@@ -1295,7 +1295,7 @@ else
    }
 %>
 
-<label  id="LabelLocation1" name="LabelLocation1" style="width:130px;height:16px;position:absolute;left:434px;top:130px;"><%=strTextDisplayValue%></label>
+<label  id="LabelLocation1" name="LabelLocation1" style="width:178px;height:16px;position:absolute;left:466px;top:130px;"><%=strTextDisplayValue%></label>
 
 <% /* PanelLocation2::Text */ %>
 
@@ -1326,11 +1326,11 @@ else
    }
 %>
 
-<label  id="PanelLocation2" name="PanelLocation2" style="width:130px;height:16px;position:absolute;left:130px;top:156px;"><%=strTextDisplayValue%></label>
+<label  id="PanelLocation2" name="PanelLocation2" style="width:178px;height:16px;position:absolute;left:134px;top:156px;"><%=strTextDisplayValue%></label>
 
 <% /* LabelLocation2::Text */ %>
 
-<label  id="LabelLocation2:" name="LabelLocation2:" style="width:130px;height:16px;position:absolute;left:298px;top:156px;">LabelLocation:</label>
+<label  id="LabelLocation2:" name="LabelLocation2:" style="width:130px;height:16px;position:absolute;left:330px;top:156px;">LabelLocation:</label>
 
 <% /* LabelLocation2:Text */ %>
 <% strTextDisplayValue = "";
@@ -1357,7 +1357,7 @@ else
    }
 %>
 
-<label  id="LabelLocation2" name="LabelLocation2" style="width:130px;height:16px;position:absolute;left:434px;top:156px;"><%=strTextDisplayValue%></label>
+<label  id="LabelLocation2" name="LabelLocation2" style="width:178px;height:16px;position:absolute;left:466px;top:156px;"><%=strTextDisplayValue%></label>
 
 <% /* PanelLocation3::Text */ %>
 
@@ -1388,11 +1388,11 @@ else
    }
 %>
 
-<label  id="PanelLocation3" name="PanelLocation3" style="width:130px;height:16px;position:absolute;left:130px;top:182px;"><%=strTextDisplayValue%></label>
+<label  id="PanelLocation3" name="PanelLocation3" style="width:178px;height:16px;position:absolute;left:134px;top:182px;"><%=strTextDisplayValue%></label>
 
 <% /* LabelLocation3::Text */ %>
 
-<label  id="LabelLocation3:" name="LabelLocation3:" style="width:130px;height:16px;position:absolute;left:298px;top:182px;">LabelLocation:</label>
+<label  id="LabelLocation3:" name="LabelLocation3:" style="width:130px;height:16px;position:absolute;left:330px;top:182px;">LabelLocation:</label>
 
 <% /* LabelLocation3:Text */ %>
 <% strTextDisplayValue = "";
@@ -1419,7 +1419,7 @@ else
    }
 %>
 
-<label  id="LabelLocation3" name="LabelLocation3" style="width:130px;height:16px;position:absolute;left:434px;top:182px;"><%=strTextDisplayValue%></label>
+<label  id="LabelLocation3" name="LabelLocation3" style="width:178px;height:16px;position:absolute;left:466px;top:182px;"><%=strTextDisplayValue%></label>
 
 <% /* PanelLocation4::Text */ %>
 
@@ -1450,11 +1450,11 @@ else
    }
 %>
 
-<label  id="PanelLocation4" name="PanelLocation4" style="width:130px;height:16px;position:absolute;left:130px;top:208px;"><%=strTextDisplayValue%></label>
+<label  id="PanelLocation4" name="PanelLocation4" style="width:178px;height:16px;position:absolute;left:134px;top:208px;"><%=strTextDisplayValue%></label>
 
 <% /* LabelLocation4::Text */ %>
 
-<label  id="LabelLocation4:" name="LabelLocation4:" style="width:130px;height:16px;position:absolute;left:298px;top:208px;">Label Location:</label>
+<label  id="LabelLocation4:" name="LabelLocation4:" style="width:130px;height:16px;position:absolute;left:330px;top:208px;">Label Location:</label>
 
 <% /* LabelLocation4:Text */ %>
 <% strTextDisplayValue = "";
@@ -1481,7 +1481,7 @@ else
    }
 %>
 
-<label  id="LabelLocation4" name="LabelLocation4" style="width:130px;height:16px;position:absolute;left:434px;top:208px;"><%=strTextDisplayValue%></label>
+<label  id="LabelLocation4" name="LabelLocation4" style="width:178px;height:16px;position:absolute;left:466px;top:208px;"><%=strTextDisplayValue%></label>
 
 <% /* PanelLocation5::Text */ %>
 
@@ -1512,11 +1512,11 @@ else
    }
 %>
 
-<label  id="PanelLocation5" name="PanelLocation5" style="width:130px;height:16px;position:absolute;left:130px;top:234px;"><%=strTextDisplayValue%></label>
+<label  id="PanelLocation5" name="PanelLocation5" style="width:178px;height:16px;position:absolute;left:134px;top:234px;"><%=strTextDisplayValue%></label>
 
 <% /* LabelLocation5::Text */ %>
 
-<label  id="LabelLocation5:" name="LabelLocation5:" style="width:130px;height:16px;position:absolute;left:298px;top:234px;">LabelLocation:</label>
+<label  id="LabelLocation5:" name="LabelLocation5:" style="width:130px;height:16px;position:absolute;left:330px;top:234px;">LabelLocation:</label>
 
 <% /* LabelLocation5:Text */ %>
 <% strTextDisplayValue = "";
@@ -1543,10 +1543,278 @@ else
    }
 %>
 
-<label  id="LabelLocation5" name="LabelLocation5" style="width:130px;height:16px;position:absolute;left:434px;top:234px;"><%=strTextDisplayValue%></label>
+<label  id="LabelLocation5" name="LabelLocation5" style="width:178px;height:16px;position:absolute;left:466px;top:234px;"><%=strTextDisplayValue%></label>
+
+<% /* PanelLocation6::Text */ %>
+
+<label  id="PanelLocation6:" name="PanelLocation6:" style="width:130px;height:16px;position:absolute;left:0px;top:260px;">Panel Location:</label>
+
+<% /* PanelLocation6:Text */ %>
+<% strTextDisplayValue = "";
+   mSubLC = task.getViewByName( "mSubLC" );
+   if ( VmlOperation.isValid( mSubLC ) == false )
+      task.log( ).debug( "Invalid View: " + "PanelLocation6" );
+   else
+   {
+      nRC = mSubLC.cursor( "S_HumanHazardSection" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+      {
+      try
+      {
+         strTextDisplayValue = mSubLC.cursor( "S_HumanHazardSection" ).getAttribute( "PanelLoc6" ).getString( "" );
+      }
+      catch (Exception e)
+      {
+         out.println("There is an error on PanelLocation6: " + e.getMessage());
+         task.log().info( "*** Error on ctrl PanelLocation6" + e.getMessage() );
+      }
+         if ( strTextDisplayValue == null )
+            strTextDisplayValue = "";
+      }
+   }
+%>
+
+<label  id="PanelLocation6" name="PanelLocation6" style="width:178px;height:16px;position:absolute;left:134px;top:260px;"><%=strTextDisplayValue%></label>
+
+<% /* LabelLocation6::Text */ %>
+
+<label  id="LabelLocation6:" name="LabelLocation6:" style="width:130px;height:16px;position:absolute;left:330px;top:260px;">Label Location:</label>
+
+<% /* LabelLocation6:Text */ %>
+<% strTextDisplayValue = "";
+   mSubLC = task.getViewByName( "mSubLC" );
+   if ( VmlOperation.isValid( mSubLC ) == false )
+      task.log( ).debug( "Invalid View: " + "LabelLocation6" );
+   else
+   {
+      nRC = mSubLC.cursor( "S_HumanHazardSection" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+      {
+      try
+      {
+         strTextDisplayValue = mSubLC.cursor( "S_HumanHazardSection" ).getAttribute( "LabelLoc6" ).getString( "" );
+      }
+      catch (Exception e)
+      {
+         out.println("There is an error on LabelLocation6: " + e.getMessage());
+         task.log().info( "*** Error on ctrl LabelLocation6" + e.getMessage() );
+      }
+         if ( strTextDisplayValue == null )
+            strTextDisplayValue = "";
+      }
+   }
+%>
+
+<label  id="LabelLocation6" name="LabelLocation6" style="width:178px;height:16px;position:absolute;left:466px;top:260px;"><%=strTextDisplayValue%></label>
+
+<% /* PanelLocation7::Text */ %>
+
+<label  id="PanelLocation7:" name="PanelLocation7:" style="width:130px;height:16px;position:absolute;left:0px;top:286px;">Panel Location:</label>
+
+<% /* PanelLocation7:Text */ %>
+<% strTextDisplayValue = "";
+   mSubLC = task.getViewByName( "mSubLC" );
+   if ( VmlOperation.isValid( mSubLC ) == false )
+      task.log( ).debug( "Invalid View: " + "PanelLocation7" );
+   else
+   {
+      nRC = mSubLC.cursor( "S_HumanHazardSection" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+      {
+      try
+      {
+         strTextDisplayValue = mSubLC.cursor( "S_HumanHazardSection" ).getAttribute( "PanelLoc7" ).getString( "" );
+      }
+      catch (Exception e)
+      {
+         out.println("There is an error on PanelLocation7: " + e.getMessage());
+         task.log().info( "*** Error on ctrl PanelLocation7" + e.getMessage() );
+      }
+         if ( strTextDisplayValue == null )
+            strTextDisplayValue = "";
+      }
+   }
+%>
+
+<label  id="PanelLocation7" name="PanelLocation7" style="width:178px;height:16px;position:absolute;left:134px;top:286px;"><%=strTextDisplayValue%></label>
+
+<% /* LabelLocation7::Text */ %>
+
+<label  id="LabelLocation7:" name="LabelLocation7:" style="width:130px;height:16px;position:absolute;left:330px;top:286px;">LabelLocation:</label>
+
+<% /* LabelLocation7:Text */ %>
+<% strTextDisplayValue = "";
+   mSubLC = task.getViewByName( "mSubLC" );
+   if ( VmlOperation.isValid( mSubLC ) == false )
+      task.log( ).debug( "Invalid View: " + "LabelLocation7" );
+   else
+   {
+      nRC = mSubLC.cursor( "S_HumanHazardSection" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+      {
+      try
+      {
+         strTextDisplayValue = mSubLC.cursor( "S_HumanHazardSection" ).getAttribute( "LabelLoc7" ).getString( "" );
+      }
+      catch (Exception e)
+      {
+         out.println("There is an error on LabelLocation7: " + e.getMessage());
+         task.log().info( "*** Error on ctrl LabelLocation7" + e.getMessage() );
+      }
+         if ( strTextDisplayValue == null )
+            strTextDisplayValue = "";
+      }
+   }
+%>
+
+<label  id="LabelLocation7" name="LabelLocation7" style="width:178px;height:16px;position:absolute;left:466px;top:286px;"><%=strTextDisplayValue%></label>
+
+<% /* PanelLocation8::Text */ %>
+
+<label  id="PanelLocation8:" name="PanelLocation8:" style="width:130px;height:16px;position:absolute;left:0px;top:312px;">PanelLocation:</label>
+
+<% /* PanelLocation8:Text */ %>
+<% strTextDisplayValue = "";
+   mSubLC = task.getViewByName( "mSubLC" );
+   if ( VmlOperation.isValid( mSubLC ) == false )
+      task.log( ).debug( "Invalid View: " + "PanelLocation8" );
+   else
+   {
+      nRC = mSubLC.cursor( "S_HumanHazardSection" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+      {
+      try
+      {
+         strTextDisplayValue = mSubLC.cursor( "S_HumanHazardSection" ).getAttribute( "PanelLoc8" ).getString( "" );
+      }
+      catch (Exception e)
+      {
+         out.println("There is an error on PanelLocation8: " + e.getMessage());
+         task.log().info( "*** Error on ctrl PanelLocation8" + e.getMessage() );
+      }
+         if ( strTextDisplayValue == null )
+            strTextDisplayValue = "";
+      }
+   }
+%>
+
+<label  id="PanelLocation8" name="PanelLocation8" style="width:178px;height:16px;position:absolute;left:134px;top:312px;"><%=strTextDisplayValue%></label>
+
+<% /* LabelLocation8::Text */ %>
+
+<label  id="LabelLocation8:" name="LabelLocation8:" style="width:130px;height:16px;position:absolute;left:330px;top:312px;">LabelLocation:</label>
+
+<% /* LabelLocation8:Text */ %>
+<% strTextDisplayValue = "";
+   mSubLC = task.getViewByName( "mSubLC" );
+   if ( VmlOperation.isValid( mSubLC ) == false )
+      task.log( ).debug( "Invalid View: " + "LabelLocation8" );
+   else
+   {
+      nRC = mSubLC.cursor( "S_HumanHazardSection" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+      {
+      try
+      {
+         strTextDisplayValue = mSubLC.cursor( "S_HumanHazardSection" ).getAttribute( "LabelLoc8" ).getString( "" );
+      }
+      catch (Exception e)
+      {
+         out.println("There is an error on LabelLocation8: " + e.getMessage());
+         task.log().info( "*** Error on ctrl LabelLocation8" + e.getMessage() );
+      }
+         if ( strTextDisplayValue == null )
+            strTextDisplayValue = "";
+      }
+   }
+%>
+
+<label  id="LabelLocation8" name="LabelLocation8" style="width:178px;height:16px;position:absolute;left:466px;top:312px;"><%=strTextDisplayValue%></label>
+
+<% /* PanelLocation9::Text */ %>
+
+<label  id="PanelLocation9:" name="PanelLocation9:" style="width:130px;height:16px;position:absolute;left:0px;top:338px;">Panel Location:</label>
+
+<% /* PanelLocation9:Text */ %>
+<% strTextDisplayValue = "";
+   mSubLC = task.getViewByName( "mSubLC" );
+   if ( VmlOperation.isValid( mSubLC ) == false )
+      task.log( ).debug( "Invalid View: " + "PanelLocation9" );
+   else
+   {
+      nRC = mSubLC.cursor( "S_HumanHazardSection" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+      {
+      try
+      {
+         strTextDisplayValue = mSubLC.cursor( "S_HumanHazardSection" ).getAttribute( "PanelLoc9" ).getString( "" );
+      }
+      catch (Exception e)
+      {
+         out.println("There is an error on PanelLocation9: " + e.getMessage());
+         task.log().info( "*** Error on ctrl PanelLocation9" + e.getMessage() );
+      }
+         if ( strTextDisplayValue == null )
+            strTextDisplayValue = "";
+      }
+   }
+%>
+
+<label  id="PanelLocation9" name="PanelLocation9" style="width:178px;height:16px;position:absolute;left:134px;top:338px;"><%=strTextDisplayValue%></label>
+
+<% /* LabelLocation9::Text */ %>
+
+<label  id="LabelLocation9:" name="LabelLocation9:" style="width:130px;height:16px;position:absolute;left:330px;top:338px;">Label Location:</label>
+
+<% /* LabelLocation9:Text */ %>
+<% strTextDisplayValue = "";
+   mSubLC = task.getViewByName( "mSubLC" );
+   if ( VmlOperation.isValid( mSubLC ) == false )
+      task.log( ).debug( "Invalid View: " + "LabelLocation9" );
+   else
+   {
+      nRC = mSubLC.cursor( "S_HumanHazardSection" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+      {
+      try
+      {
+         strTextDisplayValue = mSubLC.cursor( "S_HumanHazardSection" ).getAttribute( "LabelLoc9" ).getString( "" );
+      }
+      catch (Exception e)
+      {
+         out.println("There is an error on LabelLocation9: " + e.getMessage());
+         task.log().info( "*** Error on ctrl LabelLocation9" + e.getMessage() );
+      }
+         if ( strTextDisplayValue == null )
+            strTextDisplayValue = "";
+      }
+   }
+%>
+
+<label  id="LabelLocation9" name="LabelLocation9" style="width:178px;height:16px;position:absolute;left:466px;top:338px;"><%=strTextDisplayValue%></label>
 
 
 </div>  <!--  GroupBox1 --> 
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:6px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GroupBox2:GroupBox */ %>
+
+<div id="GroupBox2" name="GroupBox2" class="withborder"   style="float:left;position:relative; width:692px; height:40px;">  <!-- GroupBox2 --> 
+
+<% /* FullHazardStatement:Text */ %>
+
+<label class="groupbox"  id="FullHazardStatement" name="FullHazardStatement" style="width:208px;height:16px;position:absolute;left:8px;top:14px;">Complete Hazard Statement</label>
+
+
+</div>  <!--  GroupBox2 --> 
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
@@ -1557,32 +1825,9 @@ else
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GroupBox2:GroupBox */ %>
-
-<div id="GroupBox2" name="GroupBox2" class="withborder"   style="float:left;position:relative; width:692px; height:40px;">  <!-- GroupBox2 --> 
-
-<% /* FullHazardStatement:Text */ %>
-
-<label class="groupbox"  id="FullHazardStatement" name="FullHazardStatement" style="width:208px;height:16px;position:absolute;left:18px;top:14px;">Complete Hazard Statement</label>
-
-
-</div>  <!--  GroupBox2 --> 
-</div>  <!-- End of a new line -->
-
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
-
-
- <!-- This is added as a line spacer -->
-<div style="height:10px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox3:GroupBox */ %>
 
 <div id="GroupBox3" name="GroupBox3"   style="float:left;position:relative; width:692px; height:142px;">  <!-- GroupBox3 --> 
-
-<% /* Refresh:PushBtn */ %>
-<button type="button" name="Refresh" id="Refresh" value="" onclick="RefreshFullStatement( )" style="width:130px;height:24px;position:absolute;left:0px;top:0px;">Refresh</button>
 
 <% /* MLEditFullStatement:MLEdit */ %>
 <%
@@ -1616,7 +1861,7 @@ else
    }
 %>
 
-<div name="MLEditFullStatement" id="MLEditFullStatement" style="width:552px;height:136px;position:absolute;left:140px;top:0px;border:solid;border-width:4px;border-style:groove;text-overflow:hidden;background-color:lightgray;" wrap="wrap"><%=strErrorMapValue%></div>
+<div name="MLEditFullStatement" id="MLEditFullStatement" style="width:672px;height:136px;position:absolute;left:10px;top:0px;border:solid;border-width:4px;border-style:groove;text-overflow:hidden;background-color:lightgray;" wrap="wrap"><%=strErrorMapValue%></div>
 
 
 </div>  <!--  GroupBox3 --> 

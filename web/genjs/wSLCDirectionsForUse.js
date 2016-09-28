@@ -1,4 +1,4 @@
-// wSLCDirectionsForUse   Generate Timestamp: 20160620105928136
+// wSLCDirectionsForUse   Generate Timestamp: 20160927164754088
 
 var isWindowClosing = true;
 var timerID = null;
@@ -191,7 +191,7 @@ function CheckAllInGrid(id, CheckBoxName) // triggered by no text checkbox
    }
 }
 
-function GOTO_DirsForUseSectionDetail( strTagEntityKey )
+function GOTO_DirectionsForUseCategory( strTagEntityKey )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -205,7 +205,7 @@ function GOTO_DirsForUseSectionDetail( strTagEntityKey )
       document.wSLCDirectionsForUse.zTableRowSelect.value = strEntityKey;
       _DisableFormElements( true );
 
-      document.wSLCDirectionsForUse.zAction.value = "GOTO_DirsForUseSectionDetail";
+      document.wSLCDirectionsForUse.zAction.value = "GOTO_DirectionsForUseCategory";
       document.wSLCDirectionsForUse.submit( );
    }
 }

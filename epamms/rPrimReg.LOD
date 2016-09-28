@@ -1,4 +1,4 @@
-z1000-Zeidon    RPRIMREG TZZOLODO 05/26/16   12:37:15 1.0a2   
+z1000-Zeidon    RPRIMREG TZZOLODO                         09/20/16   15:23:04 1.0a2   
 eLOD       1
 aZKey      1157074
 aName      rPrimReg
@@ -65,8 +65,8 @@ aName      PrimarySub
 aZKey      68568356
 aPurpose   S
 aDesc      Used to carry intersection data between Primary and Subregistrants
-aER_DiagramPosX 68
-aER_DiagramPosY 17
+aER_DiagramPosX 67
+aER_DiagramPosY 13
 
 eER_RelLinkRec 4
 aName      has
@@ -78,11 +78,11 @@ eER_RelTypeRec 5
 aZKey      68568357
 aFact      Added thru ER Dialog
 aER_DiagramBendPosX 43
-aER_DiagramBendPosY 19
+aER_DiagramBendPosY 15
 aER_DiagramE1PosX 43
 aER_DiagramE1PosY 31
-aER_DiagramE2PosX 67
-aER_DiagramE2PosY 19
+aER_DiagramE2PosX 66
+aER_DiagramE2PosY 15
 
 eLOD_EntityChild 3
 aName      Organization
@@ -199,8 +199,8 @@ eER_EntityRec 4
 aName      Organization
 aZKey      1653216
 aPurpose   F
-aER_DiagramPosX 66
-aER_DiagramPosY 33
+aER_DiagramPosX 67
+aER_DiagramPosY 29
 
 eER_RelLinkRec 4
 aName      for
@@ -214,12 +214,12 @@ aTE_NoForeignKeyPrefix N
 eER_RelTypeRec 5
 aZKey      1653217
 aFact      Added thru ER Dialog
-aER_DiagramBendPosX 0
-aER_DiagramBendPosY 0
-aER_DiagramE1PosX 65
-aER_DiagramE1PosY 33
+aER_DiagramBendPosX 69
+aER_DiagramBendPosY 35
+aER_DiagramE1PosX 69
+aER_DiagramE1PosY 34
 aER_DiagramE2PosX 48
-aER_DiagramE2PosY 33
+aER_DiagramE2PosY 35
 
 eLOD_EntityChild 3
 aName      MasterProduct
@@ -341,8 +341,8 @@ eER_EntityRec 5
 aName      MasterLabelContent
 aZKey      68568593
 aPurpose   F
-aER_DiagramPosX 51
-aER_DiagramPosY 63
+aER_DiagramPosX 54
+aER_DiagramPosY 60
 
 eER_RelLinkRec 5
 aName      has
@@ -358,10 +358,10 @@ aZKey      69031549
 aFact      Added thru ER Dialog
 aER_DiagramBendPosX 0
 aER_DiagramBendPosY 0
-aER_DiagramE1PosX 55
-aER_DiagramE1PosY 54
-aER_DiagramE2PosX 55
-aER_DiagramE2PosY 62
+aER_DiagramE1PosX 54
+aER_DiagramE1PosY 49
+aER_DiagramE2PosX 54
+aER_DiagramE2PosY 59
 
 eLOD_AttributeRec 4
 aZKey      1163349
@@ -417,7 +417,7 @@ aZKey      68568087
 aName      TextDescription
 aDomainType A
 aDataType  S
-aMaxStringLth 1024
+aMaxStringLth 2048
 aDesc      Long text
 aContextRestriction N
 
@@ -527,8 +527,8 @@ eER_EntityRec 4
 aName      MasterProduct
 aZKey      69031545
 aPurpose   F
-aER_DiagramPosX 51
-aER_DiagramPosY 49
+aER_DiagramPosX 50
+aER_DiagramPosY 44
 
 eER_RelLinkRec 4
 aName      has
@@ -543,11 +543,11 @@ eER_RelTypeRec 5
 aZKey      69031569
 aFact      Added thru ER Dialog
 aER_DiagramBendPosX 43
-aER_DiagramBendPosY 51
+aER_DiagramBendPosY 46
 aER_DiagramE1PosX 43
 aER_DiagramE1PosY 37
-aER_DiagramE2PosX 50
-aER_DiagramE2PosY 51
+aER_DiagramE2PosX 49
+aER_DiagramE2PosY 46
 
 eLOD_AttributeRec 3
 aZKey      1158076

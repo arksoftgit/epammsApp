@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSubRNewSubregProduct   Generate Timestamp: 20160706125724170 --%>
+<%-- wSubRNewSubregProduct   Generate Timestamp: 20160926154019033 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -856,10 +856,10 @@ else
 <div style="height:16px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
-<span style="height:24px;">&nbsp&nbsp</span>
+<span style="height:14px;">&nbsp&nbsp</span>
 <% /* Registrant:Text */ %>
 
-<label class="groupbox"  id="Registrant" name="Registrant" style="width:114px;height:24px;">Registrant</label>
+<label class="groupbox"  id="Registrant" name="Registrant" style="width:114px;height:14px;">Registrant</label>
 
 </div>  <!-- End of a new line -->
 
@@ -874,7 +874,7 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:24px;width:100px;"></div>
+<div style="height:20px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:8px;float:left;"></div>   <!-- Width Spacer -->
@@ -937,10 +937,10 @@ else
 <div style="height:10px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
-<span style="height:24px;">&nbsp&nbsp</span>
+<span style="height:14px;">&nbsp&nbsp</span>
 <% /* Product:Text */ %>
 
-<label class="groupbox"  id="Product" name="Product" style="width:114px;height:24px;">Product</label>
+<label class="groupbox"  id="Product" name="Product" style="width:114px;height:14px;">Product</label>
 
 </div>  <!-- End of a new line -->
 
@@ -951,11 +951,11 @@ else
 <div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GBProduct:GroupBox */ %>
 
-<div id="GBProduct" name="GBProduct" style="width:624px;height:192px;float:left;">  <!-- GBProduct --> 
+<div id="GBProduct" name="GBProduct" style="width:624px;height:164px;float:left;">  <!-- GBProduct --> 
 
 
  <!-- This is added as a line spacer -->
-<div style="height:26px;width:100px;"></div>
+<div style="height:20px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:8px;float:left;"></div>   <!-- Width Spacer -->
@@ -1229,7 +1229,7 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:14px;width:100px;"></div>
+<div style="height:6px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <span style="height:24px;">&nbsp&nbsp</span>
@@ -1246,7 +1246,7 @@ else
 <div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GBMasterProducts:GroupBox */ %>
 
-<div id="GBMasterProducts" name="GBMasterProducts" style="width:624px;float:left;">  <!-- GBMasterProducts --> 
+<div id="GBMasterProducts" name="GBMasterProducts" style="width:698px;height:240px;float:left;">  <!-- GBMasterProducts --> 
 
 
  <!-- This is added as a line spacer -->
@@ -1255,14 +1255,14 @@ else
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GridMasterProducts:Grid */ %>
-<table  cols=4 style="width:602px;"  name="GridMasterProducts" id="GridMasterProducts">
+<table  cols=4 style=""  name="GridMasterProducts" id="GridMasterProducts">
 
 <thead><tr>
 
-   <th>Select</th>
-   <th>Name</th>
-   <th>Description</th>
-   <th>Number</th>
+   <th class="gridheading"><input type="checkbox" onclick="CheckAllInGrid(this,'Select')"></th>
+   <th style="width:154px;">Name</th>
+   <th style="width:398px;">Description</th>
+   <th style="width:66px;">Number</th>
 
 </tr></thead>
 
@@ -1361,9 +1361,9 @@ try
 <tr<%=strOdd%>>
 
    <td nowrap><%=strSelect%></td>
-   <td nowrap><%=strGridLabelName%></td>
-   <td nowrap><%=strGridContentDescription%></td>
-   <td nowrap><%=strGENumber%></td>
+   <td nowrap style="width:154px;"><%=strGridLabelName%></td>
+   <td nowrap style="width:398px;"><%=strGridContentDescription%></td>
+   <td nowrap style="width:66px;"><%=strGENumber%></td>
 
 </tr>
 
@@ -1392,7 +1392,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 
 
  <!-- This is added as a line spacer -->
-<div style="height:6px;width:100px;"></div>
+<div style="height:42px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:32px;float:left;"></div>   <!-- Width Spacer -->

@@ -376,7 +376,7 @@ BuildNewSLC_Version( VIEW NewSLC      BASED ON LOD mSubLC,
                CREATE ENTITY NewSLC.S_VersionChangeMessage
                GetStringFromAttributeByContext( szMessageSubComponent, PreviousSLC, "S_UsageType", "UsageType", "FullUsageType", 50 )
                GetStringFromAttributeByContext( szMessageComponent, PreviousSLC, "S_Usage", "Name", "", 50 )
-               NewSLC.S_VersionChangeMessage.ChangeText = "Deleted " + szMessageSubComponent + " Usage: " + szMessageComponent
+               NewSLC.S_VersionChangeMessage.ChangeNote = "Deleted " + szMessageSubComponent + " Usage: " + szMessageComponent
                CREATE ENTITY NewSLC.S_VersionChangeMessage   // Skip a line
             END
          END
@@ -429,7 +429,7 @@ BuildNewSLC_Version( VIEW NewSLC      BASED ON LOD mSubLC,
          // Create error message that Storage and Disposal Section does not exist in new MLC.
          CREATE ENTITY NewSLC.S_VersionChangeMessage
          GetStringFromAttributeByContext( szMessageComponent, PreviousSLC, "S_StorageDisposalSection", "ContainerVolume", "", 50 )
-         NewSLC.S_VersionChangeMessage.ChangeText = "Deleted Storage and Disposal Section, " + szMessageComponent
+         NewSLC.S_VersionChangeMessage.ChangeNote = "Deleted Storage and Disposal Section, " + szMessageComponent
          CREATE ENTITY NewSLC.S_VersionChangeMessage   // Skip a line
       END
    END
@@ -446,7 +446,7 @@ BuildNewSLC_Version( VIEW NewSLC      BASED ON LOD mSubLC,
          // Create message that the Directions For Use Section has been deleted.
          CREATE ENTITY NewSLC.S_VersionChangeMessage
          GetStringFromAttributeByContext( szMessageComponent, PreviousSLC, "S_DirectionsForUseSection", "Name", "", 50 )
-         NewSLC.S_VersionChangeMessage.ChangeText = "Deleted Directions For Use Section, " + szMessageComponent
+         NewSLC.S_VersionChangeMessage.ChangeNote = "Deleted Directions For Use Section, " + szMessageComponent
          CREATE ENTITY NewSLC.S_VersionChangeMessage   // Skip a line
       ELSE
          // Copy the MLC Section to the SLC.
@@ -491,7 +491,7 @@ BuildNewSLC_Version( VIEW NewSLC      BASED ON LOD mSubLC,
          // The Marketing Section from the original MLC was not included in the new MLC, so create change message.
          CREATE ENTITY NewSLC.S_VersionChangeMessage
          GetStringFromAttributeByContext( szMessageComponent, PreviousSLC, "S_MarketingSection", "Name", "", 50 )
-         NewSLC.S_VersionChangeMessage.ChangeText = "Deleted Marketing Section, " + szMessageComponent
+         NewSLC.S_VersionChangeMessage.ChangeNote = "Deleted Marketing Section, " + szMessageComponent
          CREATE ENTITY NewSLC.S_VersionChangeMessage   // Skip a line
       ELSE
          // The MLC Marketing Section has been copied, so bring it over.
@@ -505,7 +505,7 @@ BuildNewSLC_Version( VIEW NewSLC      BASED ON LOD mSubLC,
             CREATE ENTITY NewSLC.S_VersionChangeMessage
             GetStringFromAttributeByContext( szMessageComponent, NewSLC, "S_MarketingSection", "Title", "", 50 )
             GetStringFromAttributeByContext( szMessageSubComponent, PreviousSLC, "S_MarketingSection", "Title", "", 50 )
-            NewSLC.S_VersionChangeMessage.ChangeText = "Marketing Section Title has changed from '" + szMessageSubComponent +
+            NewSLC.S_VersionChangeMessage.ChangeNote = "Marketing Section Title has changed from '" + szMessageSubComponent +
                                                        "' to: '" + szMessageComponent + "'"
             CREATE ENTITY NewSLC.S_VersionChangeMessage   // Skip a line
          END
@@ -522,7 +522,7 @@ BuildNewSLC_Version( VIEW NewSLC      BASED ON LOD mSubLC,
                // The Marketing Statement from the original MLC was not included in the new MLC, so create change message.
                CREATE ENTITY NewSLC.S_VersionChangeMessage
                GetStringFromAttributeByContext( szMessageComponent, PreviousSLC, "S_MarketingStatement", "Text", "", 50 )
-               NewSLC.S_VersionChangeMessage.ChangeText = "Deleted Marketing Statement, " + NEW_LINE + NEW_LINE + szMessageComponent
+               NewSLC.S_VersionChangeMessage.ChangeNote = "Deleted Marketing Statement, " + NEW_LINE + NEW_LINE + szMessageComponent
                CREATE ENTITY NewSLC.S_VersionChangeMessage   // Skip a line
             ELSE
                CREATE ENTITY NewSLC.S_MarketingStatement
@@ -534,18 +534,18 @@ BuildNewSLC_Version( VIEW NewSLC      BASED ON LOD mSubLC,
                IF PreviousSLC.S_MarketingStatement.Title != NewSLC.S_MarketingStatement.Title
                   CREATE ENTITY NewSLC.S_VersionChangeMessage
                   GetStringFromAttributeByContext( szMessageComponent, NewSLC, "S_MarketingStatement", "Title", "", 50 )
-                  NewSLC.S_VersionChangeMessage.ChangeText = "Marketing Statement Title has changed to: " + szMessageComponent
+                  NewSLC.S_VersionChangeMessage.ChangeNote = "Marketing Statement Title has changed to: " + szMessageComponent
                   CREATE ENTITY NewSLC.S_VersionChangeMessage   // Skip a line
                END
                IF PreviousSLC.S_MarketingStatement.Text != NewSLC.S_MarketingStatement.Text
                   CREATE ENTITY NewSLC.S_VersionChangeMessage
-                  NewSLC.S_VersionChangeMessage.ChangeText = "Marketing Statement Text has changed from the first statement to the second: "
+                  NewSLC.S_VersionChangeMessage.ChangeNote = "Marketing Statement Text has changed from the first statement to the second: "
                   GetStringFromAttributeByContext( szMessageComponent, PreviousSLC, "S_MarketingStatement", "Text", "", 50 )
                   CREATE ENTITY NewSLC.S_VersionChangeMessage
-                  NewSLC.S_VersionChangeMessage.ChangeText = szMessageComponent
+                  NewSLC.S_VersionChangeMessage.ChangeNote = szMessageComponent
                   GetStringFromAttributeByContext( szMessageComponent, NewSLC, "S_MarketingStatement", "Text", "", 50 )
                   CREATE ENTITY NewSLC.S_VersionChangeMessage
-                  NewSLC.S_VersionChangeMessage.ChangeText = szMessageComponent
+                  NewSLC.S_VersionChangeMessage.ChangeNote = szMessageComponent
                   CREATE ENTITY NewSLC.S_VersionChangeMessage   // Skip a line
                END
             END
@@ -732,6 +732,36 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
+//  OPERATION: CopyStorageDisposalStmts
+//
+/////////////////////////////////////////////////////////////////////////////
+LOCAL OPERATION
+CopyStorageDisposalStmts( VIEW NewSLC, VIEW SourceMLC )
+
+   FOR EACH SourceMLC.M_StorageDisposalStatement
+      CREATE ENTITY NewSLC.S_StorageDisposalStatement
+      SetMatchingAttributesByName( NewSLC, "S_StorageDisposalStatement", SourceMLC, "M_StorageDisposalStatement", zSET_NULL )
+      FOR EACH SourceMLC.M_StorageDisposalSubStatement
+         SetViewToSubobject( SourceMLC, "M_StorageDisposalSubStatement" )
+         SetViewToSubobject( NewSLC, "S_StorageDisposalSubStatement" )
+         CopyStorageDisposalStmts( NewSLC, SourceMLC )
+         ResetViewFromSubobject( NewSLC )
+         ResetViewFromSubobject( SourceMLC )
+      END
+      FOR EACH SourceMLC.M_InsertTextKeywordSD
+         CREATE ENTITY NewSLC.S_InsertTextKeywordSD
+         SetMatchingAttributesByName( NewSLC, "S_InsertTextKeywordSD", SourceMLC, "M_InsertTextKeywordSD", zSET_NULL )
+         FOR EACH SourceMLC.M_InsertTextSD
+            CREATE ENTITY NewSLC.S_InsertTextSD
+            SetMatchingAttributesByName( NewSLC, "S_InsertTextSD", SourceMLC, "M_InsertTextSD", zSET_NULL )
+         END
+      END
+   END
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
 //  OPERATION: BuildSLC_FromMLC
 //
 /////////////////////////////////////////////////////////////////////////////
@@ -777,11 +807,18 @@ BuildSLC_FromMLC( VIEW NewSLC    BASED ON LOD mSubLC,
    END
 
    // StorageDisposal Section
+   // For the moment, copy all Storage & Disposal Sections with child entities.
+   FOR EACH SourceMLC.M_StorageDisposalSection
+      CREATE ENTITY NewSLC.S_StorageDisposalSection
+      SetMatchingAttributesByName( NewSLC, "S_StorageDisposalSection", SourceMLC, "M_StorageDisposalSection", zSET_NULL )
+      CopyStorageDisposalStmts( NewSLC, SourceMLC )
+   END
+   /*
    // Select the Storage & Disposal Section based on Container Size, which is stored as a work attribute in NewSLC.
-   IF NewSLC.SubregLabelContent.wContainerSize > 1
-      SET CURSOR FIRST SourceMLC.M_StorageDisposalSection WHERE SourceMLC.M_StorageDisposalSection.ContainerVolume = ">1"
+   IF NewSLC.SubregLabelContent.wContainerSize > 5
+      SET CURSOR FIRST SourceMLC.M_StorageDisposalSection WHERE SourceMLC.M_StorageDisposalSection.ContainerVolume = ">5"
    ELSE
-      SET CURSOR FIRST SourceMLC.M_StorageDisposalSection WHERE SourceMLC.M_StorageDisposalSection.ContainerVolume = "<=1"
+      SET CURSOR FIRST SourceMLC.M_StorageDisposalSection WHERE SourceMLC.M_StorageDisposalSection.ContainerVolume = "<=5"
    END
    CREATE ENTITY NewSLC.S_StorageDisposalSection
    SetMatchingAttributesByName( NewSLC, "S_StorageDisposalSection", SourceMLC, "M_StorageDisposalSection", zSET_NULL )
@@ -791,7 +828,7 @@ BuildSLC_FromMLC( VIEW NewSLC    BASED ON LOD mSubLC,
       SetMatchingAttributesByName( NewSLC, "S_StorageDisposalStatement", SourceMLC, "M_StorageDisposalStatement", zSET_NULL )
       NewSLC.S_StorageDisposalStatement.PrimaryMLC_ID = SourceMLC.M_StorageDisposalStatement.ID
    END
-
+   */
    // HumanHazard Section
    FOR EACH SourceMLC.M_HumanHazardSection
       CREATE ENTITY NewSLC.S_HumanHazardSection
@@ -800,10 +837,14 @@ BuildSLC_FromMLC( VIEW NewSLC    BASED ON LOD mSubLC,
    END
 
    // Add any Directions For Use Sections that aren't driven by Usage entries.
-   FOR EACH SourceMLC.M_DirectionsForUseSection
-      IF SourceMLC.M_DrivingUsage DOES NOT EXIST
-         // No Driving Usage entry exists, so always copy the section.
-         CopyDirsForUseSection( NewSLC, SourceMLC )
+   FOR EACH SourceMLC.M_DirectionsForUseCategory
+      CREATE ENTITY NewSLC.S_DirectionsForUseCategory
+      SetMatchingAttributesByName( NewSLC, "S_DirectionsForUseCategory", SourceMLC, "M_DirectionsForUseCategory", zSET_NULL )
+      FOR EACH SourceMLC.M_DirectionsForUseSection
+         IF SourceMLC.M_DrivingUsage DOES NOT EXIST
+            // No Driving Usage entry exists, so always copy the section.
+            CopyDirsForUseSection( NewSLC, SourceMLC )
+         END
       END
    END
 
@@ -811,7 +852,7 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-//  OPERATION: BuildSLC_FromMLC
+//  OPERATION: BuildDirsForUseSects
 //
 /////////////////////////////////////////////////////////////////////////////
 TRANSFORMATION OPERATION
@@ -859,19 +900,13 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-//  OPERATION: CopyDirsForUseSection
+//  OPERATION: CopyDirsForUseStatements
 //
 /////////////////////////////////////////////////////////////////////////////
-TRANSFORMATION OPERATION
-CopyDirsForUseSection( VIEW NewSLC    BASED ON LOD mSubLC,
-                       VIEW SourceMLC BASED ON LOD mMasLC )
+LOCAL OPERATION
+CopyDirsForUseStatements( VIEW NewSLC    BASED ON LOD mSubLC,
+                          VIEW SourceMLC BASED ON LOD mMasLC )
 
-   // Copy a Directions For Use Section from the MLC to the SLC
-   // No Driving Usage entry exists, so always copy the section.
-   CREATE ENTITY NewSLC.S_DirectionsForUseSection
-   SetMatchingAttributesByName( NewSLC,    "S_DirectionsForUseSection",
-                                SourceMLC, "M_DirectionsForUseSection", zSET_NULL )
-   NewSLC.S_DirectionsForUseSection.PrimaryMLC_ID = SourceMLC.M_DirectionsForUseSection.ID
    FOR EACH SourceMLC.M_DirectionsForUseStatement
       CREATE ENTITY NewSLC.S_DirectionsForUseStatement
       SetMatchingAttributesByName( NewSLC,    "S_DirectionsForUseStatement",
@@ -889,8 +924,33 @@ CopyDirsForUseSection( VIEW NewSLC    BASED ON LOD mSubLC,
             INCLUDE NewSLC.S_DirectionsUsage FROM NewSLC.S_Usage
          END
       END
+      IF SourceMLC.M_DirectionsForUseSubStatement EXISTS
+         SetViewToSubobject( SourceMLC, "M_DirectionsForUseSubStatement" )
+         SetViewToSubobject( NewSLC, "S_DirectionsForUseSubStatement" )
+         CopyDirsForUseStatements( NewSLC, SourceMLC )
+         ResetViewFromSubobject( NewSLC )
+         ResetViewFromSubobject( SourceMLC )
+      END
    END
 
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: CopyDirsForUseSection
+//
+/////////////////////////////////////////////////////////////////////////////
+TRANSFORMATION OPERATION
+CopyDirsForUseSection( VIEW NewSLC    BASED ON LOD mSubLC,
+                       VIEW SourceMLC BASED ON LOD mMasLC )
+
+   // Copy a Directions For Use Section from the MLC to the SLC
+   // No Driving Usage entry exists, so always copy the section.
+   CREATE ENTITY NewSLC.S_DirectionsForUseSection
+   SetMatchingAttributesByName( NewSLC,    "S_DirectionsForUseSection",
+                                SourceMLC, "M_DirectionsForUseSection", zSET_NULL )
+   NewSLC.S_DirectionsForUseSection.PrimaryMLC_ID = SourceMLC.M_DirectionsForUseSection.ID
+   CopyDirsForUseStatements( NewSLC, SourceMLC )
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1247,6 +1307,26 @@ dFullHazardStatement( VIEW mSubLC BASED ON LOD mSubLC,
                szReplaceString = szReplaceString + szOpenSeparator + szLocation + szCloseSeparator
             END
 
+            szLocation = mSubLC.S_HumanHazardSection.PanelLoc6
+            IF szLocation != ""
+               szReplaceString = szReplaceString + szOpenSeparator + szLocation + szCloseSeparator
+            END
+
+            szLocation = mSubLC.S_HumanHazardSection.PanelLoc7
+            IF szLocation != ""
+               szReplaceString = szReplaceString + szOpenSeparator + szLocation + szCloseSeparator
+            END
+
+            szLocation = mSubLC.S_HumanHazardSection.PanelLoc8
+            IF szLocation != ""
+               szReplaceString = szReplaceString + szOpenSeparator + szLocation + szCloseSeparator
+            END
+
+            szLocation = mSubLC.S_HumanHazardSection.PanelLoc9
+            IF szLocation != ""
+               szReplaceString = szReplaceString + szOpenSeparator + szLocation + szCloseSeparator
+            END
+
             zReplaceSubString( szString, nPosStart, nPosEnd, szReplaceString )
          END
 
@@ -1280,6 +1360,26 @@ dFullHazardStatement( VIEW mSubLC BASED ON LOD mSubLC,
             END
 
             szLocation = mSubLC.S_HumanHazardSection.LabelLoc5
+            IF szLocation != ""
+               szReplaceString = szReplaceString + szOpenSeparator + szLocation + szCloseSeparator
+            END
+
+            szLocation = mSubLC.S_HumanHazardSection.LabelLoc6
+            IF szLocation != ""
+               szReplaceString = szReplaceString + szOpenSeparator + szLocation + szCloseSeparator
+            END
+
+            szLocation = mSubLC.S_HumanHazardSection.LabelLoc7
+            IF szLocation != ""
+               szReplaceString = szReplaceString + szOpenSeparator + szLocation + szCloseSeparator
+            END
+
+            szLocation = mSubLC.S_HumanHazardSection.LabelLoc8
+            IF szLocation != ""
+               szReplaceString = szReplaceString + szOpenSeparator + szLocation + szCloseSeparator
+            END
+
+            szLocation = mSubLC.S_HumanHazardSection.LabelLoc9
             IF szLocation != ""
                szReplaceString = szReplaceString + szOpenSeparator + szLocation + szCloseSeparator
             END

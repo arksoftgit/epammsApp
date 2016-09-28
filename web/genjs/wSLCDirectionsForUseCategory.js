@@ -1,4 +1,4 @@
-// wSubRNewSubregProduct   Generate Timestamp: 20160926154019033
+// wSLCDirectionsForUseCategory   Generate Timestamp: 20160927165432197
 
 var isWindowClosing = true;
 var timerID = null;
@@ -45,8 +45,8 @@ function _OnAlmostTimeout()
       // If the time is less than one minute, resubmit the page.  Otherwise, go to the timeout window.
       if (tDiff < 60000)
       {
-         document.wSubRNewSubregProduct.zAction.value = "_OnResubmitPage";
-         document.wSubRNewSubregProduct.submit( );
+         document.wSLCDirectionsForUseCategory.zAction.value = "_OnResubmitPage";
+         document.wSLCDirectionsForUseCategory.submit( );
       }
       else
       {
@@ -61,8 +61,8 @@ function _OnTimeout( )
    {
       _DisableFormElements( true );
 
-      document.wSubRNewSubregProduct.zAction.value = "_OnTimeout";
-      document.wSubRNewSubregProduct.submit( );
+      document.wSLCDirectionsForUseCategory.zAction.value = "_OnTimeout";
+      document.wSLCDirectionsForUseCategory.submit( );
    }
 }
 
@@ -76,8 +76,8 @@ function _BeforePageUnload( )
       // If the user clicked the window close box, unregister zeidon.
       if (isWindowClosing)
       {
-         document.wSubRNewSubregProduct.zAction.value = "_OnUnload";
-         document.wSubRNewSubregProduct.submit( );
+         document.wSLCDirectionsForUseCategory.zAction.value = "_OnUnload";
+         document.wSLCDirectionsForUseCategory.submit( );
       }
    }
 }
@@ -130,16 +130,16 @@ function _AfterPageLoaded( )
 {
 // _DisableFormElements( false );
 
-   var szFocusCtrl = document.wSubRNewSubregProduct.zFocusCtrl.value;
+   var szFocusCtrl = document.wSLCDirectionsForUseCategory.zFocusCtrl.value;
    if ( szFocusCtrl != "" && szFocusCtrl != "null" )
-      eval( 'document.wSubRNewSubregProduct.' + szFocusCtrl + '.focus( )' );
+      eval( 'document.wSLCDirectionsForUseCategory.' + szFocusCtrl + '.focus( )' );
 
    // This is where we put out a message from the previous iteration on this window
-   var szMsg = document.wSubRNewSubregProduct.zError.value;
+   var szMsg = document.wSLCDirectionsForUseCategory.zError.value;
    if ( szMsg != "" )
       alert( szMsg ); // "Houston ... We have a problem"
 
-   szMsg = document.wSubRNewSubregProduct.zOpenFile.value;
+   szMsg = document.wSLCDirectionsForUseCategory.zOpenFile.value;
    if ( szMsg != "" )
    {
       var NewWin = window.open( szMsg );
@@ -151,10 +151,10 @@ function _AfterPageLoaded( )
       }
    }
 
-   var LoginName = document.wSubRNewSubregProduct.zLoginName.value;
-   var keyRole = document.wSubRNewSubregProduct.zKeyRole.value;
-   document.wSubRNewSubregProduct.zError.value = "";
-   document.wSubRNewSubregProduct.zOpenFile.value = "";
+   var LoginName = document.wSLCDirectionsForUseCategory.zLoginName.value;
+   var keyRole = document.wSLCDirectionsForUseCategory.zKeyRole.value;
+   document.wSLCDirectionsForUseCategory.zError.value = "";
+   document.wSLCDirectionsForUseCategory.zOpenFile.value = "";
 
    if ( timerID != null )
    {
@@ -162,7 +162,7 @@ function _AfterPageLoaded( )
       timerID = null;
    }
 
-   var varTimeout = document.wSubRNewSubregProduct.zTimeout.value;
+   var varTimeout = document.wSLCDirectionsForUseCategory.zTimeout.value;
    if ( varTimeout > 0 )
    {
       var varDelay = 60000 * varTimeout;  // Timeout value in timeout.inc
@@ -191,7 +191,7 @@ function CheckAllInGrid(id, CheckBoxName) // triggered by no text checkbox
    }
 }
 
-function AcceptNewSubregProduct( )
+function GOTO_DirsForUseSection( strTagEntityKey )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -199,30 +199,18 @@ function AcceptNewSubregProduct( )
 
    if ( _IsDocDisabled( ) == false )
    {
-      // Javascript code entered by user.
+      var nIdx = strTagEntityKey.lastIndexOf( '::' );
+      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
 
-   if ( document.wSubRNewSubregProduct.ProductName.value == "" )
-   {
-      alert( "The Product Name cannot be blank." );
-      return;
-   }
-
-   if ( document.wSubRNewSubregProduct.ProductNumber.value == "" )
-   {
-      alert( "The Product Number cannot be blank." );
-      return;
-   }
-
-      // END of Javascript code entered by user.
-
+      document.wSLCDirectionsForUseCategory.zTableRowSelect.value = strEntityKey;
       _DisableFormElements( true );
 
-      document.wSubRNewSubregProduct.zAction.value = "AcceptNewSubregProduct";
-      document.wSubRNewSubregProduct.submit( );
+      document.wSLCDirectionsForUseCategory.zAction.value = "GOTO_DirsForUseSection";
+      document.wSLCDirectionsForUseCategory.submit( );
    }
 }
 
-function NewProdLabelContent( )
+function Return( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -232,100 +220,8 @@ function NewProdLabelContent( )
    {
       _DisableFormElements( true );
 
-      document.wSubRNewSubregProduct.zAction.value = "NewProdLabelContent";
-      document.wSubRNewSubregProduct.submit( );
-   }
-}
-
-function UpdateProdLabelContent( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wSubRNewSubregProduct.zAction.value = "UpdateProdLabelContent";
-      document.wSubRNewSubregProduct.submit( );
-   }
-}
-
-function CancelNewSubregProduct( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wSubRNewSubregProduct.zAction.value = "CancelNewSubregProduct";
-      document.wSubRNewSubregProduct.submit( );
-   }
-}
-
-function InitSubregProductForInsert( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wSubRNewSubregProduct.zAction.value = "InitSubregProductForInsert";
-      document.wSubRNewSubregProduct.submit( );
-   }
-}
-
-function smAcceptNewSubregProduct( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-
-      // Javascript code entered by user.
-
-   if ( document.wSubRNewSubregProduct.ProductName.value == "" )
-   {
-      alert( "The Product Name cannot be blank." );
-      return;
-   }
-
-   if ( document.wSubRNewSubregProduct.ProductNumber.value == "" )
-   {
-      alert( "The Product Number cannot be blank." );
-      return;
-   }
-
-      // END of Javascript code entered by user.
-
-      _DisableFormElements( true );
-
-      document.wSubRNewSubregProduct.zAction.value = "smAcceptNewSubregProduct";
-      document.wSubRNewSubregProduct.submit( );
-   }
-}
-
-function smCancelNewSubregProduct( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wSubRNewSubregProduct.zAction.value = "smCancelNewSubregProduct";
-      document.wSubRNewSubregProduct.submit( );
+      document.wSLCDirectionsForUseCategory.zAction.value = "Return";
+      document.wSLCDirectionsForUseCategory.submit( );
    }
 }
 

@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSLCDirectionsForUseSection   Generate Timestamp: 20160620105928180 --%>
+<%-- wSLCDirectionsForUseSection   Generate Timestamp: 20160927165422284 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -592,13 +592,13 @@ else
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
-<% /* DirectionsForUseSection:GroupBox */ %>
+<% /* GBDirectionsForUseSection:GroupBox */ %>
 
-<div id="DirectionsForUseSection" name="DirectionsForUseSection" class="withborder"   style="float:left;position:relative; width:780px; height:90px;">  <!-- DirectionsForUseSection --> 
+<div id="GBDirectionsForUseSection" name="GBDirectionsForUseSection" class="withborder"   style="float:left;position:relative; width:780px; height:90px;">  <!-- GBDirectionsForUseSection --> 
 
-<% /* Text1:Text */ %>
+<% /* DirectionsForUseSection:Text */ %>
 
-<label class="listheader"  id="Text1" name="Text1" style="width:434px;height:16px;position:absolute;left:8px;top:6px;">Directions for Use Section</label>
+<label class="listheader"  id="DirectionsForUseSection" name="DirectionsForUseSection" style="width:434px;height:16px;position:absolute;left:8px;top:6px;">Directions for Use Section</label>
 
 <% /* GroupBox2:GroupBox */ %>
 
@@ -633,7 +633,7 @@ else
    }
 %>
 
-<label  id="Text6" name="Text6" style="width:254px;height:16px;position:absolute;left:142px;top:12px;"><%=strTextDisplayValue%></label>
+<label  id="Text6" name="Text6" style="width:586px;height:16px;position:absolute;left:142px;top:12px;"><%=strTextDisplayValue%></label>
 
 <% /* Text2:Text */ %>
 
@@ -669,7 +669,7 @@ else
 
 </div>  <!--  GroupBox2 --> 
 
-</div>  <!--  DirectionsForUseSection --> 
+</div>  <!--  GBDirectionsForUseSection --> 
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
@@ -722,11 +722,12 @@ else
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GridDirectionsUse:Grid */ %>
-<table  cols=1 style=""  name="GridDirectionsUse" id="GridDirectionsUse">
+<table  cols=2 style=""  name="GridDirectionsUse" id="GridDirectionsUse">
 
 <thead><tr>
 
    <th>Statement Text</th>
+   <th>Display</th>
 
 </tr></thead>
 
@@ -745,6 +746,7 @@ try
       String strOdd;
       String strTag;
       String strGridEditDirectionsUse;
+      String strBMBUpdateDFU_Statement;
       
       View vGridDirectionsUse;
       vGridDirectionsUse = mSubLC.newView( );
@@ -774,6 +776,7 @@ try
 <tr<%=strOdd%>>
 
    <td><a href="#" onclick="GOTO_DirectionsForUseStatement( this.id )" id="GridEditDirectionsUse::<%=strEntityKey%>"><%=strGridEditDirectionsUse%></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateDFU_Statement" onclick="GOTO_DirectionsForUseStatement( this.id )" id="BMBUpdateDFU_Statement::<%=strEntityKey%>"><img src="./images/ePammsDisplay.png" alt="Display"></a></td>
 
 </tr>
 
@@ -1022,6 +1025,19 @@ try
 
          if ( StringUtils.isBlank( strGridEditCtl3 ) )
             strGridEditCtl3 = "&nbsp";
+
+         strGridEditCtl4 = "";
+         nRC = vGrid2.cursor( "M_DrivingUsage" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            strGridEditCtl4 = vGrid2.cursor( "M_DrivingUsage" ).getAttribute( "dDisplayUsageName" ).getString( "" );
+
+            if ( strGridEditCtl4 == null )
+               strGridEditCtl4 = "";
+         }
+
+         if ( StringUtils.isBlank( strGridEditCtl4 ) )
+            strGridEditCtl4 = "&nbsp";
 
 %>
 

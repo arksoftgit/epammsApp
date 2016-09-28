@@ -1,4 +1,4 @@
-// wSLCStorageDisposal   Generate Timestamp: 20160620105928899
+// wSLCStorageDisposal   Generate Timestamp: 20160927181943144
 
 var isWindowClosing = true;
 var timerID = null;
@@ -188,6 +188,25 @@ function CheckAllInGrid(id, CheckBoxName) // triggered by no text checkbox
       {
          wcontrol.checked = check;
       }
+   }
+}
+
+function GOTO_StorageDisposalSection( strTagEntityKey )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      var nIdx = strTagEntityKey.lastIndexOf( '::' );
+      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
+
+      document.wSLCStorageDisposal.zTableRowSelect.value = strEntityKey;
+      _DisableFormElements( true );
+
+      document.wSLCStorageDisposal.zAction.value = "GOTO_StorageDisposalSection";
+      document.wSLCStorageDisposal.submit( );
    }
 }
 

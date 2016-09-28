@@ -1,4 +1,4 @@
-//start mSPLDef 2016.09.15 13:35:01
+//start mSPLDef 2016.09.27 10:22:01
 zOPER_EXPORT zSHORT OPERATION
 omSPLDef_GeneratePDF_Label( zVIEW vViewToInstance0 );
 
@@ -169,7 +169,7 @@ zOPER_EXPORT zSHORT OPERATION
 omTempl_BuildDisplayStructure( zVIEW vViewToInstance0 );
 
 //end
-//start mMasLC 2016.09.15 13:35:00
+//start mMasLC 2016.09.27 10:21:59
 zOPER_EXPORT zSHORT OPERATION
 omMasLC_MergeUsageSelectEnts( zVIEW vViewToInstance0 );
 
@@ -220,7 +220,7 @@ zOPER_EXPORT zSHORT OPERATION
 omMasLC_BuildNonGroupEntries( zVIEW vViewToInstance0 );
 
 //end
-//start mSubLC 2016.09.15 13:35:02
+//start mSubLC 2016.09.28 09:20:05
 zOPER_EXPORT zSHORT OPERATION
 omSubLC_BuildNewSLC_Version( zVIEW vViewToInstance0,
                              zVIEW vOriginalSLC1,
@@ -264,7 +264,7 @@ omSubLC_ObjectConstraints( zVIEW vViewtoInstance0,
                            zSHORT nState2 );
 
 //end
-//start DOMAINT 2016.09.15 13:34:57
+//start DOMAINT 2016.09.27 10:21:56
 zOPER_EXPORT zSHORT OPERATION
 oDOMAINT_ActivateDomainList( zPVIEW vViewToInstance0,
                              zVIEW vViewToWindow1 );
@@ -285,7 +285,7 @@ oDOMAINT_PreloadSystemDomains( zVIEW vViewToInstance0,
                                zPCHAR pchInstallApp2 );
 
 //end
-//start lMLCATgt 2016.09.15 13:34:58
+//start lMLCATgt 2016.09.27 10:21:57
 zOPER_EXPORT zSHORT OPERATION
 olMLCATgt_BuildDifferencesMLC( zVIEW vViewToInstance0,
                                zVIEW vSourceCompareObject1 );
@@ -765,5 +765,100 @@ CopyMLC_EntityToSLC( zVIEW vMasLC0,
                      zVIEW vSubLC1,
                      zPCHAR eEntity2,
                      zSHORT nFlag3 );
+
+//end
+//start mMasDS 2016.09.27 10:21:59
+zOPER_EXPORT zSHORT OPERATION
+omMasDS_MergeUsageSelectEnts( zVIEW vViewToInstance0 );
+
+zOPER_EXPORT zSHORT OPERATION
+omMasDS_BuildNewMLC_Version( zVIEW vViewToInstance0,
+                             zVIEW vPreviousMLC1 );
+
+zOPER_EXPORT zSHORT OPERATION
+omMasDS_CopyMLCToNewProduct( zVIEW vTargetMLC0,
+                             zVIEW vSourceMLC1 );
+
+zOPER_EXPORT zSHORT OPERATION
+omMasDS_ObjectConstraints( zVIEW vViewtoInstance0,
+                           zSHORT nEvent1,
+                           zSHORT nState2 );
+
+zOPER_EXPORT zSHORT OPERATION
+omMasDS_BuildCompositeEntries( zVIEW vViewToInstance0 );
+
+zOPER_EXPORT zSHORT OPERATION
+omMasDS_BuildFullCompEntries( zVIEW vViewToInstance0 );
+
+zOPER_EXPORT zSHORT OPERATION
+omMasDS_BuildCompEntsWO_Usage( zVIEW vViewToInstance0 );
+
+zOPER_EXPORT zSHORT OPERATION
+omMasDS_BuildUsageSelectEnts( zVIEW vViewToInstance0 );
+
+zOPER_EXPORT zSHORT OPERATION
+omMasDS_BuildUsageWorkEnts( zVIEW vViewToInstance0,
+                            zPCHAR pchDirUseOrMarketingTyp1 );
+
+zOPER_EXPORT zSHORT OPERATION
+omMasDS_SetMLC_SelectedFlags( zVIEW vViewToInstance0,
+                              zVIEW vmSubLC1 );
+
+zOPER_EXPORT zSHORT OPERATION
+omMasDS_BuildUsageGroupEntries( zVIEW vViewToInstance0 );
+
+zOPER_EXPORT zSHORT OPERATION
+omMasDS_BuildUsageKeyEntries( zVIEW vViewToInstance0,
+                              zPCHAR pchSourceKeywordEntityN1,
+                              zPCHAR pchSourceTextEntityName2,
+                              zPCHAR pchTextValue3,
+                              zPCHAR pchTitleValue4 );
+
+zOPER_EXPORT zSHORT OPERATION
+omMasDS_BuildNonGroupEntries( zVIEW vViewToInstance0 );
+
+//end
+//start mSubDS 2016.09.27 10:22:09
+zOPER_EXPORT zSHORT OPERATION
+omSubDS_BuildNewSLC_Version( zVIEW vViewToInstance0,
+                             zVIEW vOriginalSLC1,
+                             zVIEW vNewMLC2,
+                             zVIEW vPreviousMLC3 );
+
+zOPER_EXPORT zSHORT OPERATION
+omSubDS_DuplicateSLC( zVIEW vNewSLC0,
+                      zVIEW vPreviousSLC1 );
+
+zOPER_EXPORT zSHORT OPERATION
+omSubDS_BuildSLC_FromMLC( zVIEW vViewToInstance0,
+                          zVIEW vSourceMLC1 );
+
+zOPER_EXPORT zSHORT OPERATION
+omSubDS_BuildDirsForUseSects( zVIEW vNewSLC0,
+                              zVIEW vSourceMLC1 );
+
+zOPER_EXPORT zSHORT OPERATION
+omSubDS_BuildCompositeEntries( zVIEW vmSubLC0 );
+
+zOPER_EXPORT zSHORT OPERATION
+omSubDS_BuildUsageWorkEnts( zVIEW vmSubLC0,
+                            zPCHAR pchszDirUseOrMarketingT1 );
+
+zOPER_EXPORT zSHORT OPERATION
+omSubDS_RefreshSLC_FromMLC( zVIEW vViewToInstance0,
+                            zVIEW vmMasLC1 );
+
+zOPER_EXPORT zSHORT OPERATION
+omSubDS_BuildWorkVariables( zVIEW vViewToInstance0,
+                            zVIEW vmMasLC1 );
+
+zOPER_EXPORT zSHORT OPERATION
+omSubDS_CopyDirsForUseSection( zVIEW vViewToInstance0,
+                               zVIEW vmMLC1 );
+
+zOPER_EXPORT zSHORT OPERATION
+omSubDS_ObjectConstraints( zVIEW vViewtoInstance0,
+                           zSHORT nEvent1,
+                           zSHORT nState2 );
 
 //end

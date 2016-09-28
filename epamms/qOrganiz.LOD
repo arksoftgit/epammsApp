@@ -1,4 +1,4 @@
-z1000-Zeidon    QORGANIZ TZZOLODO 05/26/16   12:37:15 1.0a2   
+z1000-Zeidon    QORGANIZ TZZOLODO                         09/20/16   15:23:04 1.0a2   
 eLOD       1
 aZKey      1658404
 aName      qOrganiz
@@ -98,12 +98,12 @@ aTE_NoForeignKeyPrefix N
 eER_RelTypeRec 5
 aZKey      1653217
 aFact      Added thru ER Dialog
-aER_DiagramBendPosX 0
-aER_DiagramBendPosY 0
-aER_DiagramE1PosX 65
-aER_DiagramE1PosY 33
+aER_DiagramBendPosX 69
+aER_DiagramBendPosY 35
+aER_DiagramE1PosX 69
+aER_DiagramE1PosY 34
 aER_DiagramE2PosX 48
-aER_DiagramE2PosY 33
+aER_DiagramE2PosY 35
 
 eLOD_EntityChild 3
 aName      Subregistrant
@@ -208,8 +208,8 @@ eER_EntityRec 7
 aName      Organization
 aZKey      1653216
 aPurpose   F
-aER_DiagramPosX 66
-aER_DiagramPosY 33
+aER_DiagramPosX 67
+aER_DiagramPosY 29
 
 eER_RelLinkRec 7
 aName      for
@@ -248,11 +248,11 @@ eER_RelTypeRec 7
 aZKey      68568357
 aFact      Added thru ER Dialog
 aER_DiagramBendPosX 43
-aER_DiagramBendPosY 19
+aER_DiagramBendPosY 15
 aER_DiagramE1PosX 43
 aER_DiagramE1PosY 31
-aER_DiagramE2PosX 67
-aER_DiagramE2PosY 19
+aER_DiagramE2PosX 66
+aER_DiagramE2PosY 15
 
 eLOD_AttributeRec 5
 aZKey      110004429
@@ -270,8 +270,8 @@ aName      PrimarySub
 aZKey      68568356
 aPurpose   S
 aDesc      Used to carry intersection data between Primary and Subregistrants
-aER_DiagramPosX 68
-aER_DiagramPosY 17
+aER_DiagramPosX 67
+aER_DiagramPosY 13
 
 eER_RelLinkRec 5
 aName      has
@@ -282,12 +282,12 @@ aCardMax   m
 eER_RelTypeRec 6
 aZKey      68568360
 aFact      Added thru ER Dialog
-aER_DiagramBendPosX 98
-aER_DiagramBendPosY 19
-aER_DiagramE1PosX 98
-aER_DiagramE1PosY 33
-aER_DiagramE2PosX 77
-aER_DiagramE2PosY 19
+aER_DiagramBendPosX 112
+aER_DiagramBendPosY 15
+aER_DiagramE1PosX 112
+aER_DiagramE1PosY 36
+aER_DiagramE2PosX 76
+aER_DiagramE2PosY 15
 
 eLOD_AttributeRec 4
 aZKey      1658416
@@ -315,8 +315,8 @@ eER_EntityRec 4
 aName      Subregistrant
 aZKey      68568355
 aPurpose   F
-aER_DiagramPosX 94
-aER_DiagramPosY 34
+aER_DiagramPosX 108
+aER_DiagramPosY 37
 
 eER_RelLinkRec 4
 aName      has
@@ -330,12 +330,12 @@ aTE_NoForeignKeyPrefix N
 eER_RelTypeRec 5
 aZKey      1653220
 aFact      Added thru ER Dialog
-aER_DiagramBendPosX 0
-aER_DiagramBendPosY 0
-aER_DiagramE1PosX 75
-aER_DiagramE1PosY 37
-aER_DiagramE2PosX 93
-aER_DiagramE2PosY 37
+aER_DiagramBendPosX 73
+aER_DiagramBendPosY 39
+aER_DiagramE1PosX 73
+aER_DiagramE1PosY 34
+aER_DiagramE2PosX 107
+aER_DiagramE2PosY 39
 
 eLOD_EntityChild 3
 aName      Employee
@@ -573,9 +573,9 @@ aFact      Added thru ER Dialog
 aER_DiagramBendPosX 0
 aER_DiagramBendPosY 0
 aER_DiagramE1PosX 101
-aER_DiagramE1PosY 25
+aER_DiagramE1PosY 24
 aER_DiagramE2PosX 91
-aER_DiagramE2PosY 25
+aER_DiagramE2PosY 24
 
 eLOD_AttributeRec 4
 aZKey      1658422
@@ -810,7 +810,7 @@ aName      Person
 aZKey      68568419
 aPurpose   F
 aER_DiagramPosX 82
-aER_DiagramPosY 23
+aER_DiagramPosY 20
 
 eER_RelLinkRec 4
 aName      has employee
@@ -825,11 +825,11 @@ eER_RelTypeRec 5
 aZKey      1654852
 aFact      Added thru ER Dialog
 aER_DiagramBendPosX 86
-aER_DiagramBendPosY 35
+aER_DiagramBendPosY 31
 aER_DiagramE1PosX 86
-aER_DiagramE1PosY 28
-aER_DiagramE2PosX 75
-aER_DiagramE2PosY 35
+aER_DiagramE1PosY 25
+aER_DiagramE2PosX 76
+aER_DiagramE2PosY 31
 
 eLOD_AttributeRec 3
 aZKey      1658406
