@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSLCSLC_ComponentsUpdate   Generate Timestamp: 20160620105928776 --%>
+<%-- wSLCSLC_ComponentsUpdate   Generate Timestamp: 20161010115316581 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -707,6 +707,7 @@ else
    View mMasLC = null;
    View mSPLDef = null;
    View mSubLC = null;
+   View mSubLC_Root = null;
    View mSubProd = null;
    View mSubreg = null;
    String strRadioGroupValue = "";
@@ -1041,7 +1042,7 @@ else
    }
 %>
 
-<input name="EditBox1" id="EditBox1" maxlength="1024" style="width:338px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="EditBox1" id="EditBox1" maxlength="2048" style="width:338px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>

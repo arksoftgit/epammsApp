@@ -52,6 +52,11 @@ import com.quinsoft.zeidon.zeidonoperations.ZDRVROPR;
 import com.quinsoft.zeidon.zeidonoperations.KZOEP1AA;
 import com.quinsoft.zeidon.zeidonoperations.ActiveDirectory;
 
+import java.util.List;
+import java.util.LinkedList;
+import java.util.ArrayList;
+
+
 /**
  * @author QuinSoft
  *
@@ -4644,7 +4649,7 @@ public class ZGlobal1_Operation extends VmlOperation
       int k;
       String token;
       pos = 0;
-      while ( pos <= end ) {
+      while ( pos <= end && posPrev < end ) {
          for ( k = 0; k < delimEnd; k++ ) {
             if ( (posPrev < pos && pos == end) || paragraph.charAt( pos ) == delimiters.charAt( k ) ) {
                token = paragraph.substring( posPrev, pos );
@@ -4655,11 +4660,11 @@ public class ZGlobal1_Operation extends VmlOperation
                   value = value.substring( 0, lth );
                }
                if ( value.isEmpty() == false ) {
-         // TraceLineS( value, "|" );
-            count++;
-            ec.createEntity( CursorPosition.LAST );
-            ec.getAttribute( attributeName ).setValue( value );
-         }
+               // TraceLineS( value, "|" );
+                  count++;
+                  ec.createEntity( CursorPosition.LAST );
+                  ec.getAttribute( attributeName ).setValue( value );
+               }
                break;
             }
          }
@@ -4667,6 +4672,24 @@ public class ZGlobal1_Operation extends VmlOperation
       }
 
       return count;
+   }
+
+   public void
+   SetFirstCharacterCase( StringBuilder sbTarget, int bUpper )
+   {
+      if ( sbTarget.length() > 0 )
+      {
+         char ch;
+         if ( bUpper != 0 )
+         {
+            ch = Character.toUpperCase(sbTarget.charAt(0));
+         }
+         else
+         {
+            ch = Character.toLowerCase(sbTarget.charAt(0));
+         }
+         sbTarget.setCharAt(0, ch);
+      }
    }
 
    public String
@@ -4688,14 +4711,150 @@ public class ZGlobal1_Operation extends VmlOperation
    }
 
    public int
-   InsertKeywordsIntoString( View         mSPLDef,
-                                 StringBuilder sbSourceToModify,
-                                 String   szUsageTypeEntityName,
-                                 String   szLoopingEntityName,
-                                 String   szSeparatorCharacters )
+   GenerateKeywordTextIntoString( View mMasLC,
+                                  StringBuilder sbTextToModify,
+                                  String szKeywordEntityName,
+                                  String szKeywordTextEntityName,
+                                  String szSeparatorCharacters )
    {
       StringBuilder sbTarget = new StringBuilder();
-      String   szOrigSource = sbSourceToModify.toString();
+      String   szOrigSource = sbTextToModify.toString();
+      int      sourceLth = szOrigSource.length();
+      String   szKeywordName = null;
+      String   szKeywordValue = null;
+      char     chKeywordType;
+      boolean  changed = false;
+      int      sourcePos = 0;  // keeps track of last position in source copied to target
+      int      openBracePos = 0;
+      int      closeBracePos;
+      int      traverse = 1;
+      int      count;
+            
+      // Insert Keyword text items into a position in szStringArea that is identified by the Keyword.
+      // The entries inserted will be separated by one or more characters as identified by the variable szSeparatorCharacters.
+      // After determining the position of the insertion, we will loop through Keyword entries, formatting each entry as we go.
+      sbTarget.setLength( 0 );
+      openBracePos = szOrigSource.indexOf( "{{", sourcePos );
+      // Don't do the hasAny check since there may be only global keywords
+      if ( openBracePos >= 0 ) { // && mMasLC.cursor( szKeywordEntityName ).hasAny() ) {  // looks like it's worth processing
+         View mMasLC2 = mMasLC.newView( );
+         mMasLC2.copyCursors( mMasLC );
+
+         while ( openBracePos >= 0 ) {
+            // Get to the innermost set of "{{"
+            while ( szOrigSource.charAt( openBracePos + 2) == '{' ) {
+               openBracePos++;
+            }
+            // Copy static text up to the brace to the target.
+            sbTarget.append( szOrigSource.substring( sourcePos, openBracePos ) );
+
+            // Parse the Keyword out of the string of the form {{xxxxx}}.
+            closeBracePos = szOrigSource.indexOf( "}}", openBracePos + 2 );
+            if ( closeBracePos >= 0 ) {
+               changed = true;
+               szKeywordName = szOrigSource.substring( openBracePos + 2, closeBracePos );
+               sourcePos = closeBracePos + 2; // point to the next static text portion in the original source string
+               count = 0;
+
+               CursorResult cr = mMasLC2.cursor( szKeywordEntityName ).setFirst( "Name", szKeywordName );
+               if ( cr.isSet() ) {
+                  // Type values: All optional, Only one allowed, Required (at least one)
+                  String szType = mMasLC2.cursor( szKeywordEntityName ).getAttribute( "Type" ).getString();
+                  if ( szType == "" ) {
+                     chKeywordType = 'A';
+                  } else {
+                     chKeywordType = szType.charAt( 0 );
+                  }
+                  if ( chKeywordType == 'R' || chKeywordType == 'X' ) {
+                     sbTarget.append( '[' );
+                  }
+                  while ( cr.isSet() ) {
+                     // There are Text entries for the Keyword specified, so loop through all.
+                     count++;
+                     szKeywordValue = mMasLC2.cursor( szKeywordTextEntityName ).getAttribute( "Text" ).getString();
+                     if ( count > 1 ) {
+                        // If szSeparatorCharacters are ", ", substitute " and " for the separator characters before the last Usage entry.
+                        if ( mMasLC2.cursor( szKeywordTextEntityName ).hasNext() ) {
+                           sbTarget.append( szSeparatorCharacters );
+                        } else {
+                           if ( chKeywordType == 'O' || chKeywordType == 'X' ) {
+                              sbTarget.append( " or " );
+                           } else {
+                              sbTarget.append( szSeparatorCharacters );
+                           }
+                        }
+                     }
+                     if ( traverse > 2 ) {
+                        sbTarget.append( "{" + szKeywordValue + "}" );
+                     } else if ( traverse > 1 ) {
+                        sbTarget.append( "<i>{" + szKeywordValue + "}</i>" );
+                     } else {
+                        sbTarget.append( "<b>{" + szKeywordValue + "}</b>" );
+                     }
+                     cr = mMasLC2.cursor( szKeywordTextEntityName ).setNext( );
+                  }
+                  if ( chKeywordType == 'R' || chKeywordType == 'X' ) {
+                     sbTarget.append( ']' );
+                  }
+               } else if ( szKeywordName.length() > 0 && szKeywordName.charAt(0) == '#' ) {
+                  // underline "global keywords"
+                  sbTarget.append( "<u>{" + szKeywordName + "}</u>" );
+               } else {
+                  // notify user that the keyword is not found
+                  sbTarget.append( "{{'" + szKeywordName + "' not found}} " );
+                  TraceLineS( "### Keyword NOT Found: "+ szKeywordName + "   in Statement: ", szOrigSource );
+                  cr = mMasLC2.cursor( szKeywordEntityName ).setFirst();
+                  while ( cr.isSet() ) {
+                     szKeywordValue = mMasLC2.cursor( szKeywordEntityName ).getAttribute( "Name" ).getString();
+                     TraceLineS( "### Current Keyword : ", szKeywordValue );
+                     cr = mMasLC2.cursor( szKeywordEntityName ).setNext();
+                  }
+                  break;
+               }
+            } else {
+               break;  // improper close braces (matching not found)
+            }
+            openBracePos = szOrigSource.indexOf( "{{", sourcePos );
+            if ( openBracePos < 0 && changed && traverse < 3 ) {
+               traverse++;
+               sbTextToModify.setLength( 0 );
+               sbTextToModify.append( sbTarget.toString() );
+
+               // Move in remaining characters.
+               if ( sourcePos < sourceLth ) {
+                  sbTextToModify.append( szOrigSource.substring( sourcePos ) );
+               }
+               szOrigSource = sbTextToModify.toString();
+               sourceLth = szOrigSource.length();
+               sourcePos = 0;
+               sbTarget.setLength( 0 );
+               openBracePos = szOrigSource.indexOf( "{{", sourcePos );
+            }
+         }
+         mMasLC2.drop();
+      }
+      if ( changed ) {
+         sbTextToModify.setLength( 0 );
+         sbTextToModify.append( sbTarget.toString() );
+
+         // Move in remaining characters.
+         if ( sourcePos < sourceLth ) {
+            sbTextToModify.append( szOrigSource.substring( sourcePos ) );
+         }
+      }
+
+      return( 0 );
+   }
+   
+   public int
+   InsertKeywordsIntoString( View     mSPLDef,
+                             StringBuilder sbTextToModify,
+                             String   szUsageTypeEntityName,
+                             String   szLoopingEntityName,
+                             String   szSeparatorCharacters )
+   {
+      StringBuilder sbTarget = new StringBuilder();
+      String   szOrigSource = sbTextToModify.toString();
       int      sourceLth = szOrigSource.length();
       String   szUsageType = null;
       String   szUsageValue = null;
@@ -4778,7 +4937,7 @@ public class ZGlobal1_Operation extends VmlOperation
                sbTarget.append( szInsertValue );
             }
          } else {
-            sbSourceToModify.append( " ### Error replacing keywords" );
+            sbTextToModify.append( " ### Error replacing keywords" );
             return -1;
          }
 
@@ -4786,12 +4945,12 @@ public class ZGlobal1_Operation extends VmlOperation
       }
 
       if ( changed ) {
-         sbSourceToModify.setLength( 0 );
-         sbSourceToModify.append( sbTarget.toString() );
+         sbTextToModify.setLength( 0 );
+         sbTextToModify.append( sbTarget.toString() );
 
          // Move in remaining characters.
          if ( sourcePos < sourceLth ) {
-            sbSourceToModify.append( szOrigSource.substring( sourcePos ) );
+            sbTextToModify.append( szOrigSource.substring( sourcePos ) );
          }
       }
 
@@ -4805,16 +4964,23 @@ public class ZGlobal1_Operation extends VmlOperation
 
    public int
    InsertOptionalSubUsages( View     mMasLC,
-                            StringBuilder sbSourceToModify )
+                            StringBuilder sbTextToModify,
+                            String   stringEntity,
+                            int      bInsertBraces )
    {
       StringBuilder sbTarget = new StringBuilder();
-      String   szOrigSource = sbSourceToModify.toString();
+      String   szOrigSource = sbTextToModify.toString();
       String   szOpenBrace = "{";
       boolean  changed = false;
       int      openBracePos = 0;
       int      closeBracePos;
       int      nRC = 0;
 
+      if ( bInsertBraces != 0 )
+         szOpenBrace = "{";
+      else
+         szOpenBrace = "";
+      
    // Food [{{}}] areas
    // preparation storage
    // Automobile [{{}}]
@@ -4826,25 +4992,265 @@ public class ZGlobal1_Operation extends VmlOperation
       // Parse the double braces out of the string of the form {{}}.
       openBracePos = szOrigSource.indexOf( "{{", 0 );
       closeBracePos = szOrigSource.indexOf( "}}", openBracePos + 2 );
-      if ( openBracePos >= 0 && closeBracePos >= 0 && (nRC = mMasLC.cursor( "M_SubUsage" ).setFirst().toInt()) >= zCURSOR_SET ) {
+      if ( openBracePos >= 0 && closeBracePos >= 0 && (nRC = mMasLC.cursor( stringEntity ).setFirst().toInt()) >= zCURSOR_SET ) {
          // Copy static text up to the brace to the target.
          sbTarget.append( szOrigSource.substring( 0, openBracePos ) );
 
          // Copy the SubUsage values into the text - surounded by single braces to signify the values are optional.
          while ( nRC >= zCURSOR_SET ) {
-            sbTarget.append( szOpenBrace + mMasLC.cursor( "M_SubUsage" ).getAttribute( "Name" ).getString() + "}" );
+            sbTarget.append( szOpenBrace + mMasLC.cursor( stringEntity ).getAttribute( "Name" ).getString() );
+            if ( bInsertBraces != 0 )
+               sbTarget.append( "}" );
             if ( changed == false ) {
                changed = true;
-               szOpenBrace = ", {";
+               if ( bInsertBraces != 0 )
+                  szOpenBrace = ", {";
+               else
+                  szOpenBrace = ", ";
             }
-            nRC = mMasLC.cursor( "M_SubUsage" ).setNext().toInt();
+            nRC = mMasLC.cursor( stringEntity ).setNext().toInt();
          }
          sbTarget.append( szOrigSource.substring( closeBracePos + 2 ) ); // append remaining static text in the original source string
       }
 
       if ( changed ) {
-         sbSourceToModify.setLength( 0 );
-         sbSourceToModify.append( sbTarget.toString() );
+         sbTextToModify.setLength( 0 );
+         sbTextToModify.append( sbTarget.toString() );
+      }
+
+      return( 0 );
+   }
+
+   /////////////////////////////////////////////////////////////////////////////
+   /////////////////////////////////////////////////////////////////////////////
+   /////////////////////////////////////////////////////////////////////////////
+   /////////////////////////////////////////////////////////////////////////////
+
+   private String
+   ScrunchCamelCase( String s )
+   {
+      if ( s.length() < 2 )
+         return s;
+
+      if ( s.charAt( 0 ) == '(' && s.charAt( s.length() - 1 ) == ')' )
+         s = s.substring( 1, s.length() - 1 );
+
+      String[] sub = s.split( " " );
+      StringBuilder sb = new StringBuilder();
+      int k = 0;
+      while ( k < sub.length ) {
+         if ( sub[ k ].length() > 0 && (sub.length == 1 || (sub[ k ].compareToIgnoreCase( "or" ) != 0 && sub[ k ].compareToIgnoreCase( "and" ) != 0)) ) {
+            sb.append( sub[ k ].substring( 0, 1 ).toUpperCase() ).append( sub[ k ].substring( 1 ) );
+         }
+         k++;
+      }
+      k = sb.indexOf( "PpmActive" );
+      if ( k >= 0 ) {
+         sb.replace( k, k + 9, "PPM" );
+      }
+      return sb.toString();
+   }
+
+   public class TreeNode {
+      char type;  // bracket, semaphore, text
+      char close; // close bracket/semaphore/null
+      int  startPos;
+      int  endPos;
+      String text;
+      String scrunch;
+      TreeNode parent;
+      LinkedList<TreeNode> children;
+
+      public TreeNode( char type, char close, String text, int startPos, int endPos ) {
+         this.type = type;
+         this.close = close;
+         this.startPos = startPos;
+         this.endPos = endPos;
+         this.text = text;
+         this.children = new LinkedList<TreeNode>();
+      }
+
+      public TreeNode addChild( char type, char close, String text, int startPos, int endPos ) {
+         TreeNode childNode = new TreeNode( type, close, text, startPos, endPos );
+         childNode.parent = this;
+         children.add( childNode );
+         return childNode;
+      }
+
+      // This product {{{{when used as directed}} {{can be used}} {{is formulated to {{{{disinfect}} {{clean}} {{sanitize}} {{deodorize}}}}}} {{is formulated for use}}}} on {{washable}} hard, non-porous surfaces such as: (insert surface)
+      //          1         2         3         4         5         6         7         8         9        10        11        12        13        14        15        16        17        18        19        20        21    
+      // 123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890  << lth = 205
+      // This product [{when used as directed} {can be used} {is formulated to [{disinfect} {clean} {sanitize} {deodorize}] {is formulated for use}] on {washable} hard, non-porous surfaces such as: (insert surface)
+
+      private String buildKeywords( View mMasLC, String keywordEntity, String keywordTextEntity, int level ) {
+
+         String statement = "";
+         String keyword;
+         String keywordValue;
+
+         for ( TreeNode tnode : children ) {
+
+            if ( tnode.type == 'T' ) {
+               if ( tnode.parent.type != '[' && tnode.parent.type != 'T' ) {
+                  keywordValue = tnode.text;
+                  keyword = ScrunchCamelCase( keywordValue );
+                  statement += keyword;
+                  mMasLC.cursor( keywordTextEntity ).createEntity();
+                  mMasLC.cursor( keywordTextEntity ).getAttribute( "Text" ).setValue( keywordValue );
+               } else {
+                  statement += tnode.text;
+               }
+            } else if ( type == tnode.type ) { // drop down a level
+               statement += tnode.buildKeywords( mMasLC, keywordEntity, keywordTextEntity, level + 1 );
+            } else if ( type == '[' ) {
+            // if ( tnode.children.size() > 0 ) {  // should always be true
+               keywordValue = "";
+               keyword = "";
+               for ( TreeNode tchild : tnode.children ) {
+                  if ( tchild.type == 'T' ) {
+                     keywordValue += tchild.text;
+                     keyword += ScrunchCamelCase( keywordValue );
+                  } else {
+                     keywordValue += "{{" + ScrunchCamelCase( tchild.buildKeywords( mMasLC, keywordEntity, keywordTextEntity, level + 1 ) ) + "}}";
+                  }
+               }
+               mMasLC.cursor( keywordTextEntity ).createEntity();  // should happen with type = '[' and tnode.type = '{'
+               mMasLC.cursor( keywordTextEntity ).getAttribute( "Text" ).setValue( keywordValue );
+               statement += keyword;
+            }
+         }
+
+      // TraceLine( "### Build Value: %s   level: %d   scrunch: %s", text, level, scrunch );
+         return statement;   
+      }
+
+      // This product [{when used as directed} {can be used} {is formulated to [{disinfect} {clean} {sanitize} {deodorize}] {is formulated for use}] on {washable} hard, non-porous surfaces such as: (insert surface)
+      public String TraverseGoGetIt( View mMasLC, String entity, String attribute, String keywordEntity, String keywordTextEntity, int level ) {
+
+         String statement = "";
+         String keyword;
+         String keywordValue;
+ 
+         // At the root.
+         for ( TreeNode tnode : children ) {
+            if ( tnode.type == 'T' ) {
+               statement += tnode.text;
+               if ( tnode.children.size() > 0 ) {  // should never be true
+                  TraceLine( "TraverseGoGetIt has a text ('%s') node with children: %d", statement, tnode.children.size() );
+               }
+            } else {
+               if ( level % 2 == 0 ) {
+                  mMasLC.cursor( keywordEntity ).createEntity();
+                  mMasLC.cursor( keywordEntity ).getAttribute( "Type" ).setValue( tnode.type == '[' ? "R" : "A" );
+                  keywordValue = tnode.buildKeywords( mMasLC, keywordEntity, keywordTextEntity, 0 );
+                  keyword = ScrunchCamelCase( keywordValue );
+                  mMasLC.cursor( keywordEntity ).getAttribute( "Name" ).setValue( keyword );
+                  statement += "{{" + keyword + "}}";
+               }
+               tnode.TraverseGoGetIt( mMasLC, entity, attribute, keywordEntity, keywordTextEntity, level + 1 );
+            }
+         }
+
+         TraceLine( "TraverseGoGetIt statement: %s   level: %d", statement, level );
+         return statement;
+      }
+   }
+
+   private int
+   ParseRecursiveKeywords( TreeNode tnode,
+                           String   statement,
+                           int      pos,
+                           char     openSemaphore,
+                           char     closeSemaphore )
+   {
+      TreeNode childNode;
+      char ch;
+      int  k;
+      int  rc;
+      int  start = pos;
+
+      //          1         2         3         4         5         6         7         8         9        10        11        12        13
+      // 1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123  << lth = 133
+      // [{Malodor Activity} {Odor} {Counteract}] - [{eliminates} {destroys}] odors {and odor-causing bacteria on hard, non-porous surfaces in restroom areas,
+      //    behind and under sinks and counters, and storage areas {and other {hard, non-porous} surfaces} where bacterial growth can cause malodors.}
+      // Is great for use [{on} {in the}] [{kitchen}, {bathroom}, {floors} {and} {other household areas}].
+      // Is effective against household [{germs} {bacteria}].
+      // 0.75 oz. of this product per 4 gal. of water {(0.19 oz. per gal. of water)} {(150 ppm active quat)}{(or equivalent use dilution)} 
+      //          1         2         3         4         5         6         7         8         9        10        11        12        13        14        15        16        17        18        19        20        21    
+      // 123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890  << lth = 205
+      // This product [{when used as directed} {can be used} {is formulated to [{disinfect} {clean} {sanitize} {deodorize}] {is formulated for use}] on {washable} hard, non-porous surfaces such as: (insert surface)
+      for ( k = pos; k < statement.length(); k++ ) {
+         ch = statement.charAt( k );
+         if ( ch == '[' || ch == openSemaphore ) {  // open
+            if ( start < k ) {
+               childNode = tnode.addChild( 'T', '\0', statement.substring( start, k ), start, k );
+            }
+            childNode = tnode.addChild( ch, ch == '[' ? ']' : closeSemaphore, "", k, -1 );
+            rc = ParseRecursiveKeywords( childNode, statement, k + 1, openSemaphore, closeSemaphore );
+            if ( rc >= 0 ) {
+               k = rc;
+               start = k + 1;
+            } else {
+               return rc;
+            }
+         } else if ( ch == ']' || ch == closeSemaphore ) {
+            if ( start < k ) {
+               childNode = tnode.addChild( 'T', '\0', statement.substring( start, k ), start, k );
+            }
+            if ( ch == tnode.close ) {  // close
+               tnode.endPos = k;
+               return k;
+            } else {
+               return k - 1;
+            }
+         } else {
+            start = k++;
+            while ( k < statement.length() ) {
+               ch = statement.charAt( k );
+               if ( ch == '[' || ch == openSemaphore || ch == ']' || ch == closeSemaphore ) {
+                  k--; // decrement to set up for increment in for loop
+                  break;  // out of inner while
+               }
+               k++;
+               if ( k == statement.length() ) {
+                  childNode = tnode.addChild( 'T', '\0', statement.substring( start, k ), start, k );
+               }
+            }
+         }
+      }
+      return statement.length();
+   }
+   
+   public int
+   ParseStatementForKeywords( View     mMasLC,
+                              String   entity,
+                              String   attribute,
+                              String   keywordEntity,
+                              String   keywordTextEntity,
+                              String   keywordSemaphore )
+   {
+
+      if ( keywordSemaphore.length() < 2 )
+         keywordSemaphore = "{}";
+
+      char openSemaphore = keywordSemaphore.charAt( 0 );
+      char closeSemaphore = keywordSemaphore.charAt( 1 );
+
+      Object value = mMasLC.cursor( entity ).getAttribute( attribute ).getValue();
+      if ( value == null )
+         return -1;
+
+      mMasLC = ((zVIEW) mMasLC).getView( );
+      String statement = value.toString();
+                // 1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123  << lth = 133
+   // statement = "This product [{when used as directed} {can be used} {is formulated to [{disinfect} {clean} {sanitize} {deodorize}]} {is formulated for use}] on {washable} hard, non-porous surfaces such as: (insert surface)";
+      TreeNode root = new TreeNode( 'T', '\0', "", 0, statement.length() );
+      int rc = ParseRecursiveKeywords( root, statement, 0, openSemaphore, closeSemaphore );
+      if ( rc >= 0 ) {
+         statement = root.TraverseGoGetIt( mMasLC, entity, attribute, keywordEntity, keywordTextEntity, 0 );
+         mMasLC.cursor( entity ).getAttribute( attribute ).setValue( statement );
+      // mMasLC.cursor( entity ).logEntity( true );
+         return 0;
       }
 
       return( 0 );
@@ -6062,7 +6468,7 @@ public class ZGlobal1_Operation extends VmlOperation
    public int
    SeparateNumberedStatement( String pchOriginalStatement,
                               int    lMaxLth,
-                              String pchNumberedText )
+                              StringBuilder sbNumberedText )
    {
       String pchRemainingText;
       int    lMemHandle;

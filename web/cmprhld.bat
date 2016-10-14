@@ -1,6 +1,5 @@
-
-call wd "\workspace\NetBeansProjects\epammsApp\web\wSPLDGraphicalView.jsp"  wSPLDGraphicalView.jsp.hld
-call wd "\workspace\NetBeansProjects\epammsApp\web\genjs\wSPLDGraphicalView.js"  genjs\wSPLDGraphicalView.js.hld
+call wd "\workspace\NetBeansProjects\epammsApp\web\wSPLDGraphicalView.jsp" wSPLDGraphicalView.jsp.hld
+call wd "\workspace\NetBeansProjects\epammsApp\web\genjs\wSPLDGraphicalView.js" genjs\wSPLDGraphicalView.js.hld
 call wd "\workspace\NetBeansProjects\epammsApp\web\wStartUpUserLogin.jsp" wStartUpUserLogin.jsp.hld
 call wd "\workspace\NetBeansProjects\epammsApp\web\genjs\wStartUpUserLogin.js" genjs\wStartUpUserLogin.js.hld
 call wd "\workspace\NetBeansProjects\epammsApp\web\wSystemDragDropSort.jsp" wSystemDragDropSort.jsp.hld
@@ -15,6 +14,10 @@ call wd "\workspace\NetBeansProjects\epammsApp\web\wSystemUpdateHelpMessage.jsp"
 call wd "\workspace\NetBeansProjects\epammsApp\web\genjs\wSystemUpdateHelpMessage.js" genjs\wSystemUpdateHelpMessage.js.hld
 call wd "\workspace\NetBeansProjects\epammsApp\web\wSystemExitHelpMessage.jsp" wSystemExitHelpMessage.jsp.hld
 call wd "\workspace\NetBeansProjects\epammsApp\web\genjs\wSystemExitHelpMessage.js" genjs\wSystemExitHelpMessage.js.hld
+call wd "\workspace\NetBeansProjects\epammsApp\web\wMLCTableData.jsp" wMLCTableData.jsp.hld
+call wd "\workspace\NetBeansProjects\epammsApp\web\genjs\wMLCTableData.js" genjs\wMLCTableData.js.hld
+call wd "\workspace\NetBeansProjects\epammsApp\web\wSLCTableData.jsp" wSLCTableData.jsp.hld
+call wd "\workspace\NetBeansProjects\epammsApp\web\genjs\wSLCTableData.js" genjs\wSLCTableData.js.hld
 
 call wd "\workspace\NetBeansProjects\epammsApp\web\wMLCAreasOfUse.jsp" wMLCAreasOfUse.jsp.hld
                                                                                                            

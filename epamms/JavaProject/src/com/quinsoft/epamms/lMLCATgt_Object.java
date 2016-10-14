@@ -86,15 +86,25 @@ olMLCATgt_BuildDifferencesMLC( View     lMLCATgt,
    int      lTempInteger_13 = 0;
    int      lTempInteger_14 = 0;
    int      lTempInteger_15 = 0;
+   String   szTempString_10 = null;
+   String   szTempString_11 = null;
    int      lTempInteger_16 = 0;
    int      lTempInteger_17 = 0;
+   String   szTempString_12 = null;
+   String   szTempString_13 = null;
    int      lTempInteger_18 = 0;
    int      lTempInteger_19 = 0;
    int      lTempInteger_20 = 0;
    int      lTempInteger_21 = 0;
+   String   szTempString_14 = null;
+   String   szTempString_15 = null;
    int      lTempInteger_22 = 0;
    int      lTempInteger_23 = 0;
+   String   szTempString_16 = null;
+   String   szTempString_17 = null;
    int      lTempInteger_24 = 0;
+   int      lTempInteger_25 = 0;
+   int      lTempInteger_26 = 0;
 
 
    //:// Build a difference subobject in the Target object that shows the differences between the two MLCs.
@@ -127,14 +137,14 @@ olMLCATgt_BuildDifferencesMLC( View     lMLCATgt,
          sb_szTempString_0 = new StringBuilder( 32 );
       else
          sb_szTempString_0 = new StringBuilder( szTempString_0 );
-            ZeidonStringCopy( sb_szTempString_0, 1, 0, "General: ", 1, 0, 255 );
+            ZeidonStringCopy( sb_szTempString_0, 1, 0, "General: ", 1, 0, 1026 );
       szTempString_0 = sb_szTempString_0.toString( );}
        {StringBuilder sb_szTempString_0;
       if ( szTempString_0 == null )
          sb_szTempString_0 = new StringBuilder( 32 );
       else
          sb_szTempString_0 = new StringBuilder( szTempString_0 );
-            ZeidonStringConcat( sb_szTempString_0, 1, 0, szTempString_1, 1, 0, 255 );
+            ZeidonStringConcat( sb_szTempString_0, 1, 0, szTempString_1, 1, 0, 1026 );
       szTempString_0 = sb_szTempString_0.toString( );}
       SetAttributeFromString( lMLCATgt, "ComparisonDifference", "Title", szTempString_0 );
       //:lMLCATgt.ComparisonDifference.TitleFlag = "Y"
@@ -1078,8 +1088,25 @@ olMLCATgt_BuildDifferencesMLC( View     lMLCATgt,
                //:CREATE ENTITY lMLCATgt.ComparisonDifference
                RESULT = CreateEntity( lMLCATgt, "ComparisonDifference", zPOS_AFTER );
                //:lMLCATgt.ComparisonDifference.Title                = "...Directions " + szUsageType
+                {StringBuilder sb_szTempString_10;
+               if ( szTempString_10 == null )
+                  sb_szTempString_10 = new StringBuilder( 32 );
+               else
+                  sb_szTempString_10 = new StringBuilder( szTempString_10 );
+                              ZeidonStringCopy( sb_szTempString_10, 1, 0, "...Directions ", 1, 0, 255 );
+               szTempString_10 = sb_szTempString_10.toString( );}
+                {StringBuilder sb_szTempString_10;
+               if ( szTempString_10 == null )
+                  sb_szTempString_10 = new StringBuilder( 32 );
+               else
+                  sb_szTempString_10 = new StringBuilder( szTempString_10 );
+                              ZeidonStringConcat( sb_szTempString_10, 1, 0, szUsageType, 1, 0, 255 );
+               szTempString_10 = sb_szTempString_10.toString( );}
+               SetAttributeFromString( lMLCATgt, "ComparisonDifference", "Title", szTempString_10 );
                //:lMLCATgt.ComparisonDifference.TargetStatementValue = lMLCATgt.M_DirectionsUsage.Name
+               SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "TargetStatementValue", lMLCATgt, "M_DirectionsUsage", "Name" );
                //:lMLCATgt.ComparisonDifference.SortSectionNumber    = lMLCATgt.M_DirectionsForUseSection.wSectionSortOrder
+               SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SortSectionNumber", lMLCATgt, "M_DirectionsForUseSection", "wSectionSortOrder" );
                //:SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle )
                olMLCATgt_SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle );
             } 
@@ -1122,8 +1149,25 @@ olMLCATgt_BuildDifferencesMLC( View     lMLCATgt,
                //:CREATE ENTITY lMLCATgt.ComparisonDifference
                RESULT = CreateEntity( lMLCATgt, "ComparisonDifference", zPOS_AFTER );
                //:lMLCATgt.ComparisonDifference.Title                = "...Directions " + szUsageType
+                {StringBuilder sb_szTempString_11;
+               if ( szTempString_11 == null )
+                  sb_szTempString_11 = new StringBuilder( 32 );
+               else
+                  sb_szTempString_11 = new StringBuilder( szTempString_11 );
+                              ZeidonStringCopy( sb_szTempString_11, 1, 0, "...Directions ", 1, 0, 255 );
+               szTempString_11 = sb_szTempString_11.toString( );}
+                {StringBuilder sb_szTempString_11;
+               if ( szTempString_11 == null )
+                  sb_szTempString_11 = new StringBuilder( 32 );
+               else
+                  sb_szTempString_11 = new StringBuilder( szTempString_11 );
+                              ZeidonStringConcat( sb_szTempString_11, 1, 0, szUsageType, 1, 0, 255 );
+               szTempString_11 = sb_szTempString_11.toString( );}
+               SetAttributeFromString( lMLCATgt, "ComparisonDifference", "Title", szTempString_11 );
                //:lMLCATgt.ComparisonDifference.SourceStatementValue = lMLCASrc.M_DirectionsUsage.Name
+               SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SourceStatementValue", lMLCASrc, "M_DirectionsUsage", "Name" );
                //:lMLCATgt.ComparisonDifference.SortSectionNumber    = lMLCATgt.M_DirectionsForUseSection.wSectionSortOrder
+               SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SortSectionNumber", lMLCATgt, "M_DirectionsForUseSection", "wSectionSortOrder" );
                //:SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle )
                olMLCATgt_SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle );
             } 
@@ -1141,8 +1185,11 @@ olMLCATgt_BuildDifferencesMLC( View     lMLCATgt,
          //:CREATE ENTITY lMLCATgt.ComparisonDifference
          RESULT = CreateEntity( lMLCATgt, "ComparisonDifference", zPOS_AFTER );
          //:lMLCATgt.ComparisonDifference.Title                = "...DirectionsForUse Section Title"
+         SetAttributeFromString( lMLCATgt, "ComparisonDifference", "Title", "...DirectionsForUse Section Title" );
          //:lMLCATgt.ComparisonDifference.TargetStatementValue = lMLCATgt.M_DirectionsForUseSection.Title
+         SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "TargetStatementValue", lMLCATgt, "M_DirectionsForUseSection", "Title" );
          //:lMLCATgt.ComparisonDifference.SortSectionNumber    = lMLCATgt.M_DirectionsForUseSection.wSectionSortOrder
+         SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SortSectionNumber", lMLCATgt, "M_DirectionsForUseSection", "wSectionSortOrder" );
          //:SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle )
          olMLCATgt_SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle );
          //:FOR EACH lMLCATgt.M_DirectionsForUseStatement
@@ -1152,8 +1199,11 @@ olMLCATgt_BuildDifferencesMLC( View     lMLCATgt,
             //:CREATE ENTITY lMLCATgt.ComparisonDifference
             RESULT = CreateEntity( lMLCATgt, "ComparisonDifference", zPOS_AFTER );
             //:lMLCATgt.ComparisonDifference.Title                = "...Directions Statement Text"
+            SetAttributeFromString( lMLCATgt, "ComparisonDifference", "Title", "...Directions Statement Text" );
             //:lMLCATgt.ComparisonDifference.TargetStatementValue = lMLCATgt.M_DirectionsForUseStatement.Text
+            SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "TargetStatementValue", lMLCATgt, "M_DirectionsForUseStatement", "Text" );
             //:lMLCATgt.ComparisonDifference.SortSectionNumber    = lMLCATgt.M_DirectionsForUseSection.wSectionSortOrder
+            SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SortSectionNumber", lMLCATgt, "M_DirectionsForUseSection", "wSectionSortOrder" );
             //:SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle )
             olMLCATgt_SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle );
             RESULT = SetCursorNextEntity( lMLCATgt, "M_DirectionsForUseStatement", "" );
@@ -1188,8 +1238,11 @@ olMLCATgt_BuildDifferencesMLC( View     lMLCATgt,
                //:CREATE ENTITY lMLCATgt.ComparisonDifference
                RESULT = CreateEntity( lMLCATgt, "ComparisonDifference", zPOS_AFTER );
                //:lMLCATgt.ComparisonDifference.Title                = "...Directions Statement Text"
+               SetAttributeFromString( lMLCATgt, "ComparisonDifference", "Title", "...Directions Statement Text" );
                //:lMLCATgt.ComparisonDifference.SourceStatementValue = lMLCASrc.M_DirectionsForUseStatement.Text
+               SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SourceStatementValue", lMLCASrc, "M_DirectionsForUseStatement", "Text" );
                //:lMLCATgt.ComparisonDifference.SortSectionNumber    = lMLCATgt.M_DirectionsForUseSection.wSectionSortOrder
+               SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SortSectionNumber", lMLCATgt, "M_DirectionsForUseSection", "wSectionSortOrder" );
                //:SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle )
                olMLCATgt_SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle );
             } 
@@ -1208,8 +1261,11 @@ olMLCATgt_BuildDifferencesMLC( View     lMLCATgt,
          //:CREATE ENTITY lMLCATgt.ComparisonDifference
          RESULT = CreateEntity( lMLCATgt, "ComparisonDifference", zPOS_AFTER );
          //:lMLCATgt.ComparisonDifference.Title                = "...Directions Section Title"
+         SetAttributeFromString( lMLCATgt, "ComparisonDifference", "Title", "...Directions Section Title" );
          //:lMLCATgt.ComparisonDifference.SourceStatementValue = lMLCASrc.M_DirectionsForUseSection.Title
+         SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SourceStatementValue", lMLCASrc, "M_DirectionsForUseSection", "Title" );
          //:lMLCATgt.ComparisonDifference.SortSectionNumber    = lMLCATgt.M_DirectionsForUseSection.wSectionSortOrder
+         SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SortSectionNumber", lMLCATgt, "M_DirectionsForUseSection", "wSectionSortOrder" );
          //:SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle )
          olMLCATgt_SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle );
          //:FOR EACH lMLCASrc.M_DirectionsForUseStatement
@@ -1219,8 +1275,11 @@ olMLCATgt_BuildDifferencesMLC( View     lMLCATgt,
             //:CREATE ENTITY lMLCATgt.ComparisonDifference
             RESULT = CreateEntity( lMLCATgt, "ComparisonDifference", zPOS_AFTER );
             //:lMLCATgt.ComparisonDifference.Title                = "...Directions Statement Text"
+            SetAttributeFromString( lMLCATgt, "ComparisonDifference", "Title", "...Directions Statement Text" );
             //:lMLCATgt.ComparisonDifference.SourceStatementValue = lMLCASrc.M_DirectionsForUseStatement.Text
+            SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SourceStatementValue", lMLCASrc, "M_DirectionsForUseStatement", "Text" );
             //:lMLCATgt.ComparisonDifference.SortSectionNumber    = lMLCATgt.M_DirectionsForUseSection.wSectionSortOrder
+            SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SortSectionNumber", lMLCATgt, "M_DirectionsForUseSection", "wSectionSortOrder" );
             //:SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle )
             olMLCATgt_SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle );
             RESULT = SetCursorNextEntity( lMLCASrc, "M_DirectionsForUseStatement", "" );
@@ -1246,17 +1305,52 @@ olMLCATgt_BuildDifferencesMLC( View     lMLCATgt,
       //:CREATE ENTITY lMLCATgt.ComparisonDifference
       RESULT = CreateEntity( lMLCATgt, "ComparisonDifference", zPOS_AFTER );
       //:lMLCATgt.ComparisonDifference.Title = "Marketing: " + lMLCATgt.M_MarketingSection.Title
+      {MutableInt mi_lTempInteger_18 = new MutableInt( lTempInteger_18 );
+      StringBuilder sb_szTempString_13;
+      if ( szTempString_13 == null )
+         sb_szTempString_13 = new StringBuilder( 32 );
+      else
+         sb_szTempString_13 = new StringBuilder( szTempString_13 );
+             GetVariableFromAttribute( sb_szTempString_13, mi_lTempInteger_18, 'S', 255, lMLCATgt, "M_MarketingSection", "Title", "", 0 );
+      lTempInteger_18 = mi_lTempInteger_18.intValue( );
+      szTempString_13 = sb_szTempString_13.toString( );}
+       {StringBuilder sb_szTempString_12;
+      if ( szTempString_12 == null )
+         sb_szTempString_12 = new StringBuilder( 32 );
+      else
+         sb_szTempString_12 = new StringBuilder( szTempString_12 );
+            ZeidonStringCopy( sb_szTempString_12, 1, 0, "Marketing: ", 1, 0, 255 );
+      szTempString_12 = sb_szTempString_12.toString( );}
+       {StringBuilder sb_szTempString_12;
+      if ( szTempString_12 == null )
+         sb_szTempString_12 = new StringBuilder( 32 );
+      else
+         sb_szTempString_12 = new StringBuilder( szTempString_12 );
+            ZeidonStringConcat( sb_szTempString_12, 1, 0, szTempString_13, 1, 0, 255 );
+      szTempString_12 = sb_szTempString_12.toString( );}
+      SetAttributeFromString( lMLCATgt, "ComparisonDifference", "Title", szTempString_12 );
       //:lMLCATgt.ComparisonDifference.TitleFlag = "Y"
+      SetAttributeFromString( lMLCATgt, "ComparisonDifference", "TitleFlag", "Y" );
       //:lSortSectionNbr = lSortSectionNbr + 1
+      lSortSectionNbr = lSortSectionNbr + 1;
       //:lMLCATgt.M_MarketingSection.wSectionSortOrder   = lSortSectionNbr
+      SetAttributeFromInteger( lMLCATgt, "M_MarketingSection", "wSectionSortOrder", lSortSectionNbr );
       //:lMLCATgt.ComparisonDifference.SortSectionNumber = lSortSectionNbr
+      SetAttributeFromInteger( lMLCATgt, "ComparisonDifference", "SortSectionNumber", lSortSectionNbr );
       //:szSortTitle = "5Marketing" //+ lMLCATgt.ComparisonDifference.Title
+       {StringBuilder sb_szSortTitle;
+      if ( szSortTitle == null )
+         sb_szSortTitle = new StringBuilder( 32 );
+      else
+         sb_szSortTitle = new StringBuilder( szSortTitle );
+            ZeidonStringCopy( sb_szSortTitle, 1, 0, "5Marketing", 1, 0, 51 );
+      szSortTitle = sb_szSortTitle.toString( );}
       //:SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle )
       olMLCATgt_SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle );
 
       //:IF lMLCATgt.MP_MarketingSection EXISTS
-      lTempInteger_18 = CheckExistenceOfEntity( lMLCATgt, "MP_MarketingSection" );
-      if ( lTempInteger_18 == 0 )
+      lTempInteger_19 = CheckExistenceOfEntity( lMLCATgt, "MP_MarketingSection" );
+      if ( lTempInteger_19 == 0 )
       { 
          //:// This section was created from a Source, so see if Title and Statement match.
          //:IF lMLCATgt.M_MarketingSection.Title != lMLCATgt.MP_MarketingSection.Title
@@ -1266,9 +1360,13 @@ olMLCATgt_BuildDifferencesMLC( View     lMLCATgt,
             //:CREATE ENTITY lMLCATgt.ComparisonDifference
             RESULT = CreateEntity( lMLCATgt, "ComparisonDifference", zPOS_AFTER );
             //:lMLCATgt.ComparisonDifference.Title                = "...Marketing Section Title"
+            SetAttributeFromString( lMLCATgt, "ComparisonDifference", "Title", "...Marketing Section Title" );
             //:lMLCATgt.ComparisonDifference.TargetStatementValue = lMLCATgt.M_MarketingSection.Title
+            SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "TargetStatementValue", lMLCATgt, "M_MarketingSection", "Title" );
             //:lMLCATgt.ComparisonDifference.SourceStatementValue = lMLCATgt.MP_MarketingSection.Title
+            SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SourceStatementValue", lMLCATgt, "MP_MarketingSection", "Title" );
             //:lMLCATgt.ComparisonDifference.SortSectionNumber    = lMLCATgt.M_MarketingSection.wSectionSortOrder
+            SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SortSectionNumber", lMLCATgt, "M_MarketingSection", "wSectionSortOrder" );
             //:SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle )
             olMLCATgt_SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle );
          } 
@@ -1279,8 +1377,8 @@ olMLCATgt_BuildDifferencesMLC( View     lMLCATgt,
          while ( RESULT > zCURSOR_UNCHANGED )
          { 
             //:IF lMLCATgt.MP_MarketingStatement EXISTS
-            lTempInteger_19 = CheckExistenceOfEntity( lMLCATgt, "MP_MarketingStatement" );
-            if ( lTempInteger_19 == 0 )
+            lTempInteger_20 = CheckExistenceOfEntity( lMLCATgt, "MP_MarketingStatement" );
+            if ( lTempInteger_20 == 0 )
             { 
                //:IF lMLCATgt.M_MarketingStatement.Text != lMLCATgt.MP_MarketingStatement.Text
                if ( CompareAttributeToAttribute( lMLCATgt, "M_MarketingStatement", "Text", lMLCATgt, "MP_MarketingStatement", "Text" ) != 0 )
@@ -1289,9 +1387,13 @@ olMLCATgt_BuildDifferencesMLC( View     lMLCATgt,
                   //:CREATE ENTITY lMLCATgt.ComparisonDifference
                   RESULT = CreateEntity( lMLCATgt, "ComparisonDifference", zPOS_AFTER );
                   //:lMLCATgt.ComparisonDifference.Title                = "....Marketing Statement Text"
+                  SetAttributeFromString( lMLCATgt, "ComparisonDifference", "Title", "....Marketing Statement Text" );
                   //:lMLCATgt.ComparisonDifference.TargetStatementValue = lMLCATgt.M_MarketingStatement.Text
+                  SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "TargetStatementValue", lMLCATgt, "M_MarketingStatement", "Text" );
                   //:lMLCATgt.ComparisonDifference.SourceStatementValue = lMLCATgt.MP_MarketingStatement.Text
+                  SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SourceStatementValue", lMLCATgt, "MP_MarketingStatement", "Text" );
                   //:lMLCATgt.ComparisonDifference.SortSectionNumber    = lMLCATgt.M_MarketingSection.wSectionSortOrder
+                  SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SortSectionNumber", lMLCATgt, "M_MarketingSection", "wSectionSortOrder" );
                   //:SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle )
                   olMLCATgt_SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle );
                } 
@@ -1305,8 +1407,11 @@ olMLCATgt_BuildDifferencesMLC( View     lMLCATgt,
                //:CREATE ENTITY lMLCATgt.ComparisonDifference
                RESULT = CreateEntity( lMLCATgt, "ComparisonDifference", zPOS_AFTER );
                //:lMLCATgt.ComparisonDifference.Title                = "...Marketing Statement Text"
+               SetAttributeFromString( lMLCATgt, "ComparisonDifference", "Title", "...Marketing Statement Text" );
                //:lMLCATgt.ComparisonDifference.TargetStatementValue = lMLCATgt.M_MarketingStatement.Text
+               SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "TargetStatementValue", lMLCATgt, "M_MarketingStatement", "Text" );
                //:lMLCATgt.ComparisonDifference.SortSectionNumber    = lMLCATgt.M_MarketingSection.wSectionSortOrder
+               SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SortSectionNumber", lMLCATgt, "M_MarketingSection", "wSectionSortOrder" );
                //:SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle )
                olMLCATgt_SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle );
             } 
@@ -1318,10 +1423,10 @@ olMLCATgt_BuildDifferencesMLC( View     lMLCATgt,
          //:END
          //:// Target Usages not in Source
          //:SET CURSOR FIRST lMLCASrc.M_MarketingSection WHERE lMLCASrc.M_MarketingSection.ID = lMLCATgt.MP_MarketingSection.ID
-         {MutableInt mi_lTempInteger_20 = new MutableInt( lTempInteger_20 );
-                   GetIntegerFromAttribute( mi_lTempInteger_20, lMLCATgt, "MP_MarketingSection", "ID" );
-         lTempInteger_20 = mi_lTempInteger_20.intValue( );}
-         RESULT = SetCursorFirstEntityByInteger( lMLCASrc, "M_MarketingSection", "ID", lTempInteger_20, "" );
+         {MutableInt mi_lTempInteger_21 = new MutableInt( lTempInteger_21 );
+                   GetIntegerFromAttribute( mi_lTempInteger_21, lMLCATgt, "MP_MarketingSection", "ID" );
+         lTempInteger_21 = mi_lTempInteger_21.intValue( );}
+         RESULT = SetCursorFirstEntityByInteger( lMLCASrc, "M_MarketingSection", "ID", lTempInteger_21, "" );
          //:FOR EACH lMLCATgt.M_MarketingUsage WITHIN lMLCATgt.M_MarketingSection
          RESULT = SetCursorFirstEntity( lMLCATgt, "M_MarketingUsage", "M_MarketingSection" );
          while ( RESULT > zCURSOR_UNCHANGED )
@@ -1354,8 +1459,25 @@ olMLCATgt_BuildDifferencesMLC( View     lMLCATgt,
                //:CREATE ENTITY lMLCATgt.ComparisonDifference
                RESULT = CreateEntity( lMLCATgt, "ComparisonDifference", zPOS_AFTER );
                //:lMLCATgt.ComparisonDifference.Title                = "...Marketing " + szUsageType
+                {StringBuilder sb_szTempString_14;
+               if ( szTempString_14 == null )
+                  sb_szTempString_14 = new StringBuilder( 32 );
+               else
+                  sb_szTempString_14 = new StringBuilder( szTempString_14 );
+                              ZeidonStringCopy( sb_szTempString_14, 1, 0, "...Marketing ", 1, 0, 255 );
+               szTempString_14 = sb_szTempString_14.toString( );}
+                {StringBuilder sb_szTempString_14;
+               if ( szTempString_14 == null )
+                  sb_szTempString_14 = new StringBuilder( 32 );
+               else
+                  sb_szTempString_14 = new StringBuilder( szTempString_14 );
+                              ZeidonStringConcat( sb_szTempString_14, 1, 0, szUsageType, 1, 0, 255 );
+               szTempString_14 = sb_szTempString_14.toString( );}
+               SetAttributeFromString( lMLCATgt, "ComparisonDifference", "Title", szTempString_14 );
                //:lMLCATgt.ComparisonDifference.TargetStatementValue = lMLCATgt.M_MarketingUsage.Name
+               SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "TargetStatementValue", lMLCATgt, "M_MarketingUsage", "Name" );
                //:lMLCATgt.ComparisonDifference.SortSectionNumber    = lMLCATgt.M_MarketingSection.wSectionSortOrder
+               SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SortSectionNumber", lMLCATgt, "M_MarketingSection", "wSectionSortOrder" );
                //:SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle )
                olMLCATgt_SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle );
             } 
@@ -1398,8 +1520,25 @@ olMLCATgt_BuildDifferencesMLC( View     lMLCATgt,
                //:CREATE ENTITY lMLCATgt.ComparisonDifference
                RESULT = CreateEntity( lMLCATgt, "ComparisonDifference", zPOS_AFTER );
                //:lMLCATgt.ComparisonDifference.Title                = "...Marketing " + szUsageType
+                {StringBuilder sb_szTempString_15;
+               if ( szTempString_15 == null )
+                  sb_szTempString_15 = new StringBuilder( 32 );
+               else
+                  sb_szTempString_15 = new StringBuilder( szTempString_15 );
+                              ZeidonStringCopy( sb_szTempString_15, 1, 0, "...Marketing ", 1, 0, 255 );
+               szTempString_15 = sb_szTempString_15.toString( );}
+                {StringBuilder sb_szTempString_15;
+               if ( szTempString_15 == null )
+                  sb_szTempString_15 = new StringBuilder( 32 );
+               else
+                  sb_szTempString_15 = new StringBuilder( szTempString_15 );
+                              ZeidonStringConcat( sb_szTempString_15, 1, 0, szUsageType, 1, 0, 255 );
+               szTempString_15 = sb_szTempString_15.toString( );}
+               SetAttributeFromString( lMLCATgt, "ComparisonDifference", "Title", szTempString_15 );
                //:lMLCATgt.ComparisonDifference.SourceStatementValue = lMLCASrc.M_MarketingUsage.Name
+               SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SourceStatementValue", lMLCASrc, "M_MarketingUsage", "Name" );
                //:lMLCATgt.ComparisonDifference.SortSectionNumber    = lMLCATgt.M_MarketingSection.wSectionSortOrder
+               SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SortSectionNumber", lMLCATgt, "M_MarketingSection", "wSectionSortOrder" );
                //:SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle )
                olMLCATgt_SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle );
             } 
@@ -1417,8 +1556,11 @@ olMLCATgt_BuildDifferencesMLC( View     lMLCATgt,
          //:CREATE ENTITY lMLCATgt.ComparisonDifference
          RESULT = CreateEntity( lMLCATgt, "ComparisonDifference", zPOS_AFTER );
          //:lMLCATgt.ComparisonDifference.Title                = "...Marketing Section Title"
+         SetAttributeFromString( lMLCATgt, "ComparisonDifference", "Title", "...Marketing Section Title" );
          //:lMLCATgt.ComparisonDifference.TargetStatementValue = lMLCATgt.M_MarketingSection.Title
+         SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "TargetStatementValue", lMLCATgt, "M_MarketingSection", "Title" );
          //:lMLCATgt.ComparisonDifference.SortSectionNumber    = lMLCATgt.M_MarketingSection.wSectionSortOrder
+         SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SortSectionNumber", lMLCATgt, "M_MarketingSection", "wSectionSortOrder" );
          //:SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle )
          olMLCATgt_SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle );
          //:FOR EACH lMLCATgt.M_MarketingStatement
@@ -1428,8 +1570,11 @@ olMLCATgt_BuildDifferencesMLC( View     lMLCATgt,
             //:CREATE ENTITY lMLCATgt.ComparisonDifference
             RESULT = CreateEntity( lMLCATgt, "ComparisonDifference", zPOS_AFTER );
             //:lMLCATgt.ComparisonDifference.Title                = "...Marketing Statement Text"
+            SetAttributeFromString( lMLCATgt, "ComparisonDifference", "Title", "...Marketing Statement Text" );
             //:lMLCATgt.ComparisonDifference.TargetStatementValue = lMLCATgt.M_MarketingStatement.Text
+            SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "TargetStatementValue", lMLCATgt, "M_MarketingStatement", "Text" );
             //:lMLCATgt.ComparisonDifference.SortSectionNumber    = lMLCATgt.M_MarketingSection.wSectionSortOrder
+            SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SortSectionNumber", lMLCATgt, "M_MarketingSection", "wSectionSortOrder" );
             //:SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle )
             olMLCATgt_SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle );
             RESULT = SetCursorNextEntity( lMLCATgt, "M_MarketingStatement", "" );
@@ -1449,8 +1594,8 @@ olMLCATgt_BuildDifferencesMLC( View     lMLCATgt,
    while ( RESULT > zCURSOR_UNCHANGED )
    { 
       //:IF lMLCASrc.MN_MarketingSection EXISTS
-      lTempInteger_21 = CheckExistenceOfEntity( lMLCASrc, "MN_MarketingSection" );
-      if ( lTempInteger_21 == 0 )
+      lTempInteger_22 = CheckExistenceOfEntity( lMLCASrc, "MN_MarketingSection" );
+      if ( lTempInteger_22 == 0 )
       { 
          //:// Section exists in Target, check for each Statement.
          //:FOR EACH lMLCASrc.M_MarketingStatement
@@ -1458,14 +1603,17 @@ olMLCATgt_BuildDifferencesMLC( View     lMLCATgt,
          while ( RESULT > zCURSOR_UNCHANGED )
          { 
             //:IF lMLCASrc.MN_MarketingStatement DOES NOT EXIST
-            lTempInteger_22 = CheckExistenceOfEntity( lMLCASrc, "MN_MarketingStatement" );
-            if ( lTempInteger_22 != 0 )
+            lTempInteger_23 = CheckExistenceOfEntity( lMLCASrc, "MN_MarketingStatement" );
+            if ( lTempInteger_23 != 0 )
             { 
                //:CREATE ENTITY lMLCATgt.ComparisonDifference
                RESULT = CreateEntity( lMLCATgt, "ComparisonDifference", zPOS_AFTER );
                //:lMLCATgt.ComparisonDifference.Title                = "...Marketing Statement Text"
+               SetAttributeFromString( lMLCATgt, "ComparisonDifference", "Title", "...Marketing Statement Text" );
                //:lMLCATgt.ComparisonDifference.SourceStatementValue = lMLCASrc.M_MarketingStatement.Text
+               SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SourceStatementValue", lMLCASrc, "M_MarketingStatement", "Text" );
                //:lMLCATgt.ComparisonDifference.SortSectionNumber    = lMLCATgt.M_MarketingSection.wSectionSortOrder
+               SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SortSectionNumber", lMLCATgt, "M_MarketingSection", "wSectionSortOrder" );
                //:SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle )
                olMLCATgt_SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle );
             } 
@@ -1483,8 +1631,11 @@ olMLCATgt_BuildDifferencesMLC( View     lMLCATgt,
          //:CREATE ENTITY lMLCATgt.ComparisonDifference
          RESULT = CreateEntity( lMLCATgt, "ComparisonDifference", zPOS_AFTER );
          //:lMLCATgt.ComparisonDifference.Title                = "...Marketing Section Title"
+         SetAttributeFromString( lMLCATgt, "ComparisonDifference", "Title", "...Marketing Section Title" );
          //:lMLCATgt.ComparisonDifference.SourceStatementValue = lMLCASrc.M_MarketingSection.Title
+         SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SourceStatementValue", lMLCASrc, "M_MarketingSection", "Title" );
          //:lMLCATgt.ComparisonDifference.SortSectionNumber    = lMLCATgt.M_MarketingSection.wSectionSortOrder
+         SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SortSectionNumber", lMLCATgt, "M_MarketingSection", "wSectionSortOrder" );
          //:SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle )
          olMLCATgt_SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle );
          //:FOR EACH lMLCASrc.M_MarketingStatement
@@ -1494,8 +1645,11 @@ olMLCATgt_BuildDifferencesMLC( View     lMLCATgt,
             //:CREATE ENTITY lMLCATgt.ComparisonDifference
             RESULT = CreateEntity( lMLCATgt, "ComparisonDifference", zPOS_AFTER );
             //:lMLCATgt.ComparisonDifference.Title                = "...Marketing Statement Text"
+            SetAttributeFromString( lMLCATgt, "ComparisonDifference", "Title", "...Marketing Statement Text" );
             //:lMLCATgt.ComparisonDifference.SourceStatementValue = lMLCASrc.M_MarketingStatement.Text
+            SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SourceStatementValue", lMLCASrc, "M_MarketingStatement", "Text" );
             //:lMLCATgt.ComparisonDifference.SortSectionNumber    = lMLCATgt.M_MarketingSection.wSectionSortOrder
+            SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SortSectionNumber", lMLCATgt, "M_MarketingSection", "wSectionSortOrder" );
             //:SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle )
             olMLCATgt_SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle );
             RESULT = SetCursorNextEntity( lMLCASrc, "M_MarketingStatement", "" );
@@ -1521,17 +1675,52 @@ olMLCATgt_BuildDifferencesMLC( View     lMLCATgt,
       //:CREATE ENTITY lMLCATgt.ComparisonDifference
       RESULT = CreateEntity( lMLCATgt, "ComparisonDifference", zPOS_AFTER );
       //:lMLCATgt.ComparisonDifference.Title = "Human Hazard: " + lMLCATgt.MP_HumanHazardSection.EPA_SignalWord
+      {MutableInt mi_lTempInteger_24 = new MutableInt( lTempInteger_24 );
+      StringBuilder sb_szTempString_17;
+      if ( szTempString_17 == null )
+         sb_szTempString_17 = new StringBuilder( 32 );
+      else
+         sb_szTempString_17 = new StringBuilder( szTempString_17 );
+             GetVariableFromAttribute( sb_szTempString_17, mi_lTempInteger_24, 'S', 33, lMLCATgt, "MP_HumanHazardSection", "EPA_SignalWord", "", 0 );
+      lTempInteger_24 = mi_lTempInteger_24.intValue( );
+      szTempString_17 = sb_szTempString_17.toString( );}
+       {StringBuilder sb_szTempString_16;
+      if ( szTempString_16 == null )
+         sb_szTempString_16 = new StringBuilder( 32 );
+      else
+         sb_szTempString_16 = new StringBuilder( szTempString_16 );
+            ZeidonStringCopy( sb_szTempString_16, 1, 0, "Human Hazard: ", 1, 0, 255 );
+      szTempString_16 = sb_szTempString_16.toString( );}
+       {StringBuilder sb_szTempString_16;
+      if ( szTempString_16 == null )
+         sb_szTempString_16 = new StringBuilder( 32 );
+      else
+         sb_szTempString_16 = new StringBuilder( szTempString_16 );
+            ZeidonStringConcat( sb_szTempString_16, 1, 0, szTempString_17, 1, 0, 255 );
+      szTempString_16 = sb_szTempString_16.toString( );}
+      SetAttributeFromString( lMLCATgt, "ComparisonDifference", "Title", szTempString_16 );
       //:lMLCATgt.ComparisonDifference.TitleFlag = "Y"
+      SetAttributeFromString( lMLCATgt, "ComparisonDifference", "TitleFlag", "Y" );
       //:lSortSectionNbr = lSortSectionNbr + 1
+      lSortSectionNbr = lSortSectionNbr + 1;
       //:lMLCATgt.M_HumanHazardSection.wSectionSortOrder = lSortSectionNbr
+      SetAttributeFromInteger( lMLCATgt, "M_HumanHazardSection", "wSectionSortOrder", lSortSectionNbr );
       //:lMLCATgt.ComparisonDifference.SortSectionNumber = lSortSectionNbr
+      SetAttributeFromInteger( lMLCATgt, "ComparisonDifference", "SortSectionNumber", lSortSectionNbr );
       //:szSortTitle = "6Hazards" //+ lMLCATgt.ComparisonDifference.Title
+       {StringBuilder sb_szSortTitle;
+      if ( szSortTitle == null )
+         sb_szSortTitle = new StringBuilder( 32 );
+      else
+         sb_szSortTitle = new StringBuilder( szSortTitle );
+            ZeidonStringCopy( sb_szSortTitle, 1, 0, "6Hazards", 1, 0, 51 );
+      szSortTitle = sb_szSortTitle.toString( );}
       //:SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle )
       olMLCATgt_SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle );
 
       //:IF lMLCATgt.MP_HumanHazardSection EXISTS
-      lTempInteger_23 = CheckExistenceOfEntity( lMLCATgt, "MP_HumanHazardSection" );
-      if ( lTempInteger_23 == 0 )
+      lTempInteger_25 = CheckExistenceOfEntity( lMLCATgt, "MP_HumanHazardSection" );
+      if ( lTempInteger_25 == 0 )
       { 
          //:// This section was created from a Source, so see if EPA_SignalWord and EPA_ChildHazardWarning match.
          //:IF lMLCATgt.M_HumanHazardSection.EPA_SignalWord != lMLCATgt.MP_HumanHazardSection.EPA_SignalWord
@@ -1541,9 +1730,13 @@ olMLCATgt_BuildDifferencesMLC( View     lMLCATgt,
             //:CREATE ENTITY lMLCATgt.ComparisonDifference
             RESULT = CreateEntity( lMLCATgt, "ComparisonDifference", zPOS_AFTER );
             //:lMLCATgt.ComparisonDifference.Title                = "...Hazards EPA Signal Word"
+            SetAttributeFromString( lMLCATgt, "ComparisonDifference", "Title", "...Hazards EPA Signal Word" );
             //:lMLCATgt.ComparisonDifference.TargetStatementValue = lMLCATgt.M_HumanHazardSection.EPA_SignalWord
+            SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "TargetStatementValue", lMLCATgt, "M_HumanHazardSection", "EPA_SignalWord" );
             //:lMLCATgt.ComparisonDifference.SourceStatementValue = lMLCATgt.MP_HumanHazardSection.EPA_SignalWord
+            SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SourceStatementValue", lMLCATgt, "MP_HumanHazardSection", "EPA_SignalWord" );
             //:lMLCATgt.ComparisonDifference.SortSectionNumber    = lMLCATgt.M_HumanHazardSection.wSectionSortOrder
+            SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SortSectionNumber", lMLCATgt, "M_HumanHazardSection", "wSectionSortOrder" );
             //:SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle )
             olMLCATgt_SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle );
          } 
@@ -1556,9 +1749,13 @@ olMLCATgt_BuildDifferencesMLC( View     lMLCATgt,
             //:CREATE ENTITY lMLCATgt.ComparisonDifference
             RESULT = CreateEntity( lMLCATgt, "ComparisonDifference", zPOS_AFTER );
             //:lMLCATgt.ComparisonDifference.Title                = "...Hazards EPA Warning"
+            SetAttributeFromString( lMLCATgt, "ComparisonDifference", "Title", "...Hazards EPA Warning" );
             //:lMLCATgt.ComparisonDifference.TargetStatementValue = lMLCATgt.M_HumanHazardSection.EPA_ChildHazardWarning
+            SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "TargetStatementValue", lMLCATgt, "M_HumanHazardSection", "EPA_ChildHazardWarning" );
             //:lMLCATgt.ComparisonDifference.SourceStatementValue = lMLCATgt.MP_HumanHazardSection.EPA_ChildHazardWarning
+            SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SourceStatementValue", lMLCATgt, "MP_HumanHazardSection", "EPA_ChildHazardWarning" );
             //:lMLCATgt.ComparisonDifference.SortSectionNumber    = lMLCATgt.M_HumanHazardSection.wSectionSortOrder
+            SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SortSectionNumber", lMLCATgt, "M_HumanHazardSection", "wSectionSortOrder" );
             //:SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle )
             olMLCATgt_SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle );
          } 
@@ -1572,15 +1769,21 @@ olMLCATgt_BuildDifferencesMLC( View     lMLCATgt,
          //:CREATE ENTITY lMLCATgt.ComparisonDifference
          RESULT = CreateEntity( lMLCATgt, "ComparisonDifference", zPOS_AFTER );
          //:lMLCATgt.ComparisonDifference.Title                = "...Hazards EPA Signal Word"
+         SetAttributeFromString( lMLCATgt, "ComparisonDifference", "Title", "...Hazards EPA Signal Word" );
          //:lMLCATgt.ComparisonDifference.TargetStatementValue = lMLCATgt.M_HumanHazardSection.EPA_SignalWord
+         SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "TargetStatementValue", lMLCATgt, "M_HumanHazardSection", "EPA_SignalWord" );
          //:lMLCATgt.ComparisonDifference.SortSectionNumber    = lMLCATgt.M_HumanHazardSection.wSectionSortOrder
+         SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SortSectionNumber", lMLCATgt, "M_HumanHazardSection", "wSectionSortOrder" );
          //:SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle )
          olMLCATgt_SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle );
          //:CREATE ENTITY lMLCATgt.ComparisonDifference
          RESULT = CreateEntity( lMLCATgt, "ComparisonDifference", zPOS_AFTER );
          //:lMLCATgt.ComparisonDifference.Title                = "...Hazards EPA Warning"
+         SetAttributeFromString( lMLCATgt, "ComparisonDifference", "Title", "...Hazards EPA Warning" );
          //:lMLCATgt.ComparisonDifference.TargetStatementValue = lMLCATgt.M_HumanHazardSection.EPA_ChildHazardWarning
+         SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "TargetStatementValue", lMLCATgt, "M_HumanHazardSection", "EPA_ChildHazardWarning" );
          //:lMLCATgt.ComparisonDifference.SortSectionNumber    = lMLCATgt.M_HumanHazardSection.wSectionSortOrder
+         SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SortSectionNumber", lMLCATgt, "M_HumanHazardSection", "wSectionSortOrder" );
          //:SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle )
          olMLCATgt_SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle );
       } 
@@ -1596,22 +1799,28 @@ olMLCATgt_BuildDifferencesMLC( View     lMLCATgt,
    while ( RESULT > zCURSOR_UNCHANGED )
    { 
       //:IF lMLCASrc.MN_HumanHazardSection DOES NOT EXIST
-      lTempInteger_24 = CheckExistenceOfEntity( lMLCASrc, "MN_HumanHazardSection" );
-      if ( lTempInteger_24 != 0 )
+      lTempInteger_26 = CheckExistenceOfEntity( lMLCASrc, "MN_HumanHazardSection" );
+      if ( lTempInteger_26 != 0 )
       { 
          //:// Section and Statements do not exist in in Target.
          //:CREATE ENTITY lMLCATgt.ComparisonDifference
          RESULT = CreateEntity( lMLCATgt, "ComparisonDifference", zPOS_AFTER );
          //:lMLCATgt.ComparisonDifference.Title                = "...Hazards EPA Signal Word"
+         SetAttributeFromString( lMLCATgt, "ComparisonDifference", "Title", "...Hazards EPA Signal Word" );
          //:lMLCATgt.ComparisonDifference.SourceStatementValue = lMLCASrc.M_HumanHazardSection.EPA_SignalWord
+         SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SourceStatementValue", lMLCASrc, "M_HumanHazardSection", "EPA_SignalWord" );
          //:lMLCATgt.ComparisonDifference.SortSectionNumber    = lMLCATgt.M_HumanHazardSection.wSectionSortOrder
+         SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SortSectionNumber", lMLCATgt, "M_HumanHazardSection", "wSectionSortOrder" );
          //:SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle )
          olMLCATgt_SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle );
          //:CREATE ENTITY lMLCATgt.ComparisonDifference
          RESULT = CreateEntity( lMLCATgt, "ComparisonDifference", zPOS_AFTER );
          //:lMLCATgt.ComparisonDifference.Title                = "...Hazards EPA Warning"
+         SetAttributeFromString( lMLCATgt, "ComparisonDifference", "Title", "...Hazards EPA Warning" );
          //:lMLCATgt.ComparisonDifference.SourceStatementValue = lMLCASrc.M_HumanHazardSection.EPA_ChildHazardWarning
+         SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SourceStatementValue", lMLCASrc, "M_HumanHazardSection", "EPA_ChildHazardWarning" );
          //:lMLCATgt.ComparisonDifference.SortSectionNumber    = lMLCATgt.M_HumanHazardSection.wSectionSortOrder
+         SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SortSectionNumber", lMLCATgt, "M_HumanHazardSection", "wSectionSortOrder" );
          //:SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle )
          olMLCATgt_SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle );
       } 
@@ -1625,6 +1834,7 @@ olMLCATgt_BuildDifferencesMLC( View     lMLCATgt,
    //:OrderEntityForView( lMLCATgt, "ComparisonDifference", "SortSectionTitle A SortEntryNumber A" )
    OrderEntityForView( lMLCATgt, "ComparisonDifference", "SortSectionTitle A SortEntryNumber A" );
    //:lMLCATgt.MasterLabelContent.wLastSortNumber = lSortEntryNbr
+   SetAttributeFromInteger( lMLCATgt, "MasterLabelContent", "wLastSortNumber", lSortEntryNbr );
    return( 0 );
 // END
 } 
@@ -1659,6 +1869,7 @@ olMLCATgt_BuildDifferencesSLC( View     lMLCATgt,
    int      lTempInteger_7 = 0;
    int      lTempInteger_8 = 0;
    int      lTempInteger_9 = 0;
+   String   szTempString_0 = null;
    int      lTempInteger_10 = 0;
    int      lTempInteger_11 = 0;
    int      lTempInteger_12 = 0;
@@ -1669,11 +1880,15 @@ olMLCATgt_BuildDifferencesSLC( View     lMLCATgt,
    int      lTempInteger_17 = 0;
    int      lTempInteger_18 = 0;
    int      lTempInteger_19 = 0;
+   String   szTempString_1 = null;
+   String   szTempString_2 = null;
    int      lTempInteger_20 = 0;
    int      lTempInteger_21 = 0;
    int      lTempInteger_22 = 0;
    int      lTempInteger_23 = 0;
    int      lTempInteger_24 = 0;
+   String   szTempString_3 = null;
+   String   szTempString_4 = null;
    int      lTempInteger_25 = 0;
    int      lTempInteger_26 = 0;
 
@@ -1710,6 +1925,9 @@ olMLCATgt_BuildDifferencesSLC( View     lMLCATgt,
 
    //:END
    //:lSortEntryNbr = lMLCATgt.MasterLabelContent.wLastSortNumber
+   {MutableInt mi_lSortEntryNbr = new MutableInt( lSortEntryNbr );
+       GetIntegerFromAttribute( mi_lSortEntryNbr, lMLCATgt, "MasterLabelContent", "wLastSortNumber" );
+   lSortEntryNbr = mi_lSortEntryNbr.intValue( );}
 
    //:// GENERAL
 
@@ -1721,6 +1939,13 @@ olMLCATgt_BuildDifferencesSLC( View     lMLCATgt,
 
       //:// Set up sort value so entries in this Operaiton sort with entries created earlier.
       //:szSortTitle = "1General: " //+ lSLCAnal.M_GeneralSection.Title
+       {StringBuilder sb_szSortTitle;
+      if ( szSortTitle == null )
+         sb_szSortTitle = new StringBuilder( 32 );
+      else
+         sb_szSortTitle = new StringBuilder( szSortTitle );
+            ZeidonStringCopy( sb_szSortTitle, 1, 0, "1General: ", 1, 0, 51 );
+      szSortTitle = sb_szSortTitle.toString( );}
 
       //:// Follow SLC Section to related MLC and then to new MLC.
       //:SET CURSOR FIRST lMLCASrc.M_GeneralSection WHERE lMLCASrc.M_GeneralSection.ID = lSLCAnal.M_GeneralSection.ID
@@ -1744,9 +1969,13 @@ olMLCATgt_BuildDifferencesSLC( View     lMLCATgt,
             //:CREATE ENTITY lMLCATgt.ComparisonDifference
             RESULT = CreateEntity( lMLCATgt, "ComparisonDifference", zPOS_AFTER );
             //:lMLCATgt.ComparisonDifference.Title                = "...General Section Title"
+            SetAttributeFromString( lMLCATgt, "ComparisonDifference", "Title", "...General Section Title" );
             //:lMLCATgt.ComparisonDifference.TargetStatementValue = lMLCATgt.M_GeneralSection.Title
+            SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "TargetStatementValue", lMLCATgt, "M_GeneralSection", "Title" );
             //:lMLCATgt.ComparisonDifference.SourceStatementValue = lSLCAnal.S_GeneralSection.Title
+            SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SourceStatementValue", lSLCAnal, "S_GeneralSection", "Title" );
             //:lMLCATgt.ComparisonDifference.SortSectionNumber    = lMLCATgt.M_GeneralSection.wSectionSortOrder
+            SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SortSectionNumber", lMLCATgt, "M_GeneralSection", "wSectionSortOrder" );
             //:SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle )
             olMLCATgt_SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle );
          } 
@@ -1777,9 +2006,13 @@ olMLCATgt_BuildDifferencesSLC( View     lMLCATgt,
                   //:CREATE ENTITY lMLCATgt.ComparisonDifference
                   RESULT = CreateEntity( lMLCATgt, "ComparisonDifference", zPOS_AFTER );
                   //:lMLCATgt.ComparisonDifference.Title                = "...General Statement Text"
+                  SetAttributeFromString( lMLCATgt, "ComparisonDifference", "Title", "...General Statement Text" );
                   //:lMLCATgt.ComparisonDifference.TargetStatementValue = lMLCATgt.M_GeneralStatement.Text
+                  SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "TargetStatementValue", lMLCATgt, "M_GeneralStatement", "Text" );
                   //:lMLCATgt.ComparisonDifference.SourceStatementValue = lSLCAnal.S_GeneralStatement.Text
+                  SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SourceStatementValue", lSLCAnal, "S_GeneralStatement", "Text" );
                   //:lMLCATgt.ComparisonDifference.SortSectionNumber    = lMLCATgt.M_GeneralSection.wSectionSortOrder
+                  SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SortSectionNumber", lMLCATgt, "M_GeneralSection", "wSectionSortOrder" );
                   //:SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle )
                   olMLCATgt_SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle );
                } 
@@ -1793,8 +2026,11 @@ olMLCATgt_BuildDifferencesSLC( View     lMLCATgt,
                //:CREATE ENTITY lMLCATgt.ComparisonDifference
                RESULT = CreateEntity( lMLCATgt, "ComparisonDifference", zPOS_AFTER );
                //:lMLCATgt.ComparisonDifference.Title                = "...General Statement Text"
+               SetAttributeFromString( lMLCATgt, "ComparisonDifference", "Title", "...General Statement Text" );
                //:lMLCATgt.ComparisonDifference.SourceStatementValue = lSLCAnal.S_GeneralStatement.Text
+               SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SourceStatementValue", lSLCAnal, "S_GeneralStatement", "Text" );
                //:lMLCATgt.ComparisonDifference.SortSectionNumber    = lMLCATgt.M_GeneralSection.wSectionSortOrder
+               SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SortSectionNumber", lMLCATgt, "M_GeneralSection", "wSectionSortOrder" );
                //:SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle )
                olMLCATgt_SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle );
             } 
@@ -1812,8 +2048,11 @@ olMLCATgt_BuildDifferencesSLC( View     lMLCATgt,
          //:CREATE ENTITY lMLCATgt.ComparisonDifference
          RESULT = CreateEntity( lMLCATgt, "ComparisonDifference", zPOS_AFTER );
          //:lMLCATgt.ComparisonDifference.Title                = "...General Section Title"
+         SetAttributeFromString( lMLCATgt, "ComparisonDifference", "Title", "...General Section Title" );
          //:lMLCATgt.ComparisonDifference.SourceStatementValue = lSLCAnal.S_GeneralSection.Title
+         SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SourceStatementValue", lSLCAnal, "S_GeneralSection", "Title" );
          //:lMLCATgt.ComparisonDifference.SortSectionNumber    = lMLCATgt.M_GeneralSection.wSectionSortOrder
+         SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SortSectionNumber", lMLCATgt, "M_GeneralSection", "wSectionSortOrder" );
          //:SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle )
          olMLCATgt_SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle );
          //:FOR EACH lSLCAnal.S_GeneralStatement
@@ -1823,8 +2062,11 @@ olMLCATgt_BuildDifferencesSLC( View     lMLCATgt,
             //:CREATE ENTITY lMLCATgt.ComparisonDifference
             RESULT = CreateEntity( lMLCATgt, "ComparisonDifference", zPOS_AFTER );
             //:lMLCATgt.ComparisonDifference.Title                = "...General Statement Text"
+            SetAttributeFromString( lMLCATgt, "ComparisonDifference", "Title", "...General Statement Text" );
             //:lMLCATgt.ComparisonDifference.SourceStatementValue = lSLCAnal.S_GeneralStatement.Text
+            SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SourceStatementValue", lSLCAnal, "S_GeneralStatement", "Text" );
             //:lMLCATgt.ComparisonDifference.SortSectionNumber    = lMLCATgt.M_GeneralSection.wSectionSortOrder
+            SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SortSectionNumber", lMLCATgt, "M_GeneralSection", "wSectionSortOrder" );
             //:SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle )
             olMLCATgt_SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle );
             RESULT = SetCursorNextEntity( lSLCAnal, "S_GeneralStatement", "" );
@@ -1846,6 +2088,13 @@ olMLCATgt_BuildDifferencesSLC( View     lMLCATgt,
 
    //:// Set up sort value so entries in this Operaiton sort with entries created earlier.
    //:szSortTitle = "2Ingredients"
+    {StringBuilder sb_szSortTitle;
+   if ( szSortTitle == null )
+      sb_szSortTitle = new StringBuilder( 32 );
+   else
+      sb_szSortTitle = new StringBuilder( szSortTitle );
+      ZeidonStringCopy( sb_szSortTitle, 1, 0, "2Ingredients", 1, 0, 51 );
+   szSortTitle = sb_szSortTitle.toString( );}
 
    //:FOR EACH lSLCAnal.M_IngredientsStatement
    RESULT = SetCursorFirstEntity( lSLCAnal, "M_IngredientsStatement", "" );
@@ -1874,9 +2123,13 @@ olMLCATgt_BuildDifferencesSLC( View     lMLCATgt,
             //:CREATE ENTITY lMLCATgt.ComparisonDifference
             RESULT = CreateEntity( lMLCATgt, "ComparisonDifference", zPOS_AFTER );
             //:lMLCATgt.ComparisonDifference.Title                = "...Ingredients Section Title"
+            SetAttributeFromString( lMLCATgt, "ComparisonDifference", "Title", "...Ingredients Section Title" );
             //:lMLCATgt.ComparisonDifference.TargetStatementValue = lMLCATgt.M_IngredientsSection.ActiveTitle
+            SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "TargetStatementValue", lMLCATgt, "M_IngredientsSection", "ActiveTitle" );
             //:lMLCATgt.ComparisonDifference.SourceStatementValue = lSLCAnal.S_IngredientsSection.ActiveTitle
+            SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SourceStatementValue", lSLCAnal, "S_IngredientsSection", "ActiveTitle" );
             //:lMLCATgt.ComparisonDifference.SortSectionNumber    = lMLCATgt.M_IngredientsSection.wSectionSortOrder
+            SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SortSectionNumber", lMLCATgt, "M_IngredientsSection", "wSectionSortOrder" );
             //:SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle )
             olMLCATgt_SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle );
          } 
@@ -1907,9 +2160,13 @@ olMLCATgt_BuildDifferencesSLC( View     lMLCATgt,
                   //:CREATE ENTITY lMLCATgt.ComparisonDifference
                   RESULT = CreateEntity( lMLCATgt, "ComparisonDifference", zPOS_AFTER );
                   //:lMLCATgt.ComparisonDifference.Title                = "...Ingredients Statement SystemChemical"
+                  SetAttributeFromString( lMLCATgt, "ComparisonDifference", "Title", "...Ingredients Statement SystemChemical" );
                   //:lMLCATgt.ComparisonDifference.TargetStatementValue = lMLCATgt.M_IngredientsStatement.ChemicalName
+                  SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "TargetStatementValue", lMLCATgt, "M_IngredientsStatement", "ChemicalName" );
                   //:lMLCATgt.ComparisonDifference.SourceStatementValue = lSLCAnal.S_IngredientsStatement.ChemicalName
+                  SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SourceStatementValue", lSLCAnal, "S_IngredientsStatement", "ChemicalName" );
                   //:lMLCATgt.ComparisonDifference.SortSectionNumber    = lMLCATgt.M_IngredientsSection.wSectionSortOrder
+                  SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SortSectionNumber", lMLCATgt, "M_IngredientsSection", "wSectionSortOrder" );
                   //:SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle )
                   olMLCATgt_SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle );
                } 
@@ -1922,9 +2179,13 @@ olMLCATgt_BuildDifferencesSLC( View     lMLCATgt,
                   //:CREATE ENTITY lMLCATgt.ComparisonDifference
                   RESULT = CreateEntity( lMLCATgt, "ComparisonDifference", zPOS_AFTER );
                   //:lMLCATgt.ComparisonDifference.Title                = "...Ingredients Statement Percent"
+                  SetAttributeFromString( lMLCATgt, "ComparisonDifference", "Title", "...Ingredients Statement Percent" );
                   //:lMLCATgt.ComparisonDifference.TargetStatementValue = lMLCATgt.M_IngredientsStatement.Percent
+                  SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "TargetStatementValue", lMLCATgt, "M_IngredientsStatement", "Percent" );
                   //:lMLCATgt.ComparisonDifference.SourceStatementValue = lSLCAnal.S_IngredientsStatement.Percent
+                  SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SourceStatementValue", lSLCAnal, "S_IngredientsStatement", "Percent" );
                   //:lMLCATgt.ComparisonDifference.SortSectionNumber    = lMLCATgt.M_IngredientsSection.wSectionSortOrder
+                  SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SortSectionNumber", lMLCATgt, "M_IngredientsSection", "wSectionSortOrder" );
                   //:SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle )
                   olMLCATgt_SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle );
                } 
@@ -1938,15 +2199,21 @@ olMLCATgt_BuildDifferencesSLC( View     lMLCATgt,
                //:CREATE ENTITY lMLCATgt.ComparisonDifference
                RESULT = CreateEntity( lMLCATgt, "ComparisonDifference", zPOS_AFTER );
                //:lMLCATgt.ComparisonDifference.Title                = "...Ingredients Statement SystemChemical"
+               SetAttributeFromString( lMLCATgt, "ComparisonDifference", "Title", "...Ingredients Statement SystemChemical" );
                //:lMLCATgt.ComparisonDifference.SourceStatementValue = lSLCAnal.S_IngredientsStatement.ChemicalName
+               SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SourceStatementValue", lSLCAnal, "S_IngredientsStatement", "ChemicalName" );
                //:lMLCATgt.ComparisonDifference.SortSectionNumber    = lMLCATgt.M_IngredientsSection.wSectionSortOrder
+               SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SortSectionNumber", lMLCATgt, "M_IngredientsSection", "wSectionSortOrder" );
                //:SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle )
                olMLCATgt_SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle );
                //:CREATE ENTITY lMLCATgt.ComparisonDifference
                RESULT = CreateEntity( lMLCATgt, "ComparisonDifference", zPOS_AFTER );
                //:lMLCATgt.ComparisonDifference.Title                = "...Ingredients Statement Percent"
+               SetAttributeFromString( lMLCATgt, "ComparisonDifference", "Title", "...Ingredients Statement Percent" );
                //:lMLCATgt.ComparisonDifference.SourceStatementValue = lSLCAnal.S_IngredientsStatement.Percent
+               SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SourceStatementValue", lSLCAnal, "S_IngredientsStatement", "Percent" );
                //:lMLCATgt.ComparisonDifference.SortSectionNumber    = lMLCATgt.M_IngredientsSection.wSectionSortOrder
+               SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SortSectionNumber", lMLCATgt, "M_IngredientsSection", "wSectionSortOrder" );
                //:SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle )
                olMLCATgt_SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle );
             } 
@@ -1964,8 +2231,11 @@ olMLCATgt_BuildDifferencesSLC( View     lMLCATgt,
          //:CREATE ENTITY lMLCATgt.ComparisonDifference
          RESULT = CreateEntity( lMLCATgt, "ComparisonDifference", zPOS_AFTER );
          //:lMLCATgt.ComparisonDifference.Title                = "...Ingredients Section Title"
+         SetAttributeFromString( lMLCATgt, "ComparisonDifference", "Title", "...Ingredients Section Title" );
          //:lMLCATgt.ComparisonDifference.SourceStatementValue = lSLCAnal.S_IngredientsSection.ActiveTitle
+         SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SourceStatementValue", lSLCAnal, "S_IngredientsSection", "ActiveTitle" );
          //:lMLCATgt.ComparisonDifference.SortSectionNumber    = lMLCATgt.M_IngredientsSection.wSectionSortOrder
+         SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SortSectionNumber", lMLCATgt, "M_IngredientsSection", "wSectionSortOrder" );
          //:SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle )
          olMLCATgt_SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle );
          //:FOR EACH lSLCAnal.S_IngredientsStatement
@@ -1975,15 +2245,21 @@ olMLCATgt_BuildDifferencesSLC( View     lMLCATgt,
             //:CREATE ENTITY lMLCATgt.ComparisonDifference
             RESULT = CreateEntity( lMLCATgt, "ComparisonDifference", zPOS_AFTER );
             //:lMLCATgt.ComparisonDifference.Title                = "...Ingredients Statement SystemChemical"
+            SetAttributeFromString( lMLCATgt, "ComparisonDifference", "Title", "...Ingredients Statement SystemChemical" );
             //:lMLCATgt.ComparisonDifference.SourceStatementValue = lSLCAnal.S_IngredientsStatement.ChemicalName
+            SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SourceStatementValue", lSLCAnal, "S_IngredientsStatement", "ChemicalName" );
             //:lMLCATgt.ComparisonDifference.SortSectionNumber    = lMLCATgt.M_IngredientsSection.wSectionSortOrder
+            SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SortSectionNumber", lMLCATgt, "M_IngredientsSection", "wSectionSortOrder" );
             //:SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle )
             olMLCATgt_SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle );
             //:CREATE ENTITY lMLCATgt.ComparisonDifference
             RESULT = CreateEntity( lMLCATgt, "ComparisonDifference", zPOS_AFTER );
             //:lMLCATgt.ComparisonDifference.Title                = "...Ingredients Statement Percent"
+            SetAttributeFromString( lMLCATgt, "ComparisonDifference", "Title", "...Ingredients Statement Percent" );
             //:lMLCATgt.ComparisonDifference.SourceStatementValue = lSLCAnal.S_IngredientsStatement.Percent
+            SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SourceStatementValue", lSLCAnal, "S_IngredientsStatement", "Percent" );
             //:lMLCATgt.ComparisonDifference.SortSectionNumber    = lMLCATgt.M_IngredientsSection.wSectionSortOrder
+            SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SortSectionNumber", lMLCATgt, "M_IngredientsSection", "wSectionSortOrder" );
             //:SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle )
             olMLCATgt_SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle );
             RESULT = SetCursorNextEntity( lSLCAnal, "S_IngredientsStatement", "" );
@@ -2005,6 +2281,13 @@ olMLCATgt_BuildDifferencesSLC( View     lMLCATgt,
 
    //:// Set up sort value so entries in this Operaiton sort with entries created earlier.
    //:szSortTitle = "9Usages"
+    {StringBuilder sb_szSortTitle;
+   if ( szSortTitle == null )
+      sb_szSortTitle = new StringBuilder( 32 );
+   else
+      sb_szSortTitle = new StringBuilder( szSortTitle );
+      ZeidonStringCopy( sb_szSortTitle, 1, 0, "9Usages", 1, 0, 51 );
+   szSortTitle = sb_szSortTitle.toString( );}
 
    //:FOR EACH lMLCASrc.M_Usage
    RESULT = SetCursorFirstEntity( lMLCASrc, "M_Usage", "" );
@@ -2037,7 +2320,23 @@ olMLCATgt_BuildDifferencesSLC( View     lMLCATgt,
          //:CREATE ENTITY lMLCATgt.ComparisonDifference
          RESULT = CreateEntity( lMLCATgt, "ComparisonDifference", zPOS_AFTER );
          //:lMLCATgt.ComparisonDifference.Title                = "..." + szUsageType
+          {StringBuilder sb_szTempString_0;
+         if ( szTempString_0 == null )
+            sb_szTempString_0 = new StringBuilder( 32 );
+         else
+            sb_szTempString_0 = new StringBuilder( szTempString_0 );
+                  ZeidonStringCopy( sb_szTempString_0, 1, 0, "...", 1, 0, 255 );
+         szTempString_0 = sb_szTempString_0.toString( );}
+          {StringBuilder sb_szTempString_0;
+         if ( szTempString_0 == null )
+            sb_szTempString_0 = new StringBuilder( 32 );
+         else
+            sb_szTempString_0 = new StringBuilder( szTempString_0 );
+                  ZeidonStringConcat( sb_szTempString_0, 1, 0, szUsageType, 1, 0, 255 );
+         szTempString_0 = sb_szTempString_0.toString( );}
+         SetAttributeFromString( lMLCATgt, "ComparisonDifference", "Title", szTempString_0 );
          //:lMLCATgt.ComparisonDifference.SourceStatementValue = lMLCASrc.M_Usage.Name
+         SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SourceStatementValue", lMLCASrc, "M_Usage", "Name" );
          //:SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle )
          olMLCATgt_SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle );
       } 
@@ -2058,6 +2357,13 @@ olMLCATgt_BuildDifferencesSLC( View     lMLCATgt,
 
       //:// Set up sort value so entries in this Operaiton sort with entries created earlier.
       //:szSortTitle = "3Storage + Disposal: " //+ lSLCAnal.M_StorageDisposalSection.Title
+       {StringBuilder sb_szSortTitle;
+      if ( szSortTitle == null )
+         sb_szSortTitle = new StringBuilder( 32 );
+      else
+         sb_szSortTitle = new StringBuilder( szSortTitle );
+            ZeidonStringCopy( sb_szSortTitle, 1, 0, "3Storage + Disposal: ", 1, 0, 51 );
+      szSortTitle = sb_szSortTitle.toString( );}
 
       //:// Follow SLC Section to related MLC and then to new MLC.
       //:SET CURSOR FIRST lMLCASrc.M_StorageDisposalSection WHERE lMLCASrc.M_StorageDisposalSection.ID = lSLCAnal.M_StorageDisposalSection.ID
@@ -2081,9 +2387,13 @@ olMLCATgt_BuildDifferencesSLC( View     lMLCATgt,
             //:CREATE ENTITY lMLCATgt.ComparisonDifference
             RESULT = CreateEntity( lMLCATgt, "ComparisonDifference", zPOS_AFTER );
             //:lMLCATgt.ComparisonDifference.Title                = "...Storage/Disposal Section Title"
+            SetAttributeFromString( lMLCATgt, "ComparisonDifference", "Title", "...Storage/Disposal Section Title" );
             //:lMLCATgt.ComparisonDifference.TargetStatementValue = lMLCATgt.M_StorageDisposalSection.Title
+            SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "TargetStatementValue", lMLCATgt, "M_StorageDisposalSection", "Title" );
             //:lMLCATgt.ComparisonDifference.SourceStatementValue = lSLCAnal.S_StorageDisposalSection.Title
+            SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SourceStatementValue", lSLCAnal, "S_StorageDisposalSection", "Title" );
             //:lMLCATgt.ComparisonDifference.SortSectionNumber    = lMLCATgt.M_StorageDisposalSection.wSectionSortOrder
+            SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SortSectionNumber", lMLCATgt, "M_StorageDisposalSection", "wSectionSortOrder" );
             //:SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle )
             olMLCATgt_SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle );
          } 
@@ -2114,9 +2424,13 @@ olMLCATgt_BuildDifferencesSLC( View     lMLCATgt,
                   //:CREATE ENTITY lMLCATgt.ComparisonDifference
                   RESULT = CreateEntity( lMLCATgt, "ComparisonDifference", zPOS_AFTER );
                   //:lMLCATgt.ComparisonDifference.Title                = "...Storage/Disposal Statement Text"
+                  SetAttributeFromString( lMLCATgt, "ComparisonDifference", "Title", "...Storage/Disposal Statement Text" );
                   //:lMLCATgt.ComparisonDifference.TargetStatementValue = lMLCATgt.M_StorageDisposalStatement.Text
+                  SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "TargetStatementValue", lMLCATgt, "M_StorageDisposalStatement", "Text" );
                   //:lMLCATgt.ComparisonDifference.SourceStatementValue = lSLCAnal.S_StorageDisposalStatement.Text
+                  SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SourceStatementValue", lSLCAnal, "S_StorageDisposalStatement", "Text" );
                   //:lMLCATgt.ComparisonDifference.SortSectionNumber    = lMLCATgt.M_StorageDisposalSection.wSectionSortOrder
+                  SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SortSectionNumber", lMLCATgt, "M_StorageDisposalSection", "wSectionSortOrder" );
                   //:SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle )
                   olMLCATgt_SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle );
                } 
@@ -2130,8 +2444,11 @@ olMLCATgt_BuildDifferencesSLC( View     lMLCATgt,
                //:CREATE ENTITY lMLCATgt.ComparisonDifference
                RESULT = CreateEntity( lMLCATgt, "ComparisonDifference", zPOS_AFTER );
                //:lMLCATgt.ComparisonDifference.Title                = "...Storage/Disposal Statement Text"
+               SetAttributeFromString( lMLCATgt, "ComparisonDifference", "Title", "...Storage/Disposal Statement Text" );
                //:lMLCATgt.ComparisonDifference.SourceStatementValue = lSLCAnal.S_StorageDisposalStatement.Text
+               SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SourceStatementValue", lSLCAnal, "S_StorageDisposalStatement", "Text" );
                //:lMLCATgt.ComparisonDifference.SortSectionNumber    = lMLCATgt.M_StorageDisposalSection.wSectionSortOrder
+               SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SortSectionNumber", lMLCATgt, "M_StorageDisposalSection", "wSectionSortOrder" );
                //:SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle )
                olMLCATgt_SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle );
             } 
@@ -2149,8 +2466,11 @@ olMLCATgt_BuildDifferencesSLC( View     lMLCATgt,
          //:CREATE ENTITY lMLCATgt.ComparisonDifference
          RESULT = CreateEntity( lMLCATgt, "ComparisonDifference", zPOS_AFTER );
          //:lMLCATgt.ComparisonDifference.Title                = "...Storage/Disposal Section Title"
+         SetAttributeFromString( lMLCATgt, "ComparisonDifference", "Title", "...Storage/Disposal Section Title" );
          //:lMLCATgt.ComparisonDifference.SourceStatementValue = lSLCAnal.S_StorageDisposalSection.Title
+         SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SourceStatementValue", lSLCAnal, "S_StorageDisposalSection", "Title" );
          //:lMLCATgt.ComparisonDifference.SortSectionNumber    = lMLCATgt.M_StorageDisposalSection.wSectionSortOrder
+         SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SortSectionNumber", lMLCATgt, "M_StorageDisposalSection", "wSectionSortOrder" );
          //:SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle )
          olMLCATgt_SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle );
          //:FOR EACH lSLCAnal.S_StorageDisposalStatement
@@ -2160,8 +2480,11 @@ olMLCATgt_BuildDifferencesSLC( View     lMLCATgt,
             //:CREATE ENTITY lMLCATgt.ComparisonDifference
             RESULT = CreateEntity( lMLCATgt, "ComparisonDifference", zPOS_AFTER );
             //:lMLCATgt.ComparisonDifference.Title                = "...Storage/Disposal Statement Text"
+            SetAttributeFromString( lMLCATgt, "ComparisonDifference", "Title", "...Storage/Disposal Statement Text" );
             //:lMLCATgt.ComparisonDifference.SourceStatementValue = lSLCAnal.S_StorageDisposalStatement.Text
+            SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SourceStatementValue", lSLCAnal, "S_StorageDisposalStatement", "Text" );
             //:lMLCATgt.ComparisonDifference.SortSectionNumber    = lMLCATgt.M_StorageDisposalSection.wSectionSortOrder
+            SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SortSectionNumber", lMLCATgt, "M_StorageDisposalSection", "wSectionSortOrder" );
             //:SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle )
             olMLCATgt_SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle );
             RESULT = SetCursorNextEntity( lSLCAnal, "S_StorageDisposalStatement", "" );
@@ -2186,6 +2509,13 @@ olMLCATgt_BuildDifferencesSLC( View     lMLCATgt,
 
       //:// Set up sort value so entries in this Operaiton sort with entries created earlier.
       //:szSortTitle = "4Directions" //+ lSLCAnal.M_DirectionsForUseSection.Title
+       {StringBuilder sb_szSortTitle;
+      if ( szSortTitle == null )
+         sb_szSortTitle = new StringBuilder( 32 );
+      else
+         sb_szSortTitle = new StringBuilder( szSortTitle );
+            ZeidonStringCopy( sb_szSortTitle, 1, 0, "4Directions", 1, 0, 51 );
+      szSortTitle = sb_szSortTitle.toString( );}
 
       //:// Follow SLC Section to related MLC and then to new MLC.
       //:SET CURSOR FIRST lMLCASrc.M_DirectionsForUseSection WHERE lMLCASrc.M_DirectionsForUseSection.ID = lSLCAnal.M_DirectionsForUseSection.ID
@@ -2209,9 +2539,13 @@ olMLCATgt_BuildDifferencesSLC( View     lMLCATgt,
             //:CREATE ENTITY lMLCATgt.ComparisonDifference
             RESULT = CreateEntity( lMLCATgt, "ComparisonDifference", zPOS_AFTER );
             //:lMLCATgt.ComparisonDifference.Title                = "...Directions Section Title"
+            SetAttributeFromString( lMLCATgt, "ComparisonDifference", "Title", "...Directions Section Title" );
             //:lMLCATgt.ComparisonDifference.TargetStatementValue = lMLCATgt.M_DirectionsForUseSection.Title
+            SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "TargetStatementValue", lMLCATgt, "M_DirectionsForUseSection", "Title" );
             //:lMLCATgt.ComparisonDifference.SourceStatementValue = lSLCAnal.S_DirectionsForUseSection.Title
+            SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SourceStatementValue", lSLCAnal, "S_DirectionsForUseSection", "Title" );
             //:lMLCATgt.ComparisonDifference.SortSectionNumber    = lMLCATgt.M_DirectionsForUseSection.wSectionSortOrder
+            SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SortSectionNumber", lMLCATgt, "M_DirectionsForUseSection", "wSectionSortOrder" );
             //:SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle )
             olMLCATgt_SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle );
          } 
@@ -2242,9 +2576,13 @@ olMLCATgt_BuildDifferencesSLC( View     lMLCATgt,
                   //:CREATE ENTITY lMLCATgt.ComparisonDifference
                   RESULT = CreateEntity( lMLCATgt, "ComparisonDifference", zPOS_AFTER );
                   //:lMLCATgt.ComparisonDifference.Title                = "...Directions Statement Text"
+                  SetAttributeFromString( lMLCATgt, "ComparisonDifference", "Title", "...Directions Statement Text" );
                   //:lMLCATgt.ComparisonDifference.TargetStatementValue = lMLCATgt.M_DirectionsForUseStatement.Text
+                  SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "TargetStatementValue", lMLCATgt, "M_DirectionsForUseStatement", "Text" );
                   //:lMLCATgt.ComparisonDifference.SourceStatementValue = lSLCAnal.S_DirectionsForUseStatement.Text
+                  SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SourceStatementValue", lSLCAnal, "S_DirectionsForUseStatement", "Text" );
                   //:lMLCATgt.ComparisonDifference.SortSectionNumber    = lMLCATgt.M_DirectionsForUseSection.wSectionSortOrder
+                  SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SortSectionNumber", lMLCATgt, "M_DirectionsForUseSection", "wSectionSortOrder" );
                   //:SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle )
                   olMLCATgt_SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle );
                } 
@@ -2258,8 +2596,11 @@ olMLCATgt_BuildDifferencesSLC( View     lMLCATgt,
                //:CREATE ENTITY lMLCATgt.ComparisonDifference
                RESULT = CreateEntity( lMLCATgt, "ComparisonDifference", zPOS_AFTER );
                //:lMLCATgt.ComparisonDifference.Title                = "...Directions Statement Text"
+               SetAttributeFromString( lMLCATgt, "ComparisonDifference", "Title", "...Directions Statement Text" );
                //:lMLCATgt.ComparisonDifference.SourceStatementValue = lSLCAnal.S_DirectionsForUseStatement.Text
+               SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SourceStatementValue", lSLCAnal, "S_DirectionsForUseStatement", "Text" );
                //:lMLCATgt.ComparisonDifference.SortSectionNumber    = lMLCATgt.M_DirectionsForUseSection.wSectionSortOrder
+               SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SortSectionNumber", lMLCATgt, "M_DirectionsForUseSection", "wSectionSortOrder" );
                //:SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle )
                olMLCATgt_SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle );
             } 
@@ -2302,8 +2643,25 @@ olMLCATgt_BuildDifferencesSLC( View     lMLCATgt,
                //:CREATE ENTITY lMLCATgt.ComparisonDifference
                RESULT = CreateEntity( lMLCATgt, "ComparisonDifference", zPOS_AFTER );
                //:lMLCATgt.ComparisonDifference.Title                = "...Directions " + szUsageType
+                {StringBuilder sb_szTempString_1;
+               if ( szTempString_1 == null )
+                  sb_szTempString_1 = new StringBuilder( 32 );
+               else
+                  sb_szTempString_1 = new StringBuilder( szTempString_1 );
+                              ZeidonStringCopy( sb_szTempString_1, 1, 0, "...Directions ", 1, 0, 255 );
+               szTempString_1 = sb_szTempString_1.toString( );}
+                {StringBuilder sb_szTempString_1;
+               if ( szTempString_1 == null )
+                  sb_szTempString_1 = new StringBuilder( 32 );
+               else
+                  sb_szTempString_1 = new StringBuilder( szTempString_1 );
+                              ZeidonStringConcat( sb_szTempString_1, 1, 0, szUsageType, 1, 0, 255 );
+               szTempString_1 = sb_szTempString_1.toString( );}
+               SetAttributeFromString( lMLCATgt, "ComparisonDifference", "Title", szTempString_1 );
                //:lMLCATgt.ComparisonDifference.SourceStatementValue = lSLCAnal.S_DirectionsUsage.Name
+               SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SourceStatementValue", lSLCAnal, "S_DirectionsUsage", "Name" );
                //:lMLCATgt.ComparisonDifference.SortSectionNumber    = lMLCATgt.M_DirectionsForUseSection.wSectionSortOrder
+               SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SortSectionNumber", lMLCATgt, "M_DirectionsForUseSection", "wSectionSortOrder" );
                //:SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle )
                olMLCATgt_SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle );
             } 
@@ -2321,8 +2679,11 @@ olMLCATgt_BuildDifferencesSLC( View     lMLCATgt,
          //:CREATE ENTITY lMLCATgt.ComparisonDifference
          RESULT = CreateEntity( lMLCATgt, "ComparisonDifference", zPOS_AFTER );
          //:lMLCATgt.ComparisonDifference.Title                = "...Directions Section Title"
+         SetAttributeFromString( lMLCATgt, "ComparisonDifference", "Title", "...Directions Section Title" );
          //:lMLCATgt.ComparisonDifference.SourceStatementValue = lSLCAnal.S_DirectionsForUseSection.Title
+         SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SourceStatementValue", lSLCAnal, "S_DirectionsForUseSection", "Title" );
          //:lMLCATgt.ComparisonDifference.SortSectionNumber    = lMLCATgt.M_DirectionsForUseSection.wSectionSortOrder
+         SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SortSectionNumber", lMLCATgt, "M_DirectionsForUseSection", "wSectionSortOrder" );
          //:SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle )
          olMLCATgt_SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle );
          //:FOR EACH lSLCAnal.S_DirectionsForUseStatement
@@ -2332,8 +2693,11 @@ olMLCATgt_BuildDifferencesSLC( View     lMLCATgt,
             //:CREATE ENTITY lMLCATgt.ComparisonDifference
             RESULT = CreateEntity( lMLCATgt, "ComparisonDifference", zPOS_AFTER );
             //:lMLCATgt.ComparisonDifference.Title                = "...Directions Statement Text"
+            SetAttributeFromString( lMLCATgt, "ComparisonDifference", "Title", "...Directions Statement Text" );
             //:lMLCATgt.ComparisonDifference.SourceStatementValue = lSLCAnal.S_DirectionsForUseStatement.Text
+            SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SourceStatementValue", lSLCAnal, "S_DirectionsForUseStatement", "Text" );
             //:lMLCATgt.ComparisonDifference.SortSectionNumber    = lMLCATgt.M_DirectionsForUseSection.wSectionSortOrder
+            SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SortSectionNumber", lMLCATgt, "M_DirectionsForUseSection", "wSectionSortOrder" );
             //:SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle )
             olMLCATgt_SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle );
             RESULT = SetCursorNextEntity( lSLCAnal, "S_DirectionsForUseStatement", "" );
@@ -2355,8 +2719,25 @@ olMLCATgt_BuildDifferencesSLC( View     lMLCATgt,
             //:CREATE ENTITY lMLCATgt.ComparisonDifference
             RESULT = CreateEntity( lMLCATgt, "ComparisonDifference", zPOS_AFTER );
             //:lMLCATgt.ComparisonDifference.Title                = "...Directions " + szUsageType
+             {StringBuilder sb_szTempString_2;
+            if ( szTempString_2 == null )
+               sb_szTempString_2 = new StringBuilder( 32 );
+            else
+               sb_szTempString_2 = new StringBuilder( szTempString_2 );
+                        ZeidonStringCopy( sb_szTempString_2, 1, 0, "...Directions ", 1, 0, 255 );
+            szTempString_2 = sb_szTempString_2.toString( );}
+             {StringBuilder sb_szTempString_2;
+            if ( szTempString_2 == null )
+               sb_szTempString_2 = new StringBuilder( 32 );
+            else
+               sb_szTempString_2 = new StringBuilder( szTempString_2 );
+                        ZeidonStringConcat( sb_szTempString_2, 1, 0, szUsageType, 1, 0, 255 );
+            szTempString_2 = sb_szTempString_2.toString( );}
+            SetAttributeFromString( lMLCATgt, "ComparisonDifference", "Title", szTempString_2 );
             //:lMLCATgt.ComparisonDifference.TargetStatementValue = lSLCAnal.S_DirectionsUsage.Name
+            SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "TargetStatementValue", lSLCAnal, "S_DirectionsUsage", "Name" );
             //:lMLCATgt.ComparisonDifference.SortSectionNumber    = lMLCATgt.M_DirectionsForUseSection.wSectionSortOrder
+            SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SortSectionNumber", lMLCATgt, "M_DirectionsForUseSection", "wSectionSortOrder" );
             //:SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle )
             olMLCATgt_SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle );
             RESULT = SetCursorNextEntity( lSLCAnal, "S_DirectionsUsage", "S_DirectionsForUseSection" );
@@ -2381,6 +2762,13 @@ olMLCATgt_BuildDifferencesSLC( View     lMLCATgt,
 
       //:// Set up sort value so entries in this Operaiton sort with entries created earlier.
       //:szSortTitle = "5Marketing: " //+ lSLCAnal.M_MarketingSection.Title
+       {StringBuilder sb_szSortTitle;
+      if ( szSortTitle == null )
+         sb_szSortTitle = new StringBuilder( 32 );
+      else
+         sb_szSortTitle = new StringBuilder( szSortTitle );
+            ZeidonStringCopy( sb_szSortTitle, 1, 0, "5Marketing: ", 1, 0, 51 );
+      szSortTitle = sb_szSortTitle.toString( );}
 
       //:// Follow SLC Section to related MLC and then to new MLC.
       //:SET CURSOR FIRST lMLCASrc.M_MarketingSection WHERE lMLCASrc.M_MarketingSection.ID = lSLCAnal.M_MarketingSection.ID
@@ -2404,9 +2792,13 @@ olMLCATgt_BuildDifferencesSLC( View     lMLCATgt,
             //:CREATE ENTITY lMLCATgt.ComparisonDifference
             RESULT = CreateEntity( lMLCATgt, "ComparisonDifference", zPOS_AFTER );
             //:lMLCATgt.ComparisonDifference.Title                = "...Marketing Section Title"
+            SetAttributeFromString( lMLCATgt, "ComparisonDifference", "Title", "...Marketing Section Title" );
             //:lMLCATgt.ComparisonDifference.TargetStatementValue = lMLCATgt.M_MarketingSection.Title
+            SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "TargetStatementValue", lMLCATgt, "M_MarketingSection", "Title" );
             //:lMLCATgt.ComparisonDifference.SourceStatementValue = lSLCAnal.S_MarketingSection.Title
+            SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SourceStatementValue", lSLCAnal, "S_MarketingSection", "Title" );
             //:lMLCATgt.ComparisonDifference.SortSectionNumber    = lMLCATgt.M_MarketingSection.wSectionSortOrder
+            SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SortSectionNumber", lMLCATgt, "M_MarketingSection", "wSectionSortOrder" );
             //:SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle )
             olMLCATgt_SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle );
          } 
@@ -2437,9 +2829,13 @@ olMLCATgt_BuildDifferencesSLC( View     lMLCATgt,
                   //:CREATE ENTITY lMLCATgt.ComparisonDifference
                   RESULT = CreateEntity( lMLCATgt, "ComparisonDifference", zPOS_AFTER );
                   //:lMLCATgt.ComparisonDifference.Title                = "...Marketing Statement Text"
+                  SetAttributeFromString( lMLCATgt, "ComparisonDifference", "Title", "...Marketing Statement Text" );
                   //:lMLCATgt.ComparisonDifference.TargetStatementValue = lMLCATgt.M_MarketingStatement.Text
+                  SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "TargetStatementValue", lMLCATgt, "M_MarketingStatement", "Text" );
                   //:lMLCATgt.ComparisonDifference.SourceStatementValue = lSLCAnal.S_MarketingStatement.Text
+                  SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SourceStatementValue", lSLCAnal, "S_MarketingStatement", "Text" );
                   //:lMLCATgt.ComparisonDifference.SortSectionNumber    = lMLCATgt.M_MarketingSection.wSectionSortOrder
+                  SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SortSectionNumber", lMLCATgt, "M_MarketingSection", "wSectionSortOrder" );
                   //:SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle )
                   olMLCATgt_SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle );
                } 
@@ -2453,8 +2849,11 @@ olMLCATgt_BuildDifferencesSLC( View     lMLCATgt,
                //:CREATE ENTITY lMLCATgt.ComparisonDifference
                RESULT = CreateEntity( lMLCATgt, "ComparisonDifference", zPOS_AFTER );
                //:lMLCATgt.ComparisonDifference.Title                = "...Marketing Statement Text"
+               SetAttributeFromString( lMLCATgt, "ComparisonDifference", "Title", "...Marketing Statement Text" );
                //:lMLCATgt.ComparisonDifference.SourceStatementValue = lSLCAnal.S_MarketingStatement.Text
+               SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SourceStatementValue", lSLCAnal, "S_MarketingStatement", "Text" );
                //:lMLCATgt.ComparisonDifference.SortSectionNumber    = lMLCATgt.M_MarketingSection.wSectionSortOrder
+               SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SortSectionNumber", lMLCATgt, "M_MarketingSection", "wSectionSortOrder" );
                //:SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle )
                olMLCATgt_SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle );
             } 
@@ -2497,8 +2896,25 @@ olMLCATgt_BuildDifferencesSLC( View     lMLCATgt,
                //:CREATE ENTITY lMLCATgt.ComparisonDifference
                RESULT = CreateEntity( lMLCATgt, "ComparisonDifference", zPOS_AFTER );
                //:lMLCATgt.ComparisonDifference.Title                = "...Marketing " + szUsageType
+                {StringBuilder sb_szTempString_3;
+               if ( szTempString_3 == null )
+                  sb_szTempString_3 = new StringBuilder( 32 );
+               else
+                  sb_szTempString_3 = new StringBuilder( szTempString_3 );
+                              ZeidonStringCopy( sb_szTempString_3, 1, 0, "...Marketing ", 1, 0, 255 );
+               szTempString_3 = sb_szTempString_3.toString( );}
+                {StringBuilder sb_szTempString_3;
+               if ( szTempString_3 == null )
+                  sb_szTempString_3 = new StringBuilder( 32 );
+               else
+                  sb_szTempString_3 = new StringBuilder( szTempString_3 );
+                              ZeidonStringConcat( sb_szTempString_3, 1, 0, szUsageType, 1, 0, 255 );
+               szTempString_3 = sb_szTempString_3.toString( );}
+               SetAttributeFromString( lMLCATgt, "ComparisonDifference", "Title", szTempString_3 );
                //:lMLCATgt.ComparisonDifference.TargetStatementValue = lSLCAnal.S_MarketingUsage.Name
+               SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "TargetStatementValue", lSLCAnal, "S_MarketingUsage", "Name" );
                //:lMLCATgt.ComparisonDifference.SortSectionNumber    = lMLCATgt.M_MarketingSection.wSectionSortOrder
+               SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SortSectionNumber", lMLCATgt, "M_MarketingSection", "wSectionSortOrder" );
                //:SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle )
                olMLCATgt_SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle );
             } 
@@ -2516,8 +2932,11 @@ olMLCATgt_BuildDifferencesSLC( View     lMLCATgt,
          //:CREATE ENTITY lMLCATgt.ComparisonDifference
          RESULT = CreateEntity( lMLCATgt, "ComparisonDifference", zPOS_AFTER );
          //:lMLCATgt.ComparisonDifference.Title                = "...Marketing Section Title"
+         SetAttributeFromString( lMLCATgt, "ComparisonDifference", "Title", "...Marketing Section Title" );
          //:lMLCATgt.ComparisonDifference.SourceStatementValue = lSLCAnal.S_MarketingSection.Title
+         SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SourceStatementValue", lSLCAnal, "S_MarketingSection", "Title" );
          //:lMLCATgt.ComparisonDifference.SortSectionNumber    = lMLCATgt.M_MarketingSection.wSectionSortOrder
+         SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SortSectionNumber", lMLCATgt, "M_MarketingSection", "wSectionSortOrder" );
          //:SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle )
          olMLCATgt_SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle );
          //:FOR EACH lSLCAnal.S_MarketingStatement
@@ -2527,8 +2946,11 @@ olMLCATgt_BuildDifferencesSLC( View     lMLCATgt,
             //:CREATE ENTITY lMLCATgt.ComparisonDifference
             RESULT = CreateEntity( lMLCATgt, "ComparisonDifference", zPOS_AFTER );
             //:lMLCATgt.ComparisonDifference.Title                = "...Marketing Statement Text"
+            SetAttributeFromString( lMLCATgt, "ComparisonDifference", "Title", "...Marketing Statement Text" );
             //:lMLCATgt.ComparisonDifference.SourceStatementValue = lSLCAnal.S_MarketingStatement.Text
+            SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SourceStatementValue", lSLCAnal, "S_MarketingStatement", "Text" );
             //:lMLCATgt.ComparisonDifference.SortSectionNumber    = lMLCATgt.M_MarketingSection.wSectionSortOrder
+            SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SortSectionNumber", lMLCATgt, "M_MarketingSection", "wSectionSortOrder" );
             //:SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle )
             olMLCATgt_SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle );
             RESULT = SetCursorNextEntity( lSLCAnal, "S_MarketingStatement", "" );
@@ -2550,8 +2972,25 @@ olMLCATgt_BuildDifferencesSLC( View     lMLCATgt,
             //:CREATE ENTITY lMLCATgt.ComparisonDifference
             RESULT = CreateEntity( lMLCATgt, "ComparisonDifference", zPOS_AFTER );
             //:lMLCATgt.ComparisonDifference.Title                = "...Marketing " + szUsageType
+             {StringBuilder sb_szTempString_4;
+            if ( szTempString_4 == null )
+               sb_szTempString_4 = new StringBuilder( 32 );
+            else
+               sb_szTempString_4 = new StringBuilder( szTempString_4 );
+                        ZeidonStringCopy( sb_szTempString_4, 1, 0, "...Marketing ", 1, 0, 255 );
+            szTempString_4 = sb_szTempString_4.toString( );}
+             {StringBuilder sb_szTempString_4;
+            if ( szTempString_4 == null )
+               sb_szTempString_4 = new StringBuilder( 32 );
+            else
+               sb_szTempString_4 = new StringBuilder( szTempString_4 );
+                        ZeidonStringConcat( sb_szTempString_4, 1, 0, szUsageType, 1, 0, 255 );
+            szTempString_4 = sb_szTempString_4.toString( );}
+            SetAttributeFromString( lMLCATgt, "ComparisonDifference", "Title", szTempString_4 );
             //:lMLCATgt.ComparisonDifference.TargetStatementValue = lSLCAnal.S_MarketingUsage.Name
+            SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "TargetStatementValue", lSLCAnal, "S_MarketingUsage", "Name" );
             //:lMLCATgt.ComparisonDifference.SortSectionNumber    = lMLCATgt.M_MarketingSection.wSectionSortOrder
+            SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SortSectionNumber", lMLCATgt, "M_MarketingSection", "wSectionSortOrder" );
             //:SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle )
             olMLCATgt_SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle );
             RESULT = SetCursorNextEntity( lSLCAnal, "S_MarketingUsage", "" );
@@ -2576,6 +3015,13 @@ olMLCATgt_BuildDifferencesSLC( View     lMLCATgt,
 
       //:// Set up sort value so entries in this Operaiton sort with entries created earlier.
       //:szSortTitle = "6Human Hazard: " //+ lSLCAnal.M_HumanHazardSection.EPA_SignalWord
+       {StringBuilder sb_szSortTitle;
+      if ( szSortTitle == null )
+         sb_szSortTitle = new StringBuilder( 32 );
+      else
+         sb_szSortTitle = new StringBuilder( szSortTitle );
+            ZeidonStringCopy( sb_szSortTitle, 1, 0, "6Human Hazard: ", 1, 0, 51 );
+      szSortTitle = sb_szSortTitle.toString( );}
 
       //:// Follow SLC Section to related MLC and then to new MLC.
       //:SET CURSOR FIRST lMLCASrc.M_HumanHazardSection WHERE lMLCASrc.M_HumanHazardSection.ID = lSLCAnal.M_HumanHazardSection.ID
@@ -2599,9 +3045,13 @@ olMLCATgt_BuildDifferencesSLC( View     lMLCATgt,
             //:CREATE ENTITY lMLCATgt.ComparisonDifference
             RESULT = CreateEntity( lMLCATgt, "ComparisonDifference", zPOS_AFTER );
             //:lMLCATgt.ComparisonDifference.Title                = "...Hazards EPA Signal Word"
+            SetAttributeFromString( lMLCATgt, "ComparisonDifference", "Title", "...Hazards EPA Signal Word" );
             //:lMLCATgt.ComparisonDifference.TargetStatementValue = lMLCATgt.M_HumanHazardSection.EPA_SignalWord
+            SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "TargetStatementValue", lMLCATgt, "M_HumanHazardSection", "EPA_SignalWord" );
             //:lMLCATgt.ComparisonDifference.SourceStatementValue = lSLCAnal.S_HumanHazardSection.EPA_SignalWord
+            SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SourceStatementValue", lSLCAnal, "S_HumanHazardSection", "EPA_SignalWord" );
             //:lMLCATgt.ComparisonDifference.SortSectionNumber    = lMLCATgt.M_HumanHazardSection.wSectionSortOrder
+            SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SortSectionNumber", lMLCATgt, "M_HumanHazardSection", "wSectionSortOrder" );
             //:SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle )
             olMLCATgt_SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle );
          } 
@@ -2614,9 +3064,13 @@ olMLCATgt_BuildDifferencesSLC( View     lMLCATgt,
             //:CREATE ENTITY lMLCATgt.ComparisonDifference
             RESULT = CreateEntity( lMLCATgt, "ComparisonDifference", zPOS_AFTER );
             //:lMLCATgt.ComparisonDifference.Title                = "...Hazards EPA Warning"
+            SetAttributeFromString( lMLCATgt, "ComparisonDifference", "Title", "...Hazards EPA Warning" );
             //:lMLCATgt.ComparisonDifference.TargetStatementValue = lMLCATgt.M_HumanHazardSection.EPA_ChildHazardWarning
+            SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "TargetStatementValue", lMLCATgt, "M_HumanHazardSection", "EPA_ChildHazardWarning" );
             //:lMLCATgt.ComparisonDifference.SourceStatementValue = lSLCAnal.S_HumanHazardSection.EPA_ChildHazardWarning
+            SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SourceStatementValue", lSLCAnal, "S_HumanHazardSection", "EPA_ChildHazardWarning" );
             //:lMLCATgt.ComparisonDifference.SortSectionNumber    = lMLCATgt.M_HumanHazardSection.wSectionSortOrder
+            SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SortSectionNumber", lMLCATgt, "M_HumanHazardSection", "wSectionSortOrder" );
             //:SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle )
             olMLCATgt_SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle );
          } 
@@ -2630,18 +3084,26 @@ olMLCATgt_BuildDifferencesSLC( View     lMLCATgt,
          //:CREATE ENTITY lMLCATgt.ComparisonDifference
          RESULT = CreateEntity( lMLCATgt, "ComparisonDifference", zPOS_AFTER );
          //:lMLCATgt.ComparisonDifference.Title                = "...Hazards EPA Signal Word"
+         SetAttributeFromString( lMLCATgt, "ComparisonDifference", "Title", "...Hazards EPA Signal Word" );
          //:lMLCATgt.ComparisonDifference.TargetStatementValue = lMLCATgt.M_HumanHazardSection.EPA_SignalWord
+         SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "TargetStatementValue", lMLCATgt, "M_HumanHazardSection", "EPA_SignalWord" );
          //:lMLCATgt.ComparisonDifference.SourceStatementValue = lSLCAnal.S_HumanHazardSection.EPA_SignalWord
+         SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SourceStatementValue", lSLCAnal, "S_HumanHazardSection", "EPA_SignalWord" );
          //:lMLCATgt.ComparisonDifference.SortSectionNumber    = lMLCATgt.M_HumanHazardSection.wSectionSortOrder
+         SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SortSectionNumber", lMLCATgt, "M_HumanHazardSection", "wSectionSortOrder" );
          //:SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle )
          olMLCATgt_SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle );
          //:// Section Title has changed
          //:CREATE ENTITY lMLCATgt.ComparisonDifference
          RESULT = CreateEntity( lMLCATgt, "ComparisonDifference", zPOS_AFTER );
          //:lMLCATgt.ComparisonDifference.Title                = "...Hazards EPA Warning"
+         SetAttributeFromString( lMLCATgt, "ComparisonDifference", "Title", "...Hazards EPA Warning" );
          //:lMLCATgt.ComparisonDifference.TargetStatementValue = lMLCATgt.M_HumanHazardSection.EPA_ChildHazardWarning
+         SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "TargetStatementValue", lMLCATgt, "M_HumanHazardSection", "EPA_ChildHazardWarning" );
          //:lMLCATgt.ComparisonDifference.SourceStatementValue = lSLCAnal.S_HumanHazardSection.EPA_ChildHazardWarning
+         SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SourceStatementValue", lSLCAnal, "S_HumanHazardSection", "EPA_ChildHazardWarning" );
          //:lMLCATgt.ComparisonDifference.SortSectionNumber    = lMLCATgt.M_HumanHazardSection.wSectionSortOrder
+         SetAttributeFromAttribute( lMLCATgt, "ComparisonDifference", "SortSectionNumber", lMLCATgt, "M_HumanHazardSection", "wSectionSortOrder" );
          //:SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle )
          olMLCATgt_SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle );
       } 
@@ -2662,20 +3124,23 @@ olMLCATgt_BuildDifferencesSLC( View     lMLCATgt,
 
 
 //:TRANSFORMATION OPERATION
-//:SetDifferencesSortVs( VIEW lMLCATgt BASED ON LOD lMLCATgt,
-//:                      INTEGER lSortNbr,
-//:                      STRING ( 20 ) szTitle )
 public int 
 olMLCATgt_SetDifferencesSortVs( View     lMLCATgt,
                                 int      lSortNbr,
                                 String   szTitle )
 {
 
+   //:SetDifferencesSortVs( VIEW lMLCATgt BASED ON LOD lMLCATgt,
+   //:                   INTEGER lSortNbr,
+   //:                   STRING ( 20 ) szTitle )
 
    //:// Set values that are used for sorting Difference entries by sequence number within Section Title.
    //:lSortNbr = lSortNbr + 1
+   lSortNbr = lSortNbr + 1;
    //:lMLCATgt.ComparisonDifference.SortEntryNumber  = lSortNbr
+   SetAttributeFromInteger( lMLCATgt, "ComparisonDifference", "SortEntryNumber", lSortNbr );
    //:lMLCATgt.ComparisonDifference.SortSectionTitle = szTitle
+   SetAttributeFromString( lMLCATgt, "ComparisonDifference", "SortSectionTitle", szTitle );
    return( 0 );
 // END
 } 

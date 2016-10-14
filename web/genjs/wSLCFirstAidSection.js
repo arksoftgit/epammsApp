@@ -1,4 +1,4 @@
-// wSLCFirstAidSection   Generate Timestamp: 20160620105928260
+// wSLCFirstAidSection   Generate Timestamp: 20161010115316092
 
 var isWindowClosing = true;
 var timerID = null;

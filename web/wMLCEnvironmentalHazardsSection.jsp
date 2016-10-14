@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCEnvironmentalHazardsSection   Generate Timestamp: 20160914172945346 --%>
+<%-- wMLCEnvironmentalHazardsSection   Generate Timestamp: 20161010122943448 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -61,7 +61,7 @@ public int DoInputMapping( HttpServletRequest request,
    if ( VmlOperation.isValid( mMasLC ) )
    {
       // EditBox: EnvironmentalHazardsName
-      nRC = mMasLC.cursor( "M_GeneralSubsection" ).checkExistenceOfEntity( ).toInt();
+      nRC = mMasLC.cursor( "M_GeneralSubSection" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 ) // CursorResult.SET
       {
          strMapValue = request.getParameter( "EnvironmentalHazardsName" );
@@ -70,7 +70,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "EnvironmentalHazardsName", "", strMapValue );
             else
-               mMasLC.cursor( "M_GeneralSubsection" ).getAttribute( "Name" ).setValue( strMapValue, "" );
+               mMasLC.cursor( "M_GeneralSubSection" ).getAttribute( "Name" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -80,7 +80,7 @@ public int DoInputMapping( HttpServletRequest request,
       }
 
       // EditBox: EnvironmentalHazardsTitle
-      nRC = mMasLC.cursor( "M_GeneralSubsection" ).checkExistenceOfEntity( ).toInt();
+      nRC = mMasLC.cursor( "M_GeneralSubSection" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 ) // CursorResult.SET
       {
          strMapValue = request.getParameter( "EnvironmentalHazardsTitle" );
@@ -89,7 +89,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "EnvironmentalHazardsTitle", "", strMapValue );
             else
-               mMasLC.cursor( "M_GeneralSubsection" ).getAttribute( "Title" ).setValue( strMapValue, "" );
+               mMasLC.cursor( "M_GeneralSubSection" ).getAttribute( "Title" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -99,7 +99,7 @@ public int DoInputMapping( HttpServletRequest request,
       }
 
       // EditBox: EnvironmentalHazardReviewerNote
-      nRC = mMasLC.cursor( "M_GeneralSubsection" ).checkExistenceOfEntity( ).toInt();
+      nRC = mMasLC.cursor( "M_GeneralSubSection" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 ) // CursorResult.SET
       {
          strMapValue = request.getParameter( "EnvironmentalHazardReviewerNote" );
@@ -108,7 +108,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "EnvironmentalHazardReviewerNote", "", strMapValue );
             else
-               mMasLC.cursor( "M_GeneralSubsection" ).getAttribute( "ReviewerNote" ).setValue( strMapValue, "" );
+               mMasLC.cursor( "M_GeneralSubSection" ).getAttribute( "ReviewerNote" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -118,7 +118,7 @@ public int DoInputMapping( HttpServletRequest request,
       }
 
       // ComboBox: ComboBox1
-      nRC = mMasLC.cursor( "M_GeneralSubsection" ).checkExistenceOfEntity( ).toInt();
+      nRC = mMasLC.cursor( "M_GeneralSubSection" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
          strMapValue = request.getParameter( "hComboBox1" );
@@ -127,7 +127,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "ComboBox1", "", strMapValue );
             else
-               mMasLC.cursor( "M_GeneralSubsection" ).getAttribute( "ContainerVolumeEnvironmentHazard" ).setValue( strMapValue, "" );
+               mMasLC.cursor( "M_GeneralSubSection" ).getAttribute( "ContainerVolumeEnvironmentHazard" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -290,7 +290,7 @@ if ( strActionToProcess != null )
       try
       {
          View mMasLCAuto = task.getViewByName( "mMasLC" );
-         EntityCursor cursor = mMasLCAuto.cursor( "M_GeneralSubsection" );
+         EntityCursor cursor = mMasLCAuto.cursor( "M_GeneralSubSection" );
             if ( cursor.isNull() )
                nRC = 0;
             else
@@ -326,7 +326,7 @@ if ( strActionToProcess != null )
       try
       {
          View mMasLCAuto = task.getViewByName( "mMasLC" );
-         EntityCursor cursor = mMasLCAuto.cursor( "M_GeneralSubsection" );
+         EntityCursor cursor = mMasLCAuto.cursor( "M_GeneralSubSection" );
             if ( cursor.isNull() )
                nRC = 0;
             else
@@ -867,12 +867,12 @@ else
          task.log( ).debug( "Invalid View: " + "EnvironmentalHazardsName" );
       else
       {
-         nRC = mMasLC.cursor( "M_GeneralSubsection" ).checkExistenceOfEntity( ).toInt();
+         nRC = mMasLC.cursor( "M_GeneralSubSection" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
             try
             {
-               strErrorMapValue = mMasLC.cursor( "M_GeneralSubsection" ).getAttribute( "Name" ).getString( "" );
+               strErrorMapValue = mMasLC.cursor( "M_GeneralSubSection" ).getAttribute( "Name" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -882,10 +882,10 @@ else
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
 
-            task.log( ).debug( "M_GeneralSubsection.Name: " + strErrorMapValue );
+            task.log( ).debug( "M_GeneralSubSection.Name: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist for EnvironmentalHazardsName: " + "mMasLC.M_GeneralSubsection" );
+            task.log( ).debug( "Entity does not exist for EnvironmentalHazardsName: " + "mMasLC.M_GeneralSubSection" );
       }
    }
 %>
@@ -918,12 +918,12 @@ else
          task.log( ).debug( "Invalid View: " + "EnvironmentalHazardsTitle" );
       else
       {
-         nRC = mMasLC.cursor( "M_GeneralSubsection" ).checkExistenceOfEntity( ).toInt();
+         nRC = mMasLC.cursor( "M_GeneralSubSection" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
             try
             {
-               strErrorMapValue = mMasLC.cursor( "M_GeneralSubsection" ).getAttribute( "Title" ).getString( "" );
+               strErrorMapValue = mMasLC.cursor( "M_GeneralSubSection" ).getAttribute( "Title" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -933,10 +933,10 @@ else
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
 
-            task.log( ).debug( "M_GeneralSubsection.Title: " + strErrorMapValue );
+            task.log( ).debug( "M_GeneralSubSection.Title: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist for EnvironmentalHazardsTitle: " + "mMasLC.M_GeneralSubsection" );
+            task.log( ).debug( "Entity does not exist for EnvironmentalHazardsTitle: " + "mMasLC.M_GeneralSubSection" );
       }
    }
 %>
@@ -969,12 +969,12 @@ else
          task.log( ).debug( "Invalid View: " + "EnvironmentalHazardReviewerNote" );
       else
       {
-         nRC = mMasLC.cursor( "M_GeneralSubsection" ).checkExistenceOfEntity( ).toInt();
+         nRC = mMasLC.cursor( "M_GeneralSubSection" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
             try
             {
-               strErrorMapValue = mMasLC.cursor( "M_GeneralSubsection" ).getAttribute( "ReviewerNote" ).getString( "" );
+               strErrorMapValue = mMasLC.cursor( "M_GeneralSubSection" ).getAttribute( "ReviewerNote" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -984,10 +984,10 @@ else
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
 
-            task.log( ).debug( "M_GeneralSubsection.ReviewerNote: " + strErrorMapValue );
+            task.log( ).debug( "M_GeneralSubSection.ReviewerNote: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist for EnvironmentalHazardReviewerNote: " + "mMasLC.M_GeneralSubsection" );
+            task.log( ).debug( "Entity does not exist for EnvironmentalHazardReviewerNote: " + "mMasLC.M_GeneralSubSection" );
       }
    }
 %>
@@ -1049,12 +1049,12 @@ else
    mMasLC = task.getViewByName( "mMasLC" );
    if ( VmlOperation.isValid( mMasLC ) )
    {
-      List<TableEntry> list = JspWebUtils.getTableDomainValues( mMasLC , "M_GeneralSubsection", "ContainerVolumeEnvironmentHazard", "" );
+      List<TableEntry> list = JspWebUtils.getTableDomainValues( mMasLC , "M_GeneralSubSection", "ContainerVolumeEnvironmentHazard", "" );
 
-      nRC = mMasLC.cursor( "M_GeneralSubsection" ).checkExistenceOfEntity( ).toInt();
+      nRC = mMasLC.cursor( "M_GeneralSubSection" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
-         strComboCurrentValue = mMasLC.cursor( "M_GeneralSubsection" ).getAttribute( "ContainerVolumeEnvironmentHazard" ).getString( "" );
+         strComboCurrentValue = mMasLC.cursor( "M_GeneralSubSection" ).getAttribute( "ContainerVolumeEnvironmentHazard" ).getString( "" );
          if ( strComboCurrentValue == null )
             strComboCurrentValue = "";
       }

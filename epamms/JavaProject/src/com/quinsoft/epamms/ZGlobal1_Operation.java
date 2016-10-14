@@ -4711,7 +4711,7 @@ public class ZGlobal1_Operation extends VmlOperation
    }
 
    public int
-   GenerateKeywordTextIntoString( View mMasLC,
+   GenerateKeywordTextIntoString( View v,
                                   StringBuilder sbTextToModify,
                                   String szKeywordEntityName,
                                   String szKeywordTextEntityName,
@@ -4736,9 +4736,9 @@ public class ZGlobal1_Operation extends VmlOperation
       sbTarget.setLength( 0 );
       openBracePos = szOrigSource.indexOf( "{{", sourcePos );
       // Don't do the hasAny check since there may be only global keywords
-      if ( openBracePos >= 0 ) { // && mMasLC.cursor( szKeywordEntityName ).hasAny() ) {  // looks like it's worth processing
-         View mMasLC2 = mMasLC.newView( );
-         mMasLC2.copyCursors( mMasLC );
+      if ( openBracePos >= 0 ) { // && v.cursor( szKeywordEntityName ).hasAny() ) {  // looks like it's worth processing
+         View v2 = v.newView( );
+         v2.copyCursors( v );
 
          while ( openBracePos >= 0 ) {
             // Get to the innermost set of "{{"
@@ -4756,10 +4756,10 @@ public class ZGlobal1_Operation extends VmlOperation
                sourcePos = closeBracePos + 2; // point to the next static text portion in the original source string
                count = 0;
 
-               CursorResult cr = mMasLC2.cursor( szKeywordEntityName ).setFirst( "Name", szKeywordName );
+               CursorResult cr = v2.cursor( szKeywordEntityName ).setFirst( "Name", szKeywordName );
                if ( cr.isSet() ) {
                   // Type values: All optional, Only one allowed, Required (at least one)
-                  String szType = mMasLC2.cursor( szKeywordEntityName ).getAttribute( "Type" ).getString();
+                  String szType = v2.cursor( szKeywordEntityName ).getAttribute( "Type" ).getString();
                   if ( szType == "" ) {
                      chKeywordType = 'A';
                   } else {
@@ -4771,10 +4771,10 @@ public class ZGlobal1_Operation extends VmlOperation
                   while ( cr.isSet() ) {
                      // There are Text entries for the Keyword specified, so loop through all.
                      count++;
-                     szKeywordValue = mMasLC2.cursor( szKeywordTextEntityName ).getAttribute( "Text" ).getString();
+                     szKeywordValue = v2.cursor( szKeywordTextEntityName ).getAttribute( "Text" ).getString();
                      if ( count > 1 ) {
                         // If szSeparatorCharacters are ", ", substitute " and " for the separator characters before the last Usage entry.
-                        if ( mMasLC2.cursor( szKeywordTextEntityName ).hasNext() ) {
+                        if ( v2.cursor( szKeywordTextEntityName ).hasNext() ) {
                            sbTarget.append( szSeparatorCharacters );
                         } else {
                            if ( chKeywordType == 'O' || chKeywordType == 'X' ) {
@@ -4791,7 +4791,7 @@ public class ZGlobal1_Operation extends VmlOperation
                      } else {
                         sbTarget.append( "<b>{" + szKeywordValue + "}</b>" );
                      }
-                     cr = mMasLC2.cursor( szKeywordTextEntityName ).setNext( );
+                     cr = v2.cursor( szKeywordTextEntityName ).setNext( );
                   }
                   if ( chKeywordType == 'R' || chKeywordType == 'X' ) {
                      sbTarget.append( ']' );
@@ -4803,11 +4803,11 @@ public class ZGlobal1_Operation extends VmlOperation
                   // notify user that the keyword is not found
                   sbTarget.append( "{{'" + szKeywordName + "' not found}} " );
                   TraceLineS( "### Keyword NOT Found: "+ szKeywordName + "   in Statement: ", szOrigSource );
-                  cr = mMasLC2.cursor( szKeywordEntityName ).setFirst();
+                  cr = v2.cursor( szKeywordEntityName ).setFirst();
                   while ( cr.isSet() ) {
-                     szKeywordValue = mMasLC2.cursor( szKeywordEntityName ).getAttribute( "Name" ).getString();
+                     szKeywordValue = v2.cursor( szKeywordEntityName ).getAttribute( "Name" ).getString();
                      TraceLineS( "### Current Keyword : ", szKeywordValue );
-                     cr = mMasLC2.cursor( szKeywordEntityName ).setNext();
+                     cr = v2.cursor( szKeywordEntityName ).setNext();
                   }
                   break;
                }
@@ -4831,7 +4831,7 @@ public class ZGlobal1_Operation extends VmlOperation
                openBracePos = szOrigSource.indexOf( "{{", sourcePos );
             }
          }
-         mMasLC2.drop();
+         v2.drop();
       }
       if ( changed ) {
          sbTextToModify.setLength( 0 );
@@ -4963,7 +4963,7 @@ public class ZGlobal1_Operation extends VmlOperation
    /////////////////////////////////////////////////////////////////////////////
 
    public int
-   InsertOptionalSubUsages( View     mMasLC,
+   InsertOptionalSubUsages( View     v,
                             StringBuilder sbTextToModify,
                             String   stringEntity,
                             int      bInsertBraces )
@@ -4992,13 +4992,13 @@ public class ZGlobal1_Operation extends VmlOperation
       // Parse the double braces out of the string of the form {{}}.
       openBracePos = szOrigSource.indexOf( "{{", 0 );
       closeBracePos = szOrigSource.indexOf( "}}", openBracePos + 2 );
-      if ( openBracePos >= 0 && closeBracePos >= 0 && (nRC = mMasLC.cursor( stringEntity ).setFirst().toInt()) >= zCURSOR_SET ) {
+      if ( openBracePos >= 0 && closeBracePos >= 0 && (nRC = v.cursor( stringEntity ).setFirst().toInt()) >= zCURSOR_SET ) {
          // Copy static text up to the brace to the target.
          sbTarget.append( szOrigSource.substring( 0, openBracePos ) );
 
          // Copy the SubUsage values into the text - surounded by single braces to signify the values are optional.
          while ( nRC >= zCURSOR_SET ) {
-            sbTarget.append( szOpenBrace + mMasLC.cursor( stringEntity ).getAttribute( "Name" ).getString() );
+            sbTarget.append( szOpenBrace + v.cursor( stringEntity ).getAttribute( "Name" ).getString() );
             if ( bInsertBraces != 0 )
                sbTarget.append( "}" );
             if ( changed == false ) {
@@ -5008,7 +5008,7 @@ public class ZGlobal1_Operation extends VmlOperation
                else
                   szOpenBrace = ", ";
             }
-            nRC = mMasLC.cursor( stringEntity ).setNext().toInt();
+            nRC = v.cursor( stringEntity ).setNext().toInt();
          }
          sbTarget.append( szOrigSource.substring( closeBracePos + 2 ) ); // append remaining static text in the original source string
       }
@@ -5082,7 +5082,7 @@ public class ZGlobal1_Operation extends VmlOperation
       // 123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890  << lth = 205
       // This product [{when used as directed} {can be used} {is formulated to [{disinfect} {clean} {sanitize} {deodorize}] {is formulated for use}] on {washable} hard, non-porous surfaces such as: (insert surface)
 
-      private String buildKeywords( View mMasLC, String keywordEntity, String keywordTextEntity, int level ) {
+      private String buildKeywords( View v, String keywordEntity, String keywordTextEntity, int level ) {
 
          String statement = "";
          String keyword;
@@ -5095,13 +5095,13 @@ public class ZGlobal1_Operation extends VmlOperation
                   keywordValue = tnode.text;
                   keyword = ScrunchCamelCase( keywordValue );
                   statement += keyword;
-                  mMasLC.cursor( keywordTextEntity ).createEntity();
-                  mMasLC.cursor( keywordTextEntity ).getAttribute( "Text" ).setValue( keywordValue );
+                  v.cursor( keywordTextEntity ).createEntity();
+                  v.cursor( keywordTextEntity ).getAttribute( "Text" ).setValue( keywordValue );
                } else {
                   statement += tnode.text;
                }
             } else if ( type == tnode.type ) { // drop down a level
-               statement += tnode.buildKeywords( mMasLC, keywordEntity, keywordTextEntity, level + 1 );
+               statement += tnode.buildKeywords( v, keywordEntity, keywordTextEntity, level + 1 );
             } else if ( type == '[' ) {
             // if ( tnode.children.size() > 0 ) {  // should always be true
                keywordValue = "";
@@ -5111,11 +5111,11 @@ public class ZGlobal1_Operation extends VmlOperation
                      keywordValue += tchild.text;
                      keyword += ScrunchCamelCase( keywordValue );
                   } else {
-                     keywordValue += "{{" + ScrunchCamelCase( tchild.buildKeywords( mMasLC, keywordEntity, keywordTextEntity, level + 1 ) ) + "}}";
+                     keywordValue += "{{" + ScrunchCamelCase( tchild.buildKeywords( v, keywordEntity, keywordTextEntity, level + 1 ) ) + "}}";
                   }
                }
-               mMasLC.cursor( keywordTextEntity ).createEntity();  // should happen with type = '[' and tnode.type = '{'
-               mMasLC.cursor( keywordTextEntity ).getAttribute( "Text" ).setValue( keywordValue );
+               v.cursor( keywordTextEntity ).createEntity();  // should happen with type = '[' and tnode.type = '{'
+               v.cursor( keywordTextEntity ).getAttribute( "Text" ).setValue( keywordValue );
                statement += keyword;
             }
          }
@@ -5125,7 +5125,7 @@ public class ZGlobal1_Operation extends VmlOperation
       }
 
       // This product [{when used as directed} {can be used} {is formulated to [{disinfect} {clean} {sanitize} {deodorize}] {is formulated for use}] on {washable} hard, non-porous surfaces such as: (insert surface)
-      public String TraverseGoGetIt( View mMasLC, String entity, String attribute, String keywordEntity, String keywordTextEntity, int level ) {
+      public String TraverseGoGetIt( View v, String entity, String attribute, String keywordEntity, String keywordTextEntity, int level ) {
 
          String statement = "";
          String keyword;
@@ -5140,14 +5140,14 @@ public class ZGlobal1_Operation extends VmlOperation
                }
             } else {
                if ( level % 2 == 0 ) {
-                  mMasLC.cursor( keywordEntity ).createEntity();
-                  mMasLC.cursor( keywordEntity ).getAttribute( "Type" ).setValue( tnode.type == '[' ? "R" : "A" );
-                  keywordValue = tnode.buildKeywords( mMasLC, keywordEntity, keywordTextEntity, 0 );
+                  v.cursor( keywordEntity ).createEntity();
+                  v.cursor( keywordEntity ).getAttribute( "Type" ).setValue( tnode.type == '[' ? "R" : "A" );
+                  keywordValue = tnode.buildKeywords( v, keywordEntity, keywordTextEntity, 0 );
                   keyword = ScrunchCamelCase( keywordValue );
-                  mMasLC.cursor( keywordEntity ).getAttribute( "Name" ).setValue( keyword );
+                  v.cursor( keywordEntity ).getAttribute( "Name" ).setValue( keyword );
                   statement += "{{" + keyword + "}}";
                }
-               tnode.TraverseGoGetIt( mMasLC, entity, attribute, keywordEntity, keywordTextEntity, level + 1 );
+               tnode.TraverseGoGetIt( v, entity, attribute, keywordEntity, keywordTextEntity, level + 1 );
             }
          }
 
@@ -5222,7 +5222,7 @@ public class ZGlobal1_Operation extends VmlOperation
    }
    
    public int
-   ParseStatementForKeywords( View     mMasLC,
+   ParseStatementForKeywords( View     v,
                               String   entity,
                               String   attribute,
                               String   keywordEntity,
@@ -5236,20 +5236,20 @@ public class ZGlobal1_Operation extends VmlOperation
       char openSemaphore = keywordSemaphore.charAt( 0 );
       char closeSemaphore = keywordSemaphore.charAt( 1 );
 
-      Object value = mMasLC.cursor( entity ).getAttribute( attribute ).getValue();
+      Object value = v.cursor( entity ).getAttribute( attribute ).getValue();
       if ( value == null )
          return -1;
 
-      mMasLC = ((zVIEW) mMasLC).getView( );
+      v = ((zVIEW) v).getView( );
       String statement = value.toString();
                 // 1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123  << lth = 133
    // statement = "This product [{when used as directed} {can be used} {is formulated to [{disinfect} {clean} {sanitize} {deodorize}]} {is formulated for use}] on {washable} hard, non-porous surfaces such as: (insert surface)";
       TreeNode root = new TreeNode( 'T', '\0', "", 0, statement.length() );
       int rc = ParseRecursiveKeywords( root, statement, 0, openSemaphore, closeSemaphore );
       if ( rc >= 0 ) {
-         statement = root.TraverseGoGetIt( mMasLC, entity, attribute, keywordEntity, keywordTextEntity, 0 );
-         mMasLC.cursor( entity ).getAttribute( attribute ).setValue( statement );
-      // mMasLC.cursor( entity ).logEntity( true );
+         statement = root.TraverseGoGetIt( v, entity, attribute, keywordEntity, keywordTextEntity, 0 );
+         v.cursor( entity ).getAttribute( attribute ).setValue( statement );
+      // v.cursor( entity ).logEntity( true );
          return 0;
       }
 

@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCEnvironmentalHazards   Generate Timestamp: 20160914154444661 --%>
+<%-- wMLCEnvironmentalHazards   Generate Timestamp: 20161010122948577 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -67,14 +67,14 @@ public int DoInputMapping( HttpServletRequest request,
       // grids on the same window with the same view we do not mess up the 
       // entity positions. 
       vGridTmp = mMasLC.newView( );
-      csrRC = vGridTmp.cursor( "M_GeneralSubsection" ).setFirst(  );
+      csrRC = vGridTmp.cursor( "M_GeneralSubSection" ).setFirst(  );
       while ( csrRC.isSet() )
       {
-         lEntityKey = vGridTmp.cursor( "M_GeneralSubsection" ).getEntityKey( );
+         lEntityKey = vGridTmp.cursor( "M_GeneralSubSection" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
          iTableRowCnt++;
 
-         csrRC = vGridTmp.cursor( "M_GeneralSubsection" ).setNextContinue( );
+         csrRC = vGridTmp.cursor( "M_GeneralSubSection" ).setNextContinue( );
       }
 
       vGridTmp.drop( );
@@ -216,14 +216,14 @@ if ( strActionToProcess != null )
       if ( VmlOperation.isValid( mMasLC ) )
       {
          lEKey = java.lang.Long.parseLong( strEntityKey );
-         csrRC = mMasLC.cursor( "M_GeneralSubsection" ).setByEntityKey( lEKey );
+         csrRC = mMasLC.cursor( "M_GeneralSubSection" ).setByEntityKey( lEKey );
          if ( !csrRC.isSet() )
          {
             boolean bFound = false;
-            csrRCk = mMasLC.cursor( "M_GeneralSubsection" ).setFirst( );
+            csrRCk = mMasLC.cursor( "M_GeneralSubSection" ).setFirst( );
             while ( csrRCk.isSet() && !bFound )
             {
-               lEKey = mMasLC.cursor( "M_GeneralSubsection" ).getEntityKey( );
+               lEKey = mMasLC.cursor( "M_GeneralSubSection" ).getEntityKey( );
                strKey = Long.toString( lEKey );
                if ( StringUtils.equals( strKey, strEntityKey ) )
                {
@@ -231,7 +231,7 @@ if ( strActionToProcess != null )
                   bFound = true;
                }
                else
-                  csrRCk = mMasLC.cursor( "M_GeneralSubsection" ).setNextContinue( );
+                  csrRCk = mMasLC.cursor( "M_GeneralSubSection" ).setNextContinue( );
             } // Grid
          }
       }
@@ -240,7 +240,7 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-         EntityCursor cursor = mMasLC.cursor( "M_GeneralSubsection" );
+         EntityCursor cursor = mMasLC.cursor( "M_GeneralSubSection" );
             if ( cursor.isNull() )
                nRC = 0;
             else
@@ -280,14 +280,14 @@ if ( strActionToProcess != null )
       if ( VmlOperation.isValid( mMasLC ) )
       {
          lEKey = java.lang.Long.parseLong( strEntityKey );
-         csrRC = mMasLC.cursor( "M_GeneralSubsection" ).setByEntityKey( lEKey );
+         csrRC = mMasLC.cursor( "M_GeneralSubSection" ).setByEntityKey( lEKey );
          if ( !csrRC.isSet() )
          {
             boolean bFound = false;
-            csrRCk = mMasLC.cursor( "M_GeneralSubsection" ).setFirst( );
+            csrRCk = mMasLC.cursor( "M_GeneralSubSection" ).setFirst( );
             while ( csrRCk.isSet() && !bFound )
             {
-               lEKey = mMasLC.cursor( "M_GeneralSubsection" ).getEntityKey( );
+               lEKey = mMasLC.cursor( "M_GeneralSubSection" ).getEntityKey( );
                strKey = Long.toString( lEKey );
                if ( StringUtils.equals( strKey, strEntityKey ) )
                {
@@ -295,7 +295,7 @@ if ( strActionToProcess != null )
                   bFound = true;
                }
                else
-                  csrRCk = mMasLC.cursor( "M_GeneralSubsection" ).setNextContinue( );
+                  csrRCk = mMasLC.cursor( "M_GeneralSubSection" ).setNextContinue( );
             } // Grid
          }
       }
@@ -304,7 +304,7 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-         EntityCursor cursor = mMasLC.cursor( "M_GeneralSubsection" );
+         EntityCursor cursor = mMasLC.cursor( "M_GeneralSubSection" );
          cursor.createTemporalEntity( );
 
       }
@@ -336,7 +336,7 @@ if ( strActionToProcess != null )
       try
       {
          View mMasLCAuto = task.getViewByName( "mMasLC" );
-         EntityCursor cursor = mMasLCAuto.cursor( "M_GeneralSubsection" );
+         EntityCursor cursor = mMasLCAuto.cursor( "M_GeneralSubSection" );
          cursor.createTemporalEntity( );
 
       }
@@ -370,14 +370,14 @@ if ( strActionToProcess != null )
       if ( VmlOperation.isValid( mMasLC ) )
       {
          lEKey = java.lang.Long.parseLong( strEntityKey );
-         csrRC = mMasLC.cursor( "M_GeneralSubsection" ).setByEntityKey( lEKey );
+         csrRC = mMasLC.cursor( "M_GeneralSubSection" ).setByEntityKey( lEKey );
          if ( !csrRC.isSet() )
          {
             boolean bFound = false;
-            csrRCk = mMasLC.cursor( "M_GeneralSubsection" ).setFirst( );
+            csrRCk = mMasLC.cursor( "M_GeneralSubSection" ).setFirst( );
             while ( csrRCk.isSet() && !bFound )
             {
-               lEKey = mMasLC.cursor( "M_GeneralSubsection" ).getEntityKey( );
+               lEKey = mMasLC.cursor( "M_GeneralSubSection" ).getEntityKey( );
                strKey = Long.toString( lEKey );
                if ( StringUtils.equals( strKey, strEntityKey ) )
                {
@@ -385,7 +385,7 @@ if ( strActionToProcess != null )
                   bFound = true;
                }
                else
-                  csrRCk = mMasLC.cursor( "M_GeneralSubsection" ).setNextContinue( );
+                  csrRCk = mMasLC.cursor( "M_GeneralSubSection" ).setNextContinue( );
             } // Grid
          }
       }
@@ -435,14 +435,14 @@ if ( strActionToProcess != null )
       if ( VmlOperation.isValid( mMasLC ) )
       {
          lEKey = java.lang.Long.parseLong( strEntityKey );
-         csrRC = mMasLC.cursor( "M_GeneralSubsection" ).setByEntityKey( lEKey );
+         csrRC = mMasLC.cursor( "M_GeneralSubSection" ).setByEntityKey( lEKey );
          if ( !csrRC.isSet() )
          {
             boolean bFound = false;
-            csrRCk = mMasLC.cursor( "M_GeneralSubsection" ).setFirst( );
+            csrRCk = mMasLC.cursor( "M_GeneralSubSection" ).setFirst( );
             while ( csrRCk.isSet() && !bFound )
             {
-               lEKey = mMasLC.cursor( "M_GeneralSubsection" ).getEntityKey( );
+               lEKey = mMasLC.cursor( "M_GeneralSubSection" ).getEntityKey( );
                strKey = Long.toString( lEKey );
                if ( StringUtils.equals( strKey, strEntityKey ) )
                {
@@ -450,7 +450,7 @@ if ( strActionToProcess != null )
                   bFound = true;
                }
                else
-                  csrRCk = mMasLC.cursor( "M_GeneralSubsection" ).setNextContinue( );
+                  csrRCk = mMasLC.cursor( "M_GeneralSubSection" ).setNextContinue( );
             } // Grid
          }
       }
@@ -459,7 +459,7 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-         EntityCursor cursor = mMasLC.cursor( "M_GeneralSubsection" );
+         EntityCursor cursor = mMasLC.cursor( "M_GeneralSubSection" );
          cursor.createTemporalSubobjectVersion( );
 
       }
@@ -1243,11 +1243,11 @@ else
 %>
 
 <%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "EnvironmentalHazards" );
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "EnvironmentalHazard" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="smEnvironmentalHazards" name="smEnvironmentalHazards"><a href="#"  class="sideselected"  onclick="smEnvironmentalHazards()">Environmental Hazards</a></li>
+       <li id="smEnvironmentalHazard" name="smEnvironmentalHazard"><a href="#"  class="sideselected"  onclick="smEnvironmentalHazards()">Environmental Hazard</a></li>
 <%
    }
 %>
@@ -1517,19 +1517,19 @@ try
       
       View vGridStorDisp;
       vGridStorDisp = mMasLC.newView( );
-      csrRC2 = vGridStorDisp.cursor( "M_GeneralSubsection" ).setFirst(  );
+      csrRC2 = vGridStorDisp.cursor( "M_GeneralSubSection" ).setFirst(  );
       while ( csrRC2.isSet() )
       {
          strOdd = (iTableRowCnt % 2) != 0 ? " class='odd'" : "";
          iTableRowCnt++;
 
-         lEntityKey = vGridStorDisp.cursor( "M_GeneralSubsection" ).getEntityKey( );
+         lEntityKey = vGridStorDisp.cursor( "M_GeneralSubSection" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
          strGridEditStorDisp = "";
-         nRC = vGridStorDisp.cursor( "M_GeneralSubsection" ).checkExistenceOfEntity( ).toInt();
+         nRC = vGridStorDisp.cursor( "M_GeneralSubSection" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditStorDisp = vGridStorDisp.cursor( "M_GeneralSubsection" ).getAttribute( "Name" ).getString( "" );
+            strGridEditStorDisp = vGridStorDisp.cursor( "M_GeneralSubSection" ).getAttribute( "Name" ).getString( "" );
 
             if ( strGridEditStorDisp == null )
                strGridEditStorDisp = "";
@@ -1539,10 +1539,10 @@ try
             strGridEditStorDisp = "&nbsp";
 
          strGridEditVolume = "";
-         nRC = vGridStorDisp.cursor( "M_GeneralSubsection" ).checkExistenceOfEntity( ).toInt();
+         nRC = vGridStorDisp.cursor( "M_GeneralSubSection" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditVolume = vGridStorDisp.cursor( "M_GeneralSubsection" ).getAttribute( "ContainerVolumeEnvironmentHazard" ).getString( "" );
+            strGridEditVolume = vGridStorDisp.cursor( "M_GeneralSubSection" ).getAttribute( "ContainerVolumeEnvironmentHazard" ).getString( "" );
 
             if ( strGridEditVolume == null )
                strGridEditVolume = "";
@@ -1565,7 +1565,7 @@ try
 </tr>
 
 <%
-         csrRC2 = vGridStorDisp.cursor( "M_GeneralSubsection" ).setNextContinue( );
+         csrRC2 = vGridStorDisp.cursor( "M_GeneralSubSection" ).setNextContinue( );
       }
       vGridStorDisp.drop( );
    }

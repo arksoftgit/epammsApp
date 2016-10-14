@@ -1,4 +1,4 @@
-// wSLCStorageDisposalSection   Generate Timestamp: 20160927180321896
+// wSLCStorageDisposalSection   Generate Timestamp: 20161010115316755
 
 var isWindowClosing = true;
 var timerID = null;
@@ -202,6 +202,25 @@ function Return( )
       _DisableFormElements( true );
 
       document.wSLCStorageDisposalSection.zAction.value = "Return";
+      document.wSLCStorageDisposalSection.submit( );
+   }
+}
+
+function GOTO_StorageDisposalStatement( strTagEntityKey )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      var nIdx = strTagEntityKey.lastIndexOf( '::' );
+      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
+
+      document.wSLCStorageDisposalSection.zTableRowSelect.value = strEntityKey;
+      _DisableFormElements( true );
+
+      document.wSLCStorageDisposalSection.zAction.value = "GOTO_StorageDisposalStatement";
       document.wSLCStorageDisposalSection.submit( );
    }
 }

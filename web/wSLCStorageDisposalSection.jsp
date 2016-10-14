@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSLCStorageDisposalSection   Generate Timestamp: 20160927180321896 --%>
+<%-- wSLCStorageDisposalSection   Generate Timestamp: 20161010115316755 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -216,6 +216,71 @@ if ( strActionToProcess != null )
       break;
    }
 
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_StorageDisposalStatement" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wSLCStorageDisposalSection", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Position on the entity that was selected in the grid.
+      String strEntityKey = (String) request.getParameter( "zTableRowSelect" );
+      View mSubLC;
+      mSubLC = task.getViewByName( "mSubLC" );
+      if ( VmlOperation.isValid( mSubLC ) )
+      {
+         lEKey = java.lang.Long.parseLong( strEntityKey );
+         csrRC = mSubLC.cursor( "S_StorageDisposalStatement" ).setByEntityKey( lEKey );
+         if ( !csrRC.isSet() )
+         {
+            boolean bFound = false;
+            csrRCk = mSubLC.cursor( "S_StorageDisposalStatement" ).setFirst( );
+            while ( csrRCk.isSet() && !bFound )
+            {
+               lEKey = mSubLC.cursor( "S_StorageDisposalStatement" ).getEntityKey( );
+               strKey = Long.toString( lEKey );
+               if ( StringUtils.equals( strKey, strEntityKey ) )
+               {
+                  // Stop while loop because we have positioned on the correct entity.
+                  bFound = true;
+               }
+               else
+                  csrRCk = mSubLC.cursor( "S_StorageDisposalStatement" ).setNextContinue( );
+            } // Grid
+         }
+      }
+
+      // Action Operation
+      nRC = 0;
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCStorageDisposalSection", "wSLC.GOTO_StorageDisposalStatement" );
+      nOptRC = wSLC.GOTO_StorageDisposalStatement( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wSLC.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_StartModalSubwindow, "wSLC", "StorageDisposalStatement" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
    while ( bDone == false && strActionToProcess.equals( "ZEIDON_ComboBoxSubmit" ) )
    {
       bDone = true;
@@ -401,6 +466,7 @@ else
    View mMasLC = null;
    View mSPLDef = null;
    View mSubLC = null;
+   View mSubLC_Root = null;
    View mSubProd = null;
    View mSubreg = null;
    String strRadioGroupValue = "";
@@ -510,9 +576,56 @@ else
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GBStorDispSections1:GroupBox */ %>
+
+<div id="GBStorDispSections1" name="GBStorDispSections1" class="listgroup"   style="float:left;position:relative; width:794px; height:36px;">  <!-- GBStorDispSections1 --> 
+
+<% /* StorageDisposalSections::Text */ %>
+
+<label class="groupbox"  id="StorageDisposalSections:" name="StorageDisposalSections:" style="width:202px;height:16px;position:absolute;left:6px;top:12px;">Storage and Disposal Section:</label>
+
+<% /* SectionName:Text */ %>
+<% strTextDisplayValue = "";
+   mSubLC = task.getViewByName( "mSubLC" );
+   if ( VmlOperation.isValid( mSubLC ) == false )
+      task.log( ).debug( "Invalid View: " + "SectionName" );
+   else
+   {
+      nRC = mSubLC.cursor( "S_StorageDisposalSection" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+      {
+      try
+      {
+         strTextDisplayValue = mSubLC.cursor( "S_StorageDisposalSection" ).getAttribute( "Name" ).getString( "" );
+      }
+      catch (Exception e)
+      {
+         out.println("There is an error on SectionName: " + e.getMessage());
+         task.log().info( "*** Error on ctrl SectionName" + e.getMessage() );
+      }
+         if ( strTextDisplayValue == null )
+            strTextDisplayValue = "";
+      }
+   }
+%>
+
+<label class="groupbox"  id="SectionName" name="SectionName" style="width:188px;height:16px;position:absolute;left:216px;top:12px;"><%=strTextDisplayValue%></label>
+
+
+</div>  <!--  GBStorDispSections1 --> 
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:4px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GBStorDispSections:GroupBox */ %>
 
-<div id="GBStorDispSections" name="GBStorDispSections" class="listgroup"   style="float:left;position:relative; width:790px; height:36px;">  <!-- GBStorDispSections --> 
+<div id="GBStorDispSections" name="GBStorDispSections" class="listgroup"   style="float:left;position:relative; width:790px; height:62px;">  <!-- GBStorDispSections --> 
 
 <% /* StorageDisposalStatements:Text */ %>
 
@@ -549,6 +662,37 @@ else
 
 <label class="groupbox"  id="ContainerVolume" name="ContainerVolume" style="width:188px;height:16px;position:absolute;left:496px;top:12px;"><%=strTextDisplayValue%></label>
 
+<% /* Type:Text */ %>
+
+<label class="groupbox"  id="Type" name="Type" style="width:158px;height:16px;position:absolute;left:338px;top:38px;">Container Type:</label>
+
+<% /* Text2:Text */ %>
+<% strTextDisplayValue = "";
+   mSubLC = task.getViewByName( "mSubLC" );
+   if ( VmlOperation.isValid( mSubLC ) == false )
+      task.log( ).debug( "Invalid View: " + "Text2" );
+   else
+   {
+      nRC = mSubLC.cursor( "S_StorageDisposalSection" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+      {
+      try
+      {
+         strTextDisplayValue = mSubLC.cursor( "S_StorageDisposalSection" ).getAttribute( "ContainerType" ).getString( "" );
+      }
+      catch (Exception e)
+      {
+         out.println("There is an error on Text2: " + e.getMessage());
+         task.log().info( "*** Error on ctrl Text2" + e.getMessage() );
+      }
+         if ( strTextDisplayValue == null )
+            strTextDisplayValue = "";
+      }
+   }
+%>
+
+<label class="groupbox"  id="Text2" name="Text2" style="width:188px;height:16px;position:absolute;left:496px;top:38px;"><%=strTextDisplayValue%></label>
+
 
 </div>  <!--  GBStorDispSections --> 
 </div>  <!-- End of a new line -->
@@ -557,17 +701,18 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:10px;width:100px;"></div>
+<div style="height:8px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GridStorDisp:Grid */ %>
-<table  cols=2 style="width:792px;"  name="GridStorDisp" id="GridStorDisp">
+<table  cols=3 style="width:792px;"  name="GridStorDisp" id="GridStorDisp">
 
 <thead><tr>
 
    <th>Statement Title</th>
    <th>Statement Text</th>
+   <th>Display</th>
 
 </tr></thead>
 
@@ -587,6 +732,7 @@ try
       String strTag;
       String strGridEditStorDispTitle;
       String strGridEditStorDispText;
+      String strBMBDisplaySD_Statement;
       
       View vGridStorDisp;
       vGridStorDisp = mSubLC.newView( );
@@ -630,6 +776,7 @@ try
 
    <td><%=strGridEditStorDispTitle%></td>
    <td><%=strGridEditStorDispText%></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDisplaySD_Statement" onclick="GOTO_StorageDisposalStatement( this.id )" id="BMBDisplaySD_Statement::<%=strEntityKey%>"><img src="./images/ePammsDisplay.png" alt="Display"></a></td>
 
 </tr>
 

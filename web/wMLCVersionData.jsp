@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCVersionData   Generate Timestamp: 20160914154446944 --%>
+<%-- wMLCVersionData   Generate Timestamp: 20161014132313644 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -1196,11 +1196,11 @@ else
 %>
 
 <%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "EnvironmentalHazards" );
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "EnvironmentalHazard" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="smEnvironmentalHazards" name="smEnvironmentalHazards"><a href="#"  onclick="smEnvironmentalHazards()">Environmental Hazards</a></li>
+       <li id="smEnvironmentalHazard" name="smEnvironmentalHazard"><a href="#"  onclick="smEnvironmentalHazards()">Environmental Hazard</a></li>
 <%
    }
 %>

@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSLCDeleteSubregProduct   Generate Timestamp: 20160620105928089 --%>
+<%-- wSLCDeleteSubregProduct   Generate Timestamp: 20161010115315785 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -510,6 +510,7 @@ else
    View mMasLC = null;
    View mSPLDef = null;
    View mSubLC = null;
+   View mSubLC_Root = null;
    View mSubProd = null;
    View mSubreg = null;
    String strRadioGroupValue = "";

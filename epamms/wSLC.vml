@@ -15,6 +15,23 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
+//  OPERATION: SaveSLC_Return
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+SaveSLC_Return( VIEW ViewToWindow )
+
+   VIEW mSubLC_Root REGISTERED AS mSubLC_Root
+
+   IF mSubLC_Root != 0
+      DropView( mSubLC_Root )
+   END
+   SaveSLC( ViewToWindow )
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
 //  OPERATION: SaveSLC
 //
 /////////////////////////////////////////////////////////////////////////////
@@ -554,6 +571,41 @@ GOTO_MarketingStatementDetail( VIEW ViewToWindow )
 
 END
 
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: GOTO_StorageDisposalStatement
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+GOTO_StorageDisposalStatement( VIEW ViewToWindow )
+
+   VIEW mSubLC REGISTERED AS mSubLC
+
+   TraceLineS( "###################################################### Prior mSubLC", "" )
+   DisplayEntityInstance( mSubLC, "S_StorageDisposalStatement" )
+
+   // Get to subobject: S_StorageDisposalSubStatement.
+   SetViewToSubobject( mSubLC, "S_StorageDisposalSubStatement" )
+
+   TraceLineS( "###################################################### After mSubLC", "" )
+   DisplayEntityInstance( mSubLC, "S_StorageDisposalStatement" )
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: RETURN_StorageDisposalStatement
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+RETURN_StorageDisposalStatement( VIEW ViewToWindow )
+
+   VIEW mSubLC REGISTERED AS mSubLC
+
+   // Return from subobject: S_StorageDisposalSubStatement.
+   ResetViewFromSubobject( mSubLC )
+
+END
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -1133,11 +1185,14 @@ GOTO_UpdateSubregProductSLC( VIEW ViewToWindow )
 
    VIEW mSubProd REGISTERED AS mSubProd
    VIEW mSubLC   BASED ON LOD  mSubLC
+   VIEW mSubLC_Root BASED ON LOD mSubLC
    VIEW mMasLC   BASED ON LOD  mMasLC
 
    // Activate selected Subreg SLC and build the Components work entries from persistent entries.
    ACTIVATE mSubLC WHERE mSubLC.SubregLabelContent.ID = mSubProd.SubregLabelContent.ID
    NAME VIEW mSubLC "mSubLC"
+   CreateViewFromView( mSubLC_Root, mSubLC )
+   NAME VIEW mSubLC_Root "mSubLC_Root"
 
    // Delete any S_Usage entries that aren't tied to an MLC.
    // Also delete any Directions For Use or Marketing Ordering entries not tied to a Usage.
@@ -1322,6 +1377,7 @@ GOTO_DisplayGeneratedText( VIEW ViewToWindow )
 
    VIEW mSubLC REGISTERED AS mSubLC
 
+   mSubLC.SubregLabelContent.wGeneratedTitleDisplay = mSubLC.S_MarketingStatement.dDisplayKeywordTitle
    mSubLC.SubregLabelContent.wGeneratedTextDisplay = mSubLC.S_MarketingStatement.dDisplayKeywordText
 
 END
@@ -1741,3 +1797,15 @@ CorrectSLC_Data( VIEW ViewToWindow )
 END
 
 
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: SetListItemPosition
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+SetListItemPosition( VIEW ViewToWindow )
+
+   // just to set position
+
+END

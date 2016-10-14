@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSLCLocations   Generate Timestamp: 20160620105928045 --%>
+<%-- wSLCLocations   Generate Timestamp: 20161010115316240 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -263,8 +263,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCLocations", "wSLC.SaveSLC" );
-      nOptRC = wSLC.SaveSLC( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCLocations", "wSLC.SaveSLC_Return" );
+      nOptRC = wSLC.SaveSLC_Return( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -556,7 +556,7 @@ if ( strActionToProcess != null )
       if ( strNextJSP_Name.equals( "" ) )
       {
          // Next Window
-         strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_ReplaceWindowWithModalWindow, "wSLC", "HazardsSection" );
+         strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_ReplaceWindowWithModalWindow, "wSLC", "EnvironmentalHazards" );
       }
 
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -944,7 +944,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="smStorDisp" name="smStorDisp"><a href="#"  onclick="smDisplayStorDispSect()">Storage and Disposal</a></li>
+       <li id="smStorDisp" name="smStorDisp"><a href="#"  onclick="smDisplayStorDispSect()">Storage Disposal</a></li>
 <%
    }
 %>
@@ -970,11 +970,11 @@ else
 %>
 
 <%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "EnvironmentalHazards" );
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "EnvironmentalHazard" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="smEnvironmentalHazards" name="smEnvironmentalHazards"><a href="#"  onclick="smDisplayHazardSection()">Environmental Hazards</a></li>
+       <li id="smEnvironmentalHazard" name="smEnvironmentalHazard"><a href="#"  onclick="smDisplayHazardSection()">Environmental Hazard</a></li>
 <%
    }
 %>
@@ -1054,6 +1054,7 @@ else
    View mMasLC = null;
    View mSPLDef = null;
    View mSubLC = null;
+   View mSubLC_Root = null;
    View mSubProd = null;
    View mSubreg = null;
    String strRadioGroupValue = "";

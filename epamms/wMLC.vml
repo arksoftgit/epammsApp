@@ -335,6 +335,52 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
+//  OPERATION: AcceptGoNextStorDispStmt
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+AcceptGoNextStorDispStmt( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+   SHORT nRC
+
+   nRC = AcceptSubobject( mMasLC, "M_StorageDisposalStatement" )
+   IF nRC < 0
+      MessageSend( ViewToWindow, "", "Accept and Go Next Storage and Disposal Statement",
+                   "The Storage and Disposal Statement contains errors.",
+                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+      RETURN nRC
+   END
+   SetCursorNextEntity( mMasLC, "M_StorageDisposalStatement", "" )
+   CreateTemporalSubobjectVersion( mMasLC, "M_StorageDisposalStatement" )
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: AcceptGoPrevStorDispStmt
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+AcceptGoPrevStorDispStmt( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+   SHORT nRC
+
+   nRC = AcceptSubobject( mMasLC, "M_StorageDisposalStatement" )
+   IF nRC < 0
+      MessageSend( ViewToWindow, "", "Accept and Go Previous Storage and Disposal Statement",
+                   "The Storage and Disposal Statement contains errors.",
+                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+      RETURN nRC
+   END
+   SetCursorPrevEntity( mMasLC, "M_StorageDisposalStatement", "" )
+   CreateTemporalSubobjectVersion( mMasLC, "M_StorageDisposalStatement" )
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
 //  OPERATION: GOTO_StorageDispStatementDelete
 //
 /////////////////////////////////////////////////////////////////////////////

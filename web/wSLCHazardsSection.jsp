@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSLCHazardsSection   Generate Timestamp: 20160620105928324 --%>
+<%-- wSLCHazardsSection   Generate Timestamp: 20160928132403852 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -244,8 +244,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCHazardsSection", "wSLC.SaveSLC" );
-      nOptRC = wSLC.SaveSLC( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCHazardsSection", "wSLC.SaveSLC_Return" );
+      nOptRC = wSLC.SaveSLC_Return( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -925,7 +925,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="smStorDisp" name="smStorDisp"><a href="#"  onclick="smDisplayStorDispSect()">Storage and Disposal</a></li>
+       <li id="smStorDisp" name="smStorDisp"><a href="#"  onclick="smDisplayStorDispSect()">Storage Disposal</a></li>
 <%
    }
 %>
@@ -951,11 +951,11 @@ else
 %>
 
 <%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "EnvironmentalHazards" );
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "EnvironmentalHazard" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="smEnvironmentalHazards" name="smEnvironmentalHazards"><a href="#"  class="sideselected"  onclick="smDisplayHazardSection()">Environmental Hazards</a></li>
+       <li id="smEnvironmentalHazard" name="smEnvironmentalHazard"><a href="#"  class="sideselected"  onclick="smDisplayHazardSection()">Environmental Hazard</a></li>
 <%
    }
 %>
@@ -1035,6 +1035,7 @@ else
    View mMasLC = null;
    View mSPLDef = null;
    View mSubLC = null;
+   View mSubLC_Root = null;
    View mSubProd = null;
    View mSubreg = null;
    String strRadioGroupValue = "";

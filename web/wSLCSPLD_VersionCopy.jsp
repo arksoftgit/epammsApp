@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSLCSPLD_VersionCopy   Generate Timestamp: 20160620105928877 --%>
+<%-- wSLCSPLD_VersionCopy   Generate Timestamp: 20161010115316676 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -519,6 +519,7 @@ else
    View mMasLC = null;
    View mSPLDef = null;
    View mSubLC = null;
+   View mSubLC_Root = null;
    View mSubProd = null;
    View mSubreg = null;
    String strRadioGroupValue = "";

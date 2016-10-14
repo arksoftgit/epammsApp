@@ -4083,7 +4083,7 @@ omSPLDef_FormatContinueBlock( View     mSPLDefPDF,
             sb_szTempString_0 = new StringBuilder( 32 );
          else
             sb_szTempString_0 = new StringBuilder( szTempString_0 );
-                   GetVariableFromAttribute( sb_szTempString_0, mi_lTempInteger_0, 'S', 32001, mSPLDefPDF, "SPLD_LLD", "ContNextPageTextDirForUse", "", 0 );
+                   GetVariableFromAttribute( sb_szTempString_0, mi_lTempInteger_0, 'S', 2049, mSPLDefPDF, "SPLD_LLD", "ContNextPageTextDirForUse", "", 0 );
          lTempInteger_0 = mi_lTempInteger_0.intValue( );
          szTempString_0 = sb_szTempString_0.toString( );}
           {StringBuilder sb_szWriteBuffer;
@@ -4118,7 +4118,7 @@ omSPLDef_FormatContinueBlock( View     mSPLDefPDF,
             sb_szTempString_1 = new StringBuilder( 32 );
          else
             sb_szTempString_1 = new StringBuilder( szTempString_1 );
-                   GetVariableFromAttribute( sb_szTempString_1, mi_lTempInteger_1, 'S', 32001, mSPLDefPDF, "SPLD_LLD", "ContNextPageTextMarketing", "", 0 );
+                   GetVariableFromAttribute( sb_szTempString_1, mi_lTempInteger_1, 'S', 2049, mSPLDefPDF, "SPLD_LLD", "ContNextPageTextMarketing", "", 0 );
          lTempInteger_1 = mi_lTempInteger_1.intValue( );
          szTempString_1 = sb_szTempString_1.toString( );}
           {StringBuilder sb_szWriteBuffer;
@@ -8296,7 +8296,7 @@ omSPLDef_GeneratePDF_ClmList( View     mSPLDef,
          sb_szTempString_1 = new StringBuilder( 32 );
       else
          sb_szTempString_1 = new StringBuilder( szTempString_1 );
-             GetVariableFromAttribute( sb_szTempString_1, mi_lTempInteger_11, 'S', 255, mSPLDef, "M_UsageFootnote", "Text", "", 0 );
+             GetVariableFromAttribute( sb_szTempString_1, mi_lTempInteger_11, 'S', 2049, mSPLDef, "M_UsageFootnote", "Text", "", 0 );
       lTempInteger_11 = mi_lTempInteger_11.intValue( );
       szTempString_1 = sb_szTempString_1.toString( );}
        {StringBuilder sb_szFootnoteText;

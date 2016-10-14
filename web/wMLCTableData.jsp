@@ -743,6 +743,7 @@ else
 {
 }
 
+   // Hand coded
    View mMasLCTable = task.getViewByName( "mMasLC" );
    EntityCursor cursor = mMasLCTable.cursor( "M_MetaTable" );
    strColumnCnt = cursor.getAttribute( "Columns" ).getString( "" );
@@ -755,6 +756,7 @@ else
       if ( k < nCols )
          strColumnList += ",";
    }
+   // End of: Hand coded
 
    csrRC = vKZXMLPGO.cursor( "DynamicBannerName" ).setFirst( "DialogName", "wMLC", "" );
    if ( csrRC.isSet( ) )
@@ -775,7 +777,7 @@ else
 <html>
 <head>
 
-<title>Table</title>
+<title>Table Data</title>
 
 <%@ include file="./include/head.inc" %>
 <!-- Timeout.inc has a value for nTimeout which is used to determine when to -->

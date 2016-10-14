@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSLCVersionData   Generate Timestamp: 20160620105929094 --%>
+<%-- wSLCVersionData   Generate Timestamp: 20161014154323530 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -306,6 +306,23 @@ if ( strActionToProcess != null )
       break;
    }
 
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_TableMaintenance" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wSLCVersionData", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Next Window
+      strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_StartModalSubwindow, "wSLC", "TableMaintenance" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
    while ( bDone == false && strActionToProcess.equals( "ZEIDON_ComboBoxSubmit" ) )
    {
       bDone = true;
@@ -332,8 +349,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCVersionData", "wSLC.SaveSLC" );
-      nOptRC = wSLC.SaveSLC( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCVersionData", "wSLC.SaveSLC_Return" );
+      nOptRC = wSLC.SaveSLC_Return( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -625,7 +642,7 @@ if ( strActionToProcess != null )
       if ( strNextJSP_Name.equals( "" ) )
       {
          // Next Window
-         strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_ReplaceWindowWithModalWindow, "wSLC", "HazardsSection" );
+         strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_ReplaceWindowWithModalWindow, "wSLC", "EnvironmentalHazards" );
       }
 
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -1013,7 +1030,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="smStorDisp" name="smStorDisp"><a href="#"  onclick="smDisplayStorDispSect()">Storage and Disposal</a></li>
+       <li id="smStorDisp" name="smStorDisp"><a href="#"  onclick="smDisplayStorDispSect()">Storage Disposal</a></li>
 <%
    }
 %>
@@ -1039,11 +1056,11 @@ else
 %>
 
 <%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "EnvironmentalHazards" );
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "EnvironmentalHazard" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="smEnvironmentalHazards" name="smEnvironmentalHazards"><a href="#"  onclick="smDisplayHazardSection()">Environmental Hazards</a></li>
+       <li id="smEnvironmentalHazard" name="smEnvironmentalHazard"><a href="#"  onclick="smDisplayHazardSection()">Environmental Hazard</a></li>
 <%
    }
 %>
@@ -1099,11 +1116,21 @@ else
 %>
 
 <%
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "DisplayTables" );
+   if ( !csrRC.isSet( ) )
+   {
+%>
+       <li id="smDisplayTables" name="smDisplayTables"><a href="#"  onclick="GOTO_TableMaintenance()">Tables</a></li>
+<%
+   }
+%>
+
+<%
    csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "SyncMLC" );
    if ( !csrRC.isSet( ) )
    {
 %>
-       <li id="Marketing" name="Marketing"><a href="#"  onclick="Sync()">Sync MLC</a></li>
+       <li id="smSyncMLC" name="smSyncMLC"><a href="#"  onclick="Sync()">Sync MLC</a></li>
 <%
    }
 %>
@@ -1114,7 +1141,6 @@ else
 </div>  <!-- leftcontent -->
 
 <div id="content">
-
 <!--System Maintenance-->
 
 <%@ include file="./include/systemmaintenance.inc" %>
@@ -1129,11 +1155,14 @@ else
 
 <%
    View lMLC = null;
+   View wWebXfer = null;
    View lSPLDLST = null;
    View mLLD_LST = null;
    View mMasLC = null;
+   View mMasProd = null;
    View mSPLDef = null;
    View mSubLC = null;
+   View mSubLC_Root = null;
    View mSubProd = null;
    View mSubreg = null;
    String strRadioGroupValue = "";
@@ -1475,7 +1504,7 @@ else
    }
 %>
 
-<input name="EditBox2" id="EditBox2" maxlength="1024" style="width:338px;position:absolute;left:166px;top:4px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="EditBox2" id="EditBox2" maxlength="2048" style="width:338px;position:absolute;left:166px;top:4px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* Text9:Text */ %>
 

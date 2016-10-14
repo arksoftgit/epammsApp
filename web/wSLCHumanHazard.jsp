@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSLCHumanHazard   Generate Timestamp: 20160927123859135 --%>
+<%-- wSLCHumanHazard   Generate Timestamp: 20161010115316152 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -224,8 +224,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCHumanHazard", "wSLC.SaveSLC" );
-      nOptRC = wSLC.SaveSLC( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCHumanHazard", "wSLC.SaveSLC_Return" );
+      nOptRC = wSLC.SaveSLC_Return( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -517,7 +517,7 @@ if ( strActionToProcess != null )
       if ( strNextJSP_Name.equals( "" ) )
       {
          // Next Window
-         strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_ReplaceWindowWithModalWindow, "wSLC", "HazardsSection" );
+         strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_ReplaceWindowWithModalWindow, "wSLC", "EnvironmentalHazards" );
       }
 
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -905,7 +905,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="smStorDisp" name="smStorDisp"><a href="#"  onclick="smDisplayStorDispSect()">Storage and Disposal</a></li>
+       <li id="smStorDisp" name="smStorDisp"><a href="#"  onclick="smDisplayStorDispSect()">Storage Disposal</a></li>
 <%
    }
 %>
@@ -931,11 +931,11 @@ else
 %>
 
 <%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "EnvironmentalHazards" );
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "EnvironmentalHazard" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="smEnvironmentalHazards" name="smEnvironmentalHazards"><a href="#"  onclick="smDisplayHazardSection()">Environmental Hazards</a></li>
+       <li id="smEnvironmentalHazard" name="smEnvironmentalHazard"><a href="#"  onclick="smDisplayHazardSection()">Environmental Hazard</a></li>
 <%
    }
 %>
@@ -1015,6 +1015,7 @@ else
    View mMasLC = null;
    View mSPLDef = null;
    View mSubLC = null;
+   View mSubLC_Root = null;
    View mSubProd = null;
    View mSubreg = null;
    String strRadioGroupValue = "";
@@ -1171,7 +1172,7 @@ else
    }
 %>
 
-<label  id="Text3" name="Text3" style="width:522px;height:16px;position:absolute;left:130px;top:0px;"><%=strTextDisplayValue%></label>
+<label  id="Text3" name="Text3" style="width:544px;height:16px;position:absolute;left:130px;top:0px;"><%=strTextDisplayValue%></label>
 
 <% /* SignalWord::Text */ %>
 
@@ -1202,7 +1203,7 @@ else
    }
 %>
 
-<label  id="Text1" name="Text1" style="width:130px;height:16px;position:absolute;left:134px;top:32px;"><%=strTextDisplayValue%></label>
+<label  id="Text1" name="Text1" style="width:544px;height:16px;position:absolute;left:130px;top:32px;"><%=strTextDisplayValue%></label>
 
 <% /* Statement::Text */ %>
 
@@ -1233,7 +1234,7 @@ else
    }
 %>
 
-<label  id="Text4" name="Text4" style="width:522px;height:50px;position:absolute;left:134px;top:70px;"><%=strTextDisplayValue%></label>
+<label  id="Text4" name="Text4" style="width:542px;height:50px;position:absolute;left:134px;top:70px;"><%=strTextDisplayValue%></label>
 
 <% /* PanelLocation1::Text */ %>
 

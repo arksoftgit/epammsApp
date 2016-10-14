@@ -1,4 +1,4 @@
-// wMLCStorageDisposalStatement   Generate Timestamp: 20160914154446218
+// wMLCStorageDisposalStatement   Generate Timestamp: 20160928104227523
 
 var isWindowClosing = true;
 var timerID = null;
@@ -209,7 +209,7 @@ function AcceptAddNewStorDispStmt( )
    }
 }
 
-function GOTO_StorageDispSubStatementAdd( )
+function AcceptGoNext( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -219,45 +219,7 @@ function GOTO_StorageDispSubStatementAdd( )
    {
       _DisableFormElements( true );
 
-      document.wMLCStorageDisposalStatement.zAction.value = "GOTO_StorageDispSubStatementAdd";
-      document.wMLCStorageDisposalStatement.submit( );
-   }
-}
-
-function GOTO_StorageDispStatementDelete( strTagEntityKey )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      var nIdx = strTagEntityKey.lastIndexOf( '::' );
-      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
-
-      document.wMLCStorageDisposalStatement.zTableRowSelect.value = strEntityKey;
-      _DisableFormElements( true );
-
-      document.wMLCStorageDisposalStatement.zAction.value = "GOTO_StorageDispStatementDelete";
-      document.wMLCStorageDisposalStatement.submit( );
-   }
-}
-
-function GOTO_StorageDispStatementUpdate( strTagEntityKey )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      var nIdx = strTagEntityKey.lastIndexOf( '::' );
-      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
-
-      document.wMLCStorageDisposalStatement.zTableRowSelect.value = strEntityKey;
-      _DisableFormElements( true );
-
-      document.wMLCStorageDisposalStatement.zAction.value = "GOTO_StorageDispStatementUpdate";
+      document.wMLCStorageDisposalStatement.zAction.value = "AcceptGoNext";
       document.wMLCStorageDisposalStatement.submit( );
    }
 }
@@ -389,6 +351,59 @@ function GOTO_DU_KeywordUpdate( strTagEntityKey )
    }
 }
 
+function GOTO_StorageDispStatementDelete( strTagEntityKey )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      var nIdx = strTagEntityKey.lastIndexOf( '::' );
+      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
+
+      document.wMLCStorageDisposalStatement.zTableRowSelect.value = strEntityKey;
+      _DisableFormElements( true );
+
+      document.wMLCStorageDisposalStatement.zAction.value = "GOTO_StorageDispStatementDelete";
+      document.wMLCStorageDisposalStatement.submit( );
+   }
+}
+
+function GOTO_StorageDispStatementUpdate( strTagEntityKey )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      var nIdx = strTagEntityKey.lastIndexOf( '::' );
+      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
+
+      document.wMLCStorageDisposalStatement.zTableRowSelect.value = strEntityKey;
+      _DisableFormElements( true );
+
+      document.wMLCStorageDisposalStatement.zAction.value = "GOTO_StorageDispStatementUpdate";
+      document.wMLCStorageDisposalStatement.submit( );
+   }
+}
+
+function GOTO_StorageDispSubStatementAdd( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCStorageDisposalStatement.zAction.value = "GOTO_StorageDispSubStatementAdd";
+      document.wMLCStorageDisposalStatement.submit( );
+   }
+}
+
 function PASTE_InsertKeyword( )
 {
 
@@ -400,6 +415,21 @@ function PASTE_InsertKeyword( )
       _DisableFormElements( true );
 
       document.wMLCStorageDisposalStatement.zAction.value = "PASTE_InsertKeyword";
+      document.wMLCStorageDisposalStatement.submit( );
+   }
+}
+
+function AcceptGoPrev( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCStorageDisposalStatement.zAction.value = "AcceptGoPrev";
       document.wMLCStorageDisposalStatement.submit( );
    }
 }

@@ -1,4 +1,4 @@
-// wSLCVersionData   Generate Timestamp: 20160620105929094
+// wSLCVersionData   Generate Timestamp: 20161014154323530
 
 var isWindowClosing = true;
 var timerID = null;
@@ -202,6 +202,21 @@ function Sync( )
       _DisableFormElements( true );
 
       document.wSLCVersionData.zAction.value = "Sync";
+      document.wSLCVersionData.submit( );
+   }
+}
+
+function GOTO_TableMaintenance( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wSLCVersionData.zAction.value = "GOTO_TableMaintenance";
       document.wSLCVersionData.submit( );
    }
 }

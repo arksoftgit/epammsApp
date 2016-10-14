@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSLCGeneratedTextDisplay   Generate Timestamp: 20160620105928302 --%>
+<%-- wSLCGeneratedTextDisplay   Generate Timestamp: 20161011165917798 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -70,7 +70,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "MLEdit3", "", strMapValue );
             else
-               mSubLC.cursor( "SubregLabelContent" ).getAttribute( "wGeneratedTextDisplay" ).setValue( strMapValue, "" );
+               mSubLC.cursor( "SubregLabelContent" ).getAttribute( "wGeneratedTitleDisplay" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -433,6 +433,7 @@ else
    View mMasLC = null;
    View mSPLDef = null;
    View mSubLC = null;
+   View mSubLC_Root = null;
    View mSubProd = null;
    View mSubreg = null;
    String strRadioGroupValue = "";
@@ -548,7 +549,7 @@ else
 
 <% /* OrganismClaimsStatements3:Text */ %>
 
-<label class="groupbox"  id="OrganismClaimsStatements3" name="OrganismClaimsStatements3" style="width:324px;height:16px;position:absolute;left:6px;top:12px;">Full Generated Title Text</label>
+<label class="groupbox"  id="OrganismClaimsStatements3" name="OrganismClaimsStatements3" style="width:324px;height:16px;position:absolute;left:6px;top:12px;">Full Generated Statement Title</label>
 
 
 </div>  <!--  GBStorDispSections2 --> 
@@ -586,11 +587,11 @@ else
          nRC = mSubLC.cursor( "SubregLabelContent" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strErrorMapValue = mSubLC.cursor( "SubregLabelContent" ).getAttribute( "wGeneratedTextDisplay" ).getString( "" );
+            strErrorMapValue = mSubLC.cursor( "SubregLabelContent" ).getAttribute( "wGeneratedTitleDisplay" ).getString( "" );
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
 
-            task.log( ).debug( "SubregLabelContent.wGeneratedTextDisplay: " + strErrorMapValue );
+            task.log( ).debug( "SubregLabelContent.wGeneratedTitleDisplay: " + strErrorMapValue );
          }
          else
             task.log( ).debug( "Entity does not exist for MLEdit3: " + "mSubLC.SubregLabelContent" );

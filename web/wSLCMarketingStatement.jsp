@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSLCMarketingStatement   Generate Timestamp: 20160531205243119 --%>
+<%-- wSLCMarketingStatement   Generate Timestamp: 20161012143028491 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -67,14 +67,14 @@ public int DoInputMapping( HttpServletRequest request,
       // grids on the same window with the same view we do not mess up the 
       // entity positions. 
       vGridTmp = mSubLC.newView( );
-      csrRC = vGridTmp.cursor( "S_InsertTextMarketing" ).setFirst( "S_MarketingStatement" );
+      csrRC = vGridTmp.cursor( "S_InsertTextKeywordMarketing" ).setFirst(  );
       while ( csrRC.isSet() )
       {
-         lEntityKey = vGridTmp.cursor( "S_InsertTextMarketing" ).getEntityKey( );
+         lEntityKey = vGridTmp.cursor( "S_InsertTextKeywordMarketing" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
          iTableRowCnt++;
 
-         csrRC = vGridTmp.cursor( "S_InsertTextMarketing" ).setNextContinue( );
+         csrRC = vGridTmp.cursor( "S_InsertTextKeywordMarketing" ).setNextContinue( );
       }
 
       vGridTmp.drop( );
@@ -609,6 +609,7 @@ else
    View mMasLC = null;
    View mSPLDef = null;
    View mSubLC = null;
+   View mSubLC_Root = null;
    View mSubProd = null;
    View mSubreg = null;
    String strRadioGroupValue = "";
@@ -763,7 +764,7 @@ else
       {
       try
       {
-         strTextDisplayValue = mSubLC.cursor( "S_MarketingStatement" ).getAttribute( "Title" ).getString( "" );
+         strTextDisplayValue = mSubLC.cursor( "S_MarketingStatement" ).getAttribute( "dDisplayKeywordTitle" ).getString( "" );
       }
       catch (Exception e)
       {
@@ -800,7 +801,7 @@ else
       {
       try
       {
-         strTextDisplayValue = mSubLC.cursor( "S_MarketingStatement" ).getAttribute( "Text" ).getString( "" );
+         strTextDisplayValue = mSubLC.cursor( "S_MarketingStatement" ).getAttribute( "dDisplayKeywordText" ).getString( "" );
       }
       catch (Exception e)
       {
@@ -896,13 +897,13 @@ try
       
       View vGrid4;
       vGrid4 = mSubLC.newView( );
-      csrRC2 = vGrid4.cursor( "S_InsertTextMarketing" ).setFirst( "S_MarketingStatement" );
+      csrRC2 = vGrid4.cursor( "S_InsertTextKeywordMarketing" ).setFirst(  );
       while ( csrRC2.isSet() )
       {
          strOdd = (iTableRowCnt % 2) != 0 ? " class='odd'" : "";
          iTableRowCnt++;
 
-         lEntityKey = vGrid4.cursor( "S_InsertTextMarketing" ).getEntityKey( );
+         lEntityKey = vGrid4.cursor( "S_InsertTextKeywordMarketing" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
          strGridEditCtl6 = "";
          nRC = vGrid4.cursor( "S_InsertTextKeywordMarketing" ).checkExistenceOfEntity( ).toInt();
@@ -918,10 +919,10 @@ try
             strGridEditCtl6 = "&nbsp";
 
          strGridEditCtl7 = "";
-         nRC = vGrid4.cursor( "S_InsertTextMarketing" ).checkExistenceOfEntity( ).toInt();
+         nRC = vGrid4.cursor( "S_InsertTextKeywordMarketing" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl7 = vGrid4.cursor( "S_InsertTextMarketing" ).getAttribute( "Text" ).getString( "" );
+            strGridEditCtl7 = vGrid4.cursor( "S_InsertTextKeywordMarketing" ).getAttribute( "dMarketingKeywordText" ).getString( "" );
 
             if ( strGridEditCtl7 == null )
                strGridEditCtl7 = "";
@@ -940,7 +941,7 @@ try
 </tr>
 
 <%
-         csrRC2 = vGrid4.cursor( "S_InsertTextMarketing" ).setNextContinue( );
+         csrRC2 = vGrid4.cursor( "S_InsertTextKeywordMarketing" ).setNextContinue( );
       }
       vGrid4.drop( );
    }

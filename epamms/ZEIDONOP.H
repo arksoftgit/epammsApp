@@ -1,4 +1,4 @@
-//start mSPLDef 2016.09.27 10:22:01
+//start mSPLDef 2016.10.13 12:58:55
 zOPER_EXPORT zSHORT OPERATION
 omSPLDef_GeneratePDF_Label( zVIEW vViewToInstance0 );
 
@@ -169,7 +169,7 @@ zOPER_EXPORT zSHORT OPERATION
 omTempl_BuildDisplayStructure( zVIEW vViewToInstance0 );
 
 //end
-//start mMasLC 2016.09.27 10:21:59
+//start mMasLC 2016.10.13 12:58:53
 zOPER_EXPORT zSHORT OPERATION
 omMasLC_MergeUsageSelectEnts( zVIEW vViewToInstance0 );
 
@@ -220,7 +220,7 @@ zOPER_EXPORT zSHORT OPERATION
 omMasLC_BuildNonGroupEntries( zVIEW vViewToInstance0 );
 
 //end
-//start mSubLC 2016.09.28 09:20:05
+//start mSubLC 2016.10.13 13:44:12
 zOPER_EXPORT zSHORT OPERATION
 omSubLC_BuildNewSLC_Version( zVIEW vViewToInstance0,
                              zVIEW vOriginalSLC1,
@@ -240,7 +240,7 @@ omSubLC_BuildDirsForUseSects( zVIEW vNewSLC0,
                               zVIEW vSourceMLC1 );
 
 zOPER_EXPORT zSHORT OPERATION
-omSubLC_BuildCompositeEntries( zVIEW vmSubLC0 );
+omSubLC_BuildCompositeEntries( zVIEW vViewToInstance0 );
 
 zOPER_EXPORT zSHORT OPERATION
 omSubLC_BuildUsageWorkEnts( zVIEW vmSubLC0,
@@ -264,7 +264,7 @@ omSubLC_ObjectConstraints( zVIEW vViewtoInstance0,
                            zSHORT nState2 );
 
 //end
-//start DOMAINT 2016.09.27 10:21:56
+//start DOMAINT 2016.10.13 12:58:47
 zOPER_EXPORT zSHORT OPERATION
 oDOMAINT_ActivateDomainList( zPVIEW vViewToInstance0,
                              zVIEW vViewToWindow1 );
@@ -285,7 +285,7 @@ oDOMAINT_PreloadSystemDomains( zVIEW vViewToInstance0,
                                zPCHAR pchInstallApp2 );
 
 //end
-//start lMLCATgt 2016.09.27 10:21:57
+//start lMLCATgt 2016.10.13 12:58:49
 zOPER_EXPORT zSHORT OPERATION
 olMLCATgt_BuildDifferencesMLC( zVIEW vViewToInstance0,
                                zVIEW vSourceCompareObject1 );
@@ -296,9 +296,9 @@ olMLCATgt_BuildDifferencesSLC( zVIEW vViewToInstance0,
                                zVIEW vlSLCAnal2 );
 
 zOPER_EXPORT zSHORT OPERATION
-olMLCATgt_SetDifferencesSortVs( zVIEW vViewToInstance0,
-                                zLONG lSortNumber1,
-                                zPCHAR pchSectionTitleName2 );
+olMLCATgt_SetDifferencesSortVs( zVIEW vlMLCATgt0,
+                                zLONG llSortNbr1,
+                                zPCHAR pchszTitle2 );
 
 zOPER_EXPORT zSHORT OPERATION
 olMLCATgt_DeleteEmptyTitles( zVIEW vViewToInstance0 );
@@ -767,7 +767,7 @@ CopyMLC_EntityToSLC( zVIEW vMasLC0,
                      zSHORT nFlag3 );
 
 //end
-//start mMasDS 2016.09.27 10:21:59
+//start mMasDS 2016.10.04 09:46:03
 zOPER_EXPORT zSHORT OPERATION
 omMasDS_MergeUsageSelectEnts( zVIEW vViewToInstance0 );
 
@@ -818,7 +818,7 @@ zOPER_EXPORT zSHORT OPERATION
 omMasDS_BuildNonGroupEntries( zVIEW vViewToInstance0 );
 
 //end
-//start mSubDS 2016.09.27 10:22:09
+//start mSubDS 2016.10.04 09:46:06
 zOPER_EXPORT zSHORT OPERATION
 omSubDS_BuildNewSLC_Version( zVIEW vViewToInstance0,
                              zVIEW vOriginalSLC1,
@@ -860,5 +860,43 @@ zOPER_EXPORT zSHORT OPERATION
 omSubDS_ObjectConstraints( zVIEW vViewtoInstance0,
                            zSHORT nEvent1,
                            zSHORT nState2 );
+
+//end
+//start lMLCATds 2016.10.04 09:45:32
+zOPER_EXPORT zSHORT OPERATION
+olMLCATds_BuildDifferencesMLC( zVIEW vViewToInstance0,
+                               zVIEW vSourceCompareObject1 );
+
+zOPER_EXPORT zSHORT OPERATION
+olMLCATds_BuildDifferencesSLC( zVIEW vViewToInstance0,
+                               zVIEW vlMLCASrc1,
+                               zVIEW vlSLCAnal2 );
+
+zOPER_EXPORT zSHORT OPERATION
+olMLCATds_SetDifferencesSortVs( zVIEW vViewToInstance0,
+                                zLONG lSortNumber1,
+                                zPCHAR pchSectionTitleName2 );
+
+zOPER_EXPORT zSHORT OPERATION
+olMLCATds_DeleteEmptyTitles( zVIEW vViewToInstance0 );
+
+//end
+//start lMLCATrk 2016.10.04 09:45:53
+zOPER_EXPORT zSHORT OPERATION
+olMLCATrk_BuildDifferencesMLC( zVIEW vViewToInstance0,
+                               zVIEW vSourceCompareObject1 );
+
+zOPER_EXPORT zSHORT OPERATION
+olMLCATrk_BuildDifferencesSLC( zVIEW vViewToInstance0,
+                               zVIEW vlMLCASrc1,
+                               zVIEW vlSLCAnal2 );
+
+zOPER_EXPORT zSHORT OPERATION
+olMLCATrk_SetDifferencesSortVs( zVIEW vViewToInstance0,
+                                zLONG lSortNumber1,
+                                zPCHAR pchSectionTitleName2 );
+
+zOPER_EXPORT zSHORT OPERATION
+olMLCATrk_DeleteEmptyTitles( zVIEW vViewToInstance0 );
 
 //end

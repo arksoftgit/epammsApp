@@ -1,0 +1,13 @@
+z1000-Zeidon    3752277F TZWDVORO                         09/28/16   13:10:02 1.0a2   
+eViewObjRef 1
+aZKey      928130943
+aNextZKeyToAssign 928130943
+aName      mSubLC_Root
+
+eLOD       2
+aZKey      69035258
+aName      mSubLC
+aDesc      Subregistrant Label Content Maintenance
+aDLL_Name  mSubLC
+aActivateConstraint Y
+

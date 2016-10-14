@@ -4233,6 +4233,84 @@ AcceptAddNewStorDispSect( View     ViewToWindow )
 
 
 //:DIALOG OPERATION
+//:AcceptGoNextStorDispStmt( VIEW ViewToWindow )
+
+//:   VIEW mMasLC REGISTERED AS mMasLC
+public int 
+AcceptGoNextStorDispStmt( View     ViewToWindow )
+{
+   zVIEW    mMasLC = new zVIEW( );
+   int      RESULT = 0;
+   //:SHORT nRC
+   int      nRC = 0;
+
+   RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
+
+   //:nRC = AcceptSubobject( mMasLC, "M_StorageDisposalStatement" )
+   nRC = AcceptSubobject( mMasLC, "M_StorageDisposalStatement" );
+   //:IF nRC < 0
+   if ( nRC < 0 )
+   { 
+      //:MessageSend( ViewToWindow, "", "Accept and Go Next Storage and Disposal Statement",
+      //:             "The Storage and Disposal Statement contains errors.",
+      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      MessageSend( ViewToWindow, "", "Accept and Go Next Storage and Disposal Statement", "The Storage and Disposal Statement contains errors.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+      //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
+      //:RETURN nRC
+      if(8==8)return( nRC );
+   } 
+
+   //:END
+   //:SetCursorNextEntity( mMasLC, "M_StorageDisposalStatement", "" )
+   SetCursorNextEntity( mMasLC, "M_StorageDisposalStatement", "" );
+   //:CreateTemporalSubobjectVersion( mMasLC, "M_StorageDisposalStatement" )
+   CreateTemporalSubobjectVersion( mMasLC, "M_StorageDisposalStatement" );
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:AcceptGoPrevStorDispStmt( VIEW ViewToWindow )
+
+//:   VIEW mMasLC REGISTERED AS mMasLC
+public int 
+AcceptGoPrevStorDispStmt( View     ViewToWindow )
+{
+   zVIEW    mMasLC = new zVIEW( );
+   int      RESULT = 0;
+   //:SHORT nRC
+   int      nRC = 0;
+
+   RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
+
+   //:nRC = AcceptSubobject( mMasLC, "M_StorageDisposalStatement" )
+   nRC = AcceptSubobject( mMasLC, "M_StorageDisposalStatement" );
+   //:IF nRC < 0
+   if ( nRC < 0 )
+   { 
+      //:MessageSend( ViewToWindow, "", "Accept and Go Previous Storage and Disposal Statement",
+      //:             "The Storage and Disposal Statement contains errors.",
+      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      MessageSend( ViewToWindow, "", "Accept and Go Previous Storage and Disposal Statement", "The Storage and Disposal Statement contains errors.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+      //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
+      //:RETURN nRC
+      if(8==8)return( nRC );
+   } 
+
+   //:END
+   //:SetCursorPrevEntity( mMasLC, "M_StorageDisposalStatement", "" )
+   SetCursorPrevEntity( mMasLC, "M_StorageDisposalStatement", "" );
+   //:CreateTemporalSubobjectVersion( mMasLC, "M_StorageDisposalStatement" )
+   CreateTemporalSubobjectVersion( mMasLC, "M_StorageDisposalStatement" );
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
 //:GOTO_StorageDispStatementDelete( VIEW ViewToWindow )
 
 //:   VIEW mMasLC REGISTERED AS mMasLC
