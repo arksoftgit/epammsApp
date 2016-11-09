@@ -1,4 +1,4 @@
-// wSLCPrecautionarySection   Generate Timestamp: 20161010115316494
+// wSLCPrecautionarySection   Generate Timestamp: 20161101134411578
 
 var isWindowClosing = true;
 var timerID = null;
@@ -191,6 +191,21 @@ function CheckAllInGrid(id, CheckBoxName) // triggered by no text checkbox
    }
 }
 
+function RefreshTitle( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wSLCPrecautionarySection.zAction.value = "RefreshTitle";
+      document.wSLCPrecautionarySection.submit( );
+   }
+}
+
 function smSaveAndReturnMLC( )
 {
 
@@ -352,6 +367,21 @@ function smDisplayHazardSection( )
       _DisableFormElements( true );
 
       document.wSLCPrecautionarySection.zAction.value = "smDisplayHazardSection";
+      document.wSLCPrecautionarySection.submit( );
+   }
+}
+
+function smDilution( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wSLCPrecautionarySection.zAction.value = "smDilution";
       document.wSLCPrecautionarySection.submit( );
    }
 }

@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSLCSLC_Sidebar   Generate Timestamp: 20161010115316616 --%>
+<%-- wSLCSLC_Sidebar   Generate Timestamp: 20161019144229307 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -208,6 +208,23 @@ if ( strActionToProcess != null )
          strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_ReturnToParent, "", "" );
       }
 
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "Dilution" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wSLCSLC_Sidebar", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Next Window
+      strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_ReplaceWindowWithModalWindow, "wSLC", "Dilution" );
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
@@ -846,41 +863,41 @@ else
 <div id="sidenavigation">
    <ul id="MLC_SideBar" name="MLC_SideBar">
 <%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "New4" );
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "SaveReturn" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="New4" name="New4"><a href="#"  onclick="SaveAndReturnMLC()">Save & Return</a></li>
+       <li id="SaveReturn" name="SaveReturn"><a href="#"  onclick="SaveAndReturnMLC()">Save & Return</a></li>
 <%
    }
 %>
 
 <%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "New6" );
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "Save" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="New6" name="New6"><a href="#"  onclick="SaveSLC()">Save</a></li>
+       <li id="Save" name="Save"><a href="#"  onclick="SaveSLC()">Save</a></li>
 <%
    }
 %>
 
 <%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "New5" );
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "CancelReturn" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="New5" name="New5"><a href="#"  onclick="CancelAndReturnSLC()">Cancel & Return</a></li>
+       <li id="CancelReturn" name="CancelReturn"><a href="#"  onclick="CancelAndReturnSLC()">Cancel & Return</a></li>
 <%
    }
 %>
 
 <%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "New1" );
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "VersionData" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="New1" name="New1"><a href="#"  onclick="DisplayVersionData()">Version Data</a></li>
+       <li id="VersionData" name="VersionData"><a href="#"  onclick="DisplayVersionData()">Version Data</a></li>
 <%
    }
 %>
@@ -920,7 +937,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="StorDisp" name="StorDisp"><a href="#"  onclick="DisplayStorDispSect()">Storage Disposal</a></li>
+       <li id="StorDisp" name="StorDisp"><a href="#"  onclick="DisplayStorDispSect()">Storage & Disposal</a></li>
 <%
    }
 %>
@@ -951,6 +968,16 @@ else
    {
 %>
        <li id="EnvironmentalHazard" name="EnvironmentalHazard"><a href="#"  onclick="DisplayHazardSection()">Environmental Hazard</a></li>
+<%
+   }
+%>
+
+<%
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "DilutionEntries" );
+   if ( !csrRC.isSet() ) //if ( nRC < 0 )
+   {
+%>
+       <li id="DilutionEntries" name="DilutionEntries"><a href="#"  onclick="Dilution()">Dilution Entries</a></li>
 <%
    }
 %>
@@ -1028,11 +1055,14 @@ else
    View lSPLDLST = null;
    View mLLD_LST = null;
    View mMasLC = null;
+   View mMasLC_Root = null;
+   View mMasProd = null;
    View mSPLDef = null;
    View mSubLC = null;
    View mSubLC_Root = null;
    View mSubProd = null;
    View mSubreg = null;
+   View wWebXfer = null;
    String strRadioGroupValue = "";
    String strComboCurrentValue = "";
    String strAutoComboBoxExternalValue = "";

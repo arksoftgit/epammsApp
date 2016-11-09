@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSLCGeneratedTextDisplay   Generate Timestamp: 20161011165917798 --%>
+<%-- wSLCGeneratedTextDisplay   Generate Timestamp: 20161019144228795 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -431,11 +431,14 @@ else
    View lSPLDLST = null;
    View mLLD_LST = null;
    View mMasLC = null;
+   View mMasLC_Root = null;
+   View mMasProd = null;
    View mSPLDef = null;
    View mSubLC = null;
    View mSubLC_Root = null;
    View mSubProd = null;
    View mSubreg = null;
+   View wWebXfer = null;
    String strRadioGroupValue = "";
    String strComboCurrentValue = "";
    String strAutoComboBoxExternalValue = "";

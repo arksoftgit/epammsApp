@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSLCPrecautionarySection   Generate Timestamp: 20161010115316494 --%>
+<%-- wSLCPrecautionarySection   Generate Timestamp: 20161101134411578 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -60,41 +60,60 @@ public int DoInputMapping( HttpServletRequest request,
    mSubLC = task.getViewByName( "mSubLC" );
    if ( VmlOperation.isValid( mSubLC ) )
    {
-      // EditBox: PrecautionaryTitle
+      // CheckBox: Combine
       nRC = mSubLC.cursor( "S_GeneralSection" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 ) // CursorResult.SET
       {
-         strMapValue = request.getParameter( "PrecautionaryTitle" );
+         strMapValue = request.getParameter( "Combine" );
          try
          {
             if ( webMapping )
-               VmlOperation.CreateMessage( task, "PrecautionaryTitle", "", strMapValue );
+               VmlOperation.CreateMessage( task, "Combine", "", strMapValue );
             else
-               mSubLC.cursor( "S_GeneralSection" ).getAttribute( "Title" ).setValue( strMapValue, "" );
+               mSubLC.cursor( "S_GeneralSection" ).getAttribute( "Combined" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
             nMapError = -16;
-            VmlOperation.CreateMessage( task, "PrecautionaryTitle", e.getReason( ), strMapValue );
+            VmlOperation.CreateMessage( task, "Combine", e.getReason( ), strMapValue );
          }
       }
 
-      // EditBox: PrecautionarySubtitle
+      // CheckBox: BoldTitle
       nRC = mSubLC.cursor( "S_GeneralSection" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 ) // CursorResult.SET
       {
-         strMapValue = request.getParameter( "PrecautionarySubtitle" );
+         strMapValue = request.getParameter( "BoldTitle" );
          try
          {
             if ( webMapping )
-               VmlOperation.CreateMessage( task, "PrecautionarySubtitle", "", strMapValue );
+               VmlOperation.CreateMessage( task, "BoldTitle", "", strMapValue );
             else
-               mSubLC.cursor( "S_GeneralSection" ).getAttribute( "Subtitle" ).setValue( strMapValue, "" );
+               mSubLC.cursor( "S_GeneralSection" ).getAttribute( "BoldTitle" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
             nMapError = -16;
-            VmlOperation.CreateMessage( task, "PrecautionarySubtitle", e.getReason( ), strMapValue );
+            VmlOperation.CreateMessage( task, "BoldTitle", e.getReason( ), strMapValue );
+         }
+      }
+
+      // CheckBox: BoldText
+      nRC = mSubLC.cursor( "S_GeneralSection" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 ) // CursorResult.SET
+      {
+         strMapValue = request.getParameter( "BoldText" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "BoldText", "", strMapValue );
+            else
+               mSubLC.cursor( "S_GeneralSection" ).getAttribute( "BoldText" ).setValue( strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "BoldText", e.getReason( ), strMapValue );
          }
       }
 
@@ -235,6 +254,23 @@ if ( strActionToProcess != null )
          vMsgQ.drop( );
       }
 
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "RefreshTitle" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wSLCPrecautionarySection", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Next Window
+      strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_StayOnWindowWithRefresh, "", "" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
    }
 
    while ( bDone == false && strActionToProcess.equals( "ZEIDON_ComboBoxSubmit" ) )
@@ -564,6 +600,23 @@ if ( strActionToProcess != null )
       break;
    }
 
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "smDilution" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wSLCPrecautionarySection", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Next Window
+      strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_ReplaceWindowWithModalWindow, "wSLC", "Dilution" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
    while ( bDone == false && StringUtils.equals( strActionToProcess, "smDisplaySurfacesSection" ) )
    {
       bDone = true;
@@ -870,41 +923,41 @@ else
 <div id="sidenavigation">
    <ul id="MLC_SideBar" name="MLC_SideBar">
 <%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "New4" );
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "SaveReturn" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="smNew4" name="smNew4"><a href="#"  onclick="smSaveAndReturnMLC()">Save & Return</a></li>
+       <li id="smSaveReturn" name="smSaveReturn"><a href="#"  onclick="smSaveAndReturnMLC()">Save & Return</a></li>
 <%
    }
 %>
 
 <%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "New6" );
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "Save" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="smNew6" name="smNew6"><a href="#"  onclick="smSaveSLC()">Save</a></li>
+       <li id="smSave" name="smSave"><a href="#"  onclick="smSaveSLC()">Save</a></li>
 <%
    }
 %>
 
 <%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "New5" );
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "CancelReturn" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="smNew5" name="smNew5"><a href="#"  onclick="smCancelAndReturnSLC()">Cancel & Return</a></li>
+       <li id="smCancelReturn" name="smCancelReturn"><a href="#"  onclick="smCancelAndReturnSLC()">Cancel & Return</a></li>
 <%
    }
 %>
 
 <%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "New1" );
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "VersionData" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="smNew1" name="smNew1"><a href="#"  onclick="smDisplayVersionData()">Version Data</a></li>
+       <li id="smVersionData" name="smVersionData"><a href="#"  onclick="smDisplayVersionData()">Version Data</a></li>
 <%
    }
 %>
@@ -944,7 +997,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="smStorDisp" name="smStorDisp"><a href="#"  onclick="smDisplayStorDispSect()">Storage Disposal</a></li>
+       <li id="smStorDisp" name="smStorDisp"><a href="#"  onclick="smDisplayStorDispSect()">Storage & Disposal</a></li>
 <%
    }
 %>
@@ -975,6 +1028,16 @@ else
    {
 %>
        <li id="smEnvironmentalHazard" name="smEnvironmentalHazard"><a href="#"  onclick="smDisplayHazardSection()">Environmental Hazard</a></li>
+<%
+   }
+%>
+
+<%
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "DilutionEntries" );
+   if ( !csrRC.isSet() ) //if ( nRC < 0 )
+   {
+%>
+       <li id="smDilutionEntries" name="smDilutionEntries"><a href="#"  onclick="smDilution()">Dilution Entries</a></li>
 <%
    }
 %>
@@ -1052,11 +1115,14 @@ else
    View lSPLDLST = null;
    View mLLD_LST = null;
    View mMasLC = null;
+   View mMasLC_Root = null;
+   View mMasProd = null;
    View mSPLDef = null;
    View mSubLC = null;
    View mSubLC_Root = null;
    View mSubProd = null;
    View mSubreg = null;
+   View wWebXfer = null;
    String strRadioGroupValue = "";
    String strComboCurrentValue = "";
    String strAutoComboBoxExternalValue = "";
@@ -1209,46 +1275,32 @@ else
 
 </td>
 <td valign="top"  class="text12" style="width:550px;">
-<% /* PrecautionaryTitle:EditBox */ %>
-<%
-   strErrorMapValue = VmlOperation.CheckError( "PrecautionaryTitle", strError );
-   if ( !StringUtils.isBlank( strErrorMapValue ) )
-   {
-      if ( StringUtils.equals( strErrorFlag, "Y" ) )
-         strErrorColor = "color:red;";
-   }
+<% /* PrecautionaryTitle:Text */ %>
+<% strTextDisplayValue = "";
+   mSubLC = task.getViewByName( "mSubLC" );
+   if ( VmlOperation.isValid( mSubLC ) == false )
+      task.log( ).debug( "Invalid View: " + "PrecautionaryTitle" );
    else
    {
-      strErrorColor = "";
-      mSubLC = task.getViewByName( "mSubLC" );
-      if ( VmlOperation.isValid( mSubLC ) == false )
-         task.log( ).debug( "Invalid View: " + "PrecautionaryTitle" );
-      else
+      nRC = mSubLC.cursor( "S_GeneralSection" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
       {
-         nRC = mSubLC.cursor( "S_GeneralSection" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-         {
-            try
-            {
-               strErrorMapValue = mSubLC.cursor( "S_GeneralSection" ).getAttribute( "Title" ).getString( "" );
-            }
-            catch (Exception e)
-            {
-               out.println("There is an error on PrecautionaryTitle: " + e.getMessage());
-               task.log().error( "*** Error on ctrl PrecautionaryTitle", e );
-            }
-            if ( strErrorMapValue == null )
-               strErrorMapValue = "";
-
-            task.log( ).debug( "S_GeneralSection.Title: " + strErrorMapValue );
-         }
-         else
-            task.log( ).debug( "Entity does not exist for PrecautionaryTitle: " + "mSubLC.S_GeneralSection" );
+      try
+      {
+         strTextDisplayValue = mSubLC.cursor( "S_GeneralSection" ).getAttribute( "Title" ).getString( "" );
+      }
+      catch (Exception e)
+      {
+         out.println("There is an error on PrecautionaryTitle: " + e.getMessage());
+         task.log().info( "*** Error on ctrl PrecautionaryTitle" + e.getMessage() );
+      }
+         if ( strTextDisplayValue == null )
+            strTextDisplayValue = "";
       }
    }
 %>
 
-<input class="text12" name="PrecautionaryTitle" id="PrecautionaryTitle" maxlength="254" style="width:550px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<span class="text12"  id="PrecautionaryTitle" name="PrecautionaryTitle" style="width:550px;height:16px;"><%=strTextDisplayValue%></span>
 
 </td>
 </tr>
@@ -1260,46 +1312,32 @@ else
 
 </td>
 <td valign="top"  class="text12" style="width:550px;">
-<% /* PrecautionarySubtitle:EditBox */ %>
-<%
-   strErrorMapValue = VmlOperation.CheckError( "PrecautionarySubtitle", strError );
-   if ( !StringUtils.isBlank( strErrorMapValue ) )
-   {
-      if ( StringUtils.equals( strErrorFlag, "Y" ) )
-         strErrorColor = "color:red;";
-   }
+<% /* PrecautionarySubtitle:Text */ %>
+<% strTextDisplayValue = "";
+   mSubLC = task.getViewByName( "mSubLC" );
+   if ( VmlOperation.isValid( mSubLC ) == false )
+      task.log( ).debug( "Invalid View: " + "PrecautionarySubtitle" );
    else
    {
-      strErrorColor = "";
-      mSubLC = task.getViewByName( "mSubLC" );
-      if ( VmlOperation.isValid( mSubLC ) == false )
-         task.log( ).debug( "Invalid View: " + "PrecautionarySubtitle" );
-      else
+      nRC = mSubLC.cursor( "S_GeneralSection" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
       {
-         nRC = mSubLC.cursor( "S_GeneralSection" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-         {
-            try
-            {
-               strErrorMapValue = mSubLC.cursor( "S_GeneralSection" ).getAttribute( "Subtitle" ).getString( "" );
-            }
-            catch (Exception e)
-            {
-               out.println("There is an error on PrecautionarySubtitle: " + e.getMessage());
-               task.log().error( "*** Error on ctrl PrecautionarySubtitle", e );
-            }
-            if ( strErrorMapValue == null )
-               strErrorMapValue = "";
-
-            task.log( ).debug( "S_GeneralSection.Subtitle: " + strErrorMapValue );
-         }
-         else
-            task.log( ).debug( "Entity does not exist for PrecautionarySubtitle: " + "mSubLC.S_GeneralSection" );
+      try
+      {
+         strTextDisplayValue = mSubLC.cursor( "S_GeneralSection" ).getAttribute( "Subtitle" ).getString( "" );
+      }
+      catch (Exception e)
+      {
+         out.println("There is an error on PrecautionarySubtitle: " + e.getMessage());
+         task.log().info( "*** Error on ctrl PrecautionarySubtitle" + e.getMessage() );
+      }
+         if ( strTextDisplayValue == null )
+            strTextDisplayValue = "";
       }
    }
 %>
 
-<input class="text12" name="PrecautionarySubtitle" id="PrecautionarySubtitle" maxlength="2048" style="width:550px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<span class="text12"  id="PrecautionarySubtitle" name="PrecautionarySubtitle" style="width:550px;height:16px;"><%=strTextDisplayValue%></span>
 
 </td>
 </tr>
@@ -1323,21 +1361,92 @@ else
 <div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox2:GroupBox */ %>
 
-<div id="GroupBox2" name="GroupBox2" style="width:730px;height:34px;float:left;">  <!-- GroupBox2 --> 
+<div id="GroupBox2" name="GroupBox2" style="width:730px;height:24px;float:left;">  <!-- GroupBox2 --> 
 
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GBPrecautionaryStatements:GroupBox */ %>
-<div id="GBPrecautionaryStatements" name="GBPrecautionaryStatements" style="float:left;width:486px;"  class="listgroup">
+<div id="GBPrecautionaryStatements" name="GBPrecautionaryStatements" style="float:left;width:636px;"  class="listgroup">
 
-<table cols=0 style="width:486px;"  class="grouptable">
+<table cols=0 style="width:636px;"  class="grouptable">
 
 <tr>
-<td valign="top"  class="listheader" style="width:238px;">
+<td valign="top"  class="listheader" style="width:232px;">
 <% /* PrecautionaryStatements:Text */ %>
 
-<span class="listheader"  id="PrecautionaryStatements" name="PrecautionaryStatements" style="width:238px;height:16px;">Precautionary Statements</span>
+<span class="listheader"  id="PrecautionaryStatements" name="PrecautionaryStatements" style="width:214px;height:16px;">Precautionary Statements</span>
+
+</td>
+<td valign="top" style="width:102px;">
+<% /* Combine:CheckBox */ %>
+<%
+   strErrorMapValue = "";
+   mSubLC = task.getViewByName( "mSubLC" );
+   if ( VmlOperation.isValid( mSubLC ) == false )
+      task.log( ).debug( "Invalid View: " + "Combine" );
+   else
+   {
+      nRC = mSubLC.cursor( "S_GeneralSection" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+         strRadioGroupValue = mSubLC.cursor( "S_GeneralSection" ).getAttribute( "Combined" ).getString( );
+   }
+
+   if ( StringUtils.equals( strRadioGroupValue, "Y" ) )
+      strErrorMapValue = "checked=\"checked\"";
+%>
+
+<input type="checkbox" name="Combine" id="Combine"  value="Y" <%=strErrorMapValue%> style="">
+<span style="width:102px;height:18px;">&nbsp Combine</span>
+
+</td>
+<td valign="top" style="width:102px;">
+<% /* BoldTitle:CheckBox */ %>
+<%
+   strErrorMapValue = "";
+   mSubLC = task.getViewByName( "mSubLC" );
+   if ( VmlOperation.isValid( mSubLC ) == false )
+      task.log( ).debug( "Invalid View: " + "BoldTitle" );
+   else
+   {
+      nRC = mSubLC.cursor( "S_GeneralSection" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+         strRadioGroupValue = mSubLC.cursor( "S_GeneralSection" ).getAttribute( "BoldTitle" ).getString( );
+   }
+
+   if ( StringUtils.equals( strRadioGroupValue, "Y" ) )
+      strErrorMapValue = "checked=\"checked\"";
+%>
+
+<input type="checkbox" name="BoldTitle" id="BoldTitle"  value="Y" <%=strErrorMapValue%> style="">
+<span style="width:102px;height:18px;">&nbsp Bold Title</span>
+
+</td>
+<td valign="top" style="width:120px;">
+<% /* BoldText:CheckBox */ %>
+<%
+   strErrorMapValue = "";
+   mSubLC = task.getViewByName( "mSubLC" );
+   if ( VmlOperation.isValid( mSubLC ) == false )
+      task.log( ).debug( "Invalid View: " + "BoldText" );
+   else
+   {
+      nRC = mSubLC.cursor( "S_GeneralSection" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+         strRadioGroupValue = mSubLC.cursor( "S_GeneralSection" ).getAttribute( "BoldText" ).getString( );
+   }
+
+   if ( StringUtils.equals( strRadioGroupValue, "Y" ) )
+      strErrorMapValue = "checked=\"checked\"";
+%>
+
+<input type="checkbox" name="BoldText" id="BoldText"  value="Y" <%=strErrorMapValue%> style="">
+<span style="width:102px;height:18px;">&nbsp Bold Text</span>
+
+</td>
+<td valign="top" style="width:60px;">
+<% /* Refresh:PushBtn */ %>
+<button type="button"  id="Refresh" name="Refresh" value="Refresh" onclick="RefreshTitle( )"  style="width:60px;height:18px;">Refresh</button>
 
 </td>
 </tr>
@@ -1355,7 +1464,7 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:10px;width:100px;"></div>
+<div style="height:4px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
@@ -1398,7 +1507,7 @@ try
          nRC = vGridPrecautionary.cursor( "S_GeneralStatement" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditPrecautionary = vGridPrecautionary.cursor( "S_GeneralStatement" ).getAttribute( "Text" ).getString( "" );
+            strGridEditPrecautionary = vGridPrecautionary.cursor( "S_GeneralStatement" ).getAttribute( "dGenStmtCombinedTitleText" ).getString( "" );
 
             if ( strGridEditPrecautionary == null )
                strGridEditPrecautionary = "";

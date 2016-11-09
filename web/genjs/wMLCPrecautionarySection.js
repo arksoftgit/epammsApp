@@ -1,4 +1,4 @@
-// wMLCPrecautionarySection   Generate Timestamp: 20160914154446006
+// wMLCPrecautionarySection   Generate Timestamp: 20161101134335617
 
 var isWindowClosing = true;
 var timerID = null;
@@ -206,7 +206,7 @@ function GOTO_AddPrecautionaryStatement( )
    }
 }
 
-function Refresh( )
+function GOTO_PrecautionaryStmtDelete( strTagEntityKey )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -214,9 +214,13 @@ function Refresh( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      var nIdx = strTagEntityKey.lastIndexOf( '::' );
+      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
+
+      document.wMLCPrecautionarySection.zTableRowSelect.value = strEntityKey;
       _DisableFormElements( true );
 
-      document.wMLCPrecautionarySection.zAction.value = "Refresh";
+      document.wMLCPrecautionarySection.zAction.value = "GOTO_PrecautionaryStmtDelete";
       document.wMLCPrecautionarySection.submit( );
    }
 }
@@ -240,7 +244,7 @@ function GOTO_UpdatePrecautionaryStmt( strTagEntityKey )
    }
 }
 
-function GOTO_PrecautionaryStmtDelete( strTagEntityKey )
+function Refresh( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -248,13 +252,9 @@ function GOTO_PrecautionaryStmtDelete( strTagEntityKey )
 
    if ( _IsDocDisabled( ) == false )
    {
-      var nIdx = strTagEntityKey.lastIndexOf( '::' );
-      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
-
-      document.wMLCPrecautionarySection.zTableRowSelect.value = strEntityKey;
       _DisableFormElements( true );
 
-      document.wMLCPrecautionarySection.zAction.value = "GOTO_PrecautionaryStmtDelete";
+      document.wMLCPrecautionarySection.zAction.value = "Refresh";
       document.wMLCPrecautionarySection.submit( );
    }
 }

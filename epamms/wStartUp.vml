@@ -4187,7 +4187,7 @@ ResumeEditingSPLD( VIEW ViewToWindow )
          NAME VIEW vTemp szViewName
          IF szViewName = "mSPLDef"
             // Build the work components
-            BuildCompositeEntriesForSPLD( vTemp )
+            BuildCompEntriesForSPLD( vTemp )
          END
          SET CURSOR NEXT mUser.ResumeObject
       END

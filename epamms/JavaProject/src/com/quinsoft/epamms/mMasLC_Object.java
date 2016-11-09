@@ -120,15 +120,15 @@ omMasLC_dIngredientName( View     mMasLC,
          //:RETURN 0
          if(8==8)return( 0 );
 
-         //:/* end zDERIVED_GET */
+         //:// end zDERIVED_GET
          //:OF   zDERIVED_SET:
          case zDERIVED_SET :
             break ;
       } 
 
 
-      //:  /* end zDERIVED_SET */
-      //:END  /* case */
+      //:  // end zDERIVED_SET
+      //:END  // case
       return( 0 );
    } 
 
@@ -275,15 +275,15 @@ omMasLC_dDU_StmtTitleTxtKey( View     mMasLC,
          StoreStringInRecord( mMasLC, InternalEntityStructure, InternalAttribStructure, szDisplayStatement );
          break ;
 
-      //:  /* end zDERIVED_GET */
+      //:  // end zDERIVED_GET
       //:OF   zDERIVED_SET:
       case zDERIVED_SET :
          break ;
    } 
 
 
-   //:     /* end zDERIVED_SET */
-   //:END  /* case */
+   //:     // end zDERIVED_SET
+   //:END  // case
    return( 0 );
 // END
 } 
@@ -405,15 +405,15 @@ omMasLC_dMasterProductNameNbr( View     mMasLC,
          //:RETURN 0
          if(8==8)return( 0 );
 
-         //:/* end zDERIVED_GET */
+         //:// end zDERIVED_GET
          //:OF   zDERIVED_SET:
          case zDERIVED_SET :
             break ;
       } 
 
 
-      //:  /* end zDERIVED_SET */
-      //:END  /* case */
+      //:  // end zDERIVED_SET
+      //:END  // case
       return( 0 );
    } 
 
@@ -528,15 +528,15 @@ omMasLC_dRegistrantNameID( View     mMasLC,
          StoreStringInRecord( mMasLC, InternalEntityStructure, InternalAttribStructure, szString );
          //:RETURN 0
          if(8==8)return( 0 );
-         //:/* end zDERIVED_GET */
+         //:// end zDERIVED_GET
          //:OF   zDERIVED_SET:
          case zDERIVED_SET :
             break ;
       } 
 
 
-      //:  /* end zDERIVED_SET */
-      //:END  /* case */
+      //:  // end zDERIVED_SET
+      //:END  // case
       return( 0 );
    } 
 
@@ -1143,21 +1143,21 @@ omMasLC_CopyMLCToNewProduct( View     TargetMLC,
       //:END
 
       //:// Driving Usage
-      //:FOR EACH SourceMLC.M_DrivingUsage
-      RESULT = SetCursorFirstEntity( SourceMLC, "M_DrivingUsage", "" );
+      //:FOR EACH SourceMLC.M_ClaimsDrivingUsage
+      RESULT = SetCursorFirstEntity( SourceMLC, "M_ClaimsDrivingUsage", "" );
       while ( RESULT > zCURSOR_UNCHANGED )
       { 
          //:SET CURSOR FIRST TargetMLC.MP_Usage WITHIN TargetMLC.MasterLabelContent
-         //:           WHERE TargetMLC.MP_Usage.ID = SourceMLC.M_DrivingUsage.ID
+         //:           WHERE TargetMLC.MP_Usage.ID = SourceMLC.M_ClaimsDrivingUsage.ID
          {MutableInt mi_lTempInteger_2 = new MutableInt( lTempInteger_2 );
-                   GetIntegerFromAttribute( mi_lTempInteger_2, SourceMLC, "M_DrivingUsage", "ID" );
+                   GetIntegerFromAttribute( mi_lTempInteger_2, SourceMLC, "M_ClaimsDrivingUsage", "ID" );
          lTempInteger_2 = mi_lTempInteger_2.intValue( );}
          RESULT = SetCursorFirstEntityByInteger( TargetMLC, "MP_Usage", "ID", lTempInteger_2, "MasterLabelContent" );
          //:IF RESULT >= zCURSOR_SET
          if ( RESULT >= zCURSOR_SET )
          { 
-            //:INCLUDE TargetMLC.M_DrivingUsage FROM TargetMLC.M_Usage
-            RESULT = IncludeSubobjectFromSubobject( TargetMLC, "M_DrivingUsage", TargetMLC, "M_Usage", zPOS_AFTER );
+            //:INCLUDE TargetMLC.M_ClaimsDrivingUsage FROM TargetMLC.M_Usage
+            RESULT = IncludeSubobjectFromSubobject( TargetMLC, "M_ClaimsDrivingUsage", TargetMLC, "M_Usage", zPOS_AFTER );
             //:ELSE
          } 
          else
@@ -1168,7 +1168,7 @@ omMasLC_CopyMLCToNewProduct( View     TargetMLC,
             IssueError( TargetMLC, 0, 0, "Programming Error 2" );
          } 
 
-         RESULT = SetCursorNextEntity( SourceMLC, "M_DrivingUsage", "" );
+         RESULT = SetCursorNextEntity( SourceMLC, "M_ClaimsDrivingUsage", "" );
          //:END
       } 
 
@@ -1329,7 +1329,7 @@ omMasLC_ObjectConstraints( View     mMasLC,
       case zOCE_ACTIVATE :
 
          //:// Go to build the flat display of all components subobject.
-         //://BuildCompositeEntries( mMasLC )
+         //://BuildCompEntriesForMLC( mMasLC )
 
          //:// Build Usage Group Usages.
          //:BuildUsageGroupEntries( mMasLC )
@@ -1338,25 +1338,25 @@ omMasLC_ObjectConstraints( View     mMasLC,
 
 
 
-      //:  /* end zOCE_ACTIVATE */
+      //:  // end zOCE_ACTIVATE */
       //:OF   zOCE_ACTIVATE_EMPTY:
       case zOCE_ACTIVATE_EMPTY :
          break ;
 
-      //:  /* end zOCE_ACTIVATE_EMPTY */
+      //:  // end zOCE_ACTIVATE_EMPTY */
       //:OF   zOCE_COMMIT:
       case zOCE_COMMIT :
          break ;
 
-      //:  /* end zOCE_COMMIT */
+      //:  // end zOCE_COMMIT */
       //:OF   zOCE_DROPOI:
       case zOCE_DROPOI :
          break ;
    } 
 
 
-   //:     /* end zOCE_DROPOI */
-   //:END  /* case */
+   //:     // end zOCE_DROPOI */
+   //:END  // case
    return( 0 );
 // END
 } 
@@ -2320,15 +2320,15 @@ omMasLC_dFullHazardStatement( View     mMasLC,
          //:RETURN 0
          if(8==8)return( 0 );
 
-         //:/* end zDERIVED_GET */
+         //:// end zDERIVED_GET
          //:OF   zDERIVED_SET:
          case zDERIVED_SET :
             break ;
       } 
 
 
-      //:/* end zDERIVED_SET */
-      //:END  /* case */
+      //:// end zDERIVED_SET
+      //:END  // case
       return( 0 );
    } 
 
@@ -2507,15 +2507,15 @@ omMasLC_dUsgTextSubUsageNames( View     mMasLC,
          StoreStringInRecord( mMasLC, InternalEntityStructure, InternalAttribStructure, szDisplayStatement );
          break ;
 
-      //:  /* end zDERIVED_GET */
+      //:  // end zDERIVED_GET
       //:OF   zDERIVED_SET:
       case zDERIVED_SET :
          break ;
    } 
 
 
-   //:     /* end zDERIVED_SET */
-   //:END  /* case */
+   //:     // end zDERIVED_SET
+   //:END  // case
    return( 0 );
 // END
 } 
@@ -2637,15 +2637,15 @@ omMasLC_dDU_StatementTitleText( View     mMasLC,
          StoreStringInRecord( mMasLC, InternalEntityStructure, InternalAttribStructure, szDisplayStatement );
          break ;
 
-      //:  /* end zDERIVED_GET */
+      //:  // end zDERIVED_GET
       //:OF   zDERIVED_SET:
       case zDERIVED_SET :
          break ;
    } 
 
 
-   //:     /* end zDERIVED_SET */
-   //:END  /* case */
+   //:     // end zDERIVED_SET
+   //:END  // case
    return( 0 );
 // END
 } 
@@ -2712,15 +2712,15 @@ omMasLC_dDU_StmtTitleKeyword( View     mMasLC,
          //:RETURN 0
          if(8==8)return( 0 );
 
-         //:/* end zDERIVED_GET */
+         //:// end zDERIVED_GET
          //:OF   zDERIVED_SET:
          case zDERIVED_SET :
             break ;
       } 
 
 
-      //:  /* end zDERIVED_SET */
-      //:END  /* case */
+      //:  // end zDERIVED_SET
+      //:END  // case
       return( 0 );
    } 
 
@@ -2790,15 +2790,15 @@ omMasLC_dDU_StmtTextKeyword( View     mMasLC,
          //:RETURN 0
          if(8==8)return( 0 );
 
-         //:/* end zDERIVED_GET */
+         //:// end zDERIVED_GET
          //:OF   zDERIVED_SET:
          case zDERIVED_SET :
             break ;
       } 
 
 
-      //:  /* end zDERIVED_SET */
-      //:END  /* case */
+      //:  // end zDERIVED_SET
+      //:END  // case
       return( 0 );
    } 
 
@@ -2899,15 +2899,15 @@ omMasLC_dDU_SubStmtTitleText( View     mMasLC,
          //:RETURN 0
          if(8==8)return( 0 );
 
-         //:/* end zDERIVED_GET */
+         //:// end zDERIVED_GET
          //:OF   zDERIVED_SET:
          case zDERIVED_SET :
             break ;
       } 
 
 
-      //:  /* end zDERIVED_SET */
-      //:END  /* case */
+      //:  // end zDERIVED_SET
+      //:END  // case
       return( 0 );
    } 
 
@@ -2950,20 +2950,20 @@ omMasLC_dDU_DrivingUsgTxtNames( View     mMasLC,
       //:OF   zDERIVED_GET:
       case zDERIVED_GET :
 
-         //:IF mMasLC.M_DrivingUsage EXISTS
-         lTempInteger_0 = CheckExistenceOfEntity( mMasLC, "M_DrivingUsage" );
+         //:IF mMasLC.M_ClaimsDrivingUsage EXISTS
+         lTempInteger_0 = CheckExistenceOfEntity( mMasLC, "M_ClaimsDrivingUsage" );
          if ( lTempInteger_0 == 0 )
          { 
             //:// Display required text combined with optional usage(s).
             //:CreateViewFromView( mMasLC1, mMasLC )
             CreateViewFromView( mMasLC1, mMasLC );
             //:SetCursorFirstEntityByAttr( mMasLC1, "M_UsageType", "UsageType",
-            //:                         mMasLC, "M_DrivingUsage", "UsageType", "" )
-            SetCursorFirstEntityByAttr( mMasLC1, "M_UsageType", "UsageType", mMasLC, "M_DrivingUsage", "UsageType", "" );
+            //:                         mMasLC, "M_ClaimsDrivingUsage", "UsageType", "" )
+            SetCursorFirstEntityByAttr( mMasLC1, "M_UsageType", "UsageType", mMasLC, "M_ClaimsDrivingUsage", "UsageType", "" );
             //:SetCursorFirstEntityByAttr( mMasLC1, "M_Usage", "ID",
-            //:                         mMasLC, "M_DrivingUsage", "ID", "" )
-            SetCursorFirstEntityByAttr( mMasLC1, "M_Usage", "ID", mMasLC, "M_DrivingUsage", "ID", "" );
-            //:// SetCursorFirstEntityByEntityCsr( mMasLC1, "M_Usage", mMasLC, "M_DrivingUsage", "" )
+            //:                         mMasLC, "M_ClaimsDrivingUsage", "ID", "" )
+            SetCursorFirstEntityByAttr( mMasLC1, "M_Usage", "ID", mMasLC, "M_ClaimsDrivingUsage", "ID", "" );
+            //:// SetCursorFirstEntityByEntityCsr( mMasLC1, "M_Usage", mMasLC, "M_ClaimsDrivingUsage", "" )
 
             //:szDisplayStatement = mMasLC1.M_Usage.Name
             {MutableInt mi_lTempInteger_1 = new MutableInt( lTempInteger_1 );
@@ -3102,15 +3102,15 @@ omMasLC_dDU_DrivingUsgTxtNames( View     mMasLC,
          StoreStringInRecord( mMasLC, InternalEntityStructure, InternalAttribStructure, szDisplayStatement );
          break ;
 
-      //:  /* end zDERIVED_GET */
+      //:  // end zDERIVED_GET
       //:OF   zDERIVED_SET:
       case zDERIVED_SET :
          break ;
    } 
 
 
-   //:     /* end zDERIVED_SET */
-   //:END  /* case */
+   //:     // end zDERIVED_SET
+   //:END  // case
    return( 0 );
 // END
 } 
@@ -3198,15 +3198,15 @@ omMasLC_dDU_DrvUsgClaimClass( View     mMasLC,
          StoreStringInRecord( mMasLC, InternalEntityStructure, InternalAttribStructure, szUsageType );
          break ;
 
-      //:  /* end zDERIVED_GET */
+      //:  // end zDERIVED_GET
       //:OF   zDERIVED_SET:
       case zDERIVED_SET :
          break ;
    } 
 
 
-   //:     /* end zDERIVED_SET */
-   //:END  /* case */
+   //:     // end zDERIVED_SET
+   //:END  // case
    return( 0 );
 // END
 } 
@@ -3309,15 +3309,15 @@ omMasLC_dSD_TitleText( View     mMasLC,
          //:RETURN 0
          if(8==8)return( 0 );
 
-         //:/* end zDERIVED_GET */
+         //:// end zDERIVED_GET
          //:OF   zDERIVED_SET:
          case zDERIVED_SET :
             break ;
       } 
 
 
-      //:  /* end zDERIVED_SET */
-      //:END  /* case */
+      //:  // end zDERIVED_SET
+      //:END  // case
       return( 0 );
    } 
 
@@ -3419,15 +3419,15 @@ omMasLC_dSD_SubTitleText( View     mMasLC,
          //:RETURN 0
          if(8==8)return( 0 );
 
-         //:/* end zDERIVED_GET */
+         //:// end zDERIVED_GET
          //:OF   zDERIVED_SET:
          case zDERIVED_SET :
             break ;
       } 
 
 
-      //:  /* end zDERIVED_SET */
-      //:END  /* case */
+      //:  // end zDERIVED_SET
+      //:END  // case
       return( 0 );
    } 
 
@@ -3491,15 +3491,15 @@ omMasLC_dSD_StmtTitleKey( View     mMasLC,
          StoreStringInRecord( mMasLC, InternalEntityStructure, InternalAttribStructure, szStatementTitle );
          break ;
 
-      //:  /* end zDERIVED_GET */
+      //:  // end zDERIVED_GET
       //:OF   zDERIVED_SET:
       case zDERIVED_SET :
          break ;
    } 
 
 
-   //:     /* end zDERIVED_SET */
-   //:END  /* case */
+   //:     // end zDERIVED_SET
+   //:END  // case
    return( 0 );
 // END
 } 
@@ -3564,15 +3564,15 @@ omMasLC_dSD_StmtTextKey( View     mMasLC,
          StoreStringInRecord( mMasLC, InternalEntityStructure, InternalAttribStructure, szStatementText );
          break ;
 
-      //:  /* end zDERIVED_GET */
+      //:  // end zDERIVED_GET
       //:OF   zDERIVED_SET:
       case zDERIVED_SET :
          break ;
    } 
 
 
-   //:     /* end zDERIVED_SET */
-   //:END  /* case */
+   //:     // end zDERIVED_SET
+   //:END  // case
    return( 0 );
 // END
 } 
@@ -3713,15 +3713,15 @@ omMasLC_dSD_StmtTitleTxtKey( View     mMasLC,
          StoreStringInRecord( mMasLC, InternalEntityStructure, InternalAttribStructure, szDisplayStatement );
          break ;
 
-      //:  /* end zDERIVED_GET */
+      //:  // end zDERIVED_GET
       //:OF   zDERIVED_SET:
       case zDERIVED_SET :
          break ;
    } 
 
 
-   //:     /* end zDERIVED_SET */
-   //:END  /* case */
+   //:     // end zDERIVED_SET
+   //:END  // case
    return( 0 );
 // END
 } 
@@ -3874,15 +3874,15 @@ omMasLC_dSD_SubStmtTitleTxtKey( View     mMasLC,
          StoreStringInRecord( mMasLC, InternalEntityStructure, InternalAttribStructure, szDisplayStatement );
          break ;
 
-      //:  /* end zDERIVED_GET */
+      //:  // end zDERIVED_GET
       //:OF   zDERIVED_SET:
       case zDERIVED_SET :
          break ;
    } 
 
 
-   //:     /* end zDERIVED_SET */
-   //:END  /* case */
+   //:     // end zDERIVED_SET
+   //:END  // case
    return( 0 );
 // END
 } 
@@ -3973,15 +3973,15 @@ omMasLC_dEPA_RegistrationNbr( View     mMasLC,
          //:RETURN 0
          if(8==8)return( 0 );
 
-         //:/* end zDERIVED_GET */
+         //:// end zDERIVED_GET
          //:OF   zDERIVED_SET:
          case zDERIVED_SET :
             break ;
       } 
 
 
-      //:  /* end zDERIVED_SET */
-      //:END  /* case */
+      //:  // end zDERIVED_SET */
+      //:END  // case
       return( 0 );
    } 
 
@@ -4035,46 +4035,59 @@ omMasLC_dCombinedContainerVol( View     mMasLC,
          //:RETURN 0
          if(8==8)return( 0 );
 
-         //:/* end zDERIVED_GET */
+         //:// end zDERIVED_GET
          //:OF   zDERIVED_SET:
          case zDERIVED_SET :
             break ;
       } 
 
 
-      //:  /* end zDERIVED_SET */
-      //:END  /* case */
+      //:  // end zDERIVED_SET
+      //:END  // case
       return( 0 );
    } 
 
 
    //:TRANSFORMATION OPERATION
-   //:BuildCompositeEntries( VIEW mMasLC BASED ON LOD mMasLC )
+   //:BuildCompEntriesForMLC( VIEW mMasLC BASED ON LOD mMasLC )
 
-   //:STRING ( 100 ) szCompositeLocation
+   //:STRING ( 2052 ) szDisplayValue
 public int 
-omMasLC_BuildCompositeEntries( View     mMasLC )
+omMasLC_BuildCompEntriesForMLC( View     mMasLC )
 {
-   String   szCompositeLocation = null;
-   //:STRING ( 105 ) szDisplayValue
    String   szDisplayValue = null;
-   //:STRING ( 100 ) szOriginalDisplayValue
+   //:STRING ( 2048 ) szOriginalDisplayValue
    String   szOriginalDisplayValue = null;
-   //:STRING ( 20 )  szUsageType
-   String   szUsageType = null;
-   //:INTEGER        MaxDisplayLength
+   //:STRING ( 256 )  szName
+   String   szName = null;
+   //:INTEGER         MaxDisplayLength
    int      MaxDisplayLength = 0;
-   //:INTEGER        OriginalStringLength
+   //:INTEGER         OriginalStringLength
    int      OriginalStringLength = 0;
-   //:INTEGER        Count
-   int      Count = 0;
    int      RESULT = 0;
+   int      lTempInteger_0 = 0;
    String   szTempString_0 = null;
    String   szTempString_1 = null;
-   String   szTempString_2 = null;
-   int      lTempInteger_0 = 0;
    int      lTempInteger_1 = 0;
+   int      lTempInteger_2 = 0;
+   int      lTempInteger_3 = 0;
 
+
+   //:// Build the flat display of all components subobject.
+   //:MaxDisplayLength = 2048
+   MaxDisplayLength = 2048;
+
+   //:// First clear any current entries.
+   //:FOR EACH mMasLC.CompositeComponentList
+   RESULT = SetCursorFirstEntity( mMasLC, "CompositeComponentList", "" );
+   while ( RESULT > zCURSOR_UNCHANGED )
+   { 
+      //:DELETE ENTITY mMasLC.CompositeComponentList NONE
+      RESULT = DeleteEntity( mMasLC, "CompositeComponentList", zREPOS_NONE );
+      RESULT = SetCursorNextEntity( mMasLC, "CompositeComponentList", "" );
+   } 
+
+   //:END
 
    //:// Build Marketing Section and Statement components.
    //:FOR EACH mMasLC.M_MarketingSection
@@ -4083,32 +4096,36 @@ omMasLC_BuildCompositeEntries( View     mMasLC )
    { 
       //:CREATE ENTITY mMasLC.CompositeComponentList
       RESULT = CreateEntity( mMasLC, "CompositeComponentList", zPOS_AFTER );
-      //:mMasLC.CompositeComponentList.Type              = "M_MarketingSection"
+      //:mMasLC.CompositeComponentList.Type               = "M_MarketingSection"
       SetAttributeFromString( mMasLC, "CompositeComponentList", "Type", "M_MarketingSection" );
-      //:mMasLC.CompositeComponentList.SelectLevel       = 1
+      //:mMasLC.CompositeComponentList.SelectLevel        = 1
       SetAttributeFromInteger( mMasLC, "CompositeComponentList", "SelectLevel", 1 );
-      //:mMasLC.CompositeComponentList.DisplayType       = "Marketing"
+      //:mMasLC.CompositeComponentList.DisplayType        = "Marketing"
       SetAttributeFromString( mMasLC, "CompositeComponentList", "DisplayType", "Marketing" );
-      //:mMasLC.CompositeComponentList.DisplayTypeIndent = "Marketing"
-      SetAttributeFromString( mMasLC, "CompositeComponentList", "DisplayTypeIndent", "Marketing" );
-      //:mMasLC.CompositeComponentList.OriginalTypeID    = mMasLC.M_MarketingSection.ID
+      //:mMasLC.CompositeComponentList.DisplayTypeIndent  = "Marketing Section"
+      SetAttributeFromString( mMasLC, "CompositeComponentList", "DisplayTypeIndent", "Marketing Section" );
+      //:mMasLC.CompositeComponentList.OriginalTypeID     = mMasLC.M_MarketingSection.ID
       SetAttributeFromAttribute( mMasLC, "CompositeComponentList", "OriginalTypeID", mMasLC, "M_MarketingSection", "ID" );
-      //:mMasLC.CompositeComponentList.Name              = mMasLC.M_MarketingSection.Name
-      SetAttributeFromAttribute( mMasLC, "CompositeComponentList", "Name", mMasLC, "M_MarketingSection", "Name" );
-      //:TraceLineS( "BuildComposite Name: ", mMasLC.M_MarketingSection.Name )
-      {StringBuilder sb_szTempString_0;
-      if ( szTempString_0 == null )
-         sb_szTempString_0 = new StringBuilder( 32 );
+      //:szName                                           = mMasLC.M_MarketingSection.Name
+      {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
+      StringBuilder sb_szName;
+      if ( szName == null )
+         sb_szName = new StringBuilder( 32 );
       else
-         sb_szTempString_0 = new StringBuilder( szTempString_0 );
-             GetStringFromAttribute( sb_szTempString_0, mMasLC, "M_MarketingSection", "Name" );
-      szTempString_0 = sb_szTempString_0.toString( );}
-      TraceLineS( "BuildComposite Name: ", szTempString_0 );
+         sb_szName = new StringBuilder( szName );
+             GetVariableFromAttribute( sb_szName, mi_lTempInteger_0, 'S', 257, mMasLC, "M_MarketingSection", "Name", "", 0 );
+      lTempInteger_0 = mi_lTempInteger_0.intValue( );
+      szName = sb_szName.toString( );}
+      //:mMasLC.CompositeComponentList.Name               = szName
+      SetAttributeFromString( mMasLC, "CompositeComponentList", "Name", szName );
+
+      //:TraceLineS( "BuildComposite Name: ", szName )
+      TraceLineS( "BuildComposite Name: ", szName );
       //:IF mMasLC.M_MarketingSection.Title != ""
       if ( CompareAttributeToString( mMasLC, "M_MarketingSection", "Title", "" ) != 0 )
       { 
-         //:IF mMasLC.M_MarketingSection.Name = ""
-         if ( CompareAttributeToString( mMasLC, "M_MarketingSection", "Name", "" ) == 0 )
+         //:IF szName = ""
+         if ( ZeidonStringCompare( szName, 1, 0, "", 1, 0, 257 ) == 0 )
          { 
             //:mMasLC.CompositeComponentList.DisplayValue = mMasLC.M_MarketingSection.Title
             SetAttributeFromAttribute( mMasLC, "CompositeComponentList", "DisplayValue", mMasLC, "M_MarketingSection", "Title" );
@@ -4116,39 +4133,38 @@ omMasLC_BuildCompositeEntries( View     mMasLC )
          } 
          else
          { 
-            //:mMasLC.CompositeComponentList.DisplayValue = mMasLC.M_MarketingSection.Name + " - " +
-            //:                                             mMasLC.M_MarketingSection.Title
-            {StringBuilder sb_szTempString_1;
+            //:mMasLC.CompositeComponentList.DisplayValue = szName + " - " + mMasLC.M_MarketingSection.Title
+             {StringBuilder sb_szTempString_0;
+            if ( szTempString_0 == null )
+               sb_szTempString_0 = new StringBuilder( 32 );
+            else
+               sb_szTempString_0 = new StringBuilder( szTempString_0 );
+                        ZeidonStringCopy( sb_szTempString_0, 1, 0, szName, 1, 0, 32001 );
+            szTempString_0 = sb_szTempString_0.toString( );}
+             {StringBuilder sb_szTempString_0;
+            if ( szTempString_0 == null )
+               sb_szTempString_0 = new StringBuilder( 32 );
+            else
+               sb_szTempString_0 = new StringBuilder( szTempString_0 );
+                        ZeidonStringConcat( sb_szTempString_0, 1, 0, " - ", 1, 0, 32001 );
+            szTempString_0 = sb_szTempString_0.toString( );}
+            {MutableInt mi_lTempInteger_1 = new MutableInt( lTempInteger_1 );
+            StringBuilder sb_szTempString_1;
             if ( szTempString_1 == null )
                sb_szTempString_1 = new StringBuilder( 32 );
             else
                sb_szTempString_1 = new StringBuilder( szTempString_1 );
-                         GetStringFromAttribute( sb_szTempString_1, mMasLC, "M_MarketingSection", "Name" );
+                         GetVariableFromAttribute( sb_szTempString_1, mi_lTempInteger_1, 'S', 255, mMasLC, "M_MarketingSection", "Title", "", 0 );
+            lTempInteger_1 = mi_lTempInteger_1.intValue( );
             szTempString_1 = sb_szTempString_1.toString( );}
-             {StringBuilder sb_szTempString_1;
-            if ( szTempString_1 == null )
-               sb_szTempString_1 = new StringBuilder( 32 );
+             {StringBuilder sb_szTempString_0;
+            if ( szTempString_0 == null )
+               sb_szTempString_0 = new StringBuilder( 32 );
             else
-               sb_szTempString_1 = new StringBuilder( szTempString_1 );
-                        ZeidonStringConcat( sb_szTempString_1, 1, 0, " - ", 1, 0, 32001 );
-            szTempString_1 = sb_szTempString_1.toString( );}
-            {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
-            StringBuilder sb_szTempString_2;
-            if ( szTempString_2 == null )
-               sb_szTempString_2 = new StringBuilder( 32 );
-            else
-               sb_szTempString_2 = new StringBuilder( szTempString_2 );
-                         GetVariableFromAttribute( sb_szTempString_2, mi_lTempInteger_0, 'S', 255, mMasLC, "M_MarketingSection", "Title", "", 0 );
-            lTempInteger_0 = mi_lTempInteger_0.intValue( );
-            szTempString_2 = sb_szTempString_2.toString( );}
-             {StringBuilder sb_szTempString_1;
-            if ( szTempString_1 == null )
-               sb_szTempString_1 = new StringBuilder( 32 );
-            else
-               sb_szTempString_1 = new StringBuilder( szTempString_1 );
-                        ZeidonStringConcat( sb_szTempString_1, 1, 0, szTempString_2, 1, 0, 32001 );
-            szTempString_1 = sb_szTempString_1.toString( );}
-            SetAttributeFromString( mMasLC, "CompositeComponentList", "DisplayValue", szTempString_1 );
+               sb_szTempString_0 = new StringBuilder( szTempString_0 );
+                        ZeidonStringConcat( sb_szTempString_0, 1, 0, szTempString_1, 1, 0, 32001 );
+            szTempString_0 = sb_szTempString_0.toString( );}
+            SetAttributeFromString( mMasLC, "CompositeComponentList", "DisplayValue", szTempString_0 );
          } 
 
          //:END
@@ -4156,14 +4172,14 @@ omMasLC_BuildCompositeEntries( View     mMasLC )
       } 
       else
       { 
-         //:mMasLC.CompositeComponentList.DisplayValue = mMasLC.M_MarketingSection.Name
-         SetAttributeFromAttribute( mMasLC, "CompositeComponentList", "DisplayValue", mMasLC, "M_MarketingSection", "Name" );
+         //:mMasLC.CompositeComponentList.DisplayValue = szName
+         SetAttributeFromString( mMasLC, "CompositeComponentList", "DisplayValue", szName );
       } 
 
       //:END
-      //:mMasLC.CompositeComponentList.Title             = mMasLC.M_MarketingSection.Title
+      //:mMasLC.CompositeComponentList.Title              = mMasLC.M_MarketingSection.Title
       SetAttributeFromAttribute( mMasLC, "CompositeComponentList", "Title", mMasLC, "M_MarketingSection", "Title" );
-      //:mMasLC.CompositeComponentList.Value             = mMasLC.CompositeComponentList.DisplayValue
+      //:mMasLC.CompositeComponentList.Value              = mMasLC.CompositeComponentList.DisplayValue
       SetAttributeFromAttribute( mMasLC, "CompositeComponentList", "Value", mMasLC, "CompositeComponentList", "DisplayValue" );
 
       //:FOR EACH mMasLC.M_MarketingStatement
@@ -4172,30 +4188,40 @@ omMasLC_BuildCompositeEntries( View     mMasLC )
       { 
          //:CREATE ENTITY mMasLC.CompositeComponentList
          RESULT = CreateEntity( mMasLC, "CompositeComponentList", zPOS_AFTER );
-         //:mMasLC.CompositeComponentList.Type              = "M_MarketingStatement"
+         //:mMasLC.CompositeComponentList.Type               = "M_MarketingStatement"
          SetAttributeFromString( mMasLC, "CompositeComponentList", "Type", "M_MarketingStatement" );
-         //:mMasLC.CompositeComponentList.SelectLevel       = 2
+         //:mMasLC.CompositeComponentList.SelectLevel        = 2
          SetAttributeFromInteger( mMasLC, "CompositeComponentList", "SelectLevel", 2 );
-         //:mMasLC.CompositeComponentList.DisplayType       = "Statement"
+         //:mMasLC.CompositeComponentList.DisplayType        = "Statement"
          SetAttributeFromString( mMasLC, "CompositeComponentList", "DisplayType", "Statement" );
-         //:mMasLC.CompositeComponentList.DisplayTypeIndent = "...Statement"
+         //:mMasLC.CompositeComponentList.DisplayTypeIndent  = "...Statement"
          SetAttributeFromString( mMasLC, "CompositeComponentList", "DisplayTypeIndent", "...Statement" );
-         //:mMasLC.CompositeComponentList.OriginalTypeID    = mMasLC.M_MarketingStatement.ID
+         //:mMasLC.CompositeComponentList.OriginalTypeID     = mMasLC.M_MarketingStatement.ID
          SetAttributeFromAttribute( mMasLC, "CompositeComponentList", "OriginalTypeID", mMasLC, "M_MarketingStatement", "ID" );
-         //:mMasLC.CompositeComponentList.Title             = mMasLC.M_MarketingStatement.Title
-         SetAttributeFromAttribute( mMasLC, "CompositeComponentList", "Title", mMasLC, "M_MarketingStatement", "Title" );
-         //:mMasLC.CompositeComponentList.Value             = mMasLC.M_MarketingStatement.Text
-         SetAttributeFromAttribute( mMasLC, "CompositeComponentList", "Value", mMasLC, "M_MarketingStatement", "Text" );
 
+         //:mMasLC.CompositeComponentList.Title              = mMasLC.M_MarketingStatement.Title
+         SetAttributeFromAttribute( mMasLC, "CompositeComponentList", "Title", mMasLC, "M_MarketingStatement", "Title" );
          //:szOriginalDisplayValue = mMasLC.M_MarketingStatement.Text
-         {MutableInt mi_lTempInteger_1 = new MutableInt( lTempInteger_1 );
+         {MutableInt mi_lTempInteger_2 = new MutableInt( lTempInteger_2 );
          StringBuilder sb_szOriginalDisplayValue;
          if ( szOriginalDisplayValue == null )
             sb_szOriginalDisplayValue = new StringBuilder( 32 );
          else
             sb_szOriginalDisplayValue = new StringBuilder( szOriginalDisplayValue );
-                   GetVariableFromAttribute( sb_szOriginalDisplayValue, mi_lTempInteger_1, 'S', 101, mMasLC, "M_MarketingStatement", "Text", "", 0 );
-         lTempInteger_1 = mi_lTempInteger_1.intValue( );
+                   GetVariableFromAttribute( sb_szOriginalDisplayValue, mi_lTempInteger_2, 'S', 2049, mMasLC, "M_MarketingStatement", "Text", "", 0 );
+         lTempInteger_2 = mi_lTempInteger_2.intValue( );
+         szOriginalDisplayValue = sb_szOriginalDisplayValue.toString( );}
+         //:mMasLC.CompositeComponentList.Value              = szOriginalDisplayValue
+         SetAttributeFromString( mMasLC, "CompositeComponentList", "Value", szOriginalDisplayValue );
+         //:szOriginalDisplayValue = mMasLC.M_MarketingStatement.dDisplayKeywordText
+         {MutableInt mi_lTempInteger_3 = new MutableInt( lTempInteger_3 );
+         StringBuilder sb_szOriginalDisplayValue;
+         if ( szOriginalDisplayValue == null )
+            sb_szOriginalDisplayValue = new StringBuilder( 32 );
+         else
+            sb_szOriginalDisplayValue = new StringBuilder( szOriginalDisplayValue );
+                   GetVariableFromAttribute( sb_szOriginalDisplayValue, mi_lTempInteger_3, 'S', 2049, mMasLC, "M_MarketingStatement", "dDisplayKeywordText", "", 0 );
+         lTempInteger_3 = mi_lTempInteger_3.intValue( );
          szOriginalDisplayValue = sb_szOriginalDisplayValue.toString( );}
          //:GetAttributeLength( OriginalStringLength, mMasLC, "M_MarketingStatement", "Text" )
          {MutableInt mi_OriginalStringLength = new MutableInt( OriginalStringLength );
@@ -4204,20 +4230,20 @@ omMasLC_BuildCompositeEntries( View     mMasLC )
          //:IF MaxDisplayLength < OriginalStringLength
          if ( MaxDisplayLength < OriginalStringLength )
          { 
-            //:szDisplayValue = szOriginalDisplayValue + "....."
+            //:szDisplayValue = szOriginalDisplayValue[1:2000] + "....."
              {StringBuilder sb_szDisplayValue;
             if ( szDisplayValue == null )
                sb_szDisplayValue = new StringBuilder( 32 );
             else
                sb_szDisplayValue = new StringBuilder( szDisplayValue );
-                        ZeidonStringCopy( sb_szDisplayValue, 1, 0, szOriginalDisplayValue, 1, 0, 106 );
+                        ZeidonStringCopy( sb_szDisplayValue, 1, 0, szOriginalDisplayValue, 1, 2000, 2053 );
             szDisplayValue = sb_szDisplayValue.toString( );}
              {StringBuilder sb_szDisplayValue;
             if ( szDisplayValue == null )
                sb_szDisplayValue = new StringBuilder( 32 );
             else
                sb_szDisplayValue = new StringBuilder( szDisplayValue );
-                        ZeidonStringConcat( sb_szDisplayValue, 1, 0, ".....", 1, 0, 106 );
+                        ZeidonStringConcat( sb_szDisplayValue, 1, 0, ".....", 1, 0, 2053 );
             szDisplayValue = sb_szDisplayValue.toString( );}
             //:ELSE
          } 
@@ -4229,7 +4255,7 @@ omMasLC_BuildCompositeEntries( View     mMasLC )
                sb_szDisplayValue = new StringBuilder( 32 );
             else
                sb_szDisplayValue = new StringBuilder( szDisplayValue );
-                        ZeidonStringCopy( sb_szDisplayValue, 1, 0, szOriginalDisplayValue, 1, 0, 106 );
+                        ZeidonStringCopy( sb_szDisplayValue, 1, 0, szOriginalDisplayValue, 1, 0, 2053 );
             szDisplayValue = sb_szDisplayValue.toString( );}
          } 
 
@@ -4245,8 +4271,10 @@ omMasLC_BuildCompositeEntries( View     mMasLC )
 
    //:END
    return( 0 );
-//    // Build the flat display of all components subobject.
-//    /*MaxDisplayLength = 100
+// /*
+//    STRING ( 2048 ) szCompositeLocation
+//    STRING ( 20 )   szUsageType
+//    INTEGER         Count
 //    // First clear any current entries.
 //    FOR EACH mMasLC.CompositeComponentList
 //       DELETE ENTITY mMasLC.CompositeComponentList NONE
@@ -4487,9 +4515,9 @@ omMasLC_BuildCompositeEntries( View     mMasLC )
 //    IF mMasLC.M_HumanHazardSection.PanelLoc5 != ""
 //       szCompositeLocation = szCompositeLocation + " / " + mMasLC.M_HumanHazardSection.PanelLoc5
 //    END
-//    mMasLC.CompositeComponentList.DisplayValue   = szCompositeLocation*/
+//    mMasLC.CompositeComponentList.DisplayValue   = szCompositeLocation
 //    // Usage Section
-//    /*CREATE ENTITY mMasLC.CompositeComponentList
+//    CREATE ENTITY mMasLC.CompositeComponentList
 //    mMasLC.CompositeComponentList.Type           = "UsageSection"
 //    mMasLC.CompositeComponentList.DisplayType    = "Usage"
 //    mMasLC.CompositeComponentList.OriginalTypeID = mMasLC.M_Usage.ID
@@ -4501,7 +4529,8 @@ omMasLC_BuildCompositeEntries( View     mMasLC )
 //       mMasLC.CompositeComponentList.DisplayType    = "..." + szUsageType
 //       mMasLC.CompositeComponentList.OriginalTypeID = mMasLC.M_Usage.ID
 //       mMasLC.CompositeComponentList.DisplayValue   = mMasLC.M_Usage.Name
-//    END*/
+//    END
+// */
 // END
 } 
 
@@ -4509,14 +4538,14 @@ omMasLC_BuildCompositeEntries( View     mMasLC )
 //:TRANSFORMATION OPERATION
 //:BuildFullCompEntries( VIEW mMasLC BASED ON LOD mMasLC )
 
-//:   STRING ( 100 ) szCompositeLocation
+//:   STRING ( 2048 ) szCompositeLocation
 public int 
 omMasLC_BuildFullCompEntries( View     mMasLC )
 {
    String   szCompositeLocation = null;
-   //:STRING ( 105 ) szDisplayValue
+   //:STRING ( 2052 ) szDisplayValue
    String   szDisplayValue = null;
-   //:STRING ( 100 ) szOriginalDisplayValue
+   //:STRING ( 2048 ) szOriginalDisplayValue
    String   szOriginalDisplayValue = null;
    //:STRING ( 20 )  szUsageType
    String   szUsageType = null;
@@ -4862,14 +4891,14 @@ omMasLC_BuildFullCompEntries( View     mMasLC )
       sb_szCompositeLocation = new StringBuilder( 32 );
    else
       sb_szCompositeLocation = new StringBuilder( szCompositeLocation );
-      ZeidonStringCopy( sb_szCompositeLocation, 1, 0, "...", 1, 0, 101 );
+      ZeidonStringCopy( sb_szCompositeLocation, 1, 0, "...", 1, 0, 2049 );
    szCompositeLocation = sb_szCompositeLocation.toString( );}
     {StringBuilder sb_szCompositeLocation;
    if ( szCompositeLocation == null )
       sb_szCompositeLocation = new StringBuilder( 32 );
    else
       sb_szCompositeLocation = new StringBuilder( szCompositeLocation );
-      ZeidonStringConcat( sb_szCompositeLocation, 1, 0, szTempString_0, 1, 0, 101 );
+      ZeidonStringConcat( sb_szCompositeLocation, 1, 0, szTempString_0, 1, 0, 2049 );
    szCompositeLocation = sb_szCompositeLocation.toString( );}
    //:IF mMasLC.M_HumanHazardSection.PanelLoc2 != ""
    if ( CompareAttributeToString( mMasLC, "M_HumanHazardSection", "PanelLoc2", "" ) != 0 )
@@ -4880,7 +4909,7 @@ omMasLC_BuildFullCompEntries( View     mMasLC )
          sb_szCompositeLocation = new StringBuilder( 32 );
       else
          sb_szCompositeLocation = new StringBuilder( szCompositeLocation );
-            ZeidonStringConcat( sb_szCompositeLocation, 1, 0, " / ", 1, 0, 101 );
+            ZeidonStringConcat( sb_szCompositeLocation, 1, 0, " / ", 1, 0, 2049 );
       szCompositeLocation = sb_szCompositeLocation.toString( );}
       {MutableInt mi_lTempInteger_1 = new MutableInt( lTempInteger_1 );
       StringBuilder sb_szTempString_1;
@@ -4896,7 +4925,7 @@ omMasLC_BuildFullCompEntries( View     mMasLC )
          sb_szCompositeLocation = new StringBuilder( 32 );
       else
          sb_szCompositeLocation = new StringBuilder( szCompositeLocation );
-            ZeidonStringConcat( sb_szCompositeLocation, 1, 0, szTempString_1, 1, 0, 101 );
+            ZeidonStringConcat( sb_szCompositeLocation, 1, 0, szTempString_1, 1, 0, 2049 );
       szCompositeLocation = sb_szCompositeLocation.toString( );}
    } 
 
@@ -4910,7 +4939,7 @@ omMasLC_BuildFullCompEntries( View     mMasLC )
          sb_szCompositeLocation = new StringBuilder( 32 );
       else
          sb_szCompositeLocation = new StringBuilder( szCompositeLocation );
-            ZeidonStringConcat( sb_szCompositeLocation, 1, 0, " / ", 1, 0, 101 );
+            ZeidonStringConcat( sb_szCompositeLocation, 1, 0, " / ", 1, 0, 2049 );
       szCompositeLocation = sb_szCompositeLocation.toString( );}
       {MutableInt mi_lTempInteger_2 = new MutableInt( lTempInteger_2 );
       StringBuilder sb_szTempString_2;
@@ -4926,7 +4955,7 @@ omMasLC_BuildFullCompEntries( View     mMasLC )
          sb_szCompositeLocation = new StringBuilder( 32 );
       else
          sb_szCompositeLocation = new StringBuilder( szCompositeLocation );
-            ZeidonStringConcat( sb_szCompositeLocation, 1, 0, szTempString_2, 1, 0, 101 );
+            ZeidonStringConcat( sb_szCompositeLocation, 1, 0, szTempString_2, 1, 0, 2049 );
       szCompositeLocation = sb_szCompositeLocation.toString( );}
    } 
 
@@ -4940,7 +4969,7 @@ omMasLC_BuildFullCompEntries( View     mMasLC )
          sb_szCompositeLocation = new StringBuilder( 32 );
       else
          sb_szCompositeLocation = new StringBuilder( szCompositeLocation );
-            ZeidonStringConcat( sb_szCompositeLocation, 1, 0, " / ", 1, 0, 101 );
+            ZeidonStringConcat( sb_szCompositeLocation, 1, 0, " / ", 1, 0, 2049 );
       szCompositeLocation = sb_szCompositeLocation.toString( );}
       {MutableInt mi_lTempInteger_3 = new MutableInt( lTempInteger_3 );
       StringBuilder sb_szTempString_3;
@@ -4956,7 +4985,7 @@ omMasLC_BuildFullCompEntries( View     mMasLC )
          sb_szCompositeLocation = new StringBuilder( 32 );
       else
          sb_szCompositeLocation = new StringBuilder( szCompositeLocation );
-            ZeidonStringConcat( sb_szCompositeLocation, 1, 0, szTempString_3, 1, 0, 101 );
+            ZeidonStringConcat( sb_szCompositeLocation, 1, 0, szTempString_3, 1, 0, 2049 );
       szCompositeLocation = sb_szCompositeLocation.toString( );}
    } 
 
@@ -4970,7 +4999,7 @@ omMasLC_BuildFullCompEntries( View     mMasLC )
          sb_szCompositeLocation = new StringBuilder( 32 );
       else
          sb_szCompositeLocation = new StringBuilder( szCompositeLocation );
-            ZeidonStringConcat( sb_szCompositeLocation, 1, 0, " / ", 1, 0, 101 );
+            ZeidonStringConcat( sb_szCompositeLocation, 1, 0, " / ", 1, 0, 2049 );
       szCompositeLocation = sb_szCompositeLocation.toString( );}
       {MutableInt mi_lTempInteger_4 = new MutableInt( lTempInteger_4 );
       StringBuilder sb_szTempString_4;
@@ -4986,7 +5015,7 @@ omMasLC_BuildFullCompEntries( View     mMasLC )
          sb_szCompositeLocation = new StringBuilder( 32 );
       else
          sb_szCompositeLocation = new StringBuilder( szCompositeLocation );
-            ZeidonStringConcat( sb_szCompositeLocation, 1, 0, szTempString_4, 1, 0, 101 );
+            ZeidonStringConcat( sb_szCompositeLocation, 1, 0, szTempString_4, 1, 0, 2049 );
       szCompositeLocation = sb_szCompositeLocation.toString( );}
    } 
 
@@ -5373,6 +5402,148 @@ omMasLC_SetMLC_SelectedFlags( View     mMasLC,
 
 
 //:DERIVED ATTRIBUTE OPERATION
+//:dDisplayKeywordTitle( VIEW mMasLC BASED ON LOD mMasLC,
+//:                      STRING ( 32 ) InternalEntityStructure,
+//:                      STRING ( 32 ) InternalAttribStructure,
+//:                      SHORT GetOrSetFlag )
+
+//:   STRING ( 2048 ) szGeneratedString
+public int 
+omMasLC_dDisplayKeywordTitle( View     mMasLC,
+                              String InternalEntityStructure,
+                              String InternalAttribStructure,
+                              Integer   GetOrSetFlag )
+{
+   String   szGeneratedString = null;
+   int      lTempInteger_0 = 0;
+
+
+   //:CASE GetOrSetFlag
+   switch( GetOrSetFlag )
+   { 
+      //:OF   zDERIVED_GET:
+      case zDERIVED_GET :
+
+         //:// Expand the current Text attribute by replacing embedded Keywords with the Keyword
+         //:// values in the M_InsertTextMarketing subentities.
+         //:szGeneratedString = mMasLC.M_MarketingStatement.Title
+         {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
+         StringBuilder sb_szGeneratedString;
+         if ( szGeneratedString == null )
+            sb_szGeneratedString = new StringBuilder( 32 );
+         else
+            sb_szGeneratedString = new StringBuilder( szGeneratedString );
+                   GetVariableFromAttribute( sb_szGeneratedString, mi_lTempInteger_0, 'S', 2049, mMasLC, "M_MarketingStatement", "Title", "", 0 );
+         lTempInteger_0 = mi_lTempInteger_0.intValue( );
+         szGeneratedString = sb_szGeneratedString.toString( );}
+         //:GenerateKeywordTextIntoString( mMasLC,
+         //:                            szGeneratedString,
+         //:                            "M_InsertTextKeywordMarketing",
+         //:                            "M_InsertTextMarketing",
+         //:                            ", " )
+         {
+          ZGlobal1_Operation m_ZGlobal1_Operation = new ZGlobal1_Operation( mMasLC );
+          {StringBuilder sb_szGeneratedString;
+         if ( szGeneratedString == null )
+            sb_szGeneratedString = new StringBuilder( 32 );
+         else
+            sb_szGeneratedString = new StringBuilder( szGeneratedString );
+                   m_ZGlobal1_Operation.GenerateKeywordTextIntoString( mMasLC, sb_szGeneratedString, "M_InsertTextKeywordMarketing", "M_InsertTextMarketing", ", " );
+         szGeneratedString = sb_szGeneratedString.toString( );}
+          // m_ZGlobal1_Operation = null;  // permit gc  (unnecessary)
+         }
+
+         //:// Store the calculated value in the object.
+         //:StoreStringInRecord( mMasLC, InternalEntityStructure, InternalAttribStructure, szGeneratedString )
+         StoreStringInRecord( mMasLC, InternalEntityStructure, InternalAttribStructure, szGeneratedString );
+         break ;
+
+      //:  // end zDERIVED_GET
+      //:OF   zDERIVED_SET:
+      case zDERIVED_SET :
+         break ;
+   } 
+
+
+   //:     // end zDERIVED_SET
+   //:END  // case
+   return( 0 );
+// END
+} 
+
+
+//:DERIVED ATTRIBUTE OPERATION
+//:dDisplayKeywordText( VIEW mMasLC BASED ON LOD mMasLC,
+//:                     STRING ( 32 ) InternalEntityStructure,
+//:                     STRING ( 32 ) InternalAttribStructure,
+//:                     SHORT GetOrSetFlag )
+
+//:   STRING ( 2048 ) szGeneratedString
+public int 
+omMasLC_dDisplayKeywordText( View     mMasLC,
+                             String InternalEntityStructure,
+                             String InternalAttribStructure,
+                             Integer   GetOrSetFlag )
+{
+   String   szGeneratedString = null;
+   int      lTempInteger_0 = 0;
+
+
+   //:CASE GetOrSetFlag
+   switch( GetOrSetFlag )
+   { 
+      //:OF   zDERIVED_GET:
+      case zDERIVED_GET :
+
+         //:// Expand the current Text attribute by replacing embedded Keywords with the Keyword
+         //:// values in the M_InsertTextMarketing subentities.
+         //:szGeneratedString = mMasLC.M_MarketingStatement.Text
+         {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
+         StringBuilder sb_szGeneratedString;
+         if ( szGeneratedString == null )
+            sb_szGeneratedString = new StringBuilder( 32 );
+         else
+            sb_szGeneratedString = new StringBuilder( szGeneratedString );
+                   GetVariableFromAttribute( sb_szGeneratedString, mi_lTempInteger_0, 'S', 2049, mMasLC, "M_MarketingStatement", "Text", "", 0 );
+         lTempInteger_0 = mi_lTempInteger_0.intValue( );
+         szGeneratedString = sb_szGeneratedString.toString( );}
+         //:GenerateKeywordTextIntoString( mMasLC,
+         //:                            szGeneratedString,
+         //:                            "M_InsertTextKeywordMarketing",
+         //:                            "M_InsertTextMarketing",
+         //:                            ", " )
+         {
+          ZGlobal1_Operation m_ZGlobal1_Operation = new ZGlobal1_Operation( mMasLC );
+          {StringBuilder sb_szGeneratedString;
+         if ( szGeneratedString == null )
+            sb_szGeneratedString = new StringBuilder( 32 );
+         else
+            sb_szGeneratedString = new StringBuilder( szGeneratedString );
+                   m_ZGlobal1_Operation.GenerateKeywordTextIntoString( mMasLC, sb_szGeneratedString, "M_InsertTextKeywordMarketing", "M_InsertTextMarketing", ", " );
+         szGeneratedString = sb_szGeneratedString.toString( );}
+          // m_ZGlobal1_Operation = null;  // permit gc  (unnecessary)
+         }
+
+         //:// Store the calculated value in the object.
+         //:StoreStringInRecord( mMasLC, InternalEntityStructure, InternalAttribStructure, szGeneratedString )
+         StoreStringInRecord( mMasLC, InternalEntityStructure, InternalAttribStructure, szGeneratedString );
+         break ;
+
+      //:  // end zDERIVED_GET
+      //:OF   zDERIVED_SET:
+      case zDERIVED_SET :
+         break ;
+   } 
+
+
+   //:     // end zDERIVED_SET
+   //:END  // case
+   return( 0 );
+// END
+} 
+
+
+//:DERIVED ATTRIBUTE OPERATION
 //:dUsageKeywordText( VIEW mMasLC BASED ON LOD mMasLC,
 //:                   STRING ( 32 ) InternalEntityStructure,
 //:                   STRING ( 32 ) InternalAttribStructure,
@@ -5466,15 +5637,15 @@ omMasLC_dUsageKeywordText( View     mMasLC,
          //:RETURN 0
          if(8==8)return( 0 );
 
-         //:/* end zDERIVED_GET */
+         //:// end zDERIVED_GET
          //:OF   zDERIVED_SET:
          case zDERIVED_SET :
             break ;
       } 
 
 
-      //:  /* end zDERIVED_SET */
-      //:END  /* case */
+      //:  // end zDERIVED_SET
+      //:END  // case
       return( 0 );
    } 
 
@@ -5540,15 +5711,15 @@ omMasLC_dUsageKeywordStmtText( View     mMasLC,
          //:RETURN 0
          if(8==8)return( 0 );
 
-         //:/* end zDERIVED_GET */
+         //:// end zDERIVED_GET
          //:OF   zDERIVED_SET:
          case zDERIVED_SET :
             break ;
       } 
 
 
-      //:  /* end zDERIVED_SET */
-      //:END  /* case */
+      //:  // end zDERIVED_SET
+      //:END  // case
       return( 0 );
    } 
 
@@ -5614,15 +5785,15 @@ omMasLC_dFullKeywordTitleText( View     mMasLC,
          //:RETURN 0
          if(8==8)return( 0 );
 
-         //:/* end zDERIVED_GET */
+         //:// end zDERIVED_GET
          //:OF   zDERIVED_SET:
          case zDERIVED_SET :
             break ;
       } 
 
 
-      //:  /* end zDERIVED_SET */
-      //:END  /* case */
+      //:  // end zDERIVED_SET
+      //:END  // case
       return( 0 );
    } 
 
@@ -5940,15 +6111,15 @@ omMasLC_dUsageNameFootnote( View     mMasLC,
          StoreStringInRecord( mMasLC, InternalEntityStructure, InternalAttribStructure, szCombinedName );
          break ;
 
-      //:  /* end zDERIVED_GET */
+      //:  // end zDERIVED_GET
       //:OF   zDERIVED_SET:
       case zDERIVED_SET :
          break ;
    } 
 
 
-   //:     /* end zDERIVED_SET */
-   //:END  /* case */
+   //:     // end zDERIVED_SET
+   //:END  // case
    return( 0 );
 // END
 } 
@@ -6224,15 +6395,15 @@ omMasLC_dPathogenNameKeyFoot( View     mMasLC,
          StoreStringInRecord( mMasLC, InternalEntityStructure, InternalAttribStructure, szCombinedName );
          break ;
 
-      //:  /* end zDERIVED_GET */
+      //:  // end zDERIVED_GET
       //:OF   zDERIVED_SET:
       case zDERIVED_SET :
          break ;
    } 
 
 
-   //:     /* end zDERIVED_SET */
-   //:END  /* case */
+   //:     // end zDERIVED_SET
+   //:END  // case
    return( 0 );
 // END
 } 
@@ -6508,15 +6679,15 @@ omMasLC_dMarketUsgNameFootnote( View     mMasLC,
          StoreStringInRecord( mMasLC, InternalEntityStructure, InternalAttribStructure, szCombinedName );
          break ;
 
-      //:  /* end zDERIVED_GET */
+      //:  // end zDERIVED_GET
       //:OF   zDERIVED_SET:
       case zDERIVED_SET :
          break ;
    } 
 
 
-   //:     /* end zDERIVED_SET */
-   //:END  /* case */
+   //:     // end zDERIVED_SET
+   //:END  // case
    return( 0 );
 // END
 } 
@@ -6683,15 +6854,90 @@ omMasLC_dGenStmtTitleText( View     mMasLC,
          StoreStringInRecord( mMasLC, InternalEntityStructure, InternalAttribStructure, szCombinedText );
          break ;
 
-      //:  /* end zDERIVED_GET */
+      //:  // end zDERIVED_GET
       //:OF   zDERIVED_SET:
       case zDERIVED_SET :
          break ;
    } 
 
 
-   //:     /* end zDERIVED_SET */
-   //:END  /* case */
+   //:     // end zDERIVED_SET
+   //:END  // case
+   return( 0 );
+// END
+} 
+
+
+//:DERIVED ATTRIBUTE OPERATION
+//:dUsgPathogenOrFullName( VIEW mMasLC BASED ON LOD mMasLC,
+//:                        STRING ( 32 ) InternalEntityStructure,
+//:                        STRING ( 32 ) InternalAttribStructure,
+//:                        SHORT GetOrSetFlag )
+
+//:   STRING ( 32 )  szEntityName
+public int 
+omMasLC_dUsgPathogenOrFullName( View     mMasLC,
+                                String InternalEntityStructure,
+                                String InternalAttribStructure,
+                                Integer   GetOrSetFlag )
+{
+   String   szEntityName = null;
+   //:STRING ( 100 ) szUsageType
+   String   szUsageType = null;
+
+
+   //:CASE GetOrSetFlag
+   switch( GetOrSetFlag )
+   { 
+      //:OF   zDERIVED_GET:
+      case zDERIVED_GET :
+
+         //:// Combine the Footnote Number as a subscript to the Claim Name, if it exists.
+         //:GetEntityNameFromStructure( InternalEntityStructure, szEntityName )
+         {
+          ZGlobal1_Operation m_ZGlobal1_Operation = new ZGlobal1_Operation( mMasLC );
+          {StringBuilder sb_szEntityName;
+         if ( szEntityName == null )
+            sb_szEntityName = new StringBuilder( 32 );
+         else
+            sb_szEntityName = new StringBuilder( szEntityName );
+                   m_ZGlobal1_Operation.GetEntityNameFromStructure( InternalEntityStructure, sb_szEntityName );
+         szEntityName = sb_szEntityName.toString( );}
+          // m_ZGlobal1_Operation = null;  // permit gc  (unnecessary)
+         }
+         //:GetStringFromAttribute( szUsageType, mMasLC, szEntityName, "UsageType" )
+         {StringBuilder sb_szUsageType;
+         if ( szUsageType == null )
+            sb_szUsageType = new StringBuilder( 32 );
+         else
+            sb_szUsageType = new StringBuilder( szUsageType );
+                   GetStringFromAttribute( sb_szUsageType, mMasLC, szEntityName, "UsageType" );
+         szUsageType = sb_szUsageType.toString( );}
+         //:IF szUsageType = "C"
+         if ( ZeidonStringCompare( szUsageType, 1, 0, "C", 1, 0, 101 ) == 0 )
+         { 
+            //:dPathogenNameKeyFoot( mMasLC, InternalEntityStructure, InternalAttribStructure, GetOrSetFlag )
+            omMasLC_dPathogenNameKeyFoot( mMasLC, InternalEntityStructure, InternalAttribStructure, GetOrSetFlag );
+            //:ELSE
+         } 
+         else
+         { 
+            //:dUsgFullEmbeddedName( mMasLC, InternalEntityStructure, InternalAttribStructure, GetOrSetFlag )
+            omMasLC_dUsgFullEmbeddedName( mMasLC, InternalEntityStructure, InternalAttribStructure, GetOrSetFlag );
+         } 
+
+         //:END
+         break ;
+
+      //:  // end zDERIVED_GET
+      //:OF   zDERIVED_SET:
+      case zDERIVED_SET :
+         break ;
+   } 
+
+
+   //:     // end zDERIVED_SET
+   //:END  // case
    return( 0 );
 // END
 } 
@@ -6820,15 +7066,15 @@ omMasLC_dMarketingKeywordText( View     mMasLC,
          //:RETURN 0
          if(8==8)return( 0 );
 
-         //:/* end zDERIVED_GET */
+         //:// end zDERIVED_GET
          //:OF   zDERIVED_SET:
          case zDERIVED_SET :
             break ;
       } 
 
 
-      //:  /* end zDERIVED_SET */
-      //:END  /* case */
+      //:  // end zDERIVED_SET
+      //:END  // case
       return( 0 );
    } 
 
@@ -7097,15 +7343,15 @@ omMasLC_dDU_KeywordText( View     mMasLC,
          //:RETURN 0
          if(8==8)return( 0 );
 
-         //:/* end zDERIVED_GET */
+         //:// end zDERIVED_GET
          //:OF   zDERIVED_SET:
          case zDERIVED_SET :
             break ;
       } 
 
 
-      //:  /* end zDERIVED_SET */
-      //:END  /* case */
+      //:  // end zDERIVED_SET
+      //:END  // case
       return( 0 );
    } 
 
@@ -7204,15 +7450,15 @@ omMasLC_dSD_KeywordText( View     mMasLC,
          //:RETURN 0
          if(8==8)return( 0 );
 
-         //:/* end zDERIVED_GET */
+         //:// end zDERIVED_GET
          //:OF   zDERIVED_SET:
          case zDERIVED_SET :
             break ;
       } 
 
 
-      //:  /* end zDERIVED_SET */
-      //:END  /* case */
+      //:  // end zDERIVED_SET
+      //:END  // case
       return( 0 );
    } 
 
@@ -7311,15 +7557,15 @@ omMasLC_dGeneralKeywordText( View     mMasLC,
          //:RETURN 0
          if(8==8)return( 0 );
 
-         //:/* end zDERIVED_GET */
+         //:// end zDERIVED_GET
          //:OF   zDERIVED_SET:
          case zDERIVED_SET :
             break ;
       } 
 
 
-      //:  /* end zDERIVED_SET */
-      //:END  /* case */
+      //:  // end zDERIVED_SET
+      //:END  // case
       return( 0 );
    } 
 
@@ -7565,15 +7811,15 @@ omMasLC_dSubUsageCombinedText( View     mMasLC,
          //:RETURN 0
          if(8==8)return( 0 );
 
-         //:/* end zDERIVED_GET */
+         //:// end zDERIVED_GET
          //:OF   zDERIVED_SET:
          case zDERIVED_SET :
             break ;
       } 
 
 
-      //:  /* end zDERIVED_SET */
-      //:END  /* case */
+      //:  // end zDERIVED_SET
+      //:END  // case
       return( 0 );
    } 
 
@@ -7978,15 +8224,15 @@ omMasLC_dUsageClaimClass( View     mMasLC,
          StoreStringInRecord( mMasLC, InternalEntityStructure, InternalAttribStructure, szUsageType );
          break ;
 
-      //:  /* end zDERIVED_GET */
+      //:  // end zDERIVED_GET
       //:OF   zDERIVED_SET:
       case zDERIVED_SET :
          break ;
    } 
 
 
-   //:     /* end zDERIVED_SET */
-   //:END  /* case */
+   //:     // end zDERIVED_SET
+   //:END  // case
    return( 0 );
 // END
 } 
@@ -8056,15 +8302,15 @@ omMasLC_dUsgFullEmbeddedName( View     mMasLC,
          StoreStringInRecord( mMasLC, InternalEntityStructure, InternalAttribStructure, szDisplayStatement );
          break ;
 
-      //:  /* end zDERIVED_GET */
+      //:  // end zDERIVED_GET
       //:OF   zDERIVED_SET:
       case zDERIVED_SET :
          break ;
    } 
 
 
-   //:     /* end zDERIVED_SET */
-   //:END  /* case */
+   //:     // end zDERIVED_SET
+   //:END  // case
    return( 0 );
 // END
 } 
@@ -8141,15 +8387,15 @@ omMasLC_dUsgListFullEmbedName( View     mMasLC,
          StoreStringInRecord( mMasLC, InternalEntityStructure, InternalAttribStructure, szDisplayStatement );
          break ;
 
-      //:  /* end zDERIVED_GET */
+      //:  // end zDERIVED_GET
       //:OF   zDERIVED_SET:
       case zDERIVED_SET :
          break ;
    } 
 
 
-   //:     /* end zDERIVED_SET */
-   //:END  /* case */
+   //:     // end zDERIVED_SET
+   //:END  // case
    return( 0 );
 // END
 } 
@@ -8226,15 +8472,15 @@ omMasLC_dUsgNonGroupSubUsages( View     mMasLC,
          StoreStringInRecord( mMasLC, InternalEntityStructure, InternalAttribStructure, szDisplayStatement );
          break ;
 
-      //:  /* end zDERIVED_GET */
+      //:  // end zDERIVED_GET
       //:OF   zDERIVED_SET:
       case zDERIVED_SET :
          break ;
    } 
 
 
-   //:     /* end zDERIVED_SET */
-   //:END  /* case */
+   //:     // end zDERIVED_SET
+   //:END  // case
    return( 0 );
 // END
 } 
@@ -8301,15 +8547,15 @@ omMasLC_dDU_SectionTitleKeyword( View     mMasLC,
          //:RETURN 0
          if(8==8)return( 0 );
 
-         //:/* end zDERIVED_GET */
+         //:// end zDERIVED_GET
          //:OF   zDERIVED_SET:
          case zDERIVED_SET :
             break ;
       } 
 
 
-      //:  /* end zDERIVED_SET */
-      //:END  /* case */
+      //:  // end zDERIVED_SET
+      //:END  // case
       return( 0 );
    } 
 
@@ -8379,15 +8625,15 @@ omMasLC_dDU_SectionTextKeyword( View     mMasLC,
          //:RETURN 0
          if(8==8)return( 0 );
 
-         //:/* end zDERIVED_GET */
+         //:// end zDERIVED_GET
          //:OF   zDERIVED_SET:
          case zDERIVED_SET :
             break ;
       } 
 
 
-      //:  /* end zDERIVED_SET */
-      //:END  /* case */
+      //:  // end zDERIVED_SET
+      //:END  // case
       return( 0 );
    } 
 
@@ -8470,15 +8716,15 @@ omMasLC_dDU_SectTitleOrTxtKey( View     mMasLC,
          //:RETURN 0
          if(8==8)return( 0 );
 
-         //:/* end zDERIVED_GET */
+         //:// end zDERIVED_GET
          //:OF   zDERIVED_SET:
          case zDERIVED_SET :
             break ;
       } 
 
 
-      //:  /* end zDERIVED_SET */
-      //:END  /* case */
+      //:  // end zDERIVED_SET
+      //:END  // case
       return( 0 );
    } 
 
@@ -8637,15 +8883,15 @@ omMasLC_dMarkUsgTxtSubUsgNames( View     mMasLC,
          StoreStringInRecord( mMasLC, InternalEntityStructure, InternalAttribStructure, szDisplayStatement );
          break ;
 
-      //:  /* end zDERIVED_GET */
+      //:  // end zDERIVED_GET
       //:OF   zDERIVED_SET:
       case zDERIVED_SET :
          break ;
    } 
 
 
-   //:     /* end zDERIVED_SET */
-   //:END  /* case */
+   //:     // end zDERIVED_SET
+   //:END  // case
    return( 0 );
 // END
 } 
@@ -8799,15 +9045,15 @@ omMasLC_dDU_SubStmtTitleTxtKey( View     mMasLC,
          StoreStringInRecord( mMasLC, InternalEntityStructure, InternalAttribStructure, szDisplayStatement );
          break ;
 
-      //:  /* end zDERIVED_GET */
+      //:  // end zDERIVED_GET
       //:OF   zDERIVED_SET:
       case zDERIVED_SET :
          break ;
    } 
 
 
-   //:     /* end zDERIVED_SET */
-   //:END  /* case */
+   //:     // end zDERIVED_SET
+   //:END  // case
    return( 0 );
 // END
 } 

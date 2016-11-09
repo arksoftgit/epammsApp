@@ -42,11 +42,11 @@ public class ZGlobalS_Operation extends VmlDialog
 
 
 //:GLOBAL OPERATION
-//:BuildCompositeEntriesForSPLD( VIEW mSPLDef BASED ON LOD mSPLDef )
+//:BuildCompEntriesForSPLD( VIEW mSPLDef BASED ON LOD mSPLDef )
 
 //:   STRING ( 256 )   szCompositeLocation
 public void 
-BuildCompositeEntriesForSPLD( View     mSPLDef )
+BuildCompEntriesForSPLD( View     mSPLDef )
 {
    String   szCompositeLocation = null;
    //:STRING ( 4000 )  szDisplayValue
@@ -678,7 +678,7 @@ BuildCompositeEntriesForSPLD( View     mSPLDef )
       SetAttributeFromAttribute( mSPLDef, "CompositeComponentList", "OriginalTypeID", mSPLDef, "SPLD_MarketingSection", "ID" );
       //:mSPLDef.CompositeComponentList.Name              = mSPLDef.SPLD_MarketingSection.Name
       SetAttributeFromAttribute( mSPLDef, "CompositeComponentList", "Name", mSPLDef, "SPLD_MarketingSection", "Name" );
-      //:// TraceLineS( "SPLD BuildCompositeEntries Name: ", mSPLDef.SPLD_MarketingSection.Name )
+      //:// TraceLineS( "SPLD BuildCompEntries Name: ", mSPLDef.SPLD_MarketingSection.Name )
       //:IF mSPLDef.SPLD_MarketingSection.Title != ""
       if ( CompareAttributeToString( mSPLDef, "SPLD_MarketingSection", "Title", "" ) != 0 )
       { 

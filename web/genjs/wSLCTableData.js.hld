@@ -1,4 +1,4 @@
-// wSLCTableData   Generate Timestamp: 20161014110809591
+// wSLCTableData   Generate Timestamp: 20161019110621876
 
 var isWindowClosing = true;
 var timerID = null;
@@ -218,9 +218,9 @@ function HideColumns( )
    {
       // Javascript code entered by user.
 
-      //var cols = document.wMLCTableData.Columns.value;
-      var cols = document.wMLCTableData.zColumnCnt.value;
-      var colList = document.wMLCTableData.zColumnList.value;
+      //var cols = document.wSLCTableData.Columns.value;
+      var cols = document.wSLCTableData.zColumnCnt.value;
+      var colList = document.wSLCTableData.zColumnList.value;
       var tableHeader;
       var tableReplace = colList.split( "," );
       var s;
@@ -256,8 +256,8 @@ function HideColumns( )
 
       // END of Javascript code entered by user.
 
-      document.wMLCTableData.zAction.value = "HideColumns";
-      document.wMLCTableData.submit( );
+      document.wSLCTableData.zAction.value = "HideColumns";
+      document.wSLCTableData.submit( );
    }
 }
 

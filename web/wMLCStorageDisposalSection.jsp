@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCStorageDisposalSection   Generate Timestamp: 20160914154446171 --%>
+<%-- wMLCStorageDisposalSection   Generate Timestamp: 20161101135505628 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -932,7 +932,7 @@ else
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
 <% /* StorDispSection:GroupBox */ %>
 
-<div id="StorDispSection" name="StorDispSection" class="withborder" style="width:780px;height:142px;float:left;">  <!-- StorDispSection --> 
+<div id="StorDispSection" name="StorDispSection" class="withborder" style="width:780px;height:172px;float:left;">  <!-- StorDispSection --> 
 
 
  <!-- This is added as a line spacer -->
@@ -1087,7 +1087,7 @@ else
    }
 %>
 
-<textarea id="StorageDisposalText" name="StorageDisposalText" class="text12" style="width:592px;height:60px;border:solid;border-width:4px;border-style:groove;" wrap="wrap"><%=strErrorMapValue%></textarea>
+<textarea id="StorageDisposalText" name="StorageDisposalText" class="text12" style="width:592px;height:90px;border:solid;border-width:4px;border-style:groove;" wrap="wrap"><%=strErrorMapValue%></textarea>
 
 </td>
 </tr>

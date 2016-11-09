@@ -1,4 +1,4 @@
-// wSLCIngredients   Generate Timestamp: 20161010115316200
+// wSLCIngredients   Generate Timestamp: 20161019144228867
 
 var isWindowClosing = true;
 var timerID = null;
@@ -352,6 +352,21 @@ function smDisplayHazardSection( )
       _DisableFormElements( true );
 
       document.wSLCIngredients.zAction.value = "smDisplayHazardSection";
+      document.wSLCIngredients.submit( );
+   }
+}
+
+function smDilution( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wSLCIngredients.zAction.value = "smDilution";
       document.wSLCIngredients.submit( );
    }
 }

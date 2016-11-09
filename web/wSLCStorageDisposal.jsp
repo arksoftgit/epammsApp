@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSLCStorageDisposal   Generate Timestamp: 20161010115316697 --%>
+<%-- wSLCStorageDisposal   Generate Timestamp: 20161019144229392 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -570,6 +570,23 @@ if ( strActionToProcess != null )
       break;
    }
 
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "smDilution" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wSLCStorageDisposal", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Next Window
+      strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_ReplaceWindowWithModalWindow, "wSLC", "Dilution" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
    while ( bDone == false && StringUtils.equals( strActionToProcess, "smDisplaySurfacesSection" ) )
    {
       bDone = true;
@@ -876,41 +893,41 @@ else
 <div id="sidenavigation">
    <ul id="MLC_SideBar" name="MLC_SideBar">
 <%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "New4" );
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "SaveReturn" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="smNew4" name="smNew4"><a href="#"  onclick="smSaveAndReturnMLC()">Save & Return</a></li>
+       <li id="smSaveReturn" name="smSaveReturn"><a href="#"  onclick="smSaveAndReturnMLC()">Save & Return</a></li>
 <%
    }
 %>
 
 <%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "New6" );
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "Save" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="smNew6" name="smNew6"><a href="#"  onclick="smSaveSLC()">Save</a></li>
+       <li id="smSave" name="smSave"><a href="#"  onclick="smSaveSLC()">Save</a></li>
 <%
    }
 %>
 
 <%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "New5" );
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "CancelReturn" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="smNew5" name="smNew5"><a href="#"  onclick="smCancelAndReturnSLC()">Cancel & Return</a></li>
+       <li id="smCancelReturn" name="smCancelReturn"><a href="#"  onclick="smCancelAndReturnSLC()">Cancel & Return</a></li>
 <%
    }
 %>
 
 <%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "New1" );
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "VersionData" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="smNew1" name="smNew1"><a href="#"  onclick="smDisplayVersionData()">Version Data</a></li>
+       <li id="smVersionData" name="smVersionData"><a href="#"  onclick="smDisplayVersionData()">Version Data</a></li>
 <%
    }
 %>
@@ -950,7 +967,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="smStorDisp" name="smStorDisp"><a href="#"  class="sideselected"  onclick="smDisplayStorDispSect()">Storage Disposal</a></li>
+       <li id="smStorDisp" name="smStorDisp"><a href="#"  class="sideselected"  onclick="smDisplayStorDispSect()">Storage & Disposal</a></li>
 <%
    }
 %>
@@ -981,6 +998,16 @@ else
    {
 %>
        <li id="smEnvironmentalHazard" name="smEnvironmentalHazard"><a href="#"  onclick="smDisplayHazardSection()">Environmental Hazard</a></li>
+<%
+   }
+%>
+
+<%
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "DilutionEntries" );
+   if ( !csrRC.isSet() ) //if ( nRC < 0 )
+   {
+%>
+       <li id="smDilutionEntries" name="smDilutionEntries"><a href="#"  onclick="smDilution()">Dilution Entries</a></li>
 <%
    }
 %>
@@ -1058,11 +1085,14 @@ else
    View lSPLDLST = null;
    View mLLD_LST = null;
    View mMasLC = null;
+   View mMasLC_Root = null;
+   View mMasProd = null;
    View mSPLDef = null;
    View mSubLC = null;
    View mSubLC_Root = null;
    View mSubProd = null;
    View mSubreg = null;
+   View wWebXfer = null;
    String strRadioGroupValue = "";
    String strComboCurrentValue = "";
    String strAutoComboBoxExternalValue = "";
@@ -1166,7 +1196,86 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:6px;width:100px;"></div>
+<div style="height:18px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GroupBox1:GroupBox */ %>
+
+<div id="GroupBox1" name="GroupBox1" class="listgroup"   style="float:left;position:relative; width:794px; height:80px;">  <!-- GroupBox1 --> 
+
+<% /* StorageAndDisposal:Text */ %>
+
+<label class="groupbox"  id="StorageAndDisposal" name="StorageAndDisposal" style="width:330px;height:16px;position:absolute;left:6px;top:12px;">Storage and Disposal</label>
+
+<% /* Title::Text */ %>
+
+<label class="groupbox"  id="Title:" name="Title:" style="width:86px;height:16px;position:absolute;left:6px;top:36px;">Title:</label>
+
+<% /* Title:Text */ %>
+<% strTextDisplayValue = "";
+   mSubLC = task.getViewByName( "mSubLC" );
+   if ( VmlOperation.isValid( mSubLC ) == false )
+      task.log( ).debug( "Invalid View: " + "Title" );
+   else
+   {
+      nRC = mSubLC.cursor( "SubregLabelContent" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+      {
+      try
+      {
+         strTextDisplayValue = mSubLC.cursor( "SubregLabelContent" ).getAttribute( "TitleSAD" ).getString( "" );
+      }
+      catch (Exception e)
+      {
+         out.println("There is an error on Title: " + e.getMessage());
+         task.log().info( "*** Error on ctrl Title" + e.getMessage() );
+      }
+         if ( strTextDisplayValue == null )
+            strTextDisplayValue = "";
+      }
+   }
+%>
+
+<label class="groupbox"  id="Title" name="Title" style="width:668px;height:16px;position:absolute;left:106px;top:36px;"><%=strTextDisplayValue%></label>
+
+<% /* Text::Text */ %>
+
+<label class="groupbox"  id="Text:" name="Text:" style="width:86px;height:16px;position:absolute;left:6px;top:62px;">Text:</label>
+
+<% /* Text:Text */ %>
+<% strTextDisplayValue = "";
+   mSubLC = task.getViewByName( "mSubLC" );
+   if ( VmlOperation.isValid( mSubLC ) == false )
+      task.log( ).debug( "Invalid View: " + "Text" );
+   else
+   {
+      nRC = mSubLC.cursor( "SubregLabelContent" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+      {
+      try
+      {
+         strTextDisplayValue = mSubLC.cursor( "SubregLabelContent" ).getAttribute( "TextSAD" ).getString( "" );
+      }
+      catch (Exception e)
+      {
+         out.println("There is an error on Text: " + e.getMessage());
+         task.log().info( "*** Error on ctrl Text" + e.getMessage() );
+      }
+         if ( strTextDisplayValue == null )
+            strTextDisplayValue = "";
+      }
+   }
+%>
+
+<label class="groupbox"  id="Text" name="Text" style="width:668px;height:16px;position:absolute;left:106px;top:62px;"><%=strTextDisplayValue%></label>
+
+
+</div>  <!--  GroupBox1 --> 
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
@@ -1178,46 +1287,12 @@ else
 
 <label class="groupbox"  id="StorageDisposalSections" name="StorageDisposalSections" style="width:330px;height:16px;position:absolute;left:6px;top:12px;">Storage and Disposal Sections</label>
 
-<% /* Text1:Text */ %>
-
-<label class="groupbox"  id="Text1" name="Text1" style="width:158px;height:16px;position:absolute;left:338px;top:12px;">Container Size Range:</label>
-
-<% /* Text2:Text */ %>
-<% strTextDisplayValue = "";
-   mSubLC = task.getViewByName( "mSubLC" );
-   if ( VmlOperation.isValid( mSubLC ) == false )
-      task.log( ).debug( "Invalid View: " + "Text2" );
-   else
-   {
-      nRC = mSubLC.cursor( "S_StorageDisposalSection" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 )
-      {
-      try
-      {
-         strTextDisplayValue = mSubLC.cursor( "S_StorageDisposalSection" ).getAttribute( "ContainerVolume" ).getString( "" );
-      }
-      catch (Exception e)
-      {
-         out.println("There is an error on Text2: " + e.getMessage());
-         task.log().info( "*** Error on ctrl Text2" + e.getMessage() );
-      }
-         if ( strTextDisplayValue == null )
-            strTextDisplayValue = "";
-      }
-   }
-%>
-
-<label class="groupbox"  id="Text2" name="Text2" style="width:188px;height:16px;position:absolute;left:496px;top:12px;"><%=strTextDisplayValue%></label>
-
 
 </div>  <!--  GBStorDispSections --> 
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
 
-
- <!-- This is added as a line spacer -->
-<div style="height:10px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->

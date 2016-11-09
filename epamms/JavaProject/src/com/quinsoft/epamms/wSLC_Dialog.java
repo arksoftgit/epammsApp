@@ -54,134 +54,25 @@ public class wSLC_Dialog extends VmlDialog
 //:DIALOG OPERATION
 //:CancelAndReturnSLC( VIEW ViewToWindow )
 
-//:   VIEW mSubLC   REGISTERED AS mSubLC
+//:   VIEW mSubLC_Root REGISTERED AS mSubLC_Root
 public int 
 CancelAndReturnSLC( View     ViewToWindow )
 {
-   zVIEW    mSubLC = new zVIEW( );
+   zVIEW    mSubLC_Root = new zVIEW( );
    int      RESULT = 0;
 
-   RESULT = GetViewByName( mSubLC, "mSubLC", ViewToWindow, zLEVEL_TASK );
+   RESULT = GetViewByName( mSubLC_Root, "mSubLC_Root", ViewToWindow, zLEVEL_TASK );
 
-   //:// Drop current SLC.
-   //:DropObjectInstance( mSubLC )
-   DropObjectInstance( mSubLC );
+   //:IF mSubLC_Root != 0
+   if ( getView( mSubLC_Root ) != null )
+   { 
+      //:DropView( mSubLC_Root )
+      DropView( mSubLC_Root );
+   } 
+
+   //:END
    return( 0 );
 // END
-} 
-
-
-private int 
-o_fnLocalBuildQual_14( View     vSubtask,
-                       zVIEW    vQualObject,
-                       int      lTempInteger_1 )
-{
-   int      RESULT = 0;
-
-   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
-   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "SubregPhysicalLabelDef" );
-   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "SubregPhysicalLabelDef" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
-   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_1 );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
-   return( 0 );
-} 
-
-
-private int 
-o_fnLocalBuildQual_15( View     vSubtask,
-                       zVIEW    vQualObject,
-                       int      lTempInteger_2 )
-{
-   int      RESULT = 0;
-
-   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
-   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "SubregPhysicalLabelDef" );
-   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "SubregProduct" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
-   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_2 );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
-   return( 0 );
-} 
-
-
-private int 
-o_fnLocalBuildQual_16( View     vSubtask,
-                       zVIEW    vQualObject,
-                       int      lTempInteger_1 )
-{
-   int      RESULT = 0;
-
-   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
-   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "SubregPhysicalLabelDef" );
-   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "SubregPhysicalLabelDef" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
-   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_1 );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
-   return( 0 );
-} 
-
-
-private int 
-o_fnLocalBuildQual_17( View     vSubtask,
-                       zVIEW    vQualObject,
-                       int      lTempInteger_2 )
-{
-   int      RESULT = 0;
-
-   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
-   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "SubregLabelContent" );
-   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "SubregLabelContent" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
-   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_2 );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
-   return( 0 );
-} 
-
-
-private int 
-o_fnLocalBuildQual_18( View     vSubtask,
-                       zVIEW    vQualObject,
-                       int      lTempInteger_3 )
-{
-   int      RESULT = 0;
-
-   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
-   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "SubregLabelContent" );
-   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "SP_SubregLabelContent" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
-   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_3 );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
-   return( 0 );
-} 
-
-
-private int 
-o_fnLocalBuildQual_19( View     vSubtask,
-                       zVIEW    vQualObject,
-                       int      lTempInteger_4 )
-{
-   int      RESULT = 0;
-
-   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
-   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "SubregPhysicalLabelDef" );
-   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "SubregProduct" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
-   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_4 );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
-   return( 0 );
 } 
 
 
@@ -541,6 +432,120 @@ o_fnLocalBuildQual_13( View     vSubtask,
    SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "Subregistrant" );
    SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
    SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", SubregID );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+   return( 0 );
+} 
+
+
+private int 
+o_fnLocalBuildQual_14( View     vSubtask,
+                       zVIEW    vQualObject,
+                       int      lTempInteger_1 )
+{
+   int      RESULT = 0;
+
+   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
+   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "SubregPhysicalLabelDef" );
+   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "SubregPhysicalLabelDef" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
+   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_1 );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+   return( 0 );
+} 
+
+
+private int 
+o_fnLocalBuildQual_15( View     vSubtask,
+                       zVIEW    vQualObject,
+                       int      lTempInteger_2 )
+{
+   int      RESULT = 0;
+
+   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
+   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "SubregPhysicalLabelDef" );
+   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "SubregProduct" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
+   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_2 );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+   return( 0 );
+} 
+
+
+private int 
+o_fnLocalBuildQual_16( View     vSubtask,
+                       zVIEW    vQualObject,
+                       int      lTempInteger_1 )
+{
+   int      RESULT = 0;
+
+   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
+   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "SubregPhysicalLabelDef" );
+   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "SubregPhysicalLabelDef" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
+   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_1 );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+   return( 0 );
+} 
+
+
+private int 
+o_fnLocalBuildQual_17( View     vSubtask,
+                       zVIEW    vQualObject,
+                       int      lTempInteger_2 )
+{
+   int      RESULT = 0;
+
+   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
+   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "SubregLabelContent" );
+   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "SubregLabelContent" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
+   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_2 );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+   return( 0 );
+} 
+
+
+private int 
+o_fnLocalBuildQual_18( View     vSubtask,
+                       zVIEW    vQualObject,
+                       int      lTempInteger_3 )
+{
+   int      RESULT = 0;
+
+   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
+   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "SubregLabelContent" );
+   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "SP_SubregLabelContent" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
+   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_3 );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+   return( 0 );
+} 
+
+
+private int 
+o_fnLocalBuildQual_19( View     vSubtask,
+                       zVIEW    vQualObject,
+                       int      lTempInteger_4 )
+{
+   int      RESULT = 0;
+
+   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
+   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "SubregPhysicalLabelDef" );
+   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "SubregProduct" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
+   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_4 );
    SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
    return( 0 );
 } 
@@ -1211,10 +1216,10 @@ GOTO_UpdateSubregProductSPLD( View     ViewToWindow )
    //:END
 
    //:// Build the work components
-   //:BuildCompositeEntriesForSPLD( mSPLDef ) // Need this for Update SPLD Block Definition to work
+   //:BuildCompEntriesForSPLD( mSPLDef ) // Need this for Update SPLD Block Definition to work
    {
     ZGlobalS_Operation m_ZGlobalS_Operation = new ZGlobalS_Operation( mSPLDef );
-    m_ZGlobalS_Operation.BuildCompositeEntriesForSPLD( mSPLDef );
+    m_ZGlobalS_Operation.BuildCompEntriesForSPLD( mSPLDef );
     // m_ZGlobalS_Operation = null;  // permit gc  (unnecessary)
    }
    //:TraceLineS( "$$$$$$ end of SLC oper", "GOTO_UpdateSubregProductSPLD" )
@@ -1224,7 +1229,7 @@ GOTO_UpdateSubregProductSPLD( View     ViewToWindow )
 //    // Also activate the corresponding SLC and build the composite subobject.
 //    //ACTIVATE mSubLC WHERE mSubLC.SubregLabelContent.ID = mSPLDef.SubregLabelContent.ID
 //    //NAME VIEW mSubLC "mSubLC"
-//    //BuildCompositeEntries( mSubLC )
+//    //BuildCompEntriesForSLC( mSubLC )
 // END
 } 
 
@@ -1309,10 +1314,10 @@ GOTO_UpdateSubregProductSLC( View     ViewToWindow )
    //:END
    //:COMMIT mSubLC*/
 
-   //:BuildCompositeEntries( mSubLC )
+   //:BuildCompEntriesForSLC( mSubLC )
    {
     mSubLC_Object m_mSubLC_Object = new mSubLC_Object( mSubLC );
-    m_mSubLC_Object.omSubLC_BuildCompositeEntries( mSubLC );
+    m_mSubLC_Object.omSubLC_BuildCompEntriesForSLC( mSubLC );
     // m_mSubLC_Object = null;  // permit gc  (unnecessary)
    }
 
@@ -1392,10 +1397,10 @@ GOTO_UpdateSubregProductSLC( View     ViewToWindow )
    DropView( vTempViewVar_1 );
    //:NAME VIEW mMasLC "mMasLC"
    SetNameForView( mMasLC, "mMasLC", null, zLEVEL_TASK );
-   //:BuildCompositeEntries( mMasLC )
+   //:BuildCompEntriesForMLC( mMasLC )
    {
     mMasLC_Object m_mMasLC_Object = new mMasLC_Object( mMasLC );
-    m_mMasLC_Object.omMasLC_BuildCompositeEntries( mMasLC );
+    m_mMasLC_Object.omMasLC_BuildCompEntriesForMLC( mMasLC );
     // m_mMasLC_Object = null;  // permit gc  (unnecessary)
    }
    //:BuildWorkVariables( mSubLC, mMasLC )
@@ -2393,10 +2398,13 @@ SELECT_MLC_ForNewSLC( View     ViewToWindow )
    SetNameForView( mMasLC, "mMasLC", null, zLEVEL_TASK );
    //:INCLUDE mSubLC.MasterLabelContent FROM mMasLC.MasterLabelContent
    RESULT = IncludeSubobjectFromSubobject( mSubLC, "MasterLabelContent", mMasLC, "MasterLabelContent", zPOS_AFTER );
-   //:BuildCompositeEntries( mMasLC )
+   //:SetMatchingAttributesByName( mSubLC, "SubregLabelContent",
+   //:                             mMasLC, "MasterLabelContent", zSET_NOTNULL )
+   SetMatchingAttributesByName( mSubLC, "SubregLabelContent", mMasLC, "MasterLabelContent", zSET_NOTNULL );
+   //:BuildCompEntriesForMLC( mMasLC )
    {
     mMasLC_Object m_mMasLC_Object = new mMasLC_Object( mMasLC );
-    m_mMasLC_Object.omMasLC_BuildCompositeEntries( mMasLC );
+    m_mMasLC_Object.omMasLC_BuildCompEntriesForMLC( mMasLC );
     // m_mMasLC_Object = null;  // permit gc  (unnecessary)
    }
 
@@ -2409,7 +2417,7 @@ SELECT_MLC_ForNewSLC( View     ViewToWindow )
    }
    return( 0 );
 //    // Build SLC Components subobject.
-//    //BuildCompositeEntries( mSubLC )
+// // BuildCompEntriesForSLC( mSubLC )
 // END
 } 
 
@@ -2427,10 +2435,10 @@ GOTO_SelectRemoveMktgStatements( View     ViewToWindow )
    RESULT = GetViewByName( mSubLC, "mSubLC", ViewToWindow, zLEVEL_TASK );
 
    //:// Make sure the SLC Components are built.
-   //:BuildCompositeEntries( mSubLC )
+   //:BuildCompEntriesForSLC( mSubLC )
    {
     mSubLC_Object m_mSubLC_Object = new mSubLC_Object( mSubLC );
-    m_mSubLC_Object.omSubLC_BuildCompositeEntries( mSubLC );
+    m_mSubLC_Object.omSubLC_BuildCompEntriesForSLC( mSubLC );
     // m_mSubLC_Object = null;  // permit gc  (unnecessary)
    }
    return( 0 );
@@ -2476,12 +2484,12 @@ SelectMLC_ComponentsForSLC( View     ViewToWindow )
                    GetIntegerFromAttribute( mi_lTempInteger_0, mMasLC, "CompositeComponentList", "OriginalTypeID" );
          lTempInteger_0 = mi_lTempInteger_0.intValue( );}
          RESULT = SetCursorFirstEntityByInteger( mMasLC, "M_MarketingStatement", "ID", lTempInteger_0, "MasterLabelContent" );
-         //:SET CURSOR FIRST mSubLC.M_MarketingSection WITHIN mSubLC.SubregLabelContent
-         //:           WHERE mSubLC.M_MarketingSection.ID = mMasLC.M_MarketingSection.ID
+         //:SET CURSOR FIRST mSubLC.S_MarketingSection WITHIN mSubLC.SubregLabelContent
+         //:           WHERE mSubLC.S_MarketingSection.PrimaryMLC_ID = mMasLC.M_MarketingSection.ID
          {MutableInt mi_lTempInteger_1 = new MutableInt( lTempInteger_1 );
                    GetIntegerFromAttribute( mi_lTempInteger_1, mMasLC, "M_MarketingSection", "ID" );
          lTempInteger_1 = mi_lTempInteger_1.intValue( );}
-         RESULT = SetCursorFirstEntityByInteger( mSubLC, "M_MarketingSection", "ID", lTempInteger_1, "SubregLabelContent" );
+         RESULT = SetCursorFirstEntityByInteger( mSubLC, "S_MarketingSection", "PrimaryMLC_ID", lTempInteger_1, "SubregLabelContent" );
          //:IF RESULT < zCURSOR_SET
          if ( RESULT < zCURSOR_SET )
          { 
@@ -2489,17 +2497,19 @@ SelectMLC_ComponentsForSLC( View     ViewToWindow )
             RESULT = CreateEntity( mSubLC, "S_MarketingSection", zPOS_AFTER );
             //:SetMatchingAttributesByName( mSubLC, "S_MarketingSection", mMasLC, "M_MarketingSection", zSET_NULL )
             SetMatchingAttributesByName( mSubLC, "S_MarketingSection", mMasLC, "M_MarketingSection", zSET_NULL );
+            //:mSubLC.S_MarketingSection.PrimaryMLC_ID = mMasLC.M_MarketingSection.ID
+            SetAttributeFromAttribute( mSubLC, "S_MarketingSection", "PrimaryMLC_ID", mMasLC, "M_MarketingSection", "ID" );
             //:INCLUDE mSubLC.M_MarketingSection FROM mMasLC.M_MarketingSection
             RESULT = IncludeSubobjectFromSubobject( mSubLC, "M_MarketingSection", mMasLC, "M_MarketingSection", zPOS_AFTER );
          } 
 
          //:END
-         //:SET CURSOR FIRST mSubLC.M_MarketingStatement WITHIN mSubLC.S_MarketingSection
-         //:           WHERE mSubLC.M_MarketingStatement.ID = mMasLC.M_MarketingStatement.ID
+         //:SET CURSOR FIRST mSubLC.S_MarketingStatement WITHIN mSubLC.S_MarketingSection
+         //:           WHERE mSubLC.S_MarketingStatement.PrimaryMLC_ID = mMasLC.M_MarketingStatement.ID
          {MutableInt mi_lTempInteger_2 = new MutableInt( lTempInteger_2 );
                    GetIntegerFromAttribute( mi_lTempInteger_2, mMasLC, "M_MarketingStatement", "ID" );
          lTempInteger_2 = mi_lTempInteger_2.intValue( );}
-         RESULT = SetCursorFirstEntityByInteger( mSubLC, "M_MarketingStatement", "ID", lTempInteger_2, "S_MarketingSection" );
+         RESULT = SetCursorFirstEntityByInteger( mSubLC, "S_MarketingStatement", "PrimaryMLC_ID", lTempInteger_2, "S_MarketingSection" );
          //:IF RESULT < zCURSOR_SET
          if ( RESULT < zCURSOR_SET )
          { 
@@ -2509,9 +2519,37 @@ SelectMLC_ComponentsForSLC( View     ViewToWindow )
             SetMatchingAttributesByName( mSubLC, "S_MarketingStatement", mMasLC, "M_MarketingStatement", zSET_NULL );
             //:INCLUDE mSubLC.M_MarketingStatement FROM mMasLC.M_MarketingStatement
             RESULT = IncludeSubobjectFromSubobject( mSubLC, "M_MarketingStatement", mMasLC, "M_MarketingStatement", zPOS_AFTER );
+            //:mSubLC.S_MarketingStatement.PrimaryMLC_ID = mMasLC.M_MarketingStatement.ID
+            SetAttributeFromAttribute( mSubLC, "S_MarketingStatement", "PrimaryMLC_ID", mMasLC, "M_MarketingStatement", "ID" );
+            //:FOR EACH mMasLC.M_InsertTextKeywordMarketing
+            RESULT = SetCursorFirstEntity( mMasLC, "M_InsertTextKeywordMarketing", "" );
+            while ( RESULT > zCURSOR_UNCHANGED )
+            { 
+               //:CREATE ENTITY mSubLC.S_InsertTextKeywordMarketing
+               RESULT = CreateEntity( mSubLC, "S_InsertTextKeywordMarketing", zPOS_AFTER );
+               //:SetMatchingAttributesByName( mSubLC, "S_InsertTextKeywordMarketing", mMasLC, "M_InsertTextKeywordMarketing", zSET_NULL )
+               SetMatchingAttributesByName( mSubLC, "S_InsertTextKeywordMarketing", mMasLC, "M_InsertTextKeywordMarketing", zSET_NULL );
+               //:FOR EACH mMasLC.M_InsertTextMarketing
+               RESULT = SetCursorFirstEntity( mMasLC, "M_InsertTextMarketing", "" );
+               while ( RESULT > zCURSOR_UNCHANGED )
+               { 
+                  //:CREATE ENTITY mSubLC.S_InsertTextMarketing
+                  RESULT = CreateEntity( mSubLC, "S_InsertTextMarketing", zPOS_AFTER );
+                  //:SetMatchingAttributesByName( mSubLC, "S_InsertTextMarketing", mMasLC, "M_InsertTextMarketing", zSET_NULL )
+                  SetMatchingAttributesByName( mSubLC, "S_InsertTextMarketing", mMasLC, "M_InsertTextMarketing", zSET_NULL );
+                  RESULT = SetCursorNextEntity( mMasLC, "M_InsertTextMarketing", "" );
+               } 
+
+               RESULT = SetCursorNextEntity( mMasLC, "M_InsertTextKeywordMarketing", "" );
+               //:END
+            } 
+
+            //:END
          } 
 
          //:END
+         //:mMasLC.CompositeComponentList.Selected = ""
+         SetAttributeFromString( mMasLC, "CompositeComponentList", "Selected", "" );
       } 
 
       RESULT = SetCursorNextEntity( mMasLC, "CompositeComponentList", "" );
@@ -2521,10 +2559,10 @@ SelectMLC_ComponentsForSLC( View     ViewToWindow )
    //:END
 
    //:// Rebuild the Marketing Components.
-   //:BuildCompositeEntries( mSubLC )
+   //:BuildCompEntriesForSLC( mSubLC )
    {
     mSubLC_Object m_mSubLC_Object = new mSubLC_Object( mSubLC );
-    m_mSubLC_Object.omSubLC_BuildCompositeEntries( mSubLC );
+    m_mSubLC_Object.omSubLC_BuildCompEntriesForSLC( mSubLC );
     // m_mSubLC_Object = null;  // permit gc  (unnecessary)
    }
    return( 0 );
@@ -2600,10 +2638,10 @@ DeleteMLC_ComponentsForSLC( View     ViewToWindow )
    //:END
 
    //:// Rebuild the Marketing Components.
-   //:BuildCompositeEntries( mSubLC )
+   //:BuildCompEntriesForSLC( mSubLC )
    {
     mSubLC_Object m_mSubLC_Object = new mSubLC_Object( mSubLC );
-    m_mSubLC_Object.omSubLC_BuildCompositeEntries( mSubLC );
+    m_mSubLC_Object.omSubLC_BuildCompEntriesForSLC( mSubLC );
     // m_mSubLC_Object = null;  // permit gc  (unnecessary)
    }
    return( 0 );
@@ -3143,7 +3181,12 @@ SelectMLC_UsageEntries( View     ViewToWindow )
    int      RESULT = 0;
    //:VIEW mMasLC REGISTERED AS mMasLC
    zVIEW    mMasLC = new zVIEW( );
+   //:STRING ( 256 ) szText
+   String   szText = null;
    int      lTempInteger_0 = 0;
+   int      lTempInteger_1 = 0;
+   int      lTempInteger_2 = 0;
+   int      lTempInteger_3 = 0;
 
    RESULT = GetViewByName( mSubLC, "mSubLC", ViewToWindow, zLEVEL_TASK );
    RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
@@ -3153,14 +3196,15 @@ SelectMLC_UsageEntries( View     ViewToWindow )
    RESULT = SetCursorFirstEntity( mMasLC, "M_Usage", "" );
    while ( RESULT > zCURSOR_UNCHANGED )
    { 
+
       //:IF mMasLC.M_Usage.wSelected = "Y"
       if ( CompareAttributeToString( mMasLC, "M_Usage", "wSelected", "Y" ) == 0 )
       { 
-         //:SET CURSOR FIRST mSubLC.S_Usage WHERE mSubLC.S_Usage.ID = mMasLC.M_Usage.ID
+         //:SET CURSOR FIRST mSubLC.S_Usage WHERE mSubLC.S_Usage.PrimaryMLC_ID = mMasLC.M_Usage.ID
          {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
                    GetIntegerFromAttribute( mi_lTempInteger_0, mMasLC, "M_Usage", "ID" );
          lTempInteger_0 = mi_lTempInteger_0.intValue( );}
-         RESULT = SetCursorFirstEntityByInteger( mSubLC, "S_Usage", "ID", lTempInteger_0, "" );
+         RESULT = SetCursorFirstEntityByInteger( mSubLC, "S_Usage", "PrimaryMLC_ID", lTempInteger_0, "" );
          //:IF RESULT < zCURSOR_SET
          if ( RESULT < zCURSOR_SET )
          { 
@@ -3172,6 +3216,77 @@ SelectMLC_UsageEntries( View     ViewToWindow )
             SetAttributeFromString( mSubLC, "S_Usage", "wSelected", "" );
             //:mSubLC.S_Usage.PrimaryMLC_ID = mMasLC.M_Usage.ID
             SetAttributeFromAttribute( mSubLC, "S_Usage", "PrimaryMLC_ID", mMasLC, "M_Usage", "ID" );
+            //://?INCLUDE mSubLC.M_Usage FROM mMasLC.M_Usage
+            //:FOR EACH mMasLC.M_InsertTextKeywordUsage
+            RESULT = SetCursorFirstEntity( mMasLC, "M_InsertTextKeywordUsage", "" );
+            while ( RESULT > zCURSOR_UNCHANGED )
+            { 
+               //:CREATE ENTITY mSubLC.S_InsertTextKeywordUsage
+               RESULT = CreateEntity( mSubLC, "S_InsertTextKeywordUsage", zPOS_AFTER );
+               //:SetMatchingAttributesByName( mSubLC, "S_InsertTextKeywordUsage", mMasLC, "M_InsertTextKeywordUsage", zSET_NULL )
+               SetMatchingAttributesByName( mSubLC, "S_InsertTextKeywordUsage", mMasLC, "M_InsertTextKeywordUsage", zSET_NULL );
+               //:FOR EACH mMasLC.M_InsertTextUsage
+               RESULT = SetCursorFirstEntity( mMasLC, "M_InsertTextUsage", "" );
+               while ( RESULT > zCURSOR_UNCHANGED )
+               { 
+                  //:CREATE ENTITY mSubLC.S_InsertTextUsage
+                  RESULT = CreateEntity( mSubLC, "S_InsertTextUsage", zPOS_AFTER );
+                  //:SetMatchingAttributesByName( mSubLC, "S_InsertTextUsage", mMasLC, "M_InsertTextUsage", zSET_NULL )
+                  SetMatchingAttributesByName( mSubLC, "S_InsertTextUsage", mMasLC, "M_InsertTextUsage", zSET_NULL );
+                  RESULT = SetCursorNextEntity( mMasLC, "M_InsertTextUsage", "" );
+               } 
+
+               RESULT = SetCursorNextEntity( mMasLC, "M_InsertTextKeywordUsage", "" );
+               //:END
+            } 
+
+            //:END
+            //:IF mMasLC.M_UsageFootnoteUsed EXISTS
+            lTempInteger_1 = CheckExistenceOfEntity( mMasLC, "M_UsageFootnoteUsed" );
+            if ( lTempInteger_1 == 0 )
+            { 
+               //:szText = mMasLC.M_UsageFootnoteUsed.Text
+               {MutableInt mi_lTempInteger_2 = new MutableInt( lTempInteger_2 );
+               StringBuilder sb_szText;
+               if ( szText == null )
+                  sb_szText = new StringBuilder( 32 );
+               else
+                  sb_szText = new StringBuilder( szText );
+                               GetVariableFromAttribute( sb_szText, mi_lTempInteger_2, 'S', 257, mMasLC, "M_UsageFootnoteUsed", "Text", "", 0 );
+               lTempInteger_2 = mi_lTempInteger_2.intValue( );
+               szText = sb_szText.toString( );}
+               //:SET CURSOR FIRST mSubLC.S_UsageFootnote WHERE mSubLC.S_UsageFootnote.Text = szText
+               RESULT = SetCursorFirstEntityByString( mSubLC, "S_UsageFootnote", "Text", szText, "" );
+               //:INCLUDE mSubLC.S_UsageFootnoteUsed FROM mSubLC.S_UsageFootnote
+               RESULT = IncludeSubobjectFromSubobject( mSubLC, "S_UsageFootnoteUsed", mSubLC, "S_UsageFootnote", zPOS_AFTER );
+            } 
+
+            //:END
+            //:IF mMasLC.M_SubUsage EXISTS
+            lTempInteger_3 = CheckExistenceOfEntity( mMasLC, "M_SubUsage" );
+            if ( lTempInteger_3 == 0 )
+            { 
+               //:SetViewToSubobject( mMasLC, "M_SubUsage" )
+               SetViewToSubobject( mMasLC, "M_SubUsage" );
+               //:SetViewToSubobject( mSubLC, "S_SubUsage" )
+               SetViewToSubobject( mSubLC, "S_SubUsage" );
+               //:FOR EACH mMasLC.M_Usage
+               RESULT = SetCursorFirstEntity( mMasLC, "M_Usage", "" );
+               while ( RESULT > zCURSOR_UNCHANGED )
+               { 
+                  //:SelectMLC_UsageEntries( ViewToWindow )
+                  SelectMLC_UsageEntries( ViewToWindow );
+                  RESULT = SetCursorNextEntity( mMasLC, "M_Usage", "" );
+               } 
+
+               //:END
+               //:ResetViewFromSubobject( mSubLC )
+               ResetViewFromSubobject( mSubLC );
+               //:ResetViewFromSubobject( mMasLC )
+               ResetViewFromSubobject( mMasLC );
+            } 
+
+            //:END
          } 
 
          //:END
@@ -3510,11 +3625,11 @@ GOTO_MarketingStatementDetail( View     ViewToWindow )
 
 
 //:DIALOG OPERATION
-//:GOTO_StorageDisposalStatement( VIEW ViewToWindow )
+//:GOTO_StorageDisposalSubStatement( VIEW ViewToWindow )
 
 //:   VIEW mSubLC REGISTERED AS mSubLC
 public int 
-GOTO_StorageDisposalStatement( View     ViewToWindow )
+GOTO_StorageDisposalSubStatement( View     ViewToWindow )
 {
    zVIEW    mSubLC = new zVIEW( );
    int      RESULT = 0;
@@ -3540,11 +3655,11 @@ GOTO_StorageDisposalStatement( View     ViewToWindow )
 
 
 //:DIALOG OPERATION
-//:RETURN_StorageDisposalStatement( VIEW ViewToWindow )
+//:RETURN_StorageDisposalSubStmt( VIEW ViewToWindow )
 
 //:   VIEW mSubLC REGISTERED AS mSubLC
 public int 
-RETURN_StorageDisposalStatement( View     ViewToWindow )
+RETURN_StorageDisposalSubStmt( View     ViewToWindow )
 {
    zVIEW    mSubLC = new zVIEW( );
    int      RESULT = 0;

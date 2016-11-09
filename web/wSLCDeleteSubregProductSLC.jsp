@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSLCDeleteSubregProductSLC   Generate Timestamp: 20161010115315834 --%>
+<%-- wSLCDeleteSubregProductSLC   Generate Timestamp: 20161019144228419 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -425,11 +425,14 @@ else
    View lSPLDLST = null;
    View mLLD_LST = null;
    View mMasLC = null;
+   View mMasLC_Root = null;
+   View mMasProd = null;
    View mSPLDef = null;
    View mSubLC = null;
    View mSubLC_Root = null;
    View mSubProd = null;
    View mSubreg = null;
+   View wWebXfer = null;
    String strRadioGroupValue = "";
    String strComboCurrentValue = "";
    String strAutoComboBoxExternalValue = "";

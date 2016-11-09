@@ -1881,10 +1881,10 @@ GOTO_UpdateSubregProductSPLD( View     ViewToWindow )
    //:END
 
    //:// Build the work components
-   //:BuildCompositeEntriesForSPLD( mSPLDef ) // Need this for Update SPLD Block Definition to work
+   //:BuildCompEntriesForSPLD( mSPLDef ) // Need this for Update SPLD Block Definition to work
    {
     ZGlobalS_Operation m_ZGlobalS_Operation = new ZGlobalS_Operation( mSPLDef );
-    m_ZGlobalS_Operation.BuildCompositeEntriesForSPLD( mSPLDef );
+    m_ZGlobalS_Operation.BuildCompEntriesForSPLD( mSPLDef );
     // m_ZGlobalS_Operation = null;  // permit gc  (unnecessary)
    }
    //:TraceLineS( "$$$$$$ end of SPLD oper", "GOTO_UpdateSubregProductSPLD" )
@@ -1894,7 +1894,7 @@ GOTO_UpdateSubregProductSPLD( View     ViewToWindow )
 //    // Also activate the corresponding SLC and build the composite subobject.
 //    //ACTIVATE mSubLC WHERE mSubLC.SubregLabelContent.ID = mSPLDef.SubregLabelContent.ID
 //    //NAME VIEW mSubLC "mSubLC"
-//    //BuildCompositeEntries( mSubLC )
+//    //BuildCompEntriesForSLC( mSubLC )
 // END
 } 
 
@@ -2411,10 +2411,10 @@ REFRESH_SLC_FromMLC( View     ViewToWindow )
     m_mSubLC_Object.omSubLC_RefreshSLC_FromMLC( mSubLC, mMasLC );
     // m_mSubLC_Object = null;  // permit gc  (unnecessary)
    }
-   //:BuildCompositeEntries( mSubLC )
+   //:BuildCompEntriesForSLC( mSubLC )
    {
     mSubLC_Object m_mSubLC_Object = new mSubLC_Object( mSubLC );
-    m_mSubLC_Object.omSubLC_BuildCompositeEntries( mSubLC );
+    m_mSubLC_Object.omSubLC_BuildCompEntriesForSLC( mSubLC );
     // m_mSubLC_Object = null;  // permit gc  (unnecessary)
    }
    return( 0 );
@@ -2454,7 +2454,7 @@ SelectMLC_ComponentsForSLC( View     ViewToWindow )
    //:// Also, we will need to be sure that any Section entries for selected Statement entries are also selected.
 
    //:// Delete all Directions Usage and Marketing Component entries, after setting the selected flag for the corresponding
-   //:// MLC entry..
+   //:// MLC entry.
    //:FOR EACH mSubLC.CompositeComponentList
    RESULT = SetCursorFirstEntity( mSubLC, "CompositeComponentList", "" );
    while ( RESULT > zCURSOR_UNCHANGED )
@@ -4522,10 +4522,10 @@ REFRESH_SPLD_FromSLC( View     ViewToWindow )
     m_mSPLDef_Object.omSPLDef_BuildSPLD_FromSLC( mSPLDef, mSubLC );
     // m_mSPLDef_Object = null;  // permit gc  (unnecessary)
    }
-   //:BuildCompositeEntriesForSPLD( mSPLDef )
+   //:BuildCompEntriesForSPLD( mSPLDef )
    {
     ZGlobalS_Operation m_ZGlobalS_Operation = new ZGlobalS_Operation( mSPLDef );
-    m_ZGlobalS_Operation.BuildCompositeEntriesForSPLD( mSPLDef );
+    m_ZGlobalS_Operation.BuildCompEntriesForSPLD( mSPLDef );
     // m_ZGlobalS_Operation = null;  // permit gc  (unnecessary)
    }
    return( 0 );
@@ -4862,7 +4862,7 @@ CLEAN_ClaimEntries( View     ViewToWindow )
 //          DELETE ENTITY mSubLC.S_Usage NONE
 //       END
 //    END
-//    BuildCompositeEntries( mSubLC )*/
+//    BuildCompEntriesForSLC( mSubLC )*/
 // END
 } 
 
@@ -6815,10 +6815,10 @@ GOTO_UpdateSubregProductSLC( View     ViewToWindow )
    //:COMMIT mSubLC
    RESULT = CommitObjectInstance( mSubLC );
 
-   //:BuildCompositeEntries( mSubLC )
+   //:BuildCompEntriesForSLC( mSubLC )
    {
     mSubLC_Object m_mSubLC_Object = new mSubLC_Object( mSubLC );
-    m_mSubLC_Object.omSubLC_BuildCompositeEntries( mSubLC );
+    m_mSubLC_Object.omSubLC_BuildCompEntriesForSLC( mSubLC );
     // m_mSubLC_Object = null;  // permit gc  (unnecessary)
    }
 
@@ -6898,10 +6898,10 @@ GOTO_UpdateSubregProductSLC( View     ViewToWindow )
    DropView( vTempViewVar_1 );
    //:NAME VIEW mMasLC "mMasLC"
    SetNameForView( mMasLC, "mMasLC", null, zLEVEL_TASK );
-   //:BuildCompositeEntries( mMasLC )
+   //:BuildCompEntriesForMLC( mMasLC )
    {
     mMasLC_Object m_mMasLC_Object = new mMasLC_Object( mMasLC );
-    m_mMasLC_Object.omMasLC_BuildCompositeEntries( mMasLC );
+    m_mMasLC_Object.omMasLC_BuildCompEntriesForMLC( mMasLC );
     // m_mMasLC_Object = null;  // permit gc  (unnecessary)
    }
    //:BuildWorkVariables( mSubLC, mMasLC )
@@ -7101,6 +7101,7 @@ SELECT_MLC_ForNewSLC( View     ViewToWindow )
    RESULT = CreateEntity( mSubLC, "SubregLabelContent", zPOS_AFTER );
    //:INCLUDE mSubLC.SubregProduct FROM mSubProd.SubregProduct
    RESULT = IncludeSubobjectFromSubobject( mSubLC, "SubregProduct", mSubProd, "SubregProduct", zPOS_AFTER );
+   //:// mSubLC.SubregLabelContent.wContainerSize = SelectedContainerVolume
 
    //:// Activate the selected MLC, which has the selectable content.
    //:ACTIVATE mMasLC WHERE mMasLC.MasterLabelContent.ID = lMLC.MasterLabelContent.ID
@@ -7114,15 +7115,15 @@ SELECT_MLC_ForNewSLC( View     ViewToWindow )
    SetNameForView( mMasLC, "mMasLC", null, zLEVEL_TASK );
    //:INCLUDE mSubLC.MasterLabelContent FROM mMasLC.MasterLabelContent
    RESULT = IncludeSubobjectFromSubobject( mSubLC, "MasterLabelContent", mMasLC, "MasterLabelContent", zPOS_AFTER );
-   //:BuildCompositeEntries( mMasLC )
+   //:SetMatchingAttributesByName( mSubLC, "SubregLabelContent",
+   //:                             mMasLC, "MasterLabelContent", zSET_NOTNULL )
+   SetMatchingAttributesByName( mSubLC, "SubregLabelContent", mMasLC, "MasterLabelContent", zSET_NOTNULL );
+   //:BuildCompEntriesForMLC( mMasLC )
    {
     mMasLC_Object m_mMasLC_Object = new mMasLC_Object( mMasLC );
-    m_mMasLC_Object.omMasLC_BuildCompositeEntries( mMasLC );
+    m_mMasLC_Object.omMasLC_BuildCompEntriesForMLC( mMasLC );
     // m_mMasLC_Object = null;  // permit gc  (unnecessary)
    }
-
-   //:DisplayObjectInstance( mSubLC, "", "" )
-   DisplayObjectInstance( mSubLC, "", "" );
 
    //:// Initialize the data in the SLC from the MLC.
    //:BuildSLC_FromMLC( mSubLC, mMasLC )
@@ -7133,10 +7134,10 @@ SELECT_MLC_ForNewSLC( View     ViewToWindow )
    }
 
    //:// Build SLC Components subobject.
-   //:BuildCompositeEntries( mSubLC )
+   //:BuildCompEntriesForSLC( mSubLC )
    {
     mSubLC_Object m_mSubLC_Object = new mSubLC_Object( mSubLC );
-    m_mSubLC_Object.omSubLC_BuildCompositeEntries( mSubLC );
+    m_mSubLC_Object.omSubLC_BuildCompEntriesForSLC( mSubLC );
     // m_mSubLC_Object = null;  // permit gc  (unnecessary)
    }
    return( 0 );

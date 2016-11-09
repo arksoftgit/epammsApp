@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSLCMarketingStatement   Generate Timestamp: 20160928132404177 --%>
+<%-- wSLCStorageDisposalSubStatement   Generate Timestamp: 20161019144229491 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -13,7 +13,7 @@
 <%@ page import="com.quinsoft.zeidon.domains.*" %>
 <%@ page import="com.quinsoft.epamms.*" %>
 
-<%!
+<%! 
 
 ObjectEngine objectEngine = com.quinsoft.epamms.ZeidonObjectEngineConfiguration.getObjectEngine();
 
@@ -36,6 +36,7 @@ public int DoInputMapping( HttpServletRequest request,
    Task task = objectEngine.getTaskById( taskId );
 
    View mSubLC = null;
+   View mSubLC_Root = null;
    View vGridTmp = null; // temp view to grid view
    View vRepeatingGrp = null; // temp view to repeating group view
    String strDateFormat = "";
@@ -63,39 +64,26 @@ public int DoInputMapping( HttpServletRequest request,
       // Grid: Grid4
       iTableRowCnt = 0;
 
-      // We are creating a temp view to the grid view so that if there are
-      // grids on the same window with the same view we do not mess up the
-      // entity positions.
+      // We are creating a temp view to the grid view so that if there are 
+      // grids on the same window with the same view we do not mess up the 
+      // entity positions. 
       vGridTmp = mSubLC.newView( );
-      csrRC = vGridTmp.cursor( "S_InsertTextMarketing" ).setFirst( "S_MarketingStatement" );
+      csrRC = vGridTmp.cursor( "S_InsertTextKeywordSD" ).setFirst(  );
       while ( csrRC.isSet() )
       {
-         lEntityKey = vGridTmp.cursor( "S_InsertTextMarketing" ).getEntityKey( );
+         lEntityKey = vGridTmp.cursor( "S_InsertTextKeywordSD" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
          iTableRowCnt++;
 
-         csrRC = vGridTmp.cursor( "S_InsertTextMarketing" ).setNextContinue( );
+         csrRC = vGridTmp.cursor( "S_InsertTextKeywordSD" ).setNextContinue( );
       }
 
       vGridTmp.drop( );
-      // Grid: GridMarketingUsage
-      iTableRowCnt = 0;
+   }
 
-      // We are creating a temp view to the grid view so that if there are
-      // grids on the same window with the same view we do not mess up the
-      // entity positions.
-      vGridTmp = mSubLC.newView( );
-      csrRC = vGridTmp.cursor( "S_MarketingUsageOrdering" ).setFirst(  );
-      while ( csrRC.isSet() )
-      {
-         lEntityKey = vGridTmp.cursor( "S_MarketingUsageOrdering" ).getEntityKey( );
-         strEntityKey = Long.toString( lEntityKey );
-         iTableRowCnt++;
-
-         csrRC = vGridTmp.cursor( "S_MarketingUsageOrdering" ).setNextContinue( );
-      }
-
-      vGridTmp.drop( );
+   mSubLC_Root = task.getViewByName( "mSubLC_Root" );
+   if ( VmlOperation.isValid( mSubLC_Root ) )
+   {
    }
 
    if ( webMapping == true )
@@ -156,12 +144,12 @@ String strInputFileName = "";
 strActionToProcess = (String) request.getParameter( "zAction" );
 
 strLastWindow = (String) session.getAttribute( "ZeidonWindow" );
-if ( StringUtils.isBlank( strLastWindow ) )
+if ( StringUtils.isBlank( strLastWindow ) ) 
    strLastWindow = "NoLastWindow";
 
 strLastAction = (String) session.getAttribute( "ZeidonAction" );
 
-if ( strLastWindow.equals("wSLCMarketingStatement") && StringUtils.isBlank( strActionToProcess ) && StringUtils.isBlank( strLastAction ) )
+if ( strLastWindow.equals("wSLCStorageDisposalSubStatement") && StringUtils.isBlank( strActionToProcess ) && StringUtils.isBlank( strLastAction ) )
 {
    strURL = response.encodeRedirectURL( "logout.jsp" );
    response.sendRedirect( strURL );
@@ -199,9 +187,9 @@ strURL = "";
 bDone = false;
 nRC = 0;
 
-task.log().info("*** wSLCMarketingStatement strActionToProcess *** " + strActionToProcess );
-task.log().info("*** wSLCMarketingStatement LastWindow *** " + strLastWindow );
-task.log().info("*** wSLCMarketingStatement LastAction *** " + strLastAction );
+task.log().info("*** wSLCStorageDisposalSubStatement strActionToProcess *** " + strActionToProcess );
+task.log().info("*** wSLCStorageDisposalSubStatement LastWindow *** " + strLastWindow );
+task.log().info("*** wSLCStorageDisposalSubStatement LastAction *** " + strLastAction );
 
 if ( strActionToProcess != null )
 {
@@ -217,97 +205,15 @@ if ( strActionToProcess != null )
 
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "AcceptMarketingStatement" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "CancelStorDispSubStmt" ) )
    {
       bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wSLCMarketingStatement", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Auto Object Function
-      nRC = 0;
-      try
-      {
-         View mSubLCAuto = task.getViewByName( "mSubLC" );
-         EntityCursor cursor = mSubLCAuto.cursor( "S_MarketingStatement" );
-      if ( cursor.isNull() )
-         nRC = 0;
-      else
-      {
-         if ( cursor.isVersioned( ) )
-         {
-           cursor.acceptSubobject( );
-         }
-           nRC = 0;
-         }
-
-      }
-      catch ( Exception e )
-      {
-         nRC = 2;
-         VmlOperation.CreateMessage( task, "AcceptMarketingStatement", e.getMessage( ), "" );
-         break;
-      }
-      // Next Window
-      strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_ReturnToParent, "", "" );
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "CancelMarketingStatement" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wSLCMarketingStatement", strActionToProcess );
-
-      // Action Auto Object Function
-      nRC = 0;
-      try
-      {
-         View mSubLCAuto = task.getViewByName( "mSubLC" );
-         EntityCursor cursor = mSubLCAuto.cursor( "S_MarketingStatement" );
-      if ( cursor.isNull() )
-         nRC = 0;
-      else
-      {
-         if ( cursor.isVersioned( ) )
-         {
-           cursor.cancelSubobject( );
-         }
-           nRC = 0;
-         }
-
-      }
-      catch ( Exception e )
-      {
-         nRC = 2;
-         VmlOperation.CreateMessage( task, "CancelMarketingStatement", e.getMessage( ), "" );
-         break;
-      }
-      // Next Window
-      strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_ReturnToParent, "", "" );
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_DisplayGeneratedText" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wSLCMarketingStatement", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wSLCStorageDisposalSubStatement", strActionToProcess );
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCMarketingStatement", "wSLC.GOTO_DisplayGeneratedText" );
-      nOptRC = wSLC.GOTO_DisplayGeneratedText( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCStorageDisposalSubStatement", "wSLC.RETURN_StorageDisposalSubStmt" );
+      nOptRC = wSLC.RETURN_StorageDisposalSubStmt( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -324,88 +230,9 @@ if ( strActionToProcess != null )
       if ( strNextJSP_Name.equals( "" ) )
       {
          // Next Window
-         strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_StartModalSubwindow, "wSLC", "GeneratedTextDisplay" );
+         strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_ReturnToParent, "", "" );
       }
 
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_MarketingKeywordSelect" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wSLCMarketingStatement", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCMarketingStatement", "wSLC.GOTO_MarketingKeywordSelect" );
-      nOptRC = wSLC.GOTO_MarketingKeywordSelect( new zVIEW( vKZXMLPGO ) );
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wSLC.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_StartModalSubwindow, "wSLC", "MarketingKeywordSelect" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_SelectMarketingUsageEntries" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wSLCMarketingStatement", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Next Window
-      strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_StartModalSubwindow, "wSLC", "MarketingUsageSelect" );
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "SortMarketingStatements" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wSLCMarketingStatement", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Next Window
-      // We are borrowing zTableRowSelect and this code is hardwired for the moment.  javascript code similar to the following must be added to the action:
-      // document.wSLCMarketingStatement.zTableRowSelect.value = buildSortTableHtml( "mSubLC", "S_MarketingUsageOrdering", "GridMarketingUsage", ["Usage Type","Usage Name"] );
-      wWebXA = task.getViewByName( "wWebXfer" );
-      String strHtml = (String) request.getParameter( "zTableRowSelect" );
-      wWebXA.cursor( "Root" ).getAttribute( "HTML" ).setValue( strHtml, "" );
-      // We are borrowing zTableRowSelect and the code above is hardwired for the moment
-
-      strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_StartModalSubwindow, "wSystem", "DragDropSort" );
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
@@ -430,7 +257,7 @@ if ( strActionToProcess != null )
       bDone = true;
       if ( task != null )
       {
-         task.log().info( "OnUnload UnregisterZeidonApplication: ----->>> " + "wSLCMarketingStatement" );
+         task.log().info( "OnUnload UnregisterZeidonApplication: ----->>> " + "wSLCStorageDisposalSubStatement" );
          task.dropTask();
          task = null;
          session.setAttribute( "ZeidonTaskId", task );
@@ -447,7 +274,7 @@ if ( strActionToProcess != null )
       bDone = true;
       if ( task != null )
       {
-         task.log().info( "OnUnload UnregisterZeidonApplication: ------->>> " + "wSLCMarketingStatement" );
+         task.log().info( "OnUnload UnregisterZeidonApplication: ------->>> " + "wSLCStorageDisposalSubStatement" );
          task.dropTask();
          task = null;
          session.setAttribute( "ZeidonTaskId", task );
@@ -462,14 +289,14 @@ if ( strActionToProcess != null )
    while ( bDone == false && strActionToProcess.equals( "_OnResubmitPage" ) )
    {
       bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wSLCMarketingStatement", strActionToProcess );
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wSLCStorageDisposalSubStatement", strActionToProcess );
 
       // Input Mapping
       nRC = DoInputMapping( request, session, application, false );
       if ( nRC < 0 )
          break;
 
-      strURL = response.encodeRedirectURL( "wSLCMarketingStatement.jsp" );
+      strURL = response.encodeRedirectURL( "wSLCStorageDisposalSubStatement.jsp" );
       nRC = 1;  //do the redirection
       break;
    }
@@ -480,11 +307,11 @@ if ( strActionToProcess != null )
       {
          if ( nRC > 1 )
          {
-            strURL = response.encodeRedirectURL( "wSLCMarketingStatement.jsp" );
+            strURL = response.encodeRedirectURL( "wSLCStorageDisposalSubStatement.jsp" );
             task.log().info( "Action Error Redirect to: " + strURL );
          }
 
-         if ( ! strURL.equals("wSLCMarketingStatement.jsp") )
+         if ( ! strURL.equals("wSLCStorageDisposalSubStatement.jsp") ) 
          {
             response.sendRedirect( strURL );
             // If we are redirecting to a new page, then we need this return so that the rest of this page doesn't get built.
@@ -495,7 +322,7 @@ if ( strActionToProcess != null )
       {
          if ( nRC > -128 )
          {
-            strURL = response.encodeRedirectURL( "wSLCMarketingStatement.jsp" );
+            strURL = response.encodeRedirectURL( "wSLCStorageDisposalSubStatement.jsp" );
             task.log().info( "Mapping Error Redirect to: " + strURL );
          }
          else
@@ -523,7 +350,7 @@ else
    if ( VmlOperation.isValid( wWebXA ) )
    {
       wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wSLC", "" );
-      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "MarketingStatement", "" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "StorageDisposalSubStatement", "" );
    }
 
 %>
@@ -531,7 +358,7 @@ else
 <html>
 <head>
 
-<title>Marketing Statement</title>
+<title>Storage And Disposal Sub-Statement</title>
 
 <%@ include file="./include/head.inc" %>
 <!-- Timeout.inc has a value for nTimeout which is used to determine when to -->
@@ -539,16 +366,21 @@ else
 <%@ include file="./include/timeout.inc" %>
 <link rel="stylesheet" type="text/css" href="./css/print.css" media="print" />
 <script language="JavaScript" type="text/javascript" src="./js/common.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/jsoeUtils.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/jsoe.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/css.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/sts.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
-<script language="JavaScript" type="text/javascript" src="./genjs/wSLCMarketingStatement.js"></script>
+<script language="JavaScript" type="text/javascript" src="./genjs/wSLCStorageDisposalSubStatement.js"></script>
 
 </head>
 
-<body onLoad="_AfterPageLoaded( )" onSubmit="_DisableFormElements( true )" onBeforeUnload="_BeforePageUnload( )">
+<!-- 
+// If we have table sorting on this page, the table sorting does not work in Firefox 
+// (seems to work in IE and Opera).  The solution is to not call _AfterPageLoaded in OnLoad event. 
+// In the Standardista code (sts.js) there is an addEvent that will call _AfterPageLoaded. 
+--> 
+<body onSubmit="_DisableFormElements( true )" onBeforeUnload="_BeforePageUnload( )">
 
 <%@ include file="./include/pagebackground.inc" %>  <!-- just temporary until we get the painter dialog updates from Kelly ... 2011.10.08 dks -->
 
@@ -564,21 +396,11 @@ else
 <div id="sidenavigation">
    <ul id="Return" name="Return">
 <%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "AcceptAndReturn" );
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "Return" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="AcceptAndReturn" name="AcceptAndReturn"><a href="#"  onclick="AcceptMarketingStatement()">Accept & Return</a></li>
-<%
-   }
-%>
-
-<%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "CancelAndReturn" );
-   if ( !csrRC.isSet() ) //if ( nRC < 0 )
-   {
-%>
-       <li id="CancelAndReturn" name="CancelAndReturn"><a href="#"  onclick="CancelMarketingStatement()">Cancel & Return</a></li>
+       <li id="Return" name="Return"><a href="#"  onclick="CancelStorDispSubStmt()">Return</a></li>
 <%
    }
 %>
@@ -589,7 +411,6 @@ else
 </div>  <!-- leftcontent -->
 
 <div id="content">
-
 <!--System Maintenance-->
 
 <%@ include file="./include/systemmaintenance.inc" %>
@@ -597,7 +418,7 @@ else
 <!-- END System Maintenance-->
 
 
-<form name="wSLCMarketingStatement" id="wSLCMarketingStatement" method="post">
+<form name="wSLCStorageDisposalSubStatement" id="wSLCStorageDisposalSubStatement" method="post">
    <input name="zAction" id="zAction" type="hidden" value="NOVALUE">
    <input name="zTableRowSelect" id="zTableRowSelect" type="hidden" value="NOVALUE">
    <input name="zDisable" id="zDisable" type="hidden" value="NOVALUE">
@@ -607,11 +428,14 @@ else
    View lSPLDLST = null;
    View mLLD_LST = null;
    View mMasLC = null;
+   View mMasLC_Root = null;
+   View mMasProd = null;
    View mSPLDef = null;
    View mSubLC = null;
    View mSubLC_Root = null;
    View mSubProd = null;
    View mSubreg = null;
+   View wWebXfer = null;
    String strRadioGroupValue = "";
    String strComboCurrentValue = "";
    String strAutoComboBoxExternalValue = "";
@@ -677,7 +501,7 @@ else
 
    strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString( "" );
 
-   strFocusCtrl = VmlOperation.GetFocusCtrl( task, "wSLC", "MarketingStatement" );
+   strFocusCtrl = VmlOperation.GetFocusCtrl( task, "wSLC", "StorageDisposalSubStatement" );
    strOpenFile = VmlOperation.FindOpenFile( task );
    strDateFormat = "YYYY.MM.DD";
 
@@ -715,112 +539,154 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:4px;width:100px;"></div>
+<div style="height:2px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GroupBox10:GroupBox */ %>
+<% /* GBStorDispSections3:GroupBox */ %>
 
-<div id="GroupBox10" name="GroupBox10"   style="float:left;position:relative; width:730px; height:28px;">  <!-- GroupBox10 -->
+<div id="GBStorDispSections3" name="GBStorDispSections3" class="listgroup"   style="float:left;position:relative; width:780px; height:36px;">  <!-- GBStorDispSections3 --> 
 
-<% /* SLC_ProductText2:Text */ %>
+<% /* StorageDisposalSubStatements:Text */ %>
 
-<label class="groupbox"  id="SLC_ProductText2" name="SLC_ProductText2" style="width:338px;height:16px;position:absolute;left:0px;top:12px;">Marketing Statement</label>
+<label class="groupbox"  id="StorageDisposalSubStatements" name="StorageDisposalSubStatements" style="width:238px;height:16px;position:absolute;left:6px;top:12px;">Storage & Disposal  Sub-Statement</label>
+
+<% /* StorageDisposalSection1:Text */ %>
+
+<label class="groupbox"  id="StorageDisposalSection1" name="StorageDisposalSection1" style="width:68px;height:16px;position:absolute;left:276px;top:12px;">Section:</label>
+
+<% /* SectionName:Text */ %>
+<% strTextDisplayValue = "";
+   mSubLC_Root = task.getViewByName( "mSubLC_Root" );
+   if ( VmlOperation.isValid( mSubLC_Root ) == false )
+      task.log( ).debug( "Invalid View: " + "SectionName" );
+   else
+   {
+      nRC = mSubLC_Root.cursor( "S_StorageDisposalSection" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+      {
+      try
+      {
+         strTextDisplayValue = mSubLC_Root.cursor( "S_StorageDisposalSection" ).getAttribute( "Name" ).getString( "" );
+      }
+      catch (Exception e)
+      {
+         out.println("There is an error on SectionName: " + e.getMessage());
+         task.log().info( "*** Error on ctrl SectionName" + e.getMessage() );
+      }
+         if ( strTextDisplayValue == null )
+            strTextDisplayValue = "";
+      }
+   }
+%>
+
+<label  id="SectionName" name="SectionName" style="width:402px;height:24px;position:absolute;left:354px;top:12px;"><%=strTextDisplayValue%></label>
 
 
-</div>  <!--  GroupBox10 -->
+</div>  <!--  GBStorDispSections3 --> 
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
 
 
- <!-- This is added as a line spacer -->
-<div style="height:4px;width:100px;"></div>
-
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GroupBox3:GroupBox */ %>
-<div id="GroupBox3" name="GroupBox3" style="float:left;width:814px;" >
+<% /* GroupBox4:GroupBox */ %>
+<div id="GroupBox4" name="GroupBox4" style="float:left;width:832px;" >
 
-<table cols=2 style="width:814px;"  class="grouptable">
+<table cols=2 style="width:832px;"  class="grouptable">
 
 <tr>
 <td valign="top" style="width:54px;">
-<% /* Text2:Text */ %>
+<% /* Text4:Text */ %>
 
-<span  id="Text2" name="Text2" style="width:46px;height:18px;">Title:</span>
+<span  id="Text4" name="Text4" style="width:46px;height:18px;">Title:</span>
 
 </td>
 <td valign="top" style="width:738px;">
-<% /* Text6:Text */ %>
-<% strTextDisplayValue = "";
-   mSubLC = task.getViewByName( "mSubLC" );
-   if ( VmlOperation.isValid( mSubLC ) == false )
-      task.log( ).debug( "Invalid View: " + "Text6" );
+<% /* MLEdit3:MLEdit */ %>
+<%
+   // MLEdit: MLEdit3
+   strErrorMapValue = VmlOperation.CheckError( "MLEdit3", strError );
+   if ( !StringUtils.isBlank( strErrorMapValue ) )
+   {
+      if ( StringUtils.equals( strErrorFlag, "Y" ) )
+         strErrorColor = "color:red;";
+   }
    else
    {
-      nRC = mSubLC.cursor( "S_MarketingStatement" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 )
+      strErrorColor = "";
+      mSubLC = task.getViewByName( "mSubLC" );
+      if ( VmlOperation.isValid( mSubLC ) == false )
+         task.log( ).debug( "Invalid View: " + "MLEdit3" );
+      else
       {
-      try
-      {
-         strTextDisplayValue = mSubLC.cursor( "S_MarketingStatement" ).getAttribute( "Title" ).getString( "" );
-      }
-      catch (Exception e)
-      {
-         out.println("There is an error on Text6: " + e.getMessage());
-         task.log().info( "*** Error on ctrl Text6" + e.getMessage() );
-      }
-         if ( strTextDisplayValue == null )
-            strTextDisplayValue = "";
+         nRC = mSubLC.cursor( "S_StorageDisposalStatement" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            strErrorMapValue = mSubLC.cursor( "S_StorageDisposalStatement" ).getAttribute( "dSD_TitleKey" ).getString( "" );
+            if ( strErrorMapValue == null )
+               strErrorMapValue = "";
+
+            task.log( ).debug( "S_StorageDisposalStatement.dSD_TitleKey: " + strErrorMapValue );
+         }
+         else
+            task.log( ).debug( "Entity does not exist for MLEdit3: " + "mSubLC.S_StorageDisposalStatement" );
       }
    }
 %>
 
-<span  id="Text6" name="Text6" style="width:738px;height:34px;"><%=strTextDisplayValue%></span>
+<div id="MLEdit3" name="MLEdit3" class="" style="width:738px;height:30px;border:solid;border-width:4px;border-style:groove;text-overflow:hidden;background-color:lightgray;" wrap="wrap"><%=strErrorMapValue%></div>
 
 </td>
 </tr>
 <tr>
 <td valign="top" style="width:54px;">
-<% /* Text1:Text */ %>
+<% /* Text2:Text */ %>
 
-<span  id="Text1" name="Text1" style="width:46px;height:18px;"> Text:</span>
+<span  id="Text2" name="Text2" style="width:38px;height:18px;">Text:</span>
 
 </td>
-<td valign="top" style="width:738px;">
-<% /* Text3:Text */ %>
-<% strTextDisplayValue = "";
-   mSubLC = task.getViewByName( "mSubLC" );
-   if ( VmlOperation.isValid( mSubLC ) == false )
-      task.log( ).debug( "Invalid View: " + "Text3" );
+<td valign="top" style="width:754px;">
+<% /* MLEdit2:MLEdit */ %>
+<%
+   // MLEdit: MLEdit2
+   strErrorMapValue = VmlOperation.CheckError( "MLEdit2", strError );
+   if ( !StringUtils.isBlank( strErrorMapValue ) )
+   {
+      if ( StringUtils.equals( strErrorFlag, "Y" ) )
+         strErrorColor = "color:red;";
+   }
    else
    {
-      nRC = mSubLC.cursor( "S_MarketingStatement" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 )
+      strErrorColor = "";
+      mSubLC = task.getViewByName( "mSubLC" );
+      if ( VmlOperation.isValid( mSubLC ) == false )
+         task.log( ).debug( "Invalid View: " + "MLEdit2" );
+      else
       {
-      try
-      {
-         strTextDisplayValue = mSubLC.cursor( "S_MarketingStatement" ).getAttribute( "Text" ).getString( "" );
-      }
-      catch (Exception e)
-      {
-         out.println("There is an error on Text3: " + e.getMessage());
-         task.log().info( "*** Error on ctrl Text3" + e.getMessage() );
-      }
-         if ( strTextDisplayValue == null )
-            strTextDisplayValue = "";
+         nRC = mSubLC.cursor( "S_StorageDisposalStatement" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            strErrorMapValue = mSubLC.cursor( "S_StorageDisposalStatement" ).getAttribute( "dSD_TextKey" ).getString( "" );
+            if ( strErrorMapValue == null )
+               strErrorMapValue = "";
+
+            task.log( ).debug( "S_StorageDisposalStatement.dSD_TextKey: " + strErrorMapValue );
+         }
+         else
+            task.log( ).debug( "Entity does not exist for MLEdit2: " + "mSubLC.S_StorageDisposalStatement" );
       }
    }
 %>
 
-<span  id="Text3" name="Text3" style="width:738px;height:50px;"><%=strTextDisplayValue%></span>
+<div id="MLEdit2" name="MLEdit2" class="" style="width:754px;height:76px;border:solid;border-width:4px;border-style:groove;text-overflow:hidden;background-color:lightgray;" wrap="wrap"><%=strErrorMapValue%></div>
 
 </td>
 </tr>
 </table>
 
-</div>  <!-- GroupBox3 -->
+</div>  <!-- GroupBox4 --> 
 
 </div>  <!-- End of a new line -->
 
@@ -832,32 +698,255 @@ else
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GroupBox9:GroupBox */ %>
+<% /* GroupBox5:GroupBox */ %>
 
-<div id="GroupBox9" name="GroupBox9" style="width:832px;float:left;">  <!-- GroupBox9 -->
+<div id="GroupBox5" name="GroupBox5" class="listgroup"   style="float:left;position:relative; width:780px; height:30px;">  <!-- GroupBox5 --> 
+
+<% /* Text9:Text */ %>
+
+<label class="groupbox"  id="Text9" name="Text9" style="width:364px;height:16px;position:absolute;left:6px;top:12px;">Container Volume and Size Driving this Statement</label>
+
+
+</div>  <!--  GroupBox5 --> 
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GroupBox6:GroupBox */ %>
+
+<div id="GroupBox6" name="GroupBox6" class="withborder" style="width:780px;height:66px;float:left;">  <!-- GroupBox6 --> 
 
 
  <!-- This is added as a line spacer -->
-<div style="height:8px;width:100px;"></div>
+<div style="height:6px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GroupBox5:GroupBox */ %>
+<div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GroupBox7:GroupBox */ %>
+<div id="GroupBox7" name="GroupBox7" style="float:left;width:754px;" >
 
-<div id="GroupBox5" name="GroupBox5"   style="float:left;position:relative; width:782px; height:30px;">  <!-- GroupBox5 -->
+<table cols=2 style="width:754px;"  class="grouptable">
 
-<% /* PushBtn4:PushBtn */ %>
-<button type="button" class="newbutton" name="PushBtn4" id="PushBtn4" value="" onclick="GOTO_DisplayGeneratedText( )" style="width:158px;height:26px;position:absolute;left:398px;top:4px;">Show Generated Text</button>
+<tr>
+<td valign="top" style="width:64px;">
+<% /* Size::Text */ %>
 
-<% /* PushBtn5:PushBtn */ %>
-<button type="button" class="newbutton" name="PushBtn5" id="PushBtn5" value="" onclick="GOTO_MarketingKeywordSelect( )" style="width:118px;height:26px;position:absolute;left:582px;top:4px;">Select/Remove</button>
+<span  id="Size:" name="Size:" style="width:56px;height:16px;">Size:</span>
 
-<% /* Text7:Text */ %>
+</td>
+<td valign="top" style="width:592px;">
+<% /* CBSize:ComboBox */ %>
+<% strErrorMapValue = "";  %>
 
-<label class="listheader"  id="Text7" name="Text7" style="width:366px;height:16px;position:absolute;left:12px;top:8px;">Keyword text for Embedding in Statement Text</label>
+<select  name="CBSize" id="CBSize" size="1" style="width:592px;"  disabled onchange="CBSizeOnChange( )">
+
+<%
+   boolean inListCBSize = false;
+
+   mSubLC = task.getViewByName( "mSubLC" );
+   if ( VmlOperation.isValid( mSubLC ) )
+   {
+      List<TableEntry> list = JspWebUtils.getTableDomainValues( mSubLC , "S_StorageDisposalStatement", "ContainerVolume", "" );
+
+      nRC = mSubLC.cursor( "S_StorageDisposalStatement" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+      {
+         strComboCurrentValue = mSubLC.cursor( "S_StorageDisposalStatement" ).getAttribute( "ContainerVolume" ).getString( "" );
+         if ( strComboCurrentValue == null )
+            strComboCurrentValue = "";
+      }
+      else
+      {
+         strComboCurrentValue = "";
+      }
+
+      // Code for NOT required attribute, which makes sure a blank entry exists.
+      if ( strComboCurrentValue == "" )
+      {
+         inListCBSize = true;
+%>
+         <option selected="selected" value=""></option>
+<%
+      }
+      else
+      {
+%>
+         <option value=""></option>
+<%
+      }
+      for ( TableEntry entry : list )
+      {
+         String internalValue = entry.getInternalValue( );
+         String externalValue = entry.getExternalValue( );
+         // Perhaps getInternalValue and getExternalValue should return an empty string, 
+         // but currently it returns null.  Set to empty string. 
+         if ( externalValue == null )
+         {
+            internalValue = "";
+            externalValue = "";
+         }
+
+         if ( !StringUtils.isBlank( externalValue ) )
+         {
+            if ( StringUtils.equals( strComboCurrentValue, externalValue ) )
+            {
+               inListCBSize = true;
+%>
+               <option selected="selected" value="<%=externalValue%>"><%=externalValue%></option>
+<%
+            }
+            else
+            {
+%>
+               <option value="<%=externalValue%>"><%=externalValue%></option>
+<%
+            }
+         }
+      }  // for ( TableEntry entry
+      // The value from the database isn't in the domain, add it to the list as disabled.
+      if ( !inListCBSize )
+      {
+%>
+         <option disabled selected="selected" value="<%=strComboCurrentValue%>"><%=strComboCurrentValue%></option>
+<%
+      }
+   }  // if view != null
+%>
+</select>
+
+<input name="hCBSize" id="hCBSize" type="hidden" value="<%=strComboCurrentValue%>" >
+</td>
+</tr>
+<tr>
+<td valign="top" style="width:64px;">
+<% /* Type::Text */ %>
+
+<span  id="Type:" name="Type:" style="width:56px;height:16px;">Type:</span>
+
+</td>
+<td valign="top" style="width:592px;">
+<% /* CBType:ComboBox */ %>
+<% strErrorMapValue = "";  %>
+
+<select  name="CBType" id="CBType" size="1" style="width:592px;"  disabled onchange="CBTypeOnChange( )">
+
+<%
+   boolean inListCBType = false;
+
+   mSubLC = task.getViewByName( "mSubLC" );
+   if ( VmlOperation.isValid( mSubLC ) )
+   {
+      List<TableEntry> list = JspWebUtils.getTableDomainValues( mSubLC , "S_StorageDisposalStatement", "ContainerType", "" );
+
+      nRC = mSubLC.cursor( "S_StorageDisposalStatement" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+      {
+         strComboCurrentValue = mSubLC.cursor( "S_StorageDisposalStatement" ).getAttribute( "ContainerType" ).getString( "" );
+         if ( strComboCurrentValue == null )
+            strComboCurrentValue = "";
+      }
+      else
+      {
+         strComboCurrentValue = "";
+      }
+
+      // Code for NOT required attribute, which makes sure a blank entry exists.
+      if ( strComboCurrentValue == "" )
+      {
+         inListCBType = true;
+%>
+         <option selected="selected" value=""></option>
+<%
+      }
+      else
+      {
+%>
+         <option value=""></option>
+<%
+      }
+      for ( TableEntry entry : list )
+      {
+         String internalValue = entry.getInternalValue( );
+         String externalValue = entry.getExternalValue( );
+         // Perhaps getInternalValue and getExternalValue should return an empty string, 
+         // but currently it returns null.  Set to empty string. 
+         if ( externalValue == null )
+         {
+            internalValue = "";
+            externalValue = "";
+         }
+
+         if ( !StringUtils.isBlank( externalValue ) )
+         {
+            if ( StringUtils.equals( strComboCurrentValue, externalValue ) )
+            {
+               inListCBType = true;
+%>
+               <option selected="selected" value="<%=externalValue%>"><%=externalValue%></option>
+<%
+            }
+            else
+            {
+%>
+               <option value="<%=externalValue%>"><%=externalValue%></option>
+<%
+            }
+         }
+      }  // for ( TableEntry entry
+      // The value from the database isn't in the domain, add it to the list as disabled.
+      if ( !inListCBType )
+      {
+%>
+         <option disabled selected="selected" value="<%=strComboCurrentValue%>"><%=strComboCurrentValue%></option>
+<%
+      }
+   }  // if view != null
+%>
+</select>
+
+<input name="hCBType" id="hCBType" type="hidden" value="<%=strComboCurrentValue%>" >
+</td>
+</tr>
+</table>
+
+</div>  <!-- GroupBox7 --> 
+
+</div>  <!-- End of a new line -->
 
 
-</div>  <!--  GroupBox5 -->
+</div>  <!--  GroupBox6 --> 
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:4px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GroupBox8:GroupBox */ %>
+
+<div id="GroupBox8" name="GroupBox8" style="width:832px;float:left;">  <!-- GroupBox8 --> 
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:14px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<% /* GroupBox3:GroupBox */ %>
+
+<div id="GroupBox3" name="GroupBox3"   style="float:left;position:relative; width:756px; height:30px;">  <!-- GroupBox3 --> 
+
+<% /* Text5:Text */ %>
+
+<label class="listheader"  id="Text5" name="Text5" style="width:324px;height:16px;position:absolute;left:10px;top:8px;">Keyword text for Embedding in Statement Text</label>
+
+
+</div>  <!--  GroupBox3 --> 
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
@@ -869,9 +958,9 @@ else
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
 <% /* Grid4:Grid */ %>
-<table  cols=2 style=""  name="Grid4" id="Grid4">
+<table class="sortable"  cols=2 style=""  name="Grid4" id="Grid4">
 
-<thead><tr>
+<thead bgcolor=green><tr>
 
    <th>Keyword</th>
    <th>Keyword Text</th>
@@ -892,158 +981,24 @@ try
       String strButtonName;
       String strOdd;
       String strTag;
-      String strGridEditCtl6;
-      String strGridEditCtl7;
-
-      View vGrid4;
-      vGrid4 = mSubLC.newView( );
-      csrRC2 = vGrid4.cursor( "S_InsertTextMarketing" ).setFirst( "S_MarketingStatement" );
-      while ( csrRC2.isSet() )
-      {
-         strOdd = (iTableRowCnt % 2) != 0 ? " class='odd'" : "";
-         iTableRowCnt++;
-
-         lEntityKey = vGrid4.cursor( "S_InsertTextMarketing" ).getEntityKey( );
-         strEntityKey = Long.toString( lEntityKey );
-         strGridEditCtl6 = "";
-         nRC = vGrid4.cursor( "S_InsertTextKeywordMarketing" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-         {
-            strGridEditCtl6 = vGrid4.cursor( "S_InsertTextKeywordMarketing" ).getAttribute( "Name" ).getString( "" );
-
-            if ( strGridEditCtl6 == null )
-               strGridEditCtl6 = "";
-         }
-
-         if ( StringUtils.isBlank( strGridEditCtl6 ) )
-            strGridEditCtl6 = "&nbsp";
-
-         strGridEditCtl7 = "";
-         nRC = vGrid4.cursor( "S_InsertTextMarketing" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-         {
-            strGridEditCtl7 = vGrid4.cursor( "S_InsertTextMarketing" ).getAttribute( "Text" ).getString( "" );
-
-            if ( strGridEditCtl7 == null )
-               strGridEditCtl7 = "";
-         }
-
-         if ( StringUtils.isBlank( strGridEditCtl7 ) )
-            strGridEditCtl7 = "&nbsp";
-
-%>
-
-<tr<%=strOdd%>>
-
-   <td><%=strGridEditCtl6%></td>
-   <td><%=strGridEditCtl7%></td>
-
-</tr>
-
-<%
-         csrRC2 = vGrid4.cursor( "S_InsertTextMarketing" ).setNextContinue( );
-      }
-      vGrid4.drop( );
-   }
-}
-catch (Exception e)
-{
-out.println("There is an error in grid: " + e.getMessage());
-task.log().info( "*** Error in grid" + e.getMessage() );
-}
-%>
-</tbody>
-</table>
-
-</div>  <!-- End of a new line -->
-
-
-</div>  <!--  GroupBox9 -->
-</div>  <!-- End of a new line -->
-
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
-
-
-<div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GroupBox8:GroupBox */ %>
-
-<div id="GroupBox8" name="GroupBox8" style="width:830px;float:left;">  <!-- GroupBox8 -->
-
-
- <!-- This is added as a line spacer -->
-<div style="height:8px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:6px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GroupBox4:GroupBox */ %>
-
-<div id="GroupBox4" name="GroupBox4"   style="float:left;position:relative; width:798px; height:30px;">  <!-- GroupBox4 -->
-
-<% /* Text4:Text */ %>
-
-<label class="listheader"  id="Text4" name="Text4" style="width:434px;height:16px;position:absolute;left:12px;top:4px;">Usage Entries for Embedding in Statement Text</label>
-
-<% /* PushBtn3:PushBtn */ %>
-<button type="button" class="newbutton" name="PushBtn3" id="PushBtn3" value="" onclick="GOTO_SelectMarketingUsageEntries( )" style="width:118px;height:26px;position:absolute;left:490px;top:4px;">Select/Remove</button>
-
-<% /* PBSort:PushBtn */ %>
-<button type="button" class="newbutton" name="PBSort" id="PBSort" value="" onclick="SortMarketingStatements( )" style="width:78px;height:26px;position:absolute;left:630px;top:4px;">Sort</button>
-
-
-</div>  <!--  GroupBox4 -->
-</div>  <!-- End of a new line -->
-
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
-
-
- <!-- This is added as a line spacer -->
-<div style="height:2px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GridMarketingUsage:Grid */ %>
-<table  cols=2 style=""  name="GridMarketingUsage" id="GridMarketingUsage">
-
-<thead><tr>
-
-   <th>Usage Type</th>
-   <th>Usage Name</th>
-
-</tr></thead>
-
-<tbody>
-
-<%
-try
-{
-   iTableRowCnt = 0;
-   mSubLC = task.getViewByName( "mSubLC" );
-   if ( VmlOperation.isValid( mSubLC ) )
-   {
-      long   lEntityKey;
-      String strEntityKey;
-      String strButtonName;
-      String strOdd;
-      String strTag;
       String strGridEditCtl4;
       String strGridEditCtl5;
-
-      View vGridMarketingUsage;
-      vGridMarketingUsage = mSubLC.newView( );
-      csrRC2 = vGridMarketingUsage.cursor( "S_MarketingUsageOrdering" ).setFirst(  );
+      
+      View vGrid4;
+      vGrid4 = mSubLC.newView( );
+      csrRC2 = vGrid4.cursor( "S_InsertTextKeywordSD" ).setFirst(  );
       while ( csrRC2.isSet() )
       {
          strOdd = (iTableRowCnt % 2) != 0 ? " class='odd'" : "";
          iTableRowCnt++;
 
-         lEntityKey = vGridMarketingUsage.cursor( "S_MarketingUsageOrdering" ).getEntityKey( );
+         lEntityKey = vGrid4.cursor( "S_InsertTextKeywordSD" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
          strGridEditCtl4 = "";
-         nRC = vGridMarketingUsage.cursor( "S_MarketingUsage" ).checkExistenceOfEntity( ).toInt();
+         nRC = vGrid4.cursor( "S_InsertTextKeywordSD" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl4 = vGridMarketingUsage.cursor( "S_MarketingUsage" ).getAttribute( "UsageType" ).getString( "FullUsageType" );
+            strGridEditCtl4 = vGrid4.cursor( "S_InsertTextKeywordSD" ).getAttribute( "Name" ).getString( "" );
 
             if ( strGridEditCtl4 == null )
                strGridEditCtl4 = "";
@@ -1053,10 +1008,10 @@ try
             strGridEditCtl4 = "&nbsp";
 
          strGridEditCtl5 = "";
-         nRC = vGridMarketingUsage.cursor( "S_MarketingUsage" ).checkExistenceOfEntity( ).toInt();
+         nRC = vGrid4.cursor( "S_InsertTextKeywordSD" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl5 = vGridMarketingUsage.cursor( "S_MarketingUsage" ).getAttribute( "dDisplayUsageName" ).getString( "" );
+            strGridEditCtl5 = vGrid4.cursor( "S_InsertTextKeywordSD" ).getAttribute( "dSD_KeywordText" ).getString( "" );
 
             if ( strGridEditCtl5 == null )
                strGridEditCtl5 = "";
@@ -1075,9 +1030,9 @@ try
 </tr>
 
 <%
-         csrRC2 = vGridMarketingUsage.cursor( "S_MarketingUsageOrdering" ).setNextContinue( );
+         csrRC2 = vGrid4.cursor( "S_InsertTextKeywordSD" ).setNextContinue( );
       }
-      vGridMarketingUsage.drop( );
+      vGrid4.drop( );
    }
 }
 catch (Exception e)
@@ -1092,7 +1047,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 </div>  <!-- End of a new line -->
 
 
-</div>  <!--  GroupBox8 -->
+</div>  <!--  GroupBox8 --> 
 </div>  <!-- End of a new line -->
 
 
@@ -1125,7 +1080,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 <script type="text/javascript">animatedcollapse.init();</script>
 </html>
 <%
-   session.setAttribute( "ZeidonWindow", "wSLCMarketingStatement" );
+   session.setAttribute( "ZeidonWindow", "wSLCStorageDisposalSubStatement" );
    session.setAttribute( "ZeidonAction", null );
 
    strActionToProcess = "";

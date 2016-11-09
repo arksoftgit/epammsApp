@@ -195,7 +195,7 @@ GOTO_UpdateSubregProductSLC( VIEW ViewToWindow )
    END
    COMMIT mSubLC
 
-   BuildCompositeEntries( mSubLC )
+   BuildCompEntriesForSLC( mSubLC )
 
    // Relink Usage.
    FOR EACH mSubLC.S_DirectionsForUseSection
@@ -216,7 +216,7 @@ GOTO_UpdateSubregProductSLC( VIEW ViewToWindow )
    // Activate related MLC, which has the selectable content.
    ACTIVATE mMasLC WHERE mMasLC.MasterLabelContent.ID = mSubProd.MasterLabelContent.ID
    NAME VIEW mMasLC "mMasLC"
-   BuildCompositeEntries( mMasLC )
+   BuildCompEntriesForMLC( mMasLC )
    BuildWorkVariables( mSubLC, mMasLC )
 
 END
@@ -321,20 +321,21 @@ SELECT_MLC_ForNewSLC( VIEW ViewToWindow )
    NAME VIEW mSubLC "mSubLC"
    CREATE ENTITY mSubLC.SubregLabelContent
    INCLUDE mSubLC.SubregProduct FROM mSubProd.SubregProduct
+// mSubLC.SubregLabelContent.wContainerSize = SelectedContainerVolume
 
    // Activate the selected MLC, which has the selectable content.
    ACTIVATE mMasLC WHERE mMasLC.MasterLabelContent.ID = lMLC.MasterLabelContent.ID
    NAME VIEW mMasLC "mMasLC"
    INCLUDE mSubLC.MasterLabelContent FROM mMasLC.MasterLabelContent
-   BuildCompositeEntries( mMasLC )
-
-   DisplayObjectInstance( mSubLC, "", "" )
+   SetMatchingAttributesByName( mSubLC, "SubregLabelContent",
+                                mMasLC, "MasterLabelContent", zSET_NOTNULL )
+   BuildCompEntriesForMLC( mMasLC )
 
    // Initialize the data in the SLC from the MLC.
    BuildSLC_FromMLC( mSubLC, mMasLC )
 
    // Build SLC Components subobject.
-   BuildCompositeEntries( mSubLC )
+   BuildCompEntriesForSLC( mSubLC )
 
 END
 
@@ -451,7 +452,7 @@ REFRESH_SLC_FromMLC( VIEW ViewToWindow )
    VIEW mMasLC  REGISTERED AS mMasLC
 
    RefreshSLC_FromMLC( mSubLC, mMasLC )
-   BuildCompositeEntries( mSubLC )
+   BuildCompEntriesForSLC( mSubLC )
 
 END
 
@@ -479,7 +480,7 @@ SelectMLC_ComponentsForSLC( VIEW ViewToWindow )
    // Also, we will need to be sure that any Section entries for selected Statement entries are also selected.
 
    // Delete all Directions Usage and Marketing Component entries, after setting the selected flag for the corresponding
-   // MLC entry..
+   // MLC entry.
    FOR EACH mSubLC.CompositeComponentList
       IF mSubLC.CompositeComponentList.Type = "M_MarketingSection" OR
          mSubLC.CompositeComponentList.Type = "M_MarketingStatement" //OR
@@ -1096,14 +1097,14 @@ GOTO_UpdateSubregProductSPLD( VIEW ViewToWindow )
    END
 
    // Build the work components
-   BuildCompositeEntriesForSPLD( mSPLDef ) // Need this for Update SPLD Block Definition to work
+   BuildCompEntriesForSPLD( mSPLDef ) // Need this for Update SPLD Block Definition to work
    TraceLineS( "$$$$$$ end of SPLD oper", "GOTO_UpdateSubregProductSPLD" )
 // DisplayObjectInstance( mSPLDef, "", "" )
 
    // Also activate the corresponding SLC and build the composite subobject.
    //ACTIVATE mSubLC WHERE mSubLC.SubregLabelContent.ID = mSPLDef.SubregLabelContent.ID
    //NAME VIEW mSubLC "mSubLC"
-   //BuildCompositeEntries( mSubLC )
+   //BuildCompEntriesForSLC( mSubLC )
 
 END
 
@@ -1940,7 +1941,7 @@ REFRESH_SPLD_FromSLC( VIEW ViewToWindow )
    ACTIVATE mSubLC WHERE mSubLC.SubregLabelContent.ID =mSPLDef.SubregLabelContent.ID
    NAME VIEW mSubLC "mSubLC"
    BuildSPLD_FromSLC( mSPLDef, mSubLC )
-   BuildCompositeEntriesForSPLD( mSPLDef )
+   BuildCompEntriesForSPLD( mSPLDef )
 
 END
 
@@ -2108,7 +2109,7 @@ CLEAN_ClaimEntries( VIEW ViewToWindow )
          DELETE ENTITY mSubLC.S_Usage NONE
       END
    END
-   BuildCompositeEntries( mSubLC )*/
+   BuildCompEntriesForSLC( mSubLC )*/
 
 END
 

@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSLCDirectionsForUseSection   Generate Timestamp: 20161010115315951 --%>
+<%-- wSLCDirectionsForUseSection   Generate Timestamp: 20161108114653406 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -68,14 +68,14 @@ public int DoInputMapping( HttpServletRequest request,
       // grids on the same window with the same view we do not mess up the 
       // entity positions. 
       vGridTmp = mMasLC.newView( );
-      csrRC = vGridTmp.cursor( "M_DrivingUsage" ).setFirst(  );
+      csrRC = vGridTmp.cursor( "M_ClaimsDrivingUsage" ).setFirst(  );
       while ( csrRC.isSet() )
       {
-         lEntityKey = vGridTmp.cursor( "M_DrivingUsage" ).getEntityKey( );
+         lEntityKey = vGridTmp.cursor( "M_ClaimsDrivingUsage" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
          iTableRowCnt++;
 
-         csrRC = vGridTmp.cursor( "M_DrivingUsage" ).setNextContinue( );
+         csrRC = vGridTmp.cursor( "M_ClaimsDrivingUsage" ).setNextContinue( );
       }
 
       vGridTmp.drop( );
@@ -481,11 +481,14 @@ else
    View lSPLDLST = null;
    View mLLD_LST = null;
    View mMasLC = null;
+   View mMasLC_Root = null;
+   View mMasProd = null;
    View mSPLDef = null;
    View mSubLC = null;
    View mSubLC_Root = null;
    View mSubProd = null;
    View mSubreg = null;
+   View wWebXfer = null;
    String strRadioGroupValue = "";
    String strComboCurrentValue = "";
    String strAutoComboBoxExternalValue = "";
@@ -599,7 +602,7 @@ else
 
 <% /* DirectionsForUseSection:Text */ %>
 
-<label class="listheader"  id="DirectionsForUseSection" name="DirectionsForUseSection" style="width:434px;height:16px;position:absolute;left:8px;top:6px;">Directions for Use Section</label>
+<label class="listheader"  id="DirectionsForUseSection" name="DirectionsForUseSection" style="">Directions for Use Section</label>
 
 <% /* GroupBox2:GroupBox */ %>
 
@@ -607,7 +610,7 @@ else
 
 <% /* DirectionsUseTitle::Text */ %>
 
-<label  id="DirectionsUseTitle:" name="DirectionsUseTitle:" style="width:130px;height:16px;position:absolute;left:10px;top:12px;">Name:</label>
+<label  id="DirectionsUseTitle:" name="DirectionsUseTitle:" style="">Name:</label>
 
 <% /* Text6:Text */ %>
 <% strTextDisplayValue = "";
@@ -634,11 +637,11 @@ else
    }
 %>
 
-<label  id="Text6" name="Text6" style="width:586px;height:16px;position:absolute;left:142px;top:12px;"><%=strTextDisplayValue%></label>
+<label  id="Text6" name="Text6" style=""><%=strTextDisplayValue%></label>
 
 <% /* Text2:Text */ %>
 
-<label  id="Text2" name="Text2" style="width:130px;height:16px;position:absolute;left:10px;top:30px;">Title:</label>
+<label  id="Text2" name="Text2" style="">Title:</label>
 
 <% /* Text3:Text */ %>
 <% strTextDisplayValue = "";
@@ -665,7 +668,7 @@ else
    }
 %>
 
-<label  id="Text3" name="Text3" style="width:586px;height:16px;position:absolute;left:142px;top:30px;"><%=strTextDisplayValue%></label>
+<label  id="Text3" name="Text3" style=""><%=strTextDisplayValue%></label>
 
 
 </div>  <!--  GroupBox2 --> 
@@ -708,7 +711,7 @@ else
 
 <% /* Text5:Text */ %>
 
-<label class="listheader"  id="Text5" name="Text5" style="width:434px;height:16px;position:absolute;left:4px;top:4px;">Directions for Use Statements</label>
+<label class="listheader"  id="Text5" name="Text5" style="">Directions for Use Statements</label>
 
 
 </div>  <!--  GroupBox9 --> 
@@ -829,7 +832,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 
 <% /* Text4:Text */ %>
 
-<label class="listheader"  id="Text4" name="Text4" style="width:480px;height:16px;position:absolute;left:4px;top:4px;">Claims that Drive the current Section to be included in the SLC</label>
+<label class="listheader"  id="Text4" name="Text4" style="">Claims that Drive the current Section to be included in the SLC</label>
 
 
 </div>  <!--  GroupBox8 --> 
@@ -963,7 +966,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 
 <% /* Text7:Text */ %>
 
-<label class="listheader"  id="Text7" name="Text7" style="width:480px;height:16px;position:absolute;left:4px;top:4px;">Claims that Drive the current Section to be included in the SLC</label>
+<label class="listheader"  id="Text7" name="Text7" style="">Claims that Drive the current Section to be included in the SLC</label>
 
 
 </div>  <!--  GroupBox10 --> 
@@ -1006,19 +1009,19 @@ try
       
       View vGrid2;
       vGrid2 = mMasLC.newView( );
-      csrRC2 = vGrid2.cursor( "M_DrivingUsage" ).setFirst(  );
+      csrRC2 = vGrid2.cursor( "M_ClaimsDrivingUsage" ).setFirst(  );
       while ( csrRC2.isSet() )
       {
          strOdd = (iTableRowCnt % 2) != 0 ? " class='odd'" : "";
          iTableRowCnt++;
 
-         lEntityKey = vGrid2.cursor( "M_DrivingUsage" ).getEntityKey( );
+         lEntityKey = vGrid2.cursor( "M_ClaimsDrivingUsage" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
          strGridEditCtl3 = "";
-         nRC = vGrid2.cursor( "M_DrivingUsage" ).checkExistenceOfEntity( ).toInt();
+         nRC = vGrid2.cursor( "M_ClaimsDrivingUsage" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl3 = vGrid2.cursor( "M_DrivingUsage" ).getAttribute( "ClaimsClassification" ).getString( "" );
+            strGridEditCtl3 = vGrid2.cursor( "M_ClaimsDrivingUsage" ).getAttribute( "ClaimsClassification" ).getString( "" );
 
             if ( strGridEditCtl3 == null )
                strGridEditCtl3 = "";
@@ -1028,10 +1031,10 @@ try
             strGridEditCtl3 = "&nbsp";
 
          strGridEditCtl4 = "";
-         nRC = vGrid2.cursor( "M_DrivingUsage" ).checkExistenceOfEntity( ).toInt();
+         nRC = vGrid2.cursor( "M_ClaimsDrivingUsage" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl4 = vGrid2.cursor( "M_DrivingUsage" ).getAttribute( "dDisplayUsageName" ).getString( "" );
+            strGridEditCtl4 = vGrid2.cursor( "M_ClaimsDrivingUsage" ).getAttribute( "dDisplayUsageName" ).getString( "" );
 
             if ( strGridEditCtl4 == null )
                strGridEditCtl4 = "";
@@ -1050,7 +1053,7 @@ try
 </tr>
 
 <%
-         csrRC2 = vGrid2.cursor( "M_DrivingUsage" ).setNextContinue( );
+         csrRC2 = vGrid2.cursor( "M_ClaimsDrivingUsage" ).setNextContinue( );
       }
       vGrid2.drop( );
    }

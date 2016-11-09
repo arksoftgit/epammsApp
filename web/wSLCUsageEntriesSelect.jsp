@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSLCUsageEntriesSelect   Generate Timestamp: 20161010115316944 --%>
+<%-- wSLCUsageEntriesSelect   Generate Timestamp: 20161028120755915 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -611,11 +611,14 @@ else
    View lSPLDLST = null;
    View mLLD_LST = null;
    View mMasLC = null;
+   View mMasLC_Root = null;
+   View mMasProd = null;
    View mSPLDef = null;
    View mSubLC = null;
    View mSubLC_Root = null;
    View mSubProd = null;
    View mSubreg = null;
+   View wWebXfer = null;
    String strRadioGroupValue = "";
    String strComboCurrentValue = "";
    String strAutoComboBoxExternalValue = "";
@@ -869,7 +872,7 @@ try
          nRC = vGrid1.cursor( "S_Usage" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl2 = vGrid1.cursor( "S_Usage" ).getAttribute( "dDisplayUsageName" ).getString( "" );
+            strGridEditCtl2 = vGrid1.cursor( "S_Usage" ).getAttribute( "dUsgPathogenOrFullName" ).getString( "" );
 
             if ( strGridEditCtl2 == null )
                strGridEditCtl2 = "";
@@ -1012,7 +1015,7 @@ try
          nRC = vGrid2.cursor( "M_Usage" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl1 = vGrid2.cursor( "M_Usage" ).getAttribute( "dUsageNameFootnote" ).getString( "" );
+            strGridEditCtl1 = vGrid2.cursor( "M_Usage" ).getAttribute( "dUsgPathogenOrFullName" ).getString( "" );
 
             if ( strGridEditCtl1 == null )
                strGridEditCtl1 = "";

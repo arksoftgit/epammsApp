@@ -1997,16 +1997,16 @@ SelectMLC_UsageEntries( View     ViewToWindow )
          //:IF mMasLC.MasterLabelContent.wSelectedUsageType = "DC"   // Dir for Use Driving Claim
          if ( CompareAttributeToString( mMasLC, "MasterLabelContent", "wSelectedUsageType", "DC" ) == 0 )
          { 
-            //:SET CURSOR FIRST mMasLC.M_DrivingUsage WHERE mMasLC.M_DrivingUsage.ID = mMasLC.M_Usage.ID
+            //:SET CURSOR FIRST mMasLC.M_ClaimsDrivingUsage WHERE mMasLC.M_ClaimsDrivingUsage.ID = mMasLC.M_Usage.ID
             {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
                          GetIntegerFromAttribute( mi_lTempInteger_0, mMasLC, "M_Usage", "ID" );
             lTempInteger_0 = mi_lTempInteger_0.intValue( );}
-            RESULT = SetCursorFirstEntityByInteger( mMasLC, "M_DrivingUsage", "ID", lTempInteger_0, "" );
+            RESULT = SetCursorFirstEntityByInteger( mMasLC, "M_ClaimsDrivingUsage", "ID", lTempInteger_0, "" );
             //:IF RESULT < zCURSOR_SET
             if ( RESULT < zCURSOR_SET )
             { 
-               //:INCLUDE mMasLC.M_DrivingUsage FROM mMasLC.M_Usage
-               RESULT = IncludeSubobjectFromSubobject( mMasLC, "M_DrivingUsage", mMasLC, "M_Usage", zPOS_AFTER );
+               //:INCLUDE mMasLC.M_ClaimsDrivingUsage FROM mMasLC.M_Usage
+               RESULT = IncludeSubobjectFromSubobject( mMasLC, "M_ClaimsDrivingUsage", mMasLC, "M_Usage", zPOS_AFTER );
             } 
 
             //:END
@@ -2092,18 +2092,18 @@ RemoveMLC_UsageEntries( View     ViewToWindow )
    //:IF mMasLC.MasterLabelContent.wSelectedUsageType = "DC"   // Dir for Use Driving Claim
    if ( CompareAttributeToString( mMasLC, "MasterLabelContent", "wSelectedUsageType", "DC" ) == 0 )
    { 
-      //:FOR EACH mMasLC.M_DrivingUsage
-      RESULT = SetCursorFirstEntity( mMasLC, "M_DrivingUsage", "" );
+      //:FOR EACH mMasLC.M_ClaimsDrivingUsage
+      RESULT = SetCursorFirstEntity( mMasLC, "M_ClaimsDrivingUsage", "" );
       while ( RESULT > zCURSOR_UNCHANGED )
       { 
-         //:IF mMasLC.M_DrivingUsage.wSelected = "Y"
-         if ( CompareAttributeToString( mMasLC, "M_DrivingUsage", "wSelected", "Y" ) == 0 )
+         //:IF mMasLC.M_ClaimsDrivingUsage.wSelected = "Y"
+         if ( CompareAttributeToString( mMasLC, "M_ClaimsDrivingUsage", "wSelected", "Y" ) == 0 )
          { 
-            //:EXCLUDE  mMasLC.M_DrivingUsage NONE
-            RESULT = ExcludeEntity( mMasLC, "M_DrivingUsage", zREPOS_NONE );
+            //:EXCLUDE  mMasLC.M_ClaimsDrivingUsage NONE
+            RESULT = ExcludeEntity( mMasLC, "M_ClaimsDrivingUsage", zREPOS_NONE );
          } 
 
-         RESULT = SetCursorNextEntity( mMasLC, "M_DrivingUsage", "" );
+         RESULT = SetCursorNextEntity( mMasLC, "M_ClaimsDrivingUsage", "" );
          //:END
       } 
 
@@ -2176,13 +2176,13 @@ CLEAR_MLC_UsageTarget( View     ViewToWindow )
    //:IF mMasLC.MasterLabelContent.wSelectedUsageType = "DC"   // Dir for Use Driving Claim
    if ( CompareAttributeToString( mMasLC, "MasterLabelContent", "wSelectedUsageType", "DC" ) == 0 )
    { 
-      //:FOR EACH mMasLC.M_DrivingUsage
-      RESULT = SetCursorFirstEntity( mMasLC, "M_DrivingUsage", "" );
+      //:FOR EACH mMasLC.M_ClaimsDrivingUsage
+      RESULT = SetCursorFirstEntity( mMasLC, "M_ClaimsDrivingUsage", "" );
       while ( RESULT > zCURSOR_UNCHANGED )
       { 
-         //:mMasLC.M_DrivingUsage.wSelected = ""
-         SetAttributeFromString( mMasLC, "M_DrivingUsage", "wSelected", "" );
-         RESULT = SetCursorNextEntity( mMasLC, "M_DrivingUsage", "" );
+         //:mMasLC.M_ClaimsDrivingUsage.wSelected = ""
+         SetAttributeFromString( mMasLC, "M_ClaimsDrivingUsage", "wSelected", "" );
+         RESULT = SetCursorNextEntity( mMasLC, "M_ClaimsDrivingUsage", "" );
       } 
 
       //:END
@@ -2242,13 +2242,13 @@ SETALL_MLC_UsageTarget( View     ViewToWindow )
    //:IF mMasLC.MasterLabelContent.wSelectedUsageType = "DC"   // Dir for Use Driving Claim
    if ( CompareAttributeToString( mMasLC, "MasterLabelContent", "wSelectedUsageType", "DC" ) == 0 )
    { 
-      //:FOR EACH mMasLC.M_DrivingUsage
-      RESULT = SetCursorFirstEntity( mMasLC, "M_DrivingUsage", "" );
+      //:FOR EACH mMasLC.M_ClaimsDrivingUsage
+      RESULT = SetCursorFirstEntity( mMasLC, "M_ClaimsDrivingUsage", "" );
       while ( RESULT > zCURSOR_UNCHANGED )
       { 
-         //:mMasLC.M_DrivingUsage.wSelected = "Y"
-         SetAttributeFromString( mMasLC, "M_DrivingUsage", "wSelected", "Y" );
-         RESULT = SetCursorNextEntity( mMasLC, "M_DrivingUsage", "" );
+         //:mMasLC.M_ClaimsDrivingUsage.wSelected = "Y"
+         SetAttributeFromString( mMasLC, "M_ClaimsDrivingUsage", "wSelected", "Y" );
+         RESULT = SetCursorNextEntity( mMasLC, "M_ClaimsDrivingUsage", "" );
       } 
 
       //:END
@@ -3087,16 +3087,16 @@ ConfirmDeleteUsageEntry( View     ViewToWindow )
             } 
 
             //:END
-            //:SET CURSOR FIRST mMasLC.M_DrivingUsage WHERE mMasLC.M_DrivingUsage.ID = mMasLC.M_Usage.ID
+            //:SET CURSOR FIRST mMasLC.M_ClaimsDrivingUsage WHERE mMasLC.M_ClaimsDrivingUsage.ID = mMasLC.M_Usage.ID
             {MutableInt mi_lTempInteger_2 = new MutableInt( lTempInteger_2 );
                          GetIntegerFromAttribute( mi_lTempInteger_2, mMasLC, "M_Usage", "ID" );
             lTempInteger_2 = mi_lTempInteger_2.intValue( );}
-            RESULT = SetCursorFirstEntityByInteger( mMasLC, "M_DrivingUsage", "ID", lTempInteger_2, "" );
+            RESULT = SetCursorFirstEntityByInteger( mMasLC, "M_ClaimsDrivingUsage", "ID", lTempInteger_2, "" );
             //:IF RESULT >= zCURSOR_SET
             if ( RESULT >= zCURSOR_SET )
             { 
-               //:EXCLUDE mMasLC.M_DrivingUsage
-               RESULT = ExcludeEntity( mMasLC, "M_DrivingUsage", zREPOS_AFTER );
+               //:EXCLUDE mMasLC.M_ClaimsDrivingUsage
+               RESULT = ExcludeEntity( mMasLC, "M_ClaimsDrivingUsage", zREPOS_AFTER );
             } 
 
             RESULT = SetCursorNextEntity( mMasLC, "M_DirectionsForUseSection", "" );
@@ -7766,8 +7766,8 @@ IncludeExclusiveOrDU_Section( View     ViewToWindow )
    { 
       //:SetCursorFirstEntityByString( mMasLCIncludeExclude, "M_DirectionsForUseSection", "Name", szNameXOR, "" )
       SetCursorFirstEntityByString( mMasLCIncludeExclude, "M_DirectionsForUseSection", "Name", szNameXOR, "" );
-      //:IF mMasLCIncludeExclude.M_DirectionsForUseXOR_Section EXISTS
-      lTempInteger_1 = CheckExistenceOfEntity( mMasLCIncludeExclude, "M_DirectionsForUseXOR_Section" );
+      //:IF mMasLCIncludeExclude.M_DirectionsForUseXORSection EXISTS
+      lTempInteger_1 = CheckExistenceOfEntity( mMasLCIncludeExclude, "M_DirectionsForUseXORSection" );
       if ( lTempInteger_1 == 0 )
       { 
          //:szNameCurrent = mMasLC.M_DirectionsForUseSection.Name
@@ -7780,25 +7780,25 @@ IncludeExclusiveOrDU_Section( View     ViewToWindow )
                    GetVariableFromAttribute( sb_szNameCurrent, mi_lTempInteger_2, 'S', 257, mMasLC, "M_DirectionsForUseSection", "Name", "", 0 );
          lTempInteger_2 = mi_lTempInteger_2.intValue( );
          szNameCurrent = sb_szNameCurrent.toString( );}
-         //:szNameTarget = mMasLCIncludeExclude.M_DirectionsForUseXOR_Section.Name
+         //:szNameTarget = mMasLCIncludeExclude.M_DirectionsForUseXORSection.Name
          {MutableInt mi_lTempInteger_3 = new MutableInt( lTempInteger_3 );
          StringBuilder sb_szNameTarget;
          if ( szNameTarget == null )
             sb_szNameTarget = new StringBuilder( 32 );
          else
             sb_szNameTarget = new StringBuilder( szNameTarget );
-                   GetVariableFromAttribute( sb_szNameTarget, mi_lTempInteger_3, 'S', 257, mMasLCIncludeExclude, "M_DirectionsForUseXOR_Section", "Name", "", 0 );
+                   GetVariableFromAttribute( sb_szNameTarget, mi_lTempInteger_3, 'S', 257, mMasLCIncludeExclude, "M_DirectionsForUseXORSection", "Name", "", 0 );
          lTempInteger_3 = mi_lTempInteger_3.intValue( );
          szNameTarget = sb_szNameTarget.toString( );}
          //:IF szNameCurrent = szNameTarget
          if ( ZeidonStringCompare( szNameCurrent, 1, 0, szNameTarget, 1, 0, 257 ) == 0 )
          { 
-            //:IF mMasLCIncludeExclude.M_DirectionsForUseXOR_Section EXISTS
-            lTempInteger_4 = CheckExistenceOfEntity( mMasLCIncludeExclude, "M_DirectionsForUseXOR_Section" );
+            //:IF mMasLCIncludeExclude.M_DirectionsForUseXORSection EXISTS
+            lTempInteger_4 = CheckExistenceOfEntity( mMasLCIncludeExclude, "M_DirectionsForUseXORSection" );
             if ( lTempInteger_4 == 0 )
             { 
-               //:EXCLUDE mMasLCIncludeExclude.M_DirectionsForUseXOR_Section NONE
-               RESULT = ExcludeEntity( mMasLCIncludeExclude, "M_DirectionsForUseXOR_Section", zREPOS_NONE );
+               //:EXCLUDE mMasLCIncludeExclude.M_DirectionsForUseXORSection NONE
+               RESULT = ExcludeEntity( mMasLCIncludeExclude, "M_DirectionsForUseXORSection", zREPOS_NONE );
             } 
 
             //:END
@@ -7842,30 +7842,30 @@ IncludeExclusiveOrDU_Section( View     ViewToWindow )
       } 
 
       //:END
-      //:IF mMasLC.M_DirectionsForUseXOR_Section EXISTS
-      lTempInteger_5 = CheckExistenceOfEntity( mMasLC, "M_DirectionsForUseXOR_Section" );
+      //:IF mMasLC.M_DirectionsForUseXORSection EXISTS
+      lTempInteger_5 = CheckExistenceOfEntity( mMasLC, "M_DirectionsForUseXORSection" );
       if ( lTempInteger_5 == 0 )
       { 
-         //:EXCLUDE mMasLC.M_DirectionsForUseXOR_Section NONE
-         RESULT = ExcludeEntity( mMasLC, "M_DirectionsForUseXOR_Section", zREPOS_NONE );
+         //:EXCLUDE mMasLC.M_DirectionsForUseXORSection NONE
+         RESULT = ExcludeEntity( mMasLC, "M_DirectionsForUseXORSection", zREPOS_NONE );
       } 
 
       //:END
 
-      //:INCLUDE mMasLC.M_DirectionsForUseXOR_Section FROM mMasLCIncludeExclude.M_DirectionsForUseSection 
-      RESULT = IncludeSubobjectFromSubobject( mMasLC, "M_DirectionsForUseXOR_Section", mMasLCIncludeExclude, "M_DirectionsForUseSection", zPOS_AFTER );
-      //:INCLUDE mMasLCIncludeExclude.M_DirectionsForUseXOR_Section FROM mMasLC.M_DirectionsForUseSection 
-      RESULT = IncludeSubobjectFromSubobject( mMasLCIncludeExclude, "M_DirectionsForUseXOR_Section", mMasLC, "M_DirectionsForUseSection", zPOS_AFTER );
+      //:INCLUDE mMasLC.M_DirectionsForUseXORSection FROM mMasLCIncludeExclude.M_DirectionsForUseSection 
+      RESULT = IncludeSubobjectFromSubobject( mMasLC, "M_DirectionsForUseXORSection", mMasLCIncludeExclude, "M_DirectionsForUseSection", zPOS_AFTER );
+      //:INCLUDE mMasLCIncludeExclude.M_DirectionsForUseXORSection FROM mMasLC.M_DirectionsForUseSection 
+      RESULT = IncludeSubobjectFromSubobject( mMasLCIncludeExclude, "M_DirectionsForUseXORSection", mMasLC, "M_DirectionsForUseSection", zPOS_AFTER );
       //:ELSE
    } 
    else
    { 
-      //:IF mMasLC.M_DirectionsForUseXOR_Section EXISTS
-      lTempInteger_6 = CheckExistenceOfEntity( mMasLC, "M_DirectionsForUseXOR_Section" );
+      //:IF mMasLC.M_DirectionsForUseXORSection EXISTS
+      lTempInteger_6 = CheckExistenceOfEntity( mMasLC, "M_DirectionsForUseXORSection" );
       if ( lTempInteger_6 == 0 )
       { 
-         //:EXCLUDE mMasLC.M_DirectionsForUseXOR_Section NONE
-         RESULT = ExcludeEntity( mMasLC, "M_DirectionsForUseXOR_Section", zREPOS_NONE );
+         //:EXCLUDE mMasLC.M_DirectionsForUseXORSection NONE
+         RESULT = ExcludeEntity( mMasLC, "M_DirectionsForUseXORSection", zREPOS_NONE );
       } 
 
       //:END

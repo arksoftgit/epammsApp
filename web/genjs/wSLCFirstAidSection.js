@@ -1,4 +1,4 @@
-// wSLCFirstAidSection   Generate Timestamp: 20161010115316092
+// wSLCFirstAidSection   Generate Timestamp: 20161019144228752
 
 var isWindowClosing = true;
 var timerID = null;
@@ -352,6 +352,21 @@ function smDisplayHazardSection( )
       _DisableFormElements( true );
 
       document.wSLCFirstAidSection.zAction.value = "smDisplayHazardSection";
+      document.wSLCFirstAidSection.submit( );
+   }
+}
+
+function smDilution( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wSLCFirstAidSection.zAction.value = "smDilution";
       document.wSLCFirstAidSection.submit( );
    }
 }

@@ -1,4 +1,4 @@
-z1000-Zeidon    TEMPLATE TZDGSRCO                         09/15/16   13:17:04 1.0a2   
+z1000-Zeidon    TEMPLATE TZDGSRCO                         10/31/16   14:38:15 1.0a2   
 eDomainGroup 1
 aZKey      69081339
 aName      Template
@@ -638,11 +638,6 @@ aExternalValue Human Hazard
 aInternalValue HumanHazard
 
 eTableEntry 4
-aZKey      69085283
-aExternalValue Environmental Hazard
-aInternalValue Hazards
-
-eTableEntry 4
 aZKey      69081350
 aExternalValue Environmental Hazard
 aInternalValue EnvironmentalHazard
@@ -719,7 +714,7 @@ aInternalValue Title
 
 eTableEntry 4
 aZKey      110006310
-aExternalValue MarketingUsage
+aExternalValue Marketing Usage
 aInternalValue MarketingUsage
 
 eTableEntry 4

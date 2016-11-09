@@ -1,4 +1,4 @@
-z1000-Zeidon    EPAMMS   TZZOXOGO 06/29/16   10:40:27 1.0a2   
+z1000-Zeidon    EPAMMS   TZZOXOGO                         10/31/16   17:43:01 1.0a2   
 eTZZOXOGO  1
 aNAME      epamms
 
@@ -1323,7 +1323,7 @@ aNAME      ZGlobalS
 aLANGUAGETYPE V
 
 eOPERATION 3
-aNAME      BuildCompositeEntriesForSPLD
+aNAME      BuildCompEntriesForSPLD
 aTYPE      G
 
 ePARAMETER 4

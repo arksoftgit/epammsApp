@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCDirectionsForUseSection   Generate Timestamp: 20160914154444313 --%>
+<%-- wMLCDirectionsForUseSection   Generate Timestamp: 20161108114605662 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -268,14 +268,14 @@ public int DoInputMapping( HttpServletRequest request,
       // grids on the same window with the same view we do not mess up the 
       // entity positions. 
       vGridTmp = mMasLC.newView( );
-      csrRC = vGridTmp.cursor( "M_DrivingUsage" ).setFirst(  );
+      csrRC = vGridTmp.cursor( "M_ClaimsDrivingUsage" ).setFirst(  );
       while ( csrRC.isSet() )
       {
-         lEntityKey = vGridTmp.cursor( "M_DrivingUsage" ).getEntityKey( );
+         lEntityKey = vGridTmp.cursor( "M_ClaimsDrivingUsage" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
          iTableRowCnt++;
 
-         csrRC = vGridTmp.cursor( "M_DrivingUsage" ).setNextContinue( );
+         csrRC = vGridTmp.cursor( "M_ClaimsDrivingUsage" ).setNextContinue( );
       }
 
       vGridTmp.drop( );
@@ -2494,19 +2494,19 @@ try
       
       View vGrid1;
       vGrid1 = mMasLC.newView( );
-      csrRC2 = vGrid1.cursor( "M_DrivingUsage" ).setFirst(  );
+      csrRC2 = vGrid1.cursor( "M_ClaimsDrivingUsage" ).setFirst(  );
       while ( csrRC2.isSet() )
       {
          strOdd = (iTableRowCnt % 2) != 0 ? " class='odd'" : "";
          iTableRowCnt++;
 
-         lEntityKey = vGrid1.cursor( "M_DrivingUsage" ).getEntityKey( );
+         lEntityKey = vGrid1.cursor( "M_ClaimsDrivingUsage" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
          strGridEditCtl1 = "";
-         nRC = vGrid1.cursor( "M_DrivingUsage" ).checkExistenceOfEntity( ).toInt();
+         nRC = vGrid1.cursor( "M_ClaimsDrivingUsage" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl1 = vGrid1.cursor( "M_DrivingUsage" ).getAttribute( "dUsageClaimClassification" ).getString( "" );
+            strGridEditCtl1 = vGrid1.cursor( "M_ClaimsDrivingUsage" ).getAttribute( "dUsageClaimClassification" ).getString( "" );
 
             if ( strGridEditCtl1 == null )
                strGridEditCtl1 = "";
@@ -2516,10 +2516,10 @@ try
             strGridEditCtl1 = "&nbsp";
 
          strGridEditCtl2 = "";
-         nRC = vGrid1.cursor( "M_DrivingUsage" ).checkExistenceOfEntity( ).toInt();
+         nRC = vGrid1.cursor( "M_ClaimsDrivingUsage" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl2 = vGrid1.cursor( "M_DrivingUsage" ).getAttribute( "dUsageTextSubUsageNames" ).getString( "" );
+            strGridEditCtl2 = vGrid1.cursor( "M_ClaimsDrivingUsage" ).getAttribute( "dUsageTextSubUsageNames" ).getString( "" );
 
             if ( strGridEditCtl2 == null )
                strGridEditCtl2 = "";
@@ -2538,7 +2538,7 @@ try
 </tr>
 
 <%
-         csrRC2 = vGrid1.cursor( "M_DrivingUsage" ).setNextContinue( );
+         csrRC2 = vGrid1.cursor( "M_ClaimsDrivingUsage" ).setNextContinue( );
       }
       vGrid1.drop( );
    }

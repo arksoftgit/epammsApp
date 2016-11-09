@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSLCMarketingStatementSelect   Generate Timestamp: 20161010115316378 --%>
+<%-- wSLCMarketingStatementSelect   Generate Timestamp: 20161020145357122 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -544,11 +544,14 @@ else
    View lSPLDLST = null;
    View mLLD_LST = null;
    View mMasLC = null;
+   View mMasLC_Root = null;
+   View mMasProd = null;
    View mSPLDef = null;
    View mSubLC = null;
    View mSubLC_Root = null;
    View mSubProd = null;
    View mSubreg = null;
+   View wWebXfer = null;
    String strRadioGroupValue = "";
    String strComboCurrentValue = "";
    String strAutoComboBoxExternalValue = "";
@@ -652,13 +655,13 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:10px;width:100px;"></div>
+<div style="height:4px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:6px;float:left;"></div>   <!-- Width Spacer -->
+<div style="height:1px;width:4px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox5:GroupBox */ %>
 
-<div id="GroupBox5" name="GroupBox5" style="width:848px;float:left;">  <!-- GroupBox5 --> 
+<div id="GroupBox5" name="GroupBox5" style="width:762px;float:left;">  <!-- GroupBox5 --> 
 
 
  <!-- This is added as a line spacer -->
@@ -667,32 +670,35 @@ else
 <div>  <!-- Beginning of a new line -->
 <% /* GroupBox2:GroupBox */ %>
 
-<div id="GroupBox2" name="GroupBox2" style="width:404px;float:left;">  <!-- GroupBox2 --> 
+<div id="GroupBox2" name="GroupBox2" style="width:354px;float:left;">  <!-- GroupBox2 --> 
 
 
  <!-- This is added as a line spacer -->
-<div style="height:10px;width:100px;"></div>
+<div style="height:2px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
-<span style="height:22px;">&nbsp&nbsp&nbsp</span>
+<span style="height:22px;">&nbsp</span>
 <% /* Text2:Text */ %>
 
-<span  id="Text2" name="Text2" style="width:254px;height:22px;">Currently Selected SLC Components</span>
+<span  id="Text2" name="Text2" style="width:292px;height:22px;">Currently Selected SLC Components</span>
 
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
 
 
+ <!-- This is added as a line spacer -->
+<div style="height:4px;width:100px;"></div>
+
 <div>  <!-- Beginning of a new line -->
 <% /* Grid2:Grid */ %>
-<table  cols=3 style="width:402px;"  name="Grid2" id="Grid2">
+<table  cols=3 style="width:358px;"  name="Grid2" id="Grid2">
 
 <thead><tr>
 
    <th class="gridheading"><input type="checkbox" onclick="CheckAllInGrid(this,'GridCheckCtl3')"></th>
-   <th style="width:90px;">Name</th>
-   <th style="width:274px;">Name/Title/Content</th>
+   <th style="width:94px;">Name</th>
+   <th style="width:206px;">Name/Title/Content</th>
 
 </tr></thead>
 
@@ -777,8 +783,8 @@ try
 <tr<%=strOdd%>>
 
    <td nowrap><%=strGridCheckCtl3%></td>
-   <td nowrap style="width:90px;"><%=strGridEditCtl3%></td>
-   <td nowrap style="width:274px;"><%=strGridEditCtl5%></td>
+   <td nowrap style="width:94px;"><%=strGridEditCtl3%></td>
+   <td nowrap style="width:206px;"><%=strGridEditCtl5%></td>
 
 </tr>
 
@@ -801,6 +807,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 
 
 </div>  <!--  GroupBox2 --> 
+<div style="height:1px;width:4px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox4:GroupBox */ %>
 
 <div id="GroupBox4" name="GroupBox4" style="width:28px;height:224px;float:left;">  <!-- GroupBox4 --> 
@@ -843,32 +850,35 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 </div>  <!--  GroupBox4 --> 
 <% /* GroupBox3:GroupBox */ %>
 
-<div id="GroupBox3" name="GroupBox3" style="width:412px;float:left;">  <!-- GroupBox3 --> 
+<div id="GroupBox3" name="GroupBox3" style="width:372px;float:left;">  <!-- GroupBox3 --> 
 
 
  <!-- This is added as a line spacer -->
-<div style="height:10px;width:100px;"></div>
+<div style="height:2px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
-<span style="height:24px;">&nbsp&nbsp&nbsp</span>
+<span style="height:24px;">&nbsp</span>
 <% /* Text3:Text */ %>
 
-<span  id="Text3" name="Text3" style="width:254px;height:24px;">Potential SLC Components from MLC</span>
+<span  id="Text3" name="Text3" style="width:306px;height:24px;">Potential SLC Components from MLC</span>
 
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
 
 
+ <!-- This is added as a line spacer -->
+<div style="height:2px;width:100px;"></div>
+
 <div>  <!-- Beginning of a new line -->
 <% /* Grid3:Grid */ %>
-<table  cols=3 style="width:410px;"  name="Grid3" id="Grid3">
+<table  cols=3 style="width:370px;"  name="Grid3" id="Grid3">
 
 <thead><tr>
 
    <th class="gridheading"><input type="checkbox" onclick="CheckAllInGrid(this,'GridCheckCtl2')"></th>
-   <th style="width:90px;">Name</th>
-   <th style="width:256px;">Name/Title/Content</th>
+   <th style="width:94px;">Name</th>
+   <th style="width:220px;">Name/Title/Content</th>
 
 </tr></thead>
 
@@ -953,8 +963,8 @@ try
 <tr<%=strOdd%>>
 
    <td nowrap><%=strGridCheckCtl2%></td>
-   <td nowrap style="width:90px;"><%=strGridEditCtl2%></td>
-   <td nowrap style="width:256px;"><%=strGridEditCtl4%></td>
+   <td nowrap style="width:94px;"><%=strGridEditCtl2%></td>
+   <td nowrap style="width:220px;"><%=strGridEditCtl4%></td>
 
 </tr>
 

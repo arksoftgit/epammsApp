@@ -1,4 +1,4 @@
-// wSLCOrganismClaims   Generate Timestamp: 20161010115316453
+// wSLCOrganismClaims   Generate Timestamp: 20161024114541584
 
 var isWindowClosing = true;
 var timerID = null;
@@ -374,6 +374,21 @@ function smDisplayHazardSection( )
       _DisableFormElements( true );
 
       document.wSLCOrganismClaims.zAction.value = "smDisplayHazardSection";
+      document.wSLCOrganismClaims.submit( );
+   }
+}
+
+function smDilution( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wSLCOrganismClaims.zAction.value = "smDilution";
       document.wSLCOrganismClaims.submit( );
    }
 }

@@ -1638,9 +1638,9 @@ ConfirmDeleteUsageEntry( VIEW ViewToWindow )
                   DELETE ENTITY mMasLC.M_DirectionsUsageOrdering
                END
             END
-            SET CURSOR FIRST mMasLC.M_DrivingUsage WHERE mMasLC.M_DrivingUsage.ID = mMasLC.M_Usage.ID
+            SET CURSOR FIRST mMasLC.M_ClaimsDrivingUsage WHERE mMasLC.M_ClaimsDrivingUsage.ID = mMasLC.M_Usage.ID
             IF RESULT >= zCURSOR_SET
-               EXCLUDE mMasLC.M_DrivingUsage
+               EXCLUDE mMasLC.M_ClaimsDrivingUsage
             END
          END
 
@@ -1801,9 +1801,9 @@ SelectMLC_UsageEntries( VIEW ViewToWindow )
       IF mMasLC.M_Usage.wSelected = "Y"
          // The target entity depends on the type of select set earlier.
          IF mMasLC.MasterLabelContent.wSelectedUsageType = "DC"   // Dir for Use Driving Claim
-            SET CURSOR FIRST mMasLC.M_DrivingUsage WHERE mMasLC.M_DrivingUsage.ID = mMasLC.M_Usage.ID
+            SET CURSOR FIRST mMasLC.M_ClaimsDrivingUsage WHERE mMasLC.M_ClaimsDrivingUsage.ID = mMasLC.M_Usage.ID
             IF RESULT < zCURSOR_SET
-               INCLUDE mMasLC.M_DrivingUsage FROM mMasLC.M_Usage
+               INCLUDE mMasLC.M_ClaimsDrivingUsage FROM mMasLC.M_Usage
             END
          END
          IF mMasLC.MasterLabelContent.wSelectedUsageType = "D"   // Dir for Use Statement
@@ -1843,9 +1843,9 @@ RemoveMLC_UsageEntries( VIEW ViewToWindow )
 
    // Remove depends on the target entity.
    IF mMasLC.MasterLabelContent.wSelectedUsageType = "DC"   // Dir for Use Driving Claim
-      FOR EACH mMasLC.M_DrivingUsage
-         IF mMasLC.M_DrivingUsage.wSelected = "Y"
-            EXCLUDE  mMasLC.M_DrivingUsage NONE
+      FOR EACH mMasLC.M_ClaimsDrivingUsage
+         IF mMasLC.M_ClaimsDrivingUsage.wSelected = "Y"
+            EXCLUDE  mMasLC.M_ClaimsDrivingUsage NONE
          END
       END
    END
@@ -1878,8 +1878,8 @@ CLEAR_MLC_UsageTarget( VIEW ViewToWindow )
 
    // Clear depends on the target entity.
    IF mMasLC.MasterLabelContent.wSelectedUsageType = "DC"   // Dir for Use Driving Claim
-      FOR EACH mMasLC.M_DrivingUsage
-         mMasLC.M_DrivingUsage.wSelected = ""
+      FOR EACH mMasLC.M_ClaimsDrivingUsage
+         mMasLC.M_ClaimsDrivingUsage.wSelected = ""
       END
    END
    IF mMasLC.MasterLabelContent.wSelectedUsageType = "D"   // Dir for Use Statement
@@ -1907,8 +1907,8 @@ SETALL_MLC_UsageTarget( VIEW ViewToWindow )
 
    // Set All depends on the target entity.
    IF mMasLC.MasterLabelContent.wSelectedUsageType = "DC"   // Dir for Use Driving Claim
-      FOR EACH mMasLC.M_DrivingUsage
-         mMasLC.M_DrivingUsage.wSelected = "Y"
+      FOR EACH mMasLC.M_ClaimsDrivingUsage
+         mMasLC.M_ClaimsDrivingUsage.wSelected = "Y"
       END
    END
    IF mMasLC.MasterLabelContent.wSelectedUsageType = "D"   // Dir for Use Statement
@@ -3296,12 +3296,12 @@ IncludeExclusiveOrDU_Section( VIEW ViewToWindow )
    // For the moment, we do not permit "XOR Chaining" ... e.g. A XOR B XOR C XOR A.  Not sure we need it ...
    IF szNameXOR != ""
       SetCursorFirstEntityByString( mMasLCIncludeExclude, "M_DirectionsForUseSection", "Name", szNameXOR, "" )
-      IF mMasLCIncludeExclude.M_DirectionsForUseXOR_Section EXISTS
+      IF mMasLCIncludeExclude.M_DirectionsForUseXORSection EXISTS
          szNameCurrent = mMasLC.M_DirectionsForUseSection.Name
-         szNameTarget = mMasLCIncludeExclude.M_DirectionsForUseXOR_Section.Name
+         szNameTarget = mMasLCIncludeExclude.M_DirectionsForUseXORSection.Name
          IF szNameCurrent = szNameTarget
-            IF mMasLCIncludeExclude.M_DirectionsForUseXOR_Section EXISTS
-               EXCLUDE mMasLCIncludeExclude.M_DirectionsForUseXOR_Section NONE
+            IF mMasLCIncludeExclude.M_DirectionsForUseXORSection EXISTS
+               EXCLUDE mMasLCIncludeExclude.M_DirectionsForUseXORSection NONE
             END
          ELSE
             szMsg = szNameXOR + ": Already exclusive to section: "
@@ -3312,15 +3312,15 @@ IncludeExclusiveOrDU_Section( VIEW ViewToWindow )
             RETURN 2
          END
       END
-      IF mMasLC.M_DirectionsForUseXOR_Section EXISTS
-         EXCLUDE mMasLC.M_DirectionsForUseXOR_Section NONE
+      IF mMasLC.M_DirectionsForUseXORSection EXISTS
+         EXCLUDE mMasLC.M_DirectionsForUseXORSection NONE
       END
       
-      INCLUDE mMasLC.M_DirectionsForUseXOR_Section FROM mMasLCIncludeExclude.M_DirectionsForUseSection 
-      INCLUDE mMasLCIncludeExclude.M_DirectionsForUseXOR_Section FROM mMasLC.M_DirectionsForUseSection 
+      INCLUDE mMasLC.M_DirectionsForUseXORSection FROM mMasLCIncludeExclude.M_DirectionsForUseSection 
+      INCLUDE mMasLCIncludeExclude.M_DirectionsForUseXORSection FROM mMasLC.M_DirectionsForUseSection 
    ELSE
-      IF mMasLC.M_DirectionsForUseXOR_Section EXISTS
-         EXCLUDE mMasLC.M_DirectionsForUseXOR_Section NONE
+      IF mMasLC.M_DirectionsForUseXORSection EXISTS
+         EXCLUDE mMasLC.M_DirectionsForUseXORSection NONE
       END
    END
 

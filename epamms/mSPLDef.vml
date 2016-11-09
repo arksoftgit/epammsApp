@@ -939,19 +939,19 @@ ProcessPDF_Blocks( VIEW mSPLDef    BASED ON LOD mSPLDef,
                // For Marketing, we will process a Section if its Name matches the name in the Block.
                SET CURSOR FIRST mSPLDef.SPLD_MarketingSection WHERE mSPLDef.SPLD_MarketingSection.Name = mSPLDefPDF.LLD_Block.Name
                IF RESULT >= zCURSOR_SET
-               /* There are no Marketing headers ... Don - 2015.05.12
-                  // If there is a Marketing "Header" entry, add it.
-                  SET CURSOR FIRST mSPLDefPDF.LLD_SpecialSectionAttribute WHERE mSPLDefPDF.LLD_SpecialSectionAttribute.Name = "Header"
-                  IF RESULT >= zCURSOR_SET
-                     szWriteBuffer = szLeadingBlanks + "   <fo:block "
-                     AddFormatToSpecialText( mSPLDefPDF, "Header", szWriteBuffer )
-                     WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
-                     szWriteBuffer = szLeadingBlanks + "      Marketing"
-                     WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
-                     szWriteBuffer = szLeadingBlanks + "   </fo:block>"
-                     WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
-                  END
-               */
+               // There are no Marketing headers ... Don - 2015.05.12
+               // // If there is a Marketing "Header" entry, add it.
+               // SET CURSOR FIRST mSPLDefPDF.LLD_SpecialSectionAttribute WHERE mSPLDefPDF.LLD_SpecialSectionAttribute.Name = "Header"
+               // IF RESULT >= zCURSOR_SET
+               //    szWriteBuffer = szLeadingBlanks + "   <fo:block "
+               //    AddFormatToSpecialText( mSPLDefPDF, "Header", szWriteBuffer )
+               //    WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+               //    szWriteBuffer = szLeadingBlanks + "      Marketing"
+               //    WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+               //    szWriteBuffer = szLeadingBlanks + "   </fo:block>"
+               //    WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+               // END
+               //
                   // Don't execute if the only Statement is null. This could occur if the block contains a Claims List, without
                   // any marketing statement preceding it.
                   IF mSPLDef.SPLD_MarketingStatement.Text != ""
@@ -977,17 +977,17 @@ ProcessPDF_Blocks( VIEW mSPLDef    BASED ON LOD mSPLDef,
                END
             ELSE
 
-            // GENERAL (ENVIRONMENTAL/PHYSICAL HAZARD, FIRST AID or PRECAUTIONARY)
-            /*IF szSectionType = "OtherHazard" OR
-               szSectionType = "FirstAid" OR
-               szSectionType = "Precautionary"
-               // We can get by using the same operation because all 3 Section Types are handled the same way and the child entity,
-               // SPLDT_GeneralSection, is pointing to the instance of the correct Type.
-            // TraceLineS( "Major Block: ", szSectionType )
-               //FOR EACH mSPLDef.SPLDT_GeneralSection
-                  GeneratePDF_General( mSPLDef, mSPLDefPDF, lFile, szLeadingBlanks, szWriteBuffer )
-               //END
-            ELSE*/
+               // GENERAL (ENVIRONMENTAL/PHYSICAL HAZARD, FIRST AID or PRECAUTIONARY)
+            // IF szSectionType = "OtherHazard" OR
+            //    szSectionType = "FirstAid" OR
+            //    szSectionType = "Precautionary"
+            //  // We can get by using the same operation because all 3 Section Types are handled the same way and the child entity,
+            //  // SPLDT_GeneralSection, is pointing to the instance of the correct Type.
+            //    TraceLineS( "Major Block: ", szSectionType )
+            //    FOR EACH mSPLDef.SPLDT_GeneralSection
+            //       GeneratePDF_General( mSPLDef, mSPLDefPDF, lFile, szLeadingBlanks, szWriteBuffer )
+            //    END
+            // ELSE
 
             // STORAGE AND DISPOSAL
             IF szSectionType = "StorageDisposal"
@@ -1184,18 +1184,18 @@ ProcessPDF_Blocks( VIEW mSPLDef    BASED ON LOD mSPLDef,
          // Process Termination.
          szWriteBuffer = szLeadingBlanks + "</fo:block-container>"
          WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
-/*?
-         szTag = mSPLDefPDF.LLD_Block.ContinuationBlockTag
-         IF szTag != ""
-            lControl = zQUAL_STRING + zPOS_FIRST + zQUAL_SCOPE_OI
-            IF SetEntityCursor( mSPLDefContinue, "LLD_Block", "Tag", lControl, szTag, "", "", 0, "", "" ) >= zCURSOR_SET
-
-               IF mSPLDefContinue.LLD_Block.ContinuationBlockFlag = "Y" AND mSPLDefContinue.ContinuationStatement EXISTS
-                  FormatContinueBlock( mSPLDefContinue, mSPLDef, lFile, szLeadingBlanks, szWriteBuffer, "B" )
-               END
-            END
-         END
-?*/
+//?
+//       szTag = mSPLDefPDF.LLD_Block.ContinuationBlockTag
+//       IF szTag != ""
+//          lControl = zQUAL_STRING + zPOS_FIRST + zQUAL_SCOPE_OI
+//          IF SetEntityCursor( mSPLDefContinue, "LLD_Block", "Tag", lControl, szTag, "", "", 0, "", "" ) >= zCURSOR_SET
+//
+//             IF mSPLDefContinue.LLD_Block.ContinuationBlockFlag = "Y" AND mSPLDefContinue.ContinuationStatement EXISTS
+//                FormatContinueBlock( mSPLDefContinue, mSPLDef, lFile, szLeadingBlanks, szWriteBuffer, "B" )
+//             END
+//          END
+//      END
+//?
       END
    END
 END
@@ -1492,37 +1492,37 @@ FormatBlock( VIEW mSPLDef BASED ON LOD mSPLDef,
    // TraceLineS( "2Font Family skipped: ", szFontFamily )
    // szWriteBuffer = szWriteBuffer + " font-family=^" + szFontFamily + "^"
    END
-/*
-   szFontSize = mSPLDef.LLD_Block.FontSize
-   IF szFontSize != ""
-      TraceLineS( "2Font Size set to: ", szFontSize )
-      szWriteBuffer = szWriteBuffer + " font-size=^" + szFontSize + "pt^"
-   END
-   szFontWeight = mSPLDef.LLD_Block.FontWeight
-   IF szFontWeight != ""
-      szWriteBuffer = szWriteBuffer + " font-weight=^" + szFontWeight + "^"
-   END
-   szMarginTop = mSPLDef.LLD_Block.MarginTop
-   IF szMarginTop != ""
-      szWriteBuffer = szWriteBuffer + " margin-top=^" + szMarginTop + "in^"
-   END
-   szMarginBottom = mSPLDef.LLD_Block.MarginBottom
-   IF szMarginBottom != ""
-      szWriteBuffer = szWriteBuffer + " margin-bottom=^" + szMarginBottom + "in^"
-   END
-   szMarginLeft = mSPLDef.LLD_Block.MarginLeft
-   IF szMarginLeft != ""
-      szWriteBuffer = szWriteBuffer + " margin-left=^" + szMarginLeft + "in^"
-   END
-   szMarginRight = mSPLDef.LLD_Block.MarginRight
-   IF szMarginRight != ""
-      szWriteBuffer = szWriteBuffer + " margin-right=^" + szMarginRight + "in^"
-   END
-   szTextAlign = mSPLDef.LLD_Block.TextAlign
-   IF szTextAlign != ""
-      szWriteBuffer = szWriteBuffer + " text-align=^" + szTextAlign + "^"
-   END
-*/
+//
+// szFontSize = mSPLDef.LLD_Block.FontSize
+// IF szFontSize != ""
+//    TraceLineS( "2Font Size set to: ", szFontSize )
+//    szWriteBuffer = szWriteBuffer + " font-size=^" + szFontSize + "pt^"
+// END
+// szFontWeight = mSPLDef.LLD_Block.FontWeight
+// IF szFontWeight != ""
+//    szWriteBuffer = szWriteBuffer + " font-weight=^" + szFontWeight + "^"
+// END
+// szMarginTop = mSPLDef.LLD_Block.MarginTop
+// IF szMarginTop != ""
+//    szWriteBuffer = szWriteBuffer + " margin-top=^" + szMarginTop + "in^"
+// END
+// szMarginBottom = mSPLDef.LLD_Block.MarginBottom
+// IF szMarginBottom != ""
+//    szWriteBuffer = szWriteBuffer + " margin-bottom=^" + szMarginBottom + "in^"
+// END
+// szMarginLeft = mSPLDef.LLD_Block.MarginLeft
+// IF szMarginLeft != ""
+//    szWriteBuffer = szWriteBuffer + " margin-left=^" + szMarginLeft + "in^"
+// END
+// szMarginRight = mSPLDef.LLD_Block.MarginRight
+// IF szMarginRight != ""
+//    szWriteBuffer = szWriteBuffer + " margin-right=^" + szMarginRight + "in^"
+// END
+// szTextAlign = mSPLDef.LLD_Block.TextAlign
+// IF szTextAlign != ""
+//    szWriteBuffer = szWriteBuffer + " text-align=^" + szTextAlign + "^"
+// END
+//
 
    // Close the entry.
    szWriteBuffer = szWriteBuffer + ">"
@@ -2135,8 +2135,8 @@ GeneratePDF_ClmList( VIEW mSPLDef    BASED ON LOD mSPLDef,
    END
 
    // Build the list of unique footnotes.
-   FOR EACH mSPLDef.M_UsageFootnote
-      EXCLUDE mSPLDef.M_UsageFootnote NONE
+   FOR EACH mSPLDef.SPLD_UsageFootnote
+      EXCLUDE mSPLDef.SPLD_UsageFootnote NONE
    END
    ItemCount = 0
    FOR EACH mSPLDef.SPLD_MarketingStatement
@@ -2146,13 +2146,13 @@ GeneratePDF_ClmList( VIEW mSPLDef    BASED ON LOD mSPLDef,
             SET CURSOR FIRST mSPLDef.SPLD_Usage
                        WHERE mSPLDef.SPLD_Usage.ID = mSPLDef.SPLD_MarketingUsage.ID
             IF RESULT >=zCURSOR_SET
-               IF mSPLDef.M_UsageFootnoteUsed EXISTS
-                  SET CURSOR FIRST mSPLDef.M_UsageFootnote
-                             WHERE mSPLDef.M_UsageFootnote.ID = mSPLDef.M_UsageFootnoteUsed.ID
+               IF mSPLDef.SPLD_UsageFootnoteUsed EXISTS
+                  SET CURSOR FIRST mSPLDef.SPLD_UsageFootnote
+                             WHERE mSPLDef.SPLD_UsageFootnote.ID = mSPLDef.SPLD_UsageFootnoteUsed.ID
                   IF RESULT < zCURSOR_SET
-                     CREATE ENTITY mSPLDef.M_UsageFootnote
-                     mSPLDef.M_UsageFootnote.ID   = mSPLDef.M_UsageFootnoteUsed.ID
-                     mSPLDef.M_UsageFootnote.Text = mSPLDef.M_UsageFootnoteUsed.Text
+                     CREATE ENTITY mSPLDef.SPLD_UsageFootnote
+                     mSPLDef.SPLD_UsageFootnote.ID   = mSPLDef.SPLD_UsageFootnoteUsed.ID
+                     mSPLDef.SPLD_UsageFootnote.Text = mSPLDef.SPLD_UsageFootnoteUsed.Text
                   END
                END
             END
@@ -2168,10 +2168,10 @@ GeneratePDF_ClmList( VIEW mSPLDef    BASED ON LOD mSPLDef,
    END
 
    FootnoteCount = 0
-   FOR EACH mSPLDef.M_UsageFootnote
+   FOR EACH mSPLDef.SPLD_UsageFootnote
       FootnoteCount = FootnoteCount + 1
       ItemCount     = ItemCount + 1  // Also add to total item count.
-      mSPLDef.M_UsageFootnote.wFootNoteRelativeNumber = FootnoteCount
+      mSPLDef.SPLD_UsageFootnote.wFootNoteRelativeNumber = FootnoteCount
    END
 
    // Set the work attribute with combination Usage Name and Footnote designator.
@@ -2181,10 +2181,10 @@ GeneratePDF_ClmList( VIEW mSPLDef    BASED ON LOD mSPLDef,
          SET CURSOR FIRST mSPLDef.SPLD_Usage
                     WHERE mSPLDef.SPLD_Usage.ID = mSPLDef.SPLD_MarketingUsage.ID
          IF RESULT >=zCURSOR_SET
-            IF mSPLDef.M_UsageFootnoteUsed EXISTS
-               SET CURSOR FIRST mSPLDef.M_UsageFootnote
-                          WHERE mSPLDef.M_UsageFootnote.ID = mSPLDef.M_UsageFootnoteUsed.ID
-               szFootnoteNumber = mSPLDef.M_UsageFootnote.wFootNoteRelativeNumber
+            IF mSPLDef.SPLD_UsageFootnoteUsed EXISTS
+               SET CURSOR FIRST mSPLDef.SPLD_UsageFootnote
+                          WHERE mSPLDef.SPLD_UsageFootnote.ID = mSPLDef.SPLD_UsageFootnoteUsed.ID
+               szFootnoteNumber = mSPLDef.SPLD_UsageFootnote.wFootNoteRelativeNumber
                szCombinedName = szCombinedName + "<sup> " + szFootnoteNumber + "</sup>"
             END
             mSPLDef.SPLD_MarketingUsage.wNameWithFootnoteDesignator = szCombinedName
@@ -2263,9 +2263,9 @@ GeneratePDF_ClmList( VIEW mSPLDef    BASED ON LOD mSPLDef,
    END
 
    // Add any Footnote entries to the last Column.
-   FOR EACH mSPLDef.M_UsageFootnote
-      szFootnoteNumber = mSPLDef.M_UsageFootnote.wFootNoteRelativeNumber
-      szFootnoteText = "<sup> " + szFootnoteNumber + "</sup>" + mSPLDef.M_UsageFootnote.Text
+   FOR EACH mSPLDef.SPLD_UsageFootnote
+      szFootnoteNumber = mSPLDef.SPLD_UsageFootnote.wFootNoteRelativeNumber
+      szFootnoteText = "<sup> " + szFootnoteNumber + "</sup>" + mSPLDef.SPLD_UsageFootnote.Text
       IF CurrentColumnNumber = 1
          CREATE ENTITY mSPLDef.DisplayUsageColumn1
          mSPLDef.DisplayUsageColumn1.Name = szFootnoteText
@@ -2757,12 +2757,158 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
+//  OPERATION: CopyDirsForUseStmts
+//
+/////////////////////////////////////////////////////////////////////////////
+LOCAL OPERATION
+CopyDirsForUseStmts( VIEW NewSPLD BASED ON LOD mSPLDef,
+                     VIEW SrcSLC  BASED ON LOD mSubLC )
+
+   FOR EACH SrcSLC.S_DirectionsForUseStatement
+      CREATE ENTITY NewSPLD.SPLD_DirectionsForUseStatement
+      SetMatchingAttributesByName( NewSPLD, "SPLD_DirectionsForUseStatement",
+                                   SrcSLC, "S_DirectionsForUseStatement", zSET_NULL )
+      INCLUDE NewSPLD.S_DirectionsForUseStatement FROM SrcSLC.S_DirectionsForUseStatement
+
+      // Temporary code created by DonC on 1/13/2016 because NotForUseType was set to NotNull in the ER.
+      IF NewSPLD.SPLD_DirectionsForUseStatement.NotForUseType = ""
+         NewSPLD.SPLD_DirectionsForUseStatement.NotForUseType = "NA"
+      END
+      FOR EACH SrcSLC.S_InsertTextKeywordDU
+         CREATE ENTITY NewSPLD.SPLD_InsertTextKeywordDU
+         SetMatchingAttributesByName( NewSPLD, "SPLD_InsertTextKeywordDU", SrcSLC, "S_InsertTextKeywordDU", zSET_NULL )
+         FOR EACH SrcSLC.S_InsertTextDU
+            CREATE ENTITY NewSPLD.SPLD_InsertTextDU
+            SetMatchingAttributesByName( NewSPLD, "SPLD_InsertTextDU", SrcSLC, "S_InsertTextDU", zSET_NULL )
+         END
+      END
+      FOR EACH SrcSLC.S_DirectionsUsageOrdering
+         SET CURSOR FIRST NewSPLD.SPLD_Usage WITHIN NewSPLD.SubregLabelContent
+                    WHERE NewSPLD.SPLD_Usage.PrimarySLC_ID = SrcSLC.S_DirectionsUsage.ID
+         IF RESULT >= zCURSOR_SET
+            CREATE ENTITY NewSPLD.SPLD_DirectionsUsageOrdering
+            NewSPLD.SPLD_DirectionsUsageOrdering.PrimarySLC_ID = SrcSLC.S_DirectionsUsageOrdering.ID
+            INCLUDE NewSPLD.SPLD_DirectionsUsage FROM NewSPLD.SPLD_Usage
+         END
+      END
+      IF SrcSLC.S_DirectionsForUseSubStatement EXISTS
+         SetViewToSubobject( SrcSLC, "S_DirectionsForUseSubStatement" )
+         SetViewToSubobject( NewSPLD, "SPLD_DirectionsForUseSubStatement" )
+         CopyDirsForUseStmts( NewSPLD, SrcSLC )
+         ResetViewFromSubobject( NewSPLD )
+         ResetViewFromSubobject( SrcSLC )
+      END
+   END
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: CopyDirsForUseSection
+//
+/////////////////////////////////////////////////////////////////////////////
+LOCAL OPERATION
+CopyDirsForUseSection( VIEW NewSPLD BASED ON LOD mSPLDef,
+                       VIEW SrcSLC  BASED ON LOD mSubLC )
+
+
+   CREATE ENTITY NewSPLD.SPLD_DirectionsForUseSection
+   SetMatchingAttributesByName( NewSPLD, "SPLD_DirectionsForUseSection", SrcSLC, "S_DirectionsForUseSection", zSET_NULL )
+   INCLUDE NewSPLD.S_DirectionsForUseSection FROM SrcSLC.S_DirectionsForUseSection
+   FOR EACH SrcSLC.S_InsertTextKeywordSectionDU
+      CREATE ENTITY NewSPLD.SPLD_InsertTextKeywordSectionDU
+      SetMatchingAttributesByName( NewSPLD, "SPLD_InsertTextKeywordSectionDU", SrcSLC, "S_InsertTextKeywordSectionDU", zSET_NULL )
+      FOR EACH SrcSLC.S_InsertTextSectionDU
+         CREATE ENTITY NewSPLD.SPLD_InsertTextSectionDU
+         SetMatchingAttributesByName( NewSPLD, "SPLD_InsertTextSectionDU", SrcSLC, "S_InsertTextSectionDU", zSET_NULL )
+      END
+   END
+   CopyDirsForUseStmts( NewSPLD, SrcSLC )
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: CopyStorDispStmts
+//
+/////////////////////////////////////////////////////////////////////////////
+LOCAL OPERATION
+CopyStorDispStmts( VIEW NewSPLD BASED ON LOD mSPLDef,
+                          VIEW SrcSLC  BASED ON LOD mSubLC )
+
+   FOR EACH SrcSLC.S_StorageDisposalStatement
+      CREATE ENTITY NewSPLD.SPLD_StorageDisposalStatement
+      SetMatchingAttributesByName( NewSPLD, "SPLD_StorageDisposalStatement", SrcSLC, "S_StorageDisposalStatement", zSET_NULL )
+      FOR EACH SrcSLC.S_InsertTextKeywordSD
+         CREATE ENTITY NewSPLD.SPLD_InsertTextKeywordSD
+         SetMatchingAttributesByName( NewSPLD, "SPLD_InsertTextKeywordSD", SrcSLC, "S_InsertTextKeywordSD", zSET_NULL )
+         FOR EACH SrcSLC.S_InsertTextSD
+            CREATE ENTITY NewSPLD.SPLD_InsertTextSD
+            SetMatchingAttributesByName( NewSPLD, "SPLD_InsertTextSD", SrcSLC, "S_InsertTextSD", zSET_NULL )
+         END
+      END
+      IF SrcSLC.S_StorageDisposalSubStatement EXISTS
+         SetViewToSubobject( SrcSLC, "S_StorageDisposalSubStatement" )
+         SetViewToSubobject( NewSPLD, "SPLD_StorageDisposalSubStatement" )
+         FOR EACH SrcSLC.S_StorageDisposalStatement
+            CopyStorDispStmts( NewSPLD, SrcSLC )
+         END
+         ResetViewFromSubobject( NewSPLD )
+         ResetViewFromSubobject( SrcSLC )
+      END
+   END
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: CopyUsagesRecursive
+//
+/////////////////////////////////////////////////////////////////////////////
+LOCAL OPERATION
+CopyUsagesRecursive( VIEW NewSPLD BASED ON LOD mSPLDef,
+                     VIEW SrcSLC  BASED ON LOD mSubLC )
+
+   STRING ( 256 ) szText
+
+   FOR EACH SrcSLC.S_Usage
+      CREATE ENTITY NewSPLD.SPLD_Usage
+      SetMatchingAttributesByName( NewSPLD, "SPLD_Usage", SrcSLC, "S_Usage", zSET_NULL )
+      NewSPLD.SPLD_Usage.PrimarySLC_ID = SrcSLC.S_Usage.ID
+      INCLUDE NewSPLD.S_Usage FROM SrcSLC.S_Usage
+      FOR EACH SrcSLC.S_InsertTextKeywordUsage
+         CREATE ENTITY NewSPLD.SPLD_InsertTextKeywordUsage
+         SetMatchingAttributesByName( NewSPLD, "SPLD_InsertTextKeywordUsage", SrcSLC, "S_InsertTextKeywordUsage", zSET_NULL )
+         FOR EACH SrcSLC.S_InsertTextUsage
+            CREATE ENTITY NewSPLD.SPLD_InsertTextUsage
+            SetMatchingAttributesByName( NewSPLD, "SPLD_InsertTextUsage", SrcSLC, "S_InsertTextUsage", zSET_NULL )
+         END
+      END
+      IF SrcSLC.S_UsageFootnoteUsed EXISTS
+         szText = SrcSLC.S_UsageFootnoteUsed.Text
+         SET CURSOR FIRST NewSPLD.SPLD_UsageFootnote WHERE NewSPLD.SPLD_UsageFootnote.Text = szText
+         INCLUDE NewSPLD.SPLD_UsageFootnoteUsed FROM NewSPLD.SPLD_UsageFootnote
+      END
+      IF SrcSLC.S_SubUsage EXISTS
+         SetViewToSubobject( SrcSLC, "S_SubUsage" )
+         SetViewToSubobject( NewSPLD, "SPLD_SubUsage" )
+         FOR EACH SrcSLC.S_Usage
+            CopyUsagesRecursive( NewSPLD, SrcSLC )
+         END
+         ResetViewFromSubobject( NewSPLD )
+         ResetViewFromSubobject( SrcSLC )
+      END
+   END
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
 //  OPERATION: BuildSPLD_FromSLC
 //
 /////////////////////////////////////////////////////////////////////////////
 TRANSFORMATION OPERATION
-BuildSPLD_FromSLC( VIEW NewSPLD   BASED ON LOD mSPLDef,
-                   VIEW SourceSLC BASED ON LOD mSubLC )
+BuildSPLD_FromSLC( VIEW NewSPLD  BASED ON LOD mSPLDef,
+                   VIEW SrcSLC   BASED ON LOD mSubLC )
 
    VIEW mSPLDef2 BASED ON LOD mSPLDef
 
@@ -2770,7 +2916,7 @@ BuildSPLD_FromSLC( VIEW NewSPLD   BASED ON LOD mSPLDef,
 
    // Tie back to SLC, if necessary.
    IF NewSPLD.SubregLabelContent DOES NOT EXIST
-      INCLUDE NewSPLD.SubregLabelContent FROM SourceSLC.SubregLabelContent
+      INCLUDE NewSPLD.SubregLabelContent FROM SrcSLC.SubregLabelContent
    END
 
    // Delete any current component entries.
@@ -2797,79 +2943,136 @@ BuildSPLD_FromSLC( VIEW NewSPLD   BASED ON LOD mSPLDef,
    END
 
    // General Section ... Precautionary, First Aid, Other Hazard
-   FOR EACH SourceSLC.S_GeneralSection
+   FOR EACH SrcSLC.S_GeneralSection
       CREATE ENTITY NewSPLD.SPLD_GeneralSection
-      SetMatchingAttributesByName( NewSPLD, "SPLD_GeneralSection", SourceSLC, "S_GeneralSection", zSET_NULL )
-      INCLUDE NewSPLD.S_GeneralSection FROM SourceSLC.S_GeneralSection
-      FOR EACH SourceSLC.S_GeneralStatement
+      SetMatchingAttributesByName( NewSPLD, "SPLD_GeneralSection", SrcSLC, "S_GeneralSection", zSET_NULL )
+      INCLUDE NewSPLD.S_GeneralSection FROM SrcSLC.S_GeneralSection
+      FOR EACH SrcSLC.S_GeneralStatement
          CREATE ENTITY NewSPLD.SPLD_GeneralStatement
-         SetMatchingAttributesByName( NewSPLD, "SPLD_GeneralStatement", SourceSLC, "S_GeneralStatement", zSET_NULL )
-         INCLUDE NewSPLD.S_GeneralStatement FROM SourceSLC.S_GeneralStatement
+         SetMatchingAttributesByName( NewSPLD, "SPLD_GeneralStatement", SrcSLC, "S_GeneralStatement", zSET_NULL )
+         INCLUDE NewSPLD.S_GeneralStatement FROM SrcSLC.S_GeneralStatement
+         FOR EACH SrcSLC.S_InsertTextKeyword
+            CREATE ENTITY NewSPLD.SPLD_InsertTextKeyword
+            SetMatchingAttributesByName( NewSPLD, "SPLD_InsertTextKeyword", SrcSLC, "S_InsertTextKeyword", zSET_NULL )
+            FOR EACH SrcSLC.S_InsertText
+               CREATE ENTITY NewSPLD.SPLD_InsertText
+               SetMatchingAttributesByName( NewSPLD, "SPLD_InsertText", SrcSLC, "S_InsertText", zSET_NULL )
+            END
+         END
+      END
+      FOR EACH SrcSLC.S_GeneralSubSection
+         CREATE ENTITY NewSPLD.SPLD_GeneralSubSection
+         SetMatchingAttributesByName( NewSPLD, "SPLD_GeneralSubSection", SrcSLC, "S_GeneralSubSection", zSET_NULL )
+         INCLUDE NewSPLD.S_GeneralSubSection FROM SrcSLC.S_GeneralSubSection
+         FOR EACH SrcSLC.S_GeneralSubStatement
+            CREATE ENTITY NewSPLD.SPLD_GeneralSubStatement
+            SetMatchingAttributesByName( NewSPLD, "SPLD_GeneralSubStatement", SrcSLC, "S_GeneralSubStatement", zSET_NULL )
+            INCLUDE NewSPLD.S_GeneralSubStatement FROM SrcSLC.S_GeneralSubStatement
+            FOR EACH SrcSLC.S_InsertTextKeywordGeneral
+               CREATE ENTITY NewSPLD.SPLD_InsertTextKeywordGeneral
+               SetMatchingAttributesByName( NewSPLD, "SPLD_InsertTextKeywordGeneral", SrcSLC, "S_InsertTextKeywordGeneral", zSET_NULL )
+               FOR EACH SrcSLC.S_InsertTextGeneral
+                  CREATE ENTITY NewSPLD.SPLD_InsertTextGeneral
+                  SetMatchingAttributesByName( NewSPLD, "SPLD_InsertTextGeneral", SrcSLC, "S_InsertTextGeneral", zSET_NULL )
+               END
+            END
+         END
       END
    END
 
+   // Footnotes
+   FOR EACH SrcSLC.S_UsageFootnote
+      CREATE ENTITY NewSPLD.SPLD_UsageFootnote
+      SetMatchingAttributesByName( NewSPLD, "SPLD_UsageFootnote", SrcSLC, "S_UsageFootnote", zSET_NULL )
+   END
+
+   // Usages ... Claim, Surface, Application Type, Location 
+   FOR EACH SrcSLC.S_UsageType
+      CREATE ENTITY NewSPLD.SPLD_UsageType
+      SetMatchingAttributesByName( NewSPLD, "SPLD_UsageType", SrcSLC, "S_UsageType", zSET_NULL )
+      INCLUDE NewSPLD.S_UsageType FROM SrcSLC.S_UsageType
+      CopyUsagesRecursive( NewSPLD, SrcSLC )
+   END
+
    // Ingredients Section
-   FOR EACH SourceSLC.S_IngredientsSection
+   FOR EACH SrcSLC.S_IngredientsSection
       CREATE ENTITY NewSPLD.SPLD_IngredientsSection
-      SetMatchingAttributesByName( NewSPLD, "SPLD_IngredientsSection", SourceSLC, "S_IngredientsSection", zSET_NULL )
-      INCLUDE NewSPLD.S_IngredientsSection FROM SourceSLC.S_IngredientsSection
-      FOR EACH SourceSLC.S_IngredientsStatement
+      SetMatchingAttributesByName( NewSPLD, "SPLD_IngredientsSection", SrcSLC, "S_IngredientsSection", zSET_NULL )
+      INCLUDE NewSPLD.S_IngredientsSection FROM SrcSLC.S_IngredientsSection
+      FOR EACH SrcSLC.S_IngredientsStatement
          CREATE ENTITY NewSPLD.SPLD_IngredientsStatement
-         SetMatchingAttributesByName( NewSPLD, "SPLD_IngredientsStatement", SourceSLC, "S_IngredientsStatement", zSET_NULL )
-         INCLUDE NewSPLD.S_IngredientsStatement FROM SourceSLC.S_IngredientsStatement
+         SetMatchingAttributesByName( NewSPLD, "SPLD_IngredientsStatement", SrcSLC, "S_IngredientsStatement", zSET_NULL )
+         INCLUDE NewSPLD.S_IngredientsStatement FROM SrcSLC.S_IngredientsStatement
       END
    END
 
    // StorageDisposal Section
-   FOR EACH SourceSLC.S_StorageDisposalSection
+   FOR EACH SrcSLC.S_StorageDisposalSection
       CREATE ENTITY NewSPLD.SPLD_StorageDisposalSection
-      SetMatchingAttributesByName( NewSPLD, "SPLD_StorageDisposalSection", SourceSLC, "S_StorageDisposalSection", zSET_NULL )
-      INCLUDE NewSPLD.S_StorageDisposalSection FROM SourceSLC.S_StorageDisposalSection
-      FOR EACH SourceSLC.S_StorageDisposalStatement
-         CREATE ENTITY NewSPLD.SPLD_StorageDisposalStatement
-         SetMatchingAttributesByName( NewSPLD, "SPLD_StorageDisposalStatement", SourceSLC, "S_StorageDisposalStatement", zSET_NULL )
-         INCLUDE NewSPLD.S_StorageDisposalStatement FROM SourceSLC.S_StorageDisposalStatement
+      SetMatchingAttributesByName( NewSPLD, "SPLD_StorageDisposalSection", SrcSLC, "S_StorageDisposalSection", zSET_NULL )
+      INCLUDE NewSPLD.S_StorageDisposalSection FROM SrcSLC.S_StorageDisposalSection
+      CopyStorDispStmts( NewSPLD, SrcSLC )
+   END
+
+   // Tables
+   FOR EACH SrcSLC.S_MetaTable
+      CREATE ENTITY NewSPLD.SPLD_MetaTable
+      SetMatchingAttributesByName( NewSPLD, "SPLD_MetaTable", SrcSLC, "S_MetaTable", zSET_NULL )
+      FOR EACH SrcSLC.S_Rows
+         CREATE ENTITY NewSPLD.SPLD_Rows
+         SetMatchingAttributesByName( NewSPLD, "SPLD_Rows", SrcSLC, "S_Rows", zSET_NULL )
+      END
+   END
+
+   // Dilutions
+   FOR EACH SrcSLC.S_DilutionGroup
+      CREATE ENTITY NewSPLD.SPLD_DilutionGroup
+      SetMatchingAttributesByName( NewSPLD, "SPLD_DilutionGroup", SrcSLC, "S_DilutionGroup", zSET_NULL )
+   // NewSPLD.S_DilutionGroup.PrimarySLC_ID = SrcSLC.S_DilutionGroup.ID
+      FOR EACH SrcSLC.S_DilutionChartEntry
+         CREATE ENTITY NewSPLD.SPLD_DilutionChartEntry
+         SetMatchingAttributesByName( NewSPLD, "SPLD_DilutionChartEntry", SrcSLC, "S_DilutionChartEntry", zSET_NULL )
+      END
+      FOR EACH SrcSLC.S_DilutionGroupItem
+         CREATE ENTITY NewSPLD.SPLD_DilutionGroupItem
+         SetMatchingAttributesByName( NewSPLD, "SPLD_DilutionGroupItem", SrcSLC, "S_DilutionGroupItem", zSET_NULL )
       END
    END
 
    // HumanHazard Section
-   FOR EACH SourceSLC.S_HumanHazardSection
+   FOR EACH SrcSLC.S_HumanHazardSection
       CREATE ENTITY NewSPLD.SPLD_HumanHazardSection
-      SetMatchingAttributesByName( NewSPLD, "SPLD_HumanHazardSection", SourceSLC, "S_HumanHazardSection", zSET_NULL )
-      INCLUDE NewSPLD.S_HumanHazardSection FROM SourceSLC.S_HumanHazardSection
+      SetMatchingAttributesByName( NewSPLD, "SPLD_HumanHazardSection", SrcSLC, "S_HumanHazardSection", zSET_NULL )
+      INCLUDE NewSPLD.S_HumanHazardSection FROM SrcSLC.S_HumanHazardSection
    END
 
-   // Build Directions For Use Entries (without Usage entries).
-   FOR EACH SourceSLC.S_DirectionsForUseSection
-      CREATE ENTITY NewSPLD.SPLD_DirectionsForUseSection
-      SetMatchingAttributesByName( NewSPLD, "SPLD_DirectionsForUseSection", SourceSLC, "S_DirectionsForUseSection", zSET_NULL )
-      INCLUDE NewSPLD.S_DirectionsForUseSection FROM SourceSLC.S_DirectionsForUseSection
-      FOR EACH SourceSLC.S_DirectionsForUseStatement
-         CREATE ENTITY NewSPLD.SPLD_DirectionsForUseStatement
-         SetMatchingAttributesByName( NewSPLD, "SPLD_DirectionsForUseStatement", SourceSLC, "S_DirectionsForUseStatement", zSET_NULL )
-         INCLUDE NewSPLD.S_DirectionsForUseStatement FROM SourceSLC.S_DirectionsForUseStatement
-
-         // Temporary code created by DonC on 1/13/2016 because NotForUseType was set to NotNull in the ER.
-         IF NewSPLD.SPLD_DirectionsForUseStatement.NotForUseType = ""
-            NewSPLD.SPLD_DirectionsForUseStatement.NotForUseType = "NA"
+   // Add any Directions For Use Sections that aren't driven by Usage entries.
+   FOR EACH SrcSLC.S_DirectionsForUseCategory
+      CREATE ENTITY NewSPLD.SPLD_DirectionsForUseCategory
+      SetMatchingAttributesByName( NewSPLD, "SPLD_DirectionsForUseCategory", SrcSLC, "S_DirectionsForUseCategory", zSET_NULL )
+      INCLUDE NewSPLD.S_DirectionsForUseCategory FROM SrcSLC.S_DirectionsForUseCategory
+      FOR EACH SrcSLC.S_DirectionsForUseSection
+         IF SrcSLC.S_ClaimsDrivingUsage DOES NOT EXIST
+            // No Driving Usage entry exists, so always copy the section.
+            CopyDirsForUseSection( NewSPLD, SrcSLC )
          END
       END
    END
 
    // Build Marketing Entries (without Usage entries).
-   FOR EACH SourceSLC.S_MarketingSection
+   FOR EACH SrcSLC.S_MarketingSection
       CREATE ENTITY NewSPLD.SPLD_MarketingSection
-      SetMatchingAttributesByName( NewSPLD, "SPLD_MarketingSection", SourceSLC, "S_MarketingSection", zSET_NULL )
-      INCLUDE NewSPLD.S_MarketingSection FROM SourceSLC.S_MarketingSection
-      FOR EACH SourceSLC.S_MarketingStatement
+      SetMatchingAttributesByName( NewSPLD, "SPLD_MarketingSection", SrcSLC, "S_MarketingSection", zSET_NULL )
+      INCLUDE NewSPLD.S_MarketingSection FROM SrcSLC.S_MarketingSection
+      FOR EACH SrcSLC.S_MarketingStatement
          CREATE ENTITY NewSPLD.SPLD_MarketingStatement
-         SetMatchingAttributesByName( NewSPLD, "SPLD_MarketingStatement", SourceSLC, "S_MarketingStatement", zSET_NULL )
-         INCLUDE NewSPLD.S_MarketingStatement FROM SourceSLC.S_MarketingStatement
+         SetMatchingAttributesByName( NewSPLD, "SPLD_MarketingStatement", SrcSLC, "S_MarketingStatement", zSET_NULL )
+         INCLUDE NewSPLD.S_MarketingStatement FROM SrcSLC.S_MarketingStatement
       END
    END
 
    // Go to build Directions For Use and Marketing Usage entries.
-   BuildUsageEntriesFrSLC( NewSPLD, SourceSLC )
+   BuildUsageEntriesFrSLC( NewSPLD, SrcSLC )
 
 END
 
@@ -2879,8 +3082,8 @@ END
 //
 /////////////////////////////////////////////////////////////////////////////
 TRANSFORMATION OPERATION
-RebuildSPLD_FromSLC( VIEW NewSPLD   BASED ON LOD mSPLDef,
-                     VIEW SourceSLC BASED ON LOD mSubLC )
+RebuildSPLD_FromSLC( VIEW NewSPLD BASED ON LOD mSPLDef,
+                     VIEW SrcSLC  BASED ON LOD mSubLC )
 
    // DonC 1/11/206 - I don't think we are using this code.
 
@@ -2893,27 +3096,27 @@ RebuildSPLD_FromSLC( VIEW NewSPLD   BASED ON LOD mSPLDef,
       DELETE ENTITY NewSPLD.SPLD_MarketingSection NONE
    END
    // Build Directions For Use Entries (without Usage entries).
-   FOR EACH SourceSLC.S_DirectionsForUseSection
+   FOR EACH SrcSLC.S_DirectionsForUseSection
       CREATE ENTITY NewSPLD.SPLD_DirectionsForUseSection
-      SetMatchingAttributesByName( NewSPLD, "SPLD_DirectionsForUseSection", SourceSLC, "S_DirectionsForUseSection", zSET_NULL )
-      INCLUDE NewSPLD.S_DirectionsForUseSection FROM SourceSLC.S_DirectionsForUseSection
-      FOR EACH SourceSLC.S_DirectionsForUseStatement
+      SetMatchingAttributesByName( NewSPLD, "SPLD_DirectionsForUseSection", SrcSLC, "S_DirectionsForUseSection", zSET_NULL )
+      INCLUDE NewSPLD.S_DirectionsForUseSection FROM SrcSLC.S_DirectionsForUseSection
+      FOR EACH SrcSLC.S_DirectionsForUseStatement
          CREATE ENTITY NewSPLD.SPLD_DirectionsForUseStatement
-         SetMatchingAttributesByName( NewSPLD, "SPLD_DirectionsForUseStatement", SourceSLC, "S_DirectionsForUseStatement", zSET_NULL )
+         SetMatchingAttributesByName( NewSPLD, "SPLD_DirectionsForUseStatement", SrcSLC, "S_DirectionsForUseStatement", zSET_NULL )
       END
    END
    // Build Marketing Entries (without Usage entries).
-   FOR EACH SourceSLC.S_MarketingSection
+   FOR EACH SrcSLC.S_MarketingSection
       CREATE ENTITY NewSPLD.SPLD_MarketingSection
-      SetMatchingAttributesByName( NewSPLD, "SPLD_MarketingSection", SourceSLC, "S_MarketingSection", zSET_NULL )
-      INCLUDE NewSPLD.S_MarketingSection FROM SourceSLC.S_MarketingSection
-      FOR EACH SourceSLC.S_MarketingStatement
+      SetMatchingAttributesByName( NewSPLD, "SPLD_MarketingSection", SrcSLC, "S_MarketingSection", zSET_NULL )
+      INCLUDE NewSPLD.S_MarketingSection FROM SrcSLC.S_MarketingSection
+      FOR EACH SrcSLC.S_MarketingStatement
          CREATE ENTITY NewSPLD.SPLD_MarketingStatement
-         SetMatchingAttributesByName( NewSPLD, "SPLD_MarketingStatement", SourceSLC, "S_MarketingStatement", zSET_NULL )
+         SetMatchingAttributesByName( NewSPLD, "SPLD_MarketingStatement", SrcSLC, "S_MarketingStatement", zSET_NULL )
       END
    END
    // Go to build Directions For Use and Marketing entries.
-   BuildUsageEntriesFrSLC( NewSPLD, SourceSLC )*/
+   BuildUsageEntriesFrSLC( NewSPLD, SrcSLC )*/
 
 END
 
@@ -2924,9 +3127,9 @@ END
 /////////////////////////////////////////////////////////////////////////////
 TRANSFORMATION OPERATION
 BuildUsageEntriesFrSLC( VIEW mSPLDef   BASED ON LOD mSPLDef,
-                        VIEW SourceSLC BASED ON LOD mSubLC )
+                        VIEW SrcSLC BASED ON LOD mSubLC )
 
-   // Build the Usage, Directions For Use and Marketing subobject structures from the creating SourceSLC.
+   // Build the Usage, Directions For Use and Marketing subobject structures from the creating SrcSLC.
 
    // Delete current entries.
    FOR EACH mSPLDef.SPLD_UsageType
@@ -2934,23 +3137,23 @@ BuildUsageEntriesFrSLC( VIEW mSPLDef   BASED ON LOD mSPLDef,
    END
 
    // Build Usage Entries (Surface, Application Type, Location, Organism Claim)
-   FOR EACH SourceSLC.S_UsageType WITHIN SourceSLC.SubregLabelContent
+   FOR EACH SrcSLC.S_UsageType WITHIN SrcSLC.SubregLabelContent
       CREATE ENTITY mSPLDef.SPLD_UsageType
-      SetMatchingAttributesByName( mSPLDef, "SPLD_UsageType", SourceSLC, "S_UsageType", zSET_NULL )
-      FOR EACH SourceSLC.S_Usage WITHIN SourceSLC.SubregLabelContent
+      SetMatchingAttributesByName( mSPLDef, "SPLD_UsageType", SrcSLC, "S_UsageType", zSET_NULL )
+      FOR EACH SrcSLC.S_Usage
          CREATE ENTITY mSPLDef.SPLD_Usage
-         SetMatchingAttributesByName( mSPLDef, "SPLD_Usage", SourceSLC, "S_Usage", zSET_NULL )
-         INCLUDE mSPLDef.S_Usage FROM SourceSLC.S_Usage
+         SetMatchingAttributesByName( mSPLDef, "SPLD_Usage", SrcSLC, "S_Usage", zSET_NULL )
+         INCLUDE mSPLDef.S_Usage FROM SrcSLC.S_Usage
       END
    END
 
    // Build Directions For Use Usage Entries.
-   FOR EACH SourceSLC.S_DirectionsForUseSection
+   FOR EACH SrcSLC.S_DirectionsForUseSection
       SET CURSOR FIRST mSPLDef.S_DirectionsForUseSection WITHIN mSPLDef.SubregPhysicalLabelDef
-                 WHERE mSPLDef.S_DirectionsForUseSection.ID = SourceSLC.S_DirectionsForUseSection.ID
-      FOR EACH SourceSLC.S_DirectionsForUseStatement
+                 WHERE mSPLDef.S_DirectionsForUseSection.ID = SrcSLC.S_DirectionsForUseSection.ID
+      FOR EACH SrcSLC.S_DirectionsForUseStatement
          SET CURSOR FIRST mSPLDef.S_DirectionsForUseStatement WITHIN mSPLDef.SPLD_DirectionsForUseSection
-                    WHERE mSPLDef.S_DirectionsForUseStatement.ID = SourceSLC.S_DirectionsForUseStatement.ID
+                    WHERE mSPLDef.S_DirectionsForUseStatement.ID = SrcSLC.S_DirectionsForUseStatement.ID
 
          // Remove current entries.
          FOR EACH mSPLDef.SPLD_DirectionsUsageOrdering
@@ -2958,9 +3161,9 @@ BuildUsageEntriesFrSLC( VIEW mSPLDef   BASED ON LOD mSPLDef,
          END
 
          // Add entries from SLC.
-         FOR EACH SourceSLC.S_DirectionsUsageOrdering
+         FOR EACH SrcSLC.S_DirectionsUsageOrdering
             SET CURSOR FIRST mSPLDef.S_Usage WITHIN mSPLDef.SubregPhysicalLabelDef
-                       WHERE mSPLDef.S_Usage.ID = SourceSLC.S_DirectionsUsage.ID
+                       WHERE mSPLDef.S_Usage.ID = SrcSLC.S_DirectionsUsage.ID
             IF RESULT >= zCURSOR_SET
                CREATE ENTITY mSPLDef.SPLD_DirectionsUsageOrdering
                INCLUDE mSPLDef.SPLD_DirectionsUsage FROM mSPLDef.SPLD_Usage
@@ -2970,12 +3173,12 @@ BuildUsageEntriesFrSLC( VIEW mSPLDef   BASED ON LOD mSPLDef,
    END
 
    // Build Marketing Entries.
-   FOR EACH SourceSLC.S_MarketingSection
+   FOR EACH SrcSLC.S_MarketingSection
       SET CURSOR FIRST mSPLDef.S_MarketingSection WITHIN mSPLDef.SubregPhysicalLabelDef
-                 WHERE mSPLDef.S_MarketingSection.ID = SourceSLC.S_MarketingSection.ID
-      FOR EACH SourceSLC.S_MarketingStatement
+                 WHERE mSPLDef.S_MarketingSection.ID = SrcSLC.S_MarketingSection.ID
+      FOR EACH SrcSLC.S_MarketingStatement
          SET CURSOR FIRST mSPLDef.S_MarketingStatement WITHIN mSPLDef.SPLD_MarketingSection
-                    WHERE mSPLDef.S_MarketingStatement.ID = SourceSLC.S_MarketingStatement.ID
+                    WHERE mSPLDef.S_MarketingStatement.ID = SrcSLC.S_MarketingStatement.ID
 
          // Remove current entries.
          FOR EACH mSPLDef.SPLD_MarketingUsageOrdering
@@ -2983,9 +3186,9 @@ BuildUsageEntriesFrSLC( VIEW mSPLDef   BASED ON LOD mSPLDef,
          END
 
          // Add entries from SLC.
-         FOR EACH SourceSLC.S_MarketingUsageOrdering
+         FOR EACH SrcSLC.S_MarketingUsageOrdering
             SET CURSOR FIRST mSPLDef.S_Usage WITHIN mSPLDef.SubregPhysicalLabelDef
-                       WHERE mSPLDef.S_Usage.ID = SourceSLC.S_MarketingUsage.ID
+                       WHERE mSPLDef.S_Usage.ID = SrcSLC.S_MarketingUsage.ID
             IF RESULT >= zCURSOR_SET
                CREATE ENTITY mSPLDef.SPLD_MarketingUsageOrdering
                INCLUDE mSPLDef.SPLD_MarketingUsage FROM mSPLDef.SPLD_Usage
@@ -3240,11 +3443,11 @@ dFullNameLFM( VIEW mSPLDef BASED ON LOD mSPLDef,
         //PersonName_LastFirstMiddle( mSPLDef, InternalEntityStructure,
         //                            InternalAttribStructure, GetOrSetFlag )
 
-        /* end zDERIVED_GET */
+        // end zDERIVED_GET
    OF   zDERIVED_SET:
 
-        /* end zDERIVED_SET */
-   END  /* case */
+        // end zDERIVED_SET
+   END  // case
 
 END
 
@@ -3265,11 +3468,11 @@ dFullNameFML( VIEW mSPLDef BASED ON LOD mSPLDef,
         PersonName_FirstMiddleLast( mSPLDef, InternalEntityStructure,
                                     InternalAttribStructure, GetOrSetFlag )
 
-        /* end zDERIVED_GET */
+        // end zDERIVED_GET
    OF   zDERIVED_SET:
 
-        /* end zDERIVED_SET */
-   END  /* case */
+        // end zDERIVED_SET
+   END  // case
 
 END
 
@@ -3304,11 +3507,11 @@ dPrimRegNameID( VIEW mSPLDef BASED ON LOD mSPLDef,
                             InternalEntityStructure, InternalAttribStructure, szString )
        RETURN 0
 
-        /* end zDERIVED_GET */
+        // end zDERIVED_GET
    OF   zDERIVED_SET:
 
-        /* end zDERIVED_SET */
-   END  /* case */
+        // end zDERIVED_SET
+   END  // case
 
 END
 
@@ -3343,11 +3546,11 @@ dSubregNameID( VIEW mSPLDef BASED ON LOD mSPLDef,
                             InternalEntityStructure, InternalAttribStructure, szString )
        RETURN 0
 
-        /* end zDERIVED_GET */
+        // end zDERIVED_GET
    OF   zDERIVED_SET:
 
-        /* end zDERIVED_SET */
-   END  /* case */
+        // end zDERIVED_SET
+   END  // case
 
 END
 
@@ -3380,11 +3583,11 @@ dIngredientName( VIEW mSPLDef BASED ON LOD mSPLDef,
                             InternalEntityStructure, InternalAttribStructure, szString )
        RETURN 0
 
-        /* end zDERIVED_GET */
+        // end zDERIVED_GET
    OF   zDERIVED_SET:
 
-        /* end zDERIVED_SET */
-   END  /* case */
+        // end zDERIVED_SET
+   END  // case
 
 END
 
@@ -3411,11 +3614,11 @@ dPanelName( VIEW mSPLDef BASED ON LOD mSPLDef,
    StoreStringInRecord( mSPLDef,
                         InternalEntityStructure, InternalAttribStructure, szPanelName )*/
 
-        /* end zDERIVED_GET */
+        // end zDERIVED_GET
    OF   zDERIVED_SET:
 
-        /* end zDERIVED_SET */
-   END  /* case */
+        // end zDERIVED_SET
+   END  // case
 
 END
 
@@ -3444,11 +3647,11 @@ dSectionIdentifier( VIEW mSPLDef BASED ON LOD mSPLDef,
    StoreStringInRecord( mSPLDef,
                         InternalEntityStructure, InternalAttribStructure, szSectionIdentifier )
 
-        /* end zDERIVED_GET */
+        // end zDERIVED_GET
    OF   zDERIVED_SET:
 
-        /* end zDERIVED_SET */
-   END  /* case */
+        // end zDERIVED_SET
+   END  // case
 
 END
 
@@ -3480,11 +3683,11 @@ dMasterProductNameNbr( VIEW mSPLDef BASED ON LOD mSPLDef,
                             InternalEntityStructure, InternalAttribStructure, szString )
        RETURN 0
 
-        /* end zDERIVED_GET */
+        // end zDERIVED_GET
    OF   zDERIVED_SET:
 
-        /* end zDERIVED_SET */
-   END  /* case */
+        // end zDERIVED_SET
+   END  // case
 
 END
 
@@ -3514,11 +3717,11 @@ dSubregProductNameNbr( VIEW mSPLDef BASED ON LOD mSPLDef,
                             InternalEntityStructure, InternalAttribStructure, szString )
        RETURN 0
 
-        /* end zDERIVED_GET */
+        // end zDERIVED_GET
    OF   zDERIVED_SET:
 
-        /* end zDERIVED_SET */
-   END  /* case */
+        // end zDERIVED_SET
+   END  // case
 
 END
 
@@ -3545,22 +3748,22 @@ dDisplayPathogenName( VIEW mSPLDef BASED ON LOD mSPLDef,
    OF   zDERIVED_GET:
 
       // Combine the Footnote Number as a subscript to the Claim Name, if it exists.
-      szCombinedName = mSPLDef.M_Usage.Name
+      szCombinedName = mSPLDef.SPLD_Usage.Name
 
       // Set Footnote Number, if footnote exists.
-      IF mSPLDef.M_UsageFootnoteUsed EXISTS
-         SET CURSOR FIRST mSPLDef.M_UsageFootnote WHERE mSPLDef.M_UsageFootnote.ID = mSPLDef.M_UsageFootnoteUsed.ID
-         IF mSPLDef.M_UsageFootnote.wFootNoteRelativeNumber = ""
+      IF mSPLDef.SPLD_UsageFootnoteUsed EXISTS
+         SET CURSOR FIRST mSPLDef.SPLD_UsageFootnote WHERE mSPLDef.SPLD_UsageFootnote.ID = mSPLDef.SPLD_UsageFootnoteUsed.ID
+         IF mSPLDef.SPLD_UsageFootnote.wFootNoteRelativeNumber = ""
             // Relative numbers haven't be set, so set them here.
             CreateViewFromView( mSPLDef2, mSPLDef )
             Count = 0
-            FOR EACH mSPLDef2.M_UsageFootnote
+            FOR EACH mSPLDef2.SPLD_UsageFootnote
                Count = Count + 1
-               mSPLDef2.M_UsageFootnote.wFootNoteRelativeNumber = Count
+               mSPLDef2.SPLD_UsageFootnote.wFootNoteRelativeNumber = Count
             END
             DropView( mSPLDef2 )
          END
-         szFootnoteNumber = mSPLDef.M_UsageFootnote.wFootNoteRelativeNumber
+         szFootnoteNumber = mSPLDef.SPLD_UsageFootnote.wFootNoteRelativeNumber
          szCombinedName = szCombinedName + "<sup> " + szFootnoteNumber + "</sup>"
       END
 
@@ -3569,11 +3772,11 @@ dDisplayPathogenName( VIEW mSPLDef BASED ON LOD mSPLDef,
                            InternalEntityStructure,
                            InternalAttribStructure, szCombinedName )
 
-        /* end zDERIVED_GET */
+        // end zDERIVED_GET
    OF   zDERIVED_SET:
 
-        /* end zDERIVED_SET */
-   END  /* case */
+        // end zDERIVED_SET
+   END  // case
 
 END
 
@@ -3698,11 +3901,11 @@ dFullHazardStatement( VIEW mSPLDef BASED ON LOD mSPLDef,
       StoreStringInRecord( mSPLDef, InternalEntityStructure, InternalAttribStructure, szString )
       RETURN 0
 
-      /* end zDERIVED_GET */
+      // end zDERIVED_GET
    OF   zDERIVED_SET:
 
-      /* end zDERIVED_SET */
-   END  /* case */
+      // end zDERIVED_SET
+   END  // case
 
 END
 
@@ -3753,11 +3956,11 @@ dSelectedHazardStmt( VIEW mSPLDef BASED ON LOD mSPLDef,
       // Store the calculated value in the object.
       StoreStringInRecord( mSPLDef, InternalEntityStructure, InternalAttribStructure, szString )
 
-      /* end zDERIVED_GET */
+      // end zDERIVED_GET
    OF   zDERIVED_SET:
 
-        /* end zDERIVED_SET */
-   END  /* case */
+        // end zDERIVED_SET
+   END  // case
 
 END
 
@@ -4375,17 +4578,17 @@ ObjectConstraints( VIEW mSPLDef BASED ON LOD mSPLDef,
       END
    END
 
-        /* end zOCE_ACTIVATE */
+        // end zOCE_ACTIVATE
    OF   zOCE_ACTIVATE_EMPTY:
 
-        /* end zOCE_ACTIVATE_EMPTY */
+        // end zOCE_ACTIVATE_EMPTY
    OF   zOCE_COMMIT:
 
-        /* end zOCE_COMMIT */
+        // end zOCE_COMMIT
    OF   zOCE_DROPOI:
 
-        /* end zOCE_DROPOI */
-   END  /* case */
+        // end zOCE_DROPOI
+   END  // case
 
 END
 
@@ -4483,10 +4686,10 @@ dColorName( VIEW mSPLDef BASED ON LOD mSPLDef,
        StoreStringInRecord( mSPLDef, InternalEntityStructure, InternalAttribStructure, szName )
        RETURN 0
 
-        /* end zDERIVED_GET */
+        // end zDERIVED_GET
    OF   zDERIVED_SET:
 
-        /* end zDERIVED_SET */
-   END  /* case */
+        // end zDERIVED_SET
+   END  // case
 
 END

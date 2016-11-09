@@ -1,4 +1,4 @@
-// wSLCSubregProductUpdate   Generate Timestamp: 20161010115316857
+// wSLCSubregProductUpdate   Generate Timestamp: 20161019144229552
 
 var isWindowClosing = true;
 var timerID = null;

@@ -1,4 +1,4 @@
-// wSLCHumanHazard   Generate Timestamp: 20161010115316152
+// wSLCHumanHazard   Generate Timestamp: 20161019144228817
 
 var isWindowClosing = true;
 var timerID = null;
@@ -367,6 +367,21 @@ function smDisplayHazardSection( )
       _DisableFormElements( true );
 
       document.wSLCHumanHazard.zAction.value = "smDisplayHazardSection";
+      document.wSLCHumanHazard.submit( );
+   }
+}
+
+function smDilution( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wSLCHumanHazard.zAction.value = "smDilution";
       document.wSLCHumanHazard.submit( );
    }
 }

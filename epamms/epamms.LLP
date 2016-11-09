@@ -1,4 +1,4 @@
-z1000-Zeidon    EPAMMS   TZCMLPLO                         10/14/16   19:03:15 1.0a2   
+z1000-Zeidon    EPAMMS   TZCMLPLO                         11/08/16   18:40:08 1.0a2   
 eLPLR      1
 aName      epamms
 aDesc      ePamms Application
@@ -6,8 +6,8 @@ aZKey      4324720
 aPgmSrcDir %kzd%:\lplr\epamms
 aExecDir   %kzd%:\lplr\epamms\bin
 aMetaSrcDir %kzd%:\lplr\epamms
-aTaskUseCount 1
-aLastBuildDate 20161007153009500
+aTaskUseCount 0
+aLastBuildDate 20161108154808838
 aLPLR_Type 2
 aCurrentCompilerSpec DKS
 aTempDesc  ePamms Application
@@ -85,7 +85,7 @@ eW_MetaDef 3
 aCPLR_ZKey 110010001
 aStatus    1
 aUpdateInd 2
-aName      BuildCompositeEntriesForSPLD
+aName      BuildCompEntriesForSPLD
 
 eW_MetaDef 3
 aCPLR_ZKey 110009888
@@ -1029,8 +1029,8 @@ Additions:
 1. Added a relationship between M_UsageOrdering, S_UsageOrdering and SPLD_UsageOrdering and their corresponding DirectionsForUse and Marketing Statement entities.
 2. Added Default attributes to LLD and SPLD_LLD.
 3. Add 
-aLastSyncDate 20161013133217680
-aLastUpdateDate 20161013133217680
+aLastSyncDate 20161108160029522
+aLastUpdateDate 20161108160029522
 
 eW_MetaType 2
 aType      5
@@ -1053,8 +1053,8 @@ aStatus    1
 aUpdateInd 2
 aName      ePamms
 aDesc      ePamms Application
-aLastSyncDate 20161013133301965
-aLastUpdateDate 20161013133301965
+aLastSyncDate 20161108154857853
+aLastUpdateDate 20161108154857853
 
 eW_MetaType 2
 aType      7
@@ -1271,8 +1271,8 @@ aStatus    1
 aUpdateInd 2
 aName      mMasLC
 aDesc      Master Label Content Maintenance
-aLastSyncDate 20161007163541930
-aLastUpdateDate 20161007163541930
+aLastSyncDate 20161108173238871
+aLastUpdateDate 20161108173238871
 
 eW_MetaDef 3
 aCPLR_ZKey 69033348
@@ -1333,8 +1333,8 @@ aStatus    1
 aUpdateInd 2
 aName      mSPLDef
 aDesc      Subregistrant Physical Label Maintenance
-aLastSyncDate 20161004151020572
-aLastUpdateDate 20161004151020572
+aLastSyncDate 20161108183958292
+aLastUpdateDate 20161108183958292
 
 eW_MetaDef 3
 aCPLR_ZKey 69035258
@@ -1342,8 +1342,8 @@ aStatus    1
 aUpdateInd 2
 aName      mSubLC
 aDesc      Subregistrant Label Content Maintenance
-aLastSyncDate 20161013134411813
-aLastUpdateDate 20161013134411813
+aLastSyncDate 20161108183939908
+aLastUpdateDate 20161108183939908
 
 eW_MetaDef 3
 aCPLR_ZKey 1157934
@@ -2150,8 +2150,8 @@ aStatus    1
 aUpdateInd 2
 aName      wMLC
 aDesc      Master (Primary Registrant) Label Content
-aLastSyncDate 20161014114023572
-aLastUpdateDate 20161014114023572
+aLastSyncDate 20161108164635759
+aLastUpdateDate 20161108164635759
 
 eW_MetaDef 3
 aCPLR_ZKey 1158563
@@ -2168,8 +2168,8 @@ aStatus    1
 aUpdateInd 2
 aName      wSLC
 aDesc      Subregistrant Label Content
-aLastSyncDate 20161014190315541
-aLastUpdateDate 20161014190315541
+aLastSyncDate 20161108164656671
+aLastUpdateDate 20161108164656671
 
 eW_MetaDef 3
 aCPLR_ZKey 11205
@@ -2227,8 +2227,8 @@ aCPLR_ZKey 68567479
 aStatus    1
 aUpdateInd 2
 aName      Base
-aLastSyncDate 20160914143850490
-aLastUpdateDate 20160914143850490
+aLastSyncDate 20161017192651442
+aLastUpdateDate 20161017192651442
 
 eW_MetaDef 3
 aCPLR_ZKey 68567489
@@ -2252,8 +2252,8 @@ aCPLR_ZKey 69081339
 aStatus    1
 aUpdateInd 2
 aName      Template
-aLastSyncDate 20160915171704764
-aLastUpdateDate 20160915171704764
+aLastSyncDate 20161031183815412
+aLastUpdateDate 20161031183815412
 
 eW_MetaDef 3
 aCPLR_ZKey 68568034
@@ -2306,8 +2306,8 @@ aStatus    1
 aUpdateInd 2
 aName      ZGlobalS
 aDesc      VML operations
-aLastSyncDate 20150820152248000
-aLastUpdateDate 20150820152248000
+aLastSyncDate 20161031214301482
+aLastUpdateDate 20161031214301482
 
 eW_MetaDef 3
 aCPLR_ZKey 1399843

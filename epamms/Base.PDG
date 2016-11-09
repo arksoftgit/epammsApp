@@ -1,7 +1,7 @@
-z1000-Zeidon    BASE     TZDGSRCO                         09/13/16   19:39:46 1.0a2   
+z1000-Zeidon    BASE     TZDGSRCO                         10/17/16   15:26:51 1.0a2   
 eDomainGroup 1
 aZKey      68567479
-aNextZKeyToAssign 130001733
+aNextZKeyToAssign 130001734
 aName      Base
 aExtension C
 aWorkNumeric 9
@@ -160,8 +160,13 @@ aContextRestriction N
 
 eContext   3
 aZKey      110059062
+aDesc      Break at 5 gallon mark (< vs. >=)
 aName      ContainerVolumeEnvironmentHazard
 aIsDefault Y
+
+eTableEntry 4
+aZKey      130001734
+aExternalValue All
 
 eTableEntry 4
 aZKey      110059063
@@ -1230,10 +1235,10 @@ aExternalValue No
 aInternalValue N
 
 eDomain    2
-aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
 aZKey      4322633
 aName      BorderStyle
 aDomainType T
+aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
 aDataType  S
 aMaxStringLth 20
 aContextRestriction N

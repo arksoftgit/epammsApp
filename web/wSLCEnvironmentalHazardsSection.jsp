@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSLCEnvironmentalHazardsSection   Generate Timestamp: 20161010121927229 --%>
+<%-- wSLCEnvironmentalHazardsSection   Generate Timestamp: 20161019144228730 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -60,25 +60,6 @@ public int DoInputMapping( HttpServletRequest request,
    mSubLC = task.getViewByName( "mSubLC" );
    if ( VmlOperation.isValid( mSubLC ) )
    {
-      // EditBox: EnvironmentalName
-      nRC = mSubLC.cursor( "S_GeneralSubSection" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 ) // CursorResult.SET
-      {
-         strMapValue = request.getParameter( "EnvironmentalName" );
-         try
-         {
-            if ( webMapping )
-               VmlOperation.CreateMessage( task, "EnvironmentalName", "", strMapValue );
-            else
-               mSubLC.cursor( "S_GeneralSubSection" ).getAttribute( "Name" ).setValue( strMapValue, "" );
-         }
-         catch ( InvalidAttributeValueException e )
-         {
-            nMapError = -16;
-            VmlOperation.CreateMessage( task, "EnvironmentalName", e.getReason( ), strMapValue );
-         }
-      }
-
       // Grid: GridEnvironmental
       iTableRowCnt = 0;
 
@@ -418,11 +399,14 @@ else
    View lSPLDLST = null;
    View mLLD_LST = null;
    View mMasLC = null;
+   View mMasLC_Root = null;
+   View mMasProd = null;
    View mSPLDef = null;
    View mSubLC = null;
    View mSubLC_Root = null;
    View mSubProd = null;
    View mSubreg = null;
+   View wWebXfer = null;
    String strRadioGroupValue = "";
    String strComboCurrentValue = "";
    String strAutoComboBoxExternalValue = "";
@@ -575,46 +559,32 @@ else
 
 </td>
 <td valign="top"  class="text12" style="width:550px;">
-<% /* EnvironmentalName:EditBox */ %>
-<%
-   strErrorMapValue = VmlOperation.CheckError( "EnvironmentalName", strError );
-   if ( !StringUtils.isBlank( strErrorMapValue ) )
-   {
-      if ( StringUtils.equals( strErrorFlag, "Y" ) )
-         strErrorColor = "color:red;";
-   }
+<% /* EnvironmentalName:Text */ %>
+<% strTextDisplayValue = "";
+   mSubLC = task.getViewByName( "mSubLC" );
+   if ( VmlOperation.isValid( mSubLC ) == false )
+      task.log( ).debug( "Invalid View: " + "EnvironmentalName" );
    else
    {
-      strErrorColor = "";
-      mSubLC = task.getViewByName( "mSubLC" );
-      if ( VmlOperation.isValid( mSubLC ) == false )
-         task.log( ).debug( "Invalid View: " + "EnvironmentalName" );
-      else
+      nRC = mSubLC.cursor( "S_GeneralSubSection" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
       {
-         nRC = mSubLC.cursor( "S_GeneralSubSection" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-         {
-            try
-            {
-               strErrorMapValue = mSubLC.cursor( "S_GeneralSubSection" ).getAttribute( "Name" ).getString( "" );
-            }
-            catch (Exception e)
-            {
-               out.println("There is an error on EnvironmentalName: " + e.getMessage());
-               task.log().error( "*** Error on ctrl EnvironmentalName", e );
-            }
-            if ( strErrorMapValue == null )
-               strErrorMapValue = "";
-
-            task.log( ).debug( "S_GeneralSubSection.Name: " + strErrorMapValue );
-         }
-         else
-            task.log( ).debug( "Entity does not exist for EnvironmentalName: " + "mSubLC.S_GeneralSubSection" );
+      try
+      {
+         strTextDisplayValue = mSubLC.cursor( "S_GeneralSubSection" ).getAttribute( "Name" ).getString( "" );
+      }
+      catch (Exception e)
+      {
+         out.println("There is an error on EnvironmentalName: " + e.getMessage());
+         task.log().info( "*** Error on ctrl EnvironmentalName" + e.getMessage() );
+      }
+         if ( strTextDisplayValue == null )
+            strTextDisplayValue = "";
       }
    }
 %>
 
-<input class="text12" name="EnvironmentalName" id="EnvironmentalName" maxlength="254" style="width:550px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<span class="text12"  id="EnvironmentalName" name="EnvironmentalName" style="width:550px;height:16px;"><%=strTextDisplayValue%></span>
 
 </td>
 </tr>
@@ -644,15 +614,50 @@ else
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GBPrecautionaryStatements:GroupBox */ %>
-<div id="GBPrecautionaryStatements" name="GBPrecautionaryStatements" style="float:left;width:486px;"  class="listgroup">
+<div id="GBPrecautionaryStatements" name="GBPrecautionaryStatements" style="float:left;width:684px;"  class="listgroup">
 
-<table cols=0 style="width:486px;"  class="grouptable">
+<table cols=0 style="width:684px;"  class="grouptable">
 
 <tr>
-<td valign="top"  class="listheader" style="width:238px;">
+<td valign="top"  class="listheader" style="width:330px;">
 <% /* EnvironmentalHazardStatements:Text */ %>
 
 <span class="listheader"  id="EnvironmentalHazardStatements" name="EnvironmentalHazardStatements" style="width:238px;height:16px;">Environmental Hazard Statements</span>
+
+</td>
+<td valign="top" style="width:110px;">
+<% /* ContainerSize::Text */ %>
+
+<span  id="ContainerSize:" name="ContainerSize:" style="width:98px;height:16px;">ContainerSize:</span>
+
+</td>
+<td valign="top" style="width:98px;">
+<% /* ContainerSize:Text */ %>
+<% strTextDisplayValue = "";
+   mSubLC = task.getViewByName( "mSubLC" );
+   if ( VmlOperation.isValid( mSubLC ) == false )
+      task.log( ).debug( "Invalid View: " + "ContainerSize" );
+   else
+   {
+      nRC = mSubLC.cursor( "S_GeneralSubSection" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+      {
+      try
+      {
+         strTextDisplayValue = mSubLC.cursor( "S_GeneralSubSection" ).getAttribute( "ContainerVolumeEnvironmentHazard" ).getString( "" );
+      }
+      catch (Exception e)
+      {
+         out.println("There is an error on ContainerSize: " + e.getMessage());
+         task.log().info( "*** Error on ctrl ContainerSize" + e.getMessage() );
+      }
+         if ( strTextDisplayValue == null )
+            strTextDisplayValue = "";
+      }
+   }
+%>
+
+<span  id="ContainerSize" name="ContainerSize" style="width:98px;height:16px;"><%=strTextDisplayValue%></span>
 
 </td>
 </tr>
@@ -675,11 +680,10 @@ else
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GridEnvironmental:Grid */ %>
-<table  cols=2 style="width:710px;"  name="GridEnvironmental" id="GridEnvironmental">
+<table  cols=1 style="width:710px;"  name="GridEnvironmental" id="GridEnvironmental">
 
 <thead><tr>
 
-   <th>Statement Title</th>
    <th>Statement Text</th>
 
 </tr></thead>
@@ -698,7 +702,6 @@ try
       String strButtonName;
       String strOdd;
       String strTag;
-      String strGridEditEnvironmentalTitle;
       String strGridEditEnvironmentalText;
       
       View vGridEnvironmental;
@@ -711,19 +714,6 @@ try
 
          lEntityKey = vGridEnvironmental.cursor( "S_GeneralSubStatement" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strGridEditEnvironmentalTitle = "";
-         nRC = vGridEnvironmental.cursor( "S_GeneralSubStatement" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-         {
-            strGridEditEnvironmentalTitle = vGridEnvironmental.cursor( "S_GeneralSubStatement" ).getAttribute( "Title" ).getString( "" );
-
-            if ( strGridEditEnvironmentalTitle == null )
-               strGridEditEnvironmentalTitle = "";
-         }
-
-         if ( StringUtils.isBlank( strGridEditEnvironmentalTitle ) )
-            strGridEditEnvironmentalTitle = "&nbsp";
-
          strGridEditEnvironmentalText = "";
          nRC = vGridEnvironmental.cursor( "S_GeneralSubStatement" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
@@ -741,7 +731,6 @@ try
 
 <tr<%=strOdd%>>
 
-   <td><%=strGridEditEnvironmentalTitle%></td>
    <td><%=strGridEditEnvironmentalText%></td>
 
 </tr>

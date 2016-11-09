@@ -1,4 +1,4 @@
-// wSLCStorageDisposalStatement   Generate Timestamp: 20161010115316799
+// wSLCStorageDisposalStatement   Generate Timestamp: 20161019144229460
 
 var isWindowClosing = true;
 var timerID = null;
@@ -162,6 +162,9 @@ function _AfterPageLoaded( )
       timerID = null;
    }
 
+   document.wSLCStorageDisposalStatement.hCBSize1.value = document.wSLCStorageDisposalStatement.CBSize1.value
+   document.wSLCStorageDisposalStatement.hCBType1.value = document.wSLCStorageDisposalStatement.CBType1.value
+
    var varTimeout = document.wSLCStorageDisposalStatement.zTimeout.value;
    if ( varTimeout > 0 )
    {
@@ -191,6 +194,25 @@ function CheckAllInGrid(id, CheckBoxName) // triggered by no text checkbox
    }
 }
 
+function GOTO_StorageDisposaSublStatement( strTagEntityKey )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      var nIdx = strTagEntityKey.lastIndexOf( '::' );
+      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
+
+      document.wSLCStorageDisposalStatement.zTableRowSelect.value = strEntityKey;
+      _DisableFormElements( true );
+
+      document.wSLCStorageDisposalStatement.zAction.value = "GOTO_StorageDisposaSublStatement";
+      document.wSLCStorageDisposalStatement.submit( );
+   }
+}
+
 function Return( )
 {
 
@@ -203,6 +225,30 @@ function Return( )
 
       document.wSLCStorageDisposalStatement.zAction.value = "Return";
       document.wSLCStorageDisposalStatement.submit( );
+   }
+}
+
+function CBSize1OnChange( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      document.wSLCStorageDisposalStatement.hCBSize1.value = document.wSLCStorageDisposalStatement.CBSize1.value;
+   }
+}
+
+function CBType1OnChange( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      document.wSLCStorageDisposalStatement.hCBType1.value = document.wSLCStorageDisposalStatement.CBType1.value;
    }
 }
 

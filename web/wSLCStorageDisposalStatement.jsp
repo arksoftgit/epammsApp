@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSLCStorageDisposalStatement   Generate Timestamp: 20161010115316799 --%>
+<%-- wSLCStorageDisposalStatement   Generate Timestamp: 20161019144229460 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -35,6 +35,7 @@ public int DoInputMapping( HttpServletRequest request,
    String taskId = (String) session.getAttribute( "ZeidonTaskId" );
    Task task = objectEngine.getTaskById( taskId );
 
+   View mMasLC = null;
    View mSubLC = null;
    View mSubLC_Root = null;
    View vGridTmp = null; // temp view to grid view
@@ -58,9 +59,32 @@ public int DoInputMapping( HttpServletRequest request,
    if ( webMapping == false )
       session.setAttribute( "ZeidonError", null );
 
+   mMasLC = task.getViewByName( "mMasLC" );
+   if ( VmlOperation.isValid( mMasLC ) )
+   {
+   }
+
    mSubLC = task.getViewByName( "mSubLC" );
    if ( VmlOperation.isValid( mSubLC ) )
    {
+      // Grid: Grid5
+      iTableRowCnt = 0;
+
+      // We are creating a temp view to the grid view so that if there are 
+      // grids on the same window with the same view we do not mess up the 
+      // entity positions. 
+      vGridTmp = mSubLC.newView( );
+      csrRC = vGridTmp.cursor( "S_InsertTextKeywordSD" ).setFirst(  );
+      while ( csrRC.isSet() )
+      {
+         lEntityKey = vGridTmp.cursor( "S_InsertTextKeywordSD" ).getEntityKey( );
+         strEntityKey = Long.toString( lEntityKey );
+         iTableRowCnt++;
+
+         csrRC = vGridTmp.cursor( "S_InsertTextKeywordSD" ).setNextContinue( );
+      }
+
+      vGridTmp.drop( );
       // Grid: GridStorDisp
       iTableRowCnt = 0;
 
@@ -68,14 +92,14 @@ public int DoInputMapping( HttpServletRequest request,
       // grids on the same window with the same view we do not mess up the 
       // entity positions. 
       vGridTmp = mSubLC.newView( );
-      csrRC = vGridTmp.cursor( "S_StorageDisposalStatement" ).setFirst(  );
+      csrRC = vGridTmp.cursor( "S_StorageDisposalSubStatement" ).setFirst(  );
       while ( csrRC.isSet() )
       {
-         lEntityKey = vGridTmp.cursor( "S_StorageDisposalStatement" ).getEntityKey( );
+         lEntityKey = vGridTmp.cursor( "S_StorageDisposalSubStatement" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
          iTableRowCnt++;
 
-         csrRC = vGridTmp.cursor( "S_StorageDisposalStatement" ).setNextContinue( );
+         csrRC = vGridTmp.cursor( "S_StorageDisposalSubStatement" ).setNextContinue( );
       }
 
       vGridTmp.drop( );
@@ -205,7 +229,7 @@ if ( strActionToProcess != null )
 
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "Return" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_StorageDisposaSublStatement" ) )
    {
       bDone = true;
       VmlOperation.SetZeidonSessionAttribute( session, task, "wSLCStorageDisposalStatement", strActionToProcess );
@@ -215,10 +239,37 @@ if ( strActionToProcess != null )
       if ( nRC < 0 )
          break;
 
+      // Position on the entity that was selected in the grid.
+      String strEntityKey = (String) request.getParameter( "zTableRowSelect" );
+      View mSubLC;
+      mSubLC = task.getViewByName( "mSubLC" );
+      if ( VmlOperation.isValid( mSubLC ) )
+      {
+         lEKey = java.lang.Long.parseLong( strEntityKey );
+         csrRC = mSubLC.cursor( "S_StorageDisposalSubStatement" ).setByEntityKey( lEKey );
+         if ( !csrRC.isSet() )
+         {
+            boolean bFound = false;
+            csrRCk = mSubLC.cursor( "S_StorageDisposalSubStatement" ).setFirst( );
+            while ( csrRCk.isSet() && !bFound )
+            {
+               lEKey = mSubLC.cursor( "S_StorageDisposalSubStatement" ).getEntityKey( );
+               strKey = Long.toString( lEKey );
+               if ( StringUtils.equals( strKey, strEntityKey ) )
+               {
+                  // Stop while loop because we have positioned on the correct entity.
+                  bFound = true;
+               }
+               else
+                  csrRCk = mSubLC.cursor( "S_StorageDisposalSubStatement" ).setNextContinue( );
+            } // Grid
+         }
+      }
+
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCStorageDisposalStatement", "wSLC.RETURN_StorageDisposalStatement" );
-      nOptRC = wSLC.RETURN_StorageDisposalStatement( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCStorageDisposalStatement", "wSLC.GOTO_StorageDisposalSubStatement" );
+      nOptRC = wSLC.GOTO_StorageDisposalSubStatement( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -235,9 +286,26 @@ if ( strActionToProcess != null )
       if ( strNextJSP_Name.equals( "" ) )
       {
          // Next Window
-         strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_ReturnToParent, "", "" );
+         strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_StartModalSubwindow, "wSLC", "StorageDisposalSubStatement" );
       }
 
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "Return" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wSLCStorageDisposalStatement", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Next Window
+      strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_ReturnToParent, "", "" );
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
@@ -371,6 +439,8 @@ else
 <%@ include file="./include/timeout.inc" %>
 <link rel="stylesheet" type="text/css" href="./css/print.css" media="print" />
 <script language="JavaScript" type="text/javascript" src="./js/common.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/css.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/sts.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
@@ -378,7 +448,12 @@ else
 
 </head>
 
-<body onLoad="_AfterPageLoaded( )" onSubmit="_DisableFormElements( true )" onBeforeUnload="_BeforePageUnload( )">
+<!-- 
+// If we have table sorting on this page, the table sorting does not work in Firefox 
+// (seems to work in IE and Opera).  The solution is to not call _AfterPageLoaded in OnLoad event. 
+// In the Standardista code (sts.js) there is an addEvent that will call _AfterPageLoaded. 
+--> 
+<body onSubmit="_DisableFormElements( true )" onBeforeUnload="_BeforePageUnload( )">
 
 <%@ include file="./include/pagebackground.inc" %>  <!-- just temporary until we get the painter dialog updates from Kelly ... 2011.10.08 dks -->
 
@@ -426,11 +501,14 @@ else
    View lSPLDLST = null;
    View mLLD_LST = null;
    View mMasLC = null;
+   View mMasLC_Root = null;
+   View mMasProd = null;
    View mSPLDef = null;
    View mSubLC = null;
    View mSubLC_Root = null;
    View mSubProd = null;
    View mSubreg = null;
+   View wWebXfer = null;
    String strRadioGroupValue = "";
    String strComboCurrentValue = "";
    String strAutoComboBoxExternalValue = "";
@@ -538,13 +616,17 @@ else
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GBStorDispSections1:GroupBox */ %>
+<% /* GBStorDispStatement:GroupBox */ %>
 
-<div id="GBStorDispSections1" name="GBStorDispSections1" class="listgroup"   style="float:left;position:relative; width:794px; height:36px;">  <!-- GBStorDispSections1 --> 
+<div id="GBStorDispStatement" name="GBStorDispStatement" class="listgroup"   style="float:left;position:relative; width:794px; height:36px;">  <!-- GBStorDispStatement --> 
 
 <% /* StorageDisposalStatement::Text */ %>
 
-<label class="groupbox"  id="StorageDisposalStatement:" name="StorageDisposalStatement:" style="width:202px;height:16px;position:absolute;left:6px;top:12px;">Storage and Disposal Statement:</label>
+<label class="groupbox"  id="StorageDisposalStatement:" name="StorageDisposalStatement:" style="width:202px;height:16px;position:absolute;left:6px;top:12px;">Storage Disposal Statement</label>
+
+<% /* Section::Text */ %>
+
+<label class="groupbox"  id="Section:" name="Section:" style="width:66px;height:16px;position:absolute;left:244px;top:12px;">Section:</label>
 
 <% /* SectionName:Text */ %>
 <% strTextDisplayValue = "";
@@ -571,10 +653,344 @@ else
    }
 %>
 
-<label class="groupbox"  id="SectionName" name="SectionName" style="width:188px;height:16px;position:absolute;left:216px;top:12px;"><%=strTextDisplayValue%></label>
+<label class="groupbox"  id="SectionName" name="SectionName" style="width:454px;height:16px;position:absolute;left:316px;top:12px;"><%=strTextDisplayValue%></label>
 
 
-</div>  <!--  GBStorDispSections1 --> 
+</div>  <!--  GBStorDispStatement --> 
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GroupBox5:GroupBox */ %>
+<div id="GroupBox5" name="GroupBox5" style="float:left;width:832px;" >
+
+<table cols=2 style="width:832px;"  class="grouptable">
+
+<tr>
+<td valign="top" style="width:54px;">
+<% /* Text5:Text */ %>
+
+<span  id="Text5" name="Text5" style="width:46px;height:18px;">Title:</span>
+
+</td>
+<td valign="top" style="width:738px;">
+<% /* MLEdit4:MLEdit */ %>
+<%
+   // MLEdit: MLEdit4
+   strErrorMapValue = VmlOperation.CheckError( "MLEdit4", strError );
+   if ( !StringUtils.isBlank( strErrorMapValue ) )
+   {
+      if ( StringUtils.equals( strErrorFlag, "Y" ) )
+         strErrorColor = "color:red;";
+   }
+   else
+   {
+      strErrorColor = "";
+      mSubLC = task.getViewByName( "mSubLC" );
+      if ( VmlOperation.isValid( mSubLC ) == false )
+         task.log( ).debug( "Invalid View: " + "MLEdit4" );
+      else
+      {
+         nRC = mSubLC.cursor( "S_StorageDisposalStatement" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            strErrorMapValue = mSubLC.cursor( "S_StorageDisposalStatement" ).getAttribute( "dSD_TitleKey" ).getString( "" );
+            if ( strErrorMapValue == null )
+               strErrorMapValue = "";
+
+            task.log( ).debug( "S_StorageDisposalStatement.dSD_TitleKey: " + strErrorMapValue );
+         }
+         else
+            task.log( ).debug( "Entity does not exist for MLEdit4: " + "mSubLC.S_StorageDisposalStatement" );
+      }
+   }
+%>
+
+<div id="MLEdit4" name="MLEdit4" class="" style="width:738px;height:30px;border:solid;border-width:4px;border-style:groove;text-overflow:hidden;background-color:lightgray;" wrap="wrap"><%=strErrorMapValue%></div>
+
+</td>
+</tr>
+<tr>
+<td valign="top" style="width:54px;">
+<% /* Text3:Text */ %>
+
+<span  id="Text3" name="Text3" style="width:38px;height:18px;">Text:</span>
+
+</td>
+<td valign="top" style="width:754px;">
+<% /* MLEdit3:MLEdit */ %>
+<%
+   // MLEdit: MLEdit3
+   strErrorMapValue = VmlOperation.CheckError( "MLEdit3", strError );
+   if ( !StringUtils.isBlank( strErrorMapValue ) )
+   {
+      if ( StringUtils.equals( strErrorFlag, "Y" ) )
+         strErrorColor = "color:red;";
+   }
+   else
+   {
+      strErrorColor = "";
+      mSubLC = task.getViewByName( "mSubLC" );
+      if ( VmlOperation.isValid( mSubLC ) == false )
+         task.log( ).debug( "Invalid View: " + "MLEdit3" );
+      else
+      {
+         nRC = mSubLC.cursor( "S_StorageDisposalStatement" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            strErrorMapValue = mSubLC.cursor( "S_StorageDisposalStatement" ).getAttribute( "dSD_TextKey" ).getString( "" );
+            if ( strErrorMapValue == null )
+               strErrorMapValue = "";
+
+            task.log( ).debug( "S_StorageDisposalStatement.dSD_TextKey: " + strErrorMapValue );
+         }
+         else
+            task.log( ).debug( "Entity does not exist for MLEdit3: " + "mSubLC.S_StorageDisposalStatement" );
+      }
+   }
+%>
+
+<div id="MLEdit3" name="MLEdit3" class="" style="width:754px;height:76px;border:solid;border-width:4px;border-style:groove;text-overflow:hidden;background-color:lightgray;" wrap="wrap"><%=strErrorMapValue%></div>
+
+</td>
+</tr>
+</table>
+
+</div>  <!-- GroupBox5 --> 
+
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:2px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GroupBox6:GroupBox */ %>
+
+<div id="GroupBox6" name="GroupBox6" class="listgroup"   style="float:left;position:relative; width:780px; height:30px;">  <!-- GroupBox6 --> 
+
+<% /* Text10:Text */ %>
+
+<label class="groupbox"  id="Text10" name="Text10" style="width:364px;height:16px;position:absolute;left:6px;top:12px;">Container Volume and Size Driving this Statement</label>
+
+
+</div>  <!--  GroupBox6 --> 
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GroupBox7:GroupBox */ %>
+
+<div id="GroupBox7" name="GroupBox7" class="withborder" style="width:780px;height:66px;float:left;">  <!-- GroupBox7 --> 
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:6px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GroupBox8:GroupBox */ %>
+<div id="GroupBox8" name="GroupBox8" style="float:left;width:754px;" >
+
+<table cols=2 style="width:754px;"  class="grouptable">
+
+<tr>
+<td valign="top" style="width:64px;">
+<% /* Size:1:Text */ %>
+
+<span  id="Size:1" name="Size:1" style="width:56px;height:16px;">Size:</span>
+
+</td>
+<td valign="top" style="width:592px;">
+<% /* CBSize1:ComboBox */ %>
+<% strErrorMapValue = "";  %>
+
+<select  name="CBSize1" id="CBSize1" size="1" style="width:592px;"  disabled onchange="CBSize1OnChange( )">
+
+<%
+   boolean inListCBSize1 = false;
+
+   mSubLC = task.getViewByName( "mSubLC" );
+   if ( VmlOperation.isValid( mSubLC ) )
+   {
+      List<TableEntry> list = JspWebUtils.getTableDomainValues( mSubLC , "S_StorageDisposalStatement", "ContainerVolume", "" );
+
+      nRC = mSubLC.cursor( "S_StorageDisposalStatement" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+      {
+         strComboCurrentValue = mSubLC.cursor( "S_StorageDisposalStatement" ).getAttribute( "ContainerVolume" ).getString( "" );
+         if ( strComboCurrentValue == null )
+            strComboCurrentValue = "";
+      }
+      else
+      {
+         strComboCurrentValue = "";
+      }
+
+      // Code for NOT required attribute, which makes sure a blank entry exists.
+      if ( strComboCurrentValue == "" )
+      {
+         inListCBSize1 = true;
+%>
+         <option selected="selected" value=""></option>
+<%
+      }
+      else
+      {
+%>
+         <option value=""></option>
+<%
+      }
+      for ( TableEntry entry : list )
+      {
+         String internalValue = entry.getInternalValue( );
+         String externalValue = entry.getExternalValue( );
+         // Perhaps getInternalValue and getExternalValue should return an empty string, 
+         // but currently it returns null.  Set to empty string. 
+         if ( externalValue == null )
+         {
+            internalValue = "";
+            externalValue = "";
+         }
+
+         if ( !StringUtils.isBlank( externalValue ) )
+         {
+            if ( StringUtils.equals( strComboCurrentValue, externalValue ) )
+            {
+               inListCBSize1 = true;
+%>
+               <option selected="selected" value="<%=externalValue%>"><%=externalValue%></option>
+<%
+            }
+            else
+            {
+%>
+               <option value="<%=externalValue%>"><%=externalValue%></option>
+<%
+            }
+         }
+      }  // for ( TableEntry entry
+      // The value from the database isn't in the domain, add it to the list as disabled.
+      if ( !inListCBSize1 )
+      {
+%>
+         <option disabled selected="selected" value="<%=strComboCurrentValue%>"><%=strComboCurrentValue%></option>
+<%
+      }
+   }  // if view != null
+%>
+</select>
+
+<input name="hCBSize1" id="hCBSize1" type="hidden" value="<%=strComboCurrentValue%>" >
+</td>
+</tr>
+<tr>
+<td valign="top" style="width:64px;">
+<% /* Type:1:Text */ %>
+
+<span  id="Type:1" name="Type:1" style="width:56px;height:16px;">Type:</span>
+
+</td>
+<td valign="top" style="width:592px;">
+<% /* CBType1:ComboBox */ %>
+<% strErrorMapValue = "";  %>
+
+<select  name="CBType1" id="CBType1" size="1" style="width:592px;"  disabled onchange="CBType1OnChange( )">
+
+<%
+   boolean inListCBType1 = false;
+
+   mSubLC = task.getViewByName( "mSubLC" );
+   if ( VmlOperation.isValid( mSubLC ) )
+   {
+      List<TableEntry> list = JspWebUtils.getTableDomainValues( mSubLC , "S_StorageDisposalStatement", "ContainerType", "" );
+
+      nRC = mSubLC.cursor( "S_StorageDisposalStatement" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+      {
+         strComboCurrentValue = mSubLC.cursor( "S_StorageDisposalStatement" ).getAttribute( "ContainerType" ).getString( "" );
+         if ( strComboCurrentValue == null )
+            strComboCurrentValue = "";
+      }
+      else
+      {
+         strComboCurrentValue = "";
+      }
+
+      // Code for NOT required attribute, which makes sure a blank entry exists.
+      if ( strComboCurrentValue == "" )
+      {
+         inListCBType1 = true;
+%>
+         <option selected="selected" value=""></option>
+<%
+      }
+      else
+      {
+%>
+         <option value=""></option>
+<%
+      }
+      for ( TableEntry entry : list )
+      {
+         String internalValue = entry.getInternalValue( );
+         String externalValue = entry.getExternalValue( );
+         // Perhaps getInternalValue and getExternalValue should return an empty string, 
+         // but currently it returns null.  Set to empty string. 
+         if ( externalValue == null )
+         {
+            internalValue = "";
+            externalValue = "";
+         }
+
+         if ( !StringUtils.isBlank( externalValue ) )
+         {
+            if ( StringUtils.equals( strComboCurrentValue, externalValue ) )
+            {
+               inListCBType1 = true;
+%>
+               <option selected="selected" value="<%=externalValue%>"><%=externalValue%></option>
+<%
+            }
+            else
+            {
+%>
+               <option value="<%=externalValue%>"><%=externalValue%></option>
+<%
+            }
+         }
+      }  // for ( TableEntry entry
+      // The value from the database isn't in the domain, add it to the list as disabled.
+      if ( !inListCBType1 )
+      {
+%>
+         <option disabled selected="selected" value="<%=strComboCurrentValue%>"><%=strComboCurrentValue%></option>
+<%
+      }
+   }  // if view != null
+%>
+</select>
+
+<input name="hCBType1" id="hCBType1" type="hidden" value="<%=strComboCurrentValue%>" >
+</td>
+</tr>
+</table>
+
+</div>  <!-- GroupBox8 --> 
+
+</div>  <!-- End of a new line -->
+
+
+</div>  <!--  GroupBox7 --> 
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
@@ -584,79 +1000,26 @@ else
 <div style="height:4px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GBStorDispSections:GroupBox */ %>
+<div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GroupBox9:GroupBox */ %>
 
-<div id="GBStorDispSections" name="GBStorDispSections" class="listgroup"   style="float:left;position:relative; width:790px; height:62px;">  <!-- GBStorDispSections --> 
-
-<% /* StorageDisposalStatements:Text */ %>
-
-<label class="groupbox"  id="StorageDisposalStatements" name="StorageDisposalStatements" style="width:330px;height:16px;position:absolute;left:6px;top:12px;">Storage and Disposal Sub-Statements</label>
-
-<% /* ContainerSizeRange::Text */ %>
-
-<label class="groupbox"  id="ContainerSizeRange:" name="ContainerSizeRange:" style="width:158px;height:16px;position:absolute;left:338px;top:12px;">Container Size Range:</label>
-
-<% /* ContainerVolume:Text */ %>
-<% strTextDisplayValue = "";
-   mSubLC = task.getViewByName( "mSubLC" );
-   if ( VmlOperation.isValid( mSubLC ) == false )
-      task.log( ).debug( "Invalid View: " + "ContainerVolume" );
-   else
-   {
-      nRC = mSubLC.cursor( "S_StorageDisposalSection" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 )
-      {
-      try
-      {
-         strTextDisplayValue = mSubLC.cursor( "S_StorageDisposalSection" ).getAttribute( "ContainerVolume" ).getString( "" );
-      }
-      catch (Exception e)
-      {
-         out.println("There is an error on ContainerVolume: " + e.getMessage());
-         task.log().info( "*** Error on ctrl ContainerVolume" + e.getMessage() );
-      }
-         if ( strTextDisplayValue == null )
-            strTextDisplayValue = "";
-      }
-   }
-%>
-
-<label class="groupbox"  id="ContainerVolume" name="ContainerVolume" style="width:188px;height:16px;position:absolute;left:496px;top:12px;"><%=strTextDisplayValue%></label>
-
-<% /* Type:Text */ %>
-
-<label class="groupbox"  id="Type" name="Type" style="width:158px;height:16px;position:absolute;left:338px;top:38px;">Container Type:</label>
-
-<% /* Text2:Text */ %>
-<% strTextDisplayValue = "";
-   mSubLC = task.getViewByName( "mSubLC" );
-   if ( VmlOperation.isValid( mSubLC ) == false )
-      task.log( ).debug( "Invalid View: " + "Text2" );
-   else
-   {
-      nRC = mSubLC.cursor( "S_StorageDisposalSection" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 )
-      {
-      try
-      {
-         strTextDisplayValue = mSubLC.cursor( "S_StorageDisposalSection" ).getAttribute( "ContainerType" ).getString( "" );
-      }
-      catch (Exception e)
-      {
-         out.println("There is an error on Text2: " + e.getMessage());
-         task.log().info( "*** Error on ctrl Text2" + e.getMessage() );
-      }
-         if ( strTextDisplayValue == null )
-            strTextDisplayValue = "";
-      }
-   }
-%>
-
-<label class="groupbox"  id="Text2" name="Text2" style="width:188px;height:16px;position:absolute;left:496px;top:38px;"><%=strTextDisplayValue%></label>
+<div id="GroupBox9" name="GroupBox9" style="width:832px;float:left;">  <!-- GroupBox9 --> 
 
 
-</div>  <!--  GBStorDispSections --> 
+ <!-- This is added as a line spacer -->
+<div style="height:14px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<% /* GroupBox4:GroupBox */ %>
+
+<div id="GroupBox4" name="GroupBox4"   style="float:left;position:relative; width:756px; height:30px;">  <!-- GroupBox4 --> 
+
+<% /* Text6:Text */ %>
+
+<label class="listheader"  id="Text6" name="Text6" style="width:324px;height:16px;position:absolute;left:10px;top:8px;">Keyword text for Embedding in Statement Text</label>
+
+
+</div>  <!--  GroupBox4 --> 
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
@@ -666,14 +1029,14 @@ else
 <div style="height:8px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GridStorDisp:Grid */ %>
-<table  cols=2 style="width:792px;"  name="GridStorDisp" id="GridStorDisp">
+<div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
+<% /* Grid5:Grid */ %>
+<table class="sortable"  cols=2 style=""  name="Grid5" id="Grid5">
 
-<thead><tr>
+<thead bgcolor=green><tr>
 
-   <th>Statement Title</th>
-   <th>Statement Text</th>
+   <th>Keyword</th>
+   <th>Keyword Text</th>
 
 </tr></thead>
 
@@ -691,37 +1054,159 @@ try
       String strButtonName;
       String strOdd;
       String strTag;
-      String strGridEditStorDispTitle;
-      String strGridEditStorDispText;
+      String strGridEditCtl5;
+      String strGridEditCtl6;
       
-      View vGridStorDisp;
-      vGridStorDisp = mSubLC.newView( );
-      csrRC2 = vGridStorDisp.cursor( "S_StorageDisposalStatement" ).setFirst(  );
+      View vGrid5;
+      vGrid5 = mSubLC.newView( );
+      csrRC2 = vGrid5.cursor( "S_InsertTextKeywordSD" ).setFirst(  );
       while ( csrRC2.isSet() )
       {
          strOdd = (iTableRowCnt % 2) != 0 ? " class='odd'" : "";
          iTableRowCnt++;
 
-         lEntityKey = vGridStorDisp.cursor( "S_StorageDisposalStatement" ).getEntityKey( );
+         lEntityKey = vGrid5.cursor( "S_InsertTextKeywordSD" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strGridEditStorDispTitle = "";
-         nRC = vGridStorDisp.cursor( "S_StorageDisposalStatement" ).checkExistenceOfEntity( ).toInt();
+         strGridEditCtl5 = "";
+         nRC = vGrid5.cursor( "S_InsertTextKeywordSD" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditStorDispTitle = vGridStorDisp.cursor( "S_StorageDisposalStatement" ).getAttribute( "Title" ).getString( "" );
+            strGridEditCtl5 = vGrid5.cursor( "S_InsertTextKeywordSD" ).getAttribute( "Name" ).getString( "" );
 
-            if ( strGridEditStorDispTitle == null )
-               strGridEditStorDispTitle = "";
+            if ( strGridEditCtl5 == null )
+               strGridEditCtl5 = "";
          }
 
-         if ( StringUtils.isBlank( strGridEditStorDispTitle ) )
-            strGridEditStorDispTitle = "&nbsp";
+         if ( StringUtils.isBlank( strGridEditCtl5 ) )
+            strGridEditCtl5 = "&nbsp";
 
-         strGridEditStorDispText = "";
-         nRC = vGridStorDisp.cursor( "S_StorageDisposalStatement" ).checkExistenceOfEntity( ).toInt();
+         strGridEditCtl6 = "";
+         nRC = vGrid5.cursor( "S_InsertTextKeywordSD" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditStorDispText = vGridStorDisp.cursor( "S_StorageDisposalStatement" ).getAttribute( "Text" ).getString( "" );
+            strGridEditCtl6 = vGrid5.cursor( "S_InsertTextKeywordSD" ).getAttribute( "dSD_KeywordText" ).getString( "" );
+
+            if ( strGridEditCtl6 == null )
+               strGridEditCtl6 = "";
+         }
+
+         if ( StringUtils.isBlank( strGridEditCtl6 ) )
+            strGridEditCtl6 = "&nbsp";
+
+%>
+
+<tr<%=strOdd%>>
+
+   <td><%=strGridEditCtl5%></td>
+   <td><%=strGridEditCtl6%></td>
+
+</tr>
+
+<%
+         csrRC2 = vGrid5.cursor( "S_InsertTextKeywordSD" ).setNextContinue( );
+      }
+      vGrid5.drop( );
+   }
+}
+catch (Exception e)
+{
+out.println("There is an error in grid: " + e.getMessage());
+task.log().info( "*** Error in grid" + e.getMessage() );
+}
+%>
+</tbody>
+</table>
+
+</div>  <!-- End of a new line -->
+
+
+</div>  <!--  GroupBox9 --> 
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GroupBox10:GroupBox */ %>
+
+<div id="GroupBox10" name="GroupBox10"   style="float:left;position:relative; width:830px; height:30px;">  <!-- GroupBox10 --> 
+
+<% /* SD_SubStatements:Text */ %>
+
+<label class="listheader"  id="SD_SubStatements" name="SD_SubStatements" style="width:434px;height:16px;position:absolute;left:6px;top:4px;">Storage and Disposal Sub-Statements</label>
+
+<% /* ExclusiveStatements:CheckBox */ %>
+<%
+   strErrorMapValue = "";
+   mMasLC = task.getViewByName( "mMasLC" );
+   if ( VmlOperation.isValid( mMasLC ) == false )
+      task.log( ).debug( "Invalid View: " + "ExclusiveStatements" );
+   else
+   {
+      nRC = mMasLC.cursor( "M_StorageDisposalStatement" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+         strRadioGroupValue = mMasLC.cursor( "M_StorageDisposalStatement" ).getAttribute( "ExclusiveStatements" ).getString( );
+   }
+
+   if ( StringUtils.equals( strRadioGroupValue, "Y" ) )
+      strErrorMapValue = "checked=\"checked\"";
+%>
+
+<input type="checkbox" name="ExclusiveStatements" id="ExclusiveStatements"  disabled  value="Y" <%=strErrorMapValue%> style="position:absolute;left:474px;top:4px;">
+<span style="width:172px;height:26px;position:absolute;left:504px;top:4px;">Exclusive Statements</span>
+
+
+</div>  <!--  GroupBox10 --> 
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GridStorDisp:Grid */ %>
+<table  cols=2 style="width:792px;"  name="GridStorDisp" id="GridStorDisp">
+
+<thead><tr>
+
+   <th>Statement Title/Text</th>
+   <th>Display</th>
+
+</tr></thead>
+
+<tbody>
+
+<%
+try
+{
+   iTableRowCnt = 0;
+   mSubLC = task.getViewByName( "mSubLC" );
+   if ( VmlOperation.isValid( mSubLC ) )
+   {
+      long   lEntityKey;
+      String strEntityKey;
+      String strButtonName;
+      String strOdd;
+      String strTag;
+      String strGridEditStorDispText;
+      String strBMBDisplaySD_Statement;
+      
+      View vGridStorDisp;
+      vGridStorDisp = mSubLC.newView( );
+      csrRC2 = vGridStorDisp.cursor( "S_StorageDisposalSubStatement" ).setFirst(  );
+      while ( csrRC2.isSet() )
+      {
+         strOdd = (iTableRowCnt % 2) != 0 ? " class='odd'" : "";
+         iTableRowCnt++;
+
+         lEntityKey = vGridStorDisp.cursor( "S_StorageDisposalSubStatement" ).getEntityKey( );
+         strEntityKey = Long.toString( lEntityKey );
+         strGridEditStorDispText = "";
+         nRC = vGridStorDisp.cursor( "S_StorageDisposalSubStatement" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            strGridEditStorDispText = vGridStorDisp.cursor( "S_StorageDisposalSubStatement" ).getAttribute( "dSD_SubTitleText" ).getString( "" );
 
             if ( strGridEditStorDispText == null )
                strGridEditStorDispText = "";
@@ -734,13 +1219,13 @@ try
 
 <tr<%=strOdd%>>
 
-   <td><%=strGridEditStorDispTitle%></td>
-   <td><%=strGridEditStorDispText%></td>
+   <td><a href="#" onclick="GOTO_StorageDisposaSublStatement( this.id )" id="GridEditStorDispText::<%=strEntityKey%>"><%=strGridEditStorDispText%></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDisplaySD_Statement" onclick="GOTO_StorageDisposaSublStatement( this.id )" id="BMBDisplaySD_Statement::<%=strEntityKey%>"><img src="./images/ePammsDisplay.png" alt="Display"></a></td>
 
 </tr>
 
 <%
-         csrRC2 = vGridStorDisp.cursor( "S_StorageDisposalStatement" ).setNextContinue( );
+         csrRC2 = vGridStorDisp.cursor( "S_StorageDisposalSubStatement" ).setNextContinue( );
       }
       vGridStorDisp.drop( );
    }
