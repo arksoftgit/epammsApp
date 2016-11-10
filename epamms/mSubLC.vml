@@ -1339,9 +1339,9 @@ BuildNewSLC_Version( VIEW NewSLC BASED ON LOD mSubLC,
          FOR EACH SrcMLC.M_DirectionsForUseStatement
             CREATE ENTITY NewSLC.S_DirectionsForUseStatement
             SetMatchingAttributesByName( NewSLC, "S_DirectionsForUseStatement", SrcMLC, "M_DirectionsForUseStatement", zSET_NULL )
-            IF NewSLC.S_DirectionsForUseStatement.NotForUseType = ""
-               NewSLC.S_DirectionsForUseStatement.NotForUseType = "NA"
-            END
+         // IF NewSLC.S_DirectionsForUseStatement.NotForUseType = ""
+         //    NewSLC.S_DirectionsForUseStatement.NotForUseType = "NA"
+         // END
             INCLUDE NewSLC.M_DirectionsForUseStatement FROM SrcMLC.M_DirectionsForUseStatement
 
             // Copy each MLC Statement Usage entry that has been copied to the SLC.
@@ -1534,9 +1534,9 @@ DuplicateSLC( VIEW NewSLC BASED ON LOD mSubLC,
       FOR EACH PreviousSLC.S_DirectionsForUseStatement
          CREATE ENTITY NewSLC.S_DirectionsForUseStatement
          SetMatchingAttributesByName( NewSLC, "S_DirectionsForUseStatement", PreviousSLC, "S_DirectionsForUseStatement", zSET_NULL )
-         IF NewSLC.S_DirectionsForUseStatement.NotForUseType = ""
-            NewSLC.S_DirectionsForUseStatement.NotForUseType = "NA"
-         END
+      // IF NewSLC.S_DirectionsForUseStatement.NotForUseType = ""
+      //    NewSLC.S_DirectionsForUseStatement.NotForUseType = "NA"
+      // END
          INCLUDE NewSLC.M_DirectionsForUseStatement FROM PreviousSLC.M_DirectionsForUseStatement
 
          // UsageOrder entries
@@ -1625,9 +1625,9 @@ CopyDirsForUseStatements( VIEW NewSLC BASED ON LOD mSubLC,
       SetMatchingAttributesByName( NewSLC, "S_DirectionsForUseStatement",
                                    SrcMLC, "M_DirectionsForUseStatement", zSET_NULL )
       NewSLC.S_DirectionsForUseStatement.PrimaryMLC_ID = SrcMLC.M_DirectionsForUseStatement.ID
-      IF NewSLC.S_DirectionsForUseStatement.NotForUseType = ""
-         NewSLC.S_DirectionsForUseStatement.NotForUseType = "NA"
-      END
+   // IF NewSLC.S_DirectionsForUseStatement.NotForUseType = ""
+   //    NewSLC.S_DirectionsForUseStatement.NotForUseType = "NA"
+   // END
       FOR EACH SrcMLC.M_InsertTextKeywordDU
          CREATE ENTITY NewSLC.S_InsertTextKeywordDU
          SetMatchingAttributesByName( NewSLC, "S_InsertTextKeywordDU", SrcMLC, "M_InsertTextKeywordDU", zSET_NULL )
@@ -1867,39 +1867,6 @@ BuildSLC_FromMLC( VIEW NewSLC BASED ON LOD mSubLC,
    END
    */
 
-   // Add any Directions For Use Sections that aren't driven by Usage entries.
-   FOR EACH SrcMLC.M_DirectionsForUseCategory
-      CREATE ENTITY NewSLC.S_DirectionsForUseCategory
-      SetMatchingAttributesByName( NewSLC, "S_DirectionsForUseCategory", SrcMLC, "M_DirectionsForUseCategory", zSET_NULL )
-      FOR EACH SrcMLC.M_DirectionsForUseSection
-         IF SrcMLC.M_ClaimsDrivingUsage DOES NOT EXIST
-            // No Driving Usage entry exists, so always copy the section.
-            CopyDirsForUseSection( NewSLC, SrcMLC )
-         END
-      END
-   END
-
-   // Marketing Section
-   FOR EACH SrcMLC.M_MarketingSection
-      CREATE ENTITY NewSLC.S_MarketingSection
-      SetMatchingAttributesByName( NewSLC, "S_MarketingSection", SrcMLC, "M_MarketingSection", zSET_NULL )
-      NewSLC.S_MarketingSection.PrimaryMLC_ID = SrcMLC.M_MarketingSection.ID
-      FOR EACH SrcMLC.M_MarketingStatement
-         CREATE ENTITY NewSLC.S_MarketingStatement
-         SetMatchingAttributesByName( NewSLC, "S_MarketingStatement", SrcMLC, "M_MarketingStatement", zSET_NULL )
-         INCLUDE NewSLC.M_MarketingStatement FROM SrcMLC.M_MarketingStatement
-         NewSLC.S_MarketingStatement.PrimaryMLC_ID = SrcMLC.M_MarketingStatement.ID
-         FOR EACH SrcMLC.M_InsertTextKeywordMarketing
-            CREATE ENTITY NewSLC.S_InsertTextKeywordMarketing
-            SetMatchingAttributesByName( NewSLC, "S_InsertTextKeywordMarketing", SrcMLC, "M_InsertTextKeywordMarketing", zSET_NULL )
-            FOR EACH SrcMLC.M_InsertTextMarketing
-               CREATE ENTITY NewSLC.S_InsertTextMarketing
-               SetMatchingAttributesByName( NewSLC, "S_InsertTextMarketing", SrcMLC, "M_InsertTextMarketing", zSET_NULL )
-            END
-         END
-      END
-   END
-
    // Tables
    FOR EACH SrcMLC.M_MetaTable
       CREATE ENTITY NewSLC.S_MetaTable
@@ -1934,6 +1901,39 @@ BuildSLC_FromMLC( VIEW NewSLC BASED ON LOD mSubLC,
       CREATE ENTITY NewSLC.S_HumanHazardSection
       SetMatchingAttributesByName( NewSLC, "S_HumanHazardSection", SrcMLC, "M_HumanHazardSection", zSET_NULL )
       NewSLC.S_HumanHazardSection.PrimaryMLC_ID = SrcMLC.M_HumanHazardSection.ID
+   END
+
+   // Add any Directions For Use Sections that aren't driven by Usage entries.
+   FOR EACH SrcMLC.M_DirectionsForUseCategory
+      CREATE ENTITY NewSLC.S_DirectionsForUseCategory
+      SetMatchingAttributesByName( NewSLC, "S_DirectionsForUseCategory", SrcMLC, "M_DirectionsForUseCategory", zSET_NULL )
+      FOR EACH SrcMLC.M_DirectionsForUseSection
+         IF SrcMLC.M_ClaimsDrivingUsage DOES NOT EXIST
+            // No Driving Usage entry exists, so always copy the section.
+            CopyDirsForUseSection( NewSLC, SrcMLC )
+         END
+      END
+   END
+
+   // Marketing Section
+   FOR EACH SrcMLC.M_MarketingSection
+      CREATE ENTITY NewSLC.S_MarketingSection
+      SetMatchingAttributesByName( NewSLC, "S_MarketingSection", SrcMLC, "M_MarketingSection", zSET_NULL )
+      NewSLC.S_MarketingSection.PrimaryMLC_ID = SrcMLC.M_MarketingSection.ID
+      FOR EACH SrcMLC.M_MarketingStatement
+         CREATE ENTITY NewSLC.S_MarketingStatement
+         SetMatchingAttributesByName( NewSLC, "S_MarketingStatement", SrcMLC, "M_MarketingStatement", zSET_NULL )
+         INCLUDE NewSLC.M_MarketingStatement FROM SrcMLC.M_MarketingStatement
+         NewSLC.S_MarketingStatement.PrimaryMLC_ID = SrcMLC.M_MarketingStatement.ID
+         FOR EACH SrcMLC.M_InsertTextKeywordMarketing
+            CREATE ENTITY NewSLC.S_InsertTextKeywordMarketing
+            SetMatchingAttributesByName( NewSLC, "S_InsertTextKeywordMarketing", SrcMLC, "M_InsertTextKeywordMarketing", zSET_NULL )
+            FOR EACH SrcMLC.M_InsertTextMarketing
+               CREATE ENTITY NewSLC.S_InsertTextMarketing
+               SetMatchingAttributesByName( NewSLC, "S_InsertTextMarketing", SrcMLC, "M_InsertTextMarketing", zSET_NULL )
+            END
+         END
+      END
    END
 
 END

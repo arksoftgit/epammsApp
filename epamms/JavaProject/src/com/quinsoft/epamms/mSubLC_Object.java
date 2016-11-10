@@ -2398,14 +2398,9 @@ omSubLC_BuildNewSLC_Version( View     NewSLC,
             RESULT = CreateEntity( NewSLC, "S_DirectionsForUseStatement", zPOS_AFTER );
             //:SetMatchingAttributesByName( NewSLC, "S_DirectionsForUseStatement", SrcMLC, "M_DirectionsForUseStatement", zSET_NULL )
             SetMatchingAttributesByName( NewSLC, "S_DirectionsForUseStatement", SrcMLC, "M_DirectionsForUseStatement", zSET_NULL );
-            //:IF NewSLC.S_DirectionsForUseStatement.NotForUseType = ""
-            if ( CompareAttributeToString( NewSLC, "S_DirectionsForUseStatement", "NotForUseType", "" ) == 0 )
-            { 
-               //:NewSLC.S_DirectionsForUseStatement.NotForUseType = "NA"
-               SetAttributeFromString( NewSLC, "S_DirectionsForUseStatement", "NotForUseType", "NA" );
-            } 
-
-            //:END
+            //:// IF NewSLC.S_DirectionsForUseStatement.NotForUseType = ""
+            //://    NewSLC.S_DirectionsForUseStatement.NotForUseType = "NA"
+            //:// END
             //:INCLUDE NewSLC.M_DirectionsForUseStatement FROM SrcMLC.M_DirectionsForUseStatement
             RESULT = IncludeSubobjectFromSubobject( NewSLC, "M_DirectionsForUseStatement", SrcMLC, "M_DirectionsForUseStatement", zPOS_AFTER );
 
@@ -3010,14 +3005,9 @@ omSubLC_DuplicateSLC( View     NewSLC,
          RESULT = CreateEntity( NewSLC, "S_DirectionsForUseStatement", zPOS_AFTER );
          //:SetMatchingAttributesByName( NewSLC, "S_DirectionsForUseStatement", PreviousSLC, "S_DirectionsForUseStatement", zSET_NULL )
          SetMatchingAttributesByName( NewSLC, "S_DirectionsForUseStatement", PreviousSLC, "S_DirectionsForUseStatement", zSET_NULL );
-         //:IF NewSLC.S_DirectionsForUseStatement.NotForUseType = ""
-         if ( CompareAttributeToString( NewSLC, "S_DirectionsForUseStatement", "NotForUseType", "" ) == 0 )
-         { 
-            //:NewSLC.S_DirectionsForUseStatement.NotForUseType = "NA"
-            SetAttributeFromString( NewSLC, "S_DirectionsForUseStatement", "NotForUseType", "NA" );
-         } 
-
-         //:END
+         //:// IF NewSLC.S_DirectionsForUseStatement.NotForUseType = ""
+         //://    NewSLC.S_DirectionsForUseStatement.NotForUseType = "NA"
+         //:// END
          //:INCLUDE NewSLC.M_DirectionsForUseStatement FROM PreviousSLC.M_DirectionsForUseStatement
          RESULT = IncludeSubobjectFromSubobject( NewSLC, "M_DirectionsForUseStatement", PreviousSLC, "M_DirectionsForUseStatement", zPOS_AFTER );
 
@@ -3635,94 +3625,6 @@ omSubLC_BuildSLC_FromMLC( View     NewSLC,
    //:END
    //:*/
 
-   //:// Add any Directions For Use Sections that aren't driven by Usage entries.
-   //:FOR EACH SrcMLC.M_DirectionsForUseCategory
-   RESULT = SetCursorFirstEntity( SrcMLC, "M_DirectionsForUseCategory", "" );
-   while ( RESULT > zCURSOR_UNCHANGED )
-   { 
-      //:CREATE ENTITY NewSLC.S_DirectionsForUseCategory
-      RESULT = CreateEntity( NewSLC, "S_DirectionsForUseCategory", zPOS_AFTER );
-      //:SetMatchingAttributesByName( NewSLC, "S_DirectionsForUseCategory", SrcMLC, "M_DirectionsForUseCategory", zSET_NULL )
-      SetMatchingAttributesByName( NewSLC, "S_DirectionsForUseCategory", SrcMLC, "M_DirectionsForUseCategory", zSET_NULL );
-      //:FOR EACH SrcMLC.M_DirectionsForUseSection
-      RESULT = SetCursorFirstEntity( SrcMLC, "M_DirectionsForUseSection", "" );
-      while ( RESULT > zCURSOR_UNCHANGED )
-      { 
-         //:IF SrcMLC.M_ClaimsDrivingUsage DOES NOT EXIST
-         lTempInteger_1 = CheckExistenceOfEntity( SrcMLC, "M_ClaimsDrivingUsage" );
-         if ( lTempInteger_1 != 0 )
-         { 
-            //:// No Driving Usage entry exists, so always copy the section.
-            //:CopyDirsForUseSection( NewSLC, SrcMLC )
-            omSubLC_CopyDirsForUseSection( NewSLC, SrcMLC );
-         } 
-
-         RESULT = SetCursorNextEntity( SrcMLC, "M_DirectionsForUseSection", "" );
-         //:END
-      } 
-
-      RESULT = SetCursorNextEntity( SrcMLC, "M_DirectionsForUseCategory", "" );
-      //:END
-   } 
-
-   //:END
-
-   //:// Marketing Section
-   //:FOR EACH SrcMLC.M_MarketingSection
-   RESULT = SetCursorFirstEntity( SrcMLC, "M_MarketingSection", "" );
-   while ( RESULT > zCURSOR_UNCHANGED )
-   { 
-      //:CREATE ENTITY NewSLC.S_MarketingSection
-      RESULT = CreateEntity( NewSLC, "S_MarketingSection", zPOS_AFTER );
-      //:SetMatchingAttributesByName( NewSLC, "S_MarketingSection", SrcMLC, "M_MarketingSection", zSET_NULL )
-      SetMatchingAttributesByName( NewSLC, "S_MarketingSection", SrcMLC, "M_MarketingSection", zSET_NULL );
-      //:NewSLC.S_MarketingSection.PrimaryMLC_ID = SrcMLC.M_MarketingSection.ID
-      SetAttributeFromAttribute( NewSLC, "S_MarketingSection", "PrimaryMLC_ID", SrcMLC, "M_MarketingSection", "ID" );
-      //:FOR EACH SrcMLC.M_MarketingStatement
-      RESULT = SetCursorFirstEntity( SrcMLC, "M_MarketingStatement", "" );
-      while ( RESULT > zCURSOR_UNCHANGED )
-      { 
-         //:CREATE ENTITY NewSLC.S_MarketingStatement
-         RESULT = CreateEntity( NewSLC, "S_MarketingStatement", zPOS_AFTER );
-         //:SetMatchingAttributesByName( NewSLC, "S_MarketingStatement", SrcMLC, "M_MarketingStatement", zSET_NULL )
-         SetMatchingAttributesByName( NewSLC, "S_MarketingStatement", SrcMLC, "M_MarketingStatement", zSET_NULL );
-         //:INCLUDE NewSLC.M_MarketingStatement FROM SrcMLC.M_MarketingStatement
-         RESULT = IncludeSubobjectFromSubobject( NewSLC, "M_MarketingStatement", SrcMLC, "M_MarketingStatement", zPOS_AFTER );
-         //:NewSLC.S_MarketingStatement.PrimaryMLC_ID = SrcMLC.M_MarketingStatement.ID
-         SetAttributeFromAttribute( NewSLC, "S_MarketingStatement", "PrimaryMLC_ID", SrcMLC, "M_MarketingStatement", "ID" );
-         //:FOR EACH SrcMLC.M_InsertTextKeywordMarketing
-         RESULT = SetCursorFirstEntity( SrcMLC, "M_InsertTextKeywordMarketing", "" );
-         while ( RESULT > zCURSOR_UNCHANGED )
-         { 
-            //:CREATE ENTITY NewSLC.S_InsertTextKeywordMarketing
-            RESULT = CreateEntity( NewSLC, "S_InsertTextKeywordMarketing", zPOS_AFTER );
-            //:SetMatchingAttributesByName( NewSLC, "S_InsertTextKeywordMarketing", SrcMLC, "M_InsertTextKeywordMarketing", zSET_NULL )
-            SetMatchingAttributesByName( NewSLC, "S_InsertTextKeywordMarketing", SrcMLC, "M_InsertTextKeywordMarketing", zSET_NULL );
-            //:FOR EACH SrcMLC.M_InsertTextMarketing
-            RESULT = SetCursorFirstEntity( SrcMLC, "M_InsertTextMarketing", "" );
-            while ( RESULT > zCURSOR_UNCHANGED )
-            { 
-               //:CREATE ENTITY NewSLC.S_InsertTextMarketing
-               RESULT = CreateEntity( NewSLC, "S_InsertTextMarketing", zPOS_AFTER );
-               //:SetMatchingAttributesByName( NewSLC, "S_InsertTextMarketing", SrcMLC, "M_InsertTextMarketing", zSET_NULL )
-               SetMatchingAttributesByName( NewSLC, "S_InsertTextMarketing", SrcMLC, "M_InsertTextMarketing", zSET_NULL );
-               RESULT = SetCursorNextEntity( SrcMLC, "M_InsertTextMarketing", "" );
-            } 
-
-            RESULT = SetCursorNextEntity( SrcMLC, "M_InsertTextKeywordMarketing", "" );
-            //:END
-         } 
-
-         RESULT = SetCursorNextEntity( SrcMLC, "M_MarketingStatement", "" );
-         //:END
-      } 
-
-      RESULT = SetCursorNextEntity( SrcMLC, "M_MarketingSection", "" );
-      //:END
-   } 
-
-   //:END
-
    //:// Tables
    //:FOR EACH SrcMLC.M_MetaTable
    RESULT = SetCursorFirstEntity( SrcMLC, "M_MetaTable", "" );
@@ -3807,6 +3709,94 @@ omSubLC_BuildSLC_FromMLC( View     NewSLC,
       //:NewSLC.S_HumanHazardSection.PrimaryMLC_ID = SrcMLC.M_HumanHazardSection.ID
       SetAttributeFromAttribute( NewSLC, "S_HumanHazardSection", "PrimaryMLC_ID", SrcMLC, "M_HumanHazardSection", "ID" );
       RESULT = SetCursorNextEntity( SrcMLC, "M_HumanHazardSection", "" );
+   } 
+
+   //:END
+
+   //:// Add any Directions For Use Sections that aren't driven by Usage entries.
+   //:FOR EACH SrcMLC.M_DirectionsForUseCategory
+   RESULT = SetCursorFirstEntity( SrcMLC, "M_DirectionsForUseCategory", "" );
+   while ( RESULT > zCURSOR_UNCHANGED )
+   { 
+      //:CREATE ENTITY NewSLC.S_DirectionsForUseCategory
+      RESULT = CreateEntity( NewSLC, "S_DirectionsForUseCategory", zPOS_AFTER );
+      //:SetMatchingAttributesByName( NewSLC, "S_DirectionsForUseCategory", SrcMLC, "M_DirectionsForUseCategory", zSET_NULL )
+      SetMatchingAttributesByName( NewSLC, "S_DirectionsForUseCategory", SrcMLC, "M_DirectionsForUseCategory", zSET_NULL );
+      //:FOR EACH SrcMLC.M_DirectionsForUseSection
+      RESULT = SetCursorFirstEntity( SrcMLC, "M_DirectionsForUseSection", "" );
+      while ( RESULT > zCURSOR_UNCHANGED )
+      { 
+         //:IF SrcMLC.M_ClaimsDrivingUsage DOES NOT EXIST
+         lTempInteger_1 = CheckExistenceOfEntity( SrcMLC, "M_ClaimsDrivingUsage" );
+         if ( lTempInteger_1 != 0 )
+         { 
+            //:// No Driving Usage entry exists, so always copy the section.
+            //:CopyDirsForUseSection( NewSLC, SrcMLC )
+            omSubLC_CopyDirsForUseSection( NewSLC, SrcMLC );
+         } 
+
+         RESULT = SetCursorNextEntity( SrcMLC, "M_DirectionsForUseSection", "" );
+         //:END
+      } 
+
+      RESULT = SetCursorNextEntity( SrcMLC, "M_DirectionsForUseCategory", "" );
+      //:END
+   } 
+
+   //:END
+
+   //:// Marketing Section
+   //:FOR EACH SrcMLC.M_MarketingSection
+   RESULT = SetCursorFirstEntity( SrcMLC, "M_MarketingSection", "" );
+   while ( RESULT > zCURSOR_UNCHANGED )
+   { 
+      //:CREATE ENTITY NewSLC.S_MarketingSection
+      RESULT = CreateEntity( NewSLC, "S_MarketingSection", zPOS_AFTER );
+      //:SetMatchingAttributesByName( NewSLC, "S_MarketingSection", SrcMLC, "M_MarketingSection", zSET_NULL )
+      SetMatchingAttributesByName( NewSLC, "S_MarketingSection", SrcMLC, "M_MarketingSection", zSET_NULL );
+      //:NewSLC.S_MarketingSection.PrimaryMLC_ID = SrcMLC.M_MarketingSection.ID
+      SetAttributeFromAttribute( NewSLC, "S_MarketingSection", "PrimaryMLC_ID", SrcMLC, "M_MarketingSection", "ID" );
+      //:FOR EACH SrcMLC.M_MarketingStatement
+      RESULT = SetCursorFirstEntity( SrcMLC, "M_MarketingStatement", "" );
+      while ( RESULT > zCURSOR_UNCHANGED )
+      { 
+         //:CREATE ENTITY NewSLC.S_MarketingStatement
+         RESULT = CreateEntity( NewSLC, "S_MarketingStatement", zPOS_AFTER );
+         //:SetMatchingAttributesByName( NewSLC, "S_MarketingStatement", SrcMLC, "M_MarketingStatement", zSET_NULL )
+         SetMatchingAttributesByName( NewSLC, "S_MarketingStatement", SrcMLC, "M_MarketingStatement", zSET_NULL );
+         //:INCLUDE NewSLC.M_MarketingStatement FROM SrcMLC.M_MarketingStatement
+         RESULT = IncludeSubobjectFromSubobject( NewSLC, "M_MarketingStatement", SrcMLC, "M_MarketingStatement", zPOS_AFTER );
+         //:NewSLC.S_MarketingStatement.PrimaryMLC_ID = SrcMLC.M_MarketingStatement.ID
+         SetAttributeFromAttribute( NewSLC, "S_MarketingStatement", "PrimaryMLC_ID", SrcMLC, "M_MarketingStatement", "ID" );
+         //:FOR EACH SrcMLC.M_InsertTextKeywordMarketing
+         RESULT = SetCursorFirstEntity( SrcMLC, "M_InsertTextKeywordMarketing", "" );
+         while ( RESULT > zCURSOR_UNCHANGED )
+         { 
+            //:CREATE ENTITY NewSLC.S_InsertTextKeywordMarketing
+            RESULT = CreateEntity( NewSLC, "S_InsertTextKeywordMarketing", zPOS_AFTER );
+            //:SetMatchingAttributesByName( NewSLC, "S_InsertTextKeywordMarketing", SrcMLC, "M_InsertTextKeywordMarketing", zSET_NULL )
+            SetMatchingAttributesByName( NewSLC, "S_InsertTextKeywordMarketing", SrcMLC, "M_InsertTextKeywordMarketing", zSET_NULL );
+            //:FOR EACH SrcMLC.M_InsertTextMarketing
+            RESULT = SetCursorFirstEntity( SrcMLC, "M_InsertTextMarketing", "" );
+            while ( RESULT > zCURSOR_UNCHANGED )
+            { 
+               //:CREATE ENTITY NewSLC.S_InsertTextMarketing
+               RESULT = CreateEntity( NewSLC, "S_InsertTextMarketing", zPOS_AFTER );
+               //:SetMatchingAttributesByName( NewSLC, "S_InsertTextMarketing", SrcMLC, "M_InsertTextMarketing", zSET_NULL )
+               SetMatchingAttributesByName( NewSLC, "S_InsertTextMarketing", SrcMLC, "M_InsertTextMarketing", zSET_NULL );
+               RESULT = SetCursorNextEntity( SrcMLC, "M_InsertTextMarketing", "" );
+            } 
+
+            RESULT = SetCursorNextEntity( SrcMLC, "M_InsertTextKeywordMarketing", "" );
+            //:END
+         } 
+
+         RESULT = SetCursorNextEntity( SrcMLC, "M_MarketingStatement", "" );
+         //:END
+      } 
+
+      RESULT = SetCursorNextEntity( SrcMLC, "M_MarketingSection", "" );
+      //:END
    } 
 
    //:END
@@ -3948,14 +3938,9 @@ omSubLC_CopyDirsForUseStatements( View     NewSLC,
       SetMatchingAttributesByName( NewSLC, "S_DirectionsForUseStatement", SrcMLC, "M_DirectionsForUseStatement", zSET_NULL );
       //:NewSLC.S_DirectionsForUseStatement.PrimaryMLC_ID = SrcMLC.M_DirectionsForUseStatement.ID
       SetAttributeFromAttribute( NewSLC, "S_DirectionsForUseStatement", "PrimaryMLC_ID", SrcMLC, "M_DirectionsForUseStatement", "ID" );
-      //:IF NewSLC.S_DirectionsForUseStatement.NotForUseType = ""
-      if ( CompareAttributeToString( NewSLC, "S_DirectionsForUseStatement", "NotForUseType", "" ) == 0 )
-      { 
-         //:NewSLC.S_DirectionsForUseStatement.NotForUseType = "NA"
-         SetAttributeFromString( NewSLC, "S_DirectionsForUseStatement", "NotForUseType", "NA" );
-      } 
-
-      //:END
+      //:// IF NewSLC.S_DirectionsForUseStatement.NotForUseType = ""
+      //://    NewSLC.S_DirectionsForUseStatement.NotForUseType = "NA"
+      //:// END
       //:FOR EACH SrcMLC.M_InsertTextKeywordDU
       RESULT = SetCursorFirstEntity( SrcMLC, "M_InsertTextKeywordDU", "" );
       while ( RESULT > zCURSOR_UNCHANGED )

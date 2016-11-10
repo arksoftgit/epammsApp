@@ -2889,7 +2889,7 @@ BuildCompEntriesForMLC( VIEW mMasLC BASED ON LOD mMasLC )
    CREATE ENTITY mMasLC.CompositeComponentList
    mMasLC.CompositeComponentList.Type              = "M_HumanHazardSection"
    mMasLC.CompositeComponentList.SelectLevel       = 1
-   mMasLC.CompositeComponentList.DisplayType       = "Hazards"
+   mMasLC.CompositeComponentList.DisplayType       = "HumanHazard"
    mMasLC.CompositeComponentList.DisplayTypeIndent = "Hazards"
    mMasLC.CompositeComponentList.OriginalTypeID    = mMasLC.M_HumanHazardSection.ID
    mMasLC.CompositeComponentList.DisplayValue      = ""
@@ -3087,7 +3087,7 @@ BuildFullCompEntries( VIEW mMasLC BASED ON LOD mMasLC )
    // Hazards Section
    CREATE ENTITY mMasLC.CompositeComponentList
    mMasLC.CompositeComponentList.Type              = "M_HumanHazardSection"
-   mMasLC.CompositeComponentList.DisplayType       = "Hazards"
+   mMasLC.CompositeComponentList.DisplayType       = "HumanHazard"
    mMasLC.CompositeComponentList.OriginalTypeID    = mMasLC.M_HumanHazardSection.ID
    mMasLC.CompositeComponentList.DisplayValue      = ""
 

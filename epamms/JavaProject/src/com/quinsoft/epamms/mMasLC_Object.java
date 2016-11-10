@@ -4480,7 +4480,7 @@ omMasLC_BuildCompEntriesForMLC( View     mMasLC )
 //    CREATE ENTITY mMasLC.CompositeComponentList
 //    mMasLC.CompositeComponentList.Type              = "M_HumanHazardSection"
 //    mMasLC.CompositeComponentList.SelectLevel       = 1
-//    mMasLC.CompositeComponentList.DisplayType       = "Hazards"
+//    mMasLC.CompositeComponentList.DisplayType       = "HumanHazard"
 //    mMasLC.CompositeComponentList.DisplayTypeIndent = "Hazards"
 //    mMasLC.CompositeComponentList.OriginalTypeID    = mMasLC.M_HumanHazardSection.ID
 //    mMasLC.CompositeComponentList.DisplayValue      = ""
@@ -4838,8 +4838,8 @@ omMasLC_BuildFullCompEntries( View     mMasLC )
    RESULT = CreateEntity( mMasLC, "CompositeComponentList", zPOS_AFTER );
    //:mMasLC.CompositeComponentList.Type              = "M_HumanHazardSection"
    SetAttributeFromString( mMasLC, "CompositeComponentList", "Type", "M_HumanHazardSection" );
-   //:mMasLC.CompositeComponentList.DisplayType       = "Hazards"
-   SetAttributeFromString( mMasLC, "CompositeComponentList", "DisplayType", "Hazards" );
+   //:mMasLC.CompositeComponentList.DisplayType       = "HumanHazard"
+   SetAttributeFromString( mMasLC, "CompositeComponentList", "DisplayType", "HumanHazard" );
    //:mMasLC.CompositeComponentList.OriginalTypeID    = mMasLC.M_HumanHazardSection.ID
    SetAttributeFromAttribute( mMasLC, "CompositeComponentList", "OriginalTypeID", mMasLC, "M_HumanHazardSection", "ID" );
    //:mMasLC.CompositeComponentList.DisplayValue      = ""

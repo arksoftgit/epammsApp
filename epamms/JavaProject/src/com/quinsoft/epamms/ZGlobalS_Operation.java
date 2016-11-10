@@ -946,8 +946,8 @@ BuildCompEntriesForSPLD( View     mSPLDef )
    SetAttributeFromString( mSPLDef, "CompositeComponentList", "Type", "SPLD_HumanHazardSection" );
    //:mSPLDef.CompositeComponentList.SelectLevel        = 1
    SetAttributeFromInteger( mSPLDef, "CompositeComponentList", "SelectLevel", 1 );
-   //:mSPLDef.CompositeComponentList.DisplayType        = "Hazards"
-   SetAttributeFromString( mSPLDef, "CompositeComponentList", "DisplayType", "Hazards" );
+   //:mSPLDef.CompositeComponentList.DisplayType        = "HumanHazard"
+   SetAttributeFromString( mSPLDef, "CompositeComponentList", "DisplayType", "HumanHazard" );
    //:mSPLDef.CompositeComponentList.DisplayTypeIndent  = "Hazards"
    SetAttributeFromString( mSPLDef, "CompositeComponentList", "DisplayTypeIndent", "Hazards" );
    //:mSPLDef.CompositeComponentList.OriginalTypeID     = mSPLDef.SPLD_HumanHazardSection.ID

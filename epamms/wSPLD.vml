@@ -2225,11 +2225,11 @@ PrebuildBlockDefinitionUpdate( VIEW ViewToWindow )
    END
 
    IF szType != "Graphic" AND szType != "ProductName" AND szType != "NetContents" AND szType != "EPA_RegAndEstNbr"
-      // AND szType != "HumanHazard" AND szType != "FirstAid" AND szType != "PhysicalHazard" AND szType != "Precautionary"
+      // AND szType != "HumanHazard" AND szType != "FirstAid" AND szType != "EnvironmentalHazard" AND szType != "Precautionary"
       IF szSearch = ""
          IF szType = "Precautionary"
             szSearch = "P"
-         ELSE IF szType = "Hazards" OR szType = "HumanHazard" OR szType = "PhysicalHazard"
+         ELSE IF szType = "HumanHazard" OR szType = "EnvironmentalHazard"
             szSearch = "E"
          ELSE IF szType = "FirstAid"
             szSearch = "F"

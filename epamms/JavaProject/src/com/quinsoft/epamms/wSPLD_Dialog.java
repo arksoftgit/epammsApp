@@ -5106,7 +5106,7 @@ PrebuildBlockDefinitionUpdate( View     ViewToWindow )
    if ( ZeidonStringCompare( szType, 1, 0, "Graphic", 1, 0, 257 ) != 0 && ZeidonStringCompare( szType, 1, 0, "ProductName", 1, 0, 257 ) != 0 && ZeidonStringCompare( szType, 1, 0, "NetContents", 1, 0, 257 ) != 0 &&
         ZeidonStringCompare( szType, 1, 0, "EPA_RegAndEstNbr", 1, 0, 257 ) != 0 )
    { 
-      //:// AND szType != "HumanHazard" AND szType != "FirstAid" AND szType != "PhysicalHazard" AND szType != "Precautionary"
+      //:// AND szType != "HumanHazard" AND szType != "FirstAid" AND szType != "EnvironmentalHazard" AND szType != "Precautionary"
       //:IF szSearch = ""
       if ( ZeidonStringCompare( szSearch, 1, 0, "", 1, 0, 257 ) == 0 )
       { 
@@ -5121,11 +5121,11 @@ PrebuildBlockDefinitionUpdate( View     ViewToWindow )
                sb_szSearch = new StringBuilder( szSearch );
                         ZeidonStringCopy( sb_szSearch, 1, 0, "P", 1, 0, 257 );
             szSearch = sb_szSearch.toString( );}
-            //:ELSE IF szType = "Hazards" OR szType = "HumanHazard" OR szType = "PhysicalHazard"
+            //:ELSE IF szType = "HumanHazard" OR szType = "EnvironmentalHazard"
          } 
          else
          { 
-            if ( ZeidonStringCompare( szType, 1, 0, "Hazards", 1, 0, 257 ) == 0 || ZeidonStringCompare( szType, 1, 0, "HumanHazard", 1, 0, 257 ) == 0 || ZeidonStringCompare( szType, 1, 0, "PhysicalHazard", 1, 0, 257 ) == 0 )
+            if ( ZeidonStringCompare( szType, 1, 0, "HumanHazard", 1, 0, 257 ) == 0 || ZeidonStringCompare( szType, 1, 0, "EnvironmentalHazard", 1, 0, 257 ) == 0 )
             { 
                //:szSearch = "E"
                 {StringBuilder sb_szSearch;
