@@ -35,6 +35,7 @@ import com.quinsoft.epamms.lMLCATgt_Object;
 import com.quinsoft.epamms.ZGlobal1_Operation;
 
 import com.quinsoft.zeidon.zeidonoperations.ZDRVROPR;
+import com.quinsoft.zeidon.zeidonoperations.KZOEP1AA;
 
 /**
    @author QuinSoft
@@ -43,10 +44,12 @@ import com.quinsoft.zeidon.zeidonoperations.ZDRVROPR;
 public class wMLC_Dialog extends VmlDialog
 {
    private final ZDRVROPR m_ZDRVROPR;
+   private final KZOEP1AA m_KZOEP1AA;
    public wMLC_Dialog( View view )
    {
       super( view );
       m_ZDRVROPR = new ZDRVROPR( view );
+      m_KZOEP1AA = new KZOEP1AA( view );
    }
 
 
@@ -4736,9 +4739,11 @@ SaveMLC( View     ViewToWindow )
    zVIEW    mMasLC = new zVIEW( );
    //:VIEW wWebXfer REGISTERED AS wWebXfer
    zVIEW    wWebXfer = new zVIEW( );
-   //:STRING ( 1 ) szFound
+   //:STRING ( 1 )  szFound
    String   szFound = null;
-   //:INTEGER      MasProdID
+   //:STRING ( 18 ) szDateTime
+   String   szDateTime = null;
+   //:INTEGER       MasProdID
    int      MasProdID = 0;
    int      lTempInteger_0 = 0;
 
@@ -4812,18 +4817,29 @@ SaveMLC( View     ViewToWindow )
 
    //:END
 
+   //:SysGetDateTime( szDateTime )
+    {StringBuilder sb_szDateTime;
+   if ( szDateTime == null )
+      sb_szDateTime = new StringBuilder( 32 );
+   else
+      sb_szDateTime = new StringBuilder( szDateTime );
+      m_KZOEP1AA.SysGetDateTime( sb_szDateTime );
+   szDateTime = sb_szDateTime.toString( );}
    //:IF mMasLC.MasterLabelContent.Finalized = ""
    if ( CompareAttributeToString( mMasLC, "MasterLabelContent", "Finalized", "" ) == 0 )
    { 
       //:mMasLC.MasterLabelContent.Finalized = "W"
       SetAttributeFromString( mMasLC, "MasterLabelContent", "Finalized", "W" );
-      //:mMasLC.MasterLabelContent.CreatedDateTime = wWebXfer.Root.dCurrentDateTime
-      SetAttributeFromAttribute( mMasLC, "MasterLabelContent", "CreatedDateTime", wWebXfer, "Root", "dCurrentDateTime" );
-      //:mMasLC.MasterLabelContent.RevisionDate = wWebXfer.Root.dCurrentDateTime
-      SetAttributeFromAttribute( mMasLC, "MasterLabelContent", "RevisionDate", wWebXfer, "Root", "dCurrentDateTime" );
+      //:mMasLC.MasterLabelContent.CreatedDateTime = szDateTime // wWebXfer.Root.dCurrentDateTime
+      SetAttributeFromString( mMasLC, "MasterLabelContent", "CreatedDateTime", szDateTime );
    } 
 
    //:END
+   //:mMasLC.MasterLabelContent.RevisionDate = szDateTime // wWebXfer.Root.dCurrentDateTime
+   SetAttributeFromString( mMasLC, "MasterLabelContent", "RevisionDate", szDateTime );
+   //:mMasLC.MasterLabelContent.ModifiedDateTime = szDateTime // wWebXfer.Root.dCurrentDateTime
+   SetAttributeFromString( mMasLC, "MasterLabelContent", "ModifiedDateTime", szDateTime );
+
    //:IF mMasLC.MasterProduct DOES NOT EXIST
    lTempInteger_0 = CheckExistenceOfEntity( mMasLC, "MasterProduct" );
    if ( lTempInteger_0 != 0 )

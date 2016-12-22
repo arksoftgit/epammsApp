@@ -1,17 +1,18 @@
-z1000-Zeidon    TZAPDMAB TZDGSRCO 09/26/14   12:55:05 1.0a2    
+z1000-Zeidon    TZAPDMAB TZDGSRCO                         11/11/16   15:52:44 1.0a2   
 eDomainGroup 1
 aZKey      68568086
+aNextZKeyToAssign 68568186
 aName      TZAPDMAB
 aExtension C
 aLanguageType C
 aDomainAndGlobalOpGroupName TZAPDMAA
 
 eDomain    2
-aJavaClass com.quinsoft.zeidon.domains.DateDomain
 aZKey      68568090
 aName      Date
 aDesc      This domain manipulates the date portion of DateTime
 aDomainType A
+aJavaClass com.quinsoft.zeidon.domains.DateDomain
 aDataType  D
 aContextRestriction N
 
@@ -255,11 +256,11 @@ aType      M
 aReturnDataType N
 
 eDomain    2
-aJavaClass com.quinsoft.zeidon.domains.DateDomain
 aZKey      68568124
 aName      YearMonth
 aDesc      Year and Month of the form: YYYYMM
 aDomainType F
+aJavaClass com.quinsoft.zeidon.domains.DateDomain
 aDataType  S
 aMaxStringLth 6
 aContextRestriction N
@@ -271,10 +272,10 @@ aEditString 999999
 aIsDefault Y
 
 eDomain    2
-aJavaClass com.quinsoft.zeidon.domains.IntegerDomain
 aZKey      68568126
 aName      MonthDay
 aDomainType F
+aJavaClass com.quinsoft.zeidon.domains.IntegerDomain
 aDataType  S
 aMaxStringLth 4
 aContextRestriction N
@@ -286,11 +287,11 @@ aEditString 99/99
 aIsDefault Y
 
 eDomain    2
-aJavaClass com.quinsoft.zeidon.domains.DateDomain
 aZKey      68568128
 aName      ExpirationDate
 aDesc      Expiration Date on a Credit Card - mm/yy
 aDomainType A
+aJavaClass com.quinsoft.zeidon.domains.DateDomain
 aDataType  D
 aContextRestriction N
 
@@ -304,10 +305,10 @@ aDIL_Text  mm/dd/YYYY
 eSelectedOperation 3
 
 eDomain    2
-aJavaClass com.quinsoft.zeidon.domains.DateDomain
 aZKey      68568130
 aName      Time
 aDomainType A
+aJavaClass com.quinsoft.zeidon.domains.DateDomain
 aDataType  T
 aMaxStringLth 32
 aContextRestriction N
@@ -355,11 +356,11 @@ aType      M
 aReturnDataType N
 
 eDomain    2
-aJavaClass com.quinsoft.zeidon.domains.DateDomain
 aZKey      68568141
 aName      DateTime
 aDesc      Basic Timestamp Domain
 aDomainType A
+aJavaClass com.quinsoft.zeidon.domains.DateTimeDomain
 aDataType  T
 aMaxStringLth 20
 aContextRestriction N
@@ -615,11 +616,17 @@ aEditString YYYY-MM-DD
 aJavaEditString yyyy-MM-dd
 
 eContext   3
+aZKey      68568186
+aName      YYYY/MM/DD HH:MM:SS.S
+aEditString YYYY/mm/dd HH:MI:SS.9 AM
+aJavaEditString yyyyMMddHHmmssSSS
+aIsDefault Y
+
+eContext   3
 aZKey      68568167
 aName      YYYY/MM/DD HH:MM:SS.S AM
 aEditString YYYY/mm/dd HH:MI:SS.9 AM
 aJavaEditString yyyy/MM/dd HH:mm:ss:SSS aa
-aIsDefault Y
 
 eContext   3
 aZKey      68568184
@@ -641,6 +648,6 @@ eOperation 2
 eOperation 2
 
 i46        39
-i101       39
-i102       100
-i103       55
+i102       39
+i103       101
+i104       55

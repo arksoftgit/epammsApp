@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wStartUpProfile   Generate Timestamp: 20160620105931414 --%>
+<%-- wStartUpProfile   Generate Timestamp: 20161116135023906 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -75,6 +75,24 @@ public int DoInputMapping( HttpServletRequest request,
          iTableRowCnt++;
 
          csrRC = vGridTmp.cursor( "Color" ).setNextContinue( );
+      }
+
+      vGridTmp.drop( );
+      // Grid: Fonts
+      iTableRowCnt = 0;
+
+      // We are creating a temp view to the grid view so that if there are 
+      // grids on the same window with the same view we do not mess up the 
+      // entity positions. 
+      vGridTmp = mSubreg.newView( );
+      csrRC = vGridTmp.cursor( "Font" ).setFirst(  );
+      while ( csrRC.isSet() )
+      {
+         lEntityKey = vGridTmp.cursor( "Font" ).getEntityKey( );
+         strEntityKey = Long.toString( lEntityKey );
+         iTableRowCnt++;
+
+         csrRC = vGridTmp.cursor( "Font" ).setNextContinue( );
       }
 
       vGridTmp.drop( );
@@ -234,7 +252,7 @@ if ( strActionToProcess != null )
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "DeleteReusableBlock" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "AddNewFont" ) )
    {
       bDone = true;
       VmlOperation.SetZeidonSessionAttribute( session, task, "wStartUpProfile", strActionToProcess );
@@ -244,56 +262,8 @@ if ( strActionToProcess != null )
       if ( nRC < 0 )
          break;
 
-      // Position on the entity that was selected in the grid.
-      String strEntityKey = (String) request.getParameter( "zTableRowSelect" );
-      View mSubreg;
-      mSubreg = task.getViewByName( "mSubreg" );
-      if ( VmlOperation.isValid( mSubreg ) )
-      {
-         lEKey = java.lang.Long.parseLong( strEntityKey );
-         csrRC = mSubreg.cursor( "ReusableBlockDefinition" ).setByEntityKey( lEKey );
-         if ( !csrRC.isSet() )
-         {
-            boolean bFound = false;
-            csrRCk = mSubreg.cursor( "ReusableBlockDefinition" ).setFirst( );
-            while ( csrRCk.isSet() && !bFound )
-            {
-               lEKey = mSubreg.cursor( "ReusableBlockDefinition" ).getEntityKey( );
-               strKey = Long.toString( lEKey );
-               if ( StringUtils.equals( strKey, strEntityKey ) )
-               {
-                  // Stop while loop because we have positioned on the correct entity.
-                  bFound = true;
-               }
-               else
-                  csrRCk = mSubreg.cursor( "ReusableBlockDefinition" ).setNextContinue( );
-            } // Grid
-         }
-      }
-
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpProfile", "wStartUp.DeleteReusableBlock" );
-      nOptRC = wStartUp.DeleteReusableBlock( new zVIEW( vKZXMLPGO ) );
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wStartUp.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wStartUp.SetWebRedirection( vKZXMLPGO, wStartUp.zWAB_StayOnWindowWithRefresh, "", "" );
-      }
-
+      // Next Window
+      strNextJSP_Name = wStartUp.SetWebRedirection( vKZXMLPGO, wStartUp.zWAB_StartModalSubwindow, "wStartUp", "SubregFontAdd" );
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
@@ -335,6 +305,131 @@ if ( strActionToProcess != null )
       nRC = 0;
       VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpProfile", "wStartUp.DeleteColor" );
       nOptRC = wStartUp.DeleteColor( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wStartUp.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wStartUp.SetWebRedirection( vKZXMLPGO, wStartUp.zWAB_StayOnWindowWithRefresh, "", "" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "DeleteFont" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wStartUpProfile", strActionToProcess );
+
+      // Position on the entity that was selected in the grid.
+      String strEntityKey = (String) request.getParameter( "zTableRowSelect" );
+      View mSubreg;
+      mSubreg = task.getViewByName( "mSubreg" );
+      if ( VmlOperation.isValid( mSubreg ) )
+      {
+         lEKey = java.lang.Long.parseLong( strEntityKey );
+         csrRC = mSubreg.cursor( "Font" ).setByEntityKey( lEKey );
+         if ( !csrRC.isSet() )
+         {
+            boolean bFound = false;
+            csrRCk = mSubreg.cursor( "Font" ).setFirst( );
+            while ( csrRCk.isSet() && !bFound )
+            {
+               lEKey = mSubreg.cursor( "Font" ).getEntityKey( );
+               strKey = Long.toString( lEKey );
+               if ( StringUtils.equals( strKey, strEntityKey ) )
+               {
+                  // Stop while loop because we have positioned on the correct entity.
+                  bFound = true;
+               }
+               else
+                  csrRCk = mSubreg.cursor( "Font" ).setNextContinue( );
+            } // Grid
+         }
+      }
+
+      // Action Operation
+      nRC = 0;
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpProfile", "wStartUp.DeleteFont" );
+      nOptRC = wStartUp.DeleteFont( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wStartUp.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wStartUp.SetWebRedirection( vKZXMLPGO, wStartUp.zWAB_StayOnWindowWithRefresh, "", "" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "DeleteReusableBlock" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wStartUpProfile", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Position on the entity that was selected in the grid.
+      String strEntityKey = (String) request.getParameter( "zTableRowSelect" );
+      View mSubreg;
+      mSubreg = task.getViewByName( "mSubreg" );
+      if ( VmlOperation.isValid( mSubreg ) )
+      {
+         lEKey = java.lang.Long.parseLong( strEntityKey );
+         csrRC = mSubreg.cursor( "ReusableBlockDefinition" ).setByEntityKey( lEKey );
+         if ( !csrRC.isSet() )
+         {
+            boolean bFound = false;
+            csrRCk = mSubreg.cursor( "ReusableBlockDefinition" ).setFirst( );
+            while ( csrRCk.isSet() && !bFound )
+            {
+               lEKey = mSubreg.cursor( "ReusableBlockDefinition" ).getEntityKey( );
+               strKey = Long.toString( lEKey );
+               if ( StringUtils.equals( strKey, strEntityKey ) )
+               {
+                  // Stop while loop because we have positioned on the correct entity.
+                  bFound = true;
+               }
+               else
+                  csrRCk = mSubreg.cursor( "ReusableBlockDefinition" ).setNextContinue( );
+            } // Grid
+         }
+      }
+
+      // Action Operation
+      nRC = 0;
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpProfile", "wStartUp.DeleteReusableBlock" );
+      nOptRC = wStartUp.DeleteReusableBlock( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -455,6 +550,71 @@ if ( strActionToProcess != null )
       {
          // Next Window
          strNextJSP_Name = wStartUp.SetWebRedirection( vKZXMLPGO, wStartUp.zWAB_StartModalSubwindow, "wStartUp", "SubregColorUpdate" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "UpdateFont" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wStartUpProfile", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Position on the entity that was selected in the grid.
+      String strEntityKey = (String) request.getParameter( "zTableRowSelect" );
+      View mSubreg;
+      mSubreg = task.getViewByName( "mSubreg" );
+      if ( VmlOperation.isValid( mSubreg ) )
+      {
+         lEKey = java.lang.Long.parseLong( strEntityKey );
+         csrRC = mSubreg.cursor( "Font" ).setByEntityKey( lEKey );
+         if ( !csrRC.isSet() )
+         {
+            boolean bFound = false;
+            csrRCk = mSubreg.cursor( "Font" ).setFirst( );
+            while ( csrRCk.isSet() && !bFound )
+            {
+               lEKey = mSubreg.cursor( "Font" ).getEntityKey( );
+               strKey = Long.toString( lEKey );
+               if ( StringUtils.equals( strKey, strEntityKey ) )
+               {
+                  // Stop while loop because we have positioned on the correct entity.
+                  bFound = true;
+               }
+               else
+                  csrRCk = mSubreg.cursor( "Font" ).setNextContinue( );
+            } // Grid
+         }
+      }
+
+      // Action Operation
+      nRC = 0;
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpProfile", "wStartUp.UpdateFont" );
+      nOptRC = wStartUp.UpdateFont( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wStartUp.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wStartUp.SetWebRedirection( vKZXMLPGO, wStartUp.zWAB_StartModalSubwindow, "wStartUp", "SubregFontUpdate" );
       }
 
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -693,6 +853,8 @@ else
 <%@ include file="./include/timeout.inc" %>
 <link rel="stylesheet" type="text/css" href="./css/print.css" media="print" />
 <script language="JavaScript" type="text/javascript" src="./js/common.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/css.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/sts.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
@@ -700,7 +862,12 @@ else
 
 </head>
 
-<body onLoad="_AfterPageLoaded( )" onSubmit="_DisableFormElements( true )" onBeforeUnload="_BeforePageUnload( )">
+<!-- 
+// If we have table sorting on this page, the table sorting does not work in Firefox 
+// (seems to work in IE and Opera).  The solution is to not call _AfterPageLoaded in OnLoad event. 
+// In the Standardista code (sts.js) there is an addEvent that will call _AfterPageLoaded. 
+--> 
+<body onSubmit="_DisableFormElements( true )" onBeforeUnload="_BeforePageUnload( )">
 
 <%@ include file="./include/pagebackground.inc" %>  <!-- just temporary until we get the painter dialog updates from Kelly ... 2011.10.08 dks -->
 
@@ -870,9 +1037,8 @@ else
 <div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
 <% /* ColorList:GroupBox */ %>
 
-<div id="ColorList" name="ColorList" style="width:814px;height:264px;float:left;">  <!-- ColorList --> 
+<div id="ColorList" name="ColorList" style="width:814px;float:left;">  <!-- ColorList --> 
 
-<div  id="ColorList" name="ColorList" >Color List</div>
 
  <!-- This is added as a line spacer -->
 <div style="height:20px;width:100px;"></div>
@@ -900,9 +1066,9 @@ else
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:30px;float:left;"></div>   <!-- Width Spacer -->
 <% /* Colors:Grid */ %>
-<table  cols=5 style=""  name="Colors" id="Colors">
+<table class="sortable"  cols=5 style=""  name="Colors" id="Colors">
 
-<thead><tr>
+<thead bgcolor=green><tr>
 
    <th>Name</th>
    <th>RGB (Hex)</th>
@@ -1018,7 +1184,128 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 
 
  <!-- This is added as a line spacer -->
-<div style="height:22px;width:100px;"></div>
+<div style="height:6px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
+<% /* FontList:GroupBox */ %>
+
+<div id="FontList" name="FontList" style="width:814px;float:left;">  <!-- FontList --> 
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:20px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:138px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GroupBox3:GroupBox */ %>
+
+<div id="GroupBox3" name="GroupBox3" style="width:192px;height:30px;float:left;">  <!-- GroupBox3 --> 
+
+
+</div>  <!--  GroupBox3 --> 
+<span style="height:30px;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
+<% /* NewFont:PushBtn */ %>
+<button type="button" name="NewFont" id="NewFont" value="" onclick="AddNewFont( )" style="width:82px;height:30px;">New</button>
+
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:10px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:30px;float:left;"></div>   <!-- Width Spacer -->
+<% /* Fonts:Grid */ %>
+<table class="sortable"  cols=3 style=""  name="Fonts" id="Fonts">
+
+<thead bgcolor=green><tr>
+
+   <th>Name</th>
+   <th>Update</th>
+   <th>Delete</th>
+
+</tr></thead>
+
+<tbody>
+
+<%
+try
+{
+   iTableRowCnt = 0;
+   mSubreg = task.getViewByName( "mSubreg" );
+   if ( VmlOperation.isValid( mSubreg ) )
+   {
+      long   lEntityKey;
+      String strEntityKey;
+      String strButtonName;
+      String strOdd;
+      String strTag;
+      String strFontName;
+      String strBMBUpdateFont;
+      String strBMBDeleteFont;
+      
+      View vFonts;
+      vFonts = mSubreg.newView( );
+      csrRC2 = vFonts.cursor( "Font" ).setFirst(  );
+      while ( csrRC2.isSet() )
+      {
+         strOdd = (iTableRowCnt % 2) != 0 ? " class='odd'" : "";
+         iTableRowCnt++;
+
+         lEntityKey = vFonts.cursor( "Font" ).getEntityKey( );
+         strEntityKey = Long.toString( lEntityKey );
+         strFontName = "";
+         nRC = vFonts.cursor( "Font" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            strFontName = vFonts.cursor( "Font" ).getAttribute( "Name" ).getString( "" );
+
+            if ( strFontName == null )
+               strFontName = "";
+         }
+
+         if ( StringUtils.isBlank( strFontName ) )
+            strFontName = "&nbsp";
+
+%>
+
+<tr<%=strOdd%>>
+
+   <td nowrap><a href="#" onclick="UpdateFont( this.id )" id="FontName::<%=strEntityKey%>"><%=strFontName%></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateFont" onclick="UpdateFont( this.id )" id="BMBUpdateFont::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteFont" onclick="DeleteFont( this.id )" id="BMBDeleteFont::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
+
+</tr>
+
+<%
+         csrRC2 = vFonts.cursor( "Font" ).setNextContinue( );
+      }
+      vFonts.drop( );
+   }
+}
+catch (Exception e)
+{
+out.println("There is an error in grid: " + e.getMessage());
+task.log().info( "*** Error in grid" + e.getMessage() );
+}
+%>
+</tbody>
+</table>
+
+</div>  <!-- End of a new line -->
+
+
+</div>  <!--  FontList --> 
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:8px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
@@ -1026,7 +1313,6 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 
 <div id="ReusableBlockList" name="ReusableBlockList" style="width:814px;height:264px;float:left;">  <!-- ReusableBlockList --> 
 
-<div  id="ReusableBlockList" name="ReusableBlockList" >Reusable Blocks</div>
 
  <!-- This is added as a line spacer -->
 <div style="height:20px;width:100px;"></div>
@@ -1050,9 +1336,9 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:30px;float:left;"></div>   <!-- Width Spacer -->
 <% /* ReusableBlocks:Grid */ %>
-<table  cols=5 style=""  name="ReusableBlocks" id="ReusableBlocks">
+<table class="sortable"  cols=5 style=""  name="ReusableBlocks" id="ReusableBlocks">
 
-<thead><tr>
+<thead bgcolor=green><tr>
 
    <th>Name</th>
    <th>Description</th>

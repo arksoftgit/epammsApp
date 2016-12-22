@@ -1,6 +1,7 @@
-z1000-Zeidon    MEPA     TZZOLODO                         09/20/16   15:22:58 1.0a2   
+z1000-Zeidon    MEPA     TZZOLODO                         11/18/16   15:02:17 1.0a2   
 eLOD       1
 aZKey      1178878
+aNextZKeyToAssign 110002360
 aName      mEPA
 aDesc      EPA statements and definitions
 
@@ -85,7 +86,7 @@ aZKey      2344470
 aPurpose   F
 aDesc      Double Brace{{ ... }} enclosed replacable keyword:  Usage, Claim, Surface, Location, ApplicationType
 aER_DiagramPosX 17
-aER_DiagramPosY 18
+aER_DiagramPosY 15
 
 eER_RelLinkRec 4
 aName      has
@@ -100,11 +101,11 @@ eER_RelTypeRec 5
 aZKey      2344471
 aFact      Added thru ER Dialog
 aER_DiagramBendPosX 8
-aER_DiagramBendPosY 20
+aER_DiagramBendPosY 17
 aER_DiagramE1PosX 8
 aER_DiagramE1PosY 15
 aER_DiagramE2PosX 16
-aER_DiagramE2PosY 20
+aER_DiagramE2PosY 17
 
 eLOD_EntityChild 3
 aName      EPA_ChemicalFamily
@@ -212,8 +213,8 @@ eER_EntityRec 5
 aName      EPA_StorageDisposal
 aZKey      1178416
 aPurpose   F
-aER_DiagramPosX 3
-aER_DiagramPosY 55
+aER_DiagramPosX 1
+aER_DiagramPosY 61
 
 eER_RelLinkRec 5
 aName      has
@@ -229,10 +230,10 @@ aZKey      1178445
 aFact      Added thru ER Dialog
 aER_DiagramBendPosX 0
 aER_DiagramBendPosY 0
-aER_DiagramE1PosX 3
-aER_DiagramE1PosY 37
-aER_DiagramE2PosX 3
-aER_DiagramE2PosY 54
+aER_DiagramE1PosX 1
+aER_DiagramE1PosY 45
+aER_DiagramE2PosX 1
+aER_DiagramE2PosY 60
 
 eLOD_EntityChild 4
 aName      EPA_Location
@@ -299,7 +300,7 @@ aName      EPA_Location
 aZKey      1178451
 aPurpose   F
 aER_DiagramPosX 17
-aER_DiagramPosY 27
+aER_DiagramPosY 31
 
 eER_RelLinkRec 5
 aName      has
@@ -313,12 +314,12 @@ aTE_NoForeignKeyPrefix N
 eER_RelTypeRec 6
 aZKey      1178452
 aFact      Added thru ER Dialog
-aER_DiagramBendPosX 7
-aER_DiagramBendPosY 29
-aER_DiagramE1PosX 7
-aER_DiagramE1PosY 31
+aER_DiagramBendPosX 8
+aER_DiagramBendPosY 33
+aER_DiagramE1PosX 8
+aER_DiagramE1PosY 39
 aER_DiagramE2PosX 16
-aER_DiagramE2PosY 29
+aER_DiagramE2PosY 33
 
 eLOD_EntityChild 4
 aName      EPA_Surface
@@ -375,7 +376,7 @@ aName      EPA_Surface
 aZKey      1178458
 aPurpose   F
 aER_DiagramPosX 17
-aER_DiagramPosY 35
+aER_DiagramPosY 38
 
 eER_RelLinkRec 5
 aName      has
@@ -391,10 +392,10 @@ aZKey      1178459
 aFact      Added thru ER Dialog
 aER_DiagramBendPosX 0
 aER_DiagramBendPosY 0
-aER_DiagramE1PosX 12
-aER_DiagramE1PosY 35
+aER_DiagramE1PosX 10
+aER_DiagramE1PosY 42
 aER_DiagramE2PosX 16
-aER_DiagramE2PosY 35
+aER_DiagramE2PosY 42
 
 eLOD_EntityChild 4
 aName      EPA_ApplicationType
@@ -453,7 +454,7 @@ aZKey      2344453
 aPurpose   F
 aDesc      Disinfectant, Sanitizer, Fungicide, Virucide
 aER_DiagramPosX 17
-aER_DiagramPosY 42
+aER_DiagramPosY 45
 
 eER_RelLinkRec 5
 aName      has
@@ -467,12 +468,12 @@ aTE_NoForeignKeyPrefix N
 eER_RelTypeRec 6
 aZKey      2344458
 aFact      Added thru ER Dialog
-aER_DiagramBendPosX 7
-aER_DiagramBendPosY 44
-aER_DiagramE1PosX 7
-aER_DiagramE1PosY 37
+aER_DiagramBendPosX 5
+aER_DiagramBendPosY 47
+aER_DiagramE1PosX 5
+aER_DiagramE1PosY 45
 aER_DiagramE2PosX 16
-aER_DiagramE2PosY 44
+aER_DiagramE2PosY 47
 
 eLOD_EntityChild 4
 aName      EPA_Claim
@@ -624,7 +625,7 @@ aZKey      1178468
 aPurpose   F
 aDesc      Pathogens: Bacteria, Viruses, Fungi
 aER_DiagramPosX 17
-aER_DiagramPosY 49
+aER_DiagramPosY 52
 
 eER_RelLinkRec 5
 aName      has
@@ -638,12 +639,12 @@ aTE_NoForeignKeyPrefix N
 eER_RelTypeRec 6
 aZKey      1178469
 aFact      Added thru ER Dialog
-aER_DiagramBendPosX 5
-aER_DiagramBendPosY 51
-aER_DiagramE1PosX 5
-aER_DiagramE1PosY 37
+aER_DiagramBendPosX 3
+aER_DiagramBendPosY 54
+aER_DiagramE1PosX 3
+aER_DiagramE1PosY 45
 aER_DiagramE2PosX 16
-aER_DiagramE2PosY 51
+aER_DiagramE2PosY 54
 
 eLOD_AttributeRec 4
 aZKey      2348770
@@ -699,8 +700,8 @@ aName      EPA_ChemicalFamily
 aZKey      1178444
 aPurpose   F
 aDesc      Disinfectants, Pesticides, ...
-aER_DiagramPosX 3
-aER_DiagramPosY 32
+aER_DiagramPosX 1
+aER_DiagramPosY 40
 
 eER_RelLinkRec 4
 aName      has
@@ -719,7 +720,78 @@ aER_DiagramBendPosY 0
 aER_DiagramE1PosX 6
 aER_DiagramE1PosY 15
 aER_DiagramE2PosX 6
-aER_DiagramE2PosY 31
+aER_DiagramE2PosY 39
+
+eLOD_EntityChild 3
+aName      FootnoteSymbol
+aIndentName    FootnoteSymbol
+aIndentLvl 3
+aZKey      110002357
+aCreate    Y
+aDelete    Y
+aUpdate    Y
+aInclude   N
+aInclSrc   Y
+aExclude   N
+aRecursive N
+aDerived   N
+aParentDeleteBehave D
+aRelLinkIndicator L
+
+eLOD_AttributeRec 4
+aZKey      110002358
+
+eER_AttributeRec 5
+aName      ID
+aZKey      120387573
+aNotNull   Y
+aDesc      Generated ID
+
+eDomainRec 6
+
+eLOD_AttributeRec 4
+aZKey      110002359
+
+eER_AttributeRec 5
+aName      Text
+aZKey      120387574
+aNotNull   Y
+
+eDomainRec 6
+
+eLOD_AttributeRec 4
+aZKey      110002360
+
+eER_AttributeRec 5
+aName      Symbol
+aZKey      120387575
+aLth       2
+aNotNull   Y
+
+eDomainRec 6
+
+eER_EntityRec 4
+aName      FootnoteSymbol
+aZKey      120387569
+aPurpose   F
+aER_DiagramPosX 17
+aER_DiagramPosY 8
+
+eER_RelLinkRec 4
+aName      has
+aZKey      120387571
+aCardMin   0
+aCardMax   m
+
+eER_RelTypeRec 5
+aZKey      120387570
+aFact      Added thru ER Dialog
+aER_DiagramBendPosX 0
+aER_DiagramBendPosY 0
+aER_DiagramE1PosX 11
+aER_DiagramE1PosY 12
+aER_DiagramE2PosX 16
+aER_DiagramE2PosY 12
 
 eLOD_AttributeRec 3
 aZKey      2348764
@@ -1014,6 +1086,35 @@ eLOD_Entity 2
 
 eLOD_Entity 2
 
+eLOD_Entity 2
+
+eLOD_Attribute 3
+awkSequence 1
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 2
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 3
+
+eER_Attribute 4
+
+eDomain    5
+
+eER_Entity 3
+
+eER_RelLink 3
+
+eER_RelType 4
+
 ePOD       2
 aNAME      mEPA
 aZKey      2067530
@@ -1067,116 +1168,132 @@ i87        41
 i93        5
 i96        8
 i99        8
-i108       5
-i113       1
-i114       106
-i115       107
-i116       5
-i117       109
-i118       110
-i119       111
-i120       112
-i121       2
-i122       3
-i123       4
-i124       5
-i125       6
-i126       7
-i127       8
-i128       9
-i129       10
-i130       11
-i131       12
-i132       91
-i133       92
-i134       5
-i135       94
-i136       95
-i137       8
-i138       97
-i139       98
+i109       5
+i112       8
+i115       8
+i121       5
+i126       1
+i127       119
+i128       120
+i129       5
+i130       122
+i131       123
+i132       124
+i133       125
+i134       2
+i135       3
+i136       4
+i137       5
+i138       6
+i139       7
 i140       8
-i141       100
-i142       101
-i143       102
-i144       103
-i145       104
-i146       105
-i147       13
-i148       14
-i149       15
-i150       5
-i151       17
-i152       18
-i153       19
-i154       20
-i155       21
-i156       19
-i157       23
-i158       24
-i159       25
-i160       26
-i161       27
-i162       8
-i163       29
-i164       30
-i165       31
-i166       32
-i167       33
-i168       34
-i169       5
-i170       36
-i171       37
-i172       8
-i173       39
-i174       40
-i175       41
-i176       42
-i177       43
-i178       44
-i179       45
-i180       46
-i181       47
+i141       9
+i142       10
+i143       11
+i144       12
+i145       91
+i146       92
+i147       5
+i148       94
+i149       95
+i150       8
+i151       97
+i152       98
+i153       8
+i154       100
+i155       101
+i156       102
+i157       103
+i158       104
+i159       105
+i160       13
+i161       14
+i162       15
+i163       5
+i164       17
+i165       18
+i166       19
+i167       20
+i168       21
+i169       19
+i170       23
+i171       24
+i172       25
+i173       26
+i174       27
+i175       8
+i176       29
+i177       30
+i178       31
+i179       32
+i180       33
+i181       34
 i182       5
-i183       49
-i184       50
+i183       36
+i184       37
 i185       8
-i186       52
-i187       53
+i186       39
+i187       40
 i188       41
-i189       55
-i190       56
-i191       57
-i192       58
-i193       59
-i194       60
+i189       42
+i190       43
+i191       44
+i192       45
+i193       46
+i194       47
 i195       5
-i196       62
-i197       63
+i196       49
+i197       50
 i198       8
-i199       65
-i200       66
+i199       52
+i200       53
 i201       41
-i202       68
-i203       69
-i204       70
-i205       71
-i206       76
-i207       77
+i202       55
+i203       56
+i204       57
+i205       58
+i206       59
+i207       60
 i208       5
-i209       79
-i210       80
-i211       81
-i212       82
-i213       83
-i214       8
-i215       85
-i216       86
-i217       41
-i218       88
-i219       89
-i220       90
-i221       72
-i222       73
-i223       74
-i224       75
+i209       62
+i210       63
+i211       8
+i212       65
+i213       66
+i214       41
+i215       68
+i216       69
+i217       70
+i218       71
+i219       76
+i220       77
+i221       5
+i222       79
+i223       80
+i224       81
+i225       82
+i226       83
+i227       8
+i228       85
+i229       86
+i230       41
+i231       88
+i232       89
+i233       90
+i234       72
+i235       73
+i236       74
+i237       75
+i238       106
+i239       107
+i240       108
+i241       5
+i242       110
+i243       111
+i244       8
+i245       113
+i246       114
+i247       8
+i248       116
+i249       117
+i250       118

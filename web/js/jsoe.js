@@ -1321,3 +1321,4 @@ newObject = Object.create(oldObject);
 //var storageSession = window.sessionStorage;
 var g_LodMap = new SimpleHashMap( "string", "object" );
 var g_ViewNameMap = new ZeidonViewNames();
+

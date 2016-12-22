@@ -1,4 +1,4 @@
-z1000-Zeidon    EPAMMS   TZCMLPLO                         11/10/16   12:43:28 1.0a2   
+z1000-Zeidon    EPAMMS   TZCMLPLO                         12/21/16   11:20:58 1.0a2   
 eLPLR      1
 aName      epamms
 aDesc      ePamms Application
@@ -6,8 +6,8 @@ aZKey      4324720
 aPgmSrcDir %kzd%:\lplr\epamms
 aExecDir   %kzd%:\lplr\epamms\bin
 aMetaSrcDir %kzd%:\lplr\epamms
-aTaskUseCount 0
-aLastBuildDate 20161108154808838
+aTaskUseCount 1
+aLastBuildDate 20161118150449528
 aLPLR_Type 2
 aCurrentCompilerSpec DKS
 aTempDesc  ePamms Application
@@ -134,6 +134,12 @@ aCPLR_ZKey 89816522
 aStatus    1
 aUpdateInd 2
 aName      ConvertExternalValueOfAttribute
+
+eW_MetaDef 3
+aCPLR_ZKey 110040719
+aStatus    1
+aUpdateInd 2
+aName      ConvertHtmlEntities
 
 eW_MetaDef 3
 aCPLR_ZKey 89816453
@@ -601,42 +607,42 @@ aCPLR_ZKey 68568090
 aStatus    1
 aUpdateInd 2
 aName      Date
-aLastUpdateDate 20140926165506000
+aLastUpdateDate 20161111224151548
 
 eW_MetaDef 3
 aCPLR_ZKey 68568124
 aStatus    1
 aUpdateInd 2
 aName      YearMonth
-aLastUpdateDate 20140926165506000
+aLastUpdateDate 20161111224151548
 
 eW_MetaDef 3
 aCPLR_ZKey 68568126
 aStatus    1
 aUpdateInd 2
 aName      MonthDay
-aLastUpdateDate 20140926165506000
+aLastUpdateDate 20161111224151548
 
 eW_MetaDef 3
 aCPLR_ZKey 68568128
 aStatus    1
 aUpdateInd 2
 aName      ExpirationDate
-aLastUpdateDate 20140926165506000
+aLastUpdateDate 20161111224151548
 
 eW_MetaDef 3
 aCPLR_ZKey 68568130
 aStatus    1
 aUpdateInd 2
 aName      Time
-aLastUpdateDate 20140926165506000
+aLastUpdateDate 20161111224151548
 
 eW_MetaDef 3
 aCPLR_ZKey 68568141
 aStatus    1
 aUpdateInd 2
 aName      DateTime
-aLastUpdateDate 20140926165506000
+aLastUpdateDate 20161111224151548
 
 eW_MetaDef 3
 aCPLR_ZKey 68568073
@@ -790,91 +796,91 @@ aCPLR_ZKey 69081340
 aStatus    1
 aUpdateInd 2
 aName      TemplateTitlePosition
-aLastUpdateDate 20161031183815412
+aLastUpdateDate 20161116195937500
 
 eW_MetaDef 3
 aCPLR_ZKey 120154151
 aStatus    1
 aUpdateInd 2
 aName      ContinuationBreakFlag
-aLastUpdateDate 20161031183815412
+aLastUpdateDate 20161116195937500
 
 eW_MetaDef 3
 aCPLR_ZKey 120150076
 aStatus    1
 aUpdateInd 2
 aName      LLD_ColumnListType
-aLastUpdateDate 20161031183815412
+aLastUpdateDate 20161116195937500
 
 eW_MetaDef 3
 aCPLR_ZKey 120129882
 aStatus    1
 aUpdateInd 2
 aName      SelectUsageType
-aLastUpdateDate 20161031183815412
+aLastUpdateDate 20161116195937500
 
 eW_MetaDef 3
 aCPLR_ZKey 4322672
 aStatus    1
 aUpdateInd 2
 aName      TextAlign
-aLastUpdateDate 20161031183815412
+aLastUpdateDate 20161116195937500
 
 eW_MetaDef 3
 aCPLR_ZKey 4322656
 aStatus    1
 aUpdateInd 2
 aName      FontSize
-aLastUpdateDate 20161031183815412
+aLastUpdateDate 20161116195937500
 
 eW_MetaDef 3
 aCPLR_ZKey 4322651
 aStatus    1
 aUpdateInd 2
 aName      FontWeight
-aLastUpdateDate 20161031183815412
+aLastUpdateDate 20161116195937500
 
 eW_MetaDef 3
 aCPLR_ZKey 4322644
 aStatus    1
 aUpdateInd 2
 aName      FontFamily
-aLastUpdateDate 20161031183815412
+aLastUpdateDate 20161116195937500
 
 eW_MetaDef 3
 aCPLR_ZKey 4322642
 aStatus    1
 aUpdateInd 2
 aName      Color
-aLastUpdateDate 20161031183815412
+aLastUpdateDate 20161116195937500
 
 eW_MetaDef 3
 aCPLR_ZKey 1181561
 aStatus    1
 aUpdateInd 2
 aName      UsageType
-aLastUpdateDate 20161031183815412
+aLastUpdateDate 20161116195937500
 
 eW_MetaDef 3
 aCPLR_ZKey 69080530
 aStatus    1
 aUpdateInd 2
 aName      TemplateUsageFormatType
-aLastUpdateDate 20161031183815412
+aLastUpdateDate 20161116195937500
 
 eW_MetaDef 3
 aCPLR_ZKey 69080546
 aStatus    1
 aUpdateInd 2
 aName      TemplateStatementFormat
-aLastUpdateDate 20161031183815412
+aLastUpdateDate 20161116195937500
 
 eW_MetaDef 3
 aCPLR_ZKey 69080516
 aStatus    1
 aUpdateInd 2
 aName      LLD_SectionType
-aLastUpdateDate 20161031183815412
+aLastUpdateDate 20161116195937500
 
 eW_MetaDef 3
 aCPLR_ZKey 1160409
@@ -1115,8 +1121,8 @@ Additions:
 1. Added a relationship between M_UsageOrdering, S_UsageOrdering and SPLD_UsageOrdering and their corresponding DirectionsForUse and Marketing Statement entities.
 2. Added Default attributes to LLD and SPLD_LLD.
 3. Add 
-aLastSyncDate 20161108160029522
-aLastUpdateDate 20161108160029522
+aLastSyncDate 20161129120543328
+aLastUpdateDate 20161129120543328
 
 eW_MetaType 2
 aType      5
@@ -1139,8 +1145,8 @@ aStatus    1
 aUpdateInd 2
 aName      ePamms
 aDesc      ePamms Application
-aLastSyncDate 20161110121400371
-aLastUpdateDate 20161110121400371
+aLastSyncDate 20161129120600040
+aLastUpdateDate 20161129120600040
 
 eW_MetaType 2
 aType      7
@@ -1151,8 +1157,8 @@ aStatus    1
 aUpdateInd 2
 aName      DOMAINT
 aDesc      Zeidon Dynamic Table Domain Object
-aLastSyncDate 20160920192249863
-aLastUpdateDate 20160920192249863
+aLastSyncDate 20161118200214234
+aLastUpdateDate 20161118200214234
 
 eW_MetaDef 3
 aCPLR_ZKey 68568781
@@ -1160,8 +1166,8 @@ aStatus    1
 aUpdateInd 2
 aName      DOMAINTL
 aDesc      Dynamic Domain List
-aLastSyncDate 20160920192249951
-aLastUpdateDate 20160920192249951
+aLastSyncDate 20161118200214320
+aLastUpdateDate 20161118200214320
 
 eW_MetaDef 3
 aCPLR_ZKey 68568789
@@ -1169,8 +1175,8 @@ aStatus    1
 aUpdateInd 2
 aName      GENKEYWO
 aDesc      Zeidon Genkey Object
-aLastSyncDate 20160920192249989
-aLastUpdateDate 20160920192249989
+aLastSyncDate 20161118200214405
+aLastUpdateDate 20161118200214405
 
 eW_MetaDef 3
 aCPLR_ZKey 110002215
@@ -1178,8 +1184,8 @@ aStatus    1
 aUpdateInd 2
 aName      iePamms
 aDesc      Include
-aLastSyncDate 20160920192250051
-aLastUpdateDate 20160920192250051
+aLastSyncDate 20161118200214489
+aLastUpdateDate 20161118200214489
 
 eW_MetaDef 3
 aCPLR_ZKey 86699273
@@ -1187,8 +1193,8 @@ aStatus    1
 aUpdateInd 2
 aName      KZMSGQOO
 aDesc      Message Queue Handler
-aLastSyncDate 20160920192250105
-aLastUpdateDate 20160920192250105
+aLastSyncDate 20161118200214586
+aLastUpdateDate 20161118200214586
 
 eW_MetaDef 3
 aCPLR_ZKey 69035457
@@ -1196,8 +1202,8 @@ aStatus    1
 aUpdateInd 2
 aName      lMasLCA
 aDesc      Master Label Content Change Analysis
-aLastSyncDate 20160920192250288
-aLastUpdateDate 20160920192250288
+aLastSyncDate 20161118200214832
+aLastUpdateDate 20161118200214832
 
 eW_MetaDef 3
 aCPLR_ZKey 70129551
@@ -1205,8 +1211,8 @@ aStatus    1
 aUpdateInd 2
 aName      lMLC
 aDesc      MLC List
-aLastSyncDate 20160920192250368
-aLastUpdateDate 20160920192250368
+aLastSyncDate 20161118200214937
+aLastUpdateDate 20161118200214937
 
 eW_MetaDef 3
 aCPLR_ZKey 70129221
@@ -1214,8 +1220,8 @@ aStatus    1
 aUpdateInd 2
 aName      lMLCASrc
 aDesc      MLC Analysis Source
-aLastSyncDate 20161004140435247
-aLastUpdateDate 20161004140435247
+aLastSyncDate 20161118200215242
+aLastUpdateDate 20161118200215242
 
 eW_MetaDef 3
 aCPLR_ZKey 70129006
@@ -1223,8 +1229,8 @@ aStatus    1
 aUpdateInd 2
 aName      lMLCATgt
 aDesc      MLC Analysis Target
-aLastSyncDate 20161004144315117
-aLastUpdateDate 20161004144315117
+aLastSyncDate 20161118200215554
+aLastUpdateDate 20161118200215554
 
 eW_MetaDef 3
 aCPLR_ZKey 1162962
@@ -1232,8 +1238,8 @@ aStatus    1
 aUpdateInd 2
 aName      lPrimLDD
 aDesc      List Primary Registrant Label Data Definitions (LDDs)
-aLastSyncDate 20160920192250891
-aLastUpdateDate 20160920192250891
+aLastSyncDate 20161118200215647
+aLastUpdateDate 20161118200215647
 
 eW_MetaDef 3
 aCPLR_ZKey 1158609
@@ -1241,8 +1247,8 @@ aStatus    1
 aUpdateInd 2
 aName      lPrimReg
 aDesc      List Primary Registrants
-aLastSyncDate 20160920192251038
-aLastUpdateDate 20160920192251038
+aLastSyncDate 20161118200215828
+aLastUpdateDate 20161118200215828
 
 eW_MetaDef 3
 aCPLR_ZKey 70130418
@@ -1250,8 +1256,8 @@ aStatus    1
 aUpdateInd 2
 aName      lSLC
 aDesc      Read only SLC for lists, etc.
-aLastSyncDate 20160920192251138
-aLastUpdateDate 20160920192251138
+aLastSyncDate 20161118200215932
+aLastUpdateDate 20161118200215932
 
 eW_MetaDef 3
 aCPLR_ZKey 70129897
@@ -1259,8 +1265,8 @@ aStatus    1
 aUpdateInd 2
 aName      lSLCAnal
 aDesc      SLC Analysis
-aLastSyncDate 20161004135329189
-aLastUpdateDate 20161004135329189
+aLastSyncDate 20161118200216289
+aLastUpdateDate 20161118200216289
 
 eW_MetaDef 3
 aCPLR_ZKey 69055438
@@ -1268,8 +1274,8 @@ aStatus    1
 aUpdateInd 2
 aName      lSPLA
 aDesc      Sub Registrant Physical Label Maintenance
-aLastSyncDate 20161004152203496
-aLastUpdateDate 20161004152203496
+aLastSyncDate 20161118200216559
+aLastUpdateDate 20161118200216559
 
 eW_MetaDef 3
 aCPLR_ZKey 69783425
@@ -1277,8 +1283,8 @@ aStatus    1
 aUpdateInd 2
 aName      lSPLDLST
 aDesc      List SPLD entries
-aLastSyncDate 20160920192257301
-aLastUpdateDate 20160920192257301
+aLastSyncDate 20161118200216666
+aLastUpdateDate 20161118200216666
 
 eW_MetaDef 3
 aCPLR_ZKey 69035656
@@ -1286,8 +1292,8 @@ aStatus    1
 aUpdateInd 2
 aName      lSubLCA
 aDesc      Subregistrant Label Content Change Analysis
-aLastSyncDate 20160920192258440
-aLastUpdateDate 20160920192258440
+aLastSyncDate 20161118200216884
+aLastUpdateDate 20161118200216884
 
 eW_MetaDef 3
 aCPLR_ZKey 1162991
@@ -1295,8 +1301,8 @@ aStatus    1
 aUpdateInd 2
 aName      lSubLDD
 aDesc      List Sub-Registrant Label Data Definitions (LDDs)
-aLastSyncDate 20160920192258482
-aLastUpdateDate 20160920192258482
+aLastSyncDate 20161118200216968
+aLastUpdateDate 20161118200216968
 
 eW_MetaDef 3
 aCPLR_ZKey 1165267
@@ -1304,8 +1310,8 @@ aStatus    1
 aUpdateInd 2
 aName      lSubreg
 aDesc      List Subregistrants for a specified Primary Registrant
-aLastSyncDate 20160920192258637
-aLastUpdateDate 20160920192258637
+aLastSyncDate 20161118200217130
+aLastUpdateDate 20161118200217130
 
 eW_MetaDef 3
 aCPLR_ZKey 110030723
@@ -1313,8 +1319,8 @@ aStatus    1
 aUpdateInd 2
 aName      mBlockRU
 aDesc      Reusable LLD_Block Maintenance object
-aLastSyncDate 20160920192258789
-aLastUpdateDate 20160920192258789
+aLastSyncDate 20161118200217313
+aLastUpdateDate 20161118200217313
 
 eW_MetaDef 3
 aCPLR_ZKey 1178878
@@ -1322,16 +1328,16 @@ aStatus    1
 aUpdateInd 2
 aName      mEPA
 aDesc      EPA statements and definitions
-aLastSyncDate 20160920192258854
-aLastUpdateDate 20160920192258854
+aLastSyncDate 20161118200217434
+aLastUpdateDate 20161118200217434
 
 eW_MetaDef 3
 aCPLR_ZKey 110002009
 aStatus    1
 aUpdateInd 2
 aName      mePamms
-aLastSyncDate 20160920192258906
-aLastUpdateDate 20160920192258906
+aLastSyncDate 20161118200217532
+aLastUpdateDate 20161118200217532
 
 eW_MetaDef 3
 aCPLR_ZKey 110007207
@@ -1339,8 +1345,8 @@ aStatus    1
 aUpdateInd 2
 aName      mHelp
 aDesc      Help messages for the ePamms application
-aLastSyncDate 20160920192258971
-aLastUpdateDate 20160920192258971
+aLastSyncDate 20161118200217620
+aLastUpdateDate 20161118200217620
 
 eW_MetaDef 3
 aCPLR_ZKey 3
@@ -1348,8 +1354,8 @@ aStatus    1
 aUpdateInd 2
 aName      mLLD
 aDesc      File LLD
-aLastSyncDate 20160920192259136
-aLastUpdateDate 20160920192259136
+aLastSyncDate 20161118200217826
+aLastUpdateDate 20161118200217826
 
 eW_MetaDef 3
 aCPLR_ZKey 69033382
@@ -1357,8 +1363,8 @@ aStatus    1
 aUpdateInd 2
 aName      mMasLC
 aDesc      Master Label Content Maintenance
-aLastSyncDate 20161108173238871
-aLastUpdateDate 20161108173238871
+aLastSyncDate 20161118200218608
+aLastUpdateDate 20161118200218608
 
 eW_MetaDef 3
 aCPLR_ZKey 69033348
@@ -1366,16 +1372,16 @@ aStatus    1
 aUpdateInd 2
 aName      mMasProd
 aDesc      Master Product Maintenance
-aLastSyncDate 20160920192259972
-aLastUpdateDate 20160920192259972
+aLastSyncDate 20161118200218744
+aLastUpdateDate 20161118200218744
 
 eW_MetaDef 3
 aCPLR_ZKey 3322332
 aStatus    1
 aUpdateInd 2
 aName      mOrganiz
-aLastSyncDate 20160920192300034
-aLastUpdateDate 20160920192300034
+aLastSyncDate 20161118200218834
+aLastUpdateDate 20161118200218834
 
 eW_MetaDef 3
 aCPLR_ZKey 1164671
@@ -1383,8 +1389,8 @@ aStatus    1
 aUpdateInd 2
 aName      mPerson
 aDesc      Person object to be included in the User object
-aLastSyncDate 20160920192300119
-aLastUpdateDate 20160920192300119
+aLastSyncDate 20161118200218950
+aLastUpdateDate 20161118200218950
 
 eW_MetaDef 3
 aCPLR_ZKey 1156951
@@ -1392,8 +1398,8 @@ aStatus    1
 aUpdateInd 2
 aName      mPrimLDD
 aDesc      Primary Registrant Master Label Definition Maintenance
-aLastSyncDate 20160920192300188
-aLastUpdateDate 20160920192300188
+aLastSyncDate 20161118200219053
+aLastUpdateDate 20161118200219053
 
 eW_MetaDef 3
 aCPLR_ZKey 1156968
@@ -1401,8 +1407,8 @@ aStatus    1
 aUpdateInd 2
 aName      mPrimReg
 aDesc      Primary Registrant Maintenance
-aLastSyncDate 20160920192300335
-aLastUpdateDate 20160920192300335
+aLastSyncDate 20161118200219242
+aLastUpdateDate 20161118200219242
 
 eW_MetaDef 3
 aCPLR_ZKey 69055287
@@ -1410,8 +1416,8 @@ aStatus    1
 aUpdateInd 2
 aName      mSPL
 aDesc      Sub Registrant Physical Label Maintenance
-aLastSyncDate 20161004152627313
-aLastUpdateDate 20161004152627313
+aLastSyncDate 20161118200219524
+aLastUpdateDate 20161118200219524
 
 eW_MetaDef 3
 aCPLR_ZKey 69082112
@@ -1419,8 +1425,8 @@ aStatus    1
 aUpdateInd 2
 aName      mSPLDef
 aDesc      Subregistrant Physical Label Maintenance
-aLastSyncDate 20161110120800978
-aLastUpdateDate 20161110120800978
+aLastSyncDate 20161216091751863
+aLastUpdateDate 20161216091751863
 
 eW_MetaDef 3
 aCPLR_ZKey 69035258
@@ -1428,8 +1434,8 @@ aStatus    1
 aUpdateInd 2
 aName      mSubLC
 aDesc      Subregistrant Label Content Maintenance
-aLastSyncDate 20161109134614058
-aLastUpdateDate 20161109134614058
+aLastSyncDate 20161118200221391
+aLastUpdateDate 20161118200221391
 
 eW_MetaDef 3
 aCPLR_ZKey 1157934
@@ -1437,8 +1443,8 @@ aStatus    1
 aUpdateInd 2
 aName      mSubLDD
 aDesc      Sub Registrant Label Definition Maintenance
-aLastSyncDate 20160920192303933
-aLastUpdateDate 20160920192303933
+aLastSyncDate 20161118200221486
+aLastUpdateDate 20161118200221486
 
 eW_MetaDef 3
 aCPLR_ZKey 1357802
@@ -1446,8 +1452,8 @@ aStatus    1
 aUpdateInd 2
 aName      mSubProd
 aDesc      Maintain Subregistrant Products
-aLastSyncDate 20160920192304033
-aLastUpdateDate 20160920192304033
+aLastSyncDate 20161118200221637
+aLastUpdateDate 20161118200221637
 
 eW_MetaDef 3
 aCPLR_ZKey 1157860
@@ -1455,8 +1461,8 @@ aStatus    1
 aUpdateInd 2
 aName      mSubreg
 aDesc      Subregistrant Maintenance
-aLastSyncDate 20160920192304265
-aLastUpdateDate 20160920192304265
+aLastSyncDate 20161118200221892
+aLastUpdateDate 20161118200221892
 
 eW_MetaDef 3
 aCPLR_ZKey 1157571
@@ -1464,8 +1470,8 @@ aStatus    1
 aUpdateInd 2
 aName      mUser
 aDesc      User Maintenance
-aLastSyncDate 20160920192304387
-aLastUpdateDate 20160920192304387
+aLastSyncDate 20161118200222032
+aLastUpdateDate 20161118200222032
 
 eW_MetaDef 3
 aCPLR_ZKey 110001735
@@ -1473,8 +1479,8 @@ aStatus    1
 aUpdateInd 2
 aName      pePamms
 aDesc      List Primary Registrants
-aLastSyncDate 20160920192304487
-aLastUpdateDate 20160920192304487
+aLastSyncDate 20161118200222154
+aLastUpdateDate 20161118200222154
 
 eW_MetaDef 3
 aCPLR_ZKey 110008633
@@ -1482,8 +1488,8 @@ aStatus    1
 aUpdateInd 2
 aName      qBlockRU
 aDesc      Check for duplicate names within Subregistrant
-aLastSyncDate 20160920192304534
-aLastUpdateDate 20160920192304534
+aLastSyncDate 20161118200222243
+aLastUpdateDate 20161118200222243
 
 eW_MetaDef 3
 aCPLR_ZKey 1658404
@@ -1491,8 +1497,8 @@ aStatus    1
 aUpdateInd 2
 aName      qOrganiz
 aDesc      Query Organization (used for logon and existence checking)
-aLastSyncDate 20160920192304619
-aLastUpdateDate 20160920192304619
+aLastSyncDate 20161118200222372
+aLastUpdateDate 20161118200222372
 
 eW_MetaDef 3
 aCPLR_ZKey 1157075
@@ -1500,8 +1506,8 @@ aStatus    1
 aUpdateInd 2
 aName      qPrimReg
 aDesc      Query Primary Registrant (used for existence checking)
-aLastSyncDate 20160920192304687
-aLastUpdateDate 20160920192304687
+aLastSyncDate 20161118200222465
+aLastUpdateDate 20161118200222465
 
 eW_MetaDef 3
 aCPLR_ZKey 1159375
@@ -1509,8 +1515,8 @@ aStatus    1
 aUpdateInd 2
 aName      qSubreg
 aDesc      Query Subregistrant (used only for existence checking)
-aLastSyncDate 20160920192304787
-aLastUpdateDate 20160920192304787
+aLastSyncDate 20161118200222586
+aLastUpdateDate 20161118200222586
 
 eW_MetaDef 3
 aCPLR_ZKey 110007308
@@ -1518,8 +1524,8 @@ aStatus    1
 aUpdateInd 2
 aName      rePamms
 aDesc      For include purposes
-aLastSyncDate 20160920192304850
-aLastUpdateDate 20160920192304850
+aLastSyncDate 20161118200222675
+aLastUpdateDate 20161118200222675
 
 eW_MetaDef 3
 aCPLR_ZKey 1157074
@@ -1527,8 +1533,8 @@ aStatus    1
 aUpdateInd 2
 aName      rPrimReg
 aDesc      Read only Primary Registrant (used for existence checking)
-aLastSyncDate 20160920192304934
-aLastUpdateDate 20160920192304934
+aLastSyncDate 20161118200222795
+aLastUpdateDate 20161118200222795
 
 eW_MetaDef 3
 aCPLR_ZKey 1159374
@@ -1536,8 +1542,8 @@ aStatus    1
 aUpdateInd 2
 aName      rSubreg
 aDesc      Read only Subregistrant (use only for existence checking)
-aLastSyncDate 20160920192304987
-aLastUpdateDate 20160920192304987
+aLastSyncDate 20161118200222889
+aLastUpdateDate 20161118200222889
 
 eW_MetaDef 3
 aCPLR_ZKey 110001662
@@ -1545,8 +1551,8 @@ aStatus    1
 aUpdateInd 2
 aName      sePamms
 aDesc      List Subregistrants for a Primary Registrant
-aLastSyncDate 20160920192305083
-aLastUpdateDate 20160920192305083
+aLastSyncDate 20161118200223016
+aLastUpdateDate 20161118200223016
 
 eW_MetaDef 3
 aCPLR_ZKey 110007291
@@ -1554,8 +1560,8 @@ aStatus    1
 aUpdateInd 2
 aName      sHelp
 aDesc      For activating a single Help message
-aLastSyncDate 20160920192305165
-aLastUpdateDate 20160920192305165
+aLastSyncDate 20161118200223103
+aLastUpdateDate 20161118200223103
 
 eW_MetaDef 3
 aCPLR_ZKey 1182246
@@ -1563,8 +1569,8 @@ aStatus    1
 aUpdateInd 2
 aName      wMLCList
 aDesc      Work Master Label Content
-aLastSyncDate 20160920192305249
-aLastUpdateDate 20160920192305249
+aLastSyncDate 20161118200223181
+aLastUpdateDate 20161118200223181
 
 eW_MetaDef 3
 aCPLR_ZKey 1157145
@@ -1572,8 +1578,8 @@ aStatus    1
 aUpdateInd 2
 aName      wWebXfer
 aDesc      Web Work/Transfer object
-aLastSyncDate 20160920192305350
-aLastUpdateDate 20160920192305350
+aLastSyncDate 20161118200223311
+aLastUpdateDate 20161118200223311
 
 eW_MetaDef 3
 aCPLR_ZKey 68568663
@@ -1581,8 +1587,8 @@ aStatus    1
 aUpdateInd 2
 aName      ZPLOCKO
 aDesc      Zeidon Locking Object
-aLastSyncDate 20160920192305434
-aLastUpdateDate 20160920192305434
+aLastSyncDate 20161118200223399
+aLastUpdateDate 20161118200223399
 
 eW_MetaType 2
 aType      8
@@ -2281,8 +2287,8 @@ aStatus    1
 aUpdateInd 2
 aName      wStartUp
 aDesc      Login and Administration
-aLastSyncDate 20160706142856262
-aLastUpdateDate 20160706142856262
+aLastSyncDate 20161116185020186
+aLastUpdateDate 20161116185020186
 
 eW_MetaDef 3
 aCPLR_ZKey 1158869
@@ -2338,8 +2344,8 @@ aCPLR_ZKey 69081339
 aStatus    1
 aUpdateInd 2
 aName      Template
-aLastSyncDate 20161031183815412
-aLastUpdateDate 20161031183815412
+aLastSyncDate 20161116195937500
+aLastUpdateDate 20161116195937500
 
 eW_MetaDef 3
 aCPLR_ZKey 68568034
@@ -2363,8 +2369,8 @@ aCPLR_ZKey 68568086
 aStatus    1
 aUpdateInd 2
 aName      TZAPDMAB
-aLastSyncDate 20140926165506000
-aLastUpdateDate 20140926165506000
+aLastSyncDate 20161111224151548
+aLastUpdateDate 20161111224151548
 
 eW_MetaDef 3
 aCPLR_ZKey 68568185
@@ -2383,8 +2389,8 @@ aStatus    1
 aUpdateInd 2
 aName      ZGlobal1
 aDesc      Global Operations in C
-aLastSyncDate 20160629144027276
-aLastUpdateDate 20160629144027276
+aLastSyncDate 20161111015550174
+aLastUpdateDate 20161111015550174
 
 eW_MetaDef 3
 aCPLR_ZKey 110010003
@@ -2460,6 +2466,9 @@ aGroupName ZGlobal1
 
 eW_MetaDef 3
 aGroupName ZGlobalV
+
+eW_MetaDef 3
+aGroupName ZGlobal1
 
 eW_MetaDef 3
 aGroupName ZGlobal1
@@ -3606,6 +3615,9 @@ eDomainJavaClass 2
 aJavaClassName com.quinsoft.zeidon.domains.DateDomain
 
 eDomainJavaClass 2
+aJavaClassName com.quinsoft.zeidon.domains.DateTimeDomain
+
+eDomainJavaClass 2
 aJavaClassName com.quinsoft.zeidon.domains.DoubleDomain
 
 eDomainJavaClass 2
@@ -3637,311 +3649,312 @@ aJavaClassName com.quinsoft.zeidon.domains.SSNDomain
 eDomainJavaClass 2
 aJavaClassName com.quinsoft.zeidon.domains.TimeDomain
 
-i329       4
-i330       5
-i331       6
-i332       7
-i333       8
-i334       9
-i335       10
-i336       11
-i337       12
-i338       13
-i339       14
-i340       15
-i341       16
-i342       17
-i343       18
-i344       19
-i345       20
-i346       21
-i347       22
-i348       23
-i349       24
-i350       25
-i351       26
-i352       27
-i353       28
-i354       29
-i355       30
-i356       31
-i357       32
-i358       33
-i359       34
-i360       35
-i361       36
-i362       37
-i363       38
-i364       39
-i365       40
-i366       41
-i367       42
-i368       43
-i369       44
-i370       45
-i371       46
-i372       47
-i373       48
-i374       49
-i375       50
-i376       51
-i377       52
-i378       53
-i379       54
-i380       55
-i381       56
-i382       57
-i383       58
-i384       59
-i385       60
-i386       61
-i387       62
-i388       63
-i389       64
-i390       65
-i391       66
-i392       67
-i393       68
-i394       69
-i395       70
-i396       71
-i397       72
-i398       73
-i399       74
-i400       75
-i401       76
-i402       77
-i403       78
-i404       79
-i405       80
-i406       81
-i408       158
-i409       103
-i410       139
-i411       83
-i412       150
-i413       168
-i414       164
-i415       165
-i416       156
-i417       132
+i330       4
+i331       5
+i332       6
+i333       7
+i334       8
+i335       9
+i336       10
+i337       11
+i338       12
+i339       13
+i340       14
+i341       15
+i342       16
+i343       17
+i344       18
+i345       19
+i346       20
+i347       21
+i348       22
+i349       23
+i350       24
+i351       25
+i352       26
+i353       27
+i354       28
+i355       29
+i356       30
+i357       31
+i358       32
+i359       33
+i360       34
+i361       35
+i362       36
+i363       37
+i364       38
+i365       39
+i366       40
+i367       41
+i368       42
+i369       43
+i370       44
+i371       45
+i372       46
+i373       47
+i374       48
+i375       49
+i376       50
+i377       51
+i378       52
+i379       53
+i380       54
+i381       55
+i382       56
+i383       57
+i384       58
+i385       59
+i386       60
+i387       61
+i388       62
+i389       63
+i390       64
+i391       65
+i392       66
+i393       67
+i394       68
+i395       69
+i396       70
+i397       71
+i398       72
+i399       73
+i400       74
+i401       75
+i402       76
+i403       77
+i404       78
+i405       79
+i406       80
+i407       81
+i408       82
+i410       159
+i411       104
+i412       140
+i413       84
+i414       151
+i415       169
+i416       165
+i417       166
 i418       157
-i419       146
-i420       142
-i421       144
-i422       145
-i423       159
-i424       125
-i425       97
-i426       102
-i427       109
-i428       84
-i429       96
-i430       95
-i431       94
-i432       93
-i433       92
-i434       91
-i435       90
-i436       89
-i437       88
-i438       87
-i439       86
-i440       149
-i441       148
-i442       118
-i443       162
-i444       155
-i445       160
-i446       100
-i447       106
-i448       114
-i449       131
-i450       129
-i451       130
-i452       120
-i453       123
-i454       113
-i455       161
-i456       147
-i457       152
-i458       153
-i459       143
-i460       111
-i461       115
-i462       126
-i463       136
-i464       112
-i465       99
-i466       105
-i467       122
-i468       108
-i469       107
-i470       85
-i471       121
-i472       154
-i473       138
-i474       127
-i475       117
-i476       116
-i477       166
-i478       137
-i479       141
-i480       151
-i481       135
-i482       124
-i483       134
-i484       110
-i485       128
-i486       104
-i487       101
-i488       163
-i489       140
-i490       133
-i491       167
-i492       98
-i493       119
-i495       170
-i497       172
-i499       174
-i501       176
-i502       177
-i503       178
-i504       179
-i505       180
-i506       181
-i507       182
-i508       183
-i509       184
-i510       185
-i511       186
-i512       187
-i513       188
-i514       189
-i515       190
-i516       191
-i517       192
-i518       193
-i519       194
-i520       195
-i521       196
-i522       197
-i523       198
-i524       199
-i525       200
-i526       201
-i527       202
-i528       203
-i529       204
-i530       205
-i531       206
-i532       207
-i533       208
-i534       209
-i535       210
-i536       211
-i537       212
-i538       213
-i539       214
-i540       215
-i541       216
-i542       217
-i543       218
-i544       219
-i545       220
-i546       221
-i547       222
-i548       223
-i549       224
-i552       227
-i553       228
-i554       229
-i555       230
-i556       231
-i557       232
-i558       233
-i559       234
-i560       235
-i561       236
-i562       237
-i563       238
-i564       239
-i565       240
-i566       241
-i567       242
-i568       243
-i569       244
-i570       245
-i571       246
-i572       247
-i573       248
-i574       249
-i575       250
-i576       251
-i577       252
-i578       253
-i579       254
-i580       255
-i581       256
-i582       257
-i583       258
-i584       259
-i585       260
-i586       261
-i587       262
-i588       263
-i589       264
-i590       265
-i591       266
-i592       267
-i593       268
-i594       269
-i595       270
-i596       271
-i597       272
-i598       273
-i599       274
-i600       275
-i601       276
-i602       277
-i603       278
-i604       279
-i605       280
-i606       281
-i607       282
-i608       283
-i609       284
-i610       285
-i611       286
-i612       287
-i613       288
-i614       289
-i615       290
-i616       291
-i617       292
-i618       293
-i619       294
-i620       295
-i621       296
-i624       299
-i625       300
-i626       301
-i627       302
-i628       303
-i629       304
-i630       305
-i631       306
-i632       307
-i633       308
-i634       309
-i637       312
-i638       313
-i639       314
-i640       315
-i641       316
-i642       317
-i643       318
-i644       319
-i646       321
-i647       322
-i648       323
+i419       133
+i420       158
+i421       147
+i422       143
+i423       145
+i424       146
+i425       160
+i426       126
+i427       98
+i428       103
+i429       110
+i430       85
+i431       97
+i432       96
+i433       95
+i434       94
+i435       93
+i436       92
+i437       91
+i438       90
+i439       89
+i440       88
+i441       87
+i442       150
+i443       149
+i444       119
+i445       163
+i446       156
+i447       161
+i448       101
+i449       107
+i450       115
+i451       132
+i452       130
+i453       131
+i454       121
+i455       124
+i456       114
+i457       162
+i458       148
+i459       153
+i460       154
+i461       144
+i462       112
+i463       116
+i464       127
+i465       137
+i466       113
+i467       100
+i468       106
+i469       123
+i470       109
+i471       108
+i472       86
+i473       122
+i474       155
+i475       139
+i476       128
+i477       118
+i478       117
+i479       167
+i480       138
+i481       142
+i482       152
+i483       136
+i484       125
+i485       135
+i486       111
+i487       129
+i488       105
+i489       102
+i490       164
+i491       141
+i492       134
+i493       168
+i494       99
+i495       120
+i497       171
+i499       173
+i501       175
+i503       177
+i504       178
+i505       179
+i506       180
+i507       181
+i508       182
+i509       183
+i510       184
+i511       185
+i512       186
+i513       187
+i514       188
+i515       189
+i516       190
+i517       191
+i518       192
+i519       193
+i520       194
+i521       195
+i522       196
+i523       197
+i524       198
+i525       199
+i526       200
+i527       201
+i528       202
+i529       203
+i530       204
+i531       205
+i532       206
+i533       207
+i534       208
+i535       209
+i536       210
+i537       211
+i538       212
+i539       213
+i540       214
+i541       215
+i542       216
+i543       217
+i544       218
+i545       219
+i546       220
+i547       221
+i548       222
+i549       223
+i550       224
+i551       225
+i554       228
+i555       229
+i556       230
+i557       231
+i558       232
+i559       233
+i560       234
+i561       235
+i562       236
+i563       237
+i564       238
+i565       239
+i566       240
+i567       241
+i568       242
+i569       243
+i570       244
+i571       245
+i572       246
+i573       247
+i574       248
+i575       249
+i576       250
+i577       251
+i578       252
+i579       253
+i580       254
+i581       255
+i582       256
+i583       257
+i584       258
+i585       259
+i586       260
+i587       261
+i588       262
+i589       263
+i590       264
+i591       265
+i592       266
+i593       267
+i594       268
+i595       269
+i596       270
+i597       271
+i598       272
+i599       273
+i600       274
+i601       275
+i602       276
+i603       277
+i604       278
+i605       279
+i606       280
+i607       281
+i608       282
+i609       283
+i610       284
+i611       285
+i612       286
+i613       287
+i614       288
+i615       289
+i616       290
+i617       291
+i618       292
+i619       293
+i620       294
+i621       295
+i622       296
+i623       297
+i626       300
+i627       301
+i628       302
+i629       303
+i630       304
+i631       305
+i632       306
+i633       307
+i634       308
+i635       309
+i636       310
+i639       313
+i640       314
+i641       315
+i642       316
+i643       317
+i644       318
+i645       319
+i646       320
+i648       322
+i649       323
+i650       324

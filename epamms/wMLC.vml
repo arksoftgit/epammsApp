@@ -75,8 +75,9 @@ SaveMLC( VIEW ViewToWindow )
    VIEW mMasProd REGISTERED AS mMasProd
    VIEW mMasLC   REGISTERED AS mMasLC
    VIEW wWebXfer REGISTERED AS wWebXfer
-   STRING ( 1 ) szFound
-   INTEGER      MasProdID
+   STRING ( 1 )  szFound
+   STRING ( 18 ) szDateTime
+   INTEGER       MasProdID
 
    // Ensure section name is not blank and is unique.
    IF mMasLC.MasterLabelContent.Version = ""
@@ -104,11 +105,14 @@ SaveMLC( VIEW ViewToWindow )
       END
    END
 
+   SysGetDateTime( szDateTime )
    IF mMasLC.MasterLabelContent.Finalized = ""
       mMasLC.MasterLabelContent.Finalized = "W"
-      mMasLC.MasterLabelContent.CreatedDateTime = wWebXfer.Root.dCurrentDateTime
-      mMasLC.MasterLabelContent.RevisionDate = wWebXfer.Root.dCurrentDateTime
+      mMasLC.MasterLabelContent.CreatedDateTime = szDateTime // wWebXfer.Root.dCurrentDateTime
    END
+   mMasLC.MasterLabelContent.RevisionDate = szDateTime // wWebXfer.Root.dCurrentDateTime
+   mMasLC.MasterLabelContent.ModifiedDateTime = szDateTime // wWebXfer.Root.dCurrentDateTime
+   
    IF mMasLC.MasterProduct DOES NOT EXIST
       IncludeSubobjectFromSubobject( mMasLC, "MasterProduct",
                                      mMasProd, "MasterProduct", zPOS_BEFORE )

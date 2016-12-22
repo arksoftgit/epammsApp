@@ -1,4 +1,4 @@
-// wStartUpProfile   Generate Timestamp: 20161116135023906
+// wStartUpSubregFontAdd   Generate Timestamp: 20161116105709313
 
 var isWindowClosing = true;
 var timerID = null;
@@ -45,8 +45,8 @@ function _OnAlmostTimeout()
       // If the time is less than one minute, resubmit the page.  Otherwise, go to the timeout window.
       if (tDiff < 60000)
       {
-         document.wStartUpProfile.zAction.value = "_OnResubmitPage";
-         document.wStartUpProfile.submit( );
+         document.wStartUpSubregFontAdd.zAction.value = "_OnResubmitPage";
+         document.wStartUpSubregFontAdd.submit( );
       }
       else
       {
@@ -61,8 +61,8 @@ function _OnTimeout( )
    {
       _DisableFormElements( true );
 
-      document.wStartUpProfile.zAction.value = "_OnTimeout";
-      document.wStartUpProfile.submit( );
+      document.wStartUpSubregFontAdd.zAction.value = "_OnTimeout";
+      document.wStartUpSubregFontAdd.submit( );
    }
 }
 
@@ -76,8 +76,8 @@ function _BeforePageUnload( )
       // If the user clicked the window close box, unregister zeidon.
       if (isWindowClosing)
       {
-         document.wStartUpProfile.zAction.value = "_OnUnload";
-         document.wStartUpProfile.submit( );
+         document.wStartUpSubregFontAdd.zAction.value = "_OnUnload";
+         document.wStartUpSubregFontAdd.submit( );
       }
    }
 }
@@ -130,16 +130,16 @@ function _AfterPageLoaded( )
 {
 // _DisableFormElements( false );
 
-   var szFocusCtrl = document.wStartUpProfile.zFocusCtrl.value;
+   var szFocusCtrl = document.wStartUpSubregFontAdd.zFocusCtrl.value;
    if ( szFocusCtrl != "" && szFocusCtrl != "null" )
-      eval( 'document.wStartUpProfile.' + szFocusCtrl + '.focus( )' );
+      eval( 'document.wStartUpSubregFontAdd.' + szFocusCtrl + '.focus( )' );
 
    // This is where we put out a message from the previous iteration on this window
-   var szMsg = document.wStartUpProfile.zError.value;
+   var szMsg = document.wStartUpSubregFontAdd.zError.value;
    if ( szMsg != "" )
       alert( szMsg ); // "Houston ... We have a problem"
 
-   szMsg = document.wStartUpProfile.zOpenFile.value;
+   szMsg = document.wStartUpSubregFontAdd.zOpenFile.value;
    if ( szMsg != "" )
    {
       var NewWin = window.open( szMsg );
@@ -151,10 +151,10 @@ function _AfterPageLoaded( )
       }
    }
 
-   var LoginName = document.wStartUpProfile.zLoginName.value;
-   var keyRole = document.wStartUpProfile.zKeyRole.value;
-   document.wStartUpProfile.zError.value = "";
-   document.wStartUpProfile.zOpenFile.value = "";
+   var LoginName = document.wStartUpSubregFontAdd.zLoginName.value;
+   var keyRole = document.wStartUpSubregFontAdd.zKeyRole.value;
+   document.wStartUpSubregFontAdd.zError.value = "";
+   document.wStartUpSubregFontAdd.zOpenFile.value = "";
 
    if ( timerID != null )
    {
@@ -162,7 +162,7 @@ function _AfterPageLoaded( )
       timerID = null;
    }
 
-   var varTimeout = document.wStartUpProfile.zTimeout.value;
+   var varTimeout = document.wStartUpSubregFontAdd.zTimeout.value;
    if ( varTimeout > 0 )
    {
       var varDelay = 60000 * varTimeout;  // Timeout value in timeout.inc
@@ -191,7 +191,7 @@ function CheckAllInGrid(id, CheckBoxName) // triggered by no text checkbox
    }
 }
 
-function AddNewColor( )
+function Cancel( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -201,12 +201,12 @@ function AddNewColor( )
    {
       _DisableFormElements( true );
 
-      document.wStartUpProfile.zAction.value = "AddNewColor";
-      document.wStartUpProfile.submit( );
+      document.wStartUpSubregFontAdd.zAction.value = "Cancel";
+      document.wStartUpSubregFontAdd.submit( );
    }
 }
 
-function AddNewFont( )
+function InitFontForAdd( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -216,12 +216,12 @@ function AddNewFont( )
    {
       _DisableFormElements( true );
 
-      document.wStartUpProfile.zAction.value = "AddNewFont";
-      document.wStartUpProfile.submit( );
+      document.wStartUpSubregFontAdd.zAction.value = "InitFontForAdd";
+      document.wStartUpSubregFontAdd.submit( );
    }
 }
 
-function DeleteColor( strTagEntityKey )
+function SaveAddNew( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -229,51 +229,35 @@ function DeleteColor( strTagEntityKey )
 
    if ( _IsDocDisabled( ) == false )
    {
-      var nIdx = strTagEntityKey.lastIndexOf( '::' );
-      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
-
-      document.wStartUpProfile.zTableRowSelect.value = strEntityKey;
-      _DisableFormElements( true );
-
-      document.wStartUpProfile.zAction.value = "DeleteColor";
-      document.wStartUpProfile.submit( );
-   }
-}
-
-function DeleteFont( strTagEntityKey )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      var nIdx = strTagEntityKey.lastIndexOf( '::' );
-      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
-
-      document.wStartUpProfile.zTableRowSelect.value = strEntityKey;
-      _DisableFormElements( true );
-
-      document.wStartUpProfile.zAction.value = "DeleteFont";
-      document.wStartUpProfile.submit( );
-   }
-}
-
-function DeleteReusableBlock( strTagEntityKey )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      var nIdx = strTagEntityKey.lastIndexOf( '::' );
-      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
-
-      document.wStartUpProfile.zTableRowSelect.value = strEntityKey;
       // Javascript code entered by user.
 
-if ( confirm( "Delete the reusable block?" ) === false ) {
+var strName = document.getElementById( "FontName" ).value;
+if ( strName === "" ) {
+   alert( "Font Name is required" );
+   return;
+}
+
+
+      // END of Javascript code entered by user.
+
+      document.wStartUpSubregFontAdd.zAction.value = "SaveAddNew";
+      document.wStartUpSubregFontAdd.submit( );
+   }
+}
+
+function SaveReturn( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      // Javascript code entered by user.
+
+var strName = document.getElementById( "FontName" ).value;
+if ( strName === "" ) {
+   alert( "Font Name is required" );
    return;
 }
 
@@ -281,12 +265,12 @@ if ( confirm( "Delete the reusable block?" ) === false ) {
 
       _DisableFormElements( true );
 
-      document.wStartUpProfile.zAction.value = "DeleteReusableBlock";
-      document.wStartUpProfile.submit( );
+      document.wStartUpSubregFontAdd.zAction.value = "SaveReturn";
+      document.wStartUpSubregFontAdd.submit( );
    }
 }
 
-function Return( )
+function UpdateFont( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -296,12 +280,12 @@ function Return( )
    {
       _DisableFormElements( true );
 
-      document.wStartUpProfile.zAction.value = "Return";
-      document.wStartUpProfile.submit( );
+      document.wStartUpSubregFontAdd.zAction.value = "UpdateFont";
+      document.wStartUpSubregFontAdd.submit( );
    }
 }
 
-function UpdateColor( strTagEntityKey )
+function smSaveReturn( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -309,18 +293,25 @@ function UpdateColor( strTagEntityKey )
 
    if ( _IsDocDisabled( ) == false )
    {
-      var nIdx = strTagEntityKey.lastIndexOf( '::' );
-      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
 
-      document.wStartUpProfile.zTableRowSelect.value = strEntityKey;
+      // Javascript code entered by user.
+
+var strName = document.getElementById( "FontName" ).value;
+if ( strName === "" ) {
+   alert( "Font Name is required" );
+   return;
+}
+
+      // END of Javascript code entered by user.
+
       _DisableFormElements( true );
 
-      document.wStartUpProfile.zAction.value = "UpdateColor";
-      document.wStartUpProfile.submit( );
+      document.wStartUpSubregFontAdd.zAction.value = "smSaveReturn";
+      document.wStartUpSubregFontAdd.submit( );
    }
 }
 
-function UpdateFont( strTagEntityKey )
+function smSaveAddNew( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -328,37 +319,26 @@ function UpdateFont( strTagEntityKey )
 
    if ( _IsDocDisabled( ) == false )
    {
-      var nIdx = strTagEntityKey.lastIndexOf( '::' );
-      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
 
-      document.wStartUpProfile.zTableRowSelect.value = strEntityKey;
+      // Javascript code entered by user.
+
+var strName = document.getElementById( "FontName" ).value;
+if ( strName === "" ) {
+   alert( "Font Name is required" );
+   return;
+}
+
+
+      // END of Javascript code entered by user.
+
       _DisableFormElements( true );
 
-      document.wStartUpProfile.zAction.value = "UpdateFont";
-      document.wStartUpProfile.submit( );
+      document.wStartUpSubregFontAdd.zAction.value = "smSaveAddNew";
+      document.wStartUpSubregFontAdd.submit( );
    }
 }
 
-function UpdateReusableBlock( strTagEntityKey )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      var nIdx = strTagEntityKey.lastIndexOf( '::' );
-      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
-
-      document.wStartUpProfile.zTableRowSelect.value = strEntityKey;
-      _DisableFormElements( true );
-
-      document.wStartUpProfile.zAction.value = "UpdateReusableBlock";
-      document.wStartUpProfile.submit( );
-   }
-}
-
-function smReturn( )
+function smCancel( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -368,8 +348,8 @@ function smReturn( )
    {
       _DisableFormElements( true );
 
-      document.wStartUpProfile.zAction.value = "smReturn";
-      document.wStartUpProfile.submit( );
+      document.wStartUpSubregFontAdd.zAction.value = "smCancel";
+      document.wStartUpSubregFontAdd.submit( );
    }
 }
 

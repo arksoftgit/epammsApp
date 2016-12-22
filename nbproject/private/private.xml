@@ -1,18 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="7">
+        <file>
+            <url>web/js/labeldesigner.js</url>
+            <bookmark id="4">
+                <name/>
+                <line>2350</line>
+                <key/>
+            </bookmark>
+            <bookmark id="2">
+                <name/>
+                <line>2391</line>
+                <key/>
+            </bookmark>
+            <bookmark id="3">
+                <name/>
+                <line>2535</line>
+                <key/>
+            </bookmark>
+            <bookmark id="6">
+                <name/>
+                <line>2847</line>
+                <key/>
+            </bookmark>
+            <bookmark id="5">
+                <name/>
+                <line>4175</line>
+                <key/>
+            </bookmark>
+        </file>
         <file>
             <url>src/java/com/ajax/GraphicalLabelDesignerServlet.java</url>
-            <bookmark id="1">
+            <bookmark id="7">
                 <name/>
-                <line>894</line>
+                <line>1505</line>
                 <key/>
             </bookmark>
         </file>
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Workspace/NetBeansProjects/epammsApp/web/wStartUpUserLogin.jsp</file>
+            <file>file:/D:/Workspace/NetBeansProjects/epammsApp/src/java/com/ajax/GraphicalLabelDesignerServlet.java</file>
+            <file>file:/D:/Workspace/NetBeansProjects/epammsApp/web/js/jsoeUtils.js</file>
+            <file>file:/D:/Workspace/NetBeansProjects/epammsApp/web/js/labeldesigner.js</file>
+            <file>file:/D:/Workspace/NetBeansProjects/epammsApp/web/js/jsoe.js</file>
+            <file>file:/D:/Workspace/NetBeansProjects/epammsApp/web/wSPLDGraphicalView.jsp</file>
         </group>
     </open-files>
 </project-private>

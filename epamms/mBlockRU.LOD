@@ -1,4 +1,4 @@
-z1000-Zeidon    MBLOCKRU TZZOLODO                         09/20/16   15:22:58 1.0a2   
+z1000-Zeidon    MBLOCKRU TZZOLODO                         11/18/16   15:02:17 1.0a2   
 eLOD       1
 aZKey      110030723
 aName      mBlockRU
@@ -356,13 +356,14 @@ aZKey      110030797
 eER_AttributeRec 6
 aName      FontFamily
 aZKey      4322624
+aLth       32
 
 eDomainRec 7
 aZKey      4322644
 aName      FontFamily
-aDomainType T
+aDomainType E
 aDataType  S
-aMaxStringLth 20
+aMaxStringLth 32
 aContextRestriction N
 
 eLOD_AttributeRec 5
@@ -1760,7 +1761,7 @@ aName      for
 aAutoSeq   N
 aHangingForeignKeyEntity N
 aZKey      110030388
-aCardMin   1
+aCardMin   0
 aCardMax   1
 aTE_NoForeignKeyPrefix N
 

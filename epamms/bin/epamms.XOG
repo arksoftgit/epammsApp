@@ -1,4 +1,4 @@
-z1000-Zeidon    EPAMMS   TZZOXOGO                         10/31/16   17:43:01 1.0a2   
+z1000-Zeidon    EPAMMS   TZZOXOGO                         11/10/16   20:55:50 1.0a2   
 eTZZOXOGO  1
 aNAME      epamms
 
@@ -29,6 +29,14 @@ aDATATYPE  S
 ePARAMETER 4
 aNAME      MaxRecordLth
 aDATATYPE  L
+
+eOPERATION 3
+aNAME      ConvertHtmlEntities
+aTYPE      G
+
+ePARAMETER 4
+aNAME      StringToBeConverted
+aDATATYPE  S
 
 eOPERATION 3
 aNAME      ParseStatementForKeywords

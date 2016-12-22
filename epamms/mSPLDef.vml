@@ -423,6 +423,16 @@ FormatPrintIcons( VIEW mSPLDef BASED ON LOD mSPLDef,
    STRING ( 30 ) szDateTime
    STRING ( 30 ) szDateTimeDisplay
    STRING ( 90 ) szProductIdentifier
+   STRING ( 32 ) szLPLR_Name
+   STRING ( 64 ) szSystemIniApplName
+   STRING ( 256 ) szImageDirectory
+
+   // Get the fop images directory
+   SfGetApplicationForSubtask( szLPLR_Name, mSPLDef )
+   szSystemIniApplName = "[App." + szLPLR_Name + "]"
+   SysReadZeidonIni( -1, szSystemIniApplName, "FopImageDirectory", szImageDirectory )
+   SysConvertEnvironmentString( szImageDirectory, szImageDirectory )
+   SysAppendcDirSep( szImageDirectory )
 
    // Format the printer icons based on the Page Height and Width.
 
@@ -497,7 +507,7 @@ FormatPrintIcons( VIEW mSPLDef BASED ON LOD mSPLDef,
    WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
    szWriteBuffer = "                  <fo:block text-align=^left^>"
    WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
-   szWriteBuffer = "                     <fo:external-graphic src=^c:/lplr/epamms/xsl/images/TopLeft.png^/>"
+   szWriteBuffer = "                     <fo:external-graphic src=^" + szImageDirectory + "/TopLeft.png^/>"
    WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
    szWriteBuffer = "                  </fo:block>"
    WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
@@ -511,7 +521,7 @@ FormatPrintIcons( VIEW mSPLDef BASED ON LOD mSPLDef,
    WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
    szWriteBuffer = "                  <fo:block text-align=^left^>"
    WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
-   szWriteBuffer = "                     <fo:external-graphic src=^c:/lplr/epamms/xsl/images/TopRight.png^/>"
+   szWriteBuffer = "                     <fo:external-graphic src=^" + szImageDirectory + "/TopRight.png^/>"
    WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
    szWriteBuffer = "                  </fo:block>"
    WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
@@ -525,7 +535,7 @@ FormatPrintIcons( VIEW mSPLDef BASED ON LOD mSPLDef,
    WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
    szWriteBuffer = "                  <fo:block text-align=^left^>"
    WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
-   szWriteBuffer = "                     <fo:external-graphic src=^c:/lplr/epamms/xsl/images/BottomLeft.png^/>"
+   szWriteBuffer = "                     <fo:external-graphic src=^" + szImageDirectory + "/BottomLeft.png^/>"
    WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
    szWriteBuffer = "                  </fo:block>"
    WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
@@ -539,7 +549,7 @@ FormatPrintIcons( VIEW mSPLDef BASED ON LOD mSPLDef,
    WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
    szWriteBuffer = "                  <fo:block text-align=^left^>"
    WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
-   szWriteBuffer = "                     <fo:external-graphic src=^c:/lplr/epamms/xsl/images/BottomRight.png^/>"
+   szWriteBuffer = "                     <fo:external-graphic src=^" + szImageDirectory + "/BottomRight.png^/>"
    WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
    szWriteBuffer = "                  </fo:block>"
    WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
@@ -553,7 +563,7 @@ FormatPrintIcons( VIEW mSPLDef BASED ON LOD mSPLDef,
    WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
    szWriteBuffer = "                  <fo:block text-align=^left^>"
    WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
-   szWriteBuffer = "                     <fo:external-graphic src=^c:/lplr/epamms/xsl/images/CenterH.png^/>"
+   szWriteBuffer = "                     <fo:external-graphic src=^" + szImageDirectory + "/CenterH.png^/>"
    WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
    szWriteBuffer = "                  </fo:block>"
    WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
@@ -567,7 +577,7 @@ FormatPrintIcons( VIEW mSPLDef BASED ON LOD mSPLDef,
    WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
    szWriteBuffer = "                  <fo:block text-align=^left^>"
    WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
-   szWriteBuffer = "                     <fo:external-graphic src=^c:/lplr/epamms/xsl/images/CenterH.png^/>"
+   szWriteBuffer = "                     <fo:external-graphic src=^" + szImageDirectory + "/CenterH.png^/>"
    WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
    szWriteBuffer = "                  </fo:block>"
    WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
@@ -581,7 +591,7 @@ FormatPrintIcons( VIEW mSPLDef BASED ON LOD mSPLDef,
    WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
    szWriteBuffer = "                  <fo:block text-align=^left^>"
    WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
-   szWriteBuffer = "                     <fo:external-graphic src=^c:/lplr/epamms/xsl/images/CenterV.png^/>"
+   szWriteBuffer = "                     <fo:external-graphic src=^" + szImageDirectory + "/CenterV.png^/>"
    WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
    szWriteBuffer = "                  </fo:block>"
    WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
@@ -595,7 +605,7 @@ FormatPrintIcons( VIEW mSPLDef BASED ON LOD mSPLDef,
    WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
    szWriteBuffer = "                  <fo:block text-align=^left^>"
    WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
-   szWriteBuffer = "                     <fo:external-graphic src=^c:/lplr/epamms/xsl/images/CenterV.png^/>"
+   szWriteBuffer = "                     <fo:external-graphic src=^" + szImageDirectory + "/CenterV.png^/>"
    WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
    szWriteBuffer = "                  </fo:block>"
    WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
@@ -801,6 +811,9 @@ ProcessPDF_Blocks( VIEW mSPLDef    BASED ON LOD mSPLDef,
    STRING ( 50 ) szLeft
    STRING ( 90 ) szTitle
    STRING ( 90 ) szMsg
+   STRING ( 32 ) szLPLR_Name
+   STRING ( 64 ) szSystemIniApplName
+   STRING ( 256 ) szImageDirectory
    INTEGER       lControl
    SHORT         nRC
 
@@ -882,6 +895,14 @@ ProcessPDF_Blocks( VIEW mSPLDef    BASED ON LOD mSPLDef,
 
             // IMAGE
             IF szSectionType = "Graphic"
+
+               // Get the fop images directory
+               SfGetApplicationForSubtask( szLPLR_Name, mSPLDef )
+               szSystemIniApplName = "[App." + szLPLR_Name + "]"
+               SysReadZeidonIni( -1, szSystemIniApplName, "FopImageDirectory", szImageDirectory )
+               SysConvertEnvironmentString( szImageDirectory, szImageDirectory )
+               SysAppendcDirSep( szImageDirectory )
+
                szHeight = mSPLDefPDF.LLD_Block.Height
                szWidth  = mSPLDefPDF.LLD_Block.Width
                szTop    = mSPLDefPDF.LLD_Block.Top
@@ -889,7 +910,7 @@ ProcessPDF_Blocks( VIEW mSPLDef    BASED ON LOD mSPLDef,
 
                szWriteBuffer = "                     <fo:block text-align=^left^>"
                WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
-               szWriteBuffer = "                        <fo:external-graphic src=^c:/lplr/epamms/xsl/images/" + mSPLDefPDF.LLD_Block.ImageName +
+               szWriteBuffer = "                        <fo:external-graphic src=^" + szImageDirectory + mSPLDefPDF.LLD_Block.ImageName +
                                "^ height=^" + szHeight + "in^ width=^" + szWidth + "in^ content-height=^scale-to-fit^ content-width=^scale-to-fit^/>"
                WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
 
@@ -4375,6 +4396,7 @@ GenerateLine( VIEW mSPLDef BASED ON LOD mSPLDef,
 
    // This is just a SysWriteLine with an options TraceLineS statement.
 // TraceLineS( "*** Line: ", szOutputLine )
+   ConvertHtmlEntities( szOutputLine )
    SysWriteLine( mSPLDef, lFileHandle, szOutputLine )
 
 END

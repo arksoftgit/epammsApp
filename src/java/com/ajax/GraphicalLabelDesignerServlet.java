@@ -420,6 +420,18 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
       }
       jsonColors += " ]";
 
+      String jsonFontFamily = "[";
+      ec = vLLD.cursor( "Font" );
+      cr = ec.setFirst();
+      while ( cr.isSet() ) {
+         jsonFontFamily += " { \"Name\" : \"" + ec.getAttribute( "Name" ).getString() + "\" }";
+         cr = ec.setNext();
+         if ( cr.isSet() ) {
+            jsonFontFamily += ", ";
+         }
+      }
+      jsonFontFamily += " ]";
+
       String jsonMarketing = "[";
       ec = vLLD.cursor( "SPLD_MarketingSection" );
       cr = ec.setFirst();
@@ -523,6 +535,7 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
          jsonLabel = sb.substring( 0, pos ) + " } ] } ], \"BlockTags\" : " + jsonTagList +
                                                       ", \"ReusableBlocks\" : " + jsonReuse +
                                                       ", \"Colors\" : " + jsonColors +
+                                                      ", \"FontFamily\" : " + jsonFontFamily +
                                                       ", \"Marketing\" : " + jsonMarketing +
                                                       ", \"HazardSelectedLocations\" : " + jsonSelectedHazard +
                                                       ", \"HazardLocations\" : " + jsonHazard +
@@ -553,12 +566,12 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
    }
 
    private void displaySPLD( View mSPLDef, String entity, String id ) {
-   // logger.debug( "displaySPLD" );
+      logger.info( "displaySPLD" );
       EntityCursor ec;
       if ( entity != null ) {
          boolean display = false;
          ec = mSPLDef.getCursor( entity );
-         if ( id != "" ) {
+         if ( ! id.equals( "" ) ) {
             CursorResult cr = ec.setFirst( "ID", id );
             if ( cr.isSet() ) {
                display = true;
@@ -567,7 +580,7 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
          if ( ec.isNull() == false ) {
             ec.logEntity( display );
          } else {
-            logger.debug( "Null entity: " + entity );
+            logger.info( "Null entity: " + entity );
          }
       }
       View t = mSPLDef.newView();
@@ -715,7 +728,7 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
                            }
                         } else {
                            String setPE = null;
-                           String wPE = (String) jo.get( "wPE" );
+                           String wPE = (String) jo.get( "wPE" );  // parent entity
                            if ( wPE == null ) {
                               if ( entity.equals( "SPLD_LLD" ) ) {
                                  wPE = "SubregPhysicalLabelDef";
@@ -729,6 +742,12 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
                               } else if ( entity.equals( "LLD_Block" ) ) {
                                  wPE = "LLD_Panel";
                                  setPE = "panel";
+                              } else if ( entity.equals( "LLD_SpecialSectionAttribute" ) ) {
+                                 wPE = "LLD_Block";
+                                 setPE = "block";
+                              } else if ( entity.equals( "LLD_SpecialSectionAttrBlock" ) ) {
+                                 wPE = "LLD_SpecialSectionAttribute";
+                                 setPE = "special";
                               } else if ( entity.equals( "LLD_SubBlock" ) ) {
                                  entity = "LLD_Block";
                                  wPE = "LLD_Block";
@@ -752,13 +771,19 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
                            String wPID = (String) jo.get( "wPID" );
                            ec = vBlock.getCursor( wPE );  // this is the parent entity
                            if ( wPID == null ) {
-                              cr = CursorResult.SET;  // we must be on the correct parent (at least we really hope so)
+                              if ( entity.equals( "LLD_SpecialSectionAttribute" ) ) {
+                                 String pTag = (String) jo.get( "_pTag" );  // parent tag
+                              // cr = ec.setFirstWithinOi( "Tag", pTag );
+                                 cr = ec.setFirst( "Tag", pTag );
+                              } else {
+                                 cr = CursorResult.SET;  // we must be on the correct parent (at least we really hope so)
+                              }
                            } else {
                               cr = ec.setFirstWithinOi( "wID", wPID );
                            }
                            if ( cr.isSet() ) {
                            // if ( ec.getEntityDef().getName().equals( "LLD_SubBlock" ) ) {
-                              if ( wPE.equals( "LLD_Block" ) ) {
+                              if ( wPE.equals( "LLD_Block" ) && entity.equals( "LLD_SpecialSectionAttribute" ) == false ) {
                                  ec = vBlock.getCursor( "LLD_SubBlock" );
                                  ec.createEntity( CursorPosition.LAST );
                                  ec.setToSubobject();
@@ -892,6 +917,32 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
       }
    }
 
+   // The difference between classes zeidon and zeidon-special is that zeidon-special is an extra block entity based on the section type of the current block.
+   // When we switch to or from a special block category, we need to keep the block's data in sync with the special block data so that the UI works properly.
+   // The functions mapToSpecialBlockFromBlock and mapFromSpecialBlockToBlock perform this synchronization using the attributes defined in g_SpecialBlockAttrList.
+   // This list needs to be kept in sync between labeldesigner.js and GraphicalLabelDesignerServlet.java.
+   private static final String[] g_SpecialBlockAttrList =
+               new String[] { "TextColor", "TextColorOverride", // "BackgroundColor", "BackgroundColorOverride", "BorderClor", "BorderColorOverride", 
+                              "FontFamily", "FontSize", "FontWeight",
+                              "Margin", "MarginTop", "MarginLeft", "MarginBottom", "MarginRight", "MarginOverride",
+                              "Border", "BorderTop", "BorderBottom", "BorderLeft", "BorderRight", "BorderOverride",
+                              "Padding", "PaddingTop", "PaddingBottom", "PaddingLeft", "PaddingRight", "PaddingOverride",
+                              "TitlePosition", "TextAlign", "TextLineHeight", "TextLetterSpace" };
+
+   public static <T> boolean arrayContains( final T[] array, final T v ) {
+      if ( v == null ) {
+         for ( final T e : array )
+            if ( e == null )
+               return true;
+      } else {
+         for ( final T e : array )
+            if ( e == v || v.equals(e) )
+               return true;
+      }
+
+      return false;
+   }
+
    private void applyJsonPropertiesToZeidonAttributes( View vLLD, View vBlock, JSONObject jsonObject, String entity, int depth, EntityInstance ei ) {
       if ( ei != null ) {
       // logger.debug( "Apply Json Start" );
@@ -907,19 +958,51 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
                if ( obj instanceof String ) {
                   String valueNew = (String) obj;
                // logger.debug( StringUtils.repeat( " ", (depth + 2) * 3 ) + "E.Attr: " + entity + "." + key + " : " + valueNew );
-                  if ( key.equals( "ID" ) == false && key.charAt( 0 ) != '_' &&  // attribute is not ID (which is immutable) or a label designer work (starts with '_')
+                  if ( key.equals( "ID" ) == false &&  // attribute is not ID (which is immutable)
                        key.startsWith( "FK_ID_" ) == false && key.startsWith( "AUTOSEQ" ) == false ) {
                      // This is where we need to handle special entity/attributes such as: z_^marketing.^text.^font^weight - which
                      // should be mapped to the "Marketing" LLD_SpecialSectionAttribute entity and the "Text" LLD_SpecialSectionAttrBlock
                      // entity FontWeight attribute ... e.g. DirectionsForUse.Title.z_MarginTop
-                     int idx1 = key.indexOf( "." );
-                     if ( idx1 >= 0 ) {
-                        String sectionType = key.substring( 0, idx1 ); // e.g. DirectionsForUse
-                        idx1++;
-                        int idx2 = key.indexOf( ".z_", idx1 );
-                        if ( idx2 >= 0 ) {
-                           String blockType = key.substring( idx1, idx2 ); // e.g. Title
-                           String attribute = key.substring( idx2 + 3 ); // e.g. MarginTop
+                  // int idx1 = key.indexOf( "." );
+                  // int idx1 = g_SpecialBlockAttrList..indexOf( "." );
+                  // if ( idx1 >= 0 ) {
+                     if ( key.charAt( 0 ) == '_' ) {  // attribute is a label designer work (starts with '_')
+                        if ( key.equals( "_pTag" ) && entity.equals( "LLD_SpecialSectionAttribute" ) ) {
+                           EntityCursor ec = vBlock.cursor( "LLD_Block" );
+                           String blockTag = ec.getAttribute( "Tag" ).getString();
+                           if ( blockTag.equals( valueNew ) == false ) {
+                              String msg = "Entity: LLD_SpecialSectionAttribute Tag: " + valueNew + "   does not match LLD_Block Tag: " + blockTag;
+                              logger.error( msg );
+                              throw new ZeidonException( msg );
+                           }
+                        }
+                     } else {
+                        boolean bSpecial = entity.equals( "LLD_SpecialSectionAttrBlock" );
+                        if ( entity.equals( "LLD_SpecialSectionAttribute" ) ) {
+                           logger.info( "Entity: LLD_SpecialSectionAttribute   key: " + key + "   value: " + valueNew );
+                        } else if ( entity.equals( "LLD_Block" ) || bSpecial ) {
+                           logger.info( "Entity: " + entity + "   key: " + key + "   value: " + valueNew );
+                           if ( arrayContains( g_SpecialBlockAttrList, key ) ) {
+                              logger.info( "Entity: " + entity + "   FOUND key: " + key );
+                              if ( ! bSpecial ) {
+                                 continue;  // skip this attribute for block
+                              }
+                           } else {
+                              logger.info( "Entity: " + entity + "   NOT FOUND key: " + key );
+                              if ( bSpecial ) {
+                                 continue;  // skip this attribute
+                              }
+                           }
+                        }
+                     /*
+                     // String sectionType = key.substring( 0, idx1 ); // e.g. DirectionsForUse
+                     // idx1++;
+                     // int idx2 = key.indexOf( ".z_", idx1 );
+                     // if ( idx2 >= 0 ) {
+                     //    String blockType = key.substring( idx1, idx2 ); // e.g. Title
+                     //    String attribute = key.substring( idx2 + 3 ); // e.g. MarginTop
+                           String attribute = key;
+                           String blockType = 
                            EntityCursor ec = vBlock.cursor( "LLD_SpecialSectionAttribute" );
                            if ( attribute.equals( "ID" ) == false ) {
                               CursorResult cr = ec.setFirst( "Name", blockType );
@@ -936,40 +1019,16 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
                                  }
                                  ec.getAttribute( "LLD_SectionType" ).setValue( sectionType );
                               }
-                              if ( attribute.equals( "TextColor" ) ) { // we need to include the color entity
-                              // logger.debug( "TextColor E.Attr: " + entity + "." + key + " : " + valueNew );
-                                 ec.getAttribute( "TextColor" ).setValue( valueNew );
-                                 ec = vBlock.cursor( "SpecialAttributeTextColor" );
-                                 cr = ec.setFirst( "dColorName", valueNew );
-                                 if ( cr.isSet() == false ) {
-                                    cr = ec.setFirst();
-                                    if ( cr.isSet() ) {
-                                       ec.excludeEntity();
-                                    }
-                                    EntityCursor ecp = vLLD.cursor( "Color" );
-                                    cr = ecp.setFirst( "dColorName", valueNew );
-                                    if ( cr.isSet() ) {
-                                       ec.includeSubobject( ecp );
-                                    }
-                                 }
-                              // ec = vBlock.cursor( entity );  // debug only
-                              // ec.logEntity( true );               // debug only
-                              } else {
-                                 checkSetValue( ec.getEntityInstance(), "LLD_SectionType", attribute, valueNew );
-                              }
-                           }
-                        // else {  no!!! we do not want to set ID
-                        //    EntityInstance eib = ec.getEntityInstance();
-                        //    checkSetValue( eib, "LLD_SectionType", attribute, valueNew );
-                        // }
-                        }
-                     } else {
-                        if ( key.equals( "BackgroundColor" ) || key.equals( "BorderColor" ) ) { // we need to include the color entity
+                     */
+                        if ( ((key.equals( "BackgroundColor" ) || key.equals( "BorderColor" )) && bSpecial == false) ||
+                              (key.equals( "TextColor" ) && bSpecial) ) { // we need to include the color entity
                         // logger.debug( key + " E.Attr: " + entity + "." + key + " : " + valueNew );
                            EntityCursor ec = vBlock.cursor( entity );
                            ec.getAttribute( key ).setValue( valueNew );
                            String colorEntity;
-                           if ( entity.contains( "Block" ) ) {
+                           if ( bSpecial ) {
+                              colorEntity = "SpecialAttributeTextColor";
+                           } else if ( entity.contains( "Block" ) ) {
                               colorEntity = "Block" + key;
                            } else if ( entity.contains( "Panel" ) ) {
                               colorEntity = "Panel" + key;
@@ -1474,11 +1533,11 @@ end debug code */
                vLLD.resetSubobjectTop();
                vBlock = vLLD.newView();
                vBlock.resetSubobjectTop();
-            // logger.debug( "Before Apply Json to OI" );
-            // displaySPLD( vLLD, null, "" );
+               logger.info( "Before Apply Json to OI" );
+               displaySPLD( vLLD, null, "" );
                applyJsonLabelToView( vLLD, vBlock, jsonPost, "", -2, null );  // OIs, SPLD_LLD, depth == 0 for LLD_Page
                vLLD.setName( "mSPLDefPanel", Level.TASK );
-            // displaySPLD( vLLD, null, "" );
+               displaySPLD( vLLD, null, "" );
                // Sort the blocks
                CursorResult cr = vLLD.cursor( "LLD_Panel" ).setFirst();
                while ( cr.isSet() ) {
@@ -1490,8 +1549,17 @@ end debug code */
             // vLLD.logObjectInstance();
             // logger.debug( "Saved JSON to OI" );
                if ( action.equals( "saveLabelCommit" ) ) {
+                  EntityCursor ec = vLLD.cursor( "LLD_SpecialSectionAttribute" );
+                  cr = ec.setFirstWithinOi();
+                  while ( cr.isSet() ) {
+                     EntityCursor ec2 = vLLD.cursor( "LLD_SpecialSectionAttrBlock" );
+                     if ( ec2.hasAny() == false ) {
+                        ec.deleteEntity( CursorPosition.NONE );
+                     }
+                     cr = ec.setNextWithinOi();
+                  }
                   vLLD.commit();
-               // displaySPLD( vLLD, null, "" );
+                  displaySPLD( vLLD, null, "" );
                }
                if ( action.equals( "saveLabelRefresh" ) || action.equals( "saveReusableBlock" ) || action.equals( "applyReusableBlock" ) ) {
                   if ( action.equals( "saveReusableBlock" ) || action.equals( "applyReusableBlock" ) ) {

@@ -423,16 +423,15 @@ $(function() {
 
          g_xOffset = 0;
          g_yOffset = 0;
-         while ( $parent.parent().is( "html" ) === false && stopLoop++ < 40 )
-         {
-            if ( $parent.is( "div#zclient" ) )
-            {
+         while ( $parent.parent().is( "html" ) === false && stopLoop++ < 40 ) {
+            if ( $parent.is( "div#zclient" ) ) {
                g_xOffset = 0;
                g_yOffset = 0;
             }
 
-            if ( $parent.is( "div#zviewport" ) )
+            if ( $parent.is( "div#zviewport" ) ) {
                break;
+            }
 
          // console.log($parent);
          // console.log( "top: " + Math.round( $parent.position().top ) );
@@ -940,6 +939,9 @@ $(function() {
 
    // this is used to get the number of pixels from the inches value respecting to scale
    function scaledInch2Pixel( attr, border ) {
+      if ( ! attr ) {
+         attr = "";
+      }
       var idx = attr.indexOf( "in" );
       if ( idx >= 0 ) {
          attr = attr.substring( 0, idx );
@@ -1013,7 +1015,7 @@ $(function() {
    // <div class="block draggable canvas-element block-element ui-draggable ui-resizable" style="position:absolute;top:-0.78125px;height:253px;width:266px;left:0px;background-color: #ccffcc; display: block; float: left; color: red; border: 2px solid;" id="Tag100" name="Tag100">
    // <input type="text" id="zLabelBackgroundColor" name="zLabelBackgroundColor" class="zeidon" data-zmap="label.z_^background^color"  value="#ffffed" />
    function mapUiDataToElementData( $current_element ) {
-      if ( g_currentType ) {
+      if ( g_currentType ) {  // why this isn't done after the "if ( $current_element )" code block below, I don't know??? 2016.12.19
          mapToSpecialBlockFromBlock( g_currentType );
          g_currentType = null;
       }
@@ -1648,24 +1650,28 @@ $(function() {
          }
       });
 
-var g_BlockAttrList = [ "z_^text^color", "z_^text^color^override",
-                        "z_^font^family", "z_^font^size", "z_^font^weight",
-                        "z_^margin", "z_^margin^top", "z_^margin^left", "z_^margin^bottom", "z_^margin^right", "z_^margin^override",
-                        "z_^border", "z_^border^top", "z_^border^bottom", "z_^border^left", "z_^borderRight", "z_^border^override",
-                        "z_^padding", "z_^padding^top", "z_^padding^bottom", "z_^padding^left", "z_^padding^right", "z_^padding^override",
-                        "z_^title^position", "z_^text^align", "z_^text^line^height", "z_^text^letter^space" ];
+   // The difference between classes zeidon and zeidon-special is that zeidon-special is an extra block entity based on the section type of the current block.
+   // When we switch to or from a special block category, we need to keep the block's data in sync with the special block data so that the UI works properly.
+   // The functions mapToSpecialBlockFromBlock and mapFromSpecialBlockToBlock perform this synchronization using the attributes defined in g_SpecialBlockAttrList.
+var g_SpecialBlockAttrList = [ "z_^text^color", "z_^text^color^override", // "z_^background^color", "z_^background^color^override", "z_^border^color", "z_^border^color^override", 
+                               "z_^font^family", "z_^font^size", "z_^font^weight",
+                               "z_^margin", "z_^margin^top", "z_^margin^left", "z_^margin^bottom", "z_^margin^right", "z_^margin^override",
+                               "z_^border", "z_^border^top", "z_^border^bottom", "z_^border^left", "z_^borderRight", "z_^border^override",
+                               "z_^padding", "z_^padding^top", "z_^padding^bottom", "z_^padding^left", "z_^padding^right", "z_^padding^override",
+                               "z_^title^position", "z_^text^align", "z_^text^line^height", "z_^text^letter^space" ];
 
    function mapToSpecialBlockFromBlock( currentType ) {
       if ( g_$current_block && g_$current_block.data() ) {
          var sectionType = g_$current_block.data( "z_^l^l^d_^section^type" );
          if ( sectionType ) {
-         // displayElementData( "mapToSpecialBlockFromBlock Before", g_$current_block );
-
             var entityAttr;
             var n;
             var entity;
+            var fullKey;
             var key;
+            var value;
 
+            displayElementData( "mapToSpecialBlockFromBlock Before SectionType: " + sectionType + "." + currentType, g_$current_block );
             $("input.zeidon-special, select.zeidon-special").each( function() {
                entityAttr = $(this).data( "zmap" );
                if ( entityAttr ) {
@@ -1673,24 +1679,27 @@ var g_BlockAttrList = [ "z_^text^color", "z_^text^color^override",
                   entity = entityAttr.substring( 0, n );
                   if ( entity === "block" ) {
                      key = entityAttr.substring( n + 1 );
+                     fullKey = sectionType + "." + currentType + "." + key;
                      if ( key === "z_^text^color" ) {
                      // console.log( "Processing color1" );
-                        g_$current_block.data( key, getColorPickerByRGB( $(this).val() ) );
+                        value = getColorPickerByRGB( $(this).val() );
                      } else {
-                        g_$current_block.data( key, this.type === "checkbox" ? (this.checked === true ? "Y" : "") : $(this).val() );
+                        value = this.type === "checkbox" ? (this.checked === true ? "Y" : "") : $(this).val();
                      }
+                     console.log( "Processing To zeidon-special entityAttr: " + entityAttr );
+                     g_$current_block.data( key, value );
                   }
                }
             });
 
             var section = zeidonAttributeToKey( sectionType ) + "." + currentType + ".";
-            $.each( g_BlockAttrList, function( index, attributeName ) {
+            $.each( g_SpecialBlockAttrList, function( index, attributeName ) {
                var specialBlockAttribute = section + attributeName;
-            // console.log( "ToSpecial: " + attributeName + "  to: " + specialBlockAttribute + "  current: " + g_$current_block.data( attributeName ) );
+               console.log( "ToSpecial: " + attributeName + "  to: " + specialBlockAttribute + "  current: " + g_$current_block.data( attributeName ) );
                g_$current_block.data( specialBlockAttribute, g_$current_block.data( attributeName ) );
                g_$current_block.data( attributeName, "" );
             });
-         // displayElementData( "mapToSpecialBlockFromBlock After", g_$current_block );
+            displayElementData( "mapToSpecialBlockFromBlock After", g_$current_block );
          }
       }
    }
@@ -1700,11 +1709,11 @@ var g_BlockAttrList = [ "z_^text^color", "z_^text^color^override",
       if ( g_$current_block && g_$current_block.data() ) {
          var sectionType = g_$current_block.data( "z_^l^l^d_^section^type" );
          if ( sectionType ) {
-         // displayElementData( "Before mapFromSpecialBlockToBlock", g_$current_block );
             var section = zeidonAttributeToKey( sectionType ) + "." + currentType + ".";
-            $.each( g_BlockAttrList, function( index, attributeName ) {
+            displayElementData( "Before mapFromSpecialBlockToBlock section: " + section, g_$current_block );
+            $.each( g_SpecialBlockAttrList, function( index, attributeName ) {
                var specialBlockAttribute = section + attributeName;
-            // console.log( "FromSpecial: " + attributeName + "  from: " + specialBlockAttribute + "  current: " + g_$current_block.data( specialBlockAttribute ) );
+               console.log( "FromSpecial: " + attributeName + "  from: " + specialBlockAttribute + "  current: " + g_$current_block.data( specialBlockAttribute ) );
                g_$current_block.data( attributeName, g_$current_block.data( specialBlockAttribute ) );
                g_$current_block.data( specialBlockAttribute, "" );
             });
@@ -1712,6 +1721,7 @@ var g_BlockAttrList = [ "z_^text^color", "z_^text^color^override",
             var entityAttr;
             var n;
             var entity;
+            var fullKey;
             var key;
             var value;
             $("input.zeidon-special, select.zeidon-special").each( function() {
@@ -1721,7 +1731,9 @@ var g_BlockAttrList = [ "z_^text^color", "z_^text^color^override",
                   entity = entityAttr.substring( 0, n );
                   if ( entity === "block" ) {
                      key = entityAttr.substring( n + 1 );
+                     fullKey = section + key;
                      value = g_$current_block.data( key );
+                     console.log( "Processing From block zeidon-special key: " + fullKey );
                      if ( ! value ) {
                         value = "";
                      }
@@ -1734,7 +1746,7 @@ var g_BlockAttrList = [ "z_^text^color", "z_^text^color^override",
                }
             });
 
-         // displayElementData( "After mapFromSpecialBlockToBlock", g_$current_block );
+            displayElementData( "After mapFromSpecialBlockToBlock", g_$current_block );
          }
       }
    }
@@ -2456,7 +2468,7 @@ public class FileServer {
                      // }
 
                         // Guarantee the Tag is set properly in the element data.
-                     // jsonLabel += ", \"Tag\" : \"" + trimLeadingAndTrailingWhiteSpace( obj[prop] ) + "\"";
+                     // jsonLabel += ", \"Tag\" : \"" + trimLeadingAndTrailingWhiteSpace( String( obj[prop] ) )  + "\"";
                         $("#" + obj['id']).data( "z_^tag", obj['id'] );
 
                         // So let's get the all of the custom properties for this element
@@ -2464,7 +2476,7 @@ public class FileServer {
                         jsonLabel += elementDataToJSON( obj['id'] );
                      } /* else if ( prop === "style" ) {   these are done using the "data" versions
                         // do position and size
-                        var stylelist = obj[prop];
+                        var stylelist = String( obj[prop] );
                         jsonLabel += formatStyle( stylelist, "top" );
                         jsonLabel += formatStyle( stylelist, "left" );
                         jsonLabel += formatStyle( stylelist, "height" );
@@ -2603,22 +2615,22 @@ public class FileServer {
       var attr = "";
       var style = "style=\"position:absolute;";
       for ( var prop in obj ) {
-         if ( typeof obj[prop] === "string" ) {
+         if ( typeof obj[prop] === "string" || typeof obj[prop] === "number" ) {
          // console.log ( "Property for entity: " + entity + " prop: " + prop + ": " + obj[prop] );
             if ( prop === "Tag" ) {
                continue;
             } else if ( prop === "Top" || prop === "Left" ) {
-               style += prop.toLowerCase() + ":" + scaledInch2Pixel( obj[prop], 0 ) + ";";
+               style += prop.toLowerCase() + ":" + scaledInch2Pixel( String( obj[prop] ), 0 ) + ";";
             } else if ( prop === "Height" || prop === "Width" ) {
-               style += prop.toLowerCase() + ":" + scaledInch2Pixel( obj[prop], g_border ) + ";"; // 2*g_pixelsBorder
+               style += prop.toLowerCase() + ":" + scaledInch2Pixel( String( obj[prop] ), g_border ) + ";"; // 2*g_pixelsBorder
             } else {
                if ( prop === "Depth" ) {
-                  var objDepth = parseInt( obj[prop] );
+                  var objDepth = parseInt( String( obj[prop] ) );
                   if ( objDepth !== depth ) {
                      console.log( "AddHtmlLabelElementAttributes depth: " + depth + "  is not equal to object depth: " + objDepth +
                                   "  for Tag: " + obj["Tag"] + "  within parent: " + parentId );
                   }
-               // depth = parseInt( obj[prop] );
+               // depth = parseInt( String( obj[prop] ) );
                }
             }
          }
@@ -2671,11 +2683,11 @@ public class FileServer {
          $element.children( ".ui-resizable-handle" ).css( "z-index", "" );  // prevent these from "showing through"
          $parentElement.append( $element );
          for ( var prop in obj ) {
-            if ( typeof obj[prop] === "string" ) {
+            if ( typeof obj[prop] === "string" || typeof obj[prop] === "number" ) {
             // if ( prop === "Tag" || prop === "Top" || prop === "Left" || prop === "Height" || prop === "Width" ) {
             //    continue;
             // } else {
-                  addZeidonAttributeToElement( $element, prop, obj[prop] );
+                  addZeidonAttributeToElement( $element, prop, String( obj[prop] ) );
             // }
             }
          }
@@ -2704,11 +2716,11 @@ public class FileServer {
       // style += "\"";
       // $element.innerHTML = identity + style;
          for ( var prop in obj ) {
-            if ( typeof obj[prop] === "string" ) {
+            if ( typeof obj[prop] === "string" || typeof obj[prop] === "number" ) {
             // if ( prop === "Tag" || prop === "Top" || prop === "Left" || prop === "Height" || prop === "Width" )  {
             //   continue;
             // } else {
-                  addZeidonAttributeToElement( $element, prop, obj[prop] );
+                  addZeidonAttributeToElement( $element, prop, String( obj[prop] ) );
             // }
             }
          }
@@ -2826,18 +2838,17 @@ public class FileServer {
                throw new Error( "The JSON object does not contain an SubregPhysicalLabelDef property: " + obj );
             } else {
                document.title = "SPLD: " + objSPLD["Name"];
-            }
-
-            var objLLD = objSPLD["SPLD_LLD"][0];
-            if ( objLLD === null ) {
-               throw new Error( "The JSON object does not contain an SPLD_LLD property: " + objSPLD );
-            } else {
                // if ( value ) will evaluate to true if value is not: null/undefined/NaN/empty string ("")/0/false
                if ( objLLD["Name"] ) {
                   $("#zheader_title").text( "Label: " + objLLD["Name"] );
                } else {
                   $("#zheader_title").text( "ePamms Label Designer" );
                }
+            }
+
+            var objLLD = objSPLD["SPLD_LLD"][0];
+            if ( objLLD === null ) {
+               throw new Error( "The JSON object does not contain an SPLD_LLD property: " + objSPLD );
             }
 
             for ( var prop in objLLD ) {
@@ -2947,6 +2958,7 @@ public class FileServer {
                var jsonColors = jsonObj["Colors"];
                var jsonReuse = jsonObj["ReusableBlocks"];
                var jsonMarketing = jsonObj["Marketing"];
+               var jsonFontFamily = jsonObj["FontFamily"];
                var jsonBlockTags = jsonObj["BlockTags"];
                var jsonHazardSelected = jsonObj["HazardSelectedLocations"];
                var jsonHazard = jsonObj["HazardLocations"];
@@ -2964,6 +2976,7 @@ public class FileServer {
                setColors( jsonColors );
                setReusableBlocks( jsonReuse );
                setMarketing( jsonMarketing );
+               setFontFamily( jsonFontFamily )
                setBlockTags( jsonBlockTags );
                setHazardLocations( jsonHazardSelected, jsonHazard );
             } catch(e) {
@@ -3762,16 +3775,6 @@ public class FileServer {
       initColorPicker( '#zPageColor', colors, names, lth );
    }
 
-   function xx( $select ) {
-      $.each(opt, function(key, value){
-           var $group = $('<optgroup label="' + key + '" />');
-           $.each(value, function(){
-               $('<option />').html(this.name).appendTo($group);
-           });
-           $group.appendTo($select);
-       });
-   }
-
    function setReusableBlocks( jsonReusable )
    {
       if ( $.isArray( jsonReusable ) ) {
@@ -3801,6 +3804,28 @@ public class FileServer {
          if ( $optgroup !== null ) {
             $optgroup.appendTo( $select );
          }
+      }
+   }
+
+/*
+   function xx_deprecated( $select ) {
+      $.each(opt, function(key, value){
+           var $group = $('<optgroup label="' + key + '" />');
+           $.each(value, function(){
+               $('<option />').html(this.name).appendTo($group);
+           });
+           $group.appendTo($select);
+       });
+   }
+*/
+
+   function setFontFamily( jsonFontFamily )
+   {
+      if ( $.isArray( jsonFontFamily ) ) {
+         var list = $("#zFontFamily");
+         $.each(jsonFontFamily, function(index, item) {
+            list.append( new Option( item.Name, item.Name ) );
+         });
       }
    }
 

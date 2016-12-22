@@ -1,4 +1,4 @@
-z1000-Zeidon    ZEIDON   TZDMXGPO                         10/31/16   14:38:15 1.0a2   
+z1000-Zeidon    ZEIDON   TZDMXGPO                         11/16/16   14:59:37 1.0a2   
 eDomainGroup 1
 aName      ePamms
 
@@ -948,7 +948,7 @@ aEditString YYYY Mmmm dd
 aJavaEditString yyyy MMMM dd
 
 eDomain    2
-aJavaClass com.quinsoft.zeidon.domains.DateDomain
+aJavaClass com.quinsoft.zeidon.domains.DateTimeDomain
 aZKey      68568141
 aName      DateTime
 aDesc      Basic Timestamp Domain
@@ -1206,11 +1206,17 @@ aEditString YYYY-MM-DD
 aJavaEditString yyyy-MM-dd
 
 eContext   3
+aZKey      68568186
+aName      YYYY/MM/DD HH:MM:SS.S
+aEditString YYYY/mm/dd HH:MI:SS.9 AM
+aJavaEditString yyyyMMddHHmmssSSS
+aIsDefault Y
+
+eContext   3
 aZKey      68568167
 aName      YYYY/MM/DD HH:MM:SS.S AM
 aEditString YYYY/mm/dd HH:MI:SS.9 AM
 aJavaEditString yyyy/MM/dd HH:mm:ss:SSS aa
-aIsDefault Y
 
 eContext   3
 aZKey      68568184
@@ -2331,38 +2337,18 @@ aName      FirstName
 aIsDefault Y
 
 eDomain    2
-aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
+aJavaClass com.quinsoft.zeidon.domains.StringDomain
 aZKey      4322644
 aName      FontFamily
-aDomainType T
+aDomainType E
 aDataType  S
-aMaxStringLth 20
+aMaxStringLth 32
 aContextRestriction N
 
 eContext   3
 aZKey      4322645
 aName      FontFamily
 aIsDefault Y
-
-eTableEntry 4
-aZKey      4322646
-aExternalValue Arial
-aInternalValue Arial
-
-eTableEntry 4
-aZKey      110006764
-aExternalValue Comic Sans MS Bold
-aInternalValue Comic Sans MS Bold
-
-eTableEntry 4
-aZKey      4322647
-aExternalValue Verdana
-aInternalValue Verdana
-
-eTableEntry 4
-aZKey      4322648
-aExternalValue Serif
-aInternalValue Serif
 
 eDomain    2
 aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain

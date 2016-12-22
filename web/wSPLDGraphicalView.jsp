@@ -493,12 +493,12 @@ else
 
    <script src="js/jquery.colorPicker.js" type="text/javascript"></script>
 
-   <script src="js/labeldesigner.js"></script>
    <script src="js/jsonpath-0.8.0.js"></script>
    <script src="js/jsoeTestData.js"></script>
    <script src="js/jsoeUtils.js"></script>
    <script src="js/jsoe.js"></script>
    <script src="js/jsoeObjectBrowser.js"></script>
+   <script src="js/labeldesigner.js"></script>
 
 <!-- the mousewheel plugin - optional to provide mousewheel support -->
    <script src="js/jquery.mousewheel.js"></script>
@@ -901,7 +901,7 @@ else
                         <input type="text" id="zBlockId" class="zeidon" data-zmap="block.z_^i^d" style="float:right; font-size:9px; text-align:right; font-weight:100;" disabled />
                         </div>
                         <div style="overflow:hidden; white-space:nowrap;">
-                       <label for="zBlockTag">Tag:</label>
+                       <label for="zBlockTag">Unique Name:</label>
                        <input type="text" id="zBlockTag" class="zeidon" data-zmap="block.z_^tag" style="float:right" />
                      </div>
                      </span>
@@ -1105,10 +1105,6 @@ else
                              <label for="zFontFamily">Font Family:</label>
                              <select id="zFontFamily" class="zeidon-special" data-zmap="block.z_^font^family" style="float:right" />
                                  <option value="">Select Font Family...</option>
-                                 <option value="Arial">Arial</option>
-                                 <option value="Comic Sans MS Bold">Comic Sans MS Bold</option>
-                                 <option value="Verdana">Verdana</option>
-                                 <option value="Serif">Serif</option>
                               </select>
                            </div>
                            <div style="overflow:hidden; white-space:nowrap;">

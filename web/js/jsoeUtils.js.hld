@@ -541,6 +541,30 @@ SimpleHashMap.prototype.iterate = function( callback ) {
    return true;
 };
 
+SimpleHashMap.prototype.sortKeys = function() {
+   if ( this._db.length <= 1 ) {
+      return false;
+   }
+   var swapped;
+   var tempKey;
+   var tempValue;
+   do { // bubble sort
+      swapped = false;
+      for ( var k = 0; k < this._db.length - 1; k++ ) {
+         if ( this._db[k][0] > this._db[k + 1][0] ) {
+            tempKey = this._db[k][0];
+            tempValue = this._db[k][1];
+            this._db[k][0] = this._db[k + 1][0];
+            this._db[k][1] = this._db[k + 1][1];
+            this._db[k + 1][0] = tempKey;
+            this._db[k + 1][1] = tempValue;
+            swapped = true;
+         }
+      }
+   } while ( swapped );
+   return true;
+};
+
 /*
 SimpleHashMap.prototype.randomize = function () {
    if ( _db.length === 0 ) {

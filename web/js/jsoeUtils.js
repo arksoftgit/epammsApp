@@ -541,6 +541,30 @@ SimpleHashMap.prototype.iterate = function( callback ) {
    return true;
 };
 
+SimpleHashMap.prototype.sortKeys = function() {
+   if ( this._db.length <= 1 ) {
+      return false;
+   }
+   var swapped;
+   var tempKey;
+   var tempValue;
+   do { // bubble sort
+      swapped = false;
+      for ( var k = 0; k < this._db.length - 1; k++ ) {
+         if ( this._db[k][0] > this._db[k + 1][0] ) {
+            tempKey = this._db[k][0];
+            tempValue = this._db[k][1];
+            this._db[k][0] = this._db[k + 1][0];
+            this._db[k][1] = this._db[k + 1][1];
+            this._db[k + 1][0] = tempKey;
+            this._db[k + 1][1] = tempValue;
+            swapped = true;
+         }
+      }
+   } while ( swapped );
+   return true;
+};
+
 /*
 SimpleHashMap.prototype.randomize = function () {
    if ( _db.length === 0 ) {
@@ -1378,8 +1402,8 @@ function testJsonPath() {
 }
 
 function displayElementData( message, $element ) {
+   console.log( "Pre-display: " + message + "... Element Data for: " + $element.attr( "id" ) );  // need to use attr( "id" ) rather than data( "id" )
    if ( $element ) {
-      console.log( message + "... Element Data for: " + $element.attr( "id" ) );  // need to use attr( "id" ) rather than data( "id" )
       if ( $element.data() ) {
          $.each( $element.data(), function( key, value ) {
             if ( typeof value === "string" || typeof value === "number" ) {
@@ -1388,6 +1412,8 @@ function displayElementData( message, $element ) {
          });
       }
    }
+   console.log( "Post-display: " + message );
+
 }
 
 function keyToZeidonAttribute( key ) {
@@ -1421,10 +1447,15 @@ function zeidonAttributeToKey( attribute ) {
    return key;
 }
 
-function addZeidonAttributeToElement( $element, attribute, value ) {
+function addZeidonAttributeToElement( $element, attribute, value, encodeKey ) {
    if ( typeof value === "string" || typeof value === "number" ) {
-      var key = zeidonAttributeToKey( attribute );
-   // console.log( "addZeidonAttributeToElement: " + $element.attr( "id" ) + "  key: " + key + "  value: " + value );
+      var key;
+      if ( encodeKey ) {
+         key = zeidonAttributeToKey( attribute );
+      } else {
+         key = attribute;
+      }
+      console.log( "addZeidonAttributeToElement: " + $element.attr( "id" ) + "  key: " + key + "  value: " + value );
       $element.data( key, value );
    }
 }

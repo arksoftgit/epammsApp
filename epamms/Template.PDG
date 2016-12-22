@@ -1,4 +1,4 @@
-z1000-Zeidon    TEMPLATE TZDGSRCO                         10/31/16   14:38:15 1.0a2   
+z1000-Zeidon    TEMPLATE TZDGSRCO                         11/16/16   14:59:37 1.0a2   
 eDomainGroup 1
 aZKey      69081339
 aName      Template
@@ -398,36 +398,16 @@ aInternalValue normal
 eDomain    2
 aZKey      4322644
 aName      FontFamily
-aDomainType T
-aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
+aDomainType E
+aJavaClass com.quinsoft.zeidon.domains.StringDomain
 aDataType  S
-aMaxStringLth 20
+aMaxStringLth 32
 aContextRestriction N
 
 eContext   3
 aZKey      4322645
 aName      FontFamily
 aIsDefault Y
-
-eTableEntry 4
-aZKey      4322646
-aExternalValue Arial
-aInternalValue Arial
-
-eTableEntry 4
-aZKey      110006764
-aExternalValue Comic Sans MS Bold
-aInternalValue Comic Sans MS Bold
-
-eTableEntry 4
-aZKey      4322647
-aExternalValue Verdana
-aInternalValue Verdana
-
-eTableEntry 4
-aZKey      4322648
-aExternalValue Serif
-aInternalValue Serif
 
 eDomain    2
 aZKey      4322642

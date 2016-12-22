@@ -2424,6 +2424,12 @@ omSPLDef_FormatPrintIcons( View     mSPLDef,
    String   szDateTimeDisplay = null;
    //:STRING ( 90 ) szProductIdentifier
    String   szProductIdentifier = null;
+   //:STRING ( 32 ) szLPLR_Name
+   String   szLPLR_Name = null;
+   //:STRING ( 64 ) szSystemIniApplName
+   String   szSystemIniApplName = null;
+   //:STRING ( 256 ) szImageDirectory
+   String   szImageDirectory = null;
    int      RESULT = 0;
    double  dTempDecimal_0 = 0.0;
    double  dTempDecimal_1 = 0.0;
@@ -2432,6 +2438,62 @@ omSPLDef_FormatPrintIcons( View     mSPLDef,
    String   szTempString_1 = null;
    int      lTempInteger_1 = 0;
 
+
+   //:// Get the fop images directory
+   //:SfGetApplicationForSubtask( szLPLR_Name, mSPLDef )
+   {StringBuilder sb_szLPLR_Name;
+   if ( szLPLR_Name == null )
+      sb_szLPLR_Name = new StringBuilder( 32 );
+   else
+      sb_szLPLR_Name = new StringBuilder( szLPLR_Name );
+       SfGetApplicationForSubtask( sb_szLPLR_Name, mSPLDef );
+   szLPLR_Name = sb_szLPLR_Name.toString( );}
+   //:szSystemIniApplName = "[App." + szLPLR_Name + "]"
+    {StringBuilder sb_szSystemIniApplName;
+   if ( szSystemIniApplName == null )
+      sb_szSystemIniApplName = new StringBuilder( 32 );
+   else
+      sb_szSystemIniApplName = new StringBuilder( szSystemIniApplName );
+      ZeidonStringCopy( sb_szSystemIniApplName, 1, 0, "[App.", 1, 0, 65 );
+   szSystemIniApplName = sb_szSystemIniApplName.toString( );}
+    {StringBuilder sb_szSystemIniApplName;
+   if ( szSystemIniApplName == null )
+      sb_szSystemIniApplName = new StringBuilder( 32 );
+   else
+      sb_szSystemIniApplName = new StringBuilder( szSystemIniApplName );
+      ZeidonStringConcat( sb_szSystemIniApplName, 1, 0, szLPLR_Name, 1, 0, 65 );
+   szSystemIniApplName = sb_szSystemIniApplName.toString( );}
+    {StringBuilder sb_szSystemIniApplName;
+   if ( szSystemIniApplName == null )
+      sb_szSystemIniApplName = new StringBuilder( 32 );
+   else
+      sb_szSystemIniApplName = new StringBuilder( szSystemIniApplName );
+      ZeidonStringConcat( sb_szSystemIniApplName, 1, 0, "]", 1, 0, 65 );
+   szSystemIniApplName = sb_szSystemIniApplName.toString( );}
+   //:SysReadZeidonIni( -1, szSystemIniApplName, "FopImageDirectory", szImageDirectory )
+   {StringBuilder sb_szImageDirectory;
+   if ( szImageDirectory == null )
+      sb_szImageDirectory = new StringBuilder( 32 );
+   else
+      sb_szImageDirectory = new StringBuilder( szImageDirectory );
+       m_KZOEP1AA.SysReadZeidonIni( -1, szSystemIniApplName, "FopImageDirectory", sb_szImageDirectory );
+   szImageDirectory = sb_szImageDirectory.toString( );}
+   //:SysConvertEnvironmentString( szImageDirectory, szImageDirectory )
+   {StringBuilder sb_szImageDirectory;
+   if ( szImageDirectory == null )
+      sb_szImageDirectory = new StringBuilder( 32 );
+   else
+      sb_szImageDirectory = new StringBuilder( szImageDirectory );
+       m_KZOEP1AA.SysConvertEnvironmentString( sb_szImageDirectory, szImageDirectory );
+   szImageDirectory = sb_szImageDirectory.toString( );}
+   //:SysAppendcDirSep( szImageDirectory )
+   {StringBuilder sb_szImageDirectory;
+   if ( szImageDirectory == null )
+      sb_szImageDirectory = new StringBuilder( 32 );
+   else
+      sb_szImageDirectory = new StringBuilder( szImageDirectory );
+       m_KZOEP1AA.SysAppendcDirSep( sb_szImageDirectory );
+   szImageDirectory = sb_szImageDirectory.toString( );}
 
    //:// Format the printer icons based on the Page Height and Width.
 
@@ -2632,13 +2694,27 @@ omSPLDef_FormatPrintIcons( View     mSPLDef,
    {
       throw ZeidonException.wrapException( e );
    }
-   //:szWriteBuffer = "                     <fo:external-graphic src=^c:/lplr/epamms/xsl/images/TopLeft.png^/>"
+   //:szWriteBuffer = "                     <fo:external-graphic src=^" + szImageDirectory + "/TopLeft.png^/>"
     {StringBuilder sb_szWriteBuffer;
    if ( szWriteBuffer == null )
       sb_szWriteBuffer = new StringBuilder( 32 );
    else
       sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
-      ZeidonStringCopy( sb_szWriteBuffer, 1, 0, "                     <fo:external-graphic src=^c:/lplr/epamms/xsl/images/TopLeft.png^/>", 1, 0, 32001 );
+      ZeidonStringCopy( sb_szWriteBuffer, 1, 0, "                     <fo:external-graphic src=^", 1, 0, 32001 );
+   szWriteBuffer = sb_szWriteBuffer.toString( );}
+    {StringBuilder sb_szWriteBuffer;
+   if ( szWriteBuffer == null )
+      sb_szWriteBuffer = new StringBuilder( 32 );
+   else
+      sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
+      ZeidonStringConcat( sb_szWriteBuffer, 1, 0, szImageDirectory, 1, 0, 32001 );
+   szWriteBuffer = sb_szWriteBuffer.toString( );}
+    {StringBuilder sb_szWriteBuffer;
+   if ( szWriteBuffer == null )
+      sb_szWriteBuffer = new StringBuilder( 32 );
+   else
+      sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
+      ZeidonStringConcat( sb_szWriteBuffer, 1, 0, "/TopLeft.png^/>", 1, 0, 32001 );
    szWriteBuffer = sb_szWriteBuffer.toString( );}
    //:WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
    try
@@ -2783,13 +2859,27 @@ omSPLDef_FormatPrintIcons( View     mSPLDef,
    {
       throw ZeidonException.wrapException( e );
    }
-   //:szWriteBuffer = "                     <fo:external-graphic src=^c:/lplr/epamms/xsl/images/TopRight.png^/>"
+   //:szWriteBuffer = "                     <fo:external-graphic src=^" + szImageDirectory + "/TopRight.png^/>"
     {StringBuilder sb_szWriteBuffer;
    if ( szWriteBuffer == null )
       sb_szWriteBuffer = new StringBuilder( 32 );
    else
       sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
-      ZeidonStringCopy( sb_szWriteBuffer, 1, 0, "                     <fo:external-graphic src=^c:/lplr/epamms/xsl/images/TopRight.png^/>", 1, 0, 32001 );
+      ZeidonStringCopy( sb_szWriteBuffer, 1, 0, "                     <fo:external-graphic src=^", 1, 0, 32001 );
+   szWriteBuffer = sb_szWriteBuffer.toString( );}
+    {StringBuilder sb_szWriteBuffer;
+   if ( szWriteBuffer == null )
+      sb_szWriteBuffer = new StringBuilder( 32 );
+   else
+      sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
+      ZeidonStringConcat( sb_szWriteBuffer, 1, 0, szImageDirectory, 1, 0, 32001 );
+   szWriteBuffer = sb_szWriteBuffer.toString( );}
+    {StringBuilder sb_szWriteBuffer;
+   if ( szWriteBuffer == null )
+      sb_szWriteBuffer = new StringBuilder( 32 );
+   else
+      sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
+      ZeidonStringConcat( sb_szWriteBuffer, 1, 0, "/TopRight.png^/>", 1, 0, 32001 );
    szWriteBuffer = sb_szWriteBuffer.toString( );}
    //:WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
    try
@@ -2934,13 +3024,27 @@ omSPLDef_FormatPrintIcons( View     mSPLDef,
    {
       throw ZeidonException.wrapException( e );
    }
-   //:szWriteBuffer = "                     <fo:external-graphic src=^c:/lplr/epamms/xsl/images/BottomLeft.png^/>"
+   //:szWriteBuffer = "                     <fo:external-graphic src=^" + szImageDirectory + "/BottomLeft.png^/>"
     {StringBuilder sb_szWriteBuffer;
    if ( szWriteBuffer == null )
       sb_szWriteBuffer = new StringBuilder( 32 );
    else
       sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
-      ZeidonStringCopy( sb_szWriteBuffer, 1, 0, "                     <fo:external-graphic src=^c:/lplr/epamms/xsl/images/BottomLeft.png^/>", 1, 0, 32001 );
+      ZeidonStringCopy( sb_szWriteBuffer, 1, 0, "                     <fo:external-graphic src=^", 1, 0, 32001 );
+   szWriteBuffer = sb_szWriteBuffer.toString( );}
+    {StringBuilder sb_szWriteBuffer;
+   if ( szWriteBuffer == null )
+      sb_szWriteBuffer = new StringBuilder( 32 );
+   else
+      sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
+      ZeidonStringConcat( sb_szWriteBuffer, 1, 0, szImageDirectory, 1, 0, 32001 );
+   szWriteBuffer = sb_szWriteBuffer.toString( );}
+    {StringBuilder sb_szWriteBuffer;
+   if ( szWriteBuffer == null )
+      sb_szWriteBuffer = new StringBuilder( 32 );
+   else
+      sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
+      ZeidonStringConcat( sb_szWriteBuffer, 1, 0, "/BottomLeft.png^/>", 1, 0, 32001 );
    szWriteBuffer = sb_szWriteBuffer.toString( );}
    //:WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
    try
@@ -3085,13 +3189,27 @@ omSPLDef_FormatPrintIcons( View     mSPLDef,
    {
       throw ZeidonException.wrapException( e );
    }
-   //:szWriteBuffer = "                     <fo:external-graphic src=^c:/lplr/epamms/xsl/images/BottomRight.png^/>"
+   //:szWriteBuffer = "                     <fo:external-graphic src=^" + szImageDirectory + "/BottomRight.png^/>"
     {StringBuilder sb_szWriteBuffer;
    if ( szWriteBuffer == null )
       sb_szWriteBuffer = new StringBuilder( 32 );
    else
       sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
-      ZeidonStringCopy( sb_szWriteBuffer, 1, 0, "                     <fo:external-graphic src=^c:/lplr/epamms/xsl/images/BottomRight.png^/>", 1, 0, 32001 );
+      ZeidonStringCopy( sb_szWriteBuffer, 1, 0, "                     <fo:external-graphic src=^", 1, 0, 32001 );
+   szWriteBuffer = sb_szWriteBuffer.toString( );}
+    {StringBuilder sb_szWriteBuffer;
+   if ( szWriteBuffer == null )
+      sb_szWriteBuffer = new StringBuilder( 32 );
+   else
+      sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
+      ZeidonStringConcat( sb_szWriteBuffer, 1, 0, szImageDirectory, 1, 0, 32001 );
+   szWriteBuffer = sb_szWriteBuffer.toString( );}
+    {StringBuilder sb_szWriteBuffer;
+   if ( szWriteBuffer == null )
+      sb_szWriteBuffer = new StringBuilder( 32 );
+   else
+      sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
+      ZeidonStringConcat( sb_szWriteBuffer, 1, 0, "/BottomRight.png^/>", 1, 0, 32001 );
    szWriteBuffer = sb_szWriteBuffer.toString( );}
    //:WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
    try
@@ -3236,13 +3354,27 @@ omSPLDef_FormatPrintIcons( View     mSPLDef,
    {
       throw ZeidonException.wrapException( e );
    }
-   //:szWriteBuffer = "                     <fo:external-graphic src=^c:/lplr/epamms/xsl/images/CenterH.png^/>"
+   //:szWriteBuffer = "                     <fo:external-graphic src=^" + szImageDirectory + "/CenterH.png^/>"
     {StringBuilder sb_szWriteBuffer;
    if ( szWriteBuffer == null )
       sb_szWriteBuffer = new StringBuilder( 32 );
    else
       sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
-      ZeidonStringCopy( sb_szWriteBuffer, 1, 0, "                     <fo:external-graphic src=^c:/lplr/epamms/xsl/images/CenterH.png^/>", 1, 0, 32001 );
+      ZeidonStringCopy( sb_szWriteBuffer, 1, 0, "                     <fo:external-graphic src=^", 1, 0, 32001 );
+   szWriteBuffer = sb_szWriteBuffer.toString( );}
+    {StringBuilder sb_szWriteBuffer;
+   if ( szWriteBuffer == null )
+      sb_szWriteBuffer = new StringBuilder( 32 );
+   else
+      sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
+      ZeidonStringConcat( sb_szWriteBuffer, 1, 0, szImageDirectory, 1, 0, 32001 );
+   szWriteBuffer = sb_szWriteBuffer.toString( );}
+    {StringBuilder sb_szWriteBuffer;
+   if ( szWriteBuffer == null )
+      sb_szWriteBuffer = new StringBuilder( 32 );
+   else
+      sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
+      ZeidonStringConcat( sb_szWriteBuffer, 1, 0, "/CenterH.png^/>", 1, 0, 32001 );
    szWriteBuffer = sb_szWriteBuffer.toString( );}
    //:WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
    try
@@ -3387,13 +3519,27 @@ omSPLDef_FormatPrintIcons( View     mSPLDef,
    {
       throw ZeidonException.wrapException( e );
    }
-   //:szWriteBuffer = "                     <fo:external-graphic src=^c:/lplr/epamms/xsl/images/CenterH.png^/>"
+   //:szWriteBuffer = "                     <fo:external-graphic src=^" + szImageDirectory + "/CenterH.png^/>"
     {StringBuilder sb_szWriteBuffer;
    if ( szWriteBuffer == null )
       sb_szWriteBuffer = new StringBuilder( 32 );
    else
       sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
-      ZeidonStringCopy( sb_szWriteBuffer, 1, 0, "                     <fo:external-graphic src=^c:/lplr/epamms/xsl/images/CenterH.png^/>", 1, 0, 32001 );
+      ZeidonStringCopy( sb_szWriteBuffer, 1, 0, "                     <fo:external-graphic src=^", 1, 0, 32001 );
+   szWriteBuffer = sb_szWriteBuffer.toString( );}
+    {StringBuilder sb_szWriteBuffer;
+   if ( szWriteBuffer == null )
+      sb_szWriteBuffer = new StringBuilder( 32 );
+   else
+      sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
+      ZeidonStringConcat( sb_szWriteBuffer, 1, 0, szImageDirectory, 1, 0, 32001 );
+   szWriteBuffer = sb_szWriteBuffer.toString( );}
+    {StringBuilder sb_szWriteBuffer;
+   if ( szWriteBuffer == null )
+      sb_szWriteBuffer = new StringBuilder( 32 );
+   else
+      sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
+      ZeidonStringConcat( sb_szWriteBuffer, 1, 0, "/CenterH.png^/>", 1, 0, 32001 );
    szWriteBuffer = sb_szWriteBuffer.toString( );}
    //:WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
    try
@@ -3538,13 +3684,27 @@ omSPLDef_FormatPrintIcons( View     mSPLDef,
    {
       throw ZeidonException.wrapException( e );
    }
-   //:szWriteBuffer = "                     <fo:external-graphic src=^c:/lplr/epamms/xsl/images/CenterV.png^/>"
+   //:szWriteBuffer = "                     <fo:external-graphic src=^" + szImageDirectory + "/CenterV.png^/>"
     {StringBuilder sb_szWriteBuffer;
    if ( szWriteBuffer == null )
       sb_szWriteBuffer = new StringBuilder( 32 );
    else
       sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
-      ZeidonStringCopy( sb_szWriteBuffer, 1, 0, "                     <fo:external-graphic src=^c:/lplr/epamms/xsl/images/CenterV.png^/>", 1, 0, 32001 );
+      ZeidonStringCopy( sb_szWriteBuffer, 1, 0, "                     <fo:external-graphic src=^", 1, 0, 32001 );
+   szWriteBuffer = sb_szWriteBuffer.toString( );}
+    {StringBuilder sb_szWriteBuffer;
+   if ( szWriteBuffer == null )
+      sb_szWriteBuffer = new StringBuilder( 32 );
+   else
+      sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
+      ZeidonStringConcat( sb_szWriteBuffer, 1, 0, szImageDirectory, 1, 0, 32001 );
+   szWriteBuffer = sb_szWriteBuffer.toString( );}
+    {StringBuilder sb_szWriteBuffer;
+   if ( szWriteBuffer == null )
+      sb_szWriteBuffer = new StringBuilder( 32 );
+   else
+      sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
+      ZeidonStringConcat( sb_szWriteBuffer, 1, 0, "/CenterV.png^/>", 1, 0, 32001 );
    szWriteBuffer = sb_szWriteBuffer.toString( );}
    //:WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
    try
@@ -3689,13 +3849,27 @@ omSPLDef_FormatPrintIcons( View     mSPLDef,
    {
       throw ZeidonException.wrapException( e );
    }
-   //:szWriteBuffer = "                     <fo:external-graphic src=^c:/lplr/epamms/xsl/images/CenterV.png^/>"
+   //:szWriteBuffer = "                     <fo:external-graphic src=^" + szImageDirectory + "/CenterV.png^/>"
     {StringBuilder sb_szWriteBuffer;
    if ( szWriteBuffer == null )
       sb_szWriteBuffer = new StringBuilder( 32 );
    else
       sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
-      ZeidonStringCopy( sb_szWriteBuffer, 1, 0, "                     <fo:external-graphic src=^c:/lplr/epamms/xsl/images/CenterV.png^/>", 1, 0, 32001 );
+      ZeidonStringCopy( sb_szWriteBuffer, 1, 0, "                     <fo:external-graphic src=^", 1, 0, 32001 );
+   szWriteBuffer = sb_szWriteBuffer.toString( );}
+    {StringBuilder sb_szWriteBuffer;
+   if ( szWriteBuffer == null )
+      sb_szWriteBuffer = new StringBuilder( 32 );
+   else
+      sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
+      ZeidonStringConcat( sb_szWriteBuffer, 1, 0, szImageDirectory, 1, 0, 32001 );
+   szWriteBuffer = sb_szWriteBuffer.toString( );}
+    {StringBuilder sb_szWriteBuffer;
+   if ( szWriteBuffer == null )
+      sb_szWriteBuffer = new StringBuilder( 32 );
+   else
+      sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
+      ZeidonStringConcat( sb_szWriteBuffer, 1, 0, "/CenterV.png^/>", 1, 0, 32001 );
    szWriteBuffer = sb_szWriteBuffer.toString( );}
    //:WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
    try
@@ -4727,6 +4901,12 @@ omSPLDef_ProcessPDF_Blocks( View     mSPLDef,
    String   szTitle = null;
    //:STRING ( 90 ) szMsg
    String   szMsg = null;
+   //:STRING ( 32 ) szLPLR_Name
+   String   szLPLR_Name = null;
+   //:STRING ( 64 ) szSystemIniApplName
+   String   szSystemIniApplName = null;
+   //:STRING ( 256 ) szImageDirectory
+   String   szImageDirectory = null;
    //:INTEGER       lControl
    int      lControl = 0;
    //:SHORT         nRC
@@ -4921,6 +5101,63 @@ omSPLDef_ProcessPDF_Blocks( View     mSPLDef,
             //:IF szSectionType = "Graphic"
             if ( ZeidonStringCompare( szSectionType, 1, 0, "Graphic", 1, 0, 51 ) == 0 )
             { 
+
+               //:// Get the fop images directory
+               //:SfGetApplicationForSubtask( szLPLR_Name, mSPLDef )
+               {StringBuilder sb_szLPLR_Name;
+               if ( szLPLR_Name == null )
+                  sb_szLPLR_Name = new StringBuilder( 32 );
+               else
+                  sb_szLPLR_Name = new StringBuilder( szLPLR_Name );
+                               SfGetApplicationForSubtask( sb_szLPLR_Name, mSPLDef );
+               szLPLR_Name = sb_szLPLR_Name.toString( );}
+               //:szSystemIniApplName = "[App." + szLPLR_Name + "]"
+                {StringBuilder sb_szSystemIniApplName;
+               if ( szSystemIniApplName == null )
+                  sb_szSystemIniApplName = new StringBuilder( 32 );
+               else
+                  sb_szSystemIniApplName = new StringBuilder( szSystemIniApplName );
+                              ZeidonStringCopy( sb_szSystemIniApplName, 1, 0, "[App.", 1, 0, 65 );
+               szSystemIniApplName = sb_szSystemIniApplName.toString( );}
+                {StringBuilder sb_szSystemIniApplName;
+               if ( szSystemIniApplName == null )
+                  sb_szSystemIniApplName = new StringBuilder( 32 );
+               else
+                  sb_szSystemIniApplName = new StringBuilder( szSystemIniApplName );
+                              ZeidonStringConcat( sb_szSystemIniApplName, 1, 0, szLPLR_Name, 1, 0, 65 );
+               szSystemIniApplName = sb_szSystemIniApplName.toString( );}
+                {StringBuilder sb_szSystemIniApplName;
+               if ( szSystemIniApplName == null )
+                  sb_szSystemIniApplName = new StringBuilder( 32 );
+               else
+                  sb_szSystemIniApplName = new StringBuilder( szSystemIniApplName );
+                              ZeidonStringConcat( sb_szSystemIniApplName, 1, 0, "]", 1, 0, 65 );
+               szSystemIniApplName = sb_szSystemIniApplName.toString( );}
+               //:SysReadZeidonIni( -1, szSystemIniApplName, "FopImageDirectory", szImageDirectory )
+               {StringBuilder sb_szImageDirectory;
+               if ( szImageDirectory == null )
+                  sb_szImageDirectory = new StringBuilder( 32 );
+               else
+                  sb_szImageDirectory = new StringBuilder( szImageDirectory );
+                               m_KZOEP1AA.SysReadZeidonIni( -1, szSystemIniApplName, "FopImageDirectory", sb_szImageDirectory );
+               szImageDirectory = sb_szImageDirectory.toString( );}
+               //:SysConvertEnvironmentString( szImageDirectory, szImageDirectory )
+               {StringBuilder sb_szImageDirectory;
+               if ( szImageDirectory == null )
+                  sb_szImageDirectory = new StringBuilder( 32 );
+               else
+                  sb_szImageDirectory = new StringBuilder( szImageDirectory );
+                               m_KZOEP1AA.SysConvertEnvironmentString( sb_szImageDirectory, szImageDirectory );
+               szImageDirectory = sb_szImageDirectory.toString( );}
+               //:SysAppendcDirSep( szImageDirectory )
+               {StringBuilder sb_szImageDirectory;
+               if ( szImageDirectory == null )
+                  sb_szImageDirectory = new StringBuilder( 32 );
+               else
+                  sb_szImageDirectory = new StringBuilder( szImageDirectory );
+                               m_KZOEP1AA.SysAppendcDirSep( sb_szImageDirectory );
+               szImageDirectory = sb_szImageDirectory.toString( );}
+
                //:szHeight = mSPLDefPDF.LLD_Block.Height
                {MutableInt mi_lTempInteger_5 = new MutableInt( lTempInteger_5 );
                StringBuilder sb_szHeight;
@@ -4983,8 +5220,22 @@ omSPLDef_ProcessPDF_Blocks( View     mSPLDef,
                {
                   throw ZeidonException.wrapException( e );
                }
-               //:szWriteBuffer = "                        <fo:external-graphic src=^c:/lplr/epamms/xsl/images/" + mSPLDefPDF.LLD_Block.ImageName +
+               //:szWriteBuffer = "                        <fo:external-graphic src=^" + szImageDirectory + mSPLDefPDF.LLD_Block.ImageName +
                //:                "^ height=^" + szHeight + "in^ width=^" + szWidth + "in^ content-height=^scale-to-fit^ content-width=^scale-to-fit^/>"
+                {StringBuilder sb_szWriteBuffer;
+               if ( szWriteBuffer == null )
+                  sb_szWriteBuffer = new StringBuilder( 32 );
+               else
+                  sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
+                              ZeidonStringCopy( sb_szWriteBuffer, 1, 0, "                        <fo:external-graphic src=^", 1, 0, 32001 );
+               szWriteBuffer = sb_szWriteBuffer.toString( );}
+                {StringBuilder sb_szWriteBuffer;
+               if ( szWriteBuffer == null )
+                  sb_szWriteBuffer = new StringBuilder( 32 );
+               else
+                  sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
+                              ZeidonStringConcat( sb_szWriteBuffer, 1, 0, szImageDirectory, 1, 0, 32001 );
+               szWriteBuffer = sb_szWriteBuffer.toString( );}
                {MutableInt mi_lTempInteger_9 = new MutableInt( lTempInteger_9 );
                StringBuilder sb_szTempString_0;
                if ( szTempString_0 == null )
@@ -4994,13 +5245,6 @@ omSPLDef_ProcessPDF_Blocks( View     mSPLDef,
                                GetVariableFromAttribute( sb_szTempString_0, mi_lTempInteger_9, 'S', 255, mSPLDefPDF, "LLD_Block", "ImageName", "", 0 );
                lTempInteger_9 = mi_lTempInteger_9.intValue( );
                szTempString_0 = sb_szTempString_0.toString( );}
-                {StringBuilder sb_szWriteBuffer;
-               if ( szWriteBuffer == null )
-                  sb_szWriteBuffer = new StringBuilder( 32 );
-               else
-                  sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
-                              ZeidonStringCopy( sb_szWriteBuffer, 1, 0, "                        <fo:external-graphic src=^c:/lplr/epamms/xsl/images/", 1, 0, 32001 );
-               szWriteBuffer = sb_szWriteBuffer.toString( );}
                 {StringBuilder sb_szWriteBuffer;
                if ( szWriteBuffer == null )
                   sb_szWriteBuffer = new StringBuilder( 32 );
@@ -17339,6 +17583,18 @@ omSPLDef_GenerateLine( View     mSPLDef,
 
    //:// This is just a SysWriteLine with an options TraceLineS statement.
    //:// TraceLineS( "*** Line: ", szOutputLine )
+   //:ConvertHtmlEntities( szOutputLine )
+   {
+    ZGlobal1_Operation m_ZGlobal1_Operation = new ZGlobal1_Operation( mSPLDef );
+    {StringBuilder sb_szOutputLine;
+   if ( szOutputLine == null )
+      sb_szOutputLine = new StringBuilder( 32 );
+   else
+      sb_szOutputLine = new StringBuilder( szOutputLine );
+       m_ZGlobal1_Operation.ConvertHtmlEntities( sb_szOutputLine );
+   szOutputLine = sb_szOutputLine.toString( );}
+    // m_ZGlobal1_Operation = null;  // permit gc  (unnecessary)
+   }
    //:SysWriteLine( mSPLDef, lFileHandle, szOutputLine )
    try
    {

@@ -21,6 +21,7 @@ $(function() {
    var g_scale = 1;
    var g_pixelsPerInch = 81;
    var g_pixelsBorder = 2;
+   var g_border = 4;
 
    var g_scrollbar = null;
    var g_windowHeight = -1;
@@ -386,16 +387,15 @@ $(function() {
 
          g_xOffset = 0;
          g_yOffset = 0;
-         while ( $parent.parent().is( "html" ) === false && stopLoop++ < 40 )
-         {
-            if ( $parent.is( "div#zclient" ) )
-            {
+         while ( $parent.parent().is( "html" ) === false && stopLoop++ < 40 ) {
+            if ( $parent.is( "div#zclient" ) ) {
                g_xOffset = 0;
                g_yOffset = 0;
             }
 
-            if ( $parent.is( "div#zviewport" ) )
+            if ( $parent.is( "div#zviewport" ) ) {
                break;
+            }
 
          // console.log($parent);
          // console.log( "top: " + Math.round( $parent.position().top ) );
@@ -505,7 +505,7 @@ $(function() {
       drop: function( event, ui ) {
       // console.log( ".page, .block-element drop" );
          var stopLoop = 1;
-         if ( ui.draggable.hasClass( "canvas-element" ) ) { // dropping panel/block already on canvas
+         if ( ui.draggable.hasClass( "canvas-element" ) ) { // dropping EXISTING panel/block onto canvas
             var $canvasElement = $(ui.helper);
             var $parent = $canvasElement.parent();
             var $canvas = determineTargetOfDrop( event, $(this), $canvasElement );
@@ -556,7 +556,7 @@ $(function() {
             setCurrentBlockData( $canvasElement, "updated block already on canvas" );
             clearListAndSelection( $canvasElement[0] ); // clear the list and set current selection
          } else {
-            var $canvasElement = $(ui.helper).clone(); // ui.draggable.clone();  dropping new panel/block
+            var $canvasElement = $(ui.helper).clone(); // ui.draggable.clone();  dropping NEW panel/block
          // console.log( ".page, .block-element new block top:" + event.pageY + "  left: " + event.pageX +
          //              "   height: " + $(ui.helper).height() + "   width: " + $(ui.helper).width() );
                       // "   height: " + ($(ui.helper).height() + g_pixelsBorder) + "   width: " + ($(ui.helper).width() + g_pixelsBorder) );
@@ -620,8 +620,8 @@ $(function() {
                position: "absolute",
                top: Math.floor( ui.position.top - $canvas.offset().top ).toString() + "px",
                left: Math.floor( ui.position.left - $canvas.offset().left ).toString() + "px",
-               height: pixel2Scale( "81px", 4 ), // pixelsPerInch ... 2*g_pixelsBorder
-               width: pixel2Scale( "81px", 4 ) // pixelsPerInch ... 2*g_pixelsBorder
+               height: pixel2Scale( "81px", g_border ), // pixelsPerInch ... 2*g_pixelsBorder
+               width: pixel2Scale( "81px", g_border ) // pixelsPerInch ... 2*g_pixelsBorder
             });
             g_updatedLLD = true;
             var top = Math.floor( ui.position.top - $canvas.offset().top );
@@ -710,6 +710,13 @@ $(function() {
       return false;
    }
 
+   // The .offset() method allows us to retrieve the current position of an element relative to the document.
+   // Note that .offset() returns an object containing the properties top and left.
+   // Contrast this with .position(), which retrieves the current position relative to the offset parent.
+   // What is the difference between screenX/Y, clientX/Y and pageX/Y?
+   // Screen ? the full screen of the monitor (screenX/Y).  Position will always be relative to the physical screen's viewport.
+   // Client ? the client viewport of the browser (clientX/Y).  If you click in the left top corner the value will always be (0,0) independent of scroll position.
+   // Document ? the complete document/page (pageX/Y).  Note that pageX/pageY on the UIEvent object are not standardized.
    function determineTargetOfSelect( event, $lastSelect, $currentSelect ) {
       var clickX = event.pageX;
       var clickY = event.pageY;
@@ -888,6 +895,9 @@ $(function() {
 
    // this is used to get the number of pixels from the inches value respecting to scale
    function scaledInch2Pixel( attr, border ) {
+      if ( ! attr ) {
+         attr = "";
+      }
       var idx = attr.indexOf( "in" );
       if ( idx >= 0 ) {
          attr = attr.substring( 0, idx );
@@ -902,18 +912,20 @@ $(function() {
    }
 
    function resizeImg() {
+      var scale = Math.floor( g_scale * 81 );
       $( "div.page" ).each( function() {
          var $this = $(this);
       // console.log( "Scaling page: " + $this.attr( "id" ) );
-         var scale = Math.floor( g_scale * 81 );
          $this.css( 'background-size', scale + "px " + scale + "px" );
       });
+   // $("#label").css( 'background-size', scale + "px " + scale + "px" );
+   // $("#label").css({ left: left, height: $("#label").height() - g_scrollbar.height });
       $( ".canvas-element" ).each( function() {
          var $this = $(this);
          var top = scaledInch2Pixel( $this.data( "z_^top" ) || "0", 0 );
          var left = scaledInch2Pixel( $this.data( "z_^left" ) || "0", 0 );
-         var height = scaledInch2Pixel( $this.data( "z_^height" ) || "0", 4 ); // 2*g_pixelsBorder
-         var width = scaledInch2Pixel( $this.data( "z_^width" ) || "0", 4 ); // 2*g_pixelsBorder
+         var height = scaledInch2Pixel( $this.data( "z_^height" ) || "0", g_border ); // 2*g_pixelsBorder
+         var width = scaledInch2Pixel( $this.data( "z_^width" ) || "0", g_border ); // 2*g_pixelsBorder
       // console.log( "Resize Tag: " + $this.attr( "id" ) +
       //                "  Top: " + $this.data( "z_^top" ) + "in ~ " + top + "px" +
       //                "  Left: " + $this.data( "z_^left" ) + "in ~ " + left + "px" +
@@ -959,12 +971,12 @@ $(function() {
    // <div class="block draggable canvas-element block-element ui-draggable ui-resizable" style="position:absolute;top:-0.78125px;height:253px;width:266px;left:0px;background-color: #ccffcc; display: block; float: left; color: red; border: 2px solid;" id="Tag100" name="Tag100">
    // <input type="text" id="zLabelBackgroundColor" name="zLabelBackgroundColor" class="zeidon" data-zmap="label.z_^background^color"  value="#ffffed" />
    function mapUiDataToElementData( $current_element ) {
-      if ( g_currentType ) {
+      if ( g_currentType ) {  // why this isn't done after the "if ( $current_element )" code block below, I don't know??? 2016.12.19
          mapToSpecialBlockFromBlock( g_currentType );
          g_currentType = null;
       }
       if ( $current_element ) {
-      // displayElementData( "mapUiDataToElementData (before)", $current_element );
+         displayElementData( "mapUiDataToElementData (before)", $current_element );
          var entityAttr;
          var n;
          var entity;
@@ -988,7 +1000,7 @@ $(function() {
                }
             }
          });
-      // displayElementData( "mapUiDataToElementData (after)", $current_element );
+         displayElementData( "mapUiDataToElementData (after)", $current_element );
       }
    }
 /*
@@ -1003,7 +1015,7 @@ $(function() {
    function mapElementDataToUiData( $current_element ) {
       $("#SpecialAttrToggle").hide();
       if ( $current_element ) {
-      // displayElementData( "mapElementDataToUiData", $current_element );
+         displayElementData( "mapElementDataToUiData", $current_element );
          var entityAttr;
          var n;
          var entity;
@@ -1505,18 +1517,18 @@ $(function() {
 */
    $("#zBlockTop")
       .blur( function () {
-         var top = pixel2Scale( inch2px( $(this).val(), 0 ) );
+      // var top = pixel2Scale( inch2px( $(this).val(), 0 ) );
       // console.log( "block top attribute: " + $(this).val() + " ==> " + top );
-         top = scaledInch2Pixel( $(this).val(), 0 );
+         var top = scaledInch2Pixel( $(this).val(), 0 );
       // console.log( "scaled block top attribute: " + $(this).val() + " ==> " + top );
           g_$current_block.css({ top : top });
       });
 
    $("#zBlockLeft")
       .blur( function () {
-         var left = pixel2Scale( inch2px( $(this).val(), 0 ) );
+      // var left = pixel2Scale( inch2px( $(this).val(), 0 ) );
       // console.log( "block left attribute: " + $(this).val() + " ==> " + left );
-         left = scaledInch2Pixel( $(this).val(), 0 );
+         var left = scaledInch2Pixel( $(this).val(), 0 );
       // console.log( "scaled block left attribute: " + $(this).val() + " ==> " + left );
          g_$current_block.css({ left : left });
       });
@@ -1525,16 +1537,16 @@ $(function() {
       .blur( function () {
       // var height = pixel2Scale( inch2px( $(this).val(), 4 ) ); // 2*g_pixelsBorder
       // console.log( "block height attribute: " + $(this).val() + " ==> " + height );
-         var height = scaledInch2Pixel( $(this).val(), 4 );
+         var height = scaledInch2Pixel( $(this).val(), g_border );
       // console.log( "scaled block height attribute: " + $(this).val() + " ==> " + height );
          g_$current_block.css({ height : height });
       });
 
    $("#zBlockWidth")
       .blur( function () {
-      // var width = pixel2Scale( inch2px( $(this).val(), 4 ) ); // 2*g_pixelsBorder
+      // var width = pixel2Scale( inch2px( $(this).val(), g_border ) ); // 2*g_pixelsBorder
          // console.log( "block width attribute: " + $(this).val() + " ==> " + width );
-         var width = scaledInch2Pixel( $(this).val(), 4 );
+         var width = scaledInch2Pixel( $(this).val(), g_border );
          // console.log( "scaled block width attribute: " + $(this).val() + " ==> " + width );
          g_$current_block.css({ width : width });
       });
@@ -1594,24 +1606,27 @@ $(function() {
          }
       });
 
-var g_BlockAttrList = [ "z_^text^color", "z_^text^color^override",
-                        "z_^font^family", "z_^font^size", "z_^font^weight",
-                        "z_^margin", "z_^margin^top", "z_^margin^left", "z_^margin^bottom", "z_^margin^right", "z_^margin^override",
-                        "z_^border", "z_^border^top", "z_^border^bottom", "z_^border^left", "z_^borderRight", "z_^border^override",
-                        "z_^padding", "z_^padding^top", "z_^padding^bottom", "z_^padding^left", "z_^padding^right", "z_^padding^override",
-                        "z_^title^position", "z_^text^align", "z_^text^line^height", "z_^text^letter^space" ];
+   // The difference between classes zeidon and zeidon-special is that zeidon-special is an extra block entity based on the section type of the current block.
+   // When we switch to or from a special block category, we need to keep the block's data in sync with the special block data so that the UI works properly.
+   // The functions mapToSpecialBlockFromBlock and mapFromSpecialBlockToBlock perform this synchronization using the attributes defined in g_SpecialBlockAttrList.
+   var g_SpecialBlockAttrList = [ "z_^text^color", "z_^text^color^override", // "z_^background^color", "z_^background^color^override", "z_^border^color", "z_^border^color^override", 
+                               "z_^font^family", "z_^font^size", "z_^font^weight",
+                               "z_^margin", "z_^margin^top", "z_^margin^left", "z_^margin^bottom", "z_^margin^right", "z_^margin^override",
+                               "z_^border", "z_^border^top", "z_^border^bottom", "z_^border^left", "z_^borderRight", "z_^border^override",
+                               "z_^padding", "z_^padding^top", "z_^padding^bottom", "z_^padding^left", "z_^padding^right", "z_^padding^override",
+                               "z_^title^position", "z_^text^align", "z_^text^line^height", "z_^text^letter^space" ];
 
    function mapToSpecialBlockFromBlock( currentType ) {
       if ( g_$current_block && g_$current_block.data() ) {
          var sectionType = g_$current_block.data( "z_^l^l^d_^section^type" );
          if ( sectionType ) {
-         // displayElementData( "mapToSpecialBlockFromBlock Before", g_$current_block );
-
             var entityAttr;
             var n;
             var entity;
             var key;
+            var value;
 
+         // displayElementData( "mapToSpecialBlockFromBlock Before", g_$current_block );
             $("input.zeidon-special, select.zeidon-special").each( function() {
                entityAttr = $(this).data( "zmap" );
                if ( entityAttr ) {
@@ -1621,22 +1636,27 @@ var g_BlockAttrList = [ "z_^text^color", "z_^text^color^override",
                      key = entityAttr.substring( n + 1 );
                      if ( key === "z_^text^color" ) {
                      // console.log( "Processing color1" );
-                        g_$current_block.data( key, getColorPickerByRGB( $(this).val() ) );
+                        value = getColorPickerByRGB( $(this).val() );
                      } else {
-                        g_$current_block.data( key, this.type === "checkbox" ? (this.checked === true ? "Y" : "") : $(this).val() );
+                        value = this.type === "checkbox" ? (this.checked === true ? "Y" : "") : $(this).val();
                      }
+                     console.log( "Processing To zeidon-special entityAttr: " + key + "   Value: " + value );
+                  // if ( key in g_$current_block.data() ) {  I think it's okay to keep these hanging around
+                  //    g_$current_block.removeData( key );
+                  // }
+                     g_$current_block.data( key, value );
                   }
                }
             });
 
             var section = zeidonAttributeToKey( sectionType ) + "." + currentType + ".";
-            $.each( g_BlockAttrList, function( index, attributeName ) {
+            $.each( g_SpecialBlockAttrList, function( index, attributeName ) {
                var specialBlockAttribute = section + attributeName;
             // console.log( "ToSpecial: " + attributeName + "  to: " + specialBlockAttribute + "  current: " + g_$current_block.data( attributeName ) );
                g_$current_block.data( specialBlockAttribute, g_$current_block.data( attributeName ) );
                g_$current_block.data( attributeName, "" );
             });
-         // displayElementData( "mapToSpecialBlockFromBlock After", g_$current_block );
+            displayElementData( "mapToSpecialBlockFromBlock After", g_$current_block );
          }
       }
    }
@@ -1648,7 +1668,7 @@ var g_BlockAttrList = [ "z_^text^color", "z_^text^color^override",
          if ( sectionType ) {
          // displayElementData( "Before mapFromSpecialBlockToBlock", g_$current_block );
             var section = zeidonAttributeToKey( sectionType ) + "." + currentType + ".";
-            $.each( g_BlockAttrList, function( index, attributeName ) {
+            $.each( g_SpecialBlockAttrList, function( index, attributeName ) {
                var specialBlockAttribute = section + attributeName;
             // console.log( "FromSpecial: " + attributeName + "  from: " + specialBlockAttribute + "  current: " + g_$current_block.data( specialBlockAttribute ) );
                g_$current_block.data( attributeName, g_$current_block.data( specialBlockAttribute ) );
@@ -1680,7 +1700,7 @@ var g_BlockAttrList = [ "z_^text^color", "z_^text^color^override",
                }
             });
 
-         // displayElementData( "After mapFromSpecialBlockToBlock", g_$current_block );
+            displayElementData( "After mapFromSpecialBlockToBlock", g_$current_block );
          }
       }
    }
@@ -2205,8 +2225,8 @@ public class FileServer {
    }
 
    function elementDataToJSON( id ) {
-      var $element = $("#" + id);
       var json = "";
+      var $element = $("#" + id);
       if ( $element ) {
          $.each( $element.data(), function( key, value ) {
             if ( key.indexOf( "z_" ) === 0 && (typeof value === "string" || typeof value === "number") ) {
@@ -2412,7 +2432,7 @@ public class FileServer {
                      // }
 
                         // Guarantee the Tag is set properly in the element data.
-                     // jsonLabel += ", \"Tag\" : \"" + trimLeadingAndTrailingWhiteSpace( obj[prop] ) + "\"";
+                     // jsonLabel += ", \"Tag\" : \"" + trimLeadingAndTrailingWhiteSpace( String( obj[prop] ) )  + "\"";
                         $("#" + obj['id']).data( "z_^tag", obj['id'] );
 
                         // So let's get the all of the custom properties for this element
@@ -2420,7 +2440,7 @@ public class FileServer {
                         jsonLabel += elementDataToJSON( obj['id'] );
                      } /* else if ( prop === "style" ) {   these are done using the "data" versions
                         // do position and size
-                        var stylelist = obj[prop];
+                        var stylelist = String( obj[prop] );
                         jsonLabel += formatStyle( stylelist, "top" );
                         jsonLabel += formatStyle( stylelist, "left" );
                         jsonLabel += formatStyle( stylelist, "height" );
@@ -2559,22 +2579,22 @@ public class FileServer {
       var attr = "";
       var style = "style=\"position:absolute;";
       for ( var prop in obj ) {
-         if ( typeof obj[prop] === "string" ) {
+         if ( typeof obj[prop] === "string" || typeof obj[prop] === "number" ) {
          // console.log ( "Property for entity: " + entity + " prop: " + prop + ": " + obj[prop] );
             if ( prop === "Tag" ) {
                continue;
             } else if ( prop === "Top" || prop === "Left" ) {
-               style += prop.toLowerCase() + ":" + scaledInch2Pixel( obj[prop], 0 ) + ";";
+               style += prop.toLowerCase() + ":" + scaledInch2Pixel( String( obj[prop] ), 0 ) + ";";
             } else if ( prop === "Height" || prop === "Width" ) {
-               style += prop.toLowerCase() + ":" + scaledInch2Pixel( obj[prop], 4 ) + ";"; // 2*g_pixelsBorder
+               style += prop.toLowerCase() + ":" + scaledInch2Pixel( String( obj[prop] ), g_border ) + ";"; // 2*g_pixelsBorder
             } else {
                if ( prop === "Depth" ) {
-                  var objDepth = parseInt( obj[prop] );
+                  var objDepth = parseInt( String( obj[prop] ) );
                   if ( objDepth !== depth ) {
                      console.log( "AddHtmlLabelElementAttributes depth: " + depth + "  is not equal to object depth: " + objDepth +
                                   "  for Tag: " + obj["Tag"] + "  within parent: " + parentId );
                   }
-               // depth = parseInt( obj[prop] );
+               // depth = parseInt( String( obj[prop] ) );
                }
             }
          }
@@ -2627,11 +2647,11 @@ public class FileServer {
          $element.children( ".ui-resizable-handle" ).css( "z-index", "" );  // prevent these from "showing through"
          $parentElement.append( $element );
          for ( var prop in obj ) {
-            if ( typeof obj[prop] === "string" ) {
+            if ( typeof obj[prop] === "string" || typeof obj[prop] === "number" ) {
             // if ( prop === "Tag" || prop === "Top" || prop === "Left" || prop === "Height" || prop === "Width" ) {
             //    continue;
             // } else {
-                  addZeidonAttributeToElement( $element, prop, obj[prop] );
+                  addZeidonAttributeToElement( $element, prop, String( obj[prop] ) );
             // }
             }
          }
@@ -2660,11 +2680,11 @@ public class FileServer {
       // style += "\"";
       // $element.innerHTML = identity + style;
          for ( var prop in obj ) {
-            if ( typeof obj[prop] === "string" ) {
+            if ( typeof obj[prop] === "string" || typeof obj[prop] === "number" ) {
             // if ( prop === "Tag" || prop === "Top" || prop === "Left" || prop === "Height" || prop === "Width" )  {
             //   continue;
             // } else {
-                  addZeidonAttributeToElement( $element, prop, obj[prop] );
+                  addZeidonAttributeToElement( $element, prop, String( obj[prop] ) );
             // }
             }
          }
@@ -2833,6 +2853,7 @@ public class FileServer {
                   }
                }
             }
+            displayElementData( "After RenderWysiwygLabelFromZeidonJson", $(document.getElementById( "Tag223" )) );
          }
       } else {
          throw new Error( "The JSON does not contain a valid Zeidon Label Definition: " + jsonObj );
@@ -2903,6 +2924,7 @@ public class FileServer {
                var jsonColors = jsonObj["Colors"];
                var jsonReuse = jsonObj["ReusableBlocks"];
                var jsonMarketing = jsonObj["Marketing"];
+               var jsonFontFamily = jsonObj["FontFamily"];
                var jsonBlockTags = jsonObj["BlockTags"];
                var jsonHazardSelected = jsonObj["HazardSelectedLocations"];
                var jsonHazard = jsonObj["HazardLocations"];
@@ -2920,6 +2942,7 @@ public class FileServer {
                setColors( jsonColors );
                setReusableBlocks( jsonReuse );
                setMarketing( jsonMarketing );
+               setFontFamily( jsonFontFamily )
                setBlockTags( jsonBlockTags );
                setHazardLocations( jsonHazardSelected, jsonHazard );
             } catch(e) {
@@ -3718,16 +3741,6 @@ public class FileServer {
       initColorPicker( '#zPageColor', colors, names, lth );
    }
 
-   function xx( $select ) {
-      $.each(opt, function(key, value){
-           var $group = $('<optgroup label="' + key + '" />');
-           $.each(value, function(){
-               $('<option />').html(this.name).appendTo($group);
-           });
-           $group.appendTo($select);
-       });
-   }
-
    function setReusableBlocks( jsonReusable )
    {
       if ( $.isArray( jsonReusable ) ) {
@@ -3752,6 +3765,28 @@ public class FileServer {
          if ( $optgroup !== null ) {
             $optgroup.appendTo( $select );
          }
+      }
+   }
+
+/*
+   function xx_deprecated( $select ) {
+      $.each(opt, function(key, value){
+           var $group = $('<optgroup label="' + key + '" />');
+           $.each(value, function(){
+               $('<option />').html(this.name).appendTo($group);
+           });
+           $group.appendTo($select);
+       });
+   }
+*/
+
+   function setFontFamily( jsonFontFamily )
+   {
+      if ( $.isArray( jsonFontFamily ) ) {
+         var list = $("#zFontFamily");
+         $.each(jsonFontFamily, function(index, item) {
+            list.append( new Option( item.Name, item.Name ) );
+         });
       }
    }
 
