@@ -1654,7 +1654,7 @@ $(function() {
    // When we switch to or from a special block category, we need to keep the block's data in sync with the special block data so that the UI works properly.
    // The functions mapToSpecialBlockFromBlock and mapFromSpecialBlockToBlock perform this synchronization using the attributes defined in g_SpecialBlockAttrList.
    // This list needs to be kept in sync between labeldesigner.js and GraphicalLabelDesignerServlet.java.
-   var g_SpecialBlockAttrList = [ "z_^text^color", "z_^text^color^override", // "z_^background^color", "z_^background^color^override", "z_^border^color", "z_^border^color^override", 
+   var g_SpecialBlockAttrList = [ "z_^text^color", "z_^text^color^override",
                                   "z_^font^family", "z_^font^size", "z_^font^weight",
                                   "z_^margin", "z_^margin^top", "z_^margin^left", "z_^margin^bottom", "z_^margin^right", "z_^margin^override",
                                   "z_^border", "z_^border^top", "z_^border^bottom", "z_^border^left", "z_^borderRight", "z_^border^override",

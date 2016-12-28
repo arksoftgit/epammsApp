@@ -944,7 +944,7 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
    // The functions mapToSpecialBlockFromBlock and mapFromSpecialBlockToBlock perform this synchronization using the attributes defined in g_SpecialBlockAttrList.
    // This list needs to be kept in sync between labeldesigner.js and GraphicalLabelDesignerServlet.java.
    private static final String[] g_SpecialBlockAttrList =
-               new String[] { "TextColor", "TextColorOverride", // "BackgroundColor", "BackgroundColorOverride", "BorderClor", "BorderColorOverride", 
+               new String[] { "TextColor", "TextColorOverride",
                               "FontFamily", "FontSize", "FontWeight",
                               "Margin", "MarginTop", "MarginLeft", "MarginBottom", "MarginRight", "MarginOverride",
                               "Border", "BorderTop", "BorderBottom", "BorderLeft", "BorderRight", "BorderOverride",
