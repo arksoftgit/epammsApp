@@ -775,6 +775,28 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
                                  String pTag = (String) jo.get( "_pTag" );  // parent tag
                               // cr = ec.setFirstWithinOi( "Tag", pTag );
                                  cr = ec.setFirst( "Tag", pTag );
+                                 if ( cr.isSet() ) {
+                                    ec.logEntity( true );
+                                    ec = vBlock.getCursor( "LLD_SpecialSectionAttribute" );
+                                    String name = (String) jo.get( "Name" );
+                                    cr = ec.setFirst( "Name", name );
+                                    if ( cr.isSet() == false ) {
+                                       ec.createEntity( CursorPosition.LAST );
+                                       ec.getAttribute( "Name" ).setValue( name );
+                                       cr = CursorResult.SET;
+                                       ec.logEntity( true );
+                                    }
+                                 }
+                              } else if ( entity.equals( "LLD_SpecialSectionAttrBlock" ) ) {
+                                 ec = vBlock.getCursor( "LLD_SpecialSectionAttrBlock" );
+                                 String name = (String) jo.get( "Name" );
+                                 cr = ec.setFirst( "Name", name );
+                                 if ( cr.isSet() == false ) {
+                                    ec.createEntity( CursorPosition.LAST );
+                                    ec.getAttribute( "Name" ).setValue( name );
+                                    cr = CursorResult.SET;
+                                    ec.logEntity( true );
+                                 }
                               } else {
                                  cr = CursorResult.SET;  // we must be on the correct parent (at least we really hope so)
                               }
@@ -835,7 +857,7 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
                         */
                         if ( deleteEntity ) {
                         // vBlock.logObjectInstance();
-                        //ec.logEntity( true );
+                        // ec.logEntity( true );
                            ec.deleteEntity();
                            logger.debug( "Entity DELETED: " + entity + "  ID: " + ID + "  Depth: " + depth );
                            continue; // while ( it.hasNext ...
@@ -979,16 +1001,16 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
                      } else {
                         boolean bSpecial = entity.equals( "LLD_SpecialSectionAttrBlock" );
                         if ( entity.equals( "LLD_SpecialSectionAttribute" ) ) {
-                           logger.info( "Entity: LLD_SpecialSectionAttribute   key: " + key + "   value: " + valueNew );
+                        // logger.info( "Entity: LLD_SpecialSectionAttribute   key: " + key + "   value: " + valueNew );
                         } else if ( entity.equals( "LLD_Block" ) || bSpecial ) {
-                           logger.info( "Entity: " + entity + "   key: " + key + "   value: " + valueNew );
+                        // logger.info( "Entity: " + entity + "   key: " + key + "   value: " + valueNew );
                            if ( arrayContains( g_SpecialBlockAttrList, key ) ) {
-                              logger.info( "Entity: " + entity + "   FOUND key: " + key );
+                           // logger.info( "Entity: " + entity + "   FOUND key: " + key );
                               if ( ! bSpecial ) {
                                  continue;  // skip this attribute for block
                               }
                            } else {
-                              logger.info( "Entity: " + entity + "   NOT FOUND key: " + key );
+                           // logger.info( "Entity: " + entity + "   NOT FOUND key: " + key );
                               if ( bSpecial ) {
                                  continue;  // skip this attribute
                               }
@@ -1527,8 +1549,8 @@ end debug code */
          if ( vLLD != null ) {
             View vBlock = null;
             JSONObject jsonPost = getPostData( request );
-         // String strJson = jsonPost.toJSONString();
-         // logger.debug( "Save JSON: " + strJson );
+            String strJson = jsonPost.toJSONString();
+            logger.info( "Save JSON: " + strJson );
             try {
                vLLD.resetSubobjectTop();
                vBlock = vLLD.newView();
@@ -1598,7 +1620,7 @@ end debug code */
                response.getWriter().write( new Gson().toJson( jsonLabel ) );
             }
          } else {
-            logger.debug( "Null LLD ... skipped processing Json Label: " + jsonLabel );
+            logger.error( "Null LLD ... skipped processing Json Label: " + jsonLabel );
             response.setContentType( "text/json" );
          // response.getWriter().write( jsonLabel );
             response.getWriter().write( new Gson().toJson( "{}" ) );
@@ -1606,11 +1628,11 @@ end debug code */
       } else if ( action.equals( "loadLabel" ) ) {
       // We are just going to get the SPLD_LLD and its children and rename SPLD_LLD to LLD
          try {
-         // logger.debug( "LoadLabel OI: " );
-         // displaySPLD( vLLD, null, "" );
+            logger.info( "LoadLabel OI: " );
+            displaySPLD( vLLD, null, "" );
          // vLLD.logObjectInstance();
             jsonLabel = convertLLD_ToJSON( vLLD );
-         // logger.debug( "LoadLabel JSON: " + jsonLabel );
+            logger.info( "LoadLabel JSON: " + jsonLabel );
          // jsonLabel = jsonLabel.replaceFirst( "\"TZLLD\",", "\"TZLLD\",\n      \"fileName\" : \"" + fileName + "\"," );
          } catch( ZeidonException ze ) {
             logger.error( "Error loading Json Label: " + ze.getMessage() );

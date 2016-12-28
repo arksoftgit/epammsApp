@@ -1,7 +1,7 @@
-z1000-Zeidon    MSPLDEF  TZZOLODO                         12/16/16   09:17:51 1.0a2   
+z1000-Zeidon    MSPLDEF  TZZOLODO                         12/23/16   13:37:54 1.0a2   
 eLOD       1
 aZKey      69082112
-aNextZKeyToAssign 130002493
+aNextZKeyToAssign 130002503
 aName      mSPLDef
 aDesc      Subregistrant Physical Label Maintenance
 aActivateConstraint Y
@@ -8675,7 +8675,7 @@ aName      LLD_Block
 aZKey      69021553
 aPurpose   A
 aER_DiagramPosX 243
-aER_DiagramPosY 45
+aER_DiagramPosY 38
 
 eER_RelLinkRec 8
 aName      is linked to
@@ -8689,12 +8689,12 @@ aTE_NoForeignKeyPrefix N
 eER_RelTypeRec 9
 aZKey      4495116
 aFact      Added thru ER Dialog
-aER_DiagramBendPosX 255
-aER_DiagramBendPosY 41
-aER_DiagramE1PosX 249
-aER_DiagramE1PosY 44
-aER_DiagramE2PosX 252
-aER_DiagramE2PosY 45
+aER_DiagramBendPosX 0
+aER_DiagramBendPosY 0
+aER_DiagramE1PosX 0
+aER_DiagramE1PosY 0
+aER_DiagramE2PosX 0
+aER_DiagramE2PosY 0
 
 eLOD_EntityChild 7
 aName      LLD_SpecialSectionAttribute
@@ -8747,7 +8747,10 @@ aInclSrc   Y
 aExclude   Y
 aRecursive N
 aDerived   N
+aWork      N
 aParentDeleteBehave E
+aDupEntityInstance N
+aDupRelationshipInstance N
 aRelLinkIndicator H
 aDesc      RGB CMYK Graphic
 
@@ -8839,12 +8842,12 @@ aTE_NoForeignKeyPrefix N
 eER_RelTypeRec 11
 aZKey      110030242
 aFact      Added thru ER Dialog
-aER_DiagramBendPosX 214
-aER_DiagramBendPosY 47
-aER_DiagramE1PosX 214
+aER_DiagramBendPosX 216
+aER_DiagramBendPosY 42
+aER_DiagramE1PosX 216
 aER_DiagramE1PosY 30
 aER_DiagramE2PosX 242
-aER_DiagramE2PosY 47
+aER_DiagramE2PosY 42
 
 eLOD_AttributeRec 9
 aZKey      120088371
@@ -9272,18 +9275,18 @@ aAutoSeq   N
 aHangingForeignKeyEntity N
 aZKey      4322595
 aCardMin   0
-aCardMax   1
+aCardMax   m
 aTE_NoForeignKeyPrefix N
 
 eER_RelTypeRec 10
 aZKey      4322593
 aFact      Added thru ER Dialog
 aER_DiagramBendPosX 249
-aER_DiagramBendPosY 59
+aER_DiagramBendPosY 55
 aER_DiagramE1PosX 249
-aER_DiagramE1PosY 50
-aER_DiagramE2PosX 238
-aER_DiagramE2PosY 59
+aER_DiagramE1PosY 43
+aER_DiagramE2PosX 252
+aER_DiagramE2PosY 55
 
 ePOD_Entity 9
 aSQL_JoinWithParent Y
@@ -9369,8 +9372,8 @@ eER_EntityRec 8
 aName      LLD_SpecialSectionAttribute
 aZKey      4322587
 aPurpose   A
-aER_DiagramPosX 229
-aER_DiagramPosY 55
+aER_DiagramPosX 253
+aER_DiagramPosY 53
 
 eER_RelLinkRec 8
 aName      contains
@@ -9385,12 +9388,12 @@ aTE_NoForeignKeyPrefix N
 eER_RelTypeRec 9
 aZKey      4322590
 aFact      Added thru ER Dialog
-aER_DiagramBendPosX 247
-aER_DiagramBendPosY 57
-aER_DiagramE1PosX 247
-aER_DiagramE1PosY 50
-aER_DiagramE2PosX 238
-aER_DiagramE2PosY 57
+aER_DiagramBendPosX 257
+aER_DiagramBendPosY 40
+aER_DiagramE1PosX 252
+aER_DiagramE1PosY 40
+aER_DiagramE2PosX 257
+aER_DiagramE2PosY 52
 
 eLOD_EntityChild 7
 aName      BlockBackgroundColor
@@ -9497,12 +9500,12 @@ aTE_NoForeignKeyPrefix N
 eER_RelTypeRec 9
 aZKey      110030236
 aFact      Added thru ER Dialog
-aER_DiagramBendPosX 216
-aER_DiagramBendPosY 46
-aER_DiagramE1PosX 216
+aER_DiagramBendPosX 218
+aER_DiagramBendPosY 40
+aER_DiagramE1PosX 218
 aER_DiagramE1PosY 30
 aER_DiagramE2PosX 242
-aER_DiagramE2PosY 46
+aER_DiagramE2PosY 40
 
 eLOD_EntityChild 7
 aName      BlockBorderColor
@@ -9612,12 +9615,12 @@ aTE_NoForeignKeyPrefix N
 eER_RelTypeRec 9
 aZKey      110030239
 aFact      Added thru ER Dialog
-aER_DiagramBendPosX 218
-aER_DiagramBendPosY 45
-aER_DiagramE1PosX 218
+aER_DiagramBendPosX 220
+aER_DiagramBendPosY 38
+aER_DiagramE1PosX 220
 aER_DiagramE1PosY 30
 aER_DiagramE2PosX 242
-aER_DiagramE2PosY 45
+aER_DiagramE2PosY 38
 
 eLOD_AttributeRec 7
 aZKey      120088322
@@ -10135,9 +10138,9 @@ aFact      Added thru ER Dialog
 aER_DiagramBendPosX 0
 aER_DiagramBendPosY 0
 aER_DiagramE1PosX 247
-aER_DiagramE1PosY 36
+aER_DiagramE1PosY 30
 aER_DiagramE2PosX 247
-aER_DiagramE2PosY 44
+aER_DiagramE2PosY 37
 
 eLOD_EntityChild 6
 aName      PanelBackgroundColor
@@ -10245,12 +10248,12 @@ aTE_NoForeignKeyPrefix N
 eER_RelTypeRec 8
 aZKey      110030227
 aFact      Added thru ER Dialog
-aER_DiagramBendPosX 219
-aER_DiagramBendPosY 33
-aER_DiagramE1PosX 219
-aER_DiagramE1PosY 30
+aER_DiagramBendPosX 0
+aER_DiagramBendPosY 0
+aER_DiagramE1PosX 223
+aER_DiagramE1PosY 27
 aER_DiagramE2PosX 242
-aER_DiagramE2PosY 33
+aER_DiagramE2PosY 27
 
 eLOD_EntityChild 6
 aName      PanelBorderColor
@@ -10361,12 +10364,12 @@ aTE_NoForeignKeyPrefix N
 eER_RelTypeRec 8
 aZKey      110030230
 aFact      Added thru ER Dialog
-aER_DiagramBendPosX 244
-aER_DiagramBendPosY 27
+aER_DiagramBendPosX 0
+aER_DiagramBendPosY 0
 aER_DiagramE1PosX 223
-aER_DiagramE1PosY 27
-aER_DiagramE2PosX 244
-aER_DiagramE2PosY 30
+aER_DiagramE1PosY 29
+aER_DiagramE2PosX 242
+aER_DiagramE2PosY 29
 
 eLOD_EntityChild 6
 aName      ContinuationStatement
@@ -10969,7 +10972,7 @@ aName      LLD_Panel
 aZKey      69011498
 aPurpose   A
 aER_DiagramPosX 243
-aER_DiagramPosY 31
+aER_DiagramPosY 25
 
 eER_RelLinkRec 6
 aName      has
@@ -10983,9 +10986,9 @@ aFact      Added thru ER Dialog
 aER_DiagramBendPosX 0
 aER_DiagramBendPosY 0
 aER_DiagramE1PosX 247
-aER_DiagramE1PosY 23
+aER_DiagramE1PosY 18
 aER_DiagramE2PosX 247
-aER_DiagramE2PosY 30
+aER_DiagramE2PosY 24
 
 eLOD_EntityChild 5
 aName      PageBackgroundColor
@@ -11092,9 +11095,9 @@ eER_RelTypeRec 7
 aZKey      110004760
 aFact      Added thru ER Dialog
 aER_DiagramBendPosX 218
-aER_DiagramBendPosY 20
+aER_DiagramBendPosY 15
 aER_DiagramE1PosX 242
-aER_DiagramE1PosY 20
+aER_DiagramE1PosY 15
 aER_DiagramE2PosX 218
 aER_DiagramE2PosY 24
 
@@ -11251,7 +11254,7 @@ aName      LLD_Page
 aZKey      120085484
 aPurpose   A
 aER_DiagramPosX 243
-aER_DiagramPosY 18
+aER_DiagramPosY 13
 
 eER_RelLinkRec 5
 aName      has
@@ -11265,12 +11268,12 @@ aTE_NoForeignKeyPrefix N
 eER_RelTypeRec 6
 aZKey      120085491
 aFact      Added thru ER Dialog
-aER_DiagramBendPosX 0
-aER_DiagramBendPosY 0
-aER_DiagramE1PosX 306
-aER_DiagramE1PosY 20
+aER_DiagramBendPosX 311
+aER_DiagramBendPosY 15
+aER_DiagramE1PosX 311
+aER_DiagramE1PosY 17
 aER_DiagramE2PosX 252
-aER_DiagramE2PosY 20
+aER_DiagramE2PosY 15
 
 eLOD_AttributeRec 4
 aZKey      120088305
@@ -12158,7 +12161,7 @@ aName      LLD
 aZKey      69011483
 aPurpose   F
 aER_DiagramPosX 243
-aER_DiagramPosY 4
+aER_DiagramPosY 2
 
 eLOD_EntityChild 3
 aName      SelectableMarketingSection
@@ -20424,6 +20427,13 @@ aUFlag     N
 aZKey      61216721
 
 eParameter 4
+aShortDesc szSectionType
+aDataType  S
+aPFlag     N
+aUFlag     N
+aZKey      130002497
+
+eParameter 4
 aShortDesc STRING ( 32 ) szSPLD_SectionName,
 aDataType  S
 aPFlag     N
@@ -20494,6 +20504,13 @@ aUFlag     N
 aZKey      4887120
 
 eParameter 4
+aShortDesc szSectionType
+aDataType  S
+aPFlag     N
+aUFlag     N
+aZKey      130002495
+
+eParameter 4
 aShortDesc szLeadingBlanks
 aDataType  S
 aPFlag     N
@@ -20543,6 +20560,13 @@ aUFlag     N
 aZKey      6166506
 
 eParameter 4
+aShortDesc szSectionType
+aDataType  S
+aPFlag     N
+aUFlag     N
+aZKey      130002501
+
+eParameter 4
 aShortDesc szLeadingBlanks
 aDataType  S
 aPFlag     N
@@ -20586,6 +20610,13 @@ aUFlag     N
 aZKey      4887126
 
 eParameter 4
+aShortDesc szSectionType
+aDataType  S
+aPFlag     N
+aUFlag     N
+aZKey      130002496
+
+eParameter 4
 aShortDesc szLeadingBlanks
 aDataType  S
 aPFlag     N
@@ -20626,6 +20657,13 @@ aDataType  L
 aPFlag     N
 aUFlag     N
 aZKey      61765557
+
+eParameter 4
+aShortDesc szSectionType
+aDataType  S
+aPFlag     N
+aUFlag     N
+aZKey      130002500
 
 eParameter 4
 aShortDesc szLeadingBlanks
@@ -20815,6 +20853,13 @@ aDataType  L
 aPFlag     N
 aUFlag     N
 aZKey      6124094
+
+eParameter 4
+aShortDesc szSectionType
+aDataType  S
+aPFlag     N
+aUFlag     N
+aZKey      130002498
 
 eParameter 4
 aShortDesc szLeadingBlanks
@@ -21278,6 +21323,13 @@ aDataType  V
 aZKey      4334731
 
 eParameter 4
+aShortDesc szSectionType
+aDataType  S
+aPFlag     N
+aUFlag     N
+aZKey      130002503
+
+eParameter 4
 aShortDesc VariableName
 aDataType  S
 aPFlag     N
@@ -21469,6 +21521,13 @@ aDataType  V
 aPFlag     N
 aUFlag     N
 aZKey      110004215
+
+eParameter 4
+aShortDesc szSectionType
+aDataType  S
+aPFlag     N
+aUFlag     N
+aZKey      130002494
 
 eParameter 4
 aShortDesc szKeywordName
@@ -26255,117 +26314,117 @@ i6290      3119
 i6291      3120
 i6292      14
 i6293      55
-i6394      136
-i6399      97
-i6404      562
-i6425      176
-i6430      216
-i6446      1423
-i6451      1428
-i6507      54
-i6528      6494
-i6529      55
-i6530      6296
-i6531      55
-i6532      6468
-i6533      55
-i6534      6409
-i6535      55
-i6536      6512
+i6400      136
+i6405      97
+i6410      562
+i6431      176
+i6436      216
+i6452      1423
+i6457      1428
+i6515      54
+i6536      6501
 i6537      55
-i6538      6498
+i6538      6296
 i6539      55
-i6540      6501
+i6540      6474
 i6541      55
-i6542      6492
+i6542      6415
 i6543      55
-i6544      6516
+i6544      6520
 i6545      55
-i6546      6375
+i6546      6505
 i6547      55
-i6548      6369
+i6548      6508
 i6549      55
-i6550      6522
+i6550      6499
 i6551      55
-i6552      6372
+i6552      6524
 i6553      55
-i6554      54
+i6554      6380
 i6555      55
-i6556      6435
+i6556      6374
 i6557      55
-i6558      1423
+i6558      6530
 i6559      55
-i6560      6389
+i6560      6377
 i6561      55
-i6562      6384
+i6562      54
 i6563      55
-i6564      562
+i6564      6441
 i6565      55
-i6566      6300
+i6566      1423
 i6567      55
-i6568      176
+i6568      6395
 i6569      55
-i6570      6415
+i6570      6390
 i6571      55
-i6572      136
+i6572      562
 i6573      55
-i6574      6420
+i6574      6300
 i6575      55
-i6576      1428
+i6576      176
 i6577      55
-i6578      97
+i6578      6421
 i6579      55
-i6580      216
+i6580      136
 i6581      55
-i6582      6440
+i6582      6426
 i6583      55
-i6584      6443
+i6584      1428
 i6585      55
-i6586      6463
+i6586      97
 i6587      55
-i6588      6456
+i6588      216
 i6589      55
-i6590      6307
+i6590      6446
 i6591      55
-i6592      6303
+i6592      6449
 i6593      55
-i6594      6483
+i6594      6469
 i6595      55
-i6596      6479
+i6596      6462
 i6597      55
-i6598      6331
+i6598      6307
 i6599      55
-i6600      6344
+i6600      6303
 i6601      55
-i6602      6321
+i6602      6490
 i6603      55
-i6604      6378
+i6604      6486
 i6605      55
-i6606      6356
+i6606      6332
 i6607      55
-i6608      6350
+i6608      6347
 i6609      55
-i6610      6338
+i6610      6321
 i6611      55
-i6612      6294
+i6612      6383
 i6613      55
-i6614      6362
+i6614      6361
 i6615      55
-i6616      6475
+i6616      6354
 i6617      55
-i6618      6472
+i6618      6340
 i6619      55
-i6620      6494
+i6620      6294
 i6621      55
-i6622      6314
+i6622      6367
 i6623      55
-i6624      6412
+i6624      6482
 i6625      55
-i6626      6489
+i6626      6479
 i6627      55
-i6628      6504
+i6628      6501
 i6629      55
-i6630      6518
+i6630      6314
 i6631      55
-i6632      6520
+i6632      6418
 i6633      55
+i6634      6496
+i6635      55
+i6636      6512
+i6637      55
+i6638      6526
+i6639      55
+i6640      6528
+i6641      55

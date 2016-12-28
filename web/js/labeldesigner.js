@@ -1688,8 +1688,9 @@ $(function() {
                         value = this.type === "checkbox" ? (this.checked === true ? "Y" : "") : $(this).val();
                      }
                      console.log( "Processing To zeidon-special entityAttr: " + fullKey + "   Value: " + value );
-                  // if ( key in g_$current_block.data() ) {  I think it's okay to keep these hanging around
+                  // if ( key in g_$current_block.data() ) {  // I think it's okay to keep these hanging around //, but removing for now
                   //    g_$current_block.removeData( key );
+                  //    console.log( "Removing key in block " + key + "   adding full key: " + fullKey );
                   // }
                      g_$current_block.data( fullKey, value );
                   }
@@ -1995,7 +1996,7 @@ function ConvertWysiwygLabelDesignToZeidonJson( action, viewName, callback_func,
       reuseBlockName = $("#zReusableBlocks").val();
    }
    var jsonLabel = GetCurrentLabel();
-// console.log( "ConvertWysiwygLabelDesignToZeidonJson: " + jsonLabel );
+   console.log( "ConvertWysiwygLabelDesignToZeidonJson: " + jsonLabel );
    if ( jsonString === null ) {
       jsonString = "{}";
    }
@@ -2299,7 +2300,7 @@ public class FileServer {
                         console.log( "Processing entity: " + entity + "   name: " + name + "   attribute: " + zeidonAttribute + "   value: " + value );
                         if ( firstAttributeIn.isFirst ) {
                            firstAttributeIn.isFirst = false;
-                           json += ", \n\"LLD_SpecialSectionAttrBlock\" : [ { \".metax\" : { \"created\" : \"true\" }, \"Name\" : \"" + specialBlockData.getName() + "\"";
+                           json += ", \n\"LLD_SpecialSectionAttrBlock\" : [ { \".meta\" : { \"created\" : \"true\" }, \"Name\" : \"" + specialBlockData.getName() + "\"";
                         }
                         if ( zeidonAttribute !== "Name" ) { // we supplied the Name (e.g. Hazards Warning) right off the bat
                            json += ", \"" + zeidonAttribute + "\" : \"" + value + "\"";
@@ -2368,11 +2369,11 @@ public class FileServer {
             for ( k = 0; k < specialBlockMap.size(); k++ ) {
                specialBlockData = values[k];
                if ( k === 0 ) {
-                  json += ", \n\"LLD_SpecialSectionAttribute\" : [ { \".metay\" : { \"created\" : \"true\" }, \"Name\" : \"" + specialBlockData.getEntity() + "\"";
+                  json += ", \n\"LLD_SpecialSectionAttribute\" : [ { \".meta\" : { \"created\" : \"true\" }, \"Name\" : \"" + specialBlockData.getEntity() + "\"";
                   json += ", \"_pTag\" : \"" + id + "\"";
                   firstAttribute.isFirst = true;
                } else {
-                  json += ", \n{ \".metaz\" : { \"created\" : \"true\" }, \"Name\" : \"" + specialBlockData.getName() + "\"";
+                  json += ", \n{ \".meta\" : { \"created\" : \"true\" }, \"Name\" : \"" + specialBlockData.getName() + "\"";
                }
                json += elementDataToSpecialBlockJSON( $element, specialBlockData, firstAttribute );
                if ( k === specialBlockMap.size() - 1 ) {
@@ -2850,7 +2851,7 @@ public class FileServer {
    function AddSpecialAttributes( $block, obj ) {
       var parentId = obj["ID"]
       var sectionType = obj["LLD_SectionType"]; // if there is no section type, we have nothing
-      if ( ! sectionType || sectionType === "" ) {
+      if ( !sectionType || sectionType === "" ) {
       // console.log( "SpecialSection undefined" );
       } else {
          var objSpecial = obj["LLD_SpecialSectionAttribute"];
@@ -2859,35 +2860,37 @@ public class FileServer {
                var objSpecialAttr = objSpecial[k];
                if ( objSpecialAttr ) {
                   var specialSection = objSpecialAttr["Name"];
-               // console.log( "SpecialSection: " + sectionType + "." + specialSection );
                   var objSpecialBlock = objSpecialAttr["LLD_SpecialSectionAttrBlock"];
                   if ( objSpecialBlock ) {
-                     var objSpecialBlockProp = objSpecialBlock[0];
-                     if ( objSpecialBlockProp ) {
-                        var color = "";
-                        var specialSection2 = objSpecialBlockProp.Name;
-                        if ( specialSection2 ) {
-                           specialSection = specialSection2;
-                        }
-                        for ( var prop in objSpecialBlockProp ) {
-                           if ( prop !== ".meta" ) {
-                              if ( prop === "SpecialAttributeTextColor" ) {
-                                 var objColor = objSpecialBlockProp[prop][0];
-                                 color = objColor.dColorName;
-                                 if ( !color ) {
-                                    color = objColor.Pantone;
+                     for ( var j = 0; j < objSpecialBlock.length; j++ ) {
+                        var objSpecialBlockProp = objSpecialBlock[j];
+                        if ( objSpecialBlockProp ) {
+                           var color = "";
+                           var specialBlockSection = objSpecialBlockProp.Name;
+                           var prefix = specialSection + "." + specialBlockSection + ".";
+                           console.log( "AddSpecialAttributes SpecialBlockSection: " + prefix );
+                           for ( var prop in objSpecialBlockProp ) {
+                              if ( prop !== ".meta" ) {
+                                 if ( prop === "SpecialAttributeTextColor" ) {
+                                 /*
+                                    var objColor = objSpecialBlockProp[prop][0];
+                                    color = objColor.dColorName;
                                     if ( !color ) {
-                                       color = objColor.Name;
+                                       color = objColor.Pantone;
+                                       if ( !color ) {
+                                          color = objColor.Name;
+                                       }
                                     }
+                                    // unclear as to why we've set up the color variable ... and then don't use it.  It's the list
+                                    // of possible subregistrant colors.  Used elsewhere.
+                                 */                                                                                       
+                                 } else {
+                                    console.log( "   AddSpecialAttributes SpecialBlock: " + prop + "." + objSpecialBlockProp[prop] );
+                                    addZeidonAttributeToElement( $block, prefix + zeidonAttributeToKey( prop ), objSpecialBlockProp[prop], false );
                                  }
-                                 // unclear as to why we set up the color variable ... and then don't use it.
-                              } else {
-                              // console.log( "   SpecialBlock: " + prop + "." + objSpecialBlockProp[prop] );
-                                 addZeidonAttributeToElement( $block, sectionType + "." + specialSection + "." + zeidonAttributeToKey( prop ), objSpecialBlockProp[prop], false );
                               }
                            }
                         }
-                        addZeidonAttributeToElement( $block, sectionType + "." + specialSection + "." + "z_^text^color", color, false );
                      }
                   }
                }

@@ -1,4 +1,4 @@
-//start mSPLDef 2016.12.16 09:17:52
+//start mSPLDef 2016.12.23 13:37:55
 zOPER_EXPORT zSHORT OPERATION
 omSPLDef_GeneratePDF_Label( zVIEW vViewToInstance0 );
 
@@ -27,41 +27,46 @@ zOPER_EXPORT zSHORT OPERATION
 omSPLDef_GeneratePDF_DFU( zVIEW vViewToInstance0,
                           zVIEW vmSPLDefPDF1,
                           zLONG llFile2,
-                          zPCHAR pchSTRING32szSPLD_Secti3,
-                          zPCHAR pchszStatementName4,
-                          zPCHAR pchszUsageName5,
-                          zPCHAR pchszUsageNameScope6,
-                          zPCHAR pchLeadingBlanks7,
-                          zPCHAR pchWriteBuffer8 );
+                          zPCHAR pchszSectionType3,
+                          zPCHAR pchSTRING32szSPLD_Secti4,
+                          zPCHAR pchszStatementName5,
+                          zPCHAR pchszUsageName6,
+                          zPCHAR pchszUsageNameScope7,
+                          zPCHAR pchLeadingBlanks8,
+                          zPCHAR pchWriteBuffer9 );
 
 zOPER_EXPORT zSHORT OPERATION
 omSPLDef_GeneratePDF_ClmList( zVIEW vViewToInstance0,
                               zVIEW vmSPLDefPDF1,
                               zLONG liFile2,
-                              zPCHAR pchszLeadingBlanks3,
-                              zPCHAR pchWriteBuffer4,
-                              zLONG lNumberOfColumns5 );
+                              zPCHAR pchszSectionType3,
+                              zPCHAR pchszLeadingBlanks4,
+                              zPCHAR pchWriteBuffer5,
+                              zLONG lNumberOfColumns6 );
 
 zOPER_EXPORT zSHORT OPERATION
 omSPLDef_GeneratePDF_Ingred( zVIEW vViewToInstance0,
                              zVIEW vmSPLDefPDF1,
                              zLONG llFile2,
-                             zPCHAR pchszLeadingBlanks3,
-                             zPCHAR pchWriteBuffer4 );
+                             zPCHAR pchszSectionType3,
+                             zPCHAR pchszLeadingBlanks4,
+                             zPCHAR pchWriteBuffer5 );
 
 zOPER_EXPORT zSHORT OPERATION
 omSPLDef_GeneratePDF_Content( zVIEW vViewToInstance0,
                               zVIEW vmSPLDefPDF1,
                               zLONG llFile2,
-                              zPCHAR pchszLeadingBlanks3,
-                              zPCHAR pchszWriteBuffer4 );
+                              zPCHAR pchszSectionType3,
+                              zPCHAR pchszLeadingBlanks4,
+                              zPCHAR pchszWriteBuffer5 );
 
 zOPER_EXPORT zSHORT OPERATION
 omSPLDef_GeneratePDF_Hazards( zVIEW vViewToInstance0,
                               zVIEW vmSPLDefPDF1,
                               zLONG llFile2,
-                              zPCHAR pchszLeadingBlanks3,
-                              zPCHAR pchWriteBuffer4 );
+                              zPCHAR pchszSectionType3,
+                              zPCHAR pchszLeadingBlanks4,
+                              zPCHAR pchWriteBuffer5 );
 
 zOPER_EXPORT zSHORT OPERATION
 omSPLDef_GeneratePDF_General( zVIEW vViewToInstance0,
@@ -82,8 +87,9 @@ zOPER_EXPORT zSHORT OPERATION
 omSPLDef_GeneratePDF_EPA_Reg( zVIEW vViewToInstance0,
                               zVIEW vmSPLDefPDF1,
                               zLONG llFile2,
-                              zPCHAR pchszLeadingBlanks3,
-                              zPCHAR pchWriteBuffer4 );
+                              zPCHAR pchszSectionType3,
+                              zPCHAR pchszLeadingBlanks4,
+                              zPCHAR pchWriteBuffer5 );
 
 zOPER_EXPORT zSHORT OPERATION
 omSPLDef_BuildSPLD_FromSLC( zVIEW vViewToInstance0,
@@ -117,8 +123,9 @@ omSPLDef_FormatBlock( zVIEW vmSPLDef0,
 
 zOPER_EXPORT zSHORT OPERATION
 omSPLDef_AddFormatToSpecialText( zVIEW vViewToInstance0,
-                                 zPCHAR pchVariableName1,
-                                 zPCHAR pchWriteBuffer2 );
+                                 zPCHAR pchszSectionType1,
+                                 zPCHAR pchVariableName2,
+                                 zPCHAR pchWriteBuffer3 );
 
 zOPER_EXPORT zSHORT OPERATION
 omSPLDef_GenerateXML_File( zVIEW vmSPLDef0,
@@ -143,7 +150,8 @@ omSPLDef_BuildUsageEntriesFrSLC( zVIEW vViewToInstance0,
 
 zOPER_EXPORT zSHORT OPERATION
 omSPLDef_CheckAddKeywordEntry( zVIEW vViewToInstance0,
-                               zPCHAR pchszKeywordName1 );
+                               zPCHAR pchszSectionType1,
+                               zPCHAR pchszKeywordName2 );
 
 zOPER_EXPORT zSHORT OPERATION
 omSPLDef_SetUpKeywordEntries( zVIEW vViewToInstance0,
@@ -169,7 +177,7 @@ zOPER_EXPORT zSHORT OPERATION
 omTempl_BuildDisplayStructure( zVIEW vViewToInstance0 );
 
 //end
-//start mMasLC 2016.11.29 11:59:49
+//start mMasLC 2016.12.22 15:17:35
 zOPER_EXPORT zSHORT OPERATION
 omMasLC_MergeUsageSelectEnts( zVIEW vViewToInstance0 );
 
@@ -220,7 +228,7 @@ zOPER_EXPORT zSHORT OPERATION
 omMasLC_BuildNonGroupEntries( zVIEW vViewToInstance0 );
 
 //end
-//start mSubLC 2016.11.29 11:59:52
+//start mSubLC 2016.12.22 15:17:37
 zOPER_EXPORT zSHORT OPERATION
 omSubLC_BuildNewSLC_Version( zVIEW vViewToInstance0,
                              zVIEW vOriginalSLC1,
@@ -264,7 +272,7 @@ omSubLC_ObjectConstraints( zVIEW vViewtoInstance0,
                            zSHORT nState2 );
 
 //end
-//start DOMAINT 2016.11.29 11:59:46
+//start DOMAINT 2016.12.22 15:17:32
 zOPER_EXPORT zSHORT OPERATION
 oDOMAINT_ActivateDomainList( zPVIEW vViewToInstance0,
                              zVIEW vViewToWindow1 );
@@ -285,7 +293,7 @@ oDOMAINT_PreloadSystemDomains( zVIEW vViewToInstance0,
                                zPCHAR pchInstallApp2 );
 
 //end
-//start lMLCATgt 2016.11.29 11:59:47
+//start lMLCATgt 2016.12.22 15:17:32
 zOPER_EXPORT zSHORT OPERATION
 olMLCATgt_BuildDifferencesMLC( zVIEW vViewToInstance0,
                                zVIEW vSourceCompareObject1 );

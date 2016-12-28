@@ -1,4 +1,4 @@
-z1000-Zeidon    WWEBXFER TZZOLODO                         11/18/16   15:02:23 1.0a2   
+z1000-Zeidon    WWEBXFER TZZOLODO                         12/23/16   13:50:56 1.0a2   
 eLOD       1
 aZKey      1157145
 aNextZKeyToAssign 110007348
@@ -712,6 +712,13 @@ aName      CurrentSectionTitle
 aZKey      1189822
 
 eDomainRec 5
+aZKey      69080516
+aName      LLD_SectionType
+aDomainType T
+aDataType  S
+aMaxStringLth 32
+aDesc      Template Section Types are usually the same as regular Section Types.
+aContextRestriction N
 
 eLOD_AttributeRec 3
 aZKey      1189823
@@ -1403,7 +1410,7 @@ aZKey      1174501
 eDomainRec 5
 
 eLOD_Entity 2
-awkSelectedAttributeForDragSort 57
+awkSelectedAttributeForDragSort 11
 
 eLOD_Attribute 3
 awkSequence 1
@@ -2243,7 +2250,6 @@ i102       22
 i105       20
 i108       20
 i111       51
-i117       5
 i120       5
 i123       36
 i126       36
@@ -2325,7 +2331,7 @@ i305       131
 i306       5
 i307       115
 i308       116
-i309       5
+i309       117
 i310       118
 i311       119
 i312       5

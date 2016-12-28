@@ -4152,6 +4152,8 @@ omSPLDef_FormatContinueBlock( View     mSPLDefPDF,
    String   szTitleFormat = null;
    //:STRING ( 2 )      szStatementFormat
    String   szStatementFormat = null;
+   //:STRING ( 50 )     szSectionType
+   String   szSectionType = null;
    //:STRING ( 50 )     szLeadingBlanks
    String   szLeadingBlanks = null;
    //:STRING ( 50 )     szDisplayStatementName
@@ -4175,6 +4177,7 @@ omSPLDef_FormatContinueBlock( View     mSPLDefPDF,
    int      lTempInteger_7 = 0;
    int      lTempInteger_8 = 0;
    int      lTempInteger_9 = 0;
+   int      lTempInteger_10 = 0;
 
 
    //:// Process Storage & Disposal, Directions For Use or Marketing Continuation Statements from previous Panel.
@@ -4482,7 +4485,6 @@ omSPLDef_FormatContinueBlock( View     mSPLDefPDF,
       if ( ZeidonStringCompare( szTitleFormat, 1, 0, "PU", 1, 0, 3 ) == 0 )
       { 
 
-
          //:ELSE
       } 
       else
@@ -4505,6 +4507,17 @@ omSPLDef_FormatContinueBlock( View     mSPLDefPDF,
       } 
 
       //:END
+
+      //:szSectionType = mSPLDefPDF.LLD_Block.LLD_SectionType
+      {MutableInt mi_lTempInteger_10 = new MutableInt( lTempInteger_10 );
+      StringBuilder sb_szSectionType;
+      if ( szSectionType == null )
+         sb_szSectionType = new StringBuilder( 32 );
+      else
+         sb_szSectionType = new StringBuilder( szSectionType );
+             GetVariableFromAttribute( sb_szSectionType, mi_lTempInteger_10, 'S', 51, mSPLDefPDF, "LLD_Block", "LLD_SectionType", "", 0 );
+      lTempInteger_10 = mi_lTempInteger_10.intValue( );
+      szSectionType = sb_szSectionType.toString( );}
 
       //:// Combine Title in text if specified.
       //:IF szStatementTitle != "" AND szTitleFormat = "CT"
@@ -4564,13 +4577,13 @@ omSPLDef_FormatContinueBlock( View     mSPLDefPDF,
                sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
                         ZeidonStringConcat( sb_szWriteBuffer, 1, 0, "   <fo:block ", 1, 0, 32001 );
             szWriteBuffer = sb_szWriteBuffer.toString( );}
-            //:AddFormatToSpecialText( mSPLDefPDF, "Title", szWriteBuffer )
+            //:AddFormatToSpecialText( mSPLDefPDF, szSectionType, "Title", szWriteBuffer )
             {StringBuilder sb_szWriteBuffer;
             if ( szWriteBuffer == null )
                sb_szWriteBuffer = new StringBuilder( 32 );
             else
                sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
-                         omSPLDef_AddFormatToSpecialText( mSPLDefPDF, "Title", sb_szWriteBuffer );
+                         omSPLDef_AddFormatToSpecialText( mSPLDefPDF, szSectionType, "Title", sb_szWriteBuffer );
             szWriteBuffer = sb_szWriteBuffer.toString( );}
             //:WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
             try
@@ -4682,6 +4695,7 @@ omSPLDef_FormatContinueBlock( View     mSPLDefPDF,
       } 
 
       //:END
+
       //:// Format Statement Text
       //:szWriteBuffer = szLeadingBlanks + "   <fo:block "
        {StringBuilder sb_szWriteBuffer;
@@ -4698,13 +4712,13 @@ omSPLDef_FormatContinueBlock( View     mSPLDefPDF,
          sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
             ZeidonStringConcat( sb_szWriteBuffer, 1, 0, "   <fo:block ", 1, 0, 32001 );
       szWriteBuffer = sb_szWriteBuffer.toString( );}
-      //:AddFormatToSpecialText( mSPLDefPDF, "Text", szWriteBuffer )
+      //:AddFormatToSpecialText( mSPLDefPDF, szSectionType, "Text", szWriteBuffer )
       {StringBuilder sb_szWriteBuffer;
       if ( szWriteBuffer == null )
          sb_szWriteBuffer = new StringBuilder( 32 );
       else
          sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
-             omSPLDef_AddFormatToSpecialText( mSPLDefPDF, "Text", sb_szWriteBuffer );
+             omSPLDef_AddFormatToSpecialText( mSPLDefPDF, szSectionType, "Text", sb_szWriteBuffer );
       szWriteBuffer = sb_szWriteBuffer.toString( );}
       //:WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
       try
@@ -5085,7 +5099,6 @@ omSPLDef_ProcessPDF_Blocks( View     mSPLDef,
          else
          { 
             //:// Determine what kind of LLD_Block it is and go to process accordingly.
-
             //:szSectionType = mSPLDefPDF.LLD_Block.LLD_SectionType
             {MutableInt mi_lTempInteger_4 = new MutableInt( lTempInteger_4 );
             StringBuilder sb_szSectionType;
@@ -5376,13 +5389,13 @@ omSPLDef_ProcessPDF_Blocks( View     mSPLDef,
                      sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
                                     ZeidonStringConcat( sb_szWriteBuffer, 1, 0, "   <fo:block ", 1, 0, 32001 );
                   szWriteBuffer = sb_szWriteBuffer.toString( );}
-                  //:AddFormatToSpecialText( mSPLDefPDF, "Header", szWriteBuffer )
+                  //:AddFormatToSpecialText( mSPLDefPDF, szSectionType, "Header", szWriteBuffer )
                   {StringBuilder sb_szWriteBuffer;
                   if ( szWriteBuffer == null )
                      sb_szWriteBuffer = new StringBuilder( 32 );
                   else
                      sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
-                                     omSPLDef_AddFormatToSpecialText( mSPLDefPDF, "Header", sb_szWriteBuffer );
+                                     omSPLDef_AddFormatToSpecialText( mSPLDefPDF, szSectionType, "Header", sb_szWriteBuffer );
                   szWriteBuffer = sb_szWriteBuffer.toString( );}
                   //:WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
                   try
@@ -5469,13 +5482,15 @@ omSPLDef_ProcessPDF_Blocks( View     mSPLDef,
                   while ( RESULT > zCURSOR_UNCHANGED )
                   { 
                      //:GeneratePDF_DFU( mSPLDef, mSPLDefPDF, lFile,
+                     //:              szSectionType,
                      //:              "SPLD_DirectionsForUseSection",
                      //:              "SPLD_DirectionsForUseStatement",
                      //:              "SPLD_DirectionsUsage",
                      //:              "SPLD_DirectionsUsageOrdering",
                      //:              szLeadingBlanks,
                      //:              szWriteBuffer )
-                     omSPLDef_GeneratePDF_DFU( mSPLDef, mSPLDefPDF, lFile, "SPLD_DirectionsForUseSection", "SPLD_DirectionsForUseStatement", "SPLD_DirectionsUsage", "SPLD_DirectionsUsageOrdering", szLeadingBlanks, szWriteBuffer );
+                     omSPLDef_GeneratePDF_DFU( mSPLDef, mSPLDefPDF, lFile, szSectionType, "SPLD_DirectionsForUseSection", "SPLD_DirectionsForUseStatement", "SPLD_DirectionsUsage", "SPLD_DirectionsUsageOrdering", szLeadingBlanks,
+                        szWriteBuffer );
                      RESULT = SetCursorNextEntity( mSPLDef, "SPLD_DirectionsForUseSection", "" );
                   } 
 
@@ -5509,7 +5524,7 @@ omSPLDef_ProcessPDF_Blocks( View     mSPLDef,
                         //:// SET CURSOR FIRST mSPLDefPDF.LLD_SpecialSectionAttribute WHERE mSPLDefPDF.LLD_SpecialSectionAttribute.Name = "Header"
                         //:// IF RESULT >= zCURSOR_SET
                         //://    szWriteBuffer = szLeadingBlanks + "   <fo:block "
-                        //://    AddFormatToSpecialText( mSPLDefPDF, "Header", szWriteBuffer )
+                        //://    AddFormatToSpecialText( mSPLDefPDF, szSectionType, "Header", szWriteBuffer )
                         //://    WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
                         //://    szWriteBuffer = szLeadingBlanks + "      Marketing"
                         //://    WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
@@ -5523,13 +5538,14 @@ omSPLDef_ProcessPDF_Blocks( View     mSPLDef,
                         if ( CompareAttributeToString( mSPLDef, "SPLD_MarketingStatement", "Text", "" ) != 0 )
                         { 
                            //:GeneratePDF_DFU( mSPLDef, mSPLDefPDF, lFile,
+                           //:           szSectionType,
                            //:           "SPLD_MarketingSection",
                            //:           "SPLD_MarketingStatement",
                            //:           "SPLD_MarketingUsage",
                            //:           "SPLD_MarketingUsageOrdering",
                            //:           szLeadingBlanks,
                            //:           szWriteBuffer )
-                           omSPLDef_GeneratePDF_DFU( mSPLDef, mSPLDefPDF, lFile, "SPLD_MarketingSection", "SPLD_MarketingStatement", "SPLD_MarketingUsage", "SPLD_MarketingUsageOrdering", szLeadingBlanks, szWriteBuffer );
+                           omSPLDef_GeneratePDF_DFU( mSPLDef, mSPLDefPDF, lFile, szSectionType, "SPLD_MarketingSection", "SPLD_MarketingStatement", "SPLD_MarketingUsage", "SPLD_MarketingUsageOrdering", szLeadingBlanks, szWriteBuffer );
                         } 
 
                         //:END
@@ -5613,13 +5629,14 @@ omSPLDef_ProcessPDF_Blocks( View     mSPLDef,
 
                         //:// TraceLineS( "Major Block: ", szSectionType )
                         //:GeneratePDF_DFU( mSPLDef, mSPLDefPDF, lFile,
+                        //:        szSectionType,
                         //:        "SPLD_StorageDisposalSection",
                         //:        "SPLD_StorageDisposalStatement",
                         //:        "",
                         //:        "",
                         //:        szLeadingBlanks,
                         //:        szWriteBuffer )
-                        omSPLDef_GeneratePDF_DFU( mSPLDef, mSPLDefPDF, lFile, "SPLD_StorageDisposalSection", "SPLD_StorageDisposalStatement", "", "", szLeadingBlanks, szWriteBuffer );
+                        omSPLDef_GeneratePDF_DFU( mSPLDef, mSPLDefPDF, lFile, szSectionType, "SPLD_StorageDisposalSection", "SPLD_StorageDisposalStatement", "", "", szLeadingBlanks, szWriteBuffer );
 
                         //:ELSE
                      } 
@@ -5635,13 +5652,14 @@ omSPLDef_ProcessPDF_Blocks( View     mSPLDef,
                            //:SET CURSOR FIRST mSPLDef.SPLD_GeneralSection WHERE mSPLDef.SPLD_GeneralSection.SectionType = "P"  // SectionType of P is Precautionary
                            RESULT = SetCursorFirstEntityByString( mSPLDef, "SPLD_GeneralSection", "SectionType", "P", "" );
                            //:GeneratePDF_DFU( mSPLDef, mSPLDefPDF, lFile,
+                           //:     szSectionType,
                            //:     "SPLD_GeneralSection",
                            //:     "SPLD_GeneralStatement",
                            //:     "",
                            //:     "",
                            //:     szLeadingBlanks,
                            //:     szWriteBuffer )
-                           omSPLDef_GeneratePDF_DFU( mSPLDef, mSPLDefPDF, lFile, "SPLD_GeneralSection", "SPLD_GeneralStatement", "", "", szLeadingBlanks, szWriteBuffer );
+                           omSPLDef_GeneratePDF_DFU( mSPLDef, mSPLDefPDF, lFile, szSectionType, "SPLD_GeneralSection", "SPLD_GeneralStatement", "", "", szLeadingBlanks, szWriteBuffer );
 
                            //:ELSE
                         } 
@@ -5697,13 +5715,13 @@ omSPLDef_ProcessPDF_Blocks( View     mSPLDef,
                                  sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
                                                             ZeidonStringConcat( sb_szWriteBuffer, 1, 0, "   <fo:block ", 1, 0, 32001 );
                               szWriteBuffer = sb_szWriteBuffer.toString( );}
-                              //:AddFormatToSpecialText( mSPLDefPDF, "Header", szWriteBuffer )
+                              //:AddFormatToSpecialText( mSPLDefPDF, szSectionType, "Header", szWriteBuffer )
                               {StringBuilder sb_szWriteBuffer;
                               if ( szWriteBuffer == null )
                                  sb_szWriteBuffer = new StringBuilder( 32 );
                               else
                                  sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
-                                                             omSPLDef_AddFormatToSpecialText( mSPLDefPDF, "Header", sb_szWriteBuffer );
+                                                             omSPLDef_AddFormatToSpecialText( mSPLDefPDF, szSectionType, "Header", sb_szWriteBuffer );
                               szWriteBuffer = sb_szWriteBuffer.toString( );}
                               //:WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
                               try
@@ -5787,13 +5805,14 @@ omSPLDef_ProcessPDF_Blocks( View     mSPLDef,
                               //:SET CURSOR FIRST mSPLDef.SPLD_GeneralSection WHERE mSPLDef.SPLD_GeneralSection.SectionType = "F"  // SectionType of F is First Aid
                               RESULT = SetCursorFirstEntityByString( mSPLDef, "SPLD_GeneralSection", "SectionType", "F", "" );
                               //:GeneratePDF_DFU( mSPLDef, mSPLDefPDF, lFile,
+                              //:  szSectionType,
                               //:  "SPLD_GeneralSection",
                               //:  "SPLD_GeneralStatement",
                               //:  "",
                               //:  "",
                               //:  szLeadingBlanks,
                               //:  szWriteBuffer )
-                              omSPLDef_GeneratePDF_DFU( mSPLDef, mSPLDefPDF, lFile, "SPLD_GeneralSection", "SPLD_GeneralStatement", "", "", szLeadingBlanks, szWriteBuffer );
+                              omSPLDef_GeneratePDF_DFU( mSPLDef, mSPLDefPDF, lFile, szSectionType, "SPLD_GeneralSection", "SPLD_GeneralStatement", "", "", szLeadingBlanks, szWriteBuffer );
 
                               //:ELSE
                            } 
@@ -5809,13 +5828,14 @@ omSPLDef_ProcessPDF_Blocks( View     mSPLDef,
                                  //:SET CURSOR FIRST mSPLDef.SPLD_GeneralSection WHERE mSPLDef.SPLD_GeneralSection.SectionType = "E"  // SectionType of E is Environmental Hazard
                                  RESULT = SetCursorFirstEntityByString( mSPLDef, "SPLD_GeneralSection", "SectionType", "E", "" );
                                  //:GeneratePDF_DFU( mSPLDef, mSPLDefPDF, lFile,
+                                 //:szSectionType,
                                  //:"SPLD_GeneralSection",
                                  //:"SPLD_GeneralStatement",
                                  //:"",
                                  //:"",
                                  //:szLeadingBlanks,
                                  //:szWriteBuffer )
-                                 omSPLDef_GeneratePDF_DFU( mSPLDef, mSPLDefPDF, lFile, "SPLD_GeneralSection", "SPLD_GeneralStatement", "", "", szLeadingBlanks, szWriteBuffer );
+                                 omSPLDef_GeneratePDF_DFU( mSPLDef, mSPLDefPDF, lFile, szSectionType, "SPLD_GeneralSection", "SPLD_GeneralStatement", "", "", szLeadingBlanks, szWriteBuffer );
 
                                  //:ELSE
                               } 
@@ -5829,8 +5849,8 @@ omSPLDef_ProcessPDF_Blocks( View     mSPLDef,
 
                                     //:// Generate the single Hazards entry.
                                     //:// TraceLineS( "Major Block: ", szSectionType )
-                                    //:GeneratePDF_Hazards( mSPLDef, mSPLDefPDF, lFile, szLeadingBlanks, szWriteBuffer )
-                                    omSPLDef_GeneratePDF_Hazards( mSPLDef, mSPLDefPDF, lFile, szLeadingBlanks, szWriteBuffer );
+                                    //:GeneratePDF_Hazards( mSPLDef, mSPLDefPDF, lFile, szSectionType, szLeadingBlanks, szWriteBuffer )
+                                    omSPLDef_GeneratePDF_Hazards( mSPLDef, mSPLDefPDF, lFile, szSectionType, szLeadingBlanks, szWriteBuffer );
 
                                     //:ELSE
                                  } 
@@ -5844,8 +5864,8 @@ omSPLDef_ProcessPDF_Blocks( View     mSPLDef,
 
                                        //:// Go to generate Active Ingredients.
                                        //:// TraceLineS( "Major Block: ", szSectionType )
-                                       //:GeneratePDF_Ingred( mSPLDef, mSPLDefPDF, lFile, szLeadingBlanks, szWriteBuffer )
-                                       omSPLDef_GeneratePDF_Ingred( mSPLDef, mSPLDefPDF, lFile, szLeadingBlanks, szWriteBuffer );
+                                       //:GeneratePDF_Ingred( mSPLDef, mSPLDefPDF, lFile, szSectionType, szLeadingBlanks, szWriteBuffer )
+                                       omSPLDef_GeneratePDF_Ingred( mSPLDef, mSPLDefPDF, lFile, szSectionType, szLeadingBlanks, szWriteBuffer );
 
                                        //:ELSE
                                     } 
@@ -5859,8 +5879,8 @@ omSPLDef_ProcessPDF_Blocks( View     mSPLDef,
 
                                           //:// Go to generate Net Contents.
                                           //:// TraceLineS( "Major Block: ", szSectionType )
-                                          //:GeneratePDF_Content( mSPLDef, mSPLDefPDF, lFile, szLeadingBlanks, szWriteBuffer )
-                                          omSPLDef_GeneratePDF_Content( mSPLDef, mSPLDefPDF, lFile, szLeadingBlanks, szWriteBuffer );
+                                          //:GeneratePDF_Content( mSPLDef, mSPLDefPDF, lFile, szSectionType, szLeadingBlanks, szWriteBuffer )
+                                          omSPLDef_GeneratePDF_Content( mSPLDef, mSPLDefPDF, lFile, szSectionType, szLeadingBlanks, szWriteBuffer );
 
                                           //:ELSE
                                        } 
@@ -5874,8 +5894,8 @@ omSPLDef_ProcessPDF_Blocks( View     mSPLDef,
 
                                              //:// Go to generate EPA Reg and Est Numbers.
                                              //:// TraceLineS( "Major Block: ", szSectionType )
-                                             //:GeneratePDF_EPA_Reg( mSPLDef, mSPLDefPDF, lFile, szLeadingBlanks, szWriteBuffer )
-                                             omSPLDef_GeneratePDF_EPA_Reg( mSPLDef, mSPLDefPDF, lFile, szLeadingBlanks, szWriteBuffer );
+                                             //:GeneratePDF_EPA_Reg( mSPLDef, mSPLDefPDF, lFile, szSectionType, szLeadingBlanks, szWriteBuffer )
+                                             omSPLDef_GeneratePDF_EPA_Reg( mSPLDef, mSPLDefPDF, lFile, szSectionType, szLeadingBlanks, szWriteBuffer );
 
                                              //:ELSE
                                           } 
@@ -5918,13 +5938,13 @@ omSPLDef_ProcessPDF_Blocks( View     mSPLDef,
                                                    sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
                                                                                                 ZeidonStringConcat( sb_szWriteBuffer, 1, 0, "<fo:block ", 1, 0, 32001 );
                                                 szWriteBuffer = sb_szWriteBuffer.toString( );}
-                                                //:AddFormatToSpecialText( mSPLDefPDF, "Text", szWriteBuffer )
+                                                //:AddFormatToSpecialText( mSPLDefPDF, szSectionType, "Text", szWriteBuffer )
                                                 {StringBuilder sb_szWriteBuffer;
                                                 if ( szWriteBuffer == null )
                                                    sb_szWriteBuffer = new StringBuilder( 32 );
                                                 else
                                                    sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
-                                                                                                 omSPLDef_AddFormatToSpecialText( mSPLDefPDF, "Text", sb_szWriteBuffer );
+                                                                                                 omSPLDef_AddFormatToSpecialText( mSPLDefPDF, szSectionType, "Text", sb_szWriteBuffer );
                                                 szWriteBuffer = sb_szWriteBuffer.toString( );}
                                                 //:WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
                                                 try
@@ -6342,16 +6362,16 @@ omSPLDef_ProcessPDF_Blocks( View     mSPLDef,
                { 
                   //:// Request is 3 Column Claim List.
                   //:// TraceLineS( "Marketing 3-Column List ", "" )
-                  //:GeneratePDF_ClmList( mSPLDef, mSPLDefPDF, lFile, szLeadingBlanks, szWriteBuffer, 3 )
-                  omSPLDef_GeneratePDF_ClmList( mSPLDef, mSPLDefPDF, lFile, szLeadingBlanks, szWriteBuffer, 3 );
+                  //:GeneratePDF_ClmList( mSPLDef, mSPLDefPDF, lFile, szSectionType, szLeadingBlanks, szWriteBuffer, 3 )
+                  omSPLDef_GeneratePDF_ClmList( mSPLDef, mSPLDefPDF, lFile, szSectionType, szLeadingBlanks, szWriteBuffer, 3 );
                   //:ELSE
                } 
                else
                { 
                   //:// Default is 2 Column Claim List.
                   //:// TraceLineS( "Marketing 2-Column List ", "" )
-                  //:GeneratePDF_ClmList( mSPLDef, mSPLDefPDF, lFile, szLeadingBlanks, szWriteBuffer, 2 )
-                  omSPLDef_GeneratePDF_ClmList( mSPLDef, mSPLDefPDF, lFile, szLeadingBlanks, szWriteBuffer, 2 );
+                  //:GeneratePDF_ClmList( mSPLDef, mSPLDefPDF, lFile, szSectionType, szLeadingBlanks, szWriteBuffer, 2 )
+                  omSPLDef_GeneratePDF_ClmList( mSPLDef, mSPLDefPDF, lFile, szSectionType, szLeadingBlanks, szWriteBuffer, 2 );
                } 
 
                //:END
@@ -6419,6 +6439,7 @@ omSPLDef_ProcessPDF_Blocks( View     mSPLDef,
 //:GeneratePDF_DFU( VIEW mSPLDef    BASED ON LOD mSPLDef,
 //:                 VIEW mSPLDefPDF BASED ON LOD mSPLDef,
 //:                 INTEGER lFile,
+//:                 STRING ( 50 ) szSectionType,
 //:                 STRING ( 32 ) szSPLD_SectionName,
 //:                 STRING ( 32 ) szStatementName,
 //:                 STRING ( 32 ) szUsageTypeEntity,
@@ -6431,6 +6452,7 @@ public int
 omSPLDef_GeneratePDF_DFU( View     mSPLDef,
                           View     mSPLDefPDF,
                           int      lFile,
+                          String   szSectionType,
                           String   szSPLD_SectionName,
                           String   szStatementName,
                           String   szUsageTypeEntity,
@@ -6453,8 +6475,7 @@ omSPLDef_GeneratePDF_DFU( View     mSPLDef,
    String   szSectionTitle = null;
    //:STRING ( 50 )     szSectionName
    String   szSectionName = null;
-   //:STRING ( 50 )     szSectionType
-   String   szSectionType = null;
+   //:// STRING ( 50 )     szSectionType
    //:STRING ( 32 )     szSeparatorCharacters
    String   szSeparatorCharacters = null;
    //:STRING ( 32 )     szNumberedText
@@ -6496,36 +6517,35 @@ omSPLDef_GeneratePDF_DFU( View     mSPLDef,
    int      lTempInteger_1 = 0;
    int      lTempInteger_2 = 0;
    int      lTempInteger_3 = 0;
-   int      lTempInteger_4 = 0;
    int      RESULT = 0;
+   int      lTempInteger_4 = 0;
    int      lTempInteger_5 = 0;
    int      lTempInteger_6 = 0;
    int      lTempInteger_7 = 0;
    int      lTempInteger_8 = 0;
    int      lTempInteger_9 = 0;
    int      lTempInteger_10 = 0;
-   int      lTempInteger_11 = 0;
    String   szTempString_0 = null;
-   int      lTempInteger_12 = 0;
+   int      lTempInteger_11 = 0;
    String   szTempString_1 = null;
-   int      lTempInteger_13 = 0;
+   int      lTempInteger_12 = 0;
    String   szTempString_2 = null;
-   int      lTempInteger_14 = 0;
+   int      lTempInteger_13 = 0;
    String   szTempString_3 = null;
-   int      lTempInteger_15 = 0;
+   int      lTempInteger_14 = 0;
    String   szTempString_4 = null;
+   int      lTempInteger_15 = 0;
    int      lTempInteger_16 = 0;
-   int      lTempInteger_17 = 0;
    String   szTempString_5 = null;
-   int      lTempInteger_18 = 0;
+   int      lTempInteger_17 = 0;
    String   szTempString_6 = null;
-   int      lTempInteger_19 = 0;
+   int      lTempInteger_18 = 0;
    String   szTempString_7 = null;
-   int      lTempInteger_20 = 0;
+   int      lTempInteger_19 = 0;
    String   szTempString_8 = null;
-   int      lTempInteger_21 = 0;
+   int      lTempInteger_20 = 0;
    String   szTempString_9 = null;
-   int      lTempInteger_22 = 0;
+   int      lTempInteger_21 = 0;
 
 
    //:// Generate PDF for a "Directions of Use" or "Marketing" Section.
@@ -6569,28 +6589,19 @@ omSPLDef_GeneratePDF_DFU( View     mSPLDef,
    //:// If this is block for a Marketing Section, we need to position on the corresponding Market Section by Name.
    //:// Otherwise, we are positioned on the correct Section already.
    //:// We also need to initialize the XML for the Marketing Section.
-   //:szSectionType = mSPLDefPDF.LLD_Block.LLD_SectionType
-   {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
-   StringBuilder sb_szSectionType;
-   if ( szSectionType == null )
-      sb_szSectionType = new StringBuilder( 32 );
-   else
-      sb_szSectionType = new StringBuilder( szSectionType );
-       GetVariableFromAttribute( sb_szSectionType, mi_lTempInteger_0, 'S', 51, mSPLDefPDF, "LLD_Block", "LLD_SectionType", "", 0 );
-   lTempInteger_0 = mi_lTempInteger_0.intValue( );
-   szSectionType = sb_szSectionType.toString( );}
+   //:// szSectionType = mSPLDefPDF.LLD_Block.LLD_SectionType
    //:IF szSectionType = "Marketing"
    if ( ZeidonStringCompare( szSectionType, 1, 0, "Marketing", 1, 0, 51 ) == 0 )
    { 
       //:szSectionName = mSPLDefPDF.LLD_Block.Name
-      {MutableInt mi_lTempInteger_1 = new MutableInt( lTempInteger_1 );
+      {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
       StringBuilder sb_szSectionName;
       if ( szSectionName == null )
          sb_szSectionName = new StringBuilder( 32 );
       else
          sb_szSectionName = new StringBuilder( szSectionName );
-             GetVariableFromAttribute( sb_szSectionName, mi_lTempInteger_1, 'S', 51, mSPLDefPDF, "LLD_Block", "Name", "", 0 );
-      lTempInteger_1 = mi_lTempInteger_1.intValue( );
+             GetVariableFromAttribute( sb_szSectionName, mi_lTempInteger_0, 'S', 51, mSPLDefPDF, "LLD_Block", "Name", "", 0 );
+      lTempInteger_0 = mi_lTempInteger_0.intValue( );
       szSectionName = sb_szSectionName.toString( );}
       //:SetCursorFirstEntityByString( mSPLDef, szSPLD_SectionName, "Name", szSectionName, "" )
       SetCursorFirstEntityByString( mSPLDef, szSPLD_SectionName, "Name", szSectionName, "" );
@@ -6606,20 +6617,20 @@ omSPLDef_GeneratePDF_DFU( View     mSPLDef,
 
    //:// Increment Display Section Suffix and Initialize DisplaySection entry.
    //:mSPLDef.SubregPhysicalLabelDef.wLastDisplaySuffixCount = mSPLDef.SubregPhysicalLabelDef.wLastDisplaySuffixCount + 1
-   {MutableInt mi_lTempInteger_2 = new MutableInt( lTempInteger_2 );
-       GetIntegerFromAttribute( mi_lTempInteger_2, mSPLDef, "SubregPhysicalLabelDef", "wLastDisplaySuffixCount" );
-   lTempInteger_2 = mi_lTempInteger_2.intValue( );}
-   lTempInteger_3 = lTempInteger_2 + 1;
-   SetAttributeFromInteger( mSPLDef, "SubregPhysicalLabelDef", "wLastDisplaySuffixCount", lTempInteger_3 );
+   {MutableInt mi_lTempInteger_1 = new MutableInt( lTempInteger_1 );
+       GetIntegerFromAttribute( mi_lTempInteger_1, mSPLDef, "SubregPhysicalLabelDef", "wLastDisplaySuffixCount" );
+   lTempInteger_1 = mi_lTempInteger_1.intValue( );}
+   lTempInteger_2 = lTempInteger_1 + 1;
+   SetAttributeFromInteger( mSPLDef, "SubregPhysicalLabelDef", "wLastDisplaySuffixCount", lTempInteger_2 );
    //:szDisplaySectionSuffix = mSPLDef.SubregPhysicalLabelDef.wLastDisplaySuffixCount
-   {MutableInt mi_lTempInteger_4 = new MutableInt( lTempInteger_4 );
+   {MutableInt mi_lTempInteger_3 = new MutableInt( lTempInteger_3 );
    StringBuilder sb_szDisplaySectionSuffix;
    if ( szDisplaySectionSuffix == null )
       sb_szDisplaySectionSuffix = new StringBuilder( 32 );
    else
       sb_szDisplaySectionSuffix = new StringBuilder( szDisplaySectionSuffix );
-       GetVariableFromAttribute( sb_szDisplaySectionSuffix, mi_lTempInteger_4, 'S', 4, mSPLDef, "SubregPhysicalLabelDef", "wLastDisplaySuffixCount", "", 0 );
-   lTempInteger_4 = mi_lTempInteger_4.intValue( );
+       GetVariableFromAttribute( sb_szDisplaySectionSuffix, mi_lTempInteger_3, 'S', 4, mSPLDef, "SubregPhysicalLabelDef", "wLastDisplaySuffixCount", "", 0 );
+   lTempInteger_3 = mi_lTempInteger_3.intValue( );
    szDisplaySectionSuffix = sb_szDisplaySectionSuffix.toString( );}
    //:szDisplaySectionName = "DisplaySection" + szDisplaySectionSuffix
     {StringBuilder sb_szDisplaySectionName;
@@ -6644,14 +6655,14 @@ omSPLDef_GeneratePDF_DFU( View     mSPLDef,
    SetAttributeFromString( mSPLDef, "DisplaySection", "XML_SectionName", szDisplaySectionName );
 
    //:szSectionTitlePosition = mSPLDefPDF.LLD_Block.TitlePosition
-   {MutableInt mi_lTempInteger_5 = new MutableInt( lTempInteger_5 );
+   {MutableInt mi_lTempInteger_4 = new MutableInt( lTempInteger_4 );
    StringBuilder sb_szSectionTitlePosition;
    if ( szSectionTitlePosition == null )
       sb_szSectionTitlePosition = new StringBuilder( 32 );
    else
       sb_szSectionTitlePosition = new StringBuilder( szSectionTitlePosition );
-       GetVariableFromAttribute( sb_szSectionTitlePosition, mi_lTempInteger_5, 'S', 3, mSPLDefPDF, "LLD_Block", "TitlePosition", "", 0 );
-   lTempInteger_5 = mi_lTempInteger_5.intValue( );
+       GetVariableFromAttribute( sb_szSectionTitlePosition, mi_lTempInteger_4, 'S', 3, mSPLDefPDF, "LLD_Block", "TitlePosition", "", 0 );
+   lTempInteger_4 = mi_lTempInteger_4.intValue( );
    szSectionTitlePosition = sb_szSectionTitlePosition.toString( );}
    //:IF szSectionTitlePosition = ""
    if ( ZeidonStringCompare( szSectionTitlePosition, 1, 0, "", 1, 0, 3 ) == 0 )
@@ -6695,13 +6706,13 @@ omSPLDef_GeneratePDF_DFU( View     mSPLDef,
          sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
             ZeidonStringConcat( sb_szWriteBuffer, 1, 0, "<fo:block ", 1, 0, 32001 );
       szWriteBuffer = sb_szWriteBuffer.toString( );}
-      //:AddFormatToSpecialText( mSPLDefPDF, "Title", szWriteBuffer )
+      //:AddFormatToSpecialText( mSPLDefPDF, szSectionType, "Title", szWriteBuffer )
       {StringBuilder sb_szWriteBuffer;
       if ( szWriteBuffer == null )
          sb_szWriteBuffer = new StringBuilder( 32 );
       else
          sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
-             omSPLDef_AddFormatToSpecialText( mSPLDefPDF, "Title", sb_szWriteBuffer );
+             omSPLDef_AddFormatToSpecialText( mSPLDefPDF, szSectionType, "Title", sb_szWriteBuffer );
       szWriteBuffer = sb_szWriteBuffer.toString( );}
       //:WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
       try
@@ -6816,14 +6827,14 @@ omSPLDef_GeneratePDF_DFU( View     mSPLDef,
    if ( RESULT >= zCURSOR_SET )
    { 
       //:szStatementTitlePosition = mSPLDefPDF.LLD_SpecialSectionAttrBlock.TitlePosition
-      {MutableInt mi_lTempInteger_6 = new MutableInt( lTempInteger_6 );
+      {MutableInt mi_lTempInteger_5 = new MutableInt( lTempInteger_5 );
       StringBuilder sb_szStatementTitlePosition;
       if ( szStatementTitlePosition == null )
          sb_szStatementTitlePosition = new StringBuilder( 32 );
       else
          sb_szStatementTitlePosition = new StringBuilder( szStatementTitlePosition );
-             GetVariableFromAttribute( sb_szStatementTitlePosition, mi_lTempInteger_6, 'S', 3, mSPLDefPDF, "LLD_SpecialSectionAttrBlock", "TitlePosition", "", 0 );
-      lTempInteger_6 = mi_lTempInteger_6.intValue( );
+             GetVariableFromAttribute( sb_szStatementTitlePosition, mi_lTempInteger_5, 'S', 3, mSPLDefPDF, "LLD_SpecialSectionAttrBlock", "TitlePosition", "", 0 );
+      lTempInteger_5 = mi_lTempInteger_5.intValue( );
       szStatementTitlePosition = sb_szStatementTitlePosition.toString( );}
       //:IF szStatementTitlePosition = ""
       if ( ZeidonStringCompare( szStatementTitlePosition, 1, 0, "", 1, 0, 3 ) == 0 )
@@ -6840,14 +6851,14 @@ omSPLDef_GeneratePDF_DFU( View     mSPLDef,
 
       //:END
       //:szConvertToCapsFlag = mSPLDefPDF.LLD_SpecialSectionAttrBlock.CapitalizeTitleTextFlag
-      {MutableInt mi_lTempInteger_7 = new MutableInt( lTempInteger_7 );
+      {MutableInt mi_lTempInteger_6 = new MutableInt( lTempInteger_6 );
       StringBuilder sb_szConvertToCapsFlag;
       if ( szConvertToCapsFlag == null )
          sb_szConvertToCapsFlag = new StringBuilder( 32 );
       else
          sb_szConvertToCapsFlag = new StringBuilder( szConvertToCapsFlag );
-             GetVariableFromAttribute( sb_szConvertToCapsFlag, mi_lTempInteger_7, 'S', 2, mSPLDefPDF, "LLD_SpecialSectionAttrBlock", "CapitalizeTitleTextFlag", "", 0 );
-      lTempInteger_7 = mi_lTempInteger_7.intValue( );
+             GetVariableFromAttribute( sb_szConvertToCapsFlag, mi_lTempInteger_6, 'S', 2, mSPLDefPDF, "LLD_SpecialSectionAttrBlock", "CapitalizeTitleTextFlag", "", 0 );
+      lTempInteger_6 = mi_lTempInteger_6.intValue( );
       szConvertToCapsFlag = sb_szConvertToCapsFlag.toString( );}
    } 
 
@@ -6874,20 +6885,20 @@ omSPLDef_GeneratePDF_DFU( View     mSPLDef,
       if ( ZeidonStringCompare( szContinuationFlag, 1, 0, "", 1, 0, 2 ) == 0 || ZeidonStringCompare( szContinuationFlag, 1, 0, "M", 1, 0, 2 ) == 0 )
       { 
          //:mSPLDef.SubregPhysicalLabelDef.wLastDisplaySuffixCount = mSPLDef.SubregPhysicalLabelDef.wLastDisplaySuffixCount + 1
-         {MutableInt mi_lTempInteger_8 = new MutableInt( lTempInteger_8 );
-                   GetIntegerFromAttribute( mi_lTempInteger_8, mSPLDef, "SubregPhysicalLabelDef", "wLastDisplaySuffixCount" );
-         lTempInteger_8 = mi_lTempInteger_8.intValue( );}
-         lTempInteger_9 = lTempInteger_8 + 1;
-         SetAttributeFromInteger( mSPLDef, "SubregPhysicalLabelDef", "wLastDisplaySuffixCount", lTempInteger_9 );
+         {MutableInt mi_lTempInteger_7 = new MutableInt( lTempInteger_7 );
+                   GetIntegerFromAttribute( mi_lTempInteger_7, mSPLDef, "SubregPhysicalLabelDef", "wLastDisplaySuffixCount" );
+         lTempInteger_7 = mi_lTempInteger_7.intValue( );}
+         lTempInteger_8 = lTempInteger_7 + 1;
+         SetAttributeFromInteger( mSPLDef, "SubregPhysicalLabelDef", "wLastDisplaySuffixCount", lTempInteger_8 );
          //:szDisplaySectionSuffix = mSPLDef.SubregPhysicalLabelDef.wLastDisplaySuffixCount
-         {MutableInt mi_lTempInteger_10 = new MutableInt( lTempInteger_10 );
+         {MutableInt mi_lTempInteger_9 = new MutableInt( lTempInteger_9 );
          StringBuilder sb_szDisplaySectionSuffix;
          if ( szDisplaySectionSuffix == null )
             sb_szDisplaySectionSuffix = new StringBuilder( 32 );
          else
             sb_szDisplaySectionSuffix = new StringBuilder( szDisplaySectionSuffix );
-                   GetVariableFromAttribute( sb_szDisplaySectionSuffix, mi_lTempInteger_10, 'S', 4, mSPLDef, "SubregPhysicalLabelDef", "wLastDisplaySuffixCount", "", 0 );
-         lTempInteger_10 = mi_lTempInteger_10.intValue( );
+                   GetVariableFromAttribute( sb_szDisplaySectionSuffix, mi_lTempInteger_9, 'S', 4, mSPLDef, "SubregPhysicalLabelDef", "wLastDisplaySuffixCount", "", 0 );
+         lTempInteger_9 = mi_lTempInteger_9.intValue( );
          szDisplaySectionSuffix = sb_szDisplaySectionSuffix.toString( );}
          //:szDisplayStatementName = "DisplayStatement" + szDisplaySectionSuffix
           {StringBuilder sb_szDisplayStatementName;
@@ -7031,13 +7042,13 @@ omSPLDef_GeneratePDF_DFU( View     mSPLDef,
                sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
                         ZeidonStringConcat( sb_szWriteBuffer, 1, 0, "   <fo:block ", 1, 0, 32001 );
             szWriteBuffer = sb_szWriteBuffer.toString( );}
-            //:AddFormatToSpecialText( mSPLDefPDF, "Title", szWriteBuffer )
+            //:AddFormatToSpecialText( mSPLDefPDF, szSectionType, "Title", szWriteBuffer )
             {StringBuilder sb_szWriteBuffer;
             if ( szWriteBuffer == null )
                sb_szWriteBuffer = new StringBuilder( 32 );
             else
                sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
-                         omSPLDef_AddFormatToSpecialText( mSPLDefPDF, "Title", sb_szWriteBuffer );
+                         omSPLDef_AddFormatToSpecialText( mSPLDefPDF, szSectionType, "Title", sb_szWriteBuffer );
             szWriteBuffer = sb_szWriteBuffer.toString( );}
             //:WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
             try
@@ -7209,13 +7220,13 @@ omSPLDef_GeneratePDF_DFU( View     mSPLDef,
             sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
                   ZeidonStringConcat( sb_szWriteBuffer, 1, 0, "<fo:block ", 1, 0, 32001 );
          szWriteBuffer = sb_szWriteBuffer.toString( );}
-         //:AddFormatToSpecialText( mSPLDefPDF, "Text", szWriteBuffer )
+         //:AddFormatToSpecialText( mSPLDefPDF, szSectionType, "Text", szWriteBuffer )
          {StringBuilder sb_szWriteBuffer;
          if ( szWriteBuffer == null )
             sb_szWriteBuffer = new StringBuilder( 32 );
          else
             sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
-                   omSPLDef_AddFormatToSpecialText( mSPLDefPDF, "Text", sb_szWriteBuffer );
+                   omSPLDef_AddFormatToSpecialText( mSPLDefPDF, szSectionType, "Text", sb_szWriteBuffer );
          szWriteBuffer = sb_szWriteBuffer.toString( );}
          //:WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
          try
@@ -7352,13 +7363,13 @@ omSPLDef_GeneratePDF_DFU( View     mSPLDef,
                   sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
                               ZeidonStringConcat( sb_szWriteBuffer, 1, 0, "   <fo:block ", 1, 0, 32001 );
                szWriteBuffer = sb_szWriteBuffer.toString( );}
-               //:AddFormatToSpecialText( mSPLDefPDF, "Text", szWriteBuffer )
+               //:AddFormatToSpecialText( mSPLDefPDF, szSectionType, "Text", szWriteBuffer )
                {StringBuilder sb_szWriteBuffer;
                if ( szWriteBuffer == null )
                   sb_szWriteBuffer = new StringBuilder( 32 );
                else
                   sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
-                               omSPLDef_AddFormatToSpecialText( mSPLDefPDF, "Text", sb_szWriteBuffer );
+                               omSPLDef_AddFormatToSpecialText( mSPLDefPDF, szSectionType, "Text", sb_szWriteBuffer );
                szWriteBuffer = sb_szWriteBuffer.toString( );}
                //:WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
                try
@@ -7472,14 +7483,14 @@ omSPLDef_GeneratePDF_DFU( View     mSPLDef,
             //:// is the same view as mSPLDefPDF for the case where the continuation is to the next Block.
 
             //:szDebugMsg = mSPLDefPDF.LLD_Block.ID
-            {MutableInt mi_lTempInteger_11 = new MutableInt( lTempInteger_11 );
+            {MutableInt mi_lTempInteger_10 = new MutableInt( lTempInteger_10 );
             StringBuilder sb_szDebugMsg;
             if ( szDebugMsg == null )
                sb_szDebugMsg = new StringBuilder( 32 );
             else
                sb_szDebugMsg = new StringBuilder( szDebugMsg );
-                         GetVariableFromAttribute( sb_szDebugMsg, mi_lTempInteger_11, 'S', 513, mSPLDefPDF, "LLD_Block", "ID", "", 0 );
-            lTempInteger_11 = mi_lTempInteger_11.intValue( );
+                         GetVariableFromAttribute( sb_szDebugMsg, mi_lTempInteger_10, 'S', 513, mSPLDefPDF, "LLD_Block", "ID", "", 0 );
+            lTempInteger_10 = mi_lTempInteger_10.intValue( );
             szDebugMsg = sb_szDebugMsg.toString( );}
             //:szDebugMsg = szDebugMsg + "   Tag: " + mSPLDefPDF.LLD_Block.Tag
              {StringBuilder sb_szDebugMsg;
@@ -7489,14 +7500,14 @@ omSPLDef_GeneratePDF_DFU( View     mSPLDef,
                sb_szDebugMsg = new StringBuilder( szDebugMsg );
                         ZeidonStringConcat( sb_szDebugMsg, 1, 0, "   Tag: ", 1, 0, 513 );
             szDebugMsg = sb_szDebugMsg.toString( );}
-            {MutableInt mi_lTempInteger_12 = new MutableInt( lTempInteger_12 );
+            {MutableInt mi_lTempInteger_11 = new MutableInt( lTempInteger_11 );
             StringBuilder sb_szTempString_0;
             if ( szTempString_0 == null )
                sb_szTempString_0 = new StringBuilder( 32 );
             else
                sb_szTempString_0 = new StringBuilder( szTempString_0 );
-                         GetVariableFromAttribute( sb_szTempString_0, mi_lTempInteger_12, 'S', 65, mSPLDefPDF, "LLD_Block", "Tag", "", 0 );
-            lTempInteger_12 = mi_lTempInteger_12.intValue( );
+                         GetVariableFromAttribute( sb_szTempString_0, mi_lTempInteger_11, 'S', 65, mSPLDefPDF, "LLD_Block", "Tag", "", 0 );
+            lTempInteger_11 = mi_lTempInteger_11.intValue( );
             szTempString_0 = sb_szTempString_0.toString( );}
              {StringBuilder sb_szDebugMsg;
             if ( szDebugMsg == null )
@@ -7513,14 +7524,14 @@ omSPLDef_GeneratePDF_DFU( View     mSPLDef,
                sb_szDebugMsg = new StringBuilder( szDebugMsg );
                         ZeidonStringConcat( sb_szDebugMsg, 1, 0, "   Name: ", 1, 0, 513 );
             szDebugMsg = sb_szDebugMsg.toString( );}
-            {MutableInt mi_lTempInteger_13 = new MutableInt( lTempInteger_13 );
+            {MutableInt mi_lTempInteger_12 = new MutableInt( lTempInteger_12 );
             StringBuilder sb_szTempString_1;
             if ( szTempString_1 == null )
                sb_szTempString_1 = new StringBuilder( 32 );
             else
                sb_szTempString_1 = new StringBuilder( szTempString_1 );
-                         GetVariableFromAttribute( sb_szTempString_1, mi_lTempInteger_13, 'S', 129, mSPLDefPDF, "LLD_Block", "Name", "", 0 );
-            lTempInteger_13 = mi_lTempInteger_13.intValue( );
+                         GetVariableFromAttribute( sb_szTempString_1, mi_lTempInteger_12, 'S', 129, mSPLDefPDF, "LLD_Block", "Name", "", 0 );
+            lTempInteger_12 = mi_lTempInteger_12.intValue( );
             szTempString_1 = sb_szTempString_1.toString( );}
              {StringBuilder sb_szDebugMsg;
             if ( szDebugMsg == null )
@@ -7537,14 +7548,14 @@ omSPLDef_GeneratePDF_DFU( View     mSPLDef,
                sb_szDebugMsg = new StringBuilder( szDebugMsg );
                         ZeidonStringConcat( sb_szDebugMsg, 1, 0, "   Title: ", 1, 0, 513 );
             szDebugMsg = sb_szDebugMsg.toString( );}
-            {MutableInt mi_lTempInteger_14 = new MutableInt( lTempInteger_14 );
+            {MutableInt mi_lTempInteger_13 = new MutableInt( lTempInteger_13 );
             StringBuilder sb_szTempString_2;
             if ( szTempString_2 == null )
                sb_szTempString_2 = new StringBuilder( 32 );
             else
                sb_szTempString_2 = new StringBuilder( szTempString_2 );
-                         GetVariableFromAttribute( sb_szTempString_2, mi_lTempInteger_14, 'S', 255, mSPLDefPDF, "LLD_Block", "BlockTitle", "", 0 );
-            lTempInteger_14 = mi_lTempInteger_14.intValue( );
+                         GetVariableFromAttribute( sb_szTempString_2, mi_lTempInteger_13, 'S', 255, mSPLDefPDF, "LLD_Block", "BlockTitle", "", 0 );
+            lTempInteger_13 = mi_lTempInteger_13.intValue( );
             szTempString_2 = sb_szTempString_2.toString( );}
              {StringBuilder sb_szDebugMsg;
             if ( szDebugMsg == null )
@@ -7561,14 +7572,14 @@ omSPLDef_GeneratePDF_DFU( View     mSPLDef,
                sb_szDebugMsg = new StringBuilder( szDebugMsg );
                         ZeidonStringConcat( sb_szDebugMsg, 1, 0, "   Section Type: ", 1, 0, 513 );
             szDebugMsg = sb_szDebugMsg.toString( );}
-            {MutableInt mi_lTempInteger_15 = new MutableInt( lTempInteger_15 );
+            {MutableInt mi_lTempInteger_14 = new MutableInt( lTempInteger_14 );
             StringBuilder sb_szTempString_3;
             if ( szTempString_3 == null )
                sb_szTempString_3 = new StringBuilder( 32 );
             else
                sb_szTempString_3 = new StringBuilder( szTempString_3 );
-                         GetVariableFromAttribute( sb_szTempString_3, mi_lTempInteger_15, 'S', 33, mSPLDefPDF, "LLD_Block", "LLD_SectionType", "", 0 );
-            lTempInteger_15 = mi_lTempInteger_15.intValue( );
+                         GetVariableFromAttribute( sb_szTempString_3, mi_lTempInteger_14, 'S', 33, mSPLDefPDF, "LLD_Block", "LLD_SectionType", "", 0 );
+            lTempInteger_14 = mi_lTempInteger_14.intValue( );
             szTempString_3 = sb_szTempString_3.toString( );}
              {StringBuilder sb_szDebugMsg;
             if ( szDebugMsg == null )
@@ -7585,14 +7596,14 @@ omSPLDef_GeneratePDF_DFU( View     mSPLDef,
                sb_szDebugMsg = new StringBuilder( szDebugMsg );
                         ZeidonStringConcat( sb_szDebugMsg, 1, 0, "   Continuation: ", 1, 0, 513 );
             szDebugMsg = sb_szDebugMsg.toString( );}
-            {MutableInt mi_lTempInteger_16 = new MutableInt( lTempInteger_16 );
+            {MutableInt mi_lTempInteger_15 = new MutableInt( lTempInteger_15 );
             StringBuilder sb_szTempString_4;
             if ( szTempString_4 == null )
                sb_szTempString_4 = new StringBuilder( 32 );
             else
                sb_szTempString_4 = new StringBuilder( szTempString_4 );
-                         GetVariableFromAttribute( sb_szTempString_4, mi_lTempInteger_16, 'S', 2, mSPLDefPDF, "LLD_Block", "ContinuationBlockFlag", "", 0 );
-            lTempInteger_16 = mi_lTempInteger_16.intValue( );
+                         GetVariableFromAttribute( sb_szTempString_4, mi_lTempInteger_15, 'S', 2, mSPLDefPDF, "LLD_Block", "ContinuationBlockFlag", "", 0 );
+            lTempInteger_15 = mi_lTempInteger_15.intValue( );
             szTempString_4 = sb_szTempString_4.toString( );}
              {StringBuilder sb_szDebugMsg;
             if ( szDebugMsg == null )
@@ -7614,14 +7625,14 @@ omSPLDef_GeneratePDF_DFU( View     mSPLDef,
             if ( RESULT >= zCURSOR_SET )
             { 
                //:szDebugMsg = mSPLDefPDF.LLD_Block.ID
-               {MutableInt mi_lTempInteger_17 = new MutableInt( lTempInteger_17 );
+               {MutableInt mi_lTempInteger_16 = new MutableInt( lTempInteger_16 );
                StringBuilder sb_szDebugMsg;
                if ( szDebugMsg == null )
                   sb_szDebugMsg = new StringBuilder( 32 );
                else
                   sb_szDebugMsg = new StringBuilder( szDebugMsg );
-                               GetVariableFromAttribute( sb_szDebugMsg, mi_lTempInteger_17, 'S', 513, mSPLDefPDF, "LLD_Block", "ID", "", 0 );
-               lTempInteger_17 = mi_lTempInteger_17.intValue( );
+                               GetVariableFromAttribute( sb_szDebugMsg, mi_lTempInteger_16, 'S', 513, mSPLDefPDF, "LLD_Block", "ID", "", 0 );
+               lTempInteger_16 = mi_lTempInteger_16.intValue( );
                szDebugMsg = sb_szDebugMsg.toString( );}
                //:szDebugMsg = szDebugMsg + "   Tag: " + mSPLDefContinue.LLD_Block.Tag
                 {StringBuilder sb_szDebugMsg;
@@ -7631,14 +7642,14 @@ omSPLDef_GeneratePDF_DFU( View     mSPLDef,
                   sb_szDebugMsg = new StringBuilder( szDebugMsg );
                               ZeidonStringConcat( sb_szDebugMsg, 1, 0, "   Tag: ", 1, 0, 513 );
                szDebugMsg = sb_szDebugMsg.toString( );}
-               {MutableInt mi_lTempInteger_18 = new MutableInt( lTempInteger_18 );
+               {MutableInt mi_lTempInteger_17 = new MutableInt( lTempInteger_17 );
                StringBuilder sb_szTempString_5;
                if ( szTempString_5 == null )
                   sb_szTempString_5 = new StringBuilder( 32 );
                else
                   sb_szTempString_5 = new StringBuilder( szTempString_5 );
-                               GetVariableFromAttribute( sb_szTempString_5, mi_lTempInteger_18, 'S', 65, mSPLDefContinue, "LLD_Block", "Tag", "", 0 );
-               lTempInteger_18 = mi_lTempInteger_18.intValue( );
+                               GetVariableFromAttribute( sb_szTempString_5, mi_lTempInteger_17, 'S', 65, mSPLDefContinue, "LLD_Block", "Tag", "", 0 );
+               lTempInteger_17 = mi_lTempInteger_17.intValue( );
                szTempString_5 = sb_szTempString_5.toString( );}
                 {StringBuilder sb_szDebugMsg;
                if ( szDebugMsg == null )
@@ -7655,14 +7666,14 @@ omSPLDef_GeneratePDF_DFU( View     mSPLDef,
                   sb_szDebugMsg = new StringBuilder( szDebugMsg );
                               ZeidonStringConcat( sb_szDebugMsg, 1, 0, "   Name: ", 1, 0, 513 );
                szDebugMsg = sb_szDebugMsg.toString( );}
-               {MutableInt mi_lTempInteger_19 = new MutableInt( lTempInteger_19 );
+               {MutableInt mi_lTempInteger_18 = new MutableInt( lTempInteger_18 );
                StringBuilder sb_szTempString_6;
                if ( szTempString_6 == null )
                   sb_szTempString_6 = new StringBuilder( 32 );
                else
                   sb_szTempString_6 = new StringBuilder( szTempString_6 );
-                               GetVariableFromAttribute( sb_szTempString_6, mi_lTempInteger_19, 'S', 129, mSPLDefContinue, "LLD_Block", "Name", "", 0 );
-               lTempInteger_19 = mi_lTempInteger_19.intValue( );
+                               GetVariableFromAttribute( sb_szTempString_6, mi_lTempInteger_18, 'S', 129, mSPLDefContinue, "LLD_Block", "Name", "", 0 );
+               lTempInteger_18 = mi_lTempInteger_18.intValue( );
                szTempString_6 = sb_szTempString_6.toString( );}
                 {StringBuilder sb_szDebugMsg;
                if ( szDebugMsg == null )
@@ -7679,14 +7690,14 @@ omSPLDef_GeneratePDF_DFU( View     mSPLDef,
                   sb_szDebugMsg = new StringBuilder( szDebugMsg );
                               ZeidonStringConcat( sb_szDebugMsg, 1, 0, "   Title: ", 1, 0, 513 );
                szDebugMsg = sb_szDebugMsg.toString( );}
-               {MutableInt mi_lTempInteger_20 = new MutableInt( lTempInteger_20 );
+               {MutableInt mi_lTempInteger_19 = new MutableInt( lTempInteger_19 );
                StringBuilder sb_szTempString_7;
                if ( szTempString_7 == null )
                   sb_szTempString_7 = new StringBuilder( 32 );
                else
                   sb_szTempString_7 = new StringBuilder( szTempString_7 );
-                               GetVariableFromAttribute( sb_szTempString_7, mi_lTempInteger_20, 'S', 255, mSPLDefContinue, "LLD_Block", "BlockTitle", "", 0 );
-               lTempInteger_20 = mi_lTempInteger_20.intValue( );
+                               GetVariableFromAttribute( sb_szTempString_7, mi_lTempInteger_19, 'S', 255, mSPLDefContinue, "LLD_Block", "BlockTitle", "", 0 );
+               lTempInteger_19 = mi_lTempInteger_19.intValue( );
                szTempString_7 = sb_szTempString_7.toString( );}
                 {StringBuilder sb_szDebugMsg;
                if ( szDebugMsg == null )
@@ -7703,14 +7714,14 @@ omSPLDef_GeneratePDF_DFU( View     mSPLDef,
                   sb_szDebugMsg = new StringBuilder( szDebugMsg );
                               ZeidonStringConcat( sb_szDebugMsg, 1, 0, "   Section Type: ", 1, 0, 513 );
                szDebugMsg = sb_szDebugMsg.toString( );}
-               {MutableInt mi_lTempInteger_21 = new MutableInt( lTempInteger_21 );
+               {MutableInt mi_lTempInteger_20 = new MutableInt( lTempInteger_20 );
                StringBuilder sb_szTempString_8;
                if ( szTempString_8 == null )
                   sb_szTempString_8 = new StringBuilder( 32 );
                else
                   sb_szTempString_8 = new StringBuilder( szTempString_8 );
-                               GetVariableFromAttribute( sb_szTempString_8, mi_lTempInteger_21, 'S', 33, mSPLDefContinue, "LLD_Block", "LLD_SectionType", "", 0 );
-               lTempInteger_21 = mi_lTempInteger_21.intValue( );
+                               GetVariableFromAttribute( sb_szTempString_8, mi_lTempInteger_20, 'S', 33, mSPLDefContinue, "LLD_Block", "LLD_SectionType", "", 0 );
+               lTempInteger_20 = mi_lTempInteger_20.intValue( );
                szTempString_8 = sb_szTempString_8.toString( );}
                 {StringBuilder sb_szDebugMsg;
                if ( szDebugMsg == null )
@@ -7727,14 +7738,14 @@ omSPLDef_GeneratePDF_DFU( View     mSPLDef,
                   sb_szDebugMsg = new StringBuilder( szDebugMsg );
                               ZeidonStringConcat( sb_szDebugMsg, 1, 0, "   Continuation: ", 1, 0, 513 );
                szDebugMsg = sb_szDebugMsg.toString( );}
-               {MutableInt mi_lTempInteger_22 = new MutableInt( lTempInteger_22 );
+               {MutableInt mi_lTempInteger_21 = new MutableInt( lTempInteger_21 );
                StringBuilder sb_szTempString_9;
                if ( szTempString_9 == null )
                   sb_szTempString_9 = new StringBuilder( 32 );
                else
                   sb_szTempString_9 = new StringBuilder( szTempString_9 );
-                               GetVariableFromAttribute( sb_szTempString_9, mi_lTempInteger_22, 'S', 2, mSPLDefContinue, "LLD_Block", "ContinuationBlockFlag", "", 0 );
-               lTempInteger_22 = mi_lTempInteger_22.intValue( );
+                               GetVariableFromAttribute( sb_szTempString_9, mi_lTempInteger_21, 'S', 2, mSPLDefContinue, "LLD_Block", "ContinuationBlockFlag", "", 0 );
+               lTempInteger_21 = mi_lTempInteger_21.intValue( );
                szTempString_9 = sb_szTempString_9.toString( );}
                 {StringBuilder sb_szDebugMsg;
                if ( szDebugMsg == null )
@@ -7974,6 +7985,7 @@ omSPLDef_GeneratePDF_DFU( View     mSPLDef,
 //:GeneratePDF_ClmList( VIEW mSPLDef    BASED ON LOD mSPLDef,
 //:                     VIEW mSPLDefPDF BASED ON LOD mSPLDef,
 //:                     INTEGER lFile,
+//:                     STRING ( 50 )    szSectionType,
 //:                     STRING ( 256 )   szPassedBlanks,
 //:                     STRING ( 32000 ) szWriteBuffer,
 //:                     INTEGER NumberColumns )
@@ -7983,6 +7995,7 @@ public int
 omSPLDef_GeneratePDF_ClmList( View     mSPLDef,
                               View     mSPLDefPDF,
                               int      lFile,
+                              String   szSectionType,
                               String   szPassedBlanks,
                               String   szWriteBuffer,
                               int      NumberColumns )
@@ -8793,13 +8806,13 @@ omSPLDef_GeneratePDF_ClmList( View     mSPLDef,
       sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
       ZeidonStringConcat( sb_szWriteBuffer, 1, 0, "      <fo:block ", 1, 0, 32001 );
    szWriteBuffer = sb_szWriteBuffer.toString( );}
-   //:AddFormatToSpecialText( mSPLDefPDF, "Column List", szWriteBuffer )
+   //:AddFormatToSpecialText( mSPLDefPDF, szSectionType, "Column List", szWriteBuffer )
    {StringBuilder sb_szWriteBuffer;
    if ( szWriteBuffer == null )
       sb_szWriteBuffer = new StringBuilder( 32 );
    else
       sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
-       omSPLDef_AddFormatToSpecialText( mSPLDefPDF, "Column List", sb_szWriteBuffer );
+       omSPLDef_AddFormatToSpecialText( mSPLDefPDF, szSectionType, "Column List", sb_szWriteBuffer );
    szWriteBuffer = sb_szWriteBuffer.toString( );}
    //:WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
    try
@@ -8998,13 +9011,13 @@ omSPLDef_GeneratePDF_ClmList( View     mSPLDef,
       sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
       ZeidonStringConcat( sb_szWriteBuffer, 1, 0, "      <fo:block ", 1, 0, 32001 );
    szWriteBuffer = sb_szWriteBuffer.toString( );}
-   //:AddFormatToSpecialText( mSPLDefPDF, "Column List", szWriteBuffer )
+   //:AddFormatToSpecialText( mSPLDefPDF, szSectionType, "Column List", szWriteBuffer )
    {StringBuilder sb_szWriteBuffer;
    if ( szWriteBuffer == null )
       sb_szWriteBuffer = new StringBuilder( 32 );
    else
       sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
-       omSPLDef_AddFormatToSpecialText( mSPLDefPDF, "Column List", sb_szWriteBuffer );
+       omSPLDef_AddFormatToSpecialText( mSPLDefPDF, szSectionType, "Column List", sb_szWriteBuffer );
    szWriteBuffer = sb_szWriteBuffer.toString( );}
    //:WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
    try
@@ -9206,13 +9219,13 @@ omSPLDef_GeneratePDF_ClmList( View     mSPLDef,
          sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
             ZeidonStringConcat( sb_szWriteBuffer, 1, 0, "      <fo:block ", 1, 0, 32001 );
       szWriteBuffer = sb_szWriteBuffer.toString( );}
-      //:AddFormatToSpecialText( mSPLDefPDF, "Column List", szWriteBuffer )
+      //:AddFormatToSpecialText( mSPLDefPDF, szSectionType, "Column List", szWriteBuffer )
       {StringBuilder sb_szWriteBuffer;
       if ( szWriteBuffer == null )
          sb_szWriteBuffer = new StringBuilder( 32 );
       else
          sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
-             omSPLDef_AddFormatToSpecialText( mSPLDefPDF, "Column List", sb_szWriteBuffer );
+             omSPLDef_AddFormatToSpecialText( mSPLDefPDF, szSectionType, "Column List", sb_szWriteBuffer );
       szWriteBuffer = sb_szWriteBuffer.toString( );}
       //:WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
       try
@@ -9471,6 +9484,7 @@ omSPLDef_GeneratePDF_ClmList( View     mSPLDef,
 //:GeneratePDF_Ingred( VIEW mSPLDef    BASED ON LOD mSPLDef,
 //:                    VIEW mSPLDefPDF BASED ON LOD mSPLDef,
 //:                    INTEGER lFile,
+//:                    STRING ( 50 )    szSectionType,
 //:                    STRING ( 50 )    szPassedBlanks,
 //:                    STRING ( 32000 ) szWriteBuffer )
 
@@ -9479,6 +9493,7 @@ public int
 omSPLDef_GeneratePDF_Ingred( View     mSPLDef,
                              View     mSPLDefPDF,
                              int      lFile,
+                             String   szSectionType,
                              String   szPassedBlanks,
                              String   szWriteBuffer )
 {
@@ -9556,13 +9571,13 @@ omSPLDef_GeneratePDF_Ingred( View     mSPLDef,
       sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
       ZeidonStringConcat( sb_szWriteBuffer, 1, 0, "<fo:block ", 1, 0, 32001 );
    szWriteBuffer = sb_szWriteBuffer.toString( );}
-   //:AddFormatToSpecialText( mSPLDefPDF, "Title", szWriteBuffer )
+   //:AddFormatToSpecialText( mSPLDefPDF, szSectionType, "Title", szWriteBuffer )
    {StringBuilder sb_szWriteBuffer;
    if ( szWriteBuffer == null )
       sb_szWriteBuffer = new StringBuilder( 32 );
    else
       sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
-       omSPLDef_AddFormatToSpecialText( mSPLDefPDF, "Title", sb_szWriteBuffer );
+       omSPLDef_AddFormatToSpecialText( mSPLDefPDF, szSectionType, "Title", sb_szWriteBuffer );
    szWriteBuffer = sb_szWriteBuffer.toString( );}
    //:WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
    try
@@ -9682,13 +9697,13 @@ omSPLDef_GeneratePDF_Ingred( View     mSPLDef,
       sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
       ZeidonStringConcat( sb_szWriteBuffer, 1, 0, "   <fo:block text-align-last=^justify^ ", 1, 0, 32001 );
    szWriteBuffer = sb_szWriteBuffer.toString( );}
-   //:AddFormatToSpecialText( mSPLDefPDF, "Ingredients Items", szWriteBuffer )
+   //:AddFormatToSpecialText( mSPLDefPDF, szSectionType, "Ingredients Items", szWriteBuffer )
    {StringBuilder sb_szWriteBuffer;
    if ( szWriteBuffer == null )
       sb_szWriteBuffer = new StringBuilder( 32 );
    else
       sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
-       omSPLDef_AddFormatToSpecialText( mSPLDefPDF, "Ingredients Items", sb_szWriteBuffer );
+       omSPLDef_AddFormatToSpecialText( mSPLDefPDF, szSectionType, "Ingredients Items", sb_szWriteBuffer );
    szWriteBuffer = sb_szWriteBuffer.toString( );}
    //:WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
    try
@@ -9868,13 +9883,13 @@ omSPLDef_GeneratePDF_Ingred( View     mSPLDef,
          sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
             ZeidonStringConcat( sb_szWriteBuffer, 1, 0, "<fo:block text-align-last=^justify^ ", 1, 0, 32001 );
       szWriteBuffer = sb_szWriteBuffer.toString( );}
-      //:AddFormatToSpecialText( mSPLDefPDF, "Ingredients Inert", szWriteBuffer )
+      //:AddFormatToSpecialText( mSPLDefPDF, szSectionType, "Ingredients Inert", szWriteBuffer )
       {StringBuilder sb_szWriteBuffer;
       if ( szWriteBuffer == null )
          sb_szWriteBuffer = new StringBuilder( 32 );
       else
          sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
-             omSPLDef_AddFormatToSpecialText( mSPLDefPDF, "Ingredients Inert", sb_szWriteBuffer );
+             omSPLDef_AddFormatToSpecialText( mSPLDefPDF, szSectionType, "Ingredients Inert", sb_szWriteBuffer );
       szWriteBuffer = sb_szWriteBuffer.toString( );}
       //:WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
       try
@@ -10025,13 +10040,13 @@ omSPLDef_GeneratePDF_Ingred( View     mSPLDef,
       sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
       ZeidonStringConcat( sb_szWriteBuffer, 1, 0, "<fo:block text-align-last=^justify^ ", 1, 0, 32001 );
    szWriteBuffer = sb_szWriteBuffer.toString( );}
-   //:AddFormatToSpecialText( mSPLDefPDF, "Ingredients Total", szWriteBuffer )
+   //:AddFormatToSpecialText( mSPLDefPDF, szSectionType, "Ingredients Total", szWriteBuffer )
    {StringBuilder sb_szWriteBuffer;
    if ( szWriteBuffer == null )
       sb_szWriteBuffer = new StringBuilder( 32 );
    else
       sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
-       omSPLDef_AddFormatToSpecialText( mSPLDefPDF, "Ingredients Total", sb_szWriteBuffer );
+       omSPLDef_AddFormatToSpecialText( mSPLDefPDF, szSectionType, "Ingredients Total", sb_szWriteBuffer );
    szWriteBuffer = sb_szWriteBuffer.toString( );}
    //:WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
    try
@@ -10145,6 +10160,7 @@ omSPLDef_GeneratePDF_Ingred( View     mSPLDef,
 //:GeneratePDF_Content( VIEW mSPLDef    BASED ON LOD mSPLDef,
 //:                     VIEW mSPLDefPDF BASED ON LOD mSPLDef,
 //:                     INTEGER lFile,
+//:                     STRING ( 50 )    szSectionType,
 //:                     STRING ( 50 )    szPassedBlanks,
 //:                     STRING ( 32000 ) szWriteBuffer )
 
@@ -10153,6 +10169,7 @@ public int
 omSPLDef_GeneratePDF_Content( View     mSPLDef,
                               View     mSPLDefPDF,
                               int      lFile,
+                              String   szSectionType,
                               String   szPassedBlanks,
                               String   szWriteBuffer )
 {
@@ -10209,13 +10226,13 @@ omSPLDef_GeneratePDF_Content( View     mSPLDef,
       sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
       ZeidonStringConcat( sb_szWriteBuffer, 1, 0, "<fo:block ", 1, 0, 32001 );
    szWriteBuffer = sb_szWriteBuffer.toString( );}
-   //:AddFormatToSpecialText( mSPLDefPDF, "Text", szWriteBuffer )
+   //:AddFormatToSpecialText( mSPLDefPDF, szSectionType, "Text", szWriteBuffer )
    {StringBuilder sb_szWriteBuffer;
    if ( szWriteBuffer == null )
       sb_szWriteBuffer = new StringBuilder( 32 );
    else
       sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
-       omSPLDef_AddFormatToSpecialText( mSPLDefPDF, "Text", sb_szWriteBuffer );
+       omSPLDef_AddFormatToSpecialText( mSPLDefPDF, szSectionType, "Text", sb_szWriteBuffer );
    szWriteBuffer = sb_szWriteBuffer.toString( );}
    //:WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
    try
@@ -10304,6 +10321,7 @@ omSPLDef_GeneratePDF_Content( View     mSPLDef,
 //:GeneratePDF_Hazards( VIEW mSPLDef    BASED ON LOD mSPLDef,
 //:                     VIEW mSPLDefPDF BASED ON LOD mSPLDef,
 //:                     INTEGER lFile,
+//:                     STRING ( 50 )    szSectionType,
 //:                     STRING ( 50 )    szPassedBlanks,
 //:                     STRING ( 32000 ) szWriteBuffer )
 
@@ -10312,6 +10330,7 @@ public int
 omSPLDef_GeneratePDF_Hazards( View     mSPLDef,
                               View     mSPLDefPDF,
                               int      lFile,
+                              String   szSectionType,
                               String   szPassedBlanks,
                               String   szWriteBuffer )
 {
@@ -10391,13 +10410,13 @@ omSPLDef_GeneratePDF_Hazards( View     mSPLDef,
       sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
       ZeidonStringConcat( sb_szWriteBuffer, 1, 0, "<fo:block ", 1, 0, 32001 );
    szWriteBuffer = sb_szWriteBuffer.toString( );}
-   //:AddFormatToSpecialText( mSPLDefPDF, "Hazards Warning", szWriteBuffer )
+   //:AddFormatToSpecialText( mSPLDefPDF, szSectionType, "Hazards Warning", szWriteBuffer )
    {StringBuilder sb_szWriteBuffer;
    if ( szWriteBuffer == null )
       sb_szWriteBuffer = new StringBuilder( 32 );
    else
       sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
-       omSPLDef_AddFormatToSpecialText( mSPLDefPDF, "Hazards Warning", sb_szWriteBuffer );
+       omSPLDef_AddFormatToSpecialText( mSPLDefPDF, szSectionType, "Hazards Warning", sb_szWriteBuffer );
    szWriteBuffer = sb_szWriteBuffer.toString( );}
    //:WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
    try
@@ -10494,13 +10513,13 @@ omSPLDef_GeneratePDF_Hazards( View     mSPLDef,
       sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
       ZeidonStringConcat( sb_szWriteBuffer, 1, 0, "<fo:block ", 1, 0, 32001 );
    szWriteBuffer = sb_szWriteBuffer.toString( );}
-   //:AddFormatToSpecialText( mSPLDefPDF, "Hazards Signal Word", szWriteBuffer )
+   //:AddFormatToSpecialText( mSPLDefPDF, szSectionType, "Hazards Signal Word", szWriteBuffer )
    {StringBuilder sb_szWriteBuffer;
    if ( szWriteBuffer == null )
       sb_szWriteBuffer = new StringBuilder( 32 );
    else
       sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
-       omSPLDef_AddFormatToSpecialText( mSPLDefPDF, "Hazards Signal Word", sb_szWriteBuffer );
+       omSPLDef_AddFormatToSpecialText( mSPLDefPDF, szSectionType, "Hazards Signal Word", sb_szWriteBuffer );
    szWriteBuffer = sb_szWriteBuffer.toString( );}
    //:WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
    try
@@ -10597,13 +10616,13 @@ omSPLDef_GeneratePDF_Hazards( View     mSPLDef,
       sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
       ZeidonStringConcat( sb_szWriteBuffer, 1, 0, "<fo:block ", 1, 0, 32001 );
    szWriteBuffer = sb_szWriteBuffer.toString( );}
-   //:AddFormatToSpecialText( mSPLDefPDF, "Hazards Precautionary", szWriteBuffer )
+   //:AddFormatToSpecialText( mSPLDefPDF, szSectionType, "Hazards Precautionary", szWriteBuffer )
    {StringBuilder sb_szWriteBuffer;
    if ( szWriteBuffer == null )
       sb_szWriteBuffer = new StringBuilder( 32 );
    else
       sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
-       omSPLDef_AddFormatToSpecialText( mSPLDefPDF, "Hazards Precautionary", sb_szWriteBuffer );
+       omSPLDef_AddFormatToSpecialText( mSPLDefPDF, szSectionType, "Hazards Precautionary", sb_szWriteBuffer );
    szWriteBuffer = sb_szWriteBuffer.toString( );}
    //:WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
    try
@@ -11053,6 +11072,7 @@ omSPLDef_CopyDirsForUseSection( View     NewSPLD,
 //:GeneratePDF_EPA_Reg( VIEW mSPLDef    BASED ON LOD mSPLDef,
 //:                     VIEW mSPLDefPDF BASED ON LOD mSPLDef,
 //:                     INTEGER lFile,
+//:                     STRING ( 50 )    szSectionType,
 //:                     STRING ( 50 )    szPassedBlanks,
 //:                     STRING ( 32000 ) szWriteBuffer )
 
@@ -11061,6 +11081,7 @@ public int
 omSPLDef_GeneratePDF_EPA_Reg( View     mSPLDef,
                               View     mSPLDefPDF,
                               int      lFile,
+                              String   szSectionType,
                               String   szPassedBlanks,
                               String   szWriteBuffer )
 {
@@ -11187,13 +11208,13 @@ omSPLDef_GeneratePDF_EPA_Reg( View     mSPLDef,
       sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
       ZeidonStringConcat( sb_szWriteBuffer, 1, 0, "<fo:block ", 1, 0, 32001 );
    szWriteBuffer = sb_szWriteBuffer.toString( );}
-   //:AddFormatToSpecialText( mSPLDefPDF, "Text", szWriteBuffer )
+   //:AddFormatToSpecialText( mSPLDefPDF, szSectionType, "Text", szWriteBuffer )
    {StringBuilder sb_szWriteBuffer;
    if ( szWriteBuffer == null )
       sb_szWriteBuffer = new StringBuilder( 32 );
    else
       sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
-       omSPLDef_AddFormatToSpecialText( mSPLDefPDF, "Text", sb_szWriteBuffer );
+       omSPLDef_AddFormatToSpecialText( mSPLDefPDF, szSectionType, "Text", sb_szWriteBuffer );
    szWriteBuffer = sb_szWriteBuffer.toString( );}
    //:WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
    try
@@ -15702,12 +15723,14 @@ omSPLDef_FormatBlock( View     mSPLDef,
 
 //:TRANSFORMATION OPERATION
 //:AddFormatToSpecialText( VIEW mSPLDef BASED ON LOD mSPLDef,
+//:                        STRING ( 50 )    szSectionType,
 //:                        STRING ( 32 )    SpecialTextTitle,
 //:                        STRING ( 32000 ) szWriteBuffer )
 
 //:   STRING ( 32 )  szTop
 public int 
 omSPLDef_AddFormatToSpecialText( View     mSPLDef,
+                                 String   szSectionType,
                                  String   SpecialTextTitle,
                                  StringBuilder   szWriteBuffer )
 {
@@ -15748,6 +15771,8 @@ omSPLDef_AddFormatToSpecialText( View     mSPLDef,
    String   szMsg = null;
    //:STRING ( 256 ) szImg
    String   szImg = null;
+   //:SHORT nRC
+   int      nRC = 0;
    int      RESULT = 0;
    int      lTempInteger_0 = 0;
    int      lTempInteger_1 = 0;
@@ -15773,6 +15798,7 @@ omSPLDef_AddFormatToSpecialText( View     mSPLDef,
    int      lTempInteger_21 = 0;
    int      lTempInteger_22 = 0;
    int      lTempInteger_23 = 0;
+   int      lTempInteger_24 = 0;
 
 
    //:// Add any Special Attribute Block formatting variables to the text statement passed in szWriteBuffer.
@@ -15781,189 +15807,512 @@ omSPLDef_AddFormatToSpecialText( View     mSPLDef,
    //:NAME VIEW mSPLDef "mSPLDefHazards"
    SetNameForView( mSPLDef, "mSPLDefHazards", null, zLEVEL_TASK );
    //:// TraceLineS( "$$$$ Special Text for: ", SpecialTextTitle )
-   //:SET CURSOR FIRST mSPLDef.LLD_SpecialSectionAttribute WHERE mSPLDef.LLD_SpecialSectionAttribute.Name = SpecialTextTitle
-   RESULT = SetCursorFirstEntityByString( mSPLDef, "LLD_SpecialSectionAttribute", "Name", SpecialTextTitle, "" );
+   //:SET CURSOR FIRST mSPLDef.LLD_SpecialSectionAttribute WHERE mSPLDef.LLD_SpecialSectionAttribute.Name = szSectionType
+   RESULT = SetCursorFirstEntityByString( mSPLDef, "LLD_SpecialSectionAttribute", "Name", szSectionType, "" );
    //:IF RESULT >= zCURSOR_SET
    if ( RESULT >= zCURSOR_SET )
    { 
-
-      //:IF mSPLDef.SpecialAttributeTextColor EXISTS
-      lTempInteger_0 = CheckExistenceOfEntity( mSPLDef, "SpecialAttributeTextColor" );
-      if ( lTempInteger_0 == 0 )
+      //:SET CURSOR FIRST mSPLDef.LLD_SpecialSectionAttrBlock WHERE mSPLDef.LLD_SpecialSectionAttrBlock.Name  = SpecialTextTitle
+      RESULT = SetCursorFirstEntityByString( mSPLDef, "LLD_SpecialSectionAttrBlock", "Name", SpecialTextTitle, "" );
+      //:IF RESULT >= zCURSOR_SET
+      if ( RESULT >= zCURSOR_SET )
       { 
-         //:szColor = mSPLDef.SpecialAttributeTextColor.RGB
-         {MutableInt mi_lTempInteger_1 = new MutableInt( lTempInteger_1 );
-         StringBuilder sb_szColor;
-         if ( szColor == null )
-            sb_szColor = new StringBuilder( 32 );
-         else
-            sb_szColor = new StringBuilder( szColor );
-                   GetVariableFromAttribute( sb_szColor, mi_lTempInteger_1, 'S', 33, mSPLDef, "SpecialAttributeTextColor", "RGB", "", 0 );
-         lTempInteger_1 = mi_lTempInteger_1.intValue( );
-         szColor = sb_szColor.toString( );}
-         //:IF szColor != ""
-         if ( ZeidonStringCompare( szColor, 1, 0, "", 1, 0, 33 ) != 0 )
+
+         //:IF mSPLDef.SpecialAttributeTextColor EXISTS
+         lTempInteger_0 = CheckExistenceOfEntity( mSPLDef, "SpecialAttributeTextColor" );
+         if ( lTempInteger_0 == 0 )
          { 
-            //:szWriteBuffer = szWriteBuffer + " color=^#" + szColor + "^"
-            ZeidonStringConcat( szWriteBuffer, 1, 0, " color=^#", 1, 0, 32001 );
-            ZeidonStringConcat( szWriteBuffer, 1, 0, szColor, 1, 0, 32001 );
+            //:szColor = mSPLDef.SpecialAttributeTextColor.RGB
+            {MutableInt mi_lTempInteger_1 = new MutableInt( lTempInteger_1 );
+            StringBuilder sb_szColor;
+            if ( szColor == null )
+               sb_szColor = new StringBuilder( 32 );
+            else
+               sb_szColor = new StringBuilder( szColor );
+                         GetVariableFromAttribute( sb_szColor, mi_lTempInteger_1, 'S', 33, mSPLDef, "SpecialAttributeTextColor", "RGB", "", 0 );
+            lTempInteger_1 = mi_lTempInteger_1.intValue( );
+            szColor = sb_szColor.toString( );}
+            //:IF szColor != ""
+            if ( ZeidonStringCompare( szColor, 1, 0, "", 1, 0, 33 ) != 0 )
+            { 
+               //:szWriteBuffer = szWriteBuffer + " color=^#" + szColor + "^"
+               ZeidonStringConcat( szWriteBuffer, 1, 0, " color=^#", 1, 0, 32001 );
+               ZeidonStringConcat( szWriteBuffer, 1, 0, szColor, 1, 0, 32001 );
+               ZeidonStringConcat( szWriteBuffer, 1, 0, "^", 1, 0, 32001 );
+            } 
+
+            //:END
+         } 
+
+         //:END
+
+         //:szFontFamily = mSPLDef.LLD_SpecialSectionAttrBlock.FontFamily
+         {MutableInt mi_lTempInteger_2 = new MutableInt( lTempInteger_2 );
+         StringBuilder sb_szFontFamily;
+         if ( szFontFamily == null )
+            sb_szFontFamily = new StringBuilder( 32 );
+         else
+            sb_szFontFamily = new StringBuilder( szFontFamily );
+                   GetVariableFromAttribute( sb_szFontFamily, mi_lTempInteger_2, 'S', 33, mSPLDef, "LLD_SpecialSectionAttrBlock", "FontFamily", "", 0 );
+         lTempInteger_2 = mi_lTempInteger_2.intValue( );
+         szFontFamily = sb_szFontFamily.toString( );}
+         //:// TraceLineS( "3Font Family set to: ", szFontFamily )
+         //:IF szFontFamily != ""
+         if ( ZeidonStringCompare( szFontFamily, 1, 0, "", 1, 0, 33 ) != 0 )
+         { 
+            //:szWriteBuffer = szWriteBuffer + " font-family=^" + szFontFamily + "^"
+            ZeidonStringConcat( szWriteBuffer, 1, 0, " font-family=^", 1, 0, 32001 );
+            ZeidonStringConcat( szWriteBuffer, 1, 0, szFontFamily, 1, 0, 32001 );
             ZeidonStringConcat( szWriteBuffer, 1, 0, "^", 1, 0, 32001 );
          } 
 
          //:END
-      } 
 
-      //:END
-
-      //:szFontFamily = mSPLDef.LLD_SpecialSectionAttrBlock.FontFamily
-      {MutableInt mi_lTempInteger_2 = new MutableInt( lTempInteger_2 );
-      StringBuilder sb_szFontFamily;
-      if ( szFontFamily == null )
-         sb_szFontFamily = new StringBuilder( 32 );
-      else
-         sb_szFontFamily = new StringBuilder( szFontFamily );
-             GetVariableFromAttribute( sb_szFontFamily, mi_lTempInteger_2, 'S', 33, mSPLDef, "LLD_SpecialSectionAttrBlock", "FontFamily", "", 0 );
-      lTempInteger_2 = mi_lTempInteger_2.intValue( );
-      szFontFamily = sb_szFontFamily.toString( );}
-      //:// TraceLineS( "3Font Family set to: ", szFontFamily )
-      //:IF szFontFamily != ""
-      if ( ZeidonStringCompare( szFontFamily, 1, 0, "", 1, 0, 33 ) != 0 )
-      { 
-         //:szWriteBuffer = szWriteBuffer + " font-family=^" + szFontFamily + "^"
-         ZeidonStringConcat( szWriteBuffer, 1, 0, " font-family=^", 1, 0, 32001 );
-         ZeidonStringConcat( szWriteBuffer, 1, 0, szFontFamily, 1, 0, 32001 );
-         ZeidonStringConcat( szWriteBuffer, 1, 0, "^", 1, 0, 32001 );
-      } 
-
-      //:END
-
-      //:szFontSize = mSPLDef.LLD_SpecialSectionAttrBlock.FontSize
-      {MutableInt mi_lTempInteger_3 = new MutableInt( lTempInteger_3 );
-      StringBuilder sb_szFontSize;
-      if ( szFontSize == null )
-         sb_szFontSize = new StringBuilder( 32 );
-      else
-         sb_szFontSize = new StringBuilder( szFontSize );
-             GetVariableFromAttribute( sb_szFontSize, mi_lTempInteger_3, 'S', 33, mSPLDef, "LLD_SpecialSectionAttrBlock", "FontSize", "", 0 );
-      lTempInteger_3 = mi_lTempInteger_3.intValue( );
-      szFontSize = sb_szFontSize.toString( );}
-      //:IF szFontSize != ""
-      if ( ZeidonStringCompare( szFontSize, 1, 0, "", 1, 0, 33 ) != 0 )
-      { 
-         //:// TraceLineS( "3Font Size set to: ", szFontSize )
-         //:szWriteBuffer = szWriteBuffer + " font-size=^" + szFontSize + "pt^"
-         ZeidonStringConcat( szWriteBuffer, 1, 0, " font-size=^", 1, 0, 32001 );
-         ZeidonStringConcat( szWriteBuffer, 1, 0, szFontSize, 1, 0, 32001 );
-         ZeidonStringConcat( szWriteBuffer, 1, 0, "pt^", 1, 0, 32001 );
-      } 
-
-      //:END
-
-      //:szFontWeight = mSPLDef.LLD_SpecialSectionAttrBlock.FontWeight
-      {MutableInt mi_lTempInteger_4 = new MutableInt( lTempInteger_4 );
-      StringBuilder sb_szFontWeight;
-      if ( szFontWeight == null )
-         sb_szFontWeight = new StringBuilder( 32 );
-      else
-         sb_szFontWeight = new StringBuilder( szFontWeight );
-             GetVariableFromAttribute( sb_szFontWeight, mi_lTempInteger_4, 'S', 33, mSPLDef, "LLD_SpecialSectionAttrBlock", "FontWeight", "", 0 );
-      lTempInteger_4 = mi_lTempInteger_4.intValue( );
-      szFontWeight = sb_szFontWeight.toString( );}
-      //:IF szFontWeight != ""
-      if ( ZeidonStringCompare( szFontWeight, 1, 0, "", 1, 0, 33 ) != 0 )
-      { 
-         //:szWriteBuffer = szWriteBuffer + " font-weight=^" + szFontWeight + "^"
-         ZeidonStringConcat( szWriteBuffer, 1, 0, " font-weight=^", 1, 0, 32001 );
-         ZeidonStringConcat( szWriteBuffer, 1, 0, szFontWeight, 1, 0, 32001 );
-         ZeidonStringConcat( szWriteBuffer, 1, 0, "^", 1, 0, 32001 );
-      } 
-
-      //:END
-
-      //:szLineHeight = mSPLDef.LLD_SpecialSectionAttrBlock.TextLineHeight
-      {MutableInt mi_lTempInteger_5 = new MutableInt( lTempInteger_5 );
-      StringBuilder sb_szLineHeight;
-      if ( szLineHeight == null )
-         sb_szLineHeight = new StringBuilder( 32 );
-      else
-         sb_szLineHeight = new StringBuilder( szLineHeight );
-             GetVariableFromAttribute( sb_szLineHeight, mi_lTempInteger_5, 'S', 33, mSPLDef, "LLD_SpecialSectionAttrBlock", "TextLineHeight", "", 0 );
-      lTempInteger_5 = mi_lTempInteger_5.intValue( );
-      szLineHeight = sb_szLineHeight.toString( );}
-      //:IF szLineHeight != ""
-      if ( ZeidonStringCompare( szLineHeight, 1, 0, "", 1, 0, 33 ) != 0 )
-      { 
-         //:szWriteBuffer = szWriteBuffer + " line-height=^" + szLineHeight + "^"
-         ZeidonStringConcat( szWriteBuffer, 1, 0, " line-height=^", 1, 0, 32001 );
-         ZeidonStringConcat( szWriteBuffer, 1, 0, szLineHeight, 1, 0, 32001 );
-         ZeidonStringConcat( szWriteBuffer, 1, 0, "^", 1, 0, 32001 );
-      } 
-
-      //:END
-
-      //:szLetterSpace = mSPLDef.LLD_SpecialSectionAttrBlock.TextLetterSpace
-      {MutableInt mi_lTempInteger_6 = new MutableInt( lTempInteger_6 );
-      StringBuilder sb_szLetterSpace;
-      if ( szLetterSpace == null )
-         sb_szLetterSpace = new StringBuilder( 32 );
-      else
-         sb_szLetterSpace = new StringBuilder( szLetterSpace );
-             GetVariableFromAttribute( sb_szLetterSpace, mi_lTempInteger_6, 'S', 33, mSPLDef, "LLD_SpecialSectionAttrBlock", "TextLetterSpace", "", 0 );
-      lTempInteger_6 = mi_lTempInteger_6.intValue( );
-      szLetterSpace = sb_szLetterSpace.toString( );}
-      //:IF szLetterSpace != ""
-      if ( ZeidonStringCompare( szLetterSpace, 1, 0, "", 1, 0, 33 ) != 0 )
-      { 
-         //:szWriteBuffer = szWriteBuffer + " letter-spacing=^" + szLetterSpace + "px^"
-         ZeidonStringConcat( szWriteBuffer, 1, 0, " letter-spacing=^", 1, 0, 32001 );
-         ZeidonStringConcat( szWriteBuffer, 1, 0, szLetterSpace, 1, 0, 32001 );
-         ZeidonStringConcat( szWriteBuffer, 1, 0, "px^", 1, 0, 32001 );
-      } 
-
-      //:END
-
-      //:szMBP = mSPLDef.LLD_SpecialSectionAttrBlock.Margin
-      {MutableInt mi_lTempInteger_7 = new MutableInt( lTempInteger_7 );
-      StringBuilder sb_szMBP;
-      if ( szMBP == null )
-         sb_szMBP = new StringBuilder( 32 );
-      else
-         sb_szMBP = new StringBuilder( szMBP );
-             GetVariableFromAttribute( sb_szMBP, mi_lTempInteger_7, 'S', 33, mSPLDef, "LLD_SpecialSectionAttrBlock", "Margin", "", 0 );
-      lTempInteger_7 = mi_lTempInteger_7.intValue( );
-      szMBP = sb_szMBP.toString( );}
-      //:IF szMBP = ""
-      if ( ZeidonStringCompare( szMBP, 1, 0, "", 1, 0, 33 ) == 0 )
-      { 
-         //:szTopMBP = mSPLDef.LLD_SpecialSectionAttrBlock.MarginTop
-         {MutableInt mi_lTempInteger_8 = new MutableInt( lTempInteger_8 );
-         StringBuilder sb_szTopMBP;
-         if ( szTopMBP == null )
-            sb_szTopMBP = new StringBuilder( 32 );
+         //:szFontSize = mSPLDef.LLD_SpecialSectionAttrBlock.FontSize
+         {MutableInt mi_lTempInteger_3 = new MutableInt( lTempInteger_3 );
+         StringBuilder sb_szFontSize;
+         if ( szFontSize == null )
+            sb_szFontSize = new StringBuilder( 32 );
          else
-            sb_szTopMBP = new StringBuilder( szTopMBP );
-                   GetVariableFromAttribute( sb_szTopMBP, mi_lTempInteger_8, 'S', 33, mSPLDef, "LLD_SpecialSectionAttrBlock", "MarginTop", "", 0 );
-         lTempInteger_8 = mi_lTempInteger_8.intValue( );
-         szTopMBP = sb_szTopMBP.toString( );}
-         //:IF szTopMBP != ""
-         if ( ZeidonStringCompare( szTopMBP, 1, 0, "", 1, 0, 33 ) != 0 )
+            sb_szFontSize = new StringBuilder( szFontSize );
+                   GetVariableFromAttribute( sb_szFontSize, mi_lTempInteger_3, 'S', 33, mSPLDef, "LLD_SpecialSectionAttrBlock", "FontSize", "", 0 );
+         lTempInteger_3 = mi_lTempInteger_3.intValue( );
+         szFontSize = sb_szFontSize.toString( );}
+         //:IF szFontSize != ""
+         if ( ZeidonStringCompare( szFontSize, 1, 0, "", 1, 0, 33 ) != 0 )
          { 
-            //:szWriteBuffer = szWriteBuffer + " margin-top=^" + szTopMBP + "in^"
-            ZeidonStringConcat( szWriteBuffer, 1, 0, " margin-top=^", 1, 0, 32001 );
-            ZeidonStringConcat( szWriteBuffer, 1, 0, szTopMBP, 1, 0, 32001 );
+            //:// TraceLineS( "3Font Size set to: ", szFontSize )
+            //:szWriteBuffer = szWriteBuffer + " font-size=^" + szFontSize + "pt^"
+            ZeidonStringConcat( szWriteBuffer, 1, 0, " font-size=^", 1, 0, 32001 );
+            ZeidonStringConcat( szWriteBuffer, 1, 0, szFontSize, 1, 0, 32001 );
+            ZeidonStringConcat( szWriteBuffer, 1, 0, "pt^", 1, 0, 32001 );
+         } 
+
+         //:END
+
+         //:szFontWeight = mSPLDef.LLD_SpecialSectionAttrBlock.FontWeight
+         {MutableInt mi_lTempInteger_4 = new MutableInt( lTempInteger_4 );
+         StringBuilder sb_szFontWeight;
+         if ( szFontWeight == null )
+            sb_szFontWeight = new StringBuilder( 32 );
+         else
+            sb_szFontWeight = new StringBuilder( szFontWeight );
+                   GetVariableFromAttribute( sb_szFontWeight, mi_lTempInteger_4, 'S', 33, mSPLDef, "LLD_SpecialSectionAttrBlock", "FontWeight", "", 0 );
+         lTempInteger_4 = mi_lTempInteger_4.intValue( );
+         szFontWeight = sb_szFontWeight.toString( );}
+         //:IF szFontWeight != ""
+         if ( ZeidonStringCompare( szFontWeight, 1, 0, "", 1, 0, 33 ) != 0 )
+         { 
+            //:szWriteBuffer = szWriteBuffer + " font-weight=^" + szFontWeight + "^"
+            ZeidonStringConcat( szWriteBuffer, 1, 0, " font-weight=^", 1, 0, 32001 );
+            ZeidonStringConcat( szWriteBuffer, 1, 0, szFontWeight, 1, 0, 32001 );
+            ZeidonStringConcat( szWriteBuffer, 1, 0, "^", 1, 0, 32001 );
+         } 
+
+         //:END
+
+         //:szLineHeight = mSPLDef.LLD_SpecialSectionAttrBlock.TextLineHeight
+         {MutableInt mi_lTempInteger_5 = new MutableInt( lTempInteger_5 );
+         StringBuilder sb_szLineHeight;
+         if ( szLineHeight == null )
+            sb_szLineHeight = new StringBuilder( 32 );
+         else
+            sb_szLineHeight = new StringBuilder( szLineHeight );
+                   GetVariableFromAttribute( sb_szLineHeight, mi_lTempInteger_5, 'S', 33, mSPLDef, "LLD_SpecialSectionAttrBlock", "TextLineHeight", "", 0 );
+         lTempInteger_5 = mi_lTempInteger_5.intValue( );
+         szLineHeight = sb_szLineHeight.toString( );}
+         //:IF szLineHeight != ""
+         if ( ZeidonStringCompare( szLineHeight, 1, 0, "", 1, 0, 33 ) != 0 )
+         { 
+            //:szWriteBuffer = szWriteBuffer + " line-height=^" + szLineHeight + "^"
+            ZeidonStringConcat( szWriteBuffer, 1, 0, " line-height=^", 1, 0, 32001 );
+            ZeidonStringConcat( szWriteBuffer, 1, 0, szLineHeight, 1, 0, 32001 );
+            ZeidonStringConcat( szWriteBuffer, 1, 0, "^", 1, 0, 32001 );
+         } 
+
+         //:END
+
+         //:szLetterSpace = mSPLDef.LLD_SpecialSectionAttrBlock.TextLetterSpace
+         {MutableInt mi_lTempInteger_6 = new MutableInt( lTempInteger_6 );
+         StringBuilder sb_szLetterSpace;
+         if ( szLetterSpace == null )
+            sb_szLetterSpace = new StringBuilder( 32 );
+         else
+            sb_szLetterSpace = new StringBuilder( szLetterSpace );
+                   GetVariableFromAttribute( sb_szLetterSpace, mi_lTempInteger_6, 'S', 33, mSPLDef, "LLD_SpecialSectionAttrBlock", "TextLetterSpace", "", 0 );
+         lTempInteger_6 = mi_lTempInteger_6.intValue( );
+         szLetterSpace = sb_szLetterSpace.toString( );}
+         //:IF szLetterSpace != ""
+         if ( ZeidonStringCompare( szLetterSpace, 1, 0, "", 1, 0, 33 ) != 0 )
+         { 
+            //:szWriteBuffer = szWriteBuffer + " letter-spacing=^" + szLetterSpace + "px^"
+            ZeidonStringConcat( szWriteBuffer, 1, 0, " letter-spacing=^", 1, 0, 32001 );
+            ZeidonStringConcat( szWriteBuffer, 1, 0, szLetterSpace, 1, 0, 32001 );
+            ZeidonStringConcat( szWriteBuffer, 1, 0, "px^", 1, 0, 32001 );
+         } 
+
+         //:END
+
+         //:szMBP = mSPLDef.LLD_SpecialSectionAttrBlock.Margin
+         {MutableInt mi_lTempInteger_7 = new MutableInt( lTempInteger_7 );
+         StringBuilder sb_szMBP;
+         if ( szMBP == null )
+            sb_szMBP = new StringBuilder( 32 );
+         else
+            sb_szMBP = new StringBuilder( szMBP );
+                   GetVariableFromAttribute( sb_szMBP, mi_lTempInteger_7, 'S', 33, mSPLDef, "LLD_SpecialSectionAttrBlock", "Margin", "", 0 );
+         lTempInteger_7 = mi_lTempInteger_7.intValue( );
+         szMBP = sb_szMBP.toString( );}
+         //:IF szMBP = ""
+         if ( ZeidonStringCompare( szMBP, 1, 0, "", 1, 0, 33 ) == 0 )
+         { 
+            //:szTopMBP = mSPLDef.LLD_SpecialSectionAttrBlock.MarginTop
+            {MutableInt mi_lTempInteger_8 = new MutableInt( lTempInteger_8 );
+            StringBuilder sb_szTopMBP;
+            if ( szTopMBP == null )
+               sb_szTopMBP = new StringBuilder( 32 );
+            else
+               sb_szTopMBP = new StringBuilder( szTopMBP );
+                         GetVariableFromAttribute( sb_szTopMBP, mi_lTempInteger_8, 'S', 33, mSPLDef, "LLD_SpecialSectionAttrBlock", "MarginTop", "", 0 );
+            lTempInteger_8 = mi_lTempInteger_8.intValue( );
+            szTopMBP = sb_szTopMBP.toString( );}
+            //:IF szTopMBP != ""
+            if ( ZeidonStringCompare( szTopMBP, 1, 0, "", 1, 0, 33 ) != 0 )
+            { 
+               //:szWriteBuffer = szWriteBuffer + " margin-top=^" + szTopMBP + "in^"
+               ZeidonStringConcat( szWriteBuffer, 1, 0, " margin-top=^", 1, 0, 32001 );
+               ZeidonStringConcat( szWriteBuffer, 1, 0, szTopMBP, 1, 0, 32001 );
+               ZeidonStringConcat( szWriteBuffer, 1, 0, "in^", 1, 0, 32001 );
+            } 
+
+            //:END
+            //:szBottomMBP = mSPLDef.LLD_SpecialSectionAttrBlock.MarginBottom
+            {MutableInt mi_lTempInteger_9 = new MutableInt( lTempInteger_9 );
+            StringBuilder sb_szBottomMBP;
+            if ( szBottomMBP == null )
+               sb_szBottomMBP = new StringBuilder( 32 );
+            else
+               sb_szBottomMBP = new StringBuilder( szBottomMBP );
+                         GetVariableFromAttribute( sb_szBottomMBP, mi_lTempInteger_9, 'S', 33, mSPLDef, "LLD_SpecialSectionAttrBlock", "MarginBottom", "", 0 );
+            lTempInteger_9 = mi_lTempInteger_9.intValue( );
+            szBottomMBP = sb_szBottomMBP.toString( );}
+            //:IF szBottomMBP != ""
+            if ( ZeidonStringCompare( szBottomMBP, 1, 0, "", 1, 0, 33 ) != 0 )
+            { 
+               //:szWriteBuffer = szWriteBuffer + " margin-bottom=^" + szBottomMBP + "in^"
+               ZeidonStringConcat( szWriteBuffer, 1, 0, " margin-bottom=^", 1, 0, 32001 );
+               ZeidonStringConcat( szWriteBuffer, 1, 0, szBottomMBP, 1, 0, 32001 );
+               ZeidonStringConcat( szWriteBuffer, 1, 0, "in^", 1, 0, 32001 );
+            } 
+
+            //:END
+            //:szLeftMBP = mSPLDef.LLD_SpecialSectionAttrBlock.MarginLeft
+            {MutableInt mi_lTempInteger_10 = new MutableInt( lTempInteger_10 );
+            StringBuilder sb_szLeftMBP;
+            if ( szLeftMBP == null )
+               sb_szLeftMBP = new StringBuilder( 32 );
+            else
+               sb_szLeftMBP = new StringBuilder( szLeftMBP );
+                         GetVariableFromAttribute( sb_szLeftMBP, mi_lTempInteger_10, 'S', 33, mSPLDef, "LLD_SpecialSectionAttrBlock", "MarginLeft", "", 0 );
+            lTempInteger_10 = mi_lTempInteger_10.intValue( );
+            szLeftMBP = sb_szLeftMBP.toString( );}
+            //:IF szLeftMBP != ""
+            if ( ZeidonStringCompare( szLeftMBP, 1, 0, "", 1, 0, 33 ) != 0 )
+            { 
+               //:szWriteBuffer = szWriteBuffer + " margin-left=^" + szLeftMBP + "in^"
+               ZeidonStringConcat( szWriteBuffer, 1, 0, " margin-left=^", 1, 0, 32001 );
+               ZeidonStringConcat( szWriteBuffer, 1, 0, szLeftMBP, 1, 0, 32001 );
+               ZeidonStringConcat( szWriteBuffer, 1, 0, "in^", 1, 0, 32001 );
+            } 
+
+            //:END
+            //:szRightMBP = mSPLDef.LLD_SpecialSectionAttrBlock.MarginRight
+            {MutableInt mi_lTempInteger_11 = new MutableInt( lTempInteger_11 );
+            StringBuilder sb_szRightMBP;
+            if ( szRightMBP == null )
+               sb_szRightMBP = new StringBuilder( 32 );
+            else
+               sb_szRightMBP = new StringBuilder( szRightMBP );
+                         GetVariableFromAttribute( sb_szRightMBP, mi_lTempInteger_11, 'S', 33, mSPLDef, "LLD_SpecialSectionAttrBlock", "MarginRight", "", 0 );
+            lTempInteger_11 = mi_lTempInteger_11.intValue( );
+            szRightMBP = sb_szRightMBP.toString( );}
+            //:IF szRightMBP != ""
+            if ( ZeidonStringCompare( szRightMBP, 1, 0, "", 1, 0, 33 ) != 0 )
+            { 
+               //:szWriteBuffer = szWriteBuffer + " margin-right=^" + szRightMBP + "in^"
+               ZeidonStringConcat( szWriteBuffer, 1, 0, " margin-right=^", 1, 0, 32001 );
+               ZeidonStringConcat( szWriteBuffer, 1, 0, szRightMBP, 1, 0, 32001 );
+               ZeidonStringConcat( szWriteBuffer, 1, 0, "in^", 1, 0, 32001 );
+            } 
+
+            //:END
+            //:ELSE
+         } 
+         else
+         { 
+            //:szWriteBuffer = szWriteBuffer + " margin=^" + szMBP + "in^"
+            ZeidonStringConcat( szWriteBuffer, 1, 0, " margin=^", 1, 0, 32001 );
+            ZeidonStringConcat( szWriteBuffer, 1, 0, szMBP, 1, 0, 32001 );
             ZeidonStringConcat( szWriteBuffer, 1, 0, "in^", 1, 0, 32001 );
          } 
 
          //:END
-         //:szBottomMBP = mSPLDef.LLD_SpecialSectionAttrBlock.MarginBottom
-         {MutableInt mi_lTempInteger_9 = new MutableInt( lTempInteger_9 );
+
+         //:szMBP = mSPLDef.LLD_SpecialSectionAttrBlock.Border
+         {MutableInt mi_lTempInteger_12 = new MutableInt( lTempInteger_12 );
+         StringBuilder sb_szMBP;
+         if ( szMBP == null )
+            sb_szMBP = new StringBuilder( 32 );
+         else
+            sb_szMBP = new StringBuilder( szMBP );
+                   GetVariableFromAttribute( sb_szMBP, mi_lTempInteger_12, 'S', 33, mSPLDef, "LLD_SpecialSectionAttrBlock", "Border", "", 0 );
+         lTempInteger_12 = mi_lTempInteger_12.intValue( );
+         szMBP = sb_szMBP.toString( );}
+         //:IF szMBP = ""
+         if ( ZeidonStringCompare( szMBP, 1, 0, "", 1, 0, 33 ) == 0 )
+         { 
+            //:szTopMBP = mSPLDef.LLD_SpecialSectionAttrBlock.BorderTop
+            {MutableInt mi_lTempInteger_13 = new MutableInt( lTempInteger_13 );
+            StringBuilder sb_szTopMBP;
+            if ( szTopMBP == null )
+               sb_szTopMBP = new StringBuilder( 32 );
+            else
+               sb_szTopMBP = new StringBuilder( szTopMBP );
+                         GetVariableFromAttribute( sb_szTopMBP, mi_lTempInteger_13, 'S', 33, mSPLDef, "LLD_SpecialSectionAttrBlock", "BorderTop", "", 0 );
+            lTempInteger_13 = mi_lTempInteger_13.intValue( );
+            szTopMBP = sb_szTopMBP.toString( );}
+            //:IF szTopMBP != ""
+            if ( ZeidonStringCompare( szTopMBP, 1, 0, "", 1, 0, 33 ) != 0 )
+            { 
+               //:szWriteBuffer = szWriteBuffer + " border-top=^" + szTopMBP + "in^"
+               ZeidonStringConcat( szWriteBuffer, 1, 0, " border-top=^", 1, 0, 32001 );
+               ZeidonStringConcat( szWriteBuffer, 1, 0, szTopMBP, 1, 0, 32001 );
+               ZeidonStringConcat( szWriteBuffer, 1, 0, "in^", 1, 0, 32001 );
+            } 
+
+            //:END
+            //:szBottomMBP = mSPLDef.LLD_SpecialSectionAttrBlock.BorderBottom
+            {MutableInt mi_lTempInteger_14 = new MutableInt( lTempInteger_14 );
+            StringBuilder sb_szBottomMBP;
+            if ( szBottomMBP == null )
+               sb_szBottomMBP = new StringBuilder( 32 );
+            else
+               sb_szBottomMBP = new StringBuilder( szBottomMBP );
+                         GetVariableFromAttribute( sb_szBottomMBP, mi_lTempInteger_14, 'S', 33, mSPLDef, "LLD_SpecialSectionAttrBlock", "BorderBottom", "", 0 );
+            lTempInteger_14 = mi_lTempInteger_14.intValue( );
+            szBottomMBP = sb_szBottomMBP.toString( );}
+            //:IF szBottomMBP != ""
+            if ( ZeidonStringCompare( szBottomMBP, 1, 0, "", 1, 0, 33 ) != 0 )
+            { 
+               //:szWriteBuffer = szWriteBuffer + " border-bottom=^" + szBottomMBP + "in^"
+               ZeidonStringConcat( szWriteBuffer, 1, 0, " border-bottom=^", 1, 0, 32001 );
+               ZeidonStringConcat( szWriteBuffer, 1, 0, szBottomMBP, 1, 0, 32001 );
+               ZeidonStringConcat( szWriteBuffer, 1, 0, "in^", 1, 0, 32001 );
+            } 
+
+            //:END
+            //:szLeftMBP = mSPLDef.LLD_SpecialSectionAttrBlock.BorderLeft
+            {MutableInt mi_lTempInteger_15 = new MutableInt( lTempInteger_15 );
+            StringBuilder sb_szLeftMBP;
+            if ( szLeftMBP == null )
+               sb_szLeftMBP = new StringBuilder( 32 );
+            else
+               sb_szLeftMBP = new StringBuilder( szLeftMBP );
+                         GetVariableFromAttribute( sb_szLeftMBP, mi_lTempInteger_15, 'S', 33, mSPLDef, "LLD_SpecialSectionAttrBlock", "BorderLeft", "", 0 );
+            lTempInteger_15 = mi_lTempInteger_15.intValue( );
+            szLeftMBP = sb_szLeftMBP.toString( );}
+            //:IF szLeftMBP != ""
+            if ( ZeidonStringCompare( szLeftMBP, 1, 0, "", 1, 0, 33 ) != 0 )
+            { 
+               //:szWriteBuffer = szWriteBuffer + " border-left=^" + szLeftMBP + "in^"
+               ZeidonStringConcat( szWriteBuffer, 1, 0, " border-left=^", 1, 0, 32001 );
+               ZeidonStringConcat( szWriteBuffer, 1, 0, szLeftMBP, 1, 0, 32001 );
+               ZeidonStringConcat( szWriteBuffer, 1, 0, "in^", 1, 0, 32001 );
+            } 
+
+            //:END
+            //:szRightMBP = mSPLDef.LLD_SpecialSectionAttrBlock.BorderRight
+            {MutableInt mi_lTempInteger_16 = new MutableInt( lTempInteger_16 );
+            StringBuilder sb_szRightMBP;
+            if ( szRightMBP == null )
+               sb_szRightMBP = new StringBuilder( 32 );
+            else
+               sb_szRightMBP = new StringBuilder( szRightMBP );
+                         GetVariableFromAttribute( sb_szRightMBP, mi_lTempInteger_16, 'S', 33, mSPLDef, "LLD_SpecialSectionAttrBlock", "BorderRight", "", 0 );
+            lTempInteger_16 = mi_lTempInteger_16.intValue( );
+            szRightMBP = sb_szRightMBP.toString( );}
+            //:IF szRightMBP != ""
+            if ( ZeidonStringCompare( szRightMBP, 1, 0, "", 1, 0, 33 ) != 0 )
+            { 
+               //:szWriteBuffer = szWriteBuffer + " border-right=^" + szRightMBP + "in^"
+               ZeidonStringConcat( szWriteBuffer, 1, 0, " border-right=^", 1, 0, 32001 );
+               ZeidonStringConcat( szWriteBuffer, 1, 0, szRightMBP, 1, 0, 32001 );
+               ZeidonStringConcat( szWriteBuffer, 1, 0, "in^", 1, 0, 32001 );
+            } 
+
+            //:END
+            //:ELSE
+         } 
+         else
+         { 
+            //:szWriteBuffer = szWriteBuffer + " border=^" + szMBP + "in^"
+            ZeidonStringConcat( szWriteBuffer, 1, 0, " border=^", 1, 0, 32001 );
+            ZeidonStringConcat( szWriteBuffer, 1, 0, szMBP, 1, 0, 32001 );
+            ZeidonStringConcat( szWriteBuffer, 1, 0, "in^", 1, 0, 32001 );
+         } 
+
+         //:END
+
+         //:szMBP = mSPLDef.LLD_SpecialSectionAttrBlock.Padding
+         {MutableInt mi_lTempInteger_17 = new MutableInt( lTempInteger_17 );
+         StringBuilder sb_szMBP;
+         if ( szMBP == null )
+            sb_szMBP = new StringBuilder( 32 );
+         else
+            sb_szMBP = new StringBuilder( szMBP );
+                   GetVariableFromAttribute( sb_szMBP, mi_lTempInteger_17, 'S', 33, mSPLDef, "LLD_SpecialSectionAttrBlock", "Padding", "", 0 );
+         lTempInteger_17 = mi_lTempInteger_17.intValue( );
+         szMBP = sb_szMBP.toString( );}
+         //:IF szMBP = ""
+         if ( ZeidonStringCompare( szMBP, 1, 0, "", 1, 0, 33 ) == 0 )
+         { 
+            //:szTopMBP = mSPLDef.LLD_SpecialSectionAttrBlock.PaddingTop
+            {MutableInt mi_lTempInteger_18 = new MutableInt( lTempInteger_18 );
+            StringBuilder sb_szTopMBP;
+            if ( szTopMBP == null )
+               sb_szTopMBP = new StringBuilder( 32 );
+            else
+               sb_szTopMBP = new StringBuilder( szTopMBP );
+                         GetVariableFromAttribute( sb_szTopMBP, mi_lTempInteger_18, 'S', 33, mSPLDef, "LLD_SpecialSectionAttrBlock", "PaddingTop", "", 0 );
+            lTempInteger_18 = mi_lTempInteger_18.intValue( );
+            szTopMBP = sb_szTopMBP.toString( );}
+            //:IF szTopMBP != ""
+            if ( ZeidonStringCompare( szTopMBP, 1, 0, "", 1, 0, 33 ) != 0 )
+            { 
+               //:szWriteBuffer = szWriteBuffer + " padding-top=^" + szTopMBP + "in^"
+               ZeidonStringConcat( szWriteBuffer, 1, 0, " padding-top=^", 1, 0, 32001 );
+               ZeidonStringConcat( szWriteBuffer, 1, 0, szTopMBP, 1, 0, 32001 );
+               ZeidonStringConcat( szWriteBuffer, 1, 0, "in^", 1, 0, 32001 );
+            } 
+
+            //:END
+            //:szBottomMBP = mSPLDef.LLD_SpecialSectionAttrBlock.PaddingBottom
+            {MutableInt mi_lTempInteger_19 = new MutableInt( lTempInteger_19 );
+            StringBuilder sb_szBottomMBP;
+            if ( szBottomMBP == null )
+               sb_szBottomMBP = new StringBuilder( 32 );
+            else
+               sb_szBottomMBP = new StringBuilder( szBottomMBP );
+                         GetVariableFromAttribute( sb_szBottomMBP, mi_lTempInteger_19, 'S', 33, mSPLDef, "LLD_SpecialSectionAttrBlock", "PaddingBottom", "", 0 );
+            lTempInteger_19 = mi_lTempInteger_19.intValue( );
+            szBottomMBP = sb_szBottomMBP.toString( );}
+            //:IF szBottomMBP != ""
+            if ( ZeidonStringCompare( szBottomMBP, 1, 0, "", 1, 0, 33 ) != 0 )
+            { 
+               //:szWriteBuffer = szWriteBuffer + " padding-bottom=^" + szBottomMBP + "in^"
+               ZeidonStringConcat( szWriteBuffer, 1, 0, " padding-bottom=^", 1, 0, 32001 );
+               ZeidonStringConcat( szWriteBuffer, 1, 0, szBottomMBP, 1, 0, 32001 );
+               ZeidonStringConcat( szWriteBuffer, 1, 0, "in^", 1, 0, 32001 );
+            } 
+
+            //:END
+            //:szLeftMBP = mSPLDef.LLD_SpecialSectionAttrBlock.PaddingLeft
+            {MutableInt mi_lTempInteger_20 = new MutableInt( lTempInteger_20 );
+            StringBuilder sb_szLeftMBP;
+            if ( szLeftMBP == null )
+               sb_szLeftMBP = new StringBuilder( 32 );
+            else
+               sb_szLeftMBP = new StringBuilder( szLeftMBP );
+                         GetVariableFromAttribute( sb_szLeftMBP, mi_lTempInteger_20, 'S', 33, mSPLDef, "LLD_SpecialSectionAttrBlock", "PaddingLeft", "", 0 );
+            lTempInteger_20 = mi_lTempInteger_20.intValue( );
+            szLeftMBP = sb_szLeftMBP.toString( );}
+            //:IF szLeftMBP != ""
+            if ( ZeidonStringCompare( szLeftMBP, 1, 0, "", 1, 0, 33 ) != 0 )
+            { 
+               //:szWriteBuffer = szWriteBuffer + " padding-left=^" + szLeftMBP + "in^"
+               ZeidonStringConcat( szWriteBuffer, 1, 0, " padding-left=^", 1, 0, 32001 );
+               ZeidonStringConcat( szWriteBuffer, 1, 0, szLeftMBP, 1, 0, 32001 );
+               ZeidonStringConcat( szWriteBuffer, 1, 0, "in^", 1, 0, 32001 );
+            } 
+
+            //:END
+            //:szRightMBP = mSPLDef.LLD_SpecialSectionAttrBlock.PaddingRight
+            {MutableInt mi_lTempInteger_21 = new MutableInt( lTempInteger_21 );
+            StringBuilder sb_szRightMBP;
+            if ( szRightMBP == null )
+               sb_szRightMBP = new StringBuilder( 32 );
+            else
+               sb_szRightMBP = new StringBuilder( szRightMBP );
+                         GetVariableFromAttribute( sb_szRightMBP, mi_lTempInteger_21, 'S', 33, mSPLDef, "LLD_SpecialSectionAttrBlock", "PaddingRight", "", 0 );
+            lTempInteger_21 = mi_lTempInteger_21.intValue( );
+            szRightMBP = sb_szRightMBP.toString( );}
+            //:IF szRightMBP != ""
+            if ( ZeidonStringCompare( szRightMBP, 1, 0, "", 1, 0, 33 ) != 0 )
+            { 
+               //:szWriteBuffer = szWriteBuffer + " padding-right=^" + szRightMBP + "in^"
+               ZeidonStringConcat( szWriteBuffer, 1, 0, " padding-right=^", 1, 0, 32001 );
+               ZeidonStringConcat( szWriteBuffer, 1, 0, szRightMBP, 1, 0, 32001 );
+               ZeidonStringConcat( szWriteBuffer, 1, 0, "in^", 1, 0, 32001 );
+            } 
+
+            //:END
+            //:ELSE
+         } 
+         else
+         { 
+            //:szWriteBuffer = szWriteBuffer + " padding=^" + szMBP + "in^"
+            ZeidonStringConcat( szWriteBuffer, 1, 0, " padding=^", 1, 0, 32001 );
+            ZeidonStringConcat( szWriteBuffer, 1, 0, szMBP, 1, 0, 32001 );
+            ZeidonStringConcat( szWriteBuffer, 1, 0, "in^", 1, 0, 32001 );
+         } 
+
+         //:END
+
+         //:IF szRightMBP != ""
+         if ( ZeidonStringCompare( szRightMBP, 1, 0, "", 1, 0, 33 ) != 0 )
+         { 
+            //:szWriteBuffer = szWriteBuffer + " padding-right=^" + szRightMBP + "in^"
+            ZeidonStringConcat( szWriteBuffer, 1, 0, " padding-right=^", 1, 0, 32001 );
+            ZeidonStringConcat( szWriteBuffer, 1, 0, szRightMBP, 1, 0, 32001 );
+            ZeidonStringConcat( szWriteBuffer, 1, 0, "in^", 1, 0, 32001 );
+         } 
+
+         //:END
+
+         //:szTextAlign = mSPLDef.LLD_SpecialSectionAttrBlock.TextAlign
+         {MutableInt mi_lTempInteger_22 = new MutableInt( lTempInteger_22 );
+         StringBuilder sb_szTextAlign;
+         if ( szTextAlign == null )
+            sb_szTextAlign = new StringBuilder( 32 );
+         else
+            sb_szTextAlign = new StringBuilder( szTextAlign );
+                   GetVariableFromAttribute( sb_szTextAlign, mi_lTempInteger_22, 'S', 33, mSPLDef, "LLD_SpecialSectionAttrBlock", "TextAlign", "", 0 );
+         lTempInteger_22 = mi_lTempInteger_22.intValue( );
+         szTextAlign = sb_szTextAlign.toString( );}
+         //:IF szTextAlign != ""
+         if ( ZeidonStringCompare( szTextAlign, 1, 0, "", 1, 0, 33 ) != 0 )
+         { 
+            //:szWriteBuffer = szWriteBuffer + " text-align=^" + szTextAlign + "^"
+            ZeidonStringConcat( szWriteBuffer, 1, 0, " text-align=^", 1, 0, 32001 );
+            ZeidonStringConcat( szWriteBuffer, 1, 0, szTextAlign, 1, 0, 32001 );
+            ZeidonStringConcat( szWriteBuffer, 1, 0, "^", 1, 0, 32001 );
+         } 
+
+         //:END
+         //:ELSE
+      } 
+      else
+      { 
+         //:// If the block has a Bottom Margin, use it for each block below.
+         //:szBottomMBP = mSPLDef.LLD_Block.MarginBottom
+         {MutableInt mi_lTempInteger_23 = new MutableInt( lTempInteger_23 );
          StringBuilder sb_szBottomMBP;
          if ( szBottomMBP == null )
             sb_szBottomMBP = new StringBuilder( 32 );
          else
             sb_szBottomMBP = new StringBuilder( szBottomMBP );
-                   GetVariableFromAttribute( sb_szBottomMBP, mi_lTempInteger_9, 'S', 33, mSPLDef, "LLD_SpecialSectionAttrBlock", "MarginBottom", "", 0 );
-         lTempInteger_9 = mi_lTempInteger_9.intValue( );
+                   GetVariableFromAttribute( sb_szBottomMBP, mi_lTempInteger_23, 'S', 33, mSPLDef, "LLD_Block", "MarginBottom", "", 0 );
+         lTempInteger_23 = mi_lTempInteger_23.intValue( );
          szBottomMBP = sb_szBottomMBP.toString( );}
          //:IF szBottomMBP != ""
          if ( ZeidonStringCompare( szBottomMBP, 1, 0, "", 1, 0, 33 ) != 0 )
@@ -15975,314 +16324,23 @@ omSPLDef_AddFormatToSpecialText( View     mSPLDef,
          } 
 
          //:END
-         //:szLeftMBP = mSPLDef.LLD_SpecialSectionAttrBlock.MarginLeft
-         {MutableInt mi_lTempInteger_10 = new MutableInt( lTempInteger_10 );
-         StringBuilder sb_szLeftMBP;
-         if ( szLeftMBP == null )
-            sb_szLeftMBP = new StringBuilder( 32 );
-         else
-            sb_szLeftMBP = new StringBuilder( szLeftMBP );
-                   GetVariableFromAttribute( sb_szLeftMBP, mi_lTempInteger_10, 'S', 33, mSPLDef, "LLD_SpecialSectionAttrBlock", "MarginLeft", "", 0 );
-         lTempInteger_10 = mi_lTempInteger_10.intValue( );
-         szLeftMBP = sb_szLeftMBP.toString( );}
-         //:IF szLeftMBP != ""
-         if ( ZeidonStringCompare( szLeftMBP, 1, 0, "", 1, 0, 33 ) != 0 )
-         { 
-            //:szWriteBuffer = szWriteBuffer + " margin-left=^" + szLeftMBP + "in^"
-            ZeidonStringConcat( szWriteBuffer, 1, 0, " margin-left=^", 1, 0, 32001 );
-            ZeidonStringConcat( szWriteBuffer, 1, 0, szLeftMBP, 1, 0, 32001 );
-            ZeidonStringConcat( szWriteBuffer, 1, 0, "in^", 1, 0, 32001 );
-         } 
-
-         //:END
-         //:szRightMBP = mSPLDef.LLD_SpecialSectionAttrBlock.MarginRight
-         {MutableInt mi_lTempInteger_11 = new MutableInt( lTempInteger_11 );
-         StringBuilder sb_szRightMBP;
-         if ( szRightMBP == null )
-            sb_szRightMBP = new StringBuilder( 32 );
-         else
-            sb_szRightMBP = new StringBuilder( szRightMBP );
-                   GetVariableFromAttribute( sb_szRightMBP, mi_lTempInteger_11, 'S', 33, mSPLDef, "LLD_SpecialSectionAttrBlock", "MarginRight", "", 0 );
-         lTempInteger_11 = mi_lTempInteger_11.intValue( );
-         szRightMBP = sb_szRightMBP.toString( );}
-         //:IF szRightMBP != ""
-         if ( ZeidonStringCompare( szRightMBP, 1, 0, "", 1, 0, 33 ) != 0 )
-         { 
-            //:szWriteBuffer = szWriteBuffer + " margin-right=^" + szRightMBP + "in^"
-            ZeidonStringConcat( szWriteBuffer, 1, 0, " margin-right=^", 1, 0, 32001 );
-            ZeidonStringConcat( szWriteBuffer, 1, 0, szRightMBP, 1, 0, 32001 );
-            ZeidonStringConcat( szWriteBuffer, 1, 0, "in^", 1, 0, 32001 );
-         } 
-
-         //:END
-         //:ELSE
-      } 
-      else
-      { 
-         //:szWriteBuffer = szWriteBuffer + " margin=^" + szMBP + "in^"
-         ZeidonStringConcat( szWriteBuffer, 1, 0, " margin=^", 1, 0, 32001 );
-         ZeidonStringConcat( szWriteBuffer, 1, 0, szMBP, 1, 0, 32001 );
-         ZeidonStringConcat( szWriteBuffer, 1, 0, "in^", 1, 0, 32001 );
       } 
 
       //:END
-
-      //:szMBP = mSPLDef.LLD_SpecialSectionAttrBlock.Border
-      {MutableInt mi_lTempInteger_12 = new MutableInt( lTempInteger_12 );
-      StringBuilder sb_szMBP;
-      if ( szMBP == null )
-         sb_szMBP = new StringBuilder( 32 );
-      else
-         sb_szMBP = new StringBuilder( szMBP );
-             GetVariableFromAttribute( sb_szMBP, mi_lTempInteger_12, 'S', 33, mSPLDef, "LLD_SpecialSectionAttrBlock", "Border", "", 0 );
-      lTempInteger_12 = mi_lTempInteger_12.intValue( );
-      szMBP = sb_szMBP.toString( );}
-      //:IF szMBP = ""
-      if ( ZeidonStringCompare( szMBP, 1, 0, "", 1, 0, 33 ) == 0 )
-      { 
-         //:szTopMBP = mSPLDef.LLD_SpecialSectionAttrBlock.BorderTop
-         {MutableInt mi_lTempInteger_13 = new MutableInt( lTempInteger_13 );
-         StringBuilder sb_szTopMBP;
-         if ( szTopMBP == null )
-            sb_szTopMBP = new StringBuilder( 32 );
-         else
-            sb_szTopMBP = new StringBuilder( szTopMBP );
-                   GetVariableFromAttribute( sb_szTopMBP, mi_lTempInteger_13, 'S', 33, mSPLDef, "LLD_SpecialSectionAttrBlock", "BorderTop", "", 0 );
-         lTempInteger_13 = mi_lTempInteger_13.intValue( );
-         szTopMBP = sb_szTopMBP.toString( );}
-         //:IF szTopMBP != ""
-         if ( ZeidonStringCompare( szTopMBP, 1, 0, "", 1, 0, 33 ) != 0 )
-         { 
-            //:szWriteBuffer = szWriteBuffer + " border-top=^" + szTopMBP + "in^"
-            ZeidonStringConcat( szWriteBuffer, 1, 0, " border-top=^", 1, 0, 32001 );
-            ZeidonStringConcat( szWriteBuffer, 1, 0, szTopMBP, 1, 0, 32001 );
-            ZeidonStringConcat( szWriteBuffer, 1, 0, "in^", 1, 0, 32001 );
-         } 
-
-         //:END
-         //:szBottomMBP = mSPLDef.LLD_SpecialSectionAttrBlock.BorderBottom
-         {MutableInt mi_lTempInteger_14 = new MutableInt( lTempInteger_14 );
-         StringBuilder sb_szBottomMBP;
-         if ( szBottomMBP == null )
-            sb_szBottomMBP = new StringBuilder( 32 );
-         else
-            sb_szBottomMBP = new StringBuilder( szBottomMBP );
-                   GetVariableFromAttribute( sb_szBottomMBP, mi_lTempInteger_14, 'S', 33, mSPLDef, "LLD_SpecialSectionAttrBlock", "BorderBottom", "", 0 );
-         lTempInteger_14 = mi_lTempInteger_14.intValue( );
-         szBottomMBP = sb_szBottomMBP.toString( );}
-         //:IF szBottomMBP != ""
-         if ( ZeidonStringCompare( szBottomMBP, 1, 0, "", 1, 0, 33 ) != 0 )
-         { 
-            //:szWriteBuffer = szWriteBuffer + " border-bottom=^" + szBottomMBP + "in^"
-            ZeidonStringConcat( szWriteBuffer, 1, 0, " border-bottom=^", 1, 0, 32001 );
-            ZeidonStringConcat( szWriteBuffer, 1, 0, szBottomMBP, 1, 0, 32001 );
-            ZeidonStringConcat( szWriteBuffer, 1, 0, "in^", 1, 0, 32001 );
-         } 
-
-         //:END
-         //:szLeftMBP = mSPLDef.LLD_SpecialSectionAttrBlock.BorderLeft
-         {MutableInt mi_lTempInteger_15 = new MutableInt( lTempInteger_15 );
-         StringBuilder sb_szLeftMBP;
-         if ( szLeftMBP == null )
-            sb_szLeftMBP = new StringBuilder( 32 );
-         else
-            sb_szLeftMBP = new StringBuilder( szLeftMBP );
-                   GetVariableFromAttribute( sb_szLeftMBP, mi_lTempInteger_15, 'S', 33, mSPLDef, "LLD_SpecialSectionAttrBlock", "BorderLeft", "", 0 );
-         lTempInteger_15 = mi_lTempInteger_15.intValue( );
-         szLeftMBP = sb_szLeftMBP.toString( );}
-         //:IF szLeftMBP != ""
-         if ( ZeidonStringCompare( szLeftMBP, 1, 0, "", 1, 0, 33 ) != 0 )
-         { 
-            //:szWriteBuffer = szWriteBuffer + " border-left=^" + szLeftMBP + "in^"
-            ZeidonStringConcat( szWriteBuffer, 1, 0, " border-left=^", 1, 0, 32001 );
-            ZeidonStringConcat( szWriteBuffer, 1, 0, szLeftMBP, 1, 0, 32001 );
-            ZeidonStringConcat( szWriteBuffer, 1, 0, "in^", 1, 0, 32001 );
-         } 
-
-         //:END
-         //:szRightMBP = mSPLDef.LLD_SpecialSectionAttrBlock.BorderRight
-         {MutableInt mi_lTempInteger_16 = new MutableInt( lTempInteger_16 );
-         StringBuilder sb_szRightMBP;
-         if ( szRightMBP == null )
-            sb_szRightMBP = new StringBuilder( 32 );
-         else
-            sb_szRightMBP = new StringBuilder( szRightMBP );
-                   GetVariableFromAttribute( sb_szRightMBP, mi_lTempInteger_16, 'S', 33, mSPLDef, "LLD_SpecialSectionAttrBlock", "BorderRight", "", 0 );
-         lTempInteger_16 = mi_lTempInteger_16.intValue( );
-         szRightMBP = sb_szRightMBP.toString( );}
-         //:IF szRightMBP != ""
-         if ( ZeidonStringCompare( szRightMBP, 1, 0, "", 1, 0, 33 ) != 0 )
-         { 
-            //:szWriteBuffer = szWriteBuffer + " border-right=^" + szRightMBP + "in^"
-            ZeidonStringConcat( szWriteBuffer, 1, 0, " border-right=^", 1, 0, 32001 );
-            ZeidonStringConcat( szWriteBuffer, 1, 0, szRightMBP, 1, 0, 32001 );
-            ZeidonStringConcat( szWriteBuffer, 1, 0, "in^", 1, 0, 32001 );
-         } 
-
-         //:END
-         //:ELSE
-      } 
-      else
-      { 
-         //:szWriteBuffer = szWriteBuffer + " border=^" + szMBP + "in^"
-         ZeidonStringConcat( szWriteBuffer, 1, 0, " border=^", 1, 0, 32001 );
-         ZeidonStringConcat( szWriteBuffer, 1, 0, szMBP, 1, 0, 32001 );
-         ZeidonStringConcat( szWriteBuffer, 1, 0, "in^", 1, 0, 32001 );
-      } 
-
-      //:END
-
-      //:szMBP = mSPLDef.LLD_SpecialSectionAttrBlock.Padding
-      {MutableInt mi_lTempInteger_17 = new MutableInt( lTempInteger_17 );
-      StringBuilder sb_szMBP;
-      if ( szMBP == null )
-         sb_szMBP = new StringBuilder( 32 );
-      else
-         sb_szMBP = new StringBuilder( szMBP );
-             GetVariableFromAttribute( sb_szMBP, mi_lTempInteger_17, 'S', 33, mSPLDef, "LLD_SpecialSectionAttrBlock", "Padding", "", 0 );
-      lTempInteger_17 = mi_lTempInteger_17.intValue( );
-      szMBP = sb_szMBP.toString( );}
-      //:IF szMBP = ""
-      if ( ZeidonStringCompare( szMBP, 1, 0, "", 1, 0, 33 ) == 0 )
-      { 
-         //:szTopMBP = mSPLDef.LLD_SpecialSectionAttrBlock.PaddingTop
-         {MutableInt mi_lTempInteger_18 = new MutableInt( lTempInteger_18 );
-         StringBuilder sb_szTopMBP;
-         if ( szTopMBP == null )
-            sb_szTopMBP = new StringBuilder( 32 );
-         else
-            sb_szTopMBP = new StringBuilder( szTopMBP );
-                   GetVariableFromAttribute( sb_szTopMBP, mi_lTempInteger_18, 'S', 33, mSPLDef, "LLD_SpecialSectionAttrBlock", "PaddingTop", "", 0 );
-         lTempInteger_18 = mi_lTempInteger_18.intValue( );
-         szTopMBP = sb_szTopMBP.toString( );}
-         //:IF szTopMBP != ""
-         if ( ZeidonStringCompare( szTopMBP, 1, 0, "", 1, 0, 33 ) != 0 )
-         { 
-            //:szWriteBuffer = szWriteBuffer + " padding-top=^" + szTopMBP + "in^"
-            ZeidonStringConcat( szWriteBuffer, 1, 0, " padding-top=^", 1, 0, 32001 );
-            ZeidonStringConcat( szWriteBuffer, 1, 0, szTopMBP, 1, 0, 32001 );
-            ZeidonStringConcat( szWriteBuffer, 1, 0, "in^", 1, 0, 32001 );
-         } 
-
-         //:END
-         //:szBottomMBP = mSPLDef.LLD_SpecialSectionAttrBlock.PaddingBottom
-         {MutableInt mi_lTempInteger_19 = new MutableInt( lTempInteger_19 );
-         StringBuilder sb_szBottomMBP;
-         if ( szBottomMBP == null )
-            sb_szBottomMBP = new StringBuilder( 32 );
-         else
-            sb_szBottomMBP = new StringBuilder( szBottomMBP );
-                   GetVariableFromAttribute( sb_szBottomMBP, mi_lTempInteger_19, 'S', 33, mSPLDef, "LLD_SpecialSectionAttrBlock", "PaddingBottom", "", 0 );
-         lTempInteger_19 = mi_lTempInteger_19.intValue( );
-         szBottomMBP = sb_szBottomMBP.toString( );}
-         //:IF szBottomMBP != ""
-         if ( ZeidonStringCompare( szBottomMBP, 1, 0, "", 1, 0, 33 ) != 0 )
-         { 
-            //:szWriteBuffer = szWriteBuffer + " padding-bottom=^" + szBottomMBP + "in^"
-            ZeidonStringConcat( szWriteBuffer, 1, 0, " padding-bottom=^", 1, 0, 32001 );
-            ZeidonStringConcat( szWriteBuffer, 1, 0, szBottomMBP, 1, 0, 32001 );
-            ZeidonStringConcat( szWriteBuffer, 1, 0, "in^", 1, 0, 32001 );
-         } 
-
-         //:END
-         //:szLeftMBP = mSPLDef.LLD_SpecialSectionAttrBlock.PaddingLeft
-         {MutableInt mi_lTempInteger_20 = new MutableInt( lTempInteger_20 );
-         StringBuilder sb_szLeftMBP;
-         if ( szLeftMBP == null )
-            sb_szLeftMBP = new StringBuilder( 32 );
-         else
-            sb_szLeftMBP = new StringBuilder( szLeftMBP );
-                   GetVariableFromAttribute( sb_szLeftMBP, mi_lTempInteger_20, 'S', 33, mSPLDef, "LLD_SpecialSectionAttrBlock", "PaddingLeft", "", 0 );
-         lTempInteger_20 = mi_lTempInteger_20.intValue( );
-         szLeftMBP = sb_szLeftMBP.toString( );}
-         //:IF szLeftMBP != ""
-         if ( ZeidonStringCompare( szLeftMBP, 1, 0, "", 1, 0, 33 ) != 0 )
-         { 
-            //:szWriteBuffer = szWriteBuffer + " padding-left=^" + szLeftMBP + "in^"
-            ZeidonStringConcat( szWriteBuffer, 1, 0, " padding-left=^", 1, 0, 32001 );
-            ZeidonStringConcat( szWriteBuffer, 1, 0, szLeftMBP, 1, 0, 32001 );
-            ZeidonStringConcat( szWriteBuffer, 1, 0, "in^", 1, 0, 32001 );
-         } 
-
-         //:END
-         //:szRightMBP = mSPLDef.LLD_SpecialSectionAttrBlock.PaddingRight
-         {MutableInt mi_lTempInteger_21 = new MutableInt( lTempInteger_21 );
-         StringBuilder sb_szRightMBP;
-         if ( szRightMBP == null )
-            sb_szRightMBP = new StringBuilder( 32 );
-         else
-            sb_szRightMBP = new StringBuilder( szRightMBP );
-                   GetVariableFromAttribute( sb_szRightMBP, mi_lTempInteger_21, 'S', 33, mSPLDef, "LLD_SpecialSectionAttrBlock", "PaddingRight", "", 0 );
-         lTempInteger_21 = mi_lTempInteger_21.intValue( );
-         szRightMBP = sb_szRightMBP.toString( );}
-         //:IF szRightMBP != ""
-         if ( ZeidonStringCompare( szRightMBP, 1, 0, "", 1, 0, 33 ) != 0 )
-         { 
-            //:szWriteBuffer = szWriteBuffer + " padding-right=^" + szRightMBP + "in^"
-            ZeidonStringConcat( szWriteBuffer, 1, 0, " padding-right=^", 1, 0, 32001 );
-            ZeidonStringConcat( szWriteBuffer, 1, 0, szRightMBP, 1, 0, 32001 );
-            ZeidonStringConcat( szWriteBuffer, 1, 0, "in^", 1, 0, 32001 );
-         } 
-
-         //:END
-         //:ELSE
-      } 
-      else
-      { 
-         //:szWriteBuffer = szWriteBuffer + " padding=^" + szMBP + "in^"
-         ZeidonStringConcat( szWriteBuffer, 1, 0, " padding=^", 1, 0, 32001 );
-         ZeidonStringConcat( szWriteBuffer, 1, 0, szMBP, 1, 0, 32001 );
-         ZeidonStringConcat( szWriteBuffer, 1, 0, "in^", 1, 0, 32001 );
-      } 
-
-      //:END
-
-      //:IF szRightMBP != ""
-      if ( ZeidonStringCompare( szRightMBP, 1, 0, "", 1, 0, 33 ) != 0 )
-      { 
-         //:szWriteBuffer = szWriteBuffer + " padding-right=^" + szRightMBP + "in^"
-         ZeidonStringConcat( szWriteBuffer, 1, 0, " padding-right=^", 1, 0, 32001 );
-         ZeidonStringConcat( szWriteBuffer, 1, 0, szRightMBP, 1, 0, 32001 );
-         ZeidonStringConcat( szWriteBuffer, 1, 0, "in^", 1, 0, 32001 );
-      } 
-
-      //:END
-
-      //:szTextAlign = mSPLDef.LLD_SpecialSectionAttrBlock.TextAlign
-      {MutableInt mi_lTempInteger_22 = new MutableInt( lTempInteger_22 );
-      StringBuilder sb_szTextAlign;
-      if ( szTextAlign == null )
-         sb_szTextAlign = new StringBuilder( 32 );
-      else
-         sb_szTextAlign = new StringBuilder( szTextAlign );
-             GetVariableFromAttribute( sb_szTextAlign, mi_lTempInteger_22, 'S', 33, mSPLDef, "LLD_SpecialSectionAttrBlock", "TextAlign", "", 0 );
-      lTempInteger_22 = mi_lTempInteger_22.intValue( );
-      szTextAlign = sb_szTextAlign.toString( );}
-      //:IF szTextAlign != ""
-      if ( ZeidonStringCompare( szTextAlign, 1, 0, "", 1, 0, 33 ) != 0 )
-      { 
-         //:szWriteBuffer = szWriteBuffer + " text-align=^" + szTextAlign + "^"
-         ZeidonStringConcat( szWriteBuffer, 1, 0, " text-align=^", 1, 0, 32001 );
-         ZeidonStringConcat( szWriteBuffer, 1, 0, szTextAlign, 1, 0, 32001 );
-         ZeidonStringConcat( szWriteBuffer, 1, 0, "^", 1, 0, 32001 );
-      } 
-
-      //:END
-
       //:ELSE
    } 
    else
    { 
       //:// If the block has a Bottom Margin, use it for each block below.
       //:szBottomMBP = mSPLDef.LLD_Block.MarginBottom
-      {MutableInt mi_lTempInteger_23 = new MutableInt( lTempInteger_23 );
+      {MutableInt mi_lTempInteger_24 = new MutableInt( lTempInteger_24 );
       StringBuilder sb_szBottomMBP;
       if ( szBottomMBP == null )
          sb_szBottomMBP = new StringBuilder( 32 );
       else
          sb_szBottomMBP = new StringBuilder( szBottomMBP );
-             GetVariableFromAttribute( sb_szBottomMBP, mi_lTempInteger_23, 'S', 33, mSPLDef, "LLD_Block", "MarginBottom", "", 0 );
-      lTempInteger_23 = mi_lTempInteger_23.intValue( );
+             GetVariableFromAttribute( sb_szBottomMBP, mi_lTempInteger_24, 'S', 33, mSPLDef, "LLD_Block", "MarginBottom", "", 0 );
+      lTempInteger_24 = mi_lTempInteger_24.intValue( );
       szBottomMBP = sb_szBottomMBP.toString( );}
       //:IF szBottomMBP != ""
       if ( ZeidonStringCompare( szBottomMBP, 1, 0, "", 1, 0, 33 ) != 0 )
@@ -18048,35 +18106,57 @@ omSPLDef_BuildUsageEntriesFrSLC( View     mSPLDef,
 //:TRANSFORMATION OPERATION
 public int 
 omSPLDef_CheckAddKeywordEntry( View     mSPLDefBlock,
+                               String   szSectionType,
                                String   szKeywordName )
 {
    int      RESULT = 0;
 
    //:CheckAddKeywordEntry( VIEW mSPLDefBlock BASED ON LOD mSPLDef,
+   //:                   STRING ( 50 ) szSectionType,
    //:                   STRING ( 50 ) szKeywordName )
 
-   //:// Make sure that the entry for the Keyword passed in exists.
-   //:SET CURSOR FIRST mSPLDefBlock.LLD_SpecialSectionAttribute WHERE mSPLDefBlock.LLD_SpecialSectionAttribute.Name = szKeywordName
-   RESULT = SetCursorFirstEntityByString( mSPLDefBlock, "LLD_SpecialSectionAttribute", "Name", szKeywordName, "" );
+   //:// Make sure that the entry for the SectionType passed in exists.
+   //:SET CURSOR FIRST mSPLDefBlock.LLD_SpecialSectionAttribute WHERE mSPLDefBlock.LLD_SpecialSectionAttribute.Name = szSectionType
+   RESULT = SetCursorFirstEntityByString( mSPLDefBlock, "LLD_SpecialSectionAttribute", "Name", szSectionType, "" );
    //:IF RESULT < zCURSOR_SET
    if ( RESULT < zCURSOR_SET )
    { 
-      //:// TraceLineS( "CheckAddKeyordEntry adding: ", szKeywordName )
+      //:// TraceLineS( "CheckAddKeyordEntry adding SpecialSectionAttribute: ", szSectionType )
       //:SET CURSOR LAST mSPLDefBlock.LLD_SpecialSectionAttribute
       RESULT = SetCursorLastEntity( mSPLDefBlock, "LLD_SpecialSectionAttribute", "" );
       //:CREATE ENTITY mSPLDefBlock.LLD_SpecialSectionAttribute
       RESULT = CreateEntity( mSPLDefBlock, "LLD_SpecialSectionAttribute", zPOS_AFTER );
-      //:mSPLDefBlock.LLD_SpecialSectionAttribute.Name = szKeywordName
-      SetAttributeFromString( mSPLDefBlock, "LLD_SpecialSectionAttribute", "Name", szKeywordName );
-      //:CREATE ENTITY mSPLDefBlock.LLD_SpecialSectionAttrBlock
-      RESULT = CreateEntity( mSPLDefBlock, "LLD_SpecialSectionAttrBlock", zPOS_AFTER );
+      //:mSPLDefBlock.LLD_SpecialSectionAttribute.Name = szSectionType
+      SetAttributeFromString( mSPLDefBlock, "LLD_SpecialSectionAttribute", "Name", szSectionType );
       //:ELSE
    } 
    else
    { 
    } 
 
-   //:// TraceLineS( "CheckAddKeyordEntry located: ", szKeywordName )
+   //:// TraceLineS( "CheckAddKeyordEntry located SpecialSectionAttribute: ", szSectionType )
+   //:END   
+
+   //:// Make sure that the entry for the Keyword passed in exists.
+   //:SET CURSOR FIRST mSPLDefBlock.LLD_SpecialSectionAttrBlock WHERE mSPLDefBlock.LLD_SpecialSectionAttrBlock.Name = szKeywordName
+   RESULT = SetCursorFirstEntityByString( mSPLDefBlock, "LLD_SpecialSectionAttrBlock", "Name", szKeywordName, "" );
+   //:IF RESULT < zCURSOR_SET
+   if ( RESULT < zCURSOR_SET )
+   { 
+      //:// TraceLineS( "CheckAddKeyordEntry adding SpecialSectionAttrBlock: ", szKeywordName )
+      //:SET CURSOR LAST mSPLDefBlock.LLD_SpecialSectionAttrBlock
+      RESULT = SetCursorLastEntity( mSPLDefBlock, "LLD_SpecialSectionAttrBlock", "" );
+      //:CREATE ENTITY mSPLDefBlock.LLD_SpecialSectionAttrBlock
+      RESULT = CreateEntity( mSPLDefBlock, "LLD_SpecialSectionAttrBlock", zPOS_AFTER );
+      //:mSPLDefBlock.LLD_SpecialSectionAttrBlock.Name = szKeywordName
+      SetAttributeFromString( mSPLDefBlock, "LLD_SpecialSectionAttrBlock", "Name", szKeywordName );
+      //:ELSE
+   } 
+   else
+   { 
+   } 
+
+   //:// TraceLineS( "CheckAddKeyordEntry located SpecialSectionAttrBlock: ", szKeywordName )
    //:END
    return( 0 );
 // END
@@ -18097,12 +18177,12 @@ omSPLDef_SetUpKeywordEntries( View     mSPLDefBlock,
    if ( ZeidonStringCompare( szSectionType, 1, 0, "Marketing", 1, 0, 51 ) == 0 )
    { 
       //:// Marketing
-      //:CheckAddKeywordEntry( mSPLDefBlock, "Title" )
-      omSPLDef_CheckAddKeywordEntry( mSPLDefBlock, "Title" );
-      //:CheckAddKeywordEntry( mSPLDefBlock, "Text" )
-      omSPLDef_CheckAddKeywordEntry( mSPLDefBlock, "Text" );
-      //:CheckAddKeywordEntry( mSPLDefBlock, "Column List" )
-      omSPLDef_CheckAddKeywordEntry( mSPLDefBlock, "Column List" );
+      //:CheckAddKeywordEntry( mSPLDefBlock, szSectionType, "Title" )
+      omSPLDef_CheckAddKeywordEntry( mSPLDefBlock, szSectionType, "Title" );
+      //:CheckAddKeywordEntry( mSPLDefBlock, szSectionType, "Text" )
+      omSPLDef_CheckAddKeywordEntry( mSPLDefBlock, szSectionType, "Text" );
+      //:CheckAddKeywordEntry( mSPLDefBlock, szSectionType, "Column List" )
+      omSPLDef_CheckAddKeywordEntry( mSPLDefBlock, szSectionType, "Column List" );
       //:ELSE
    } 
    else
@@ -18111,12 +18191,12 @@ omSPLDef_SetUpKeywordEntries( View     mSPLDefBlock,
       if ( ZeidonStringCompare( szSectionType, 1, 0, "HumanHazard", 1, 0, 51 ) == 0 )
       { 
          //:// Human Hazard
-         //:CheckAddKeywordEntry( mSPLDefBlock, "Hazards Warning" )
-         omSPLDef_CheckAddKeywordEntry( mSPLDefBlock, "Hazards Warning" );
-         //:CheckAddKeywordEntry( mSPLDefBlock, "Hazards Signal Word" )
-         omSPLDef_CheckAddKeywordEntry( mSPLDefBlock, "Hazards Signal Word" );
-         //:CheckAddKeywordEntry( mSPLDefBlock, "Hazards Precautionary" )
-         omSPLDef_CheckAddKeywordEntry( mSPLDefBlock, "Hazards Precautionary" );
+         //:CheckAddKeywordEntry( mSPLDefBlock, szSectionType, "Hazards Warning" )
+         omSPLDef_CheckAddKeywordEntry( mSPLDefBlock, szSectionType, "Hazards Warning" );
+         //:CheckAddKeywordEntry( mSPLDefBlock, szSectionType, "Hazards Signal Word" )
+         omSPLDef_CheckAddKeywordEntry( mSPLDefBlock, szSectionType, "Hazards Signal Word" );
+         //:CheckAddKeywordEntry( mSPLDefBlock, szSectionType, "Hazards Precautionary" )
+         omSPLDef_CheckAddKeywordEntry( mSPLDefBlock, szSectionType, "Hazards Precautionary" );
          //:ELSE
       } 
       else
@@ -18125,14 +18205,14 @@ omSPLDef_SetUpKeywordEntries( View     mSPLDefBlock,
          if ( ZeidonStringCompare( szSectionType, 1, 0, "Ingredients", 1, 0, 51 ) == 0 )
          { 
             //:// Ingredients
-            //:CheckAddKeywordEntry( mSPLDefBlock, "Title" )
-            omSPLDef_CheckAddKeywordEntry( mSPLDefBlock, "Title" );
-            //:CheckAddKeywordEntry( mSPLDefBlock, "Ingredients Items" )
-            omSPLDef_CheckAddKeywordEntry( mSPLDefBlock, "Ingredients Items" );
-            //:CheckAddKeywordEntry( mSPLDefBlock, "Ingredients Inert" )
-            omSPLDef_CheckAddKeywordEntry( mSPLDefBlock, "Ingredients Inert" );
-            //:CheckAddKeywordEntry( mSPLDefBlock, "Ingredients Total" )
-            omSPLDef_CheckAddKeywordEntry( mSPLDefBlock, "Ingredients Total" );
+            //:CheckAddKeywordEntry( mSPLDefBlock, szSectionType, "Title" )
+            omSPLDef_CheckAddKeywordEntry( mSPLDefBlock, szSectionType, "Title" );
+            //:CheckAddKeywordEntry( mSPLDefBlock, szSectionType, "Ingredients Items" )
+            omSPLDef_CheckAddKeywordEntry( mSPLDefBlock, szSectionType, "Ingredients Items" );
+            //:CheckAddKeywordEntry( mSPLDefBlock, szSectionType, "Ingredients Inert" )
+            omSPLDef_CheckAddKeywordEntry( mSPLDefBlock, szSectionType, "Ingredients Inert" );
+            //:CheckAddKeywordEntry( mSPLDefBlock, szSectionType, "Ingredients Total" )
+            omSPLDef_CheckAddKeywordEntry( mSPLDefBlock, szSectionType, "Ingredients Total" );
             //:ELSE
          } 
          else
@@ -18141,21 +18221,21 @@ omSPLDef_SetUpKeywordEntries( View     mSPLDefBlock,
             if ( ZeidonStringCompare( szSectionType, 1, 0, "DirectionsForUse", 1, 0, 51 ) == 0 || ZeidonStringCompare( szSectionType, 1, 0, "FirstAid", 1, 0, 51 ) == 0 )
             { 
                //:// Directions For Use or First Aid
-               //:CheckAddKeywordEntry( mSPLDefBlock, "Header" )
-               omSPLDef_CheckAddKeywordEntry( mSPLDefBlock, "Header" );
-               //:CheckAddKeywordEntry( mSPLDefBlock, "Title" )
-               omSPLDef_CheckAddKeywordEntry( mSPLDefBlock, "Title" );
-               //:CheckAddKeywordEntry( mSPLDefBlock, "Text" )
-               omSPLDef_CheckAddKeywordEntry( mSPLDefBlock, "Text" );
+               //:CheckAddKeywordEntry( mSPLDefBlock, szSectionType, "Header" )
+               omSPLDef_CheckAddKeywordEntry( mSPLDefBlock, szSectionType, "Header" );
+               //:CheckAddKeywordEntry( mSPLDefBlock, szSectionType, "Title" )
+               omSPLDef_CheckAddKeywordEntry( mSPLDefBlock, szSectionType, "Title" );
+               //:CheckAddKeywordEntry( mSPLDefBlock, szSectionType, "Text" )
+               omSPLDef_CheckAddKeywordEntry( mSPLDefBlock, szSectionType, "Text" );
                //:ELSE
             } 
             else
             { 
                //:// Default
-               //:CheckAddKeywordEntry( mSPLDefBlock, "Title" )
-               omSPLDef_CheckAddKeywordEntry( mSPLDefBlock, "Title" );
-               //:CheckAddKeywordEntry( mSPLDefBlock, "Text" )
-               omSPLDef_CheckAddKeywordEntry( mSPLDefBlock, "Text" );
+               //:CheckAddKeywordEntry( mSPLDefBlock, szSectionType, "Title" )
+               omSPLDef_CheckAddKeywordEntry( mSPLDefBlock, szSectionType, "Title" );
+               //:CheckAddKeywordEntry( mSPLDefBlock, szSectionType, "Text" )
+               omSPLDef_CheckAddKeywordEntry( mSPLDefBlock, szSectionType, "Text" );
             } 
 
             //:END

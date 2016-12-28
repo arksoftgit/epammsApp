@@ -1,39 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="7">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="11">
         <file>
             <url>web/js/labeldesigner.js</url>
             <bookmark id="4">
                 <name/>
-                <line>2350</line>
+                <line>2353</line>
                 <key/>
             </bookmark>
             <bookmark id="2">
                 <name/>
-                <line>2391</line>
+                <line>2394</line>
                 <key/>
             </bookmark>
             <bookmark id="3">
                 <name/>
-                <line>2535</line>
+                <line>2538</line>
                 <key/>
             </bookmark>
             <bookmark id="6">
                 <name/>
-                <line>2847</line>
+                <line>2850</line>
+                <key/>
+            </bookmark>
+            <bookmark id="8">
+                <name/>
+                <line>2885</line>
                 <key/>
             </bookmark>
             <bookmark id="5">
                 <name/>
-                <line>4175</line>
+                <line>4180</line>
                 <key/>
             </bookmark>
         </file>
         <file>
             <url>src/java/com/ajax/GraphicalLabelDesignerServlet.java</url>
+            <bookmark id="11">
+                <name/>
+                <line>799</line>
+                <key/>
+            </bookmark>
             <bookmark id="7">
                 <name/>
-                <line>1505</line>
+                <line>1561</line>
+                <key/>
+            </bookmark>
+            <bookmark id="9">
+                <name/>
+                <line>1572</line>
                 <key/>
             </bookmark>
         </file>

@@ -650,6 +650,7 @@ FormatContinueBlock( VIEW mSPLDefPDF BASED ON LOD mSPLDef,
    STRING ( 32 )     szSeparatorCharacters
    STRING ( 2 )      szTitleFormat
    STRING ( 2 )      szStatementFormat
+   STRING ( 50 )     szSectionType
    STRING ( 50 )     szLeadingBlanks
    STRING ( 50 )     szDisplayStatementName
    STRING ( 50 )     szDisplaySectionName
@@ -720,7 +721,6 @@ FormatContinueBlock( VIEW mSPLDefPDF BASED ON LOD mSPLDef,
       szStatementTitle = mSPLDef.ContinuationStatement.Title
       IF szTitleFormat = "PU"
 
-
       ELSE
 
          IF szStatementFormat = "SN"   // SN - Separate Numbered Paragraph
@@ -735,6 +735,8 @@ FormatContinueBlock( VIEW mSPLDefPDF BASED ON LOD mSPLDef,
          END
       END
 
+      szSectionType = mSPLDefPDF.LLD_Block.LLD_SectionType
+
       // Combine Title in text if specified.
       IF szStatementTitle != "" AND szTitleFormat = "CT"
          // Title is combined with Text.
@@ -744,7 +746,7 @@ FormatContinueBlock( VIEW mSPLDefPDF BASED ON LOD mSPLDef,
          // Format Title, if it exists.
          IF szStatementTitle != ""
             szWriteBuffer = szLeadingBlanks + "   <fo:block "
-            AddFormatToSpecialText( mSPLDefPDF, "Title", szWriteBuffer )
+            AddFormatToSpecialText( mSPLDefPDF, szSectionType, "Title", szWriteBuffer )
             WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
 
             //szWriteBuffer = szLeadingBlanks + "      " + szStatementTitle
@@ -758,9 +760,10 @@ FormatContinueBlock( VIEW mSPLDefPDF BASED ON LOD mSPLDef,
             mSPLDef.DisplayStatement.Title = szStatementTitle
          END
       END
+
       // Format Statement Text
       szWriteBuffer = szLeadingBlanks + "   <fo:block "
-      AddFormatToSpecialText( mSPLDefPDF, "Text", szWriteBuffer )
+      AddFormatToSpecialText( mSPLDefPDF, szSectionType, "Text", szWriteBuffer )
       WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
 
       //szWriteBuffer = szLeadingBlanks + "      " + szStatementText
@@ -890,7 +893,6 @@ ProcessPDF_Blocks( VIEW mSPLDef    BASED ON LOD mSPLDef,
 
          ELSE
             // Determine what kind of LLD_Block it is and go to process accordingly.
-
             szSectionType = mSPLDefPDF.LLD_Block.LLD_SectionType
 
             // IMAGE
@@ -932,7 +934,7 @@ ProcessPDF_Blocks( VIEW mSPLDef    BASED ON LOD mSPLDef,
 
                // Set up Directions For Use Title.
                szWriteBuffer = szLeadingBlanks + "   <fo:block "
-               AddFormatToSpecialText( mSPLDefPDF, "Header", szWriteBuffer )
+               AddFormatToSpecialText( mSPLDefPDF, szSectionType, "Header", szWriteBuffer )
                WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
 
                szWriteBuffer = szLeadingBlanks + "      " + szTitle
@@ -944,6 +946,7 @@ ProcessPDF_Blocks( VIEW mSPLDef    BASED ON LOD mSPLDef,
                // For Directions For Use, we will process all Sections.
                FOR EACH mSPLDef.SPLD_DirectionsForUseSection
                   GeneratePDF_DFU( mSPLDef, mSPLDefPDF, lFile,
+                                   szSectionType,
                                    "SPLD_DirectionsForUseSection",
                                    "SPLD_DirectionsForUseStatement",
                                    "SPLD_DirectionsUsage",
@@ -965,7 +968,7 @@ ProcessPDF_Blocks( VIEW mSPLDef    BASED ON LOD mSPLDef,
                // SET CURSOR FIRST mSPLDefPDF.LLD_SpecialSectionAttribute WHERE mSPLDefPDF.LLD_SpecialSectionAttribute.Name = "Header"
                // IF RESULT >= zCURSOR_SET
                //    szWriteBuffer = szLeadingBlanks + "   <fo:block "
-               //    AddFormatToSpecialText( mSPLDefPDF, "Header", szWriteBuffer )
+               //    AddFormatToSpecialText( mSPLDefPDF, szSectionType, "Header", szWriteBuffer )
                //    WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
                //    szWriteBuffer = szLeadingBlanks + "      Marketing"
                //    WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
@@ -977,6 +980,7 @@ ProcessPDF_Blocks( VIEW mSPLDef    BASED ON LOD mSPLDef,
                   // any marketing statement preceding it.
                   IF mSPLDef.SPLD_MarketingStatement.Text != ""
                      GeneratePDF_DFU( mSPLDef, mSPLDefPDF, lFile,
+                                      szSectionType,
                                       "SPLD_MarketingSection",
                                       "SPLD_MarketingStatement",
                                       "SPLD_MarketingUsage",
@@ -1015,6 +1019,7 @@ ProcessPDF_Blocks( VIEW mSPLDef    BASED ON LOD mSPLDef,
 
             // TraceLineS( "Major Block: ", szSectionType )
                GeneratePDF_DFU( mSPLDef, mSPLDefPDF, lFile,
+                                szSectionType,
                                 "SPLD_StorageDisposalSection",
                                 "SPLD_StorageDisposalStatement",
                                 "",
@@ -1030,6 +1035,7 @@ ProcessPDF_Blocks( VIEW mSPLDef    BASED ON LOD mSPLDef,
             // TraceLineS( "Major Block: ", szSectionType )
                SET CURSOR FIRST mSPLDef.SPLD_GeneralSection WHERE mSPLDef.SPLD_GeneralSection.SectionType = "P"  // SectionType of P is Precautionary
                GeneratePDF_DFU( mSPLDef, mSPLDefPDF, lFile,
+                                szSectionType,
                                 "SPLD_GeneralSection",
                                 "SPLD_GeneralStatement",
                                 "",
@@ -1053,7 +1059,7 @@ ProcessPDF_Blocks( VIEW mSPLDef    BASED ON LOD mSPLDef,
 
                // Set up First Aid Title.
                szWriteBuffer = szLeadingBlanks + "   <fo:block "
-               AddFormatToSpecialText( mSPLDefPDF, "Header", szWriteBuffer )
+               AddFormatToSpecialText( mSPLDefPDF, szSectionType, "Header", szWriteBuffer )
                WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
 
                szWriteBuffer = szLeadingBlanks + "      " + szTitle
@@ -1064,6 +1070,7 @@ ProcessPDF_Blocks( VIEW mSPLDef    BASED ON LOD mSPLDef,
 
                SET CURSOR FIRST mSPLDef.SPLD_GeneralSection WHERE mSPLDef.SPLD_GeneralSection.SectionType = "F"  // SectionType of F is First Aid
                GeneratePDF_DFU( mSPLDef, mSPLDefPDF, lFile,
+                                szSectionType,
                                 "SPLD_GeneralSection",
                                 "SPLD_GeneralStatement",
                                 "",
@@ -1079,6 +1086,7 @@ ProcessPDF_Blocks( VIEW mSPLDef    BASED ON LOD mSPLDef,
             // TraceLineS( "Major Block: ", szSectionType )
                SET CURSOR FIRST mSPLDef.SPLD_GeneralSection WHERE mSPLDef.SPLD_GeneralSection.SectionType = "E"  // SectionType of E is Environmental Hazard
                GeneratePDF_DFU( mSPLDef, mSPLDefPDF, lFile,
+                                szSectionType,
                                 "SPLD_GeneralSection",
                                 "SPLD_GeneralStatement",
                                 "",
@@ -1093,7 +1101,7 @@ ProcessPDF_Blocks( VIEW mSPLDef    BASED ON LOD mSPLDef,
 
                // Generate the single Hazards entry.
             // TraceLineS( "Major Block: ", szSectionType )
-               GeneratePDF_Hazards( mSPLDef, mSPLDefPDF, lFile, szLeadingBlanks, szWriteBuffer )
+               GeneratePDF_Hazards( mSPLDef, mSPLDefPDF, lFile, szSectionType, szLeadingBlanks, szWriteBuffer )
 
             ELSE
 
@@ -1102,7 +1110,7 @@ ProcessPDF_Blocks( VIEW mSPLDef    BASED ON LOD mSPLDef,
 
                // Go to generate Active Ingredients.
             // TraceLineS( "Major Block: ", szSectionType )
-               GeneratePDF_Ingred( mSPLDef, mSPLDefPDF, lFile, szLeadingBlanks, szWriteBuffer )
+               GeneratePDF_Ingred( mSPLDef, mSPLDefPDF, lFile, szSectionType, szLeadingBlanks, szWriteBuffer )
 
             ELSE
 
@@ -1111,7 +1119,7 @@ ProcessPDF_Blocks( VIEW mSPLDef    BASED ON LOD mSPLDef,
 
                // Go to generate Net Contents.
             // TraceLineS( "Major Block: ", szSectionType )
-               GeneratePDF_Content( mSPLDef, mSPLDefPDF, lFile, szLeadingBlanks, szWriteBuffer )
+               GeneratePDF_Content( mSPLDef, mSPLDefPDF, lFile, szSectionType, szLeadingBlanks, szWriteBuffer )
 
             ELSE
 
@@ -1120,7 +1128,7 @@ ProcessPDF_Blocks( VIEW mSPLDef    BASED ON LOD mSPLDef,
 
                // Go to generate EPA Reg and Est Numbers.
             // TraceLineS( "Major Block: ", szSectionType )
-               GeneratePDF_EPA_Reg( mSPLDef, mSPLDefPDF, lFile, szLeadingBlanks, szWriteBuffer )
+               GeneratePDF_EPA_Reg( mSPLDef, mSPLDefPDF, lFile, szSectionType, szLeadingBlanks, szWriteBuffer )
 
             ELSE
 
@@ -1130,7 +1138,7 @@ ProcessPDF_Blocks( VIEW mSPLDef    BASED ON LOD mSPLDef,
             // TraceLineS( "Major Block: ", szSectionType )
                szBlockBlanks = szLeadingBlanks + "   "
                szWriteBuffer = szBlockBlanks + "<fo:block "
-               AddFormatToSpecialText( mSPLDefPDF, "Text", szWriteBuffer )
+               AddFormatToSpecialText( mSPLDefPDF, szSectionType, "Text", szWriteBuffer )
                WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
 
                szWriteBuffer = szBlockBlanks + "   <xsl:apply-templates select=^SubregPhysicalLabelDef/ProductName^/>"
@@ -1193,11 +1201,11 @@ ProcessPDF_Blocks( VIEW mSPLDef    BASED ON LOD mSPLDef,
                IF mSPLDefPDF.LLD_Block.LLD_ColumnListType = "C3"
                   // Request is 3 Column Claim List.
                // TraceLineS( "Marketing 3-Column List ", "" )
-                  GeneratePDF_ClmList( mSPLDef, mSPLDefPDF, lFile, szLeadingBlanks, szWriteBuffer, 3 )
+                  GeneratePDF_ClmList( mSPLDef, mSPLDefPDF, lFile, szSectionType, szLeadingBlanks, szWriteBuffer, 3 )
                ELSE
                   // Default is 2 Column Claim List.
                // TraceLineS( "Marketing 2-Column List ", "" )
-                  GeneratePDF_ClmList( mSPLDef, mSPLDefPDF, lFile, szLeadingBlanks, szWriteBuffer, 2 )
+                  GeneratePDF_ClmList( mSPLDef, mSPLDefPDF, lFile, szSectionType, szLeadingBlanks, szWriteBuffer, 2 )
                END
             END
          END
@@ -1560,6 +1568,7 @@ END
 /////////////////////////////////////////////////////////////////////////////
 TRANSFORMATION OPERATION
 AddFormatToSpecialText( VIEW mSPLDef BASED ON LOD mSPLDef,
+                        STRING ( 50 )    szSectionType,
                         STRING ( 32 )    SpecialTextTitle,
                         STRING ( 32000 ) szWriteBuffer )
 
@@ -1582,124 +1591,133 @@ AddFormatToSpecialText( VIEW mSPLDef BASED ON LOD mSPLDef,
    STRING ( 32 )  szLetterSpace
    STRING ( 200 ) szMsg
    STRING ( 256 ) szImg
+   SHORT nRC
 
    // Add any Special Attribute Block formatting variables to the text statement passed in szWriteBuffer.
    // Skip if the Special Text Attribute hasn't been defined.
 
    NAME VIEW mSPLDef "mSPLDefHazards"
 // TraceLineS( "$$$$ Special Text for: ", SpecialTextTitle )
-   SET CURSOR FIRST mSPLDef.LLD_SpecialSectionAttribute WHERE mSPLDef.LLD_SpecialSectionAttribute.Name = SpecialTextTitle
+   SET CURSOR FIRST mSPLDef.LLD_SpecialSectionAttribute WHERE mSPLDef.LLD_SpecialSectionAttribute.Name = szSectionType
    IF RESULT >= zCURSOR_SET
+      SET CURSOR FIRST mSPLDef.LLD_SpecialSectionAttrBlock WHERE mSPLDef.LLD_SpecialSectionAttrBlock.Name  = SpecialTextTitle
+      IF RESULT >= zCURSOR_SET
 
-      IF mSPLDef.SpecialAttributeTextColor EXISTS
-         szColor = mSPLDef.SpecialAttributeTextColor.RGB
-         IF szColor != ""
-            szWriteBuffer = szWriteBuffer + " color=^#" + szColor + "^"
+         IF mSPLDef.SpecialAttributeTextColor EXISTS
+            szColor = mSPLDef.SpecialAttributeTextColor.RGB
+            IF szColor != ""
+               szWriteBuffer = szWriteBuffer + " color=^#" + szColor + "^"
+            END
          END
-      END
 
-      szFontFamily = mSPLDef.LLD_SpecialSectionAttrBlock.FontFamily
-   // TraceLineS( "3Font Family set to: ", szFontFamily )
-      IF szFontFamily != ""
-         szWriteBuffer = szWriteBuffer + " font-family=^" + szFontFamily + "^"
-      END
+         szFontFamily = mSPLDef.LLD_SpecialSectionAttrBlock.FontFamily
+      // TraceLineS( "3Font Family set to: ", szFontFamily )
+         IF szFontFamily != ""
+            szWriteBuffer = szWriteBuffer + " font-family=^" + szFontFamily + "^"
+         END
 
-      szFontSize = mSPLDef.LLD_SpecialSectionAttrBlock.FontSize
-      IF szFontSize != ""
-      // TraceLineS( "3Font Size set to: ", szFontSize )
-         szWriteBuffer = szWriteBuffer + " font-size=^" + szFontSize + "pt^"
-      END
+         szFontSize = mSPLDef.LLD_SpecialSectionAttrBlock.FontSize
+         IF szFontSize != ""
+         // TraceLineS( "3Font Size set to: ", szFontSize )
+            szWriteBuffer = szWriteBuffer + " font-size=^" + szFontSize + "pt^"
+         END
 
-      szFontWeight = mSPLDef.LLD_SpecialSectionAttrBlock.FontWeight
-      IF szFontWeight != ""
-         szWriteBuffer = szWriteBuffer + " font-weight=^" + szFontWeight + "^"
-      END
+         szFontWeight = mSPLDef.LLD_SpecialSectionAttrBlock.FontWeight
+         IF szFontWeight != ""
+            szWriteBuffer = szWriteBuffer + " font-weight=^" + szFontWeight + "^"
+         END
 
-      szLineHeight = mSPLDef.LLD_SpecialSectionAttrBlock.TextLineHeight
-      IF szLineHeight != ""
-         szWriteBuffer = szWriteBuffer + " line-height=^" + szLineHeight + "^"
-      END
+         szLineHeight = mSPLDef.LLD_SpecialSectionAttrBlock.TextLineHeight
+         IF szLineHeight != ""
+            szWriteBuffer = szWriteBuffer + " line-height=^" + szLineHeight + "^"
+         END
 
-      szLetterSpace = mSPLDef.LLD_SpecialSectionAttrBlock.TextLetterSpace
-      IF szLetterSpace != ""
-         szWriteBuffer = szWriteBuffer + " letter-spacing=^" + szLetterSpace + "px^"
-      END
+         szLetterSpace = mSPLDef.LLD_SpecialSectionAttrBlock.TextLetterSpace
+         IF szLetterSpace != ""
+            szWriteBuffer = szWriteBuffer + " letter-spacing=^" + szLetterSpace + "px^"
+         END
 
-      szMBP = mSPLDef.LLD_SpecialSectionAttrBlock.Margin
-      IF szMBP = ""
-         szTopMBP = mSPLDef.LLD_SpecialSectionAttrBlock.MarginTop
-         IF szTopMBP != ""
-            szWriteBuffer = szWriteBuffer + " margin-top=^" + szTopMBP + "in^"
+         szMBP = mSPLDef.LLD_SpecialSectionAttrBlock.Margin
+         IF szMBP = ""
+            szTopMBP = mSPLDef.LLD_SpecialSectionAttrBlock.MarginTop
+            IF szTopMBP != ""
+               szWriteBuffer = szWriteBuffer + " margin-top=^" + szTopMBP + "in^"
+            END
+            szBottomMBP = mSPLDef.LLD_SpecialSectionAttrBlock.MarginBottom
+            IF szBottomMBP != ""
+               szWriteBuffer = szWriteBuffer + " margin-bottom=^" + szBottomMBP + "in^"
+            END
+            szLeftMBP = mSPLDef.LLD_SpecialSectionAttrBlock.MarginLeft
+            IF szLeftMBP != ""
+               szWriteBuffer = szWriteBuffer + " margin-left=^" + szLeftMBP + "in^"
+            END
+            szRightMBP = mSPLDef.LLD_SpecialSectionAttrBlock.MarginRight
+            IF szRightMBP != ""
+               szWriteBuffer = szWriteBuffer + " margin-right=^" + szRightMBP + "in^"
+            END
+         ELSE
+            szWriteBuffer = szWriteBuffer + " margin=^" + szMBP + "in^"
          END
-         szBottomMBP = mSPLDef.LLD_SpecialSectionAttrBlock.MarginBottom
-         IF szBottomMBP != ""
-            szWriteBuffer = szWriteBuffer + " margin-bottom=^" + szBottomMBP + "in^"
-         END
-         szLeftMBP = mSPLDef.LLD_SpecialSectionAttrBlock.MarginLeft
-         IF szLeftMBP != ""
-            szWriteBuffer = szWriteBuffer + " margin-left=^" + szLeftMBP + "in^"
-         END
-         szRightMBP = mSPLDef.LLD_SpecialSectionAttrBlock.MarginRight
-         IF szRightMBP != ""
-            szWriteBuffer = szWriteBuffer + " margin-right=^" + szRightMBP + "in^"
-         END
-      ELSE
-         szWriteBuffer = szWriteBuffer + " margin=^" + szMBP + "in^"
-      END
 
-      szMBP = mSPLDef.LLD_SpecialSectionAttrBlock.Border
-      IF szMBP = ""
-         szTopMBP = mSPLDef.LLD_SpecialSectionAttrBlock.BorderTop
-         IF szTopMBP != ""
-            szWriteBuffer = szWriteBuffer + " border-top=^" + szTopMBP + "in^"
+         szMBP = mSPLDef.LLD_SpecialSectionAttrBlock.Border
+         IF szMBP = ""
+            szTopMBP = mSPLDef.LLD_SpecialSectionAttrBlock.BorderTop
+            IF szTopMBP != ""
+               szWriteBuffer = szWriteBuffer + " border-top=^" + szTopMBP + "in^"
+            END
+            szBottomMBP = mSPLDef.LLD_SpecialSectionAttrBlock.BorderBottom
+            IF szBottomMBP != ""
+               szWriteBuffer = szWriteBuffer + " border-bottom=^" + szBottomMBP + "in^"
+            END
+            szLeftMBP = mSPLDef.LLD_SpecialSectionAttrBlock.BorderLeft
+            IF szLeftMBP != ""
+               szWriteBuffer = szWriteBuffer + " border-left=^" + szLeftMBP + "in^"
+            END
+            szRightMBP = mSPLDef.LLD_SpecialSectionAttrBlock.BorderRight
+            IF szRightMBP != ""
+               szWriteBuffer = szWriteBuffer + " border-right=^" + szRightMBP + "in^"
+            END
+         ELSE
+            szWriteBuffer = szWriteBuffer + " border=^" + szMBP + "in^"
          END
-         szBottomMBP = mSPLDef.LLD_SpecialSectionAttrBlock.BorderBottom
-         IF szBottomMBP != ""
-            szWriteBuffer = szWriteBuffer + " border-bottom=^" + szBottomMBP + "in^"
-         END
-         szLeftMBP = mSPLDef.LLD_SpecialSectionAttrBlock.BorderLeft
-         IF szLeftMBP != ""
-            szWriteBuffer = szWriteBuffer + " border-left=^" + szLeftMBP + "in^"
-         END
-         szRightMBP = mSPLDef.LLD_SpecialSectionAttrBlock.BorderRight
-         IF szRightMBP != ""
-            szWriteBuffer = szWriteBuffer + " border-right=^" + szRightMBP + "in^"
-         END
-      ELSE
-         szWriteBuffer = szWriteBuffer + " border=^" + szMBP + "in^"
-      END
 
-      szMBP = mSPLDef.LLD_SpecialSectionAttrBlock.Padding
-      IF szMBP = ""
-         szTopMBP = mSPLDef.LLD_SpecialSectionAttrBlock.PaddingTop
-         IF szTopMBP != ""
-            szWriteBuffer = szWriteBuffer + " padding-top=^" + szTopMBP + "in^"
+         szMBP = mSPLDef.LLD_SpecialSectionAttrBlock.Padding
+         IF szMBP = ""
+            szTopMBP = mSPLDef.LLD_SpecialSectionAttrBlock.PaddingTop
+            IF szTopMBP != ""
+               szWriteBuffer = szWriteBuffer + " padding-top=^" + szTopMBP + "in^"
+            END
+            szBottomMBP = mSPLDef.LLD_SpecialSectionAttrBlock.PaddingBottom
+            IF szBottomMBP != ""
+               szWriteBuffer = szWriteBuffer + " padding-bottom=^" + szBottomMBP + "in^"
+            END
+            szLeftMBP = mSPLDef.LLD_SpecialSectionAttrBlock.PaddingLeft
+            IF szLeftMBP != ""
+               szWriteBuffer = szWriteBuffer + " padding-left=^" + szLeftMBP + "in^"
+            END
+            szRightMBP = mSPLDef.LLD_SpecialSectionAttrBlock.PaddingRight
+            IF szRightMBP != ""
+               szWriteBuffer = szWriteBuffer + " padding-right=^" + szRightMBP + "in^"
+            END
+         ELSE
+            szWriteBuffer = szWriteBuffer + " padding=^" + szMBP + "in^"
          END
-         szBottomMBP = mSPLDef.LLD_SpecialSectionAttrBlock.PaddingBottom
-         IF szBottomMBP != ""
-            szWriteBuffer = szWriteBuffer + " padding-bottom=^" + szBottomMBP + "in^"
-         END
-         szLeftMBP = mSPLDef.LLD_SpecialSectionAttrBlock.PaddingLeft
-         IF szLeftMBP != ""
-            szWriteBuffer = szWriteBuffer + " padding-left=^" + szLeftMBP + "in^"
-         END
-         szRightMBP = mSPLDef.LLD_SpecialSectionAttrBlock.PaddingRight
+
          IF szRightMBP != ""
             szWriteBuffer = szWriteBuffer + " padding-right=^" + szRightMBP + "in^"
          END
+
+         szTextAlign = mSPLDef.LLD_SpecialSectionAttrBlock.TextAlign
+         IF szTextAlign != ""
+            szWriteBuffer = szWriteBuffer + " text-align=^" + szTextAlign + "^"
+         END
       ELSE
-         szWriteBuffer = szWriteBuffer + " padding=^" + szMBP + "in^"
+         // If the block has a Bottom Margin, use it for each block below.
+         szBottomMBP = mSPLDef.LLD_Block.MarginBottom
+         IF szBottomMBP != ""
+            szWriteBuffer = szWriteBuffer + " margin-bottom=^" + szBottomMBP + "in^"
+         END
       END
-
-      IF szRightMBP != ""
-         szWriteBuffer = szWriteBuffer + " padding-right=^" + szRightMBP + "in^"
-      END
-
-      szTextAlign = mSPLDef.LLD_SpecialSectionAttrBlock.TextAlign
-      IF szTextAlign != ""
-         szWriteBuffer = szWriteBuffer + " text-align=^" + szTextAlign + "^"
-      END
-
    ELSE
       // If the block has a Bottom Margin, use it for each block below.
       szBottomMBP = mSPLDef.LLD_Block.MarginBottom
@@ -1723,6 +1741,7 @@ TRANSFORMATION OPERATION
 GeneratePDF_DFU( VIEW mSPLDef    BASED ON LOD mSPLDef,
                  VIEW mSPLDefPDF BASED ON LOD mSPLDef,
                  INTEGER lFile,
+                 STRING ( 50 ) szSectionType,
                  STRING ( 32 ) szSPLD_SectionName,
                  STRING ( 32 ) szStatementName,
                  STRING ( 32 ) szUsageTypeEntity,
@@ -1738,7 +1757,7 @@ GeneratePDF_DFU( VIEW mSPLDef    BASED ON LOD mSPLDef,
    STRING ( 256 )    szTemporaryTitle
    STRING ( 50 )     szSectionTitle
    STRING ( 50 )     szSectionName
-   STRING ( 50 )     szSectionType
+// STRING ( 50 )     szSectionType
    STRING ( 32 )     szSeparatorCharacters
    STRING ( 32 )     szNumberedText
    STRING ( 32 )     szLineHeight
@@ -1772,7 +1791,7 @@ GeneratePDF_DFU( VIEW mSPLDef    BASED ON LOD mSPLDef,
    // If this is block for a Marketing Section, we need to position on the corresponding Market Section by Name.
    // Otherwise, we are positioned on the correct Section already.
    // We also need to initialize the XML for the Marketing Section.
-   szSectionType = mSPLDefPDF.LLD_Block.LLD_SectionType
+// szSectionType = mSPLDefPDF.LLD_Block.LLD_SectionType
    IF szSectionType = "Marketing"
       szSectionName = mSPLDefPDF.LLD_Block.Name
       SetCursorFirstEntityByString( mSPLDef, szSPLD_SectionName, "Name", szSectionName, "" )
@@ -1798,7 +1817,7 @@ GeneratePDF_DFU( VIEW mSPLDef    BASED ON LOD mSPLDef,
    GetStringFromAttribute( szSectionTitle, mSPLDef, szSPLD_SectionName, "Title" )
    IF szSectionTitle != ""
       szWriteBuffer = szLeadingBlanks + "<fo:block "
-      AddFormatToSpecialText( mSPLDefPDF, "Title", szWriteBuffer )
+      AddFormatToSpecialText( mSPLDefPDF, szSectionType, "Title", szWriteBuffer )
       WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
 
       szWriteBuffer = szLeadingBlanks + "      <xsl:apply-templates select=^SubregPhysicalLabelDef/" + szDisplaySectionName + "/Title^/>"
@@ -1860,7 +1879,7 @@ GeneratePDF_DFU( VIEW mSPLDef    BASED ON LOD mSPLDef,
          // Format Title, if it exists and is requested.
          IF szStatementTitle != "" AND szStatementTitlePosition = "SL"
             szWriteBuffer = szLeadingBlanks + "   <fo:block "
-            AddFormatToSpecialText( mSPLDefPDF, "Title", szWriteBuffer )
+            AddFormatToSpecialText( mSPLDefPDF, szSectionType, "Title", szWriteBuffer )
             WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
 
             //szWriteBuffer = szLeadingBlanks + "      " + szStatementTitle
@@ -1902,7 +1921,7 @@ GeneratePDF_DFU( VIEW mSPLDef    BASED ON LOD mSPLDef,
          // Process regular Statement Text.
 
          szWriteBuffer = szLeadingBlanks + "<fo:block "
-         AddFormatToSpecialText( mSPLDefPDF, "Text", szWriteBuffer )
+         AddFormatToSpecialText( mSPLDefPDF, szSectionType, "Text", szWriteBuffer )
          WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
 
          //szWriteBuffer = szLeadingBlanks + "      " + szStatementText
@@ -1924,7 +1943,7 @@ GeneratePDF_DFU( VIEW mSPLDef    BASED ON LOD mSPLDef,
             // If this is a partial text continuation, format the first part of the text on the current Block.
             IF szContinuationFlag = "M"
                szWriteBuffer = szLeadingBlanks + "   <fo:block "
-               AddFormatToSpecialText( mSPLDefPDF, "Text", szWriteBuffer )
+               AddFormatToSpecialText( mSPLDefPDF, szSectionType, "Text", szWriteBuffer )
                WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
 
                szWriteBuffer = szLeadingBlanks + "      <xsl:apply-templates select=^SubregPhysicalLabelDef/"
@@ -2109,6 +2128,7 @@ TRANSFORMATION OPERATION
 GeneratePDF_ClmList( VIEW mSPLDef    BASED ON LOD mSPLDef,
                      VIEW mSPLDefPDF BASED ON LOD mSPLDef,
                      INTEGER lFile,
+                     STRING ( 50 )    szSectionType,
                      STRING ( 256 )   szPassedBlanks,
                      STRING ( 32000 ) szWriteBuffer,
                      INTEGER NumberColumns )
@@ -2362,7 +2382,7 @@ GeneratePDF_ClmList( VIEW mSPLDef    BASED ON LOD mSPLDef,
    WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
 
    szWriteBuffer = szLeadingBlanks + "      <fo:block "
-   AddFormatToSpecialText( mSPLDefPDF, "Column List", szWriteBuffer )
+   AddFormatToSpecialText( mSPLDefPDF, szSectionType, "Column List", szWriteBuffer )
    WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
 
    szWriteBuffer = szLeadingBlanks + "         <xsl:apply-templates select=^Name^/>"
@@ -2384,7 +2404,7 @@ GeneratePDF_ClmList( VIEW mSPLDef    BASED ON LOD mSPLDef,
    WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
 
    szWriteBuffer = szLeadingBlanks + "      <fo:block "
-   AddFormatToSpecialText( mSPLDefPDF, "Column List", szWriteBuffer )
+   AddFormatToSpecialText( mSPLDefPDF, szSectionType, "Column List", szWriteBuffer )
    WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
 
    szWriteBuffer = szLeadingBlanks + "         <xsl:apply-templates select=^Name^/>"
@@ -2407,7 +2427,7 @@ GeneratePDF_ClmList( VIEW mSPLDef    BASED ON LOD mSPLDef,
       WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
 
       szWriteBuffer = szLeadingBlanks + "      <fo:block "
-      AddFormatToSpecialText( mSPLDefPDF, "Column List", szWriteBuffer )
+      AddFormatToSpecialText( mSPLDefPDF, szSectionType, "Column List", szWriteBuffer )
       WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
 
       szWriteBuffer = szLeadingBlanks + "         <xsl:apply-templates select=^Name^/>"
@@ -2483,6 +2503,7 @@ TRANSFORMATION OPERATION
 GeneratePDF_Ingred( VIEW mSPLDef    BASED ON LOD mSPLDef,
                     VIEW mSPLDefPDF BASED ON LOD mSPLDef,
                     INTEGER lFile,
+                    STRING ( 50 )    szSectionType,
                     STRING ( 50 )    szPassedBlanks,
                     STRING ( 32000 ) szWriteBuffer )
 
@@ -2500,7 +2521,7 @@ GeneratePDF_Ingred( VIEW mSPLDef    BASED ON LOD mSPLDef,
 
    // Title
    szWriteBuffer = szLeadingBlanks + "<fo:block "
-   AddFormatToSpecialText( mSPLDefPDF, "Title", szWriteBuffer )
+   AddFormatToSpecialText( mSPLDefPDF, szSectionType, "Title", szWriteBuffer )
    WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
 
    szWriteBuffer = szLeadingBlanks + "   <xsl:apply-templates select=^SubregPhysicalLabelDef/SPLD_IngredientsSection/ActiveTitle^/>"
@@ -2515,7 +2536,7 @@ GeneratePDF_Ingred( VIEW mSPLDef    BASED ON LOD mSPLDef,
    WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
 
    szWriteBuffer = szLeadingBlanks + "   <fo:block text-align-last=^justify^ "
-   AddFormatToSpecialText( mSPLDefPDF, "Ingredients Items", szWriteBuffer )
+   AddFormatToSpecialText( mSPLDefPDF, szSectionType, "Ingredients Items", szWriteBuffer )
    WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
 
    szWriteBuffer = szLeadingBlanks + "      <xsl:apply-templates select=^ChemicalName^/>"
@@ -2536,7 +2557,7 @@ GeneratePDF_Ingred( VIEW mSPLDef    BASED ON LOD mSPLDef,
    // Inert Percent
    IF mSPLDef.SPLD_IngredientsSection.GeneralInactivePercent > 0
       szWriteBuffer = szLeadingBlanks + "<fo:block text-align-last=^justify^ "
-      AddFormatToSpecialText( mSPLDefPDF, "Ingredients Inert", szWriteBuffer )
+      AddFormatToSpecialText( mSPLDefPDF, szSectionType, "Ingredients Inert", szWriteBuffer )
       WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
 
       szWriteBuffer = szLeadingBlanks + "   <xsl:apply-templates select=^SubregPhysicalLabelDef/SPLD_IngredientsSection/InertTitle^/>"
@@ -2554,7 +2575,7 @@ GeneratePDF_Ingred( VIEW mSPLDef    BASED ON LOD mSPLDef,
 
    // Total
    szWriteBuffer = szLeadingBlanks + "<fo:block text-align-last=^justify^ "
-   AddFormatToSpecialText( mSPLDefPDF, "Ingredients Total", szWriteBuffer )
+   AddFormatToSpecialText( mSPLDefPDF, szSectionType, "Ingredients Total", szWriteBuffer )
    WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
 
    szWriteBuffer = szLeadingBlanks + "   TOTAL"
@@ -2582,6 +2603,7 @@ TRANSFORMATION OPERATION
 GeneratePDF_Content( VIEW mSPLDef    BASED ON LOD mSPLDef,
                      VIEW mSPLDefPDF BASED ON LOD mSPLDef,
                      INTEGER lFile,
+                     STRING ( 50 )    szSectionType,
                      STRING ( 50 )    szPassedBlanks,
                      STRING ( 32000 ) szWriteBuffer )
 
@@ -2597,7 +2619,7 @@ GeneratePDF_Content( VIEW mSPLDef    BASED ON LOD mSPLDef,
    END
 
    szWriteBuffer = szLeadingBlanks + "<fo:block "
-   AddFormatToSpecialText( mSPLDefPDF, "Text", szWriteBuffer )
+   AddFormatToSpecialText( mSPLDefPDF, szSectionType, "Text", szWriteBuffer )
    WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
 
    szWriteBuffer = szLeadingBlanks + "   " + szNetContentsText
@@ -2615,6 +2637,7 @@ TRANSFORMATION OPERATION
 GeneratePDF_EPA_Reg( VIEW mSPLDef    BASED ON LOD mSPLDef,
                      VIEW mSPLDefPDF BASED ON LOD mSPLDef,
                      INTEGER lFile,
+                     STRING ( 50 )    szSectionType,
                      STRING ( 50 )    szPassedBlanks,
                      STRING ( 32000 ) szWriteBuffer )
 
@@ -2637,7 +2660,7 @@ GeneratePDF_EPA_Reg( VIEW mSPLDef    BASED ON LOD mSPLDef,
    szStatementText = "EPA Reg. No. " + szEPA_RegNbr + "   EPA Est. No. " + szEPA_EstNbr
 
    szWriteBuffer = szLeadingBlanks + "<fo:block "
-   AddFormatToSpecialText( mSPLDefPDF, "Text", szWriteBuffer )
+   AddFormatToSpecialText( mSPLDefPDF, szSectionType, "Text", szWriteBuffer )
    WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
 
    szWriteBuffer = szLeadingBlanks + "   " + szStatementText
@@ -2658,6 +2681,7 @@ TRANSFORMATION OPERATION
 GeneratePDF_Hazards( VIEW mSPLDef    BASED ON LOD mSPLDef,
                      VIEW mSPLDefPDF BASED ON LOD mSPLDef,
                      INTEGER lFile,
+                     STRING ( 50 )    szSectionType,
                      STRING ( 50 )    szPassedBlanks,
                      STRING ( 32000 ) szWriteBuffer )
 
@@ -2676,7 +2700,7 @@ GeneratePDF_Hazards( VIEW mSPLDef    BASED ON LOD mSPLDef,
 
    // Child Hazard Warning
    szWriteBuffer = szLeadingBlanks + "<fo:block "
-   AddFormatToSpecialText( mSPLDefPDF, "Hazards Warning", szWriteBuffer )
+   AddFormatToSpecialText( mSPLDefPDF, szSectionType, "Hazards Warning", szWriteBuffer )
    WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
 
    szWriteBuffer = szLeadingBlanks + "   " + szChildHazardWarning
@@ -2687,7 +2711,7 @@ GeneratePDF_Hazards( VIEW mSPLDef    BASED ON LOD mSPLDef,
 
    // EPA Signal Word
    szWriteBuffer = szLeadingBlanks + "<fo:block "
-   AddFormatToSpecialText( mSPLDefPDF, "Hazards Signal Word", szWriteBuffer )
+   AddFormatToSpecialText( mSPLDefPDF, szSectionType, "Hazards Signal Word", szWriteBuffer )
    WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
 
    szWriteBuffer = szLeadingBlanks + "   " + szEPA_SignalWord
@@ -2698,7 +2722,7 @@ GeneratePDF_Hazards( VIEW mSPLDef    BASED ON LOD mSPLDef,
 
    // Precautionary Statement
    szWriteBuffer = szLeadingBlanks + "<fo:block "
-   AddFormatToSpecialText( mSPLDefPDF, "Hazards Precautionary", szWriteBuffer )
+   AddFormatToSpecialText( mSPLDefPDF, szSectionType, "Hazards Precautionary", szWriteBuffer )
    WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
 
    szWriteBuffer = szLeadingBlanks + "   " + szStatementText
@@ -4421,75 +4445,6 @@ GenerateAttribute( VIEW mSPLDef BASED ON LOD mSPLDef,
 
 END
 
-/*
-/////////////////////////////////////////////////////////////////////////////
-//  No longer used ... incorrectly deletes everything up front.  Replaced by SetUpKeywordEntries.
-//
-//  OPERATION: SetUpFormattingSelect
-//
-TRANSFORMATION OPERATION
-SetUpFormattingSelect( VIEW mSPLDefPanel BASED ON LOD mSPLDef,
-                       STRING ( 50 ) szSectionType )
-   // Initialize the SpecialFormattingSelectEntry entries depending on Section Type.
-   FOR EACH mSPLDefPanel.SpecialFormattingSelectEntry
-      DELETE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry NONE
-   END
-   IF szSectionType = "HumanHazard"
-      // Human Hazard
-      CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry
-      mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Hazards Warning"
-      CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry
-      mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Hazards Signal Word"
-      CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry
-      mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Hazards Precautionary"
-   ELSE
-   IF szSectionType = "Ingredients"
-      // Ingredients
-      CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry
-      mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Title"
-      CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry
-      mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Ingredients Items"
-      CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry
-      mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Ingredients Inert"
-      CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry
-      mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Ingredients Total"
-   ELSE
-   IF szSectionType = "DirectionsForUse" OR szSectionType = "FirstAid"
-      // Directions For Use or First Aid
-      CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry
-      mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Header"
-      CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry
-      mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Title"
-      CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry
-      mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Text"
-   ELSE
-   IF szSectionType = "Marketing"
-      // Marketing
-      CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry
-      mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Title"
-      CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry
-      mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Text"
-      CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry
-      mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Column List"
-   ELSE
-      // Default
-      IF szSectionType != "NetContents" AND szSectionType != "EPA_RegAndEstNbr"
-         CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry
-         mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Title"
-      END
-      CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry
-      mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Text"
-   END
-   END
-   END
-   END
-   CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry
-   mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Block"
-   SET CURSOR FIRST mSPLDefPanel.SpecialFormattingSelectEntry
-END
-/////////////////////////////////////////////////////////////////////////////
-*/
-
 /////////////////////////////////////////////////////////////////////////////
 //
 //  OPERATION: ComputeTopPosRecursive
@@ -4625,7 +4580,6 @@ ObjectConstraints( VIEW mSPLDef BASED ON LOD mSPLDef,
 
 END
 
-
 /////////////////////////////////////////////////////////////////////////////
 //
 //  OPERATION: CheckAddKeywordEntry
@@ -4633,22 +4587,101 @@ END
 /////////////////////////////////////////////////////////////////////////////
 TRANSFORMATION OPERATION
 CheckAddKeywordEntry( VIEW mSPLDefBlock BASED ON LOD mSPLDef,
+                      STRING ( 50 ) szSectionType,
                       STRING ( 50 ) szKeywordName )
 
-   // Make sure that the entry for the Keyword passed in exists.
-   SET CURSOR FIRST mSPLDefBlock.LLD_SpecialSectionAttribute WHERE mSPLDefBlock.LLD_SpecialSectionAttribute.Name = szKeywordName
+   // Make sure that the entry for the SectionType passed in exists.
+   SET CURSOR FIRST mSPLDefBlock.LLD_SpecialSectionAttribute WHERE mSPLDefBlock.LLD_SpecialSectionAttribute.Name = szSectionType
    IF RESULT < zCURSOR_SET
-   // TraceLineS( "CheckAddKeyordEntry adding: ", szKeywordName )
+   // TraceLineS( "CheckAddKeyordEntry adding SpecialSectionAttribute: ", szSectionType )
       SET CURSOR LAST mSPLDefBlock.LLD_SpecialSectionAttribute
       CREATE ENTITY mSPLDefBlock.LLD_SpecialSectionAttribute
-      mSPLDefBlock.LLD_SpecialSectionAttribute.Name = szKeywordName
-      CREATE ENTITY mSPLDefBlock.LLD_SpecialSectionAttrBlock
+      mSPLDefBlock.LLD_SpecialSectionAttribute.Name = szSectionType
    ELSE
-   // TraceLineS( "CheckAddKeyordEntry located: ", szKeywordName )
+   // TraceLineS( "CheckAddKeyordEntry located SpecialSectionAttribute: ", szSectionType )
+   END   
+
+   // Make sure that the entry for the Keyword passed in exists.
+   SET CURSOR FIRST mSPLDefBlock.LLD_SpecialSectionAttrBlock WHERE mSPLDefBlock.LLD_SpecialSectionAttrBlock.Name = szKeywordName
+   IF RESULT < zCURSOR_SET
+   // TraceLineS( "CheckAddKeyordEntry adding SpecialSectionAttrBlock: ", szKeywordName )
+      SET CURSOR LAST mSPLDefBlock.LLD_SpecialSectionAttrBlock
+      CREATE ENTITY mSPLDefBlock.LLD_SpecialSectionAttrBlock
+      mSPLDefBlock.LLD_SpecialSectionAttrBlock.Name = szKeywordName
+   ELSE
+   // TraceLineS( "CheckAddKeyordEntry located SpecialSectionAttrBlock: ", szKeywordName )
    END
 
 END
 
+/*
+/////////////////////////////////////////////////////////////////////////////
+//  No longer used ... incorrectly deletes everything up front.  Replaced by SetUpKeywordEntries.
+//
+//  OPERATION: SetUpFormattingSelect
+//
+TRANSFORMATION OPERATION
+SetUpFormattingSelect( VIEW mSPLDefPanel BASED ON LOD mSPLDef,
+                       STRING ( 50 ) szSectionType )
+   // Initialize the SpecialFormattingSelectEntry entries depending on Section Type.
+   FOR EACH mSPLDefPanel.SpecialFormattingSelectEntry
+      DELETE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry NONE
+   END
+   IF szSectionType = "HumanHazard"
+      // Human Hazard
+      CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry
+      mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Hazards Warning"
+      CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry
+      mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Hazards Signal Word"
+      CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry
+      mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Hazards Precautionary"
+   ELSE
+   IF szSectionType = "Ingredients"
+      // Ingredients
+      CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry
+      mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Title"
+      CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry
+      mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Ingredients Items"
+      CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry
+      mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Ingredients Inert"
+      CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry
+      mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Ingredients Total"
+   ELSE
+   IF szSectionType = "DirectionsForUse" OR szSectionType = "FirstAid"
+      // Directions For Use or First Aid
+      CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry
+      mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Header"
+      CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry
+      mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Title"
+      CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry
+      mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Text"
+   ELSE
+   IF szSectionType = "Marketing"
+      // Marketing
+      CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry
+      mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Title"
+      CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry
+      mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Text"
+      CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry
+      mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Column List"
+   ELSE
+      // Default
+      IF szSectionType != "NetContents" AND szSectionType != "EPA_RegAndEstNbr"
+         CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry
+         mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Title"
+      END
+      CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry
+      mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Text"
+   END
+   END
+   END
+   END
+   CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry
+   mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Block"
+   SET CURSOR FIRST mSPLDefPanel.SpecialFormattingSelectEntry
+END
+/////////////////////////////////////////////////////////////////////////////
+*/
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -4662,32 +4695,32 @@ SetUpKeywordEntries( VIEW mSPLDefBlock BASED ON LOD mSPLDef,
    // Make sure that the appropriate Keyword entries are set up for a given Section/Block Type.
    IF szSectionType = "Marketing"
       // Marketing
-      CheckAddKeywordEntry( mSPLDefBlock, "Title" )
-      CheckAddKeywordEntry( mSPLDefBlock, "Text" )
-      CheckAddKeywordEntry( mSPLDefBlock, "Column List" )
+      CheckAddKeywordEntry( mSPLDefBlock, szSectionType, "Title" )
+      CheckAddKeywordEntry( mSPLDefBlock, szSectionType, "Text" )
+      CheckAddKeywordEntry( mSPLDefBlock, szSectionType, "Column List" )
    ELSE
    IF szSectionType = "HumanHazard"
       // Human Hazard
-      CheckAddKeywordEntry( mSPLDefBlock, "Hazards Warning" )
-      CheckAddKeywordEntry( mSPLDefBlock, "Hazards Signal Word" )
-      CheckAddKeywordEntry( mSPLDefBlock, "Hazards Precautionary" )
+      CheckAddKeywordEntry( mSPLDefBlock, szSectionType, "Hazards Warning" )
+      CheckAddKeywordEntry( mSPLDefBlock, szSectionType, "Hazards Signal Word" )
+      CheckAddKeywordEntry( mSPLDefBlock, szSectionType, "Hazards Precautionary" )
    ELSE
    IF szSectionType = "Ingredients"
       // Ingredients
-      CheckAddKeywordEntry( mSPLDefBlock, "Title" )
-      CheckAddKeywordEntry( mSPLDefBlock, "Ingredients Items" )
-      CheckAddKeywordEntry( mSPLDefBlock, "Ingredients Inert" )
-      CheckAddKeywordEntry( mSPLDefBlock, "Ingredients Total" )
+      CheckAddKeywordEntry( mSPLDefBlock, szSectionType, "Title" )
+      CheckAddKeywordEntry( mSPLDefBlock, szSectionType, "Ingredients Items" )
+      CheckAddKeywordEntry( mSPLDefBlock, szSectionType, "Ingredients Inert" )
+      CheckAddKeywordEntry( mSPLDefBlock, szSectionType, "Ingredients Total" )
    ELSE
    IF szSectionType = "DirectionsForUse" OR szSectionType = "FirstAid"
       // Directions For Use or First Aid
-      CheckAddKeywordEntry( mSPLDefBlock, "Header" )
-      CheckAddKeywordEntry( mSPLDefBlock, "Title" )
-      CheckAddKeywordEntry( mSPLDefBlock, "Text" )
+      CheckAddKeywordEntry( mSPLDefBlock, szSectionType, "Header" )
+      CheckAddKeywordEntry( mSPLDefBlock, szSectionType, "Title" )
+      CheckAddKeywordEntry( mSPLDefBlock, szSectionType, "Text" )
    ELSE
       // Default
-      CheckAddKeywordEntry( mSPLDefBlock, "Title" )
-      CheckAddKeywordEntry( mSPLDefBlock, "Text" )
+      CheckAddKeywordEntry( mSPLDefBlock, szSectionType, "Title" )
+      CheckAddKeywordEntry( mSPLDefBlock, szSectionType, "Text" )
    END
    END
    END

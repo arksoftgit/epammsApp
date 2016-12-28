@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSPLDSPLD_BlockDefinitionUpdate   Generate Timestamp: 20160620105929489 --%>
+<%-- wSPLDSPLD_BlockDefinitionUpdate --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -92,14 +92,14 @@ public int DoInputMapping( HttpServletRequest request,
       // grids on the same window with the same view we do not mess up the 
       // entity positions. 
       vGridTmp = mSPLDefBlock.newView( );
-      csrRC = vGridTmp.cursor( "LLD_SpecialSectionAttribute" ).setFirst(  );
+      csrRC = vGridTmp.cursor( "LLD_SpecialSectionAttrBlock" ).setFirst(  );
       while ( csrRC.isSet() )
       {
-         lEntityKey = vGridTmp.cursor( "LLD_SpecialSectionAttribute" ).getEntityKey( );
+         lEntityKey = vGridTmp.cursor( "LLD_SpecialSectionAttrBlock" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
          iTableRowCnt++;
 
-         csrRC = vGridTmp.cursor( "LLD_SpecialSectionAttribute" ).setNextContinue( );
+         csrRC = vGridTmp.cursor( "LLD_SpecialSectionAttrBlock" ).setNextContinue( );
       }
 
       vGridTmp.drop( );
@@ -524,14 +524,14 @@ if ( strActionToProcess != null )
       if ( VmlOperation.isValid( mSPLDefBlock ) )
       {
          lEKey = java.lang.Long.parseLong( strEntityKey );
-         csrRC = mSPLDefBlock.cursor( "LLD_SpecialSectionAttribute" ).setByEntityKey( lEKey );
+         csrRC = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).setByEntityKey( lEKey );
          if ( !csrRC.isSet() )
          {
             boolean bFound = false;
-            csrRCk = mSPLDefBlock.cursor( "LLD_SpecialSectionAttribute" ).setFirst( );
+            csrRCk = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).setFirst( );
             while ( csrRCk.isSet() && !bFound )
             {
-               lEKey = mSPLDefBlock.cursor( "LLD_SpecialSectionAttribute" ).getEntityKey( );
+               lEKey = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getEntityKey( );
                strKey = Long.toString( lEKey );
                if ( StringUtils.equals( strKey, strEntityKey ) )
                {
@@ -539,7 +539,7 @@ if ( strActionToProcess != null )
                   bFound = true;
                }
                else
-                  csrRCk = mSPLDefBlock.cursor( "LLD_SpecialSectionAttribute" ).setNextContinue( );
+                  csrRCk = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).setNextContinue( );
             } // Grid
          }
       }
@@ -985,6 +985,7 @@ else
    <input name="zFocusCtrl" id="zFocusCtrl" type="hidden" value="<%=strFocusCtrl%>">
    <input name="zOpenFile" id="zOpenFile" type="hidden" value="<%=strOpenFile%>">
    <input name="zDateFormat" id="zDateFormat" type="hidden" value="<%=strDateFormat%>">
+   <input name="zDateSequence" id="zDateSequence" type="hidden" value="MDY">
    <input name="zLoginName" id="zLoginName" type="hidden" value="<%=strLoginName%>">
    <input name="zKeyRole" id="zKeyRole" type="hidden" value="<%=strKeyRole%>">
    <input name="zOpenPopupWindow" id="zOpenPopupWindow" type="hidden" value="<%=strOpenPopupWindow%>">
@@ -1178,19 +1179,19 @@ try
       
       View vSpecialSectionAttributes;
       vSpecialSectionAttributes = mSPLDefBlock.newView( );
-      csrRC2 = vSpecialSectionAttributes.cursor( "LLD_SpecialSectionAttribute" ).setFirst(  );
+      csrRC2 = vSpecialSectionAttributes.cursor( "LLD_SpecialSectionAttrBlock" ).setFirst(  );
       while ( csrRC2.isSet() )
       {
          strOdd = (iTableRowCnt % 2) != 0 ? " class='odd'" : "";
          iTableRowCnt++;
 
-         lEntityKey = vSpecialSectionAttributes.cursor( "LLD_SpecialSectionAttribute" ).getEntityKey( );
+         lEntityKey = vSpecialSectionAttributes.cursor( "LLD_SpecialSectionAttrBlock" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
          strFormattingKeyword = "";
-         nRC = vSpecialSectionAttributes.cursor( "LLD_SpecialSectionAttribute" ).checkExistenceOfEntity( ).toInt();
+         nRC = vSpecialSectionAttributes.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strFormattingKeyword = vSpecialSectionAttributes.cursor( "LLD_SpecialSectionAttribute" ).getAttribute( "Name" ).getString( "" );
+            strFormattingKeyword = vSpecialSectionAttributes.cursor( "LLD_SpecialSectionAttrBlock" ).getAttribute( "Name" ).getString( "" );
 
             if ( strFormattingKeyword == null )
                strFormattingKeyword = "";
@@ -1264,7 +1265,7 @@ try
 </tr>
 
 <%
-         csrRC2 = vSpecialSectionAttributes.cursor( "LLD_SpecialSectionAttribute" ).setNextContinue( );
+         csrRC2 = vSpecialSectionAttributes.cursor( "LLD_SpecialSectionAttrBlock" ).setNextContinue( );
       }
       vSpecialSectionAttributes.drop( );
    }
