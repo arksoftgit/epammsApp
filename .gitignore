@@ -9,6 +9,7 @@
 /web/js/mwheelIntent.js
 /web/test?.html
 *.dks*
+*.hld
 ad.*
 good.json
 
