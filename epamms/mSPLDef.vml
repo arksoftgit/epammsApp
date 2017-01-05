@@ -1080,7 +1080,7 @@ ProcessPDF_Blocks( VIEW mSPLDef    BASED ON LOD mSPLDef,
 
             ELSE
 
-            // PHYSICAL HAZARD
+            // ENVIRONMENTAL/PHYSICAL HAZARD
             IF szSectionType = "EnvironmentalHazard"
 
             // TraceLineS( "Major Block: ", szSectionType )
@@ -1600,7 +1600,7 @@ AddFormatToSpecialText( VIEW mSPLDef BASED ON LOD mSPLDef,
 // TraceLineS( "$$$$ Special Text for: ", SpecialTextTitle )
    SET CURSOR FIRST mSPLDef.LLD_SpecialSectionAttribute WHERE mSPLDef.LLD_SpecialSectionAttribute.Name = szSectionType
    IF RESULT >= zCURSOR_SET
-      SET CURSOR FIRST mSPLDef.LLD_SpecialSectionAttrBlock WHERE mSPLDef.LLD_SpecialSectionAttrBlock.Name  = SpecialTextTitle
+      SET CURSOR FIRST mSPLDef.LLD_SpecialSectionAttrBlock WHERE mSPLDef.LLD_SpecialSectionAttrBlock.Name = SpecialTextTitle
       IF RESULT >= zCURSOR_SET
 
          IF mSPLDef.SpecialAttributeTextColor EXISTS
@@ -1898,7 +1898,7 @@ GeneratePDF_DFU( VIEW mSPLDef    BASED ON LOD mSPLDef,
       //    {{Usage}}
       //    {{Claim}}
       //    {{Surface}}
-      //    {{Location}}
+      //    {{Location}}  {{Area Of Use}}
       //    {{Application Type}}
       //    {{Product Name}}
       //    {{Master Product}}
@@ -1981,17 +1981,16 @@ GeneratePDF_DFU( VIEW mSPLDef    BASED ON LOD mSPLDef,
                szDebugMsg = szDebugMsg + "   Continuation: " + mSPLDefContinue.LLD_Block.ContinuationBlockFlag
                TraceLineS( "Checking Continuation To Block ID: ",  szDebugMsg )
 
-
-               //IF mSPLDefPDF.LLD_Block.ContinuationBlockFlag = "Y"
+            // IF mSPLDefPDF.LLD_Block.ContinuationBlockFlag = "Y"
                   szBlockContinuationType = "B"
-               //ELSE
-                  //szBlockContinuationType = "P"
-                  //SET CURSOR PREVIOUS mSPLDefPDF.LLD_Block     // We need to undo the set cursor next above.
-               //END
-               ELSE
-                  szBlockContinuationType = "P"
+            // ELSE
+               // szBlockContinuationType = "P"
                // SET CURSOR PREVIOUS mSPLDefPDF.LLD_Block     // We need to undo the set cursor next above.
-               END
+            // END
+            ELSE
+               szBlockContinuationType = "P"
+            // SET CURSOR PREVIOUS mSPLDefPDF.LLD_Block     // We need to undo the set cursor next above.
+            END
             DropView( mSPLDefContinue )
 
             // Create Panel view that will hold Continuation statements and position on next Panel, if this
@@ -2051,7 +2050,7 @@ GeneratePDF_DFU( VIEW mSPLDef    BASED ON LOD mSPLDef,
 //        IssueError( mSPLDef,0,0, "stop" )
 //     END
 //     TraceLineS( "##########********** szStatementName: ", szStatementName )
-               //SET CURSOR PREVIOUS mSPLDefPDF.LLD_Block     // We need to undo the set cursor next above.
+              // SET CURSOR PREVIOUS mSPLDefPDF.LLD_Block     // We need to undo the set cursor next above.
             ELSE
 
                // Panel continuation
@@ -2109,7 +2108,7 @@ GeneratePDF_DFU( VIEW mSPLDef    BASED ON LOD mSPLDef,
                WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )*/
             END
 
-            //DropView( mSPLDefPanelLevel )
+         // DropView( mSPLDefPanelLevel )
          END
 
       END
@@ -2225,7 +2224,10 @@ GeneratePDF_ClmList( VIEW mSPLDef    BASED ON LOD mSPLDef,
             IF mSPLDef.SPLD_UsageFootnoteUsed EXISTS
                SET CURSOR FIRST mSPLDef.SPLD_UsageFootnote
                           WHERE mSPLDef.SPLD_UsageFootnote.ID = mSPLDef.SPLD_UsageFootnoteUsed.ID
-               szFootnoteNumber = mSPLDef.SPLD_UsageFootnote.wFootNoteRelativeNumber
+               szFootnoteNumber = mSPLDef.SPLD_UsageFootnote.Symbol
+               IF szFootnoteNumber = ""
+                  szFootnoteNumber = mSPLDef.SPLD_UsageFootnote.wFootNoteRelativeNumber
+               END
                szCombinedName = szCombinedName + "<sup> " + szFootnoteNumber + "</sup>"
             END
             mSPLDef.SPLD_MarketingUsage.wNameWithFootnoteDesignator = szCombinedName
@@ -2305,7 +2307,10 @@ GeneratePDF_ClmList( VIEW mSPLDef    BASED ON LOD mSPLDef,
 
    // Add any Footnote entries to the last Column.
    FOR EACH mSPLDef.SPLD_UsageFootnote
-      szFootnoteNumber = mSPLDef.SPLD_UsageFootnote.wFootNoteRelativeNumber
+      szFootnoteNumber = mSPLDef.SPLD_UsageFootnote.Symbol
+      IF szFootnoteNumber = ""
+         szFootnoteNumber = mSPLDef.SPLD_UsageFootnote.wFootNoteRelativeNumber
+      END
       szFootnoteText = "<sup> " + szFootnoteNumber + "</sup>" + mSPLDef.SPLD_UsageFootnote.Text
       IF CurrentColumnNumber = 1
          CREATE ENTITY mSPLDef.DisplayUsageColumn1
@@ -2446,7 +2451,7 @@ GeneratePDF_ClmList( VIEW mSPLDef    BASED ON LOD mSPLDef,
    DropObjectInstance( mSPLDef2 )
 
    // Build the work object containing each Claim under the appropriate Classification.
-   // Type: C - Claim;  S - Surface;  T - Application Type;  U - Location.
+   // Type: C - Claim;  S - Surface;  T - Application Type;  U - Location (Area of Use).
    // ClaimsClassification: Bacteria; Protozoa; Viruses; Fungi.
    // First delete any existing entries.
    FOR EACH mSPLDef.SPLDI_ClaimsClassification
@@ -2521,7 +2526,7 @@ GeneratePDF_Ingred( VIEW mSPLDef    BASED ON LOD mSPLDef,
 
    // Title
    szWriteBuffer = szLeadingBlanks + "<fo:block "
-   AddFormatToSpecialText( mSPLDefPDF, szSectionType, "Title", szWriteBuffer )
+   AddFormatToSpecialText( mSPLDefPDF, szSectionType, "Ingredients Title", szWriteBuffer )
    WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
 
    szWriteBuffer = szLeadingBlanks + "   <xsl:apply-templates select=^SubregPhysicalLabelDef/SPLD_IngredientsSection/ActiveTitle^/>"
@@ -3187,7 +3192,7 @@ BuildUsageEntriesFrSLC( VIEW mSPLDef   BASED ON LOD mSPLDef,
       DELETE ENTITY mSPLDef.SPLD_UsageType NONE
    END
 
-   // Build Usage Entries (Surface, Application Type, Location, Organism Claim)
+   // Build Usage Entries (Surface, Application Type, Location (Area of Use), Organism Claim)
    FOR EACH SrcSLC.S_UsageType WITHIN SrcSLC.SubregLabelContent
       CREATE ENTITY mSPLDef.SPLD_UsageType
       SetMatchingAttributesByName( mSPLDef, "SPLD_UsageType", SrcSLC, "S_UsageType", zSET_NULL )
@@ -3260,7 +3265,7 @@ BuildSPLD_FromSPLD( VIEW NewSPLD    BASED ON LOD mSPLDef,
                     VIEW SourceSPLD BASED ON LOD mSPLDef,
                     VIEW ParentSLC  BASED ON LOD mSubLC )
 
-   // Build an new SPLD from a previous SPLD.
+   // Build a new SPLD from a previous SPLD.
    // Most of the component construction is the same as that in BuildSPLD_FromSLC. Only the LLD subobject is different.
    // So, reuse the BuildSPLD_FromSLC operation, then reuse the code for building an LLD section.
 
@@ -3976,11 +3981,12 @@ dSelectedHazardStmt( VIEW mSPLDef BASED ON LOD mSPLDef,
                      STRING ( 32 ) InternalAttribStructure,
                      SHORT GetOrSetFlag )
 
-   STRING ( 256 ) szString
-   STRING ( 256 ) szReplaceString
-   STRING ( 256 ) szLocation
+   STRING ( 2048 ) szString
+   STRING ( 2048 ) szReplaceString
+   STRING ( 2048 ) szLocation
    SHORT nPosStart
    SHORT nPosEnd
+   SHORT nLth
 
    CASE GetOrSetFlag
    OF   zDERIVED_GET:
@@ -3990,23 +3996,39 @@ dSelectedHazardStmt( VIEW mSPLDef BASED ON LOD mSPLDef,
       // Build Precautionary Statement by inserting correct Location within general statement, so that a
       // statement such as, "See {{Precautionary Panel Location}}" for Precautionary Statements and First Aid." becomes
       // "See side panel for Precautionary Statements and First Aid."
-      IF mSPLDef.SPLD_HumanHazardSection  EXISTS
+      IF mSPLDef.SPLD_HumanHazardSection EXISTS
          szString = mSPLDef.SPLD_HumanHazardSection.PrecautionaryStatement
-         nPosStart  = zSearchSubString( szString, "{{Precautionary Panel Location}}", "f", 0 )
+         nPosStart = zSearchSubString( szString, "[{{Precautionary Panel Location}}]", "f", 0 )
          IF nPosStart >= 0
-            nPosEnd = nPosStart + 32 // length of "{{Precautionary Panel Location}}"
+            nPosEnd = nPosStart + 34 // length of "[{{Precautionary Panel Location}}]"
+         ELSE
+            nPosStart = zSearchSubString( szString, "{{Precautionary Panel Location}}", "f", 0 )
+            IF nPosStart >= 0
+               nPosEnd = nPosStart + 32 // length of "{{Precautionary Panel Location}}"
+            END
+         END
+         IF nPosStart >= 0
             szLocation = mSPLDef.SPLD_HumanHazardSection.PanelLoc
-            zSearchAndReplace( szLocation, 256, ",", " ")
+            zSearchAndReplace( szLocation, 2048, ",", " ")
             zReplaceSubString( szString, nPosStart, nPosEnd, szLocation )
          END
 
-         nPosStart  = zSearchSubString( szString, "{{Precautionary Label Location}}", "f", 0 )
+         nPosStart = zSearchSubString( szString, "[{{Precautionary Label Location}}]", "f", 0 )
          IF nPosStart >= 0
-            nPosEnd = nPosStart + 32 // length of "{{Precautionary Label Location}}"
+            nPosEnd = nPosStart + 34 // length of "[{{Precautionary Label Location}}]"
+         ELSE
+            nPosStart = zSearchSubString( szString, "{{Precautionary Label Location}}", "f", 0 )
+            IF nPosStart >= 0
+               nPosEnd = nPosStart + 32 // length of "{{Precautionary Label Location}}"
+            END
+         END
+         IF nPosStart >= 0
             szLocation = mSPLDef.SPLD_HumanHazardSection.LabelLoc
-            zSearchAndReplace( szLocation, 256, ",", " ")
+            zSearchAndReplace( szLocation, 2048, ",", " ")
             zReplaceSubString( szString, nPosStart, nPosEnd, szLocation )
          END
+
+         RemovePairedCharactersFromString( szString, "{", "}", "" )
       END
    // TraceLineS( "Hazard Statement: ", szString )
       // Store the calculated value in the object.
@@ -4639,7 +4661,7 @@ SetUpFormattingSelect( VIEW mSPLDefPanel BASED ON LOD mSPLDef,
    IF szSectionType = "Ingredients"
       // Ingredients
       CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry
-      mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Title"
+      mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Ingredients Title"
       CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry
       mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Ingredients Items"
       CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry
@@ -4707,7 +4729,7 @@ SetUpKeywordEntries( VIEW mSPLDefBlock BASED ON LOD mSPLDef,
    ELSE
    IF szSectionType = "Ingredients"
       // Ingredients
-      CheckAddKeywordEntry( mSPLDefBlock, szSectionType, "Title" )
+      CheckAddKeywordEntry( mSPLDefBlock, szSectionType, "Ingredients Title" )
       CheckAddKeywordEntry( mSPLDefBlock, szSectionType, "Ingredients Items" )
       CheckAddKeywordEntry( mSPLDefBlock, szSectionType, "Ingredients Inert" )
       CheckAddKeywordEntry( mSPLDefBlock, szSectionType, "Ingredients Total" )

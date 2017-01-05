@@ -1,4 +1,4 @@
-//start mSPLDef 2016.12.23 13:37:55
+//start mSPLDef 2017.01.04 20:05:12
 zOPER_EXPORT zSHORT OPERATION
 omSPLDef_GeneratePDF_Label( zVIEW vViewToInstance0 );
 
@@ -177,7 +177,7 @@ zOPER_EXPORT zSHORT OPERATION
 omTempl_BuildDisplayStructure( zVIEW vViewToInstance0 );
 
 //end
-//start mMasLC 2016.12.22 15:17:35
+//start mMasLC 2016.12.28 10:38:02
 zOPER_EXPORT zSHORT OPERATION
 omMasLC_MergeUsageSelectEnts( zVIEW vViewToInstance0 );
 
@@ -228,7 +228,7 @@ zOPER_EXPORT zSHORT OPERATION
 omMasLC_BuildNonGroupEntries( zVIEW vViewToInstance0 );
 
 //end
-//start mSubLC 2016.12.22 15:17:37
+//start mSubLC 2016.12.28 10:38:09
 zOPER_EXPORT zSHORT OPERATION
 omSubLC_BuildNewSLC_Version( zVIEW vViewToInstance0,
                              zVIEW vOriginalSLC1,
@@ -272,7 +272,7 @@ omSubLC_ObjectConstraints( zVIEW vViewtoInstance0,
                            zSHORT nState2 );
 
 //end
-//start DOMAINT 2016.12.22 15:17:32
+//start DOMAINT 2016.12.28 10:37:59
 zOPER_EXPORT zSHORT OPERATION
 oDOMAINT_ActivateDomainList( zPVIEW vViewToInstance0,
                              zVIEW vViewToWindow1 );
@@ -293,7 +293,7 @@ oDOMAINT_PreloadSystemDomains( zVIEW vViewToInstance0,
                                zPCHAR pchInstallApp2 );
 
 //end
-//start lMLCATgt 2016.12.22 15:17:32
+//start lMLCATgt 2016.12.28 10:38:00
 zOPER_EXPORT zSHORT OPERATION
 olMLCATgt_BuildDifferencesMLC( zVIEW vViewToInstance0,
                                zVIEW vSourceCompareObject1 );
@@ -312,13 +312,19 @@ zOPER_EXPORT zSHORT OPERATION
 olMLCATgt_DeleteEmptyTitles( zVIEW vViewToInstance0 );
 
 //end
-//start ZGlobal1 2016.11.10 20:55:50
+//start ZGlobal1 2016.12.28 13:16:30
 zOPER_EXPORT zSHORT OPERATION
 ConvertLineToEntity( zVIEW vEntityView0,
                      zVIEW vXOD_View1,
                      zPCHAR pchRecordArea2,
                      zPCHAR pchDelimiterType3,
                      zLONG lMaxRecordLth4 );
+
+zOPER_EXPORT zSHORT OPERATION
+RemovePairedCharactersFromString( zPCHAR pchString0,
+                                  zPCHAR pchOpenChar1,
+                                  zPCHAR pchCloseChar2,
+                                  zPCHAR pchEnclosingOnly3 );
 
 zOPER_EXPORT zSHORT OPERATION
 ConvertHtmlEntities( zPCHAR pchStringToBeConverted0 );

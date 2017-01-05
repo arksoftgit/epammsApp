@@ -1,4 +1,4 @@
-z1000-Zeidon    EPAMMS   TZCMLPLO                         12/27/16   21:02:19 1.0a2   
+z1000-Zeidon    EPAMMS   TZCMLPLO                         01/05/17   16:12:14 1.0a2   
 eLPLR      1
 aName      epamms
 aDesc      ePamms Application
@@ -7,16 +7,16 @@ aPgmSrcDir %kzd%:\lplr\epamms
 aExecDir   %kzd%:\lplr\epamms\bin
 aMetaSrcDir %kzd%:\lplr\epamms
 aTaskUseCount 1
-aLastBuildDate 20161118150449528
+aLastBuildDate 20161229144115533
 aLPLR_Type 2
 aCurrentCompilerSpec DKS
 aTempDesc  ePamms Application
 aCurrentDateTime 20071026104553250
 aJavaPackageName com\quinsoft\epamms
-awFullyQualifiedFileName c:\lplr\epamms\wmlc1.pwd
+awFullyQualifiedFileName d:\lplr\dks\wspld.pwd
 awFullyQualifiedDirectoryName %kzd%:\lplr\epamms\back
-awCopyPasteDirectoryFileName c:\lplr\epamms\wmlc1.pwd
-awCopyPasteWindowName GeneratedTitleTextDisplay
+awCopyPasteDirectoryFileName d:\lplr\dks\wspld.pwd
+awCopyPasteWindowName SPLD_BlockSpecialFormatDef
 
 eW_MetaType 2
 aType      0
@@ -32,553 +32,480 @@ aCPLR_ZKey 1662527
 aStatus    1
 aUpdateInd 2
 aName      AcceptCurrentTemporalSubobject
-aLastUpdateDate 20160518222316511
 
 eW_MetaDef 3
 aCPLR_ZKey 89816628
 aStatus    1
 aUpdateInd 2
 aName      ActivateWorkObjectFromFile
-aLastUpdateDate 20161111015550174
 
 eW_MetaDef 3
 aCPLR_ZKey 89816623
 aStatus    1
 aUpdateInd 2
 aName      AddDaysToDate
-aLastUpdateDate 20161111015550174
 
 eW_MetaDef 3
 aCPLR_ZKey 89816557
 aStatus    1
 aUpdateInd 2
 aName      AddMonthsToDate
-aLastUpdateDate 20161111015550174
 
 eW_MetaDef 3
 aCPLR_ZKey 89816593
 aStatus    1
 aUpdateInd 2
 aName      AddressFormatToMultiLine
-aLastUpdateDate 20161111015550174
 
 eW_MetaDef 3
 aCPLR_ZKey 89816515
 aStatus    1
 aUpdateInd 2
 aName      AddSpacesToString
-aLastUpdateDate 20161111015550174
 
 eW_MetaDef 3
 aCPLR_ZKey 89816681
 aStatus    1
 aUpdateInd 2
 aName      AddToAttrFromIntByContext
-aLastUpdateDate 20161111015550174
 
 eW_MetaDef 3
 aCPLR_ZKey 89816638
 aStatus    1
 aUpdateInd 2
 aName      AddWorkingDaysToDate
-aLastUpdateDate 20161111015550174
 
 eW_MetaDef 3
 aCPLR_ZKey 89816539
 aStatus    1
 aUpdateInd 2
 aName      AGetRegistryValue
-aLastUpdateDate 20161111015550174
 
 eW_MetaDef 3
 aCPLR_ZKey 110010001
 aStatus    1
 aUpdateInd 2
 aName      BuildCompEntriesForSPLD
-aLastUpdateDate 20161031214301482
 
 eW_MetaDef 3
 aCPLR_ZKey 110009888
 aStatus    1
 aUpdateInd 2
 aName      BuildSimpleIntegerQualification
-aLastUpdateDate 20161111015550174
 
 eW_MetaDef 3
 aCPLR_ZKey 110009882
 aStatus    1
 aUpdateInd 2
 aName      BuildSimpleStringQualification
-aLastUpdateDate 20161111015550174
 
 eW_MetaDef 3
 aCPLR_ZKey 89816542
 aStatus    1
 aUpdateInd 2
 aName      CallObjectOperation
-aLastUpdateDate 20161111015550174
 
 eW_MetaDef 3
 aCPLR_ZKey 1662524
 aStatus    1
 aUpdateInd 2
 aName      CancelCurrentTemporalSubobject
-aLastUpdateDate 20160518222316511
 
 eW_MetaDef 3
 aCPLR_ZKey 89816651
 aStatus    1
 aUpdateInd 2
 aName      CharToCode
-aLastUpdateDate 20161111015550174
 
 eW_MetaDef 3
 aCPLR_ZKey 89816653
 aStatus    1
 aUpdateInd 2
 aName      CodeToChar
-aLastUpdateDate 20161111015550174
 
 eW_MetaDef 3
 aCPLR_ZKey 89816633
 aStatus    1
 aUpdateInd 2
 aName      CompareAttributeByShortString
-aLastUpdateDate 20161111015550174
 
 eW_MetaDef 3
 aCPLR_ZKey 89816522
 aStatus    1
 aUpdateInd 2
 aName      ConvertExternalValueOfAttribute
-aLastUpdateDate 20161111015550174
 
 eW_MetaDef 3
 aCPLR_ZKey 110040719
 aStatus    1
 aUpdateInd 2
 aName      ConvertHtmlEntities
-aLastUpdateDate 20161111015550174
 
 eW_MetaDef 3
 aCPLR_ZKey 89816453
 aStatus    1
 aUpdateInd 2
 aName      ConvertLineToEntity
-aLastUpdateDate 20161111015550174
 
 eW_MetaDef 3
 aCPLR_ZKey 1399847
 aStatus    1
 aUpdateInd 2
 aName      CopyMLC_EntityToSLC
-aLastUpdateDate 20160518222316511
 
 eW_MetaDef 3
 aCPLR_ZKey 1408197
 aStatus    1
 aUpdateInd 2
 aName      CopySLC_EntityToSPLD
-aLastUpdateDate 20160518222316511
 
 eW_MetaDef 3
 aCPLR_ZKey 1662531
 aStatus    1
 aUpdateInd 2
 aName      CreateCurrentTemporalVersion
-aLastUpdateDate 20160518222316511
 
 eW_MetaDef 3
 aCPLR_ZKey 89816585
 aStatus    1
 aUpdateInd 2
 aName      dAdressLabel
-aLastUpdateDate 20161111015550174
 
 eW_MetaDef 3
 aCPLR_ZKey 89816580
 aStatus    1
 aUpdateInd 2
 aName      dAdressLabelFull
-aLastUpdateDate 20161111015550174
 
 eW_MetaDef 3
 aCPLR_ZKey 89816488
 aStatus    1
 aUpdateInd 2
 aName      DBQualEntityByString
-aLastUpdateDate 20161111015550174
 
 eW_MetaDef 3
 aCPLR_ZKey 89816658
 aStatus    1
 aUpdateInd 2
 aName      DecimalSumOf
-aLastUpdateDate 20161111015550174
 
 eW_MetaDef 3
 aCPLR_ZKey 110040692
 aStatus    1
 aUpdateInd 2
 aName      DecipherUsageKeyword
-aLastUpdateDate 20161111015550174
 
 eW_MetaDef 3
 aCPLR_ZKey 2196645
 aStatus    1
 aUpdateInd 2
 aName      DetermineNextVersion
-aLastUpdateDate 20161111015550174
 
 eW_MetaDef 3
 aCPLR_ZKey 89816517
 aStatus    1
 aUpdateInd 2
 aName      FindStringInAttribute
-aLastUpdateDate 20161111015550174
 
 eW_MetaDef 3
 aCPLR_ZKey 110215868
 aStatus    1
 aUpdateInd 2
 aName      GenerateKeywordTextIntoString
-aLastUpdateDate 20161111015550174
 
 eW_MetaDef 3
 aCPLR_ZKey 89816577
 aStatus    1
 aUpdateInd 2
 aName      GetAttribNameFromStructure
-aLastUpdateDate 20161111015550174
 
 eW_MetaDef 3
 aCPLR_ZKey 89816554
 aStatus    1
 aUpdateInd 2
 aName      GetButtonHeaderName
-aLastUpdateDate 20161111015550174
 
 eW_MetaDef 3
 aCPLR_ZKey 89816495
 aStatus    1
 aUpdateInd 2
 aName      GetCurrentApplicationName
-aLastUpdateDate 20161111015550174
 
 eW_MetaDef 3
 aCPLR_ZKey 89816510
 aStatus    1
 aUpdateInd 2
 aName      GetDataTypeForAttribute
-aLastUpdateDate 20161111015550174
 
 eW_MetaDef 3
 aCPLR_ZKey 89816643
 aStatus    1
 aUpdateInd 2
 aName      GetDateAttributeDifferenceInDays
-aLastUpdateDate 20161111015550174
 
 eW_MetaDef 3
 aCPLR_ZKey 89816590
 aStatus    1
 aUpdateInd 2
 aName      GetEntityNameFromStructure
-aLastUpdateDate 20161111015550174
 
 eW_MetaDef 3
 aCPLR_ZKey 89816665
 aStatus    1
 aUpdateInd 2
 aName      GetEnvVariable
-aLastUpdateDate 20161111015550174
 
 eW_MetaDef 3
 aCPLR_ZKey 89816483
 aStatus    1
 aUpdateInd 2
 aName      GetGeneralPath
-aLastUpdateDate 20161111015550174
 
 eW_MetaDef 3
 aCPLR_ZKey 89816528
 aStatus    1
 aUpdateInd 2
 aName      GetHTMLPath
-aLastUpdateDate 20161111015550174
 
 eW_MetaDef 3
 aCPLR_ZKey 89816535
 aStatus    1
 aUpdateInd 2
 aName      GetImagingPath
-aLastUpdateDate 20161111015550174
 
 eW_MetaDef 3
 aCPLR_ZKey 89816694
 aStatus    1
 aUpdateInd 2
 aName      GetIntFromAttrByContext
-aLastUpdateDate 20161111015550174
 
 eW_MetaDef 3
 aCPLR_ZKey 89816532
 aStatus    1
 aUpdateInd 2
 aName      GetRegistryCLSID
-aLastUpdateDate 20161111015550174
 
 eW_MetaDef 3
 aCPLR_ZKey 89816472
 aStatus    1
 aUpdateInd 2
 aName      GetRTFPath
-aLastUpdateDate 20161111015550174
 
 eW_MetaDef 3
 aCPLR_ZKey 89816687
 aStatus    1
 aUpdateInd 2
 aName      GetStrFromAttrByContext
-aLastUpdateDate 20161111015550174
 
 eW_MetaDef 3
 aCPLR_ZKey 89816601
 aStatus    1
 aUpdateInd 2
 aName      GetViewFromBlobAttribute
-aLastUpdateDate 20161111015550174
 
 eW_MetaDef 3
 aCPLR_ZKey 89816547
 aStatus    1
 aUpdateInd 2
 aName      GetWindowsUserName
-aLastUpdateDate 20161111015550174
 
 eW_MetaDef 3
 aCPLR_ZKey 1399844
 aStatus    1
 aUpdateInd 2
 aName      InitializeSLC_FromMLC
-aLastUpdateDate 20160518222316511
 
 eW_MetaDef 3
 aCPLR_ZKey 1408202
 aStatus    1
 aUpdateInd 2
 aName      InitializeSPLD_FromSLC
-aLastUpdateDate 20160518222316511
 
 eW_MetaDef 3
 aCPLR_ZKey 69087046
 aStatus    1
 aUpdateInd 2
 aName      InsertKeywordsIntoString
-aLastUpdateDate 20161111015550174
 
 eW_MetaDef 3
 aCPLR_ZKey 89816459
 aStatus    1
 aUpdateInd 2
 aName      InsertOI_DataIntoEmailTemplate
-aLastUpdateDate 20161111015550174
 
 eW_MetaDef 3
 aCPLR_ZKey 89816503
 aStatus    1
 aUpdateInd 2
 aName      InsertOI_DataIntoTemplateFile
-aLastUpdateDate 20161111015550174
 
 eW_MetaDef 3
 aCPLR_ZKey 110040689
 aStatus    1
 aUpdateInd 2
 aName      InsertOptionalSubUsages
-aLastUpdateDate 20161111015550174
 
 eW_MetaDef 3
 aCPLR_ZKey 89816476
 aStatus    1
 aUpdateInd 2
 aName      ParseBooleanExpression
-aLastUpdateDate 20161111015550174
 
 eW_MetaDef 3
 aCPLR_ZKey 110040711
 aStatus    1
 aUpdateInd 2
 aName      ParseStatementForKeywords
-aLastUpdateDate 20161111015550174
 
 eW_MetaDef 3
 aCPLR_ZKey 89816567
 aStatus    1
 aUpdateInd 2
 aName      PersonName_FirstMiddleLast
-aLastUpdateDate 20161111015550174
 
 eW_MetaDef 3
 aCPLR_ZKey 89816572
 aStatus    1
 aUpdateInd 2
 aName      PersonName_LastFirstMiddle
-aLastUpdateDate 20161111015550174
 
 eW_MetaDef 3
 aCPLR_ZKey 1178394
 aStatus    1
 aUpdateInd 2
 aName      PositionOnEntityByZID
-aLastUpdateDate 20161111015550174
 
 eW_MetaDef 3
 aCPLR_ZKey 89816499
 aStatus    1
 aUpdateInd 2
 aName      ReadLine5000
-aLastUpdateDate 20161111015550174
 
 eW_MetaDef 3
 aCPLR_ZKey 89816615
 aStatus    1
 aUpdateInd 2
 aName      ReadLineIntoGlobalBuffer
-aLastUpdateDate 20161111015550174
 
 eW_MetaDef 3
 aCPLR_ZKey 89816550
 aStatus    1
 aUpdateInd 2
 aName      RemoveLeadingBlanksFromAttrib
-aLastUpdateDate 20161111015550174
+
+eW_MetaDef 3
+aCPLR_ZKey 110040721
+aStatus    1
+aUpdateInd 2
+aName      RemovePairedCharactersFromString
 
 eW_MetaDef 3
 aCPLR_ZKey 89816611
 aStatus    1
 aUpdateInd 2
 aName      SeparateName
-aLastUpdateDate 20161111015550174
 
 eW_MetaDef 3
 aCPLR_ZKey 69214769
 aStatus    1
 aUpdateInd 2
 aName      SeparateNumberedStatement
-aLastUpdateDate 20161111015550174
 
 eW_MetaDef 3
 aCPLR_ZKey 89816675
 aStatus    1
 aUpdateInd 2
 aName      SetAttrFromIntByContext
-aLastUpdateDate 20161111015550174
 
 eW_MetaDef 3
 aCPLR_ZKey 89816669
 aStatus    1
 aUpdateInd 2
 aName      SetAttrFromStrByContext
-aLastUpdateDate 20161111015550174
 
 eW_MetaDef 3
 aCPLR_ZKey 89816704
 aStatus    1
 aUpdateInd 2
 aName      SetAttributeFromCurrentDateTime
-aLastUpdateDate 20161111015550174
 
 eW_MetaDef 3
 aCPLR_ZKey 89816618
 aStatus    1
 aUpdateInd 2
 aName      SetAttributeFromTabField
-aLastUpdateDate 20161111015550174
 
 eW_MetaDef 3
 aCPLR_ZKey 89816606
 aStatus    1
 aUpdateInd 2
 aName      SetBlobAttributeFromView
-aLastUpdateDate 20161111015550174
 
 eW_MetaDef 3
 aCPLR_ZKey 89816700
 aStatus    1
 aUpdateInd 2
 aName      SetCursorLatestEntity
-aLastUpdateDate 20161111015550174
 
 eW_MetaDef 3
 aCPLR_ZKey 89816562
 aStatus    1
 aUpdateInd 2
 aName      SetDecimalPrecisionRounded
-aLastUpdateDate 20161111015550174
 
 eW_MetaDef 3
 aCPLR_ZKey 1511099
 aStatus    1
 aUpdateInd 2
 aName      SetDynamicBannerName
-aLastUpdateDate 20160518222316511
 
 eW_MetaDef 3
 aCPLR_ZKey 110040700
 aStatus    1
 aUpdateInd 2
 aName      SetFirstCharacterCase
-aLastUpdateDate 20161111015550174
 
 eW_MetaDef 3
 aCPLR_ZKey 110040677
 aStatus    1
 aUpdateInd 2
 aName      SplitParagraphOnLinefeed
-aLastUpdateDate 20161111015550174
 
 eW_MetaDef 3
 aCPLR_ZKey 89816656
 aStatus    1
 aUpdateInd 2
 aName      StrToDecimal
-aLastUpdateDate 20161111015550174
 
 eW_MetaDef 3
 aCPLR_ZKey 89816663
 aStatus    1
 aUpdateInd 2
 aName      StrToInt
-aLastUpdateDate 20161111015550174
 
 eW_MetaDef 3
 aCPLR_ZKey 1664968
 aStatus    1
 aUpdateInd 2
 aName      SyncPhysicalLabel
-aLastUpdateDate 20160518222316511
 
 eW_MetaDef 3
 aCPLR_ZKey 89816478
 aStatus    1
 aUpdateInd 2
 aName      WinShellExecute
-aLastUpdateDate 20161111015550174
 
 eW_MetaDef 3
 aCPLR_ZKey 69086455
 aStatus    1
 aUpdateInd 2
 aName      WL_QC
-aLastUpdateDate 20161111015550174
 
 eW_MetaDef 3
 aCPLR_ZKey 89816565
 aStatus    1
 aUpdateInd 2
 aName      zTrim
-aLastUpdateDate 20161111015550174
 
 eW_MetaType 2
 aType      3
@@ -1193,15 +1120,15 @@ aCPLR_ZKey 68568353
 aStatus    1
 aUpdateInd 2
 aName      epamms
-aDesc      255
+aDesc      286
 ePamms Application
 
 Additions:
 1. Added a relationship between M_UsageOrdering, S_UsageOrdering and SPLD_UsageOrdering and their corresponding DirectionsForUse and Marketing Statement entities.
 2. Added Default attributes to LLD and SPLD_LLD.
-3. Add 
-aLastSyncDate 20161222151709892
-aLastUpdateDate 20161222151709892
+3. Added TextLineHeight to LLD_Block. 
+aLastSyncDate 20161228160423219
+aLastUpdateDate 20161228160423219
 
 eW_MetaType 2
 aType      5
@@ -1224,8 +1151,8 @@ aStatus    1
 aUpdateInd 2
 aName      ePamms
 aDesc      ePamms Application
-aLastSyncDate 20161222151752562
-aLastUpdateDate 20161222151752562
+aLastSyncDate 20161228160450440
+aLastUpdateDate 20161228160450440
 
 eW_MetaType 2
 aType      7
@@ -1504,8 +1431,8 @@ aStatus    1
 aUpdateInd 2
 aName      mSPLDef
 aDesc      Subregistrant Physical Label Maintenance
-aLastSyncDate 20161223133755028
-aLastUpdateDate 20161223133755028
+aLastSyncDate 20170104200512198
+aLastUpdateDate 20170104200512198
 
 eW_MetaDef 3
 aCPLR_ZKey 69035258
@@ -1657,8 +1584,8 @@ aStatus    1
 aUpdateInd 2
 aName      wWebXfer
 aDesc      Web Work/Transfer object
-aLastSyncDate 20161223135057012
-aLastUpdateDate 20161223135057012
+aLastSyncDate 20161223185056992
+aLastUpdateDate 20161223185056992
 
 eW_MetaDef 3
 aCPLR_ZKey 68568663
@@ -2339,8 +2266,8 @@ aStatus    1
 aUpdateInd 2
 aName      wSLC
 aDesc      Subregistrant Label Content
-aLastSyncDate 20161108164656671
-aLastUpdateDate 20161108164656671
+aLastSyncDate 20170102135236318
+aLastUpdateDate 20170102135236318
 
 eW_MetaDef 3
 aCPLR_ZKey 11205
@@ -2348,8 +2275,8 @@ aStatus    1
 aUpdateInd 2
 aName      wSPLD
 aDesc      Subregistrant Physical Label Definition
-aLastSyncDate 20161223135025570
-aLastUpdateDate 20161223135025570
+aLastSyncDate 20170103141154884
+aLastUpdateDate 20170103141154884
 
 eW_MetaDef 3
 aCPLR_ZKey 93086489
@@ -2468,8 +2395,8 @@ aStatus    1
 aUpdateInd 2
 aName      ZGlobal1
 aDesc      Global Operations in C
-aLastSyncDate 20161111015550174
-aLastUpdateDate 20161111015550174
+aLastSyncDate 20161228181629955
+aLastUpdateDate 20161228181629955
 
 eW_MetaDef 3
 aCPLR_ZKey 110010003
@@ -2650,6 +2577,9 @@ aGroupName ZGlobalV
 
 eW_MetaDef 3
 aGroupName ZGlobalV
+
+eW_MetaDef 3
+aGroupName ZGlobal1
 
 eW_MetaDef 3
 aGroupName ZGlobal1
@@ -3339,13 +3269,13 @@ aBrowseInfo N
 eCompiler  2
 aName      DKS
 aDescription MS Visual C++ 6.0
-aTargetExecutableDir c:\lplr\epamms\bin
-aTargetObjectDir c:\lplr\epamms\objlib
+aTargetExecutableDir d:\lplr\epamms\bin
+aTargetObjectDir d:\lplr\epamms\objlib
 aCompilerName MSC 1.5
 aCompileWithDebug A
-aCompilerDir c:\msvc32\bin
-aMakefileDir c:\lplr\epamms
-aEnvironmentDir c:\lplr\epamms\objlib
+aCompilerDir d:\msvc32\bin
+aMakefileDir d:\lplr\epamms
+aEnvironmentDir d:\lplr\epamms\objlib
 aCloseWindowAfterCompile N
 aMakeOption 7
 aPath      551
@@ -3355,49 +3285,41 @@ aCreateExternalList 0
 aBrowseInfo N
 
 eInclude   3
-aIncludeDir c:\lplr\epamms
+aIncludeDir d:\lplr\epamms
 
 eInclude   3
-aIncludeDir c:\10c\w\incz
+aIncludeDir d:\10d\w\incz
 
 eInclude   3
-aIncludeDir c:\msvc32\include
+aIncludeDir d:\msvc32\include
 
 eInclude   3
-aIncludeDir c:\10c\a\incz
+aIncludeDir d:\10d\a\incz
 
 eInclude   3
-aIncludeDir c:\10c\w\incr
+aIncludeDir d:\10d\w\incr
 
 eInclude   3
-aIncludeDir c:\10c\a\incr
+aIncludeDir d:\10d\a\incr
 
 eLib       3
-aLibDir    c:\lplr\epamms
+aLibDir    d:\lplr\epamms
 
 eLib       3
-aLibDir    c:\10c\w\libz
+aLibDir    d:\10d\w\libz
 
 eLib       3
-aLibDir    c:\10c\w\libr
+aLibDir    d:\10d\w\libr
 
 eLib       3
-aLibDir    c:\msvc32\lib
+aLibDir    d:\msvc32\lib
 
 eLib       3
-aLibDir    c:\msvc32\mfc\lib
+aLibDir    d:\msvc32\mfc\lib
 
 eExternalTarget 3
 aName      domainc
 aExternalExists N
-
-eTargetExecutable 2
-aName      AD_Base
-
-eMeta      3
-aName      AD_Base
-aZKey      110239525
-aMetaType  2011
 
 eTargetExecutable 2
 aName      domainc
@@ -3406,22 +3328,6 @@ eMeta      3
 aName      DomainC
 aZKey      68567489
 aMetaType  2013
-
-eTargetExecutable 2
-aName      DonTest
-
-eMeta      3
-aName      DonTest
-aZKey      110240281
-aMetaType  2011
-
-eTargetExecutable 2
-aName      lMasLCA
-
-eMeta      3
-aName      lMasLCA
-aZKey      69035457
-aMetaType  2007
 
 eTargetExecutable 2
 aName      lMLCATgt
@@ -3445,14 +3351,6 @@ aName      lPrimReg
 eMeta      3
 aName      lPrimReg
 aZKey      1158609
-aMetaType  2007
-
-eTargetExecutable 2
-aName      lSubLCA
-
-eMeta      3
-aName      lSubLCA
-aZKey      69035656
 aMetaType  2007
 
 eTargetExecutable 2
@@ -3664,11 +3562,6 @@ aZKey      89816452
 aMetaType  2014
 
 eMeta      3
-aName      ZGlobalS
-aZKey      110010003
-aMetaType  2014
-
-eMeta      3
 aName      ZGlobalV
 aZKey      1399843
 aMetaType  2014
@@ -3677,12 +3570,6 @@ eDomainJavaClass 2
 
 eDomainJavaClass 2
 aJavaClassName com.quinsoft.zeidon.domains.StaticTableDomain
-
-eDomainJavaClass 2
-
-eDomainJavaClass 2
-
-eDomainJavaClass 2
 
 eDomainJavaClass 2
 aJavaClassName com.quinsoft.zeidon.domains.DynamicTableDomain
@@ -3698,8 +3585,6 @@ aJavaClassName com.quinsoft.zeidon.domains.DateTimeDomain
 
 eDomainJavaClass 2
 aJavaClassName com.quinsoft.zeidon.domains.DoubleDomain
-
-eDomainJavaClass 2
 
 eDomainJavaClass 2
 aJavaClassName com.quinsoft.zeidon.domains.PhoneDomain
@@ -3728,312 +3613,313 @@ aJavaClassName com.quinsoft.zeidon.domains.SSNDomain
 eDomainJavaClass 2
 aJavaClassName com.quinsoft.zeidon.domains.TimeDomain
 
-i330       4
-i331       5
-i332       6
-i333       7
-i334       8
-i335       9
-i336       10
-i337       11
-i338       12
-i339       13
-i340       14
-i341       15
-i342       16
-i343       17
-i344       18
-i345       19
-i346       20
-i347       21
-i348       22
-i349       23
-i350       24
-i351       25
-i352       26
-i353       27
-i354       28
-i355       29
-i356       30
-i357       31
-i358       32
-i359       33
-i360       34
-i361       35
-i362       36
-i363       37
-i364       38
-i365       39
-i366       40
-i367       41
-i368       42
-i369       43
-i370       44
-i371       45
-i372       46
-i373       47
-i374       48
-i375       49
-i376       50
-i377       51
-i378       52
-i379       53
-i380       54
-i381       55
-i382       56
-i383       57
-i384       58
-i385       59
-i386       60
-i387       61
-i388       62
-i389       63
-i390       64
-i391       65
-i392       66
-i393       67
-i394       68
-i395       69
-i396       70
-i397       71
-i398       72
-i399       73
-i400       74
-i401       75
-i402       76
-i403       77
-i404       78
-i405       79
-i406       80
-i407       81
-i408       82
-i410       159
-i411       104
-i412       140
-i413       84
-i414       151
-i415       169
-i416       165
-i417       166
-i418       157
-i419       133
+i331       4
+i332       5
+i333       6
+i334       7
+i335       8
+i336       9
+i337       10
+i338       11
+i339       12
+i340       13
+i341       14
+i342       15
+i343       16
+i344       17
+i345       18
+i346       19
+i347       20
+i348       21
+i349       22
+i350       23
+i351       24
+i352       25
+i353       26
+i354       27
+i355       28
+i356       29
+i357       30
+i358       31
+i359       32
+i360       33
+i361       34
+i362       35
+i363       36
+i364       37
+i365       38
+i366       39
+i367       40
+i368       41
+i369       42
+i370       43
+i371       44
+i372       45
+i373       46
+i374       47
+i375       48
+i376       49
+i377       50
+i378       51
+i379       52
+i380       53
+i381       54
+i382       55
+i383       56
+i384       57
+i385       58
+i386       59
+i387       60
+i388       61
+i389       62
+i390       63
+i391       64
+i392       65
+i393       66
+i394       67
+i395       68
+i396       69
+i397       70
+i398       71
+i399       72
+i400       73
+i401       74
+i402       75
+i403       76
+i404       77
+i405       78
+i406       79
+i407       80
+i408       81
+i409       82
+i410       83
+i412       160
+i413       105
+i414       141
+i415       85
+i416       152
+i417       170
+i418       166
+i419       167
 i420       158
-i421       147
-i422       143
-i423       145
-i424       146
-i425       160
-i426       126
-i427       98
-i428       103
-i429       110
-i430       85
-i431       97
-i432       96
-i433       95
-i434       94
-i435       93
-i436       92
-i437       91
-i438       90
-i439       89
-i440       88
-i441       87
-i442       150
-i443       149
-i444       119
-i445       163
-i446       156
-i447       161
-i448       101
-i449       107
-i450       115
-i451       132
-i452       130
-i453       131
-i454       121
-i455       124
-i456       114
-i457       162
-i458       148
-i459       153
-i460       154
-i461       144
-i462       112
-i463       116
-i464       127
-i465       137
-i466       113
-i467       100
-i468       106
-i469       123
-i470       109
-i471       108
-i472       86
-i473       122
-i474       155
-i475       139
-i476       128
-i477       118
-i478       117
-i479       167
-i480       138
-i481       142
-i482       152
-i483       136
-i484       125
-i485       135
-i486       111
-i487       129
-i488       105
-i489       102
-i490       164
-i491       141
-i492       134
-i493       168
-i494       99
-i495       120
-i497       171
-i499       173
-i501       175
-i503       177
-i504       178
-i505       179
-i506       180
-i507       181
-i508       182
-i509       183
-i510       184
-i511       185
-i512       186
-i513       187
-i514       188
-i515       189
-i516       190
-i517       191
-i518       192
-i519       193
-i520       194
-i521       195
-i522       196
-i523       197
-i524       198
-i525       199
-i526       200
-i527       201
-i528       202
-i529       203
-i530       204
-i531       205
-i532       206
-i533       207
-i534       208
-i535       209
-i536       210
-i537       211
-i538       212
-i539       213
-i540       214
-i541       215
-i542       216
-i543       217
-i544       218
-i545       219
-i546       220
-i547       221
-i548       222
-i549       223
-i550       224
-i551       225
-i554       228
-i555       229
-i556       230
-i557       231
-i558       232
-i559       233
-i560       234
-i561       235
-i562       236
-i563       237
-i564       238
-i565       239
-i566       240
-i567       241
-i568       242
-i569       243
-i570       244
-i571       245
-i572       246
-i573       247
-i574       248
-i575       249
-i576       250
-i577       251
-i578       252
-i579       253
-i580       254
-i581       255
-i582       256
-i583       257
-i584       258
-i585       259
-i586       260
-i587       261
-i588       262
-i589       263
-i590       264
-i591       265
-i592       266
-i593       267
-i594       268
-i595       269
-i596       270
-i597       271
-i598       272
-i599       273
-i600       274
-i601       275
-i602       276
-i603       277
-i604       278
-i605       279
-i606       280
-i607       281
-i608       282
-i609       283
-i610       284
-i611       285
-i612       286
-i613       287
-i614       288
-i615       289
-i616       290
-i617       291
-i618       292
-i619       293
-i620       294
-i621       295
-i622       296
-i623       297
-i626       300
-i627       301
-i628       302
-i629       303
-i630       304
-i631       305
-i632       306
-i633       307
-i634       308
-i635       309
-i636       310
-i639       313
-i640       314
-i641       315
-i642       316
-i643       317
-i644       318
-i645       319
-i646       320
-i648       322
-i649       323
-i650       324
+i421       134
+i422       159
+i423       148
+i424       144
+i425       146
+i426       147
+i427       161
+i428       127
+i429       99
+i430       104
+i431       111
+i432       86
+i433       98
+i434       97
+i435       96
+i436       95
+i437       94
+i438       93
+i439       92
+i440       91
+i441       90
+i442       89
+i443       88
+i444       151
+i445       150
+i446       120
+i447       164
+i448       157
+i449       162
+i450       102
+i451       108
+i452       116
+i453       133
+i454       131
+i455       132
+i456       122
+i457       125
+i458       115
+i459       163
+i460       149
+i461       154
+i462       155
+i463       145
+i464       113
+i465       117
+i466       128
+i467       138
+i468       114
+i469       101
+i470       107
+i471       124
+i472       110
+i473       109
+i474       87
+i475       123
+i476       156
+i477       140
+i478       129
+i479       119
+i480       118
+i481       168
+i482       139
+i483       143
+i484       153
+i485       137
+i486       126
+i487       136
+i488       112
+i489       130
+i490       106
+i491       103
+i492       165
+i493       142
+i494       135
+i495       169
+i496       100
+i497       121
+i499       172
+i501       174
+i503       176
+i505       178
+i506       179
+i507       180
+i508       181
+i509       182
+i510       183
+i511       184
+i512       185
+i513       186
+i514       187
+i515       188
+i516       189
+i517       190
+i518       191
+i519       192
+i520       193
+i521       194
+i522       195
+i523       196
+i524       197
+i525       198
+i526       199
+i527       200
+i528       201
+i529       202
+i530       203
+i531       204
+i532       205
+i533       206
+i534       207
+i535       208
+i536       209
+i537       210
+i538       211
+i539       212
+i540       213
+i541       214
+i542       215
+i543       216
+i544       217
+i545       218
+i546       219
+i547       220
+i548       221
+i549       222
+i550       223
+i551       224
+i552       225
+i553       226
+i556       229
+i557       230
+i558       231
+i559       232
+i560       233
+i561       234
+i562       235
+i563       236
+i564       237
+i565       238
+i566       239
+i567       240
+i568       241
+i569       242
+i570       243
+i571       244
+i572       245
+i573       246
+i574       247
+i575       248
+i576       249
+i577       250
+i578       251
+i579       252
+i580       253
+i581       254
+i582       255
+i583       256
+i584       257
+i585       258
+i586       259
+i587       260
+i588       261
+i589       262
+i590       263
+i591       264
+i592       265
+i593       266
+i594       267
+i595       268
+i596       269
+i597       270
+i598       271
+i599       272
+i600       273
+i601       274
+i602       275
+i603       276
+i604       277
+i605       278
+i606       279
+i607       280
+i608       281
+i609       282
+i610       283
+i611       284
+i612       285
+i613       286
+i614       287
+i615       288
+i616       289
+i617       290
+i618       291
+i619       292
+i620       293
+i621       294
+i622       295
+i623       296
+i624       297
+i625       298
+i628       301
+i629       302
+i630       303
+i631       304
+i632       305
+i633       306
+i634       307
+i635       308
+i636       309
+i637       310
+i638       311
+i641       314
+i642       315
+i643       316
+i644       317
+i645       318
+i646       319
+i647       320
+i648       321
+i650       323
+i651       324
+i652       325

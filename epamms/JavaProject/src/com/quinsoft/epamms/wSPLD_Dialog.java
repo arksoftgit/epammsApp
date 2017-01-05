@@ -7315,6 +7315,9 @@ SetSPLD_Resume( View     ViewToWindow )
    RESULT = GetViewByName( mSubProd, "mSubProd", ViewToWindow, zLEVEL_TASK );
    RESULT = GetViewByName( mSubreg, "mSubreg", ViewToWindow, zLEVEL_TASK );
 
+   //:SaveSPLD( ViewToWindow )
+   SaveSPLD( ViewToWindow );
+
    //:GET VIEW mUser NAMED "mUser"
    RESULT = GetViewByName( mUser, "mUser", ViewToWindow, zLEVEL_TASK );
    //:IF mUser != 0

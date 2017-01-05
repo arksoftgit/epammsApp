@@ -156,7 +156,7 @@ $(function() {
    }
 
    function saveLabel( commit, callback ) {
-      mapUiDataToElementData( g_$current_block );
+      mapUiDataToElementData( g_$current_block, true );
       if ( g_updatedLLD || commit === "Commit" ) {
          var dup = getBlockTagList();
          if ( dup !== null ) {
@@ -187,7 +187,7 @@ $(function() {
 
    $("#SaveReturn").click( function() {
       if ( g_updatedLLD ) {
-         saveLabel( "", returnCallback );
+         saveLabel( "Commit", returnCallback );
          g_updatedLLD = false;
       } else {
       // alert( "Not Changed" );
@@ -218,7 +218,7 @@ $(function() {
 
    $("#UpdateBlock").click( function() {
       if ( g_$current_block ) {
-         mapUiDataToElementData( g_$current_block );
+         mapUiDataToElementData( g_$current_block, true );
          if ( g_$current_block.hasClass( "panel" ) === false ) {
             var sectionType = g_$current_block.data( "z_^l^l^d_^section^type" );
             sessionStorage.setItem( "epamms_section_type", sectionType );
@@ -239,10 +239,10 @@ $(function() {
 
    $("#ReuseBlock").click( function() {
       if ( g_$current_block ) {
-         mapUiDataToElementData( g_$current_block );
+         mapUiDataToElementData( g_$current_block, true );
          if ( g_$current_block.hasClass( "panel" ) === false ) {
-            var tag = g_$current_block.data( "z_^tag" );
-            var reuseBlockName = prompt( "Please enter the reusable block name", tag );
+            var uniqueId = g_$current_block.data( "z_^tag" );
+            var reuseBlockName = prompt( "Please enter the reusable block name", uniqueId );
             if ( reuseBlockName === null || reuseBlockName === "" ) {
                return;
             }
@@ -253,7 +253,7 @@ $(function() {
             }
             try {
                // Assign handlers immediately after making the request and remember the jqxhr object for this request
-               var url = "labeldesigner?action=" + escape( "saveReusableBlock" ) + "&viewName=" + escape( "mSPLDef" ) + "&blockTag=" + escape( tag ) + "&blockName=" + escape( reuseBlockName );
+               var url = "labeldesigner?action=" + escape( "saveReusableBlock" ) + "&viewName=" + escape( "mSPLDef" ) + "&blockTag=" + escape( uniqueId ) + "&blockName=" + escape( reuseBlockName );
                $.ajax({ url: url,
                         type: "post", // string defining the HTTP method to use for the request: GET (default) or POST
                         contentType: "application/json; charset=utf-8",
@@ -599,8 +599,8 @@ $(function() {
             $canvasElement.height( $(ui.helper).height() ).width( $(ui.helper).width() );
          // $canvasElement.css({ top: event.pageY, left: event.pageX });
          // $canvasElement.css({ top: Math.floor( ui.position.top ), left: Math.floor( ui.position.left ) });
-            var uniqueTag = getUniqueId();
-            $canvasElement.attr( "id", uniqueTag );
+            var uniqueId = getUniqueId();
+            $canvasElement.attr( "id", uniqueId );
             var $canvas = determineTargetOfDrop( event, $(this), $canvasElement, Math.floor( ui.offset.top ), Math.floor( ui.offset.left ) );
             if ( $canvasElement.hasClass( "reusable" ) ) {
                var reuseBlockName = $("#zReusableBlocks").val();
@@ -612,7 +612,7 @@ $(function() {
                   alert( "Reusable blocks must be dropped within a panel" );
                   return;
                }
-               addZeidonAttributeToElement( $canvasElement, "wID", uniqueTag, true );
+               addZeidonAttributeToElement( $canvasElement, "wID", uniqueId.substring( 3 ), true );
                addZeidonAttributeToElement( $canvasElement, "wE", "block", true );
                addZeidonAttributeToElement( $canvasElement, "wPE", "panel", true );
                addZeidonAttributeToElement( $canvasElement, "wPID", $canvas.data( "z_w^i^d" ), true );
@@ -622,9 +622,9 @@ $(function() {
                ConvertWysiwygLabelDesignToZeidonJson( "applyReusableBlock", "mSPLDef", reloadCallback, $canvas, "{ \"top\": \"" + (t / s).toFixed( 3 ) + "\", \"left\": \"" + (l / s).toFixed( 3 ) + "\" }" );
                return;
             }
-            $canvasElement.attr( "name", uniqueTag );
-            $canvasElement.text( uniqueTag );
-            addZeidonAttributeToElement( $canvasElement, "wID", uniqueTag, true );
+            $canvasElement.attr( "name", uniqueId );
+            $canvasElement.text( uniqueId );
+            addZeidonAttributeToElement( $canvasElement, "wID", uniqueId.substring( 3 ), true );
             $canvasElement.removeClass( "ui-draggable-dragging" ).addClass( "canvas-element block-element" );
             $canvasElement.addClass( "block" );
             if ( $canvas[0].id === "page" ) {
@@ -687,7 +687,7 @@ $(function() {
    $("div").on( "mousedown", ".block-element", function( event ) {
       console.log( "mousedown, .block-element" );
       if ( event.button === 0 ) {  // left button
-         mapUiDataToElementData( g_$current_block );
+         mapUiDataToElementData( g_$current_block, true );
          g_$current_block = $el;
          $("#zBlockTag").val( $el.attr( "id" ) );
          mapElementDataToUiData( g_$current_block );
@@ -883,7 +883,7 @@ $(function() {
 
 /*
    $("body").on( "click", "div.ui-draggable", function() {
-      mapUiDataToElementData( $current_block );
+      mapUiDataToElementData( $current_block, true );
       $current_block = $(this);
       $("#zBlockTag").val( $(this).attr( "id" ) );
       mapElementDataToUiData( $current_block );
@@ -916,7 +916,7 @@ $(function() {
    // g_updatedLLD = true; commented because this should be set prior to calling this function as necessary
       mapElementCssToElementData( $element );
       if ( g_$current_block && g_$current_block.attr( "id" ) !== $element.attr( "id" ) ) {
-         mapUiDataToElementData( g_$current_block );
+         mapUiDataToElementData( g_$current_block, true );
       }
       g_$current_block = $element;
       mapElementDataToUiData( g_$current_block );
@@ -1014,9 +1014,11 @@ $(function() {
    // <div id="page" name="page" class="page" style="background-color:#f5f5fa;top:0px;left:0px;height:9in;width:8.5in;float:left;position:absolute;">1
    // <div class="block draggable canvas-element block-element ui-draggable ui-resizable" style="position:absolute;top:-0.78125px;height:253px;width:266px;left:0px;background-color: #ccffcc; display: block; float: left; color: red; border: 2px solid;" id="Tag100" name="Tag100">
    // <input type="text" id="zLabelBackgroundColor" name="zLabelBackgroundColor" class="zeidon" data-zmap="label.z_^background^color"  value="#ffffed" />
-   function mapUiDataToElementData( $current_element ) {
+   function mapUiDataToElementData( $current_element, mapSpecial ) {
       if ( g_currentType ) {  // why this isn't done after the "if ( $current_element )" code block below, I don't know??? 2016.12.19
-         mapToSpecialBlockFromBlock( g_currentType );
+         if ( mapSpecial ) {
+            mapToSpecialBlockFromBlock( g_currentType );
+         }
          g_currentType = null;
       }
       if ( $current_element ) {
@@ -1072,6 +1074,7 @@ $(function() {
             element_id = "block";
             sectionType = "";
          }
+
          $("input.zeidon, select.zeidon").each( function() {
             entityAttr = $(this).data( "zmap" );
             if ( entityAttr ) {
@@ -1096,6 +1099,7 @@ $(function() {
                }
             }
          });
+
          if ( element_id === "block" ) {
          // console.log( "Processing block type: " + sectionType );
             var optionsDflt = "<option value=\"^title\">Title</option><option value=\"^text\">Text</option>";  // default
@@ -1141,8 +1145,8 @@ $(function() {
                   // Human Hazard:  Hazards Warning / Hazards Signal Word / Hazards Precautionary
                   options = "<option value=\"^hazards ^warning\">Hazards Warning</option><option value=\"^hazards ^signal ^word\">Hazards Signal Word</option><option value=\"^hazards ^precautionary\">Hazards Precautionary</option>";
                } else if ( sectionType === "Ingredients" ) {
-                  // Ingredients:   Title / Ingredients Items / Ingredients Inert / Ingredients Total
-                  options = "<option value=\"^title\">Title</option><option value=\"^ingredients ^items\">Ingredients Items</option><option value=\"^ingredients ^inert\">Ingredients Inert</option><option value=\"^ingredients ^total\">Ingredients Total</option>";
+                  // Ingredients:   Ingredients Title / Ingredients Items / Ingredients Inert / Ingredients Total
+                  options = "<option value=\"^title\">Ingredients Title</option><option value=\"^ingredients ^items\">Ingredients Items</option><option value=\"^ingredients ^inert\">Ingredients Inert</option><option value=\"^ingredients ^total\">Ingredients Total</option>";
                } else if ( sectionType === "NetContents" || sectionType === "EPA_RegAndEstNbr" ) {
                   options = "<option value=\"^text\">Text</option>"
                } else {
@@ -1260,7 +1264,7 @@ $(function() {
 
    function getUniqueId() {
       var stopLoop = 0; // prevent infinite loop
-      var arr = $(document.getElementById( "Tag" + g_generateTag ));
+      var arr = $(document.getElementById( "UID" + g_generateTag ));
       do
       {
          if ( $(arr).length <= 0 ) {
@@ -1268,12 +1272,12 @@ $(function() {
          }
 
          g_generateTag++;
-         arr = $(document.getElementById( "Tag" + g_generateTag ));
-      } while ( stopLoop++ < 100 )
+         arr = $(document.getElementById( "UID" + g_generateTag ));
+      } while ( stopLoop++ < 1000 )
 
-      var tag = "Tag" + g_generateTag;
-   // console.log( "getUniqueId: " + tag );
-      return tag;
+      var uniqueId = "UID" + g_generateTag;
+   // console.log( "getUniqueId: " + uniqueId );
+      return uniqueId;
    }
 
    function updatePositionStatus( el, offset_top, offset_left, message ) {
@@ -1668,46 +1672,40 @@ $(function() {
             var entityAttr;
             var n;
             var entity;
-            var fullKey;
             var key;
             var value;
+            var prefix = sectionType + "." + currentType + ".";
+            var fullKey;
 
-            displayElementData( "mapToSpecialBlockFromBlock Before SectionType: " + sectionType + "." + currentType, g_$current_block );
-            $("input.zeidon-special, select.zeidon-special").each( function() {
+         // displayElementData( "mapToSpecialBlockFromBlock Before SectionType: " + prefix, g_$current_block );
+            $("input.zeidon-special, select.zeidon-special").each( function() {  // mapping from "special element" GUI to DOM data
                entityAttr = $(this).data( "zmap" );
                if ( entityAttr ) {
                   n = entityAttr.indexOf( ".z_" );
                   entity = entityAttr.substring( 0, n );
                   if ( entity === "block" ) {
                      key = entityAttr.substring( n + 1 );
-                     fullKey = sectionType + "." + currentType + "." + key;
                      if ( key === "z_^text^color" ) {
-                     // console.log( "Processing color1" );
                         value = getColorPickerByRGB( $(this).val() );
                      } else {
                         value = this.type === "checkbox" ? (this.checked === true ? "Y" : "") : $(this).val();
                      }
-                     console.log( "Processing To zeidon-special entityAttr: " + fullKey + "   Value: " + value );
-                  // if ( key in g_$current_block.data() ) {  // I think it's okay to keep these hanging around //, but removing for now
-                  //    g_$current_block.removeData( key );
-                  //    console.log( "Removing key in block " + key + "   adding full key: " + fullKey );
-                  // }
-                     g_$current_block.data( fullKey, value );
+                     g_$current_block.data( key, value );
                   }
                }
             });
 
-         // var section = zeidonAttributeToKey( sectionType ) + "." + currentType + ".";
-            var section = sectionType + "." + currentType + ".";
+            // Change special block attributes to have the full name (including section type and current type).  Note that it's possible
+            // this could have been done in the above loop, but doing it here for clarity.
             $.each( g_SpecialBlockAttrList, function( index, attributeName ) {
-               var specialBlockAttribute = section + attributeName;
+               fullKey = prefix + attributeName;
                if ( attributeName in g_$current_block.data() ) {
-                  console.log( "ToSpecial: " + attributeName + "  to: " + specialBlockAttribute + "  current: " + g_$current_block.data( attributeName ) );
-                  g_$current_block.data( specialBlockAttribute, g_$current_block.data( attributeName ) );
-               // g_$current_block.removeData( attributeName );  I think it's okay to keep these hanging around
+               // console.log( "ToSpecial: " + attributeName + "  to: " + fullKey + "  current: " + g_$current_block.data( attributeName ) );
+                  g_$current_block.data( fullKey, g_$current_block.data( attributeName ) );
+                  g_$current_block.removeData( attributeName );  // I think it's okay to keep these hanging around, but removing
                }
             });
-            displayElementData( "mapToSpecialBlockFromBlock After", g_$current_block );
+         // displayElementData( "mapToSpecialBlockFromBlock After", g_$current_block );
          }
       }
    }
@@ -1718,12 +1716,12 @@ $(function() {
          var sectionType = g_$current_block.data( "z_^l^l^d_^section^type" );
          if ( sectionType ) {
          // var section = zeidonAttributeToKey( sectionType ) + "." + currentType + ".";
-            var section = sectionType + "." + currentType + ".";
-            displayElementData( "Before mapFromSpecialBlockToBlock section: " + section, g_$current_block );
+            var prefix = sectionType + "." + currentType + ".";
+         // displayElementData( "Before mapFromSpecialBlockToBlock section: " + section, g_$current_block );
             $.each( g_SpecialBlockAttrList, function( index, attributeName ) {
-               var specialBlockAttribute = section + attributeName;
+               var specialBlockAttribute = prefix + attributeName;
                if ( specialBlockAttribute in g_$current_block.data() ) {
-                  console.log( "FromSpecial: " + attributeName + "  from: " + specialBlockAttribute + "  current: " + g_$current_block.data( specialBlockAttribute ) );
+               // console.log( "FromSpecial: " + attributeName + "  from: " + specialBlockAttribute + "  current: " + g_$current_block.data( specialBlockAttribute ) );
                   g_$current_block.data( attributeName, g_$current_block.data( specialBlockAttribute ) );
                   g_$current_block.removeData( specialBlockAttribute );
                }
@@ -1742,9 +1740,9 @@ $(function() {
                   entity = entityAttr.substring( 0, n );
                   if ( entity === "block" ) {
                      key = entityAttr.substring( n + 1 );
-                     fullKey = section + key;
+                     fullKey = prefix + key;
                      value = g_$current_block.data( key );
-                     console.log( "Processing From zeidon-special block full key: " + fullKey + "   Value: " + value );
+                  // console.log( "Processing From zeidon-special block full key: " + fullKey + "   Value: " + value );
                      if ( ! value ) {
                         value = "";
                      }
@@ -1756,8 +1754,7 @@ $(function() {
                   }
                }
             });
-
-            displayElementData( "After mapFromSpecialBlockToBlock", g_$current_block );
+         // displayElementData( "After mapFromSpecialBlockToBlock", g_$current_block );
          }
       }
    }
@@ -1792,6 +1789,8 @@ $(function() {
 
    $("#zSectionType")
       .change( function() {
+         mapUiDataToElementData( g_$current_block, false );
+
          var val = $(this).val();
          if ( val === "" ) {
             val = "?";
@@ -1809,6 +1808,8 @@ $(function() {
       // g_$current_block.text( $('#zSectionType').val() );  this wipes out all child nodes of the div ... but the complicated next line works where
       // nodeType === 3 restricts this to TEXT_NODE.
          g_$current_block.contents().filter( function() { return this.nodeType === 3; }).replaceWith( val );
+
+         mapElementDataToUiData( g_$current_block );
       });
 
 // $("#label").niceScroll({touchbehavior:false,cursorcolor:"#00F",cursoropacitymax:0.7,cursorwidth:6,background:"#ccc",autohidemode:false});
@@ -1864,7 +1865,7 @@ $(function() {
    });
 
    function selectPage( value ) {
-      mapUiDataToElementData( $("#page") );
+      mapUiDataToElementData( $("#page"), true );
       $("#page").attr( "id", "page" + g_currentPage ).attr( "name", "page" + g_currentPage ).removeClass( "page_active" ).addClass( "page_hidden" ).hide();
       $("#page" + value).attr( "id", "page" ).attr( "name", "page" ).removeClass( "page_hidden" ).addClass( "page_active" ).show();
       g_currentPage = value;
@@ -1988,9 +1989,9 @@ $(function() {
 
 function ConvertWysiwygLabelDesignToZeidonJson( action, viewName, callback_func, $block, jsonString ) {
    var reuseBlockName = "";
-   var tag = "";
+   var uniqueId = "";
    if ( $block ) {
-      tag = $block.data( "z_^tag" );
+      uniqueId = $block.data( "z_^tag" );
    }
    if ( action === "applyReusableBlock" ) {
       reuseBlockName = $("#zReusableBlocks").val();
@@ -2008,7 +2009,7 @@ function ConvertWysiwygLabelDesignToZeidonJson( action, viewName, callback_func,
       try {
          // Assign handlers immediately after making the request and remember the jqxhr object for this request
          // Retrieve the JSON version of the label from Zeidon (on the server) in a saved LLD.
-         var url = "labeldesigner?action=" + action + "&viewName=" + escape( viewName ) + "&blockTag=" + escape( tag ) + "&blockName=" + escape( reuseBlockName ) + "&parms=" + escape( jsonString );
+         var url = "labeldesigner?action=" + action + "&viewName=" + escape( viewName ) + "&blockTag=" + escape( uniqueId ) + "&blockName=" + escape( reuseBlockName ) + "&parms=" + escape( jsonString );
          $.ajax({ url: url,
                   type: "post", // string defining the HTTP method to use for the request: GET (default) or POST
                   contentType: "application/json; charset=utf-8",
@@ -2384,9 +2385,9 @@ public class FileServer {
             }
             json += " } ]";
          }
-         var tag = $element.attr( "id" );
+         var uniqueId = $element.attr( "id" );
          var map = specialBlockMap.size() > 0 ? specialBlockMap.toString( "BlockMap" ) : "";
-         console.log( "Entity array for element: " + tag + "   " + map );
+         console.log( "Entity array for element: " + uniqueId + "   " + map );
       }
 
       return json;
@@ -2525,11 +2526,11 @@ public class FileServer {
                         jsonLabel += TranslateWysiwygDesignToJsonLabel( null, -1, obj["attributes"], 0, true, false, firstBlock );
                         lastPanel = CheckIfLastSibling( parentArray, parentIdx, "panel" );
                      } else if ( classlist.indexOf( "block" ) >= 0 ) {
-                        var idTag = obj["attributes"]["id"];
-                     // if ( idTag === "Tag102" || idTag === "876" ) {
-                     //    console.log( "idTag: " + idTag );
+                        var uniqueId = obj["attributes"]["id"];
+                     // if ( uniqueId === "UID102" || uniqueId === "UID876" ) {
+                     //    console.log( "Unique Id: " + uniqueId );
                      // }
-                        var $element = $("#" + idTag);
+                        var $element = $("#" + uniqueId);
                         var blockDepth = parseInt( $element.data( "z_^depth" ) );
                         isBlock = true;
                         if ( firstBlock.isFirst || blockDepth > blockRecurse ) {
@@ -2547,7 +2548,7 @@ public class FileServer {
                         lastBlock = CheckIfLastSibling( parentArray, parentIdx, "block" );
                         jsonLabel += TranslateWysiwygDesignToJsonLabel( null, -1, obj["attributes"], 0, true, false, firstBlock );
                      // entityIdx--;
-                     // if ( json.indexOf( "Tag107" ) >= 0 ) {
+                     // if ( json.indexOf( "UID107" ) >= 0 ) {
                         // console.log( "json: " + json );
                         // console.log( obj["content"] );
                         // lastBlock = CheckIfLastBlockSibling( parentArray, parentIdx );
@@ -2728,8 +2729,6 @@ public class FileServer {
 
    function AddHtmlLabelElementAttributes( $root, $parentElement, parentId, obj, entity, depth ) {
    // console.log( "AddHtmlLabelElementAttributes processing entity: " + entity );
-      var $element;
-      var attr = "";
       var style = "style=\"position:absolute;";
       for ( var prop in obj ) {
          if ( typeof obj[prop] === "string" || typeof obj[prop] === "number" ) {
@@ -2754,36 +2753,39 @@ public class FileServer {
       }
 
       var id = obj["ID"];
-      // $(tag).innerHTML = attr + style;
-      if ( entity === "block" || entity === "panel" ) {
-         var name = formatTitle( entity, obj );
-         var tag = obj["Tag"];
-         if ( !tag ) {
-            if ( id === null || id === "" ) {
-               id = getUniqueId();
-               tag = id;
-            } else {
-               tag = "Tag" + id;
-            }
+      var uniqueId = obj["Tag"];
+      if ( !uniqueId ) {
+         if ( id === null || id === "" ) {
+            uniqueId = getUniqueId();
+         } else {
+            uniqueId = "UID" + id;
          }
-         var identity = "id=\"" + tag + "\" name=\"" + tag + "\" ";
+      }
+      if ( uniqueId.indexOf( "UID" ) === 0 && $.isNumeric( uniqueId.substring( 3 ) ) ) {
+         var uidNbr = parseInt( uniqueId.substring( 3 ) );
+         if ( ! $.isNumeric( uidNbr ) ) {
+            console.log( "AddHtmlLabelElementAttributes invalid uidNbr: " + uidNbr );
+         } else if ( g_generateTag < uidNbr ) {
+            g_generateTag = uidNbr;
+         }
+      }
+
+      var $element;
+      if ( entity === "block" || entity === "panel" ) {
+         var attr = "";  // not sure this is used (properly)?
+         var name = formatTitle( entity, obj );
+         var idname = "id=\"" + uniqueId + "\" name=\"" + uniqueId + "\" ";
          var classes = "class=\"" + entity;
          if ( entity === "panel" ) {
             classes += " block";  // hack to permit panels to resize properly
          }
 
-         if ( tag.indexOf( "Tag" ) === 0 && $.isNumeric( tag.substring( 3 ) ) ) {
-            var tagNbr = parseInt( tag.substring( 3 ) );
-            if ( g_generateTag < tagNbr ) {
-               g_generateTag = tagNbr;
-            }
-         }
          classes += " draggable canvas-element block-element";
 
          // var tab = buildTab( depth, false );
          classes += "\" ";
          style += "background-color: " + getBackgroundColorForDepth( depth ) + "; display: block; float: left; color: " + getColorForDepth( depth ) + "; border: 2px solid; background-position: initial initial; background-repeat: initial initial;\"";
-         var div = "<div " + identity + classes + style + attr + "></div>";
+         var div = "<div " + idname + classes + style + attr + "></div>";
       // console.log( "draggable containment: #" + $root.attr( "id" ) );
       // console.log( "resizeable containment: #" + $root.attr( "id" ) );
          $element = $(div).text( name )
@@ -2808,14 +2810,14 @@ public class FileServer {
             // }
             }
          }
-         addZeidonAttributeToElement( $element, "Tag", tag, true );
+         addZeidonAttributeToElement( $element, "Tag", uniqueId, true );
       // addZeidonAttributeToElement( $element, "DebugEntity", entity, true );  // add this for debugging purposes
 /*
          <div class=\"block draggable ui-widget-content ui-draggable canvas-element block-element ui-resizable\" style=\"position: absolute; top: 51px; left: 212px; height: 100px; width: 100px; background-color: rgb(204, 255, 204); display: block; float: left; color: rgb(255, 0, 0); border: 2px solid; background-position: initial initial; background-repeat: initial initial;\" id=\"Tag110\" name=\"Tag110\" z_^depth=\"1\">
 
          <div class=\"block draggable ui-widget-content ui-draggable canvas-element block-element ui-resizable\" style=\"position: absolute; top: 52px; left: 219px; height: 100px; width: 100px; background-color: rgb(204, 255, 204); display: block; float: left; color: rgb(255, 0, 0); border: 2px solid; background-position: initial initial; background-repeat: initial initial;\" id=\"Tag110\" name=\"Tag110\" z_^depth=\"1\">
             <div style=\"float:bottom\">
-            </div>Tag110
+            </div>UID110
             <div class=\"ui-resizable-handle ui-resizable-e\" style=\"z-index: 90; display: block;\"></div>
             <div class=\"ui-resizable-handle ui-resizable-s\" style=\"z-index: 90; display: block;\"></div>
             <div class=\"ui-resizable-handle ui-resizable-se ui-icon ui-icon-gripsmall-diagonal-se\" style=\"z-index: 90; display: block;\"></div>
@@ -2831,7 +2833,7 @@ public class FileServer {
             throw new Error( "The JSON object contains an unexpected entity: " + entity );
          }
       // style += "\"";
-      // $element.innerHTML = identity + style;
+      // $element.innerHTML = idname + style;
          for ( var prop in obj ) {
             if ( typeof obj[prop] === "string" || typeof obj[prop] === "number" ) {
             // if ( prop === "Tag" || prop === "Top" || prop === "Left" || prop === "Height" || prop === "Width" )  {
@@ -2843,7 +2845,7 @@ public class FileServer {
          }
       }
 
-      addZeidonAttributeToElement( $element, "wID", (id === null || id === "") ? tag : id, true );
+      addZeidonAttributeToElement( $element, "wID", (id === null || id === "") ? uniqueId.substring( 3 ) : id, true );
       addZeidonAttributeToElement( $element, "Depth", depth, true );
       return $element;
    }
@@ -3414,7 +3416,7 @@ public class FileServer {
          // g_jsonLabel1 = jsonStringToJsonObject( g_JsonNewLabel );
          // g_jsonLabel2 = jsonStringToJsonObject( g_JsonNewLabelA );
          // g_ViewNameMap.setNameForView( g_jsonLabel1, "dks1_viewname" );
-         //g_ViewNameMap.setNameForView( g_jsonLabel2, "dks2_viewname" );
+         // g_ViewNameMap.setNameForView( g_jsonLabel2, "dks2_viewname" );
          // var cursorsLabel = g_ViewNameMap.getViewByName( "dks1_viewname" );
          // console.log( "getViewByName found: " + cursorsLabel );
             var myWindow = openDebugWin();

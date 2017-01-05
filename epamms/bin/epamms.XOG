@@ -1,4 +1,4 @@
-z1000-Zeidon    EPAMMS   TZZOXOGO                         11/10/16   20:55:50 1.0a2   
+z1000-Zeidon    EPAMMS   TZZOXOGO                         12/28/16   13:16:30 1.0a2   
 eTZZOXOGO  1
 aNAME      epamms
 
@@ -29,6 +29,26 @@ aDATATYPE  S
 ePARAMETER 4
 aNAME      MaxRecordLth
 aDATATYPE  L
+
+eOPERATION 3
+aNAME      RemovePairedCharactersFromString
+aTYPE      G
+
+ePARAMETER 4
+aNAME      String
+aDATATYPE  S
+
+ePARAMETER 4
+aNAME      OpenChar
+aDATATYPE  S
+
+ePARAMETER 4
+aNAME      CloseChar
+aDATATYPE  S
+
+ePARAMETER 4
+aNAME      EnclosingOnly
+aDATATYPE  S
 
 eOPERATION 3
 aNAME      ConvertHtmlEntities

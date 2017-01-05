@@ -1,7 +1,7 @@
-z1000-Zeidon    MSPLDEF  TZZOLODO                         12/23/16   13:37:54 1.0a2   
+z1000-Zeidon    MSPLDEF  TZZOLODO                         01/04/17   20:05:12 1.0a2   
 eLOD       1
 aZKey      69082112
-aNextZKeyToAssign 130002503
+aNextZKeyToAssign 130002509
 aName      mSPLDef
 aDesc      Subregistrant Physical Label Maintenance
 aActivateConstraint Y
@@ -7890,12 +7890,15 @@ aZKey      130002081
 aCreate    Y
 aDelete    Y
 aUpdate    Y
-aInclude   N
+aInclude   Y
 aInclSrc   Y
-aExclude   N
+aExclude   Y
 aRecursive N
-aDerived   N
+aDerived   Y
+aWork      N
 aParentDeleteBehave D
+aDupEntityInstance N
+aDupRelationshipInstance N
 aRelLinkIndicator L
 aSeqNo     0
 
@@ -7992,7 +7995,7 @@ aZKey      120088314
 aCreate    Y
 aDelete    Y
 aUpdate    Y
-aInclude   N
+aInclude   Y
 aInclSrc   Y
 aExclude   N
 aRecursive N
@@ -16137,7 +16140,7 @@ eER_RelLink 3
 eER_RelType 4
 
 eLOD_Entity 2
-awkSelectedAttributeForDragSort 8
+awkSelectedAttributeForDragSort 21
 
 eLOD_Attribute 3
 awkSequence 1
@@ -17090,7 +17093,7 @@ eER_RelLink 3
 eER_RelType 4
 
 eLOD_Entity 2
-awkSelectedAttributeForDragSort 3
+awkSelectedAttributeForDragSort 4
 
 eLOD_Attribute 3
 awkSequence 1
@@ -17721,7 +17724,7 @@ eER_RelLink 3
 eER_RelType 4
 
 eLOD_Entity 2
-awkSelectedAttributeForDragSort 19
+awkSelectedAttributeForDragSort 55
 
 eLOD_Attribute 3
 awkSequence 1
@@ -18129,7 +18132,7 @@ eER_RelLink 3
 eER_RelType 4
 
 eLOD_Entity 2
-awkSelectedAttributeForDragSort 53
+awkSelectedAttributeForDragSort 48
 
 eLOD_Attribute 3
 awkSequence 1
@@ -22384,13 +22387,13 @@ i1365      25
 i1368      8
 i1377      78
 i1383      84
-i1386      14
+i1386      78
 i1389      14
 i1392      14
 i1395      14
 i1398      14
 i1401      14
-i1404      14
+i1404      78
 i1407      14
 i1410      14
 i1413      14
@@ -22398,7 +22401,7 @@ i1416      14
 i1419      14
 i1422      14
 i1424      55
-i1427      14
+i1427      78
 i1429      55
 i1432      84
 i1442      8
@@ -24563,7 +24566,7 @@ i4539      1382
 i4540      84
 i4541      1384
 i4542      1385
-i4543      14
+i4543      78
 i4544      1387
 i4545      1388
 i4546      14
@@ -24581,7 +24584,7 @@ i4557      1400
 i4558      14
 i4559      1402
 i4560      1403
-i4561      14
+i4561      78
 i4562      1405
 i4563      1406
 i4564      14
@@ -24607,7 +24610,7 @@ i4583      1423
 i4584      55
 i4585      1425
 i4586      1426
-i4587      14
+i4587      78
 i4588      1428
 i4589      55
 i4590      1433

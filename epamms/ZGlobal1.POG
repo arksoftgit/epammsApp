@@ -1,7 +1,7 @@
-z1000-Zeidon    ZGLOBAL1 TZOGSRCO                         11/10/16   20:55:50 1.0a2   
+z1000-Zeidon    ZGLOBAL1 TZOGSRCO                         12/28/16   13:16:29 1.0a2   
 eGlobalOperationGroup 1
 aZKey      89816452
-aNextZKeyToAssign 110040720
+aNextZKeyToAssign 110040725
 aName      ZGlobal1
 aDesc      Global Operations in C
 aExtension C
@@ -50,6 +50,40 @@ aDataType  L
 aPFlag     N
 aUFlag     N
 aZKey      89816458
+
+eOperation 2
+aName      RemovePairedCharactersFromString
+aZKey      110040721
+aType      G
+aReturnDataType N
+
+eParameter 3
+aShortDesc String
+aDataType  S
+aPFlag     Y
+aUFlag     N
+aZKey      110040722
+
+eParameter 3
+aShortDesc OpenChar
+aDataType  S
+aPFlag     N
+aUFlag     N
+aZKey      110040723
+
+eParameter 3
+aShortDesc CloseChar
+aDataType  S
+aPFlag     N
+aUFlag     N
+aZKey      110040724
+
+eParameter 3
+aShortDesc EnclosingOnly
+aDataType  S
+aPFlag     N
+aUFlag     N
+aZKey      110040725
 
 eOperation 2
 aName      ConvertHtmlEntities

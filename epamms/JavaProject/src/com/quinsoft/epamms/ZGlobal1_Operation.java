@@ -55,6 +55,7 @@ import com.quinsoft.zeidon.zeidonoperations.ActiveDirectory;
 import java.util.List;
 import java.util.LinkedList;
 import java.util.ArrayList;
+import java.util.Stack;
 
 
 /**
@@ -1163,6 +1164,73 @@ public class ZGlobal1_Operation extends VmlOperation
       return 0;
 
    } // RemoveLeadingZerosFromAttrib
+
+   ////////////////////////////////////////////////////////////////////////////////////////////////////
+   //
+   //  Method Name: RemovePairedCharactersFromString
+   //
+   public int
+   RemovePairedCharactersFromString( StringBuilder sb,
+                                     String openChar,
+                                     String closeChar,
+                                     String enclosingOnly )
+   {
+      String s = sb.toString();  // hold on to original
+      char chOpen = openChar.charAt( 0 );
+      char chClose = closeChar.charAt( 0 );
+      int nLth;
+
+      nLth = sb.length();
+      if ( nLth > 0 )
+      {
+         if ( enclosingOnly.equalsIgnoreCase( "Y" ) )
+         {
+            if ( sb.charAt( 0 ) == openChar.charAt( 0 ) && sb.charAt( nLth - 1 ) == closeChar.charAt( 0 ) )
+            {
+               sb.deleteCharAt( nLth - 1 );
+               sb.deleteCharAt( 0 );
+            }
+         } else {
+            Stack<Integer> stack = new Stack<Integer>();
+            for ( int k = 0; k < sb.length(); k++ )
+            {
+               char ch = sb.charAt( k );
+               if ( ch == chOpen )
+               {
+                  stack.push( k );
+               }
+
+               if ( ch == chClose )
+               {
+                  if ( stack.isEmpty() )
+                  {
+                     sb.setLength( 0 );
+                     sb.append( s );
+                     return -nLth;
+                  }
+                  sb.deleteCharAt( k );
+                  k = stack.pop();
+                  sb.deleteCharAt( k );
+                  if ( stack.isEmpty() )
+                  {
+                     k--;
+                  } else {
+                     k = stack.peek();
+                  }
+               }
+            }
+            if ( stack.isEmpty() == false )
+            {
+               sb.setLength( 0 );
+               sb.append( s );
+               return -nLth;
+            }
+         }
+      }
+
+      return sb.length();
+
+   } // RemovePairedCharactersFromString
 
    /** doesn't seem to be used in Zencas (that's a good thing).
    ////////////////////////////////////////////////////////////////////////////////////////////////////

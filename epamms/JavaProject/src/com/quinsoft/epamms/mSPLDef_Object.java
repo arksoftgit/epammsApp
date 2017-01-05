@@ -5819,7 +5819,7 @@ omSPLDef_ProcessPDF_Blocks( View     mSPLDef,
                            else
                            { 
 
-                              //:// PHYSICAL HAZARD
+                              //:// ENVIRONMENTAL/PHYSICAL HAZARD
                               //:IF szSectionType = "EnvironmentalHazard"
                               if ( ZeidonStringCompare( szSectionType, 1, 0, "EnvironmentalHazard", 1, 0, 51 ) == 0 )
                               { 
@@ -7165,7 +7165,7 @@ omSPLDef_GeneratePDF_DFU( View     mSPLDef,
       //://    {{Usage}}
       //://    {{Claim}}
       //://    {{Surface}}
-      //://    {{Location}}
+      //://    {{Location}}  {{Area Of Use}}
       //://    {{Application Type}}
       //://    {{Product Name}}
       //://    {{Master Product}}
@@ -7757,8 +7757,7 @@ omSPLDef_GeneratePDF_DFU( View     mSPLDef,
                //:TraceLineS( "Checking Continuation To Block ID: ",  szDebugMsg )
                TraceLineS( "Checking Continuation To Block ID: ", szDebugMsg );
 
-
-               //://IF mSPLDefPDF.LLD_Block.ContinuationBlockFlag = "Y"
+               //:// IF mSPLDefPDF.LLD_Block.ContinuationBlockFlag = "Y"
                //:   szBlockContinuationType = "B"
                 {StringBuilder sb_szBlockContinuationType;
                if ( szBlockContinuationType == null )
@@ -7767,15 +7766,15 @@ omSPLDef_GeneratePDF_DFU( View     mSPLDef,
                   sb_szBlockContinuationType = new StringBuilder( szBlockContinuationType );
                               ZeidonStringCopy( sb_szBlockContinuationType, 1, 0, "B", 1, 0, 2 );
                szBlockContinuationType = sb_szBlockContinuationType.toString( );}
-               //://ELSE
-               //:   //szBlockContinuationType = "P"
-               //:   //SET CURSOR PREVIOUS mSPLDefPDF.LLD_Block     // We need to undo the set cursor next above.
-               //://END
+               //:// ELSE
+               //:// szBlockContinuationType = "P"
+               //:// SET CURSOR PREVIOUS mSPLDefPDF.LLD_Block     // We need to undo the set cursor next above.
+               //:// END
                //:ELSE
             } 
             else
             { 
-               //:   szBlockContinuationType = "P"
+               //:szBlockContinuationType = "P"
                 {StringBuilder sb_szBlockContinuationType;
                if ( szBlockContinuationType == null )
                   sb_szBlockContinuationType = new StringBuilder( 32 );
@@ -7785,8 +7784,8 @@ omSPLDef_GeneratePDF_DFU( View     mSPLDef,
                szBlockContinuationType = sb_szBlockContinuationType.toString( );}
             } 
 
-            //:   // SET CURSOR PREVIOUS mSPLDefPDF.LLD_Block     // We need to undo the set cursor next above.
-            //:   END
+            //:// SET CURSOR PREVIOUS mSPLDefPDF.LLD_Block     // We need to undo the set cursor next above.
+            //:END
             //:DropView( mSPLDefContinue )
             DropView( mSPLDefContinue );
 
@@ -7899,7 +7898,7 @@ omSPLDef_GeneratePDF_DFU( View     mSPLDef,
                //://        IssueError( mSPLDef,0,0, "stop" )
                //://     END
                //://     TraceLineS( "##########********** szStatementName: ", szStatementName )
-               //://SET CURSOR PREVIOUS mSPLDefPDF.LLD_Block     // We need to undo the set cursor next above.
+               //:// SET CURSOR PREVIOUS mSPLDefPDF.LLD_Block     // We need to undo the set cursor next above.
                //:ELSE
             } 
             else
@@ -7964,7 +7963,7 @@ omSPLDef_GeneratePDF_DFU( View     mSPLDef,
          } 
 
 
-         //:   //DropView( mSPLDefPanelLevel )
+         //:// DropView( mSPLDefPanelLevel )
          //:END
       } 
 
@@ -8066,19 +8065,21 @@ omSPLDef_GeneratePDF_ClmList( View     mSPLDef,
    int      lTempInteger_8 = 0;
    int      lTempInteger_9 = 0;
    int      lTempInteger_10 = 0;
-   String   szTempString_1 = null;
    int      lTempInteger_11 = 0;
    int      lTempInteger_12 = 0;
+   String   szTempString_1 = null;
    int      lTempInteger_13 = 0;
    int      lTempInteger_14 = 0;
+   int      lTempInteger_15 = 0;
+   int      lTempInteger_16 = 0;
    double  dTempDecimal_0 = 0.0;
    double  dTempDecimal_1 = 0.0;
-   int      lTempInteger_15 = 0;
+   int      lTempInteger_17 = 0;
    double  dTempDecimal_2 = 0.0;
    double  dTempDecimal_3 = 0.0;
    double  dTempDecimal_4 = 0.0;
    double  dTempDecimal_5 = 0.0;
-   int      lTempInteger_16 = 0;
+   int      lTempInteger_18 = 0;
 
 
    //:// Generate PDF for a "Directory of Use" or "Marketing" Section.
@@ -8265,16 +8266,32 @@ omSPLDef_GeneratePDF_ClmList( View     mSPLDef,
                                GetIntegerFromAttribute( mi_lTempInteger_6, mSPLDef, "SPLD_UsageFootnoteUsed", "ID" );
                lTempInteger_6 = mi_lTempInteger_6.intValue( );}
                RESULT = SetCursorFirstEntityByInteger( mSPLDef, "SPLD_UsageFootnote", "ID", lTempInteger_6, "" );
-               //:szFootnoteNumber = mSPLDef.SPLD_UsageFootnote.wFootNoteRelativeNumber
+               //:szFootnoteNumber = mSPLDef.SPLD_UsageFootnote.Symbol
                {MutableInt mi_lTempInteger_7 = new MutableInt( lTempInteger_7 );
                StringBuilder sb_szFootnoteNumber;
                if ( szFootnoteNumber == null )
                   sb_szFootnoteNumber = new StringBuilder( 32 );
                else
                   sb_szFootnoteNumber = new StringBuilder( szFootnoteNumber );
-                               GetVariableFromAttribute( sb_szFootnoteNumber, mi_lTempInteger_7, 'S', 4, mSPLDef, "SPLD_UsageFootnote", "wFootNoteRelativeNumber", "", 0 );
+                               GetVariableFromAttribute( sb_szFootnoteNumber, mi_lTempInteger_7, 'S', 4, mSPLDef, "SPLD_UsageFootnote", "Symbol", "", 0 );
                lTempInteger_7 = mi_lTempInteger_7.intValue( );
                szFootnoteNumber = sb_szFootnoteNumber.toString( );}
+               //:IF szFootnoteNumber = ""
+               if ( ZeidonStringCompare( szFootnoteNumber, 1, 0, "", 1, 0, 4 ) == 0 )
+               { 
+                  //:szFootnoteNumber = mSPLDef.SPLD_UsageFootnote.wFootNoteRelativeNumber
+                  {MutableInt mi_lTempInteger_8 = new MutableInt( lTempInteger_8 );
+                  StringBuilder sb_szFootnoteNumber;
+                  if ( szFootnoteNumber == null )
+                     sb_szFootnoteNumber = new StringBuilder( 32 );
+                  else
+                     sb_szFootnoteNumber = new StringBuilder( szFootnoteNumber );
+                                     GetVariableFromAttribute( sb_szFootnoteNumber, mi_lTempInteger_8, 'S', 4, mSPLDef, "SPLD_UsageFootnote", "wFootNoteRelativeNumber", "", 0 );
+                  lTempInteger_8 = mi_lTempInteger_8.intValue( );
+                  szFootnoteNumber = sb_szFootnoteNumber.toString( );}
+               } 
+
+               //:END
                //:szCombinedName = szCombinedName + "<sup> " + szFootnoteNumber + "</sup>"
                 {StringBuilder sb_szCombinedName;
                if ( szCombinedName == null )
@@ -8419,24 +8436,24 @@ omSPLDef_GeneratePDF_ClmList( View     mSPLDef,
    { 
       //:// Specific Breaks have been specified.
       //:szBreakName1 = mSPLDefPDF.LLD_Block.UsageColumn1BreakName
-      {MutableInt mi_lTempInteger_8 = new MutableInt( lTempInteger_8 );
+      {MutableInt mi_lTempInteger_9 = new MutableInt( lTempInteger_9 );
       StringBuilder sb_szBreakName1;
       if ( szBreakName1 == null )
          sb_szBreakName1 = new StringBuilder( 32 );
       else
          sb_szBreakName1 = new StringBuilder( szBreakName1 );
-             GetVariableFromAttribute( sb_szBreakName1, mi_lTempInteger_8, 'S', 51, mSPLDefPDF, "LLD_Block", "UsageColumn1BreakName", "", 0 );
-      lTempInteger_8 = mi_lTempInteger_8.intValue( );
+             GetVariableFromAttribute( sb_szBreakName1, mi_lTempInteger_9, 'S', 51, mSPLDefPDF, "LLD_Block", "UsageColumn1BreakName", "", 0 );
+      lTempInteger_9 = mi_lTempInteger_9.intValue( );
       szBreakName1 = sb_szBreakName1.toString( );}
       //:szBreakName2 = mSPLDefPDF.LLD_Block.UsageColumn2BreakName
-      {MutableInt mi_lTempInteger_9 = new MutableInt( lTempInteger_9 );
+      {MutableInt mi_lTempInteger_10 = new MutableInt( lTempInteger_10 );
       StringBuilder sb_szBreakName2;
       if ( szBreakName2 == null )
          sb_szBreakName2 = new StringBuilder( 32 );
       else
          sb_szBreakName2 = new StringBuilder( szBreakName2 );
-             GetVariableFromAttribute( sb_szBreakName2, mi_lTempInteger_9, 'S', 51, mSPLDefPDF, "LLD_Block", "UsageColumn2BreakName", "", 0 );
-      lTempInteger_9 = mi_lTempInteger_9.intValue( );
+             GetVariableFromAttribute( sb_szBreakName2, mi_lTempInteger_10, 'S', 51, mSPLDefPDF, "LLD_Block", "UsageColumn2BreakName", "", 0 );
+      lTempInteger_10 = mi_lTempInteger_10.intValue( );
       szBreakName2 = sb_szBreakName2.toString( );}
       //:CurrentColumnNumber = 1
       CurrentColumnNumber = 1;
@@ -8515,16 +8532,32 @@ omSPLDef_GeneratePDF_ClmList( View     mSPLDef,
    RESULT = SetCursorFirstEntity( mSPLDef, "SPLD_UsageFootnote", "" );
    while ( RESULT > zCURSOR_UNCHANGED )
    { 
-      //:szFootnoteNumber = mSPLDef.SPLD_UsageFootnote.wFootNoteRelativeNumber
-      {MutableInt mi_lTempInteger_10 = new MutableInt( lTempInteger_10 );
+      //:szFootnoteNumber = mSPLDef.SPLD_UsageFootnote.Symbol
+      {MutableInt mi_lTempInteger_11 = new MutableInt( lTempInteger_11 );
       StringBuilder sb_szFootnoteNumber;
       if ( szFootnoteNumber == null )
          sb_szFootnoteNumber = new StringBuilder( 32 );
       else
          sb_szFootnoteNumber = new StringBuilder( szFootnoteNumber );
-             GetVariableFromAttribute( sb_szFootnoteNumber, mi_lTempInteger_10, 'S', 4, mSPLDef, "SPLD_UsageFootnote", "wFootNoteRelativeNumber", "", 0 );
-      lTempInteger_10 = mi_lTempInteger_10.intValue( );
+             GetVariableFromAttribute( sb_szFootnoteNumber, mi_lTempInteger_11, 'S', 4, mSPLDef, "SPLD_UsageFootnote", "Symbol", "", 0 );
+      lTempInteger_11 = mi_lTempInteger_11.intValue( );
       szFootnoteNumber = sb_szFootnoteNumber.toString( );}
+      //:IF szFootnoteNumber = ""
+      if ( ZeidonStringCompare( szFootnoteNumber, 1, 0, "", 1, 0, 4 ) == 0 )
+      { 
+         //:szFootnoteNumber = mSPLDef.SPLD_UsageFootnote.wFootNoteRelativeNumber
+         {MutableInt mi_lTempInteger_12 = new MutableInt( lTempInteger_12 );
+         StringBuilder sb_szFootnoteNumber;
+         if ( szFootnoteNumber == null )
+            sb_szFootnoteNumber = new StringBuilder( 32 );
+         else
+            sb_szFootnoteNumber = new StringBuilder( szFootnoteNumber );
+                   GetVariableFromAttribute( sb_szFootnoteNumber, mi_lTempInteger_12, 'S', 4, mSPLDef, "SPLD_UsageFootnote", "wFootNoteRelativeNumber", "", 0 );
+         lTempInteger_12 = mi_lTempInteger_12.intValue( );
+         szFootnoteNumber = sb_szFootnoteNumber.toString( );}
+      } 
+
+      //:END
       //:szFootnoteText = "<sup> " + szFootnoteNumber + "</sup>" + mSPLDef.SPLD_UsageFootnote.Text
        {StringBuilder sb_szFootnoteText;
       if ( szFootnoteText == null )
@@ -8547,14 +8580,14 @@ omSPLDef_GeneratePDF_ClmList( View     mSPLDef,
          sb_szFootnoteText = new StringBuilder( szFootnoteText );
             ZeidonStringConcat( sb_szFootnoteText, 1, 0, "</sup>", 1, 0, 101 );
       szFootnoteText = sb_szFootnoteText.toString( );}
-      {MutableInt mi_lTempInteger_11 = new MutableInt( lTempInteger_11 );
+      {MutableInt mi_lTempInteger_13 = new MutableInt( lTempInteger_13 );
       StringBuilder sb_szTempString_1;
       if ( szTempString_1 == null )
          sb_szTempString_1 = new StringBuilder( 32 );
       else
          sb_szTempString_1 = new StringBuilder( szTempString_1 );
-             GetVariableFromAttribute( sb_szTempString_1, mi_lTempInteger_11, 'S', 255, mSPLDef, "SPLD_UsageFootnote", "Text", "", 0 );
-      lTempInteger_11 = mi_lTempInteger_11.intValue( );
+             GetVariableFromAttribute( sb_szTempString_1, mi_lTempInteger_13, 'S', 255, mSPLDef, "SPLD_UsageFootnote", "Text", "", 0 );
+      lTempInteger_13 = mi_lTempInteger_13.intValue( );
       szTempString_1 = sb_szTempString_1.toString( );}
        {StringBuilder sb_szFootnoteText;
       if ( szFootnoteText == null )
@@ -8645,14 +8678,14 @@ omSPLDef_GeneratePDF_ClmList( View     mSPLDef,
       //:mSPLDef2.LLD_Block.Top = mSPLDefPDF.LLD_SpecialSectionAttrBlock.MarginTop
       SetAttributeFromAttribute( mSPLDef2, "LLD_Block", "Top", mSPLDefPDF, "LLD_SpecialSectionAttrBlock", "MarginTop" );
       //:szColumnTop = mSPLDef2.LLD_Block.Top
-      {MutableInt mi_lTempInteger_12 = new MutableInt( lTempInteger_12 );
+      {MutableInt mi_lTempInteger_14 = new MutableInt( lTempInteger_14 );
       StringBuilder sb_szColumnTop;
       if ( szColumnTop == null )
          sb_szColumnTop = new StringBuilder( 32 );
       else
          sb_szColumnTop = new StringBuilder( szColumnTop );
-             GetVariableFromAttribute( sb_szColumnTop, mi_lTempInteger_12, 'S', 33, mSPLDef2, "LLD_Block", "Top", "", 0 );
-      lTempInteger_12 = mi_lTempInteger_12.intValue( );
+             GetVariableFromAttribute( sb_szColumnTop, mi_lTempInteger_14, 'S', 33, mSPLDef2, "LLD_Block", "Top", "", 0 );
+      lTempInteger_14 = mi_lTempInteger_14.intValue( );
       szColumnTop = sb_szColumnTop.toString( );}
       //:// The MarginTop of LLD_SpecialSectionAttrBlock is used only for specifying the BlockContainer holding the individual entries
       //:// within a column, but not for each entry within a column. Thus we need set two different values, the Original TopMargin
@@ -8664,24 +8697,24 @@ omSPLDef_GeneratePDF_ClmList( View     mSPLDef,
              GetDecimalFromAttribute( md_OriginalTopMargin, mSPLDefPDF, "LLD_SpecialSectionAttrBlock", "MarginTop" );
       OriginalTopMargin = md_OriginalTopMargin.doubleValue( );}
       //:szMarginLeft       = mSPLDefPDF.LLD_SpecialSectionAttrBlock.MarginLeft
-      {MutableInt mi_lTempInteger_13 = new MutableInt( lTempInteger_13 );
+      {MutableInt mi_lTempInteger_15 = new MutableInt( lTempInteger_15 );
       StringBuilder sb_szMarginLeft;
       if ( szMarginLeft == null )
          sb_szMarginLeft = new StringBuilder( 32 );
       else
          sb_szMarginLeft = new StringBuilder( szMarginLeft );
-             GetVariableFromAttribute( sb_szMarginLeft, mi_lTempInteger_13, 'S', 33, mSPLDefPDF, "LLD_SpecialSectionAttrBlock", "MarginLeft", "", 0 );
-      lTempInteger_13 = mi_lTempInteger_13.intValue( );
+             GetVariableFromAttribute( sb_szMarginLeft, mi_lTempInteger_15, 'S', 33, mSPLDefPDF, "LLD_SpecialSectionAttrBlock", "MarginLeft", "", 0 );
+      lTempInteger_15 = mi_lTempInteger_15.intValue( );
       szMarginLeft = sb_szMarginLeft.toString( );}
       //:szMarginRight      = mSPLDefPDF.LLD_SpecialSectionAttrBlock.MarginRight
-      {MutableInt mi_lTempInteger_14 = new MutableInt( lTempInteger_14 );
+      {MutableInt mi_lTempInteger_16 = new MutableInt( lTempInteger_16 );
       StringBuilder sb_szMarginRight;
       if ( szMarginRight == null )
          sb_szMarginRight = new StringBuilder( 32 );
       else
          sb_szMarginRight = new StringBuilder( szMarginRight );
-             GetVariableFromAttribute( sb_szMarginRight, mi_lTempInteger_14, 'S', 33, mSPLDefPDF, "LLD_SpecialSectionAttrBlock", "MarginRight", "", 0 );
-      lTempInteger_14 = mi_lTempInteger_14.intValue( );
+             GetVariableFromAttribute( sb_szMarginRight, mi_lTempInteger_16, 'S', 33, mSPLDefPDF, "LLD_SpecialSectionAttrBlock", "MarginRight", "", 0 );
+      lTempInteger_16 = mi_lTempInteger_16.intValue( );
       szMarginRight = sb_szMarginRight.toString( );}
 
       //:// Create a Block LLD_SpecialSectionAttribute entry containing the characteristics of the Column List entry, except for dropping
@@ -8734,14 +8767,14 @@ omSPLDef_GeneratePDF_ClmList( View     mSPLDef,
    SetAttributeFromDecimal( mSPLDef2, "LLD_Block", "Height", ColumnHeight );
 
    //:szSectionName = mSPLDef.DisplaySection.XML_SectionName
-   {MutableInt mi_lTempInteger_15 = new MutableInt( lTempInteger_15 );
+   {MutableInt mi_lTempInteger_17 = new MutableInt( lTempInteger_17 );
    StringBuilder sb_szSectionName;
    if ( szSectionName == null )
       sb_szSectionName = new StringBuilder( 32 );
    else
       sb_szSectionName = new StringBuilder( szSectionName );
-       GetVariableFromAttribute( sb_szSectionName, mi_lTempInteger_15, 'S', 51, mSPLDef, "DisplaySection", "XML_SectionName", "", 0 );
-   lTempInteger_15 = mi_lTempInteger_15.intValue( );
+       GetVariableFromAttribute( sb_szSectionName, mi_lTempInteger_17, 'S', 51, mSPLDef, "DisplaySection", "XML_SectionName", "", 0 );
+   lTempInteger_17 = mi_lTempInteger_17.intValue( );
    szSectionName = sb_szSectionName.toString( );}
 
    //:// Generate column 1 Block.
@@ -9364,7 +9397,7 @@ omSPLDef_GeneratePDF_ClmList( View     mSPLDef,
    DropObjectInstance( mSPLDef2 );
 
    //:// Build the work object containing each Claim under the appropriate Classification.
-   //:// Type: C - Claim;  S - Surface;  T - Application Type;  U - Location.
+   //:// Type: C - Claim;  S - Surface;  T - Application Type;  U - Location (Area of Use).
    //:// ClaimsClassification: Bacteria; Protozoa; Viruses; Fungi.
    //:// First delete any existing entries.
    //:FOR EACH mSPLDef.SPLDI_ClaimsClassification
@@ -9424,10 +9457,10 @@ omSPLDef_GeneratePDF_ClmList( View     mSPLDef,
          { 
             //:// Check to see if the SPLD_MarketingUsage has already been included under the current ClaimsClassification.
             //:SET CURSOR FIRST mSPLDef.SPLDI_ClaimsUsage WHERE mSPLDef.SPLDI_ClaimsUsage.ID = mSPLDef.SPLD_MarketingUsage.ID
-            {MutableInt mi_lTempInteger_16 = new MutableInt( lTempInteger_16 );
-                         GetIntegerFromAttribute( mi_lTempInteger_16, mSPLDef, "SPLD_MarketingUsage", "ID" );
-            lTempInteger_16 = mi_lTempInteger_16.intValue( );}
-            RESULT = SetCursorFirstEntityByInteger( mSPLDef, "SPLDI_ClaimsUsage", "ID", lTempInteger_16, "" );
+            {MutableInt mi_lTempInteger_18 = new MutableInt( lTempInteger_18 );
+                         GetIntegerFromAttribute( mi_lTempInteger_18, mSPLDef, "SPLD_MarketingUsage", "ID" );
+            lTempInteger_18 = mi_lTempInteger_18.intValue( );}
+            RESULT = SetCursorFirstEntityByInteger( mSPLDef, "SPLDI_ClaimsUsage", "ID", lTempInteger_18, "" );
             //:IF RESULT < zCURSOR_SET
             if ( RESULT < zCURSOR_SET )
             { 
@@ -9571,13 +9604,13 @@ omSPLDef_GeneratePDF_Ingred( View     mSPLDef,
       sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
       ZeidonStringConcat( sb_szWriteBuffer, 1, 0, "<fo:block ", 1, 0, 32001 );
    szWriteBuffer = sb_szWriteBuffer.toString( );}
-   //:AddFormatToSpecialText( mSPLDefPDF, szSectionType, "Title", szWriteBuffer )
+   //:AddFormatToSpecialText( mSPLDefPDF, szSectionType, "Ingredients Title", szWriteBuffer )
    {StringBuilder sb_szWriteBuffer;
    if ( szWriteBuffer == null )
       sb_szWriteBuffer = new StringBuilder( 32 );
    else
       sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
-       omSPLDef_AddFormatToSpecialText( mSPLDefPDF, szSectionType, "Title", sb_szWriteBuffer );
+       omSPLDef_AddFormatToSpecialText( mSPLDefPDF, szSectionType, "Ingredients Title", sb_szWriteBuffer );
    szWriteBuffer = sb_szWriteBuffer.toString( );}
    //:WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
    try
@@ -13797,7 +13830,7 @@ omSPLDef_dFullHazardStatement( View     mSPLDef,
    //:                  STRING ( 32 ) InternalAttribStructure,
    //:                  SHORT GetOrSetFlag )
 
-   //:STRING ( 256 ) szString
+   //:STRING ( 2048 ) szString
 public int 
 omSPLDef_dSelectedHazardStmt( View     mSPLDef,
                               String InternalEntityStructure,
@@ -13805,14 +13838,16 @@ omSPLDef_dSelectedHazardStmt( View     mSPLDef,
                               Integer   GetOrSetFlag )
 {
    String   szString = null;
-   //:STRING ( 256 ) szReplaceString
+   //:STRING ( 2048 ) szReplaceString
    String   szReplaceString = null;
-   //:STRING ( 256 ) szLocation
+   //:STRING ( 2048 ) szLocation
    String   szLocation = null;
    //:SHORT nPosStart
    int      nPosStart = 0;
    //:SHORT nPosEnd
    int      nPosEnd = 0;
+   //:SHORT nLth
+   int      nLth = 0;
    int      lTempInteger_0 = 0;
    int      lTempInteger_1 = 0;
    int      lTempInteger_2 = 0;
@@ -13831,13 +13866,13 @@ omSPLDef_dSelectedHazardStmt( View     mSPLDef,
             sb_szString = new StringBuilder( 32 );
          else
             sb_szString = new StringBuilder( szString );
-                  ZeidonStringCopy( sb_szString, 1, 0, "", 1, 0, 257 );
+                  ZeidonStringCopy( sb_szString, 1, 0, "", 1, 0, 2049 );
          szString = sb_szString.toString( );}
 
          //:// Build Precautionary Statement by inserting correct Location within general statement, so that a
          //:// statement such as, "See {{Precautionary Panel Location}}" for Precautionary Statements and First Aid." becomes
          //:// "See side panel for Precautionary Statements and First Aid."
-         //:IF mSPLDef.SPLD_HumanHazardSection  EXISTS
+         //:IF mSPLDef.SPLD_HumanHazardSection EXISTS
          lTempInteger_0 = CheckExistenceOfEntity( mSPLDef, "SPLD_HumanHazardSection" );
          if ( lTempInteger_0 == 0 )
          { 
@@ -13848,16 +13883,36 @@ omSPLDef_dSelectedHazardStmt( View     mSPLDef,
                sb_szString = new StringBuilder( 32 );
             else
                sb_szString = new StringBuilder( szString );
-                         GetVariableFromAttribute( sb_szString, mi_lTempInteger_1, 'S', 257, mSPLDef, "SPLD_HumanHazardSection", "PrecautionaryStatement", "", 0 );
+                         GetVariableFromAttribute( sb_szString, mi_lTempInteger_1, 'S', 2049, mSPLDef, "SPLD_HumanHazardSection", "PrecautionaryStatement", "", 0 );
             lTempInteger_1 = mi_lTempInteger_1.intValue( );
             szString = sb_szString.toString( );}
-            //:nPosStart  = zSearchSubString( szString, "{{Precautionary Panel Location}}", "f", 0 )
-            nPosStart = zSearchSubString( szString, "{{Precautionary Panel Location}}", "f", 0 );
+            //:nPosStart = zSearchSubString( szString, "[{{Precautionary Panel Location}}]", "f", 0 )
+            nPosStart = zSearchSubString( szString, "[{{Precautionary Panel Location}}]", "f", 0 );
             //:IF nPosStart >= 0
             if ( nPosStart >= 0 )
             { 
-               //:nPosEnd = nPosStart + 32 // length of "{{Precautionary Panel Location}}"
-               nPosEnd = nPosStart + 32;
+               //:nPosEnd = nPosStart + 34 // length of "[{{Precautionary Panel Location}}]"
+               nPosEnd = nPosStart + 34;
+               //:ELSE
+            } 
+            else
+            { 
+               //:nPosStart = zSearchSubString( szString, "{{Precautionary Panel Location}}", "f", 0 )
+               nPosStart = zSearchSubString( szString, "{{Precautionary Panel Location}}", "f", 0 );
+               //:IF nPosStart >= 0
+               if ( nPosStart >= 0 )
+               { 
+                  //:nPosEnd = nPosStart + 32 // length of "{{Precautionary Panel Location}}"
+                  nPosEnd = nPosStart + 32;
+               } 
+
+               //:END
+            } 
+
+            //:END
+            //:IF nPosStart >= 0
+            if ( nPosStart >= 0 )
+            { 
                //:szLocation = mSPLDef.SPLD_HumanHazardSection.PanelLoc
                {MutableInt mi_lTempInteger_2 = new MutableInt( lTempInteger_2 );
                StringBuilder sb_szLocation;
@@ -13865,16 +13920,16 @@ omSPLDef_dSelectedHazardStmt( View     mSPLDef,
                   sb_szLocation = new StringBuilder( 32 );
                else
                   sb_szLocation = new StringBuilder( szLocation );
-                               GetVariableFromAttribute( sb_szLocation, mi_lTempInteger_2, 'S', 257, mSPLDef, "SPLD_HumanHazardSection", "PanelLoc", "", 0 );
+                               GetVariableFromAttribute( sb_szLocation, mi_lTempInteger_2, 'S', 2049, mSPLDef, "SPLD_HumanHazardSection", "PanelLoc", "", 0 );
                lTempInteger_2 = mi_lTempInteger_2.intValue( );
                szLocation = sb_szLocation.toString( );}
-               //:zSearchAndReplace( szLocation, 256, ",", " ")
+               //:zSearchAndReplace( szLocation, 2048, ",", " ")
                {StringBuilder sb_szLocation;
                if ( szLocation == null )
                   sb_szLocation = new StringBuilder( 32 );
                else
                   sb_szLocation = new StringBuilder( szLocation );
-                               zSearchAndReplace( sb_szLocation, 256, ",", " " );
+                               zSearchAndReplace( sb_szLocation, 2048, ",", " " );
                szLocation = sb_szLocation.toString( );}
                //:zReplaceSubString( szString, nPosStart, nPosEnd, szLocation )
                {StringBuilder sb_szString;
@@ -13888,13 +13943,33 @@ omSPLDef_dSelectedHazardStmt( View     mSPLDef,
 
             //:END
 
-            //:nPosStart  = zSearchSubString( szString, "{{Precautionary Label Location}}", "f", 0 )
-            nPosStart = zSearchSubString( szString, "{{Precautionary Label Location}}", "f", 0 );
+            //:nPosStart = zSearchSubString( szString, "[{{Precautionary Label Location}}]", "f", 0 )
+            nPosStart = zSearchSubString( szString, "[{{Precautionary Label Location}}]", "f", 0 );
             //:IF nPosStart >= 0
             if ( nPosStart >= 0 )
             { 
-               //:nPosEnd = nPosStart + 32 // length of "{{Precautionary Label Location}}"
-               nPosEnd = nPosStart + 32;
+               //:nPosEnd = nPosStart + 34 // length of "[{{Precautionary Label Location}}]"
+               nPosEnd = nPosStart + 34;
+               //:ELSE
+            } 
+            else
+            { 
+               //:nPosStart = zSearchSubString( szString, "{{Precautionary Label Location}}", "f", 0 )
+               nPosStart = zSearchSubString( szString, "{{Precautionary Label Location}}", "f", 0 );
+               //:IF nPosStart >= 0
+               if ( nPosStart >= 0 )
+               { 
+                  //:nPosEnd = nPosStart + 32 // length of "{{Precautionary Label Location}}"
+                  nPosEnd = nPosStart + 32;
+               } 
+
+               //:END
+            } 
+
+            //:END
+            //:IF nPosStart >= 0
+            if ( nPosStart >= 0 )
+            { 
                //:szLocation = mSPLDef.SPLD_HumanHazardSection.LabelLoc
                {MutableInt mi_lTempInteger_3 = new MutableInt( lTempInteger_3 );
                StringBuilder sb_szLocation;
@@ -13902,16 +13977,16 @@ omSPLDef_dSelectedHazardStmt( View     mSPLDef,
                   sb_szLocation = new StringBuilder( 32 );
                else
                   sb_szLocation = new StringBuilder( szLocation );
-                               GetVariableFromAttribute( sb_szLocation, mi_lTempInteger_3, 'S', 257, mSPLDef, "SPLD_HumanHazardSection", "LabelLoc", "", 0 );
+                               GetVariableFromAttribute( sb_szLocation, mi_lTempInteger_3, 'S', 2049, mSPLDef, "SPLD_HumanHazardSection", "LabelLoc", "", 0 );
                lTempInteger_3 = mi_lTempInteger_3.intValue( );
                szLocation = sb_szLocation.toString( );}
-               //:zSearchAndReplace( szLocation, 256, ",", " ")
+               //:zSearchAndReplace( szLocation, 2048, ",", " ")
                {StringBuilder sb_szLocation;
                if ( szLocation == null )
                   sb_szLocation = new StringBuilder( 32 );
                else
                   sb_szLocation = new StringBuilder( szLocation );
-                               zSearchAndReplace( sb_szLocation, 256, ",", " " );
+                               zSearchAndReplace( sb_szLocation, 2048, ",", " " );
                szLocation = sb_szLocation.toString( );}
                //:zReplaceSubString( szString, nPosStart, nPosEnd, szLocation )
                {StringBuilder sb_szString;
@@ -13924,6 +13999,19 @@ omSPLDef_dSelectedHazardStmt( View     mSPLDef,
             } 
 
             //:END
+
+            //:RemovePairedCharactersFromString( szString, "{", "}", "" )
+            {
+             ZGlobal1_Operation m_ZGlobal1_Operation = new ZGlobal1_Operation( mSPLDef );
+             {StringBuilder sb_szString;
+            if ( szString == null )
+               sb_szString = new StringBuilder( 32 );
+            else
+               sb_szString = new StringBuilder( szString );
+                         m_ZGlobal1_Operation.RemovePairedCharactersFromString( sb_szString, "{", "}", "" );
+            szString = sb_szString.toString( );}
+             // m_ZGlobal1_Operation = null;  // permit gc  (unnecessary)
+            }
          } 
 
          //:END
@@ -15812,7 +15900,7 @@ omSPLDef_AddFormatToSpecialText( View     mSPLDef,
    //:IF RESULT >= zCURSOR_SET
    if ( RESULT >= zCURSOR_SET )
    { 
-      //:SET CURSOR FIRST mSPLDef.LLD_SpecialSectionAttrBlock WHERE mSPLDef.LLD_SpecialSectionAttrBlock.Name  = SpecialTextTitle
+      //:SET CURSOR FIRST mSPLDef.LLD_SpecialSectionAttrBlock WHERE mSPLDef.LLD_SpecialSectionAttrBlock.Name = SpecialTextTitle
       RESULT = SetCursorFirstEntityByString( mSPLDef, "LLD_SpecialSectionAttrBlock", "Name", SpecialTextTitle, "" );
       //:IF RESULT >= zCURSOR_SET
       if ( RESULT >= zCURSOR_SET )
@@ -17935,7 +18023,7 @@ omSPLDef_BuildUsageEntriesFrSLC( View     mSPLDef,
 
    //:END
 
-   //:// Build Usage Entries (Surface, Application Type, Location, Organism Claim)
+   //:// Build Usage Entries (Surface, Application Type, Location (Area of Use), Organism Claim)
    //:FOR EACH SrcSLC.S_UsageType WITHIN SrcSLC.SubregLabelContent
    RESULT = SetCursorFirstEntity( SrcSLC, "S_UsageType", "SubregLabelContent" );
    while ( RESULT > zCURSOR_UNCHANGED )
@@ -18205,8 +18293,8 @@ omSPLDef_SetUpKeywordEntries( View     mSPLDefBlock,
          if ( ZeidonStringCompare( szSectionType, 1, 0, "Ingredients", 1, 0, 51 ) == 0 )
          { 
             //:// Ingredients
-            //:CheckAddKeywordEntry( mSPLDefBlock, szSectionType, "Title" )
-            omSPLDef_CheckAddKeywordEntry( mSPLDefBlock, szSectionType, "Title" );
+            //:CheckAddKeywordEntry( mSPLDefBlock, szSectionType, "Ingredients Title" )
+            omSPLDef_CheckAddKeywordEntry( mSPLDefBlock, szSectionType, "Ingredients Title" );
             //:CheckAddKeywordEntry( mSPLDefBlock, szSectionType, "Ingredients Items" )
             omSPLDef_CheckAddKeywordEntry( mSPLDefBlock, szSectionType, "Ingredients Items" );
             //:CheckAddKeywordEntry( mSPLDefBlock, szSectionType, "Ingredients Inert" )
@@ -18331,7 +18419,7 @@ omSPLDef_BuildSPLD_FromSPLD( View     NewSPLD,
    //:                 VIEW SourceSPLD BASED ON LOD mSPLDef,
    //:                 VIEW ParentSLC  BASED ON LOD mSubLC )
 
-   //:// Build an new SPLD from a previous SPLD.
+   //:// Build a new SPLD from a previous SPLD.
    //:// Most of the component construction is the same as that in BuildSPLD_FromSLC. Only the LLD subobject is different.
    //:// So, reuse the BuildSPLD_FromSLC operation, then reuse the code for building an LLD section.
 

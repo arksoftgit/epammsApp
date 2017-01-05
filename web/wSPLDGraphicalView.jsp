@@ -688,7 +688,7 @@ else
          float:left;
          position:absolute;
          text-align:left;
-      // overflow: scroll;
+      /* overflow: scroll; */
          background-image: url(images/inch.png);
       }
 
@@ -726,7 +726,7 @@ else
      #zfooter {
           height:30px;
           background: #ccc;
-       // position: fixed;
+       /* position: fixed; */
           bottom:0;
           padding-top:10px;
           width: 100%
@@ -868,7 +868,7 @@ else
                   // Directions for Use:   Header / Title / Text
                   // First Aid:   Header / Title / Text
                   // Human Hazard:  Hazards Warning / Hazards Signal Word / Hazards Precautionary
-                  // Ingredients:   Title / Ingredients Items / Ingredients Inert / Ingredients Total
+                  // Ingredients:   Ingredients Title / Ingredients Items / Ingredients Inert / Ingredients Total
                   // Marketing:   Title / Text / Column List
                   // Default:   Title / Text
 
@@ -1056,7 +1056,7 @@ else
                      // Directions for Use:   Title / Text / Header
                      // First Aid:   Title / Text / Header
                      // Human Hazard:  Hazards Warning / Hazards Signal Word / Hazards Precautionary
-                     // Ingredients:   Title / Ingredients Items / Ingredients Inert / Ingredients Total
+                     // Ingredients:   Ingredients Title / Ingredients Items / Ingredients Inert / Ingredients Total
                      // Marketing:   Title / Text / Column List
                      // Default:   Title / Text
                      -->
