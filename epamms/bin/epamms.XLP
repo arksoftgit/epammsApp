@@ -1,4 +1,4 @@
-z1000-Zeidon    EPAMMS   TZCMLPLO                         03/03/17   19:39:51 1.0a2   
+z1000-Zeidon    EPAMMS   TZCMLPLO                         03/03/17   20:10:59 1.0a2   
 eLPLR      1
 aName      epamms
 aDesc      ePamms Application
@@ -6,7 +6,7 @@ aZKey      4324720
 aPgmSrcDir %kzd%:\lplr\epamms
 aExecDir   %kzd%:\lplr\epamms\bin
 aMetaSrcDir %kzd%:\lplr\epamms
-aTaskUseCount 0
+aTaskUseCount 1
 aLastBuildDate 20170228104819392
 aLPLR_Type 2
 aCurrentCompilerSpec DKS
@@ -2275,8 +2275,8 @@ aStatus    1
 aUpdateInd 2
 aName      wSLC
 aDesc      Subregistrant Label Content
-aLastSyncDate 20170303193951388
-aLastUpdateDate 20170303193951388
+aLastSyncDate 20170303201059433
+aLastUpdateDate 20170303201059433
 
 eW_MetaDef 3
 aCPLR_ZKey 11205

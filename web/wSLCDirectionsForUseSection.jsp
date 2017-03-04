@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSLCDirectionsForUseSection   Generate Timestamp: 20170303150953141 --%>
+<%-- wSLCDirectionsForUseSection   Generate Timestamp: 20170303201102478 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -599,16 +599,24 @@ else
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GBDirectionsForUseSection:GroupBox */ %>
 
-<div id="GBDirectionsForUseSection" name="GBDirectionsForUseSection" class="withborder"   style="float:left;position:relative; width:866px; height:204px;">  <!-- GBDirectionsForUseSection --> 
+<div id="GBDirectionsForUseSection" name="GBDirectionsForUseSection" class="withborder" style="width:866px;float:left;">  <!-- GBDirectionsForUseSection --> 
 
+
+ <!-- This is added as a line spacer -->
+<div style="height:6px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<span style="height:16px;">&nbsp</span>
 <% /* DirectionsForUseSection:Text */ %>
 
-<label class="listheader"  id="DirectionsForUseSection" name="DirectionsForUseSection" style="">Directions for Use Section</label>
+<span class="listheader"  id="DirectionsForUseSection" name="DirectionsForUseSection" style="width:238px;height:16px;">Directions for Use Section</span>
 
+<span style="height:16px;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
 <% /* Category::Text */ %>
 
-<label class="text12lightright"  id="Category:" name="Category:" style="">  ... Category:</label>
+<span class="text12lightright"  id="Category:" name="Category:" style="width:90px;height:16px;">  ... Category:</span>
 
+<span style="height:16px;">&nbsp</span>
 <% /* DFU_CategoryName:Text */ %>
 <% strTextDisplayValue = "";
    mSubLC = task.getViewByName( "mSubLC" );
@@ -634,11 +642,21 @@ else
    }
 %>
 
-<label class="text12light"  id="DFU_CategoryName" name="DFU_CategoryName" style=""><%=strTextDisplayValue%></label>
+<span class="text12light"  id="DFU_CategoryName" name="DFU_CategoryName" style="width:430px;height:16px;"><%=strTextDisplayValue%></span>
 
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:16px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<span style="height:16px;">&nbsp&nbsp&nbsp&nbsp&nbsp</span>
 <% /* DirectionsUseName::Text */ %>
 
-<label  id="DirectionsUseName:" name="DirectionsUseName:" style="">Name:</label>
+<span  id="DirectionsUseName:" name="DirectionsUseName:" style="width:130px;height:16px;">Name:</span>
 
 <% /* DirectionsUseName:Text */ %>
 <% strTextDisplayValue = "";
@@ -665,11 +683,21 @@ else
    }
 %>
 
-<label class="text12"  id="DirectionsUseName" name="DirectionsUseName"  title="Required Name to differentiate Directions for Use Sections within a list" style=""><%=strTextDisplayValue%></label>
+<span class="text12"  id="DirectionsUseName" name="DirectionsUseName"  title="Required Name to differentiate Directions for Use Sections within a list" style="width:650px;height:16px;"><%=strTextDisplayValue%></span>
 
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:2px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<span style="height:16px;">&nbsp&nbsp&nbsp&nbsp&nbsp</span>
 <% /* DirectionsForUseTitle::Text */ %>
 
-<label  id="DirectionsForUseTitle:" name="DirectionsForUseTitle:" style="">Title:</label>
+<span  id="DirectionsForUseTitle:" name="DirectionsForUseTitle:" style="width:130px;height:16px;">Title:</span>
 
 <% /* DirectionsForUseTitle:Text */ %>
 <% strTextDisplayValue = "";
@@ -696,11 +724,21 @@ else
    }
 %>
 
-<label class="text12"  id="DirectionsForUseTitle" name="DirectionsForUseTitle"  title="Optional Title to appear with text on generated label" style=""><%=strTextDisplayValue%></label>
+<span class="text12"  id="DirectionsForUseTitle" name="DirectionsForUseTitle"  title="Optional Title to appear with text on generated label" style="width:650px;height:32px;"><%=strTextDisplayValue%></span>
 
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:4px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<span style="height:16px;">&nbsp&nbsp&nbsp&nbsp&nbsp</span>
 <% /* TitleNote::Text */ %>
 
-<label  id="TitleNote:" name="TitleNote:" style="">Title Note:</label>
+<span  id="TitleNote:" name="TitleNote:" style="width:130px;height:16px;">Title Note:</span>
 
 <% /* TitleNote:Text */ %>
 <% strTextDisplayValue = "";
@@ -727,11 +765,21 @@ else
    }
 %>
 
-<label class="text12"  id="TitleNote" name="TitleNote"  title="Optional Title to appear with text on generated label" style=""><%=strTextDisplayValue%></label>
+<span class="text12"  id="TitleNote" name="TitleNote"  title="Optional Title to appear with text on generated label" style="width:650px;height:16px;"><%=strTextDisplayValue%></span>
 
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:2px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<span style="height:16px;">&nbsp&nbsp&nbsp&nbsp&nbsp</span>
 <% /* Subtitle::Text */ %>
 
-<label  id="Subtitle:" name="Subtitle:" style="">Subtitle:</label>
+<span  id="Subtitle:" name="Subtitle:" style="width:130px;height:16px;">Subtitle:</span>
 
 <% /* Subtitle:Text */ %>
 <% strTextDisplayValue = "";
@@ -758,11 +806,21 @@ else
    }
 %>
 
-<label class="text12"  id="Subtitle" name="Subtitle"  title="Optional Title to appear with text on generated label" style=""><%=strTextDisplayValue%></label>
+<span class="text12"  id="Subtitle" name="Subtitle"  title="Optional Title to appear with text on generated label" style="width:650px;height:32px;"><%=strTextDisplayValue%></span>
 
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:10px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<span style="height:16px;">&nbsp&nbsp&nbsp&nbsp&nbsp</span>
 <% /* SectionEndNote::Text */ %>
 
-<label  id="SectionEndNote:" name="SectionEndNote:" style="">End Note:</label>
+<span  id="SectionEndNote:" name="SectionEndNote:" style="width:130px;height:16px;">End Note:</span>
 
 <% /* SectionNote:Text */ %>
 <% strTextDisplayValue = "";
@@ -789,11 +847,21 @@ else
    }
 %>
 
-<label class="text12"  id="SectionNote" name="SectionNote"  title="Optional Title to appear with text on generated label" style=""><%=strTextDisplayValue%></label>
+<span class="text12"  id="SectionNote" name="SectionNote"  title="Optional Title to appear with text on generated label" style="width:650px;height:16px;"><%=strTextDisplayValue%></span>
 
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:4px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<span style="height:16px;">&nbsp&nbsp&nbsp&nbsp&nbsp</span>
 <% /* ExclusiveXOR::Text */ %>
 
-<label  id="ExclusiveXOR:" name="ExclusiveXOR:" style="">Exclusive To:</label>
+<span  id="ExclusiveXOR:" name="ExclusiveXOR:" style="width:130px;height:16px;">Exclusive To:</span>
 
 <% /* NameXOR:Text */ %>
 <% strTextDisplayValue = "";
@@ -820,7 +888,9 @@ else
    }
 %>
 
-<label  id="NameXOR" name="NameXOR" style=""><%=strTextDisplayValue%></label>
+<span  id="NameXOR" name="NameXOR" style="width:218px;height:16px;"><%=strTextDisplayValue%></span>
+
+</div>  <!-- End of a new line -->
 
 
 </div>  <!--  GBDirectionsForUseSection --> 
@@ -830,7 +900,7 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:4px;width:100px;"></div>
+<div style="height:8px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:18px;float:left;"></div>   <!-- Width Spacer -->
@@ -861,7 +931,7 @@ else
 
 <% /* Text5:Text */ %>
 
-<label class="listheader"  id="Text5" name="Text5" style="">Directions for Use Statements</label>
+<label class="listheader"  id="Text5" name="Text5" style="width:434px;height:16px;position:absolute;left:4px;top:4px;">Directions for Use Statements</label>
 
 
 </div>  <!--  GroupBox9 --> 
@@ -982,7 +1052,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 
 <% /* Text4:Text */ %>
 
-<label class="listheader"  id="Text4" name="Text4" style="">Claims that Drive the current Section to be included in the SLC</label>
+<label class="listheader"  id="Text4" name="Text4" style="width:480px;height:16px;position:absolute;left:4px;top:4px;">Claims that Drive the current Section to be included in the SLC</label>
 
 
 </div>  <!--  GroupBox8 --> 
@@ -1116,7 +1186,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 
 <% /* Text7:Text */ %>
 
-<label class="listheader"  id="Text7" name="Text7" style="">Claims that Drive the current Section to be included in the SLC</label>
+<label class="listheader"  id="Text7" name="Text7" style="width:480px;height:16px;position:absolute;left:4px;top:4px;">Claims that Drive the current Section to be included in the SLC</label>
 
 
 </div>  <!--  GroupBox10 --> 
@@ -1235,7 +1305,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 
 
  <!-- This is added as a line spacer -->
-<div style="height:472px;width:100px;"></div>
+<div style="height:468px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:32px;float:left;"></div>   <!-- Width Spacer -->
