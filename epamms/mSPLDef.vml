@@ -794,6 +794,13 @@ END
 //
 //  OPERATION: ProcessPDF_Blocks
 //
+//    Note that mSPLDefPDF is pointing to the LLD Panel and Block substructure,
+//    which recursively steps to a subblock, while mSPLDef points to the rest
+//    of the structure at the root level.  mSPLDefTopBlock will be pointing to
+//    the top Block structure, which will be the same as mSPLDefPDF unless
+//    we've stepped down a level to SubBlock.  mSPLDefContinue is used to get
+//    position on the Continuation block for a block that is continued.
+//
 /////////////////////////////////////////////////////////////////////////////
 TRANSFORMATION OPERATION
 ProcessPDF_Blocks( VIEW mSPLDef    BASED ON LOD mSPLDef,
@@ -823,12 +830,6 @@ ProcessPDF_Blocks( VIEW mSPLDef    BASED ON LOD mSPLDef,
    szTag = mSPLDefPDF.LLD_Block.Tag
 // TraceLineS( "Processing Block: ", szTag )
    // Process each LLD_Block Container and subobject data.
-
-   // Note that mSPLDefPDF is pointing to the LLD Panel and Block substructure, which recursively steps
-   // to a subblock, while mSPLDef points to the rest of the structure at the root level.
-   // mSPLDefTopBlock will be pointing to the top Block structure, which will be the same as mSPLDefPDF unless
-   // we've stepped down a level to SubBlock.  nSPLDefContinue is used to get position on the Continuation
-   // block for a block that is continued.
 
    szLeadingBlanks = szPassedBlanks + "   "
 
@@ -944,15 +945,17 @@ ProcessPDF_Blocks( VIEW mSPLDef    BASED ON LOD mSPLDef,
                WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
 
                // For Directions For Use, we will process all Sections.
-               FOR EACH mSPLDef.SPLD_DirectionsForUseSection
-                  GeneratePDF_DFU( mSPLDef, mSPLDefPDF, lFile,
-                                   szSectionType,
-                                   "SPLD_DirectionsForUseSection",
-                                   "SPLD_DirectionsForUseStatement",
-                                   "SPLD_DirectionsUsage",
-                                   "SPLD_DirectionsUsageOrdering",
-                                   szLeadingBlanks,
-                                   szWriteBuffer )
+               FOR EACH mSPLDef.SPLD_DirectionsForUseCategory
+                  FOR EACH mSPLDef.SPLD_DirectionsForUseSection
+                     GeneratePDF_DFU( mSPLDef, mSPLDefPDF, lFile,
+                                      szSectionType,
+                                      "SPLD_DirectionsForUseSection",
+                                      "SPLD_DirectionsForUseStatement",
+                                      "SPLD_DirectionsUsage",
+                                      "SPLD_DirectionsUsageOrdering",
+                                      szLeadingBlanks,
+                                      szWriteBuffer )
+                  END
                END
             ELSE
 
@@ -1733,21 +1736,21 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-//  OPERATION: GeneratePDF_DFU
-//  Directions For Use / Storage and Disposal / General / Marketing
+//  OPERATION: GeneratePDF_DFU_Statement
+//  Directions For Use (Category) / Storage and Disposal / General / Marketing
 //
 /////////////////////////////////////////////////////////////////////////////
-TRANSFORMATION OPERATION
-GeneratePDF_DFU( VIEW mSPLDef    BASED ON LOD mSPLDef,
-                 VIEW mSPLDefPDF BASED ON LOD mSPLDef,
-                 INTEGER lFile,
-                 STRING ( 50 ) szSectionType,
-                 STRING ( 32 ) szSPLD_SectionName,
-                 STRING ( 32 ) szStatementName,
-                 STRING ( 32 ) szUsageTypeEntity,
-                 STRING ( 32 ) szLoopingEntity,
-                 STRING ( 50 ) szPassedBlanks,
-                 STRING ( 32000 ) szWriteBuffer )
+LOCAL OPERATION
+GeneratePDF_DFU_Section( VIEW mSPLDef    BASED ON LOD mSPLDef,
+                         VIEW mSPLDefPDF BASED ON LOD mSPLDef,
+                         INTEGER lFile,
+                         STRING ( 50 ) szSectionType,
+                         STRING ( 32 ) szSPLD_SectionName,
+                         STRING ( 32 ) szStatementName,
+                         STRING ( 32 ) szUsageTypeEntity,
+                         STRING ( 32 ) szLoopingEntity,
+                         STRING ( 50 ) szPassedBlanks,
+                         STRING ( 32000 ) szWriteBuffer )
 
    VIEW mSPLDefPanelLevel BASED ON LOD mSPLDef
    VIEW mSPLDefContinue   BASED ON LOD mSPLDef
@@ -1778,7 +1781,7 @@ GeneratePDF_DFU( VIEW mSPLDef    BASED ON LOD mSPLDef,
 
    STRING ( 512 ) szDebugMsg
 
-   // Generate PDF for a "Directions of Use" or "Marketing" Section.
+   // Generate PDF for a "Directions of Use" or "Storage and Disposal" or "General" or "Marketing" Statement.
 
    szLeadingBlanks = szPassedBlanks + "   "
 
@@ -1791,7 +1794,7 @@ GeneratePDF_DFU( VIEW mSPLDef    BASED ON LOD mSPLDef,
    // If this is block for a Marketing Section, we need to position on the corresponding Market Section by Name.
    // Otherwise, we are positioned on the correct Section already.
    // We also need to initialize the XML for the Marketing Section.
-// szSectionType = mSPLDefPDF.LLD_Block.LLD_SectionType
+// szSectionType = mSPLDefPDF.LLD_Block.LLD_SectionType ... now passed in (dks 2017.01.30)
    IF szSectionType = "Marketing"
       szSectionName = mSPLDefPDF.LLD_Block.Name
       SetCursorFirstEntityByString( mSPLDef, szSPLD_SectionName, "Name", szSectionName, "" )
@@ -1840,6 +1843,7 @@ GeneratePDF_DFU( VIEW mSPLDef    BASED ON LOD mSPLDef,
       szConvertToCapsFlag = mSPLDefPDF.LLD_SpecialSectionAttrBlock.CapitalizeTitleTextFlag
    END
 
+   
    nRC = SetCursorFirstEntity( mSPLDef, szStatementName, "" )
    LOOP WHILE nRC >= zCURSOR_SET
 
@@ -2055,7 +2059,8 @@ GeneratePDF_DFU( VIEW mSPLDef    BASED ON LOD mSPLDef,
 
                // Panel continuation
 
-               /*IF szContinuationFlag = "M"
+               /*
+               IF szContinuationFlag = "M"
                   // Continuation is in two pieces, so next text is ContinuationText.
                   GetStringFromAttribute( szTemporaryText, mSPLDef, szStatementName, "ContinuationText" )
                   CREATE ENTITY mSPLDefPanelLevel.ContinuationStatement
@@ -2067,11 +2072,13 @@ GeneratePDF_DFU( VIEW mSPLDef    BASED ON LOD mSPLDef,
                      mSPLDefPanelLevel.ContinuationStatement.Title = szStatementTitle
                   END
                   mSPLDefPanelLevel.ContinuationStatement.Text = szStatementText
-               END*/
+               END
+               */
 
                // Copy BlockSpecialAttributeBlock entries.
                // I decided not to do the following but use the formatting characteristics specified on the Continuation Block.
-               /*FOR EACH mSPLDefPanelLevel.LLD_SpecialSectionAttribute
+               /*
+               FOR EACH mSPLDefPanelLevel.LLD_SpecialSectionAttribute
                   DELETE ENTITY mSPLDefPanelLevel.LLD_SpecialSectionAttribute NONE
                END
                FOR EACH mSPLDefPDF.LLD_SpecialSectionAttribute
@@ -2079,12 +2086,14 @@ GeneratePDF_DFU( VIEW mSPLDef    BASED ON LOD mSPLDef,
                   mSPLDefPanelLevel.LLD_SpecialSectionAttribute.Name = mSPLDefPDF.LLD_SpecialSectionAttribute.Name
                   CREATE ENTITY mSPLDefPanelLevel.LLD_SpecialSectionAttrBlock
                   SetMatchingAttributesByName( mSPLDefPanelLevel, "LLD_SpecialSectionAttrBlock", mSPLDefPDF, "LLD_SpecialSectionAttrBlock", zSET_NULL )
-               END*/
+               END
+               */
 
                // Add any remaining Statement entries to continuation, that will be generated for the next Panel.
                // This will position us on the last Statement under the Section so that we will exit this operation without generating
                // another Statement for this Panel.
-               /*nRC = SetCursorNextEntity( mSPLDef, szStatementName, "" )
+               /*
+               nRC = SetCursorNextEntity( mSPLDef, szStatementName, "" )
                LOOP WHILE nRC >= zCURSOR_SET
                   GetStringFromAttribute( szStatementText, mSPLDef, szStatementName, "Text" )
                   GetStringFromAttribute( szStatementTitle, mSPLDef, szStatementName, "Title" )
@@ -2105,7 +2114,8 @@ GeneratePDF_DFU( VIEW mSPLDef    BASED ON LOD mSPLDef,
                WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
 
                szWriteBuffer = szLeadingBlanks + "   </fo:block>"
-               WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )*/
+               WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+               */
             END
 
          // DropView( mSPLDefPanelLevel )
@@ -2114,6 +2124,40 @@ GeneratePDF_DFU( VIEW mSPLDef    BASED ON LOD mSPLDef,
       END
 
       nRC = SetCursorNextEntity( mSPLDef, szStatementName, "" )
+   END
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: GeneratePDF_DFU
+//  Directions For Use (Category) / Storage and Disposal / General / Marketing
+//
+/////////////////////////////////////////////////////////////////////////////
+TRANSFORMATION OPERATION
+GeneratePDF_DFU( VIEW mSPLDef    BASED ON LOD mSPLDef,
+                 VIEW mSPLDefPDF BASED ON LOD mSPLDef,
+                 INTEGER lFile,
+                 STRING ( 50 ) szSectionType,
+                 STRING ( 32 ) szSPLD_SectionName,
+                 STRING ( 32 ) szStatementName,
+                 STRING ( 32 ) szUsageTypeEntity,
+                 STRING ( 32 ) szLoopingEntity,
+                 STRING ( 50 ) szPassedBlanks,
+                 STRING ( 32000 ) szWriteBuffer )
+
+   SHORT  nRC
+
+   IF szStatementName = "SPLD_DirectionsForUseSection"
+      nRC = SetCursorFirstEntity( mSPLDef, "SPLD_DirectionsForUseCategory", "" )
+      LOOP WHILE nRC >= zCURSOR_SET
+         GeneratePDF_DFU_Section( mSPLDef, mSPLDefPDF, lFile, szSectionType, szSPLD_SectionName, szStatementName,
+                                  szUsageTypeEntity, szLoopingEntity, szPassedBlanks, szWriteBuffer )
+         nRC = SetCursorFirstEntity( mSPLDef, "SPLD_DirectionsForUseCategory", "" )
+      END
+   ELSE
+      GeneratePDF_DFU_Section( mSPLDef, mSPLDefPDF, lFile, szSectionType, szSPLD_SectionName, szStatementName,
+                               szUsageTypeEntity, szLoopingEntity, szPassedBlanks, szWriteBuffer )
    END
 
 END
@@ -2520,11 +2564,11 @@ GeneratePDF_Ingred( VIEW mSPLDef    BASED ON LOD mSPLDef,
 
    szLeadingBlanks = szPassedBlanks + "   "
    SET CURSOR FIRST mSPLDef.SPLD_IngredientsSection
-   szWriteBuffer = szLeadingBlanks + "<!-- Incredients Section using Leader -->"
+   szWriteBuffer = szLeadingBlanks + "<!-- Ingredients Section using Leader -->"
    WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
    //FormatBlockContainer( mSPLDef, mSPLDef, lFile, szLeadingBlanks, szWriteBuffer, "" )
 
-   // Title
+   // Ingredients Title
    szWriteBuffer = szLeadingBlanks + "<fo:block "
    AddFormatToSpecialText( mSPLDefPDF, szSectionType, "Ingredients Title", szWriteBuffer )
    WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
@@ -2964,6 +3008,8 @@ BuildSPLD_FromSLC( VIEW NewSPLD  BASED ON LOD mSPLDef,
    VIEW mSPLDef2 BASED ON LOD mSPLDef
 
    // Build a new SPLD from the selected Subregistrant Label Content entry.
+   TraceLineS( "BuildSPLD_FromSLC SLC", "=====================>>>>>>>>" )
+   DisplayObjectInstance( SrcSLC, "", "" )
 
    // Tie back to SLC, if necessary.
    IF NewSPLD.SubregLabelContent DOES NOT EXIST
@@ -3124,6 +3170,8 @@ BuildSPLD_FromSLC( VIEW NewSPLD  BASED ON LOD mSPLDef,
 
    // Go to build Directions For Use and Marketing Usage entries.
    BuildUsageEntriesFrSLC( NewSPLD, SrcSLC )
+   TraceLineS( "BuildSPLD_FromSLC NewSPLD", "=====================>>>>>>>>" )
+   DisplayObjectInstance( NewSPLD, "", "" )
 
 END
 
@@ -4434,15 +4482,24 @@ END
 //
 //  OPERATION: GenerateLine
 //
+//    This is just a SysWriteLine with an options TraceLineS statement.
+//
 /////////////////////////////////////////////////////////////////////////////
 LOCAL OPERATION
 GenerateLine( VIEW mSPLDef BASED ON LOD mSPLDef,
               INTEGER lFileHandle,
               STRING ( 5000 ) szOutputLine )
 
-   // This is just a SysWriteLine with an options TraceLineS statement.
-// TraceLineS( "*** Line: ", szOutputLine )
+   SHORT nRC
+
+   nRC = zSearchSubString( szOutputLine, "at a temperature of", "f", 1 )
+   IF nRC >= 0   
+      TraceLineS( "*** Line Before ConvertHtmlEntities: ", szOutputLine )
+   END
    ConvertHtmlEntities( szOutputLine )
+   IF nRC >= 0   
+      TraceLineS( "*** Line After ConvertHtmlEntities: ", szOutputLine )
+   END
    SysWriteLine( mSPLDef, lFileHandle, szOutputLine )
 
 END

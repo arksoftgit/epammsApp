@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSLCFirstAidSection   Generate Timestamp: 20161019144228752 --%>
+<%-- wSLCFirstAidSection   Generate Timestamp: 20170302140656221 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -76,6 +76,63 @@ public int DoInputMapping( HttpServletRequest request,
          {
             nMapError = -16;
             VmlOperation.CreateMessage( task, "PrecautionaryTitle", e.getReason( ), strMapValue );
+         }
+      }
+
+      // CheckBox: Combine
+      nRC = mSubLC.cursor( "S_GeneralSection" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 ) // CursorResult.SET
+      {
+         strMapValue = request.getParameter( "Combine" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "Combine", "", strMapValue );
+            else
+               mSubLC.cursor( "S_GeneralSection" ).getAttribute( "Combined" ).setValue( strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "Combine", e.getReason( ), strMapValue );
+         }
+      }
+
+      // CheckBox: BoldTitle
+      nRC = mSubLC.cursor( "S_GeneralSection" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 ) // CursorResult.SET
+      {
+         strMapValue = request.getParameter( "BoldTitle" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "BoldTitle", "", strMapValue );
+            else
+               mSubLC.cursor( "S_GeneralSection" ).getAttribute( "BoldTitle" ).setValue( strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "BoldTitle", e.getReason( ), strMapValue );
+         }
+      }
+
+      // CheckBox: BoldText
+      nRC = mSubLC.cursor( "S_GeneralSection" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 ) // CursorResult.SET
+      {
+         strMapValue = request.getParameter( "BoldText" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "BoldText", "", strMapValue );
+            else
+               mSubLC.cursor( "S_GeneralSection" ).getAttribute( "BoldText" ).setValue( strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "BoldText", e.getReason( ), strMapValue );
          }
       }
 
@@ -216,6 +273,23 @@ if ( strActionToProcess != null )
          vMsgQ.drop( );
       }
 
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "Refresh" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wSLCFirstAidSection", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Next Window
+      strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_StayOnWindowWithRefresh, "", "" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
    }
 
    while ( bDone == false && strActionToProcess.equals( "ZEIDON_ComboBoxSubmit" ) )
@@ -1156,6 +1230,7 @@ else
    <input name="zFocusCtrl" id="zFocusCtrl" type="hidden" value="<%=strFocusCtrl%>">
    <input name="zOpenFile" id="zOpenFile" type="hidden" value="<%=strOpenFile%>">
    <input name="zDateFormat" id="zDateFormat" type="hidden" value="<%=strDateFormat%>">
+   <input name="zDateSequence" id="zDateSequence" type="hidden" value="MDY">
    <input name="zLoginName" id="zLoginName" type="hidden" value="<%=strLoginName%>">
    <input name="zKeyRole" id="zKeyRole" type="hidden" value="<%=strKeyRole%>">
    <input name="zOpenPopupWindow" id="zOpenPopupWindow" type="hidden" value="<%=strOpenPopupWindow%>">
@@ -1259,7 +1334,7 @@ else
    }
 %>
 
-<input class="text12" name="PrecautionaryTitle" id="PrecautionaryTitle" maxlength="254" style="width:550px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12"  name="PrecautionaryTitle" id="PrecautionaryTitle" maxlength="4096" style="width:550px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>
@@ -1289,15 +1364,89 @@ else
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GBPrecautionaryStatements:GroupBox */ %>
-<div id="GBPrecautionaryStatements" name="GBPrecautionaryStatements" style="float:left;width:486px;"  class="listgroup">
+<div id="GBPrecautionaryStatements" name="GBPrecautionaryStatements" style="float:left;width:684px;"  class="listgroup">
 
-<table cols=0 style="width:486px;"  class="grouptable">
+<table cols=0 style="width:684px;"  class="grouptable">
 
 <tr>
-<td valign="top"  class="listheader" style="width:238px;">
+<td valign="top"  class="listheader" style="width:202px;">
 <% /* FirstAidStatements:Text */ %>
 
-<span class="listheader"  id="FirstAidStatements" name="FirstAidStatements" style="width:238px;height:16px;">First Aid Statements</span>
+<span class="listheader"  id="FirstAidStatements" name="FirstAidStatements" style="width:194px;height:16px;">First Aid Statements</span>
+
+</td>
+<td valign="top" style="width:336px;">
+<% /* GroupBox5:GroupBox */ %>
+<div id="GroupBox5" name="GroupBox5" style="width:314px;height:18px;float:left;">
+
+<div>  <!-- Beginning of a new line -->
+<% /* Combine:CheckBox */ %>
+<%
+   strErrorMapValue = "";
+   mSubLC = task.getViewByName( "mSubLC" );
+   if ( VmlOperation.isValid( mSubLC ) == false )
+      task.log( ).debug( "Invalid View: " + "Combine" );
+   else
+   {
+      nRC = mSubLC.cursor( "S_GeneralSection" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+         strRadioGroupValue = mSubLC.cursor( "S_GeneralSection" ).getAttribute( "Combined" ).getString( );
+   }
+
+   if ( StringUtils.equals( strRadioGroupValue, "Y" ) )
+      strErrorMapValue = "checked=\"checked\"";
+%>
+
+<input type="checkbox" name="Combine" id="Combine"  value="Y" <%=strErrorMapValue%> style="">
+<span style="width:102px;height:18px;">&nbsp Combine</span>
+
+<% /* BoldTitle:CheckBox */ %>
+<%
+   strErrorMapValue = "";
+   mSubLC = task.getViewByName( "mSubLC" );
+   if ( VmlOperation.isValid( mSubLC ) == false )
+      task.log( ).debug( "Invalid View: " + "BoldTitle" );
+   else
+   {
+      nRC = mSubLC.cursor( "S_GeneralSection" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+         strRadioGroupValue = mSubLC.cursor( "S_GeneralSection" ).getAttribute( "BoldTitle" ).getString( );
+   }
+
+   if ( StringUtils.equals( strRadioGroupValue, "Y" ) )
+      strErrorMapValue = "checked=\"checked\"";
+%>
+
+<input type="checkbox" name="BoldTitle" id="BoldTitle"  value="Y" <%=strErrorMapValue%> style="">
+<span style="width:102px;height:18px;">&nbsp Bold Title</span>
+
+<% /* BoldText:CheckBox */ %>
+<%
+   strErrorMapValue = "";
+   mSubLC = task.getViewByName( "mSubLC" );
+   if ( VmlOperation.isValid( mSubLC ) == false )
+      task.log( ).debug( "Invalid View: " + "BoldText" );
+   else
+   {
+      nRC = mSubLC.cursor( "S_GeneralSection" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+         strRadioGroupValue = mSubLC.cursor( "S_GeneralSection" ).getAttribute( "BoldText" ).getString( );
+   }
+
+   if ( StringUtils.equals( strRadioGroupValue, "Y" ) )
+      strErrorMapValue = "checked=\"checked\"";
+%>
+
+<input type="checkbox" name="BoldText" id="BoldText"  value="Y" <%=strErrorMapValue%> style="">
+<span style="width:102px;height:18px;">&nbsp Bold Text</span>
+
+</div>  <!-- End of a new line -->
+
+</div>  <!-- GroupBox5 --> 
+</td>
+<td valign="top"  class="newbutton" style="width:78px;">
+<% /* RefreshStatements:PushBtn */ %>
+<button type="button" class="newbutton"  id="RefreshStatements" name="RefreshStatements" value="Refresh" onclick="Refresh( )"  style="width:78px;height:26px;">Refresh</button>
 
 </td>
 </tr>
@@ -1358,7 +1507,7 @@ try
          nRC = vGridPrecautionary.cursor( "S_GeneralStatement" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditPrecautionary = vGridPrecautionary.cursor( "S_GeneralStatement" ).getAttribute( "Text" ).getString( "" );
+            strGridEditPrecautionary = vGridPrecautionary.cursor( "S_GeneralStatement" ).getAttribute( "dGenStmtCombinedTitleText" ).getString( "" );
 
             if ( strGridEditPrecautionary == null )
                strGridEditPrecautionary = "";

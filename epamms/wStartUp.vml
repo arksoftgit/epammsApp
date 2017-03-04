@@ -195,10 +195,10 @@ ProcessUserLogin( VIEW ViewToWindow )
    // there are no Users for a Primary/Subregistrant, the only login possible for the specified Primary/Subregistrant is the
    // administrator for that Primary/Subregistrant.
 
-   TraceLineS( "pePamms OI:", "" )
-   DisplayObjectInstance( pePamms, "", "" )
-   TraceLineS( "pePamms Entity Instance:", "" )
-   DisplayEntityInstance( pePamms, "Organization" )
+// TraceLineS( "pePamms OI:", "" )
+// DisplayObjectInstance( pePamms, "", "" )
+// TraceLineS( "pePamms Entity Instance:", "" )
+// DisplayEntityInstance( pePamms, "Organization" )
 
    szLoginRegistrant = wWebXfer.Root.AttemptLoginRegistrant  // e.g. Lonza (a primary registrant) or ATP (Alpha Tech Pet - a subregistrant)
    IF pePamms.Organization.LoginName = "Admin"               // N.B. cannot use szLoginRegistrant since we need a case insensitive comparison
@@ -232,8 +232,8 @@ ProcessUserLogin( VIEW ViewToWindow )
       // Within a Primary Registrant (not Admin)
       ACTIVATE sePamms WHERE sePamms.PrimaryRegistrant.ID = pePamms.PrimaryRegistrant.ID
       NAME VIEW sePamms "sePamms"
-      TraceLineS( "sePamms Entity Instance:", "" )
-      DisplayObjectInstance( sePamms, "", "" )
+   // TraceLineS( "sePamms Entity Instance:", "" )
+   // DisplayObjectInstance( sePamms, "", "" )
 
       // We cannot use SET CURSOR FIRST WHERE since we need a case insensitive comparison.
       // SET CURSOR FIRST sePamms.Subregistrant WHERE sePamms.Organization.LoginName = szLoginRegistrant
@@ -245,8 +245,8 @@ ProcessUserLogin( VIEW ViewToWindow )
          SET CURSOR NEXT sePamms.Subregistrant
       END
    */
-      TraceLineS( "sePamms OI looking for: ", szLoginRegistrant )
-      DisplayEntityInstance( sePamms, "Organization" )
+   // TraceLineS( "sePamms OI looking for: ", szLoginRegistrant )
+   // DisplayEntityInstance( sePamms, "Organization" )
       IF RESULT >= 0
          ACTIVATE qOrganiz WHERE qOrganiz.Organization.ID = sePamms.Organization.ID
          lControl = zQUAL_STRING + zPOS_FIRST
@@ -277,8 +277,8 @@ ProcessUserLogin( VIEW ViewToWindow )
    END
 
    NAME VIEW qOrganiz "qOrganizLogin"
-   TraceLineS( "qOrganiz OI:", "" )
-   DisplayObjectInstance( qOrganiz, "", "" )
+// TraceLineS( "qOrganiz OI:", "" )
+// DisplayObjectInstance( qOrganiz, "", "" )
    IF qOrganiz.Organization DOES NOT EXIST
       // Organization not found!
       TraceLineS( "Login Organization not found: ", szLoginRegistrant )
@@ -379,7 +379,7 @@ ProcessUserLogin( VIEW ViewToWindow )
       nRC = CompareAttributeToString( qOrganiz, "User", "UserPassword", szAttemptPassword )
       IF nRC != 0
       
-         TraceLineS( "//////* Invalid Login Password: ", szAttemptPassword )
+      // TraceLineS( "//////* Invalid Login Password: ", szAttemptPassword )
          MessageSend( ViewToWindow, "", "Login",
                       "Invalid User Login",
                       zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
@@ -398,14 +398,14 @@ ProcessUserLogin( VIEW ViewToWindow )
    DropObjectInstance( qOrganiz )
    ACTIVATE qOrganiz WHERE qOrganiz.Organization.ID = lID // reactivate here to ensure we get the User entity
    NAME VIEW qOrganiz "qOrganizLogin"
-   TraceLineS( "qOrganizLogin OI:", "" )
-   DisplayObjectInstance( qOrganiz, "", "" )
+// TraceLineS( "qOrganizLogin OI:", "" )
+// DisplayObjectInstance( qOrganiz, "", "" )
 
    GET VIEW mOrganizInit NAMED "mOrganizInit"
 
    ACTIVATE mOrganiz WHERE mOrganiz.Organization.ID = lID
-   TraceLineS( "mOrganiz OI:", "" )
-   DisplayObjectInstance( mOrganiz, "", "" )
+// TraceLineS( "mOrganiz OI:", "" )
+// DisplayObjectInstance( mOrganiz, "", "" )
    NAME VIEW mOrganiz "mOrganiz"
    IF mOrganizInit != 0
       FOR EACH mOrganizInit.Feedback
@@ -4327,6 +4327,8 @@ END
 DIALOG OPERATION
 TEST_IncludeError( VIEW ViewToWindow )
 
+/* Appears to be fixed ... dks 2017.03.02
+
    VIEW mMasLC    BASED ON LOD mMasLC
    VIEW mSubLC    BASED ON LOD mSubLC
    VIEW mSubLCNew BASED ON LOD mSubLC
@@ -4355,7 +4357,30 @@ TEST_IncludeError( VIEW ViewToWindow )
    CREATE ENTITY mSubLCNew.S_GeneralStatement 
    SetMatchingAttributesByName( mSubLCNew, "S_GeneralStatement", mMasLC, "M_GeneralStatement", zSET_NULL )
    INCLUDE mSubLCNew.M_GeneralStatement FROM mMasLC.M_GeneralSubStatement 
+   TraceLineS( "Display SubLC Before Commit", "" )
+   DisplayObjectInstance( mSubLCNew, "", "" )
    COMMIT mSubLCNew
-     
+   ACTIVATE mSubLCNew WHERE mSubLCNew.SubregLabelContent.ID = 62
+   TraceLineS( "Display SubLC After Activate", "" )
+   DisplayObjectInstance( mSubLCNew, "", "" )
+*/
+   VIEW mSubLCNew BASED ON LOD mSubLC
+
+   ACTIVATE mSubLCNew WHERE mSubLCNew.SubregLabelContent.ID = 58
+   DeleteEntity( mSubLCNew, "subreglabelcontent", zREPOS_NONE )
+   COMMIT mSubLCNew
+   ACTIVATE mSubLCNew WHERE mSubLCNew.SubregLabelContent.ID = 59
+   DeleteEntity( mSubLCNew, "subreglabelcontent", zREPOS_NONE )
+   COMMIT mSubLCNew
+   ACTIVATE mSubLCNew WHERE mSubLCNew.SubregLabelContent.ID = 60
+   DeleteEntity( mSubLCNew, "subreglabelcontent", zREPOS_NONE )
+   COMMIT mSubLCNew
+   ACTIVATE mSubLCNew WHERE mSubLCNew.SubregLabelContent.ID = 61
+   DeleteEntity( mSubLCNew, "subreglabelcontent", zREPOS_NONE )
+   COMMIT mSubLCNew
+   ACTIVATE mSubLCNew WHERE mSubLCNew.SubregLabelContent.ID = 62
+   DeleteEntity( mSubLCNew, "subreglabelcontent", zREPOS_NONE )
+   COMMIT mSubLCNew
+ 
 END
 

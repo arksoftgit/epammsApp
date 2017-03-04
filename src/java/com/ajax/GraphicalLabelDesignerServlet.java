@@ -97,9 +97,9 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
       int k = 0;
       int mid;
       int rc;
-   // logger.debug( "Beginning insert Tag: " + tag );
+   // logger.info( "Beginning insert Tag: " + tag );
       while ( lower <= upper ) {
-      // logger.debug( "insert Tag: " + newTag + "  lower: " + lower + "  upper: " + upper );
+      // logger.info( "insert Tag: " + newTag + "  lower: " + lower + "  upper: " + upper );
          mid = (lower + upper) / 2;
          if ( mid < 0 || mid >= tagList.size() ) {
             break;
@@ -120,7 +120,7 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
       }
       mid = min( max( 0, lower ), tagList.size() );
       tagList.add( mid, newTag );
-   // logger.debug( "Insert Added Tag: " + tag + "   at position: " + mid );
+   // logger.info( "Insert Added Tag: " + tag + "   at position: " + mid );
       return mid;
    }
 
@@ -168,7 +168,7 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
          }
 
          if ( cnt > 1 ) { // we had more than one block ... so sort 'em
-            mSPLDef.cursor( "LLD_Block" ).orderEntities( "Left A Top A Width A Height A" );
+            mSPLDef.cursor( "LLD_Block" ).orderEntities( "Top A Left A Width D Height D" );
          }
       } catch( ZeidonException ze ) {
          logger.error( "Error sorting blocks: " + ze.getMessage() );
@@ -451,7 +451,7 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
          String tag = vLLD.cursor( "LLD_Panel" ).getAttribute( "Tag" ).getString();
          int pos = insertTag( tagList, tag );
          String newTag = tagList.get( pos );
-      // logger.debug( "Return from insertTag: " + newTag );
+      // logger.info( "Return from insertTag: " + newTag );
          if ( tag.equals( newTag ) == false ) {
             vLLD.cursor( "LLD_Panel" ).getAttribute( "Tag" ).setValue( newTag );
          }
@@ -483,7 +483,7 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
 
          StringBuilder sb = new StringBuilder( vLLD.serializeOi().asJson().withIncremental().toStringWriter().toString() );
 
-      // logger.debug( "LLD Json Label from OI: " + sb.toString() );
+      // logger.info( "LLD Json Label from OI: " + sb.toString() );
          int posSPLD = sb.indexOf( "SubregPhysicalLabelDef" );
          int posLBracket = sb.indexOf( "[", posSPLD );
          posLBracket = sb.indexOf( "[", posLBracket + 1 ); // get to second "left bracket"
@@ -540,7 +540,7 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
                                                       ", \"HazardSelectedLocations\" : " + jsonSelectedHazard +
                                                       ", \"HazardLocations\" : " + jsonHazard +
                                               " }";
-      // logger.debug( "Reduced Json Label from OI: " + jsonLabel );
+      // logger.info( "Reduced Json Label from OI: " + jsonLabel );
       } catch( ZeidonException ze ) {
          logger.error( "Error loading Json Label: " + ze.getMessage() );
          jsonLabel = "{ \"Error\" : \"" + ze.getMessage() + "\" }";
@@ -550,14 +550,14 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
             try {
                sw.close();
             } catch( IOException oi ) {
-               logger.debug( "Unable to close StringWriter in convertLLD_ToJSON" );
+               logger.info( "Unable to close StringWriter in convertLLD_ToJSON" );
             }
          }
          if ( writer != null ) {
             try {
                writer.close();
             } catch( IOException oi ) {
-               logger.debug( "Unable to close BufferedWriter in convertLLD_ToJSON" );
+               logger.info( "Unable to close BufferedWriter in convertLLD_ToJSON" );
             }
          }
       */
@@ -604,17 +604,17 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
             return ec;
          }
          String IDP = eip.getAttribute( "wID" ).getString();  // get ID of original parent
-         /*
-         if ( ID.equals( "600" ) || ID.equals( "812" ) || ID.equals( "813" ) ) {
-            logger.debug( ID + "C"  + "  Checking move from parent ID: " + IDP + "  to parent ID: " + wPID );
-            eip.logEntity( false );
-            displaySPLD( vLLD, entity, ID );
-         }
-         */
+
+      // if ( ID.equals( "600" ) || ID.equals( "812" ) || ID.equals( "813" ) ) {
+      //    logger.info( ID + "C"  + "  Checking move from parent ID: " + IDP + "  to parent ID: " + wPID );
+      //    eip.logEntity( false );
+      //    displaySPLD( vLLD, entity, ID );
+      // }
+
          if ( wPID == null || IDP == null  ) {
             logger.error( "For ID: " + ID + "  Unexpected null wPID: " + wPID == null ? "Null" : wPID + "  wID: " + IDP == null ? "Null" : IDP );
          } else if ( wPID.equals( IDP ) == false ) { // if there is a new parent ...
-         // logger.debug( "Before moving entity: " + entity + "  with ID: " + ID + "  from parent ID: " + IDP + "  to parent ID: " + wPID );
+         // logger.info( "Before moving entity: " + entity + "  with ID: " + ID + "  from parent ID: " + IDP + "  to parent ID: " + wPID );
          // displaySPLD( vLLD, entity, "" );
             String wPE = ec.getAttribute( "wPE" ).getString();
             ei.getAttribute( "wPE" ).setValue( wPE );
@@ -637,11 +637,13 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
                      ecp = v.getCursor( "LLD_SubBlock" );
                      ecp.setToSubobject();
                   }
-                  ecp = v.getCursor( wPE );
-                  ecp.moveSubobject( CursorPosition.FIRST, ec, CursorPosition.NONE );
+                  ecp = v.getCursor( "LLD_Block" );
+                  ecp.moveSubobject( CursorPosition.LAST, ec, CursorPosition.NONE );
                   vLLD.copyCursors( v );  // we want position on the moved entity
                // logger.info( "After Moving To SubBlock Target entity: " + entity + "  with ID: " + ID + "  from parent ID: " + IDP + "  to parent ID: " + wPID );
-               // displaySPLD( v, wPE, "" );
+               // vLLD.logObjectInstance();  huge
+               // displaySPLD( vLLD, wPE, "" );
+               // ecp.logEntity( false );
                } catch ( ZeidonException ze ) {
                   logger.error( "Error trying to move entity: " + entity + "  error: " + ze );
                }
@@ -655,7 +657,7 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
       Iterator it = jsonArray.iterator();
       while ( it.hasNext() ) {
          Object obj = it.next();
-      // logger.debug( "Array type: " + obj.getClass().getName() );
+      // logger.info( "Array type: " + obj.getClass().getName() );
          if ( obj instanceof JSONObject ) {
             JSONObject jo = (JSONObject)obj;
             if ( depth >= -1 ) {
@@ -665,7 +667,7 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
                CursorResult cr;
                /*
                if ( ID != null && ID.isEmpty() == false ) {
-                  logger.debug( "Processing Entity: " + entity + "  ID: " + ID );
+                  logger.info( "Processing Entity: " + entity + "  ID: " + ID );
                   cr = ec.setFirstWithinOi( "ID", ID );
                   if ( cr.isSet() ) {
                      if ( ec.getEntityDef().getName().equals( "LLD_SubBlock" ) ) {
@@ -673,12 +675,12 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
                      }
                      if ( ID.equals( "893" ) || ID.equals( "892" ) || ID.equals( "890" ) ||
                           ID.equals( "878" ) || ID.equals( "882" ) || ID.equals( "877" ) ) {
-                        logger.debug( ID + " at entity: " + entity );
+                        logger.info( ID + " at entity: " + entity );
                         ec.logEntity( false );
                      }
                   }
                } else {
-                  logger.debug( "Processing Entity: " + entity + "  wID: " + (String) jo.get( "wID" ) );
+                  logger.info( "Processing Entity: " + entity + "  wID: " + (String) jo.get( "wID" ) );
                }
                */
                try {
@@ -689,7 +691,7 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
                            cr = ec.setFirst( "ID", ID );
                            if ( cr.isSet() ) {
                               ec.getEntityInstance();
-                              logger.debug( "Deleting entity: " + entity );
+                              logger.info( "Deleting entity: " + entity );
                            // ec.logEntity( true );
                               ec.deleteEntity();
                            }
@@ -709,7 +711,7 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
                               ec.setToSubobject();
                            }
                            ec.deleteEntity();
-                           logger.debug( "Entity DELETED: " + entity + "  ID: " + ID + "  Depth: " + depth );
+                           logger.info( "Entity DELETED: " + entity + "  ID: " + ID + "  Depth: " + depth );
                         }
                      } else {
                         String _EOI = (String)jo.get( "_EOI" );
@@ -774,6 +776,10 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
                                  cr = ec.setFirst( "Tag", pTag );
                                  if ( cr.isSet() ) {
                                     ec.logEntity( true );
+                                 // if ( "LLD_SubBlock".compareTo( ec.getEntityInstance().getEntityDef().getName() ) == 0 ) {
+                                 //   ec.setToSubobject();
+                                 //   ec = vBlock.getCursor( "LLD_Block" );
+                                 // }
                                     ec = vBlock.getCursor( "LLD_SpecialSectionAttribute" );
                                     String name = (String) jo.get( "Name" );
                                     cr = ec.setFirst( "Name", name );
@@ -849,14 +855,14 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
                         if ( ID.equals( "600" ) || ID.equals( "812" ) || ID.equals( "878" ) ) {
                            EntityInstance eip = ei.getParent();
                            String IDP = eip.getAttribute( "ID" ).getString();
-                           logger.debug( ID + " B Parent ID: " + IDP );
+                           logger.info( ID + " B Parent ID: " + IDP );
                         }
                         */
                         if ( deleteEntity ) {
                         // vBlock.logObjectInstance();
                         // ec.logEntity( true );
                            ec.deleteEntity();
-                           logger.debug( "Entity DELETED: " + entity + "  ID: " + ID + "  Depth: " + depth );
+                           logger.info( "Entity DELETED: " + entity + "  ID: " + ID + "  Depth: " + depth );
                            continue; // while ( it.hasNext ...
                         } else {
                            applyJsonPropertiesToZeidonAttributes( vLLD, vBlock, (JSONObject)obj, entity, depth, ei );
@@ -878,7 +884,7 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
                   }
                   if ( deleteEntity == false ) {
                   // if ( ei != null ) {
-                  //    logger.debug( "Entity Instance Before: " + entity + "  ID: " + ID + "  Depth: " + depth );
+                  //    logger.info( "Entity Instance Before: " + entity + "  ID: " + ID + "  Depth: " + depth );
                   //    ei.logEntity( false );
                   // }
                   /*
@@ -888,13 +894,13 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
                           ID.equals( "894" ) || ID.equals( "861" ) || ID.equals( "871" ) ||
                           ID.equals( "894" ) || ID.equals( "861" ) || ID.equals( "871" ) ||
                           ID.equals( "878" ) || ID.equals( "882" ) || ID.equals( "877" ) ) {
-                        logger.debug( ID + " finished entity: " + entity );
+                        logger.info( ID + " finished entity: " + entity );
                         ec.logEntity( true );
                      }
                   */
                      applyJsonLabelArrayToView( vLLD, vBlock, (JSONObject)obj, entity, depth + 1, ec.getEntityInstance() );
                   // if ( ei != null ) {
-                  //    logger.debug( "Entity Instance After: " + entity + "  ID: " + ID + "  Depth: " + depth );
+                  //    logger.info( "Entity Instance After: " + entity + "  ID: " + ID + "  Depth: " + depth );
                   //    ei.logEntity( false );
                   // }
                   }
@@ -905,7 +911,7 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
                }
             // } not checking ec.isNull()
             } else {
-            // logger.debug( StringUtils.repeat( " ", (depth + 2) * 3 ) + "Entity: " + entity + "  Depth: " + depth );
+            // logger.info( StringUtils.repeat( " ", (depth + 2) * 3 ) + "Entity: " + entity + "  Depth: " + depth );
                applyJsonLabelArrayToView( vLLD, vBlock, (JSONObject)obj, entity, depth + 1, null );
             }
          } else {
@@ -917,14 +923,15 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
    private void checkSetValue( EntityInstance ei, String entity, String attribute, String valueNew ) {
       String valueOld = ei.getAttribute( attribute ).getString();
       if ( valueOld.equals( valueNew ) == false ) { // if the value has changed ...
-         logger.info( "Changing entity.attribute: " + entity + "." + attribute + ": " + valueOld + "  to: " + valueNew );
+      // logger.info( "Changing entity.attribute: " + entity + "." + attribute + ": " + valueOld + "  to: " + valueNew );
       // ei.logEntity( false );
          try {
-         // logger.debug( "AfterChange entity.attribute: " + entity + "." + key + ": " + valueOld + "  to: " + valueNew );
+         // logger.info( "AfterChange entity.attribute: " + entity + "." + key + ": " + valueOld + "  to: " + valueNew );
             ei.getAttribute( attribute ).setValue( valueNew );
          // ei.logEntity( false );
          } catch ( ZeidonException ze ) {
-            if ( attribute.startsWith( "FK_ID_" ) || attribute.startsWith( "BD_ID_" ) || attribute.startsWith( "FKID" ) || attribute.startsWith( "AUTOSEQ" ) ) {
+            if ( attribute.startsWith( "FK_ID_" ) || attribute.startsWith( "FKID" ) || attribute.startsWith( "AUTOSEQ" ) ||
+                 attribute.startsWith( "BD_ID_" ) || attribute.startsWith( "BG_ID_" ) ) {
                String v = ei.getAttribute( attribute ).getString();
                if ( v.equals( valueNew ) == false ) {
                   logger.error( "System entity.attribute changed: " + entity + "." + attribute + "  value: " + valueNew + " ==> " + v );
@@ -964,7 +971,7 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
 
    private void applyJsonPropertiesToZeidonAttributes( View vLLD, View vBlock, JSONObject jsonObject, String entity, int depth, EntityInstance ei ) {
       if ( ei != null ) {
-      // logger.debug( "Apply Json Start" );
+      // logger.info( "Apply Json Start" );
       // ei.logEntity( false );
          String entityDefName = ei.getEntityDef().getName();
          if ( entity.equals( entityDefName ) || (entity.equals( "LLD_Block" ) && entityDefName.equals( "LLD_SubBlock" )) ) {
@@ -973,12 +980,12 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
             for ( Iterator iterator = jsonObject.keySet().iterator(); iterator.hasNext(); ) {
                String key = (String) iterator.next();
                Object obj = jsonObject.get( key );
-            // logger.debug( "OTag: " + entity + "   Key: " + key + "   Depth: " + depth );
+            // logger.info( "OTag: " + entity + "   Key: " + key + "   Depth: " + depth );
                if ( obj instanceof String ) {
                   String valueNew = (String) obj;
-               // logger.debug( StringUtils.repeat( " ", (depth + 2) * 3 ) + "E.Attr: " + entity + "." + key + " : " + valueNew );
+               // logger.info( StringUtils.repeat( " ", (depth + 2) * 3 ) + "E.Attr: " + entity + "." + key + " : " + valueNew );
                   if ( key.equals( "ID" ) == false &&  // attribute is not ID (which is immutable)
-                       key.startsWith( "FK_ID_" ) == false && key.startsWith( "BD_ID_" ) == false && key.startsWith( "AUTOSEQ" ) == false ) {
+                       key.startsWith( "FK_ID_" ) == false && key.startsWith( "BD_ID_" ) == false && key.startsWith( "TX_ID_" ) == false && key.startsWith( "AUTOSEQ" ) == false ) {
                      // This is where we need to handle special entity/attributes such as: z_^marketing.^text.^font^weight - which
                      // should be mapped to the "Marketing" LLD_SpecialSectionAttribute entity and the "Text" LLD_SpecialSectionAttrBlock
                      // entity FontWeight attribute ... e.g. DirectionsForUse.Title.z_MarginTop
@@ -1041,7 +1048,7 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
                      */
                         if ( ((key.equals( "BackgroundColor" ) || key.equals( "BorderColor" )) && bSpecial == false) ||
                               (key.equals( "TextColor" ) && bSpecial) ) { // we need to include the color entity
-                        // logger.debug( key + " E.Attr: " + entity + "." + key + " : " + valueNew );
+                        // logger.info( key + " E.Attr: " + entity + "." + key + " : " + valueNew );
                            EntityCursor ec = vBlock.cursor( entity );
                            ec.getAttribute( key ).setValue( valueNew );
                            String colorEntity;
@@ -1079,7 +1086,7 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
             logger.error( msg );
             throw new ZeidonException( msg );
          }
-      // logger.debug( "Apply Json End" );
+      // logger.info( "Apply Json End" );
       // ei.logEntity( false );
       }
    }
@@ -1093,7 +1100,7 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
             String ID = (String)o;
             if ( ID.equals( "626" ) ) {
                log = true;
-               logger.debug( "Before Setting entity: " + entity + "  ID: " + ID );
+               logger.info( "Before Setting entity: " + entity + "  ID: " + ID );
                ei.logEntity( false );
             }
          }
@@ -1103,7 +1110,7 @@ end debug code */
    // for ( String key : keys ) {                           // a warning ... replaced by next two lines
       for ( Iterator iterator = jsonObject.keySet().iterator(); iterator.hasNext(); ) {
          String key = (String) iterator.next();
-      // logger.debug( "OTag: " + entity + "   Key: " + key + "   Depth: " + depth );
+      // logger.info( "OTag: " + entity + "   Key: " + key + "   Depth: " + depth );
          Object obj = jsonObject.get( key );
          if ( obj instanceof String ) {
             // we've already done this
@@ -1121,10 +1128,10 @@ end debug code */
             }
 
             String entityName = key.equals( "LLD_SubBlock" ) ? "LLD_Block" : key;
-         // logger.debug( StringUtils.repeat( " ", (depth + 2) * 3 ) + "Entity: " + key + " Depth: " + (depth + 1) );
+         // logger.info( StringUtils.repeat( " ", (depth + 2) * 3 ) + "Entity: " + key + " Depth: " + (depth + 1) );
             processJsonArray( vLLD, vBlock, ja, entityName, depth );
          } else if ( obj instanceof JSONObject ) {
-         // logger.debug( StringUtils.repeat( " ", (depth + 2) * 3 ) + "MetaOI: " + key + " Skipped!" );
+         // logger.info( StringUtils.repeat( " ", (depth + 2) * 3 ) + "MetaOI: " + key + " Skipped!" );
          // applyJsonLabelArrayToView( vLLD, vBlock, (JSONObject)obj, key, depth + 1, null );
          } else {
             logger.error( StringUtils.repeat( " ", (depth + 2) * 3 ) + "Key: " + key + "  Unknown type: " + obj.getClass().getName() );
@@ -1132,7 +1139,7 @@ end debug code */
       }
 /* start debug code
       if ( log ) {
-         logger.debug( "After Setting entity: " + entity + "  ID: " + "626" );
+         logger.info( "After Setting entity: " + entity + "  ID: " + "626" );
          ei.logEntity( false );
       }
  end debug code*/
@@ -1148,16 +1155,16 @@ end debug code */
          int rc = 0;
          while( rc >= 0 ) {
             rc = is.read( buf );
-         // logger.debug( ">>>>>>>>>>>>> Raw Post Character: " + rc );
+         // logger.info( ">>>>>>>>>>>>> Raw Post Character: " + rc );
             if ( rc >= 0 )
                os.write( buf, 0, rc );
          }
          String s = new String( os.toByteArray(), "UTF-8" );
-      // logger.debug( ">>>>>>>>>>>>> Raw Post Data: " + s );
-      // logger.debug( "=================================" );
+      // logger.info( ">>>>>>>>>>>>> Raw Post Data: " + s );
+      // logger.info( "=================================" );
          decoded = URLDecoder.decode( s, "UTF-8" );
-      // logger.debug( ">>>>>>>>>>>>> DECODED Post Data: " + decoded );
-      // logger.debug( "=================================" );
+      // logger.info( ">>>>>>>>>>>>> DECODED Post Data: " + decoded );
+      // logger.info( "=================================" );
          JSONParser jsonParser = new JSONParser();
          json = (JSONObject)jsonParser.parse( decoded );
       } catch( IOException io ) {
@@ -1195,14 +1202,14 @@ end debug code */
 
             CursorResult cr = ec.setFirst( "Tag", tag );
             if ( cr.isSet() ) {
-               logger.debug( "View path set to Entity.Tag ================>>> " + entity + "." + tag );
+               logger.info( "View path set to Entity.Tag ================>>> " + entity + "." + tag );
             // ec.logEntity( false );
                if ( idx2 < entityTagList.length() - 1 ) {
                   idx2++;
                   ec = setPathCursorPosition( vLLD, entityTagList, idx2, depth + 1 );
                }
             } else {
-               logger.debug( "Could not set cursor for Entity.Tag: " + entity + "." + tag );
+               logger.info( "Could not set cursor for Entity.Tag: " + entity + "." + tag );
                throw new ZeidonException( "Could not set cursor for Entity.Tag: " + entity + "." + tag );
             }
          }
@@ -1245,7 +1252,7 @@ end debug code */
                      cr = ec.setFirstWithinOi( "Tag", tag );
                   }
                   if ( cr.isSet() ) {
-                     logger.debug( "PositionByKey set to Entity.Tag ================>>> " + entity + "." + tag );
+                  // logger.info( "PositionByKey set to Entity.Tag ================>>> " + entity + "." + tag );
                   // ec.logEntity( false );
                   } else {
                      logger.error( "Could not set cursor for Entity.Tag: " + entity + "." + tag );
@@ -1338,7 +1345,7 @@ end debug code */
          ecb = mBlockRU.getCursor( "Subregistrant" );
          ecb.includeSubobject( vLLD.getCursor( "Subregistrant" ) );
          copyBlockToReuse( vLLD, vBlockCopy, mBlockRU );
-      // logger.debug( "Reusable Block OI: " );
+      // logger.info( "Reusable Block OI: " );
       // mBlockRU.logObjectInstance();
          mBlockRU.commit();
          mBlockRU.drop();
@@ -1433,7 +1440,7 @@ end debug code */
                ec = mBlockRU.getCursor( "LLD_Block" );
                ec.getAttribute( "Top" ).setValue( jsonObj.get( "top" ) );
                ec.getAttribute( "Left" ).setValue( jsonObj.get( "left" ) );
-            // logger.debug( "Reusable Block Entity: " );
+            // logger.info( "Reusable Block Entity: " );
             // ec.logEntity();
                copyReuseToBlock( vLLD, vBlock, mBlockRU );
             } catch( ParseException pe ) {
@@ -1466,15 +1473,15 @@ end debug code */
 
       String taskId = (String) request.getSession().getAttribute( "ZeidonTaskId" );
       Task epamms = oe.getTaskById( taskId );
-   // logger.debug( "=========================================>>>>>>>>>>>>>>>>>>>>>>>>>>> Graphical Designer Servlet Task Id: " + taskId );
+   // logger.info( "=========================================>>>>>>>>>>>>>>>>>>>>>>>>>>> Graphical Designer Servlet Task Id: " + taskId );
    // Application zeidonTools = epamms.getApplication( "Zeidon_Tools" );
    // Task zeidonSystem = oe.getSystemTask();
       String action = request.getParameter( "action" );
-      logger.debug( "Post ePamms action: " + action );
+      logger.info( "Post ePamms action: " + action );
       String viewName = request.getParameter( "viewName" );
       View vLLD = epamms.getViewByName( viewName );
    // if ( vLLD != null ) {
-   //    logger.debug( "vLLD OI: " );
+   //    logger.info( "vLLD OI: " );
    //    vLLD.logObjectInstance();
    // }
 
@@ -1498,12 +1505,12 @@ end debug code */
                }
                try {
                   String viewPath = request.getParameter( "viewPath" );
-               // logger.debug( "Setting view path: " + viewPath );
+               // logger.info( "Setting view path: " + viewPath );
                   String elementKey = request.getParameter( "elementKey" );
-               // logger.debug( "Setting cursor for element key: " + elementKey );
+               // logger.info( "Setting cursor for element key: " + elementKey );
                // EntityCursor ec = setPathCursorPosition( mSPLDefBlock, viewPath, 0, 0 );
                   EntityCursor ec = setPositionByKey( mSPLDefBlock, elementKey );
-               // logger.debug( "Finished setting view path: " + viewPath );
+               // logger.info( "Finished setting view path: " + viewPath );
                // ec.logEntity( false );
                } catch (ZeidonException ze) {
                   // Could not locate target block
@@ -1530,7 +1537,7 @@ end debug code */
                vBlock.resetSubobjectTop();
                jsonLabel = addReusableBlock( vLLD, vBlock, blockTag, blockName );
             } catch( ZeidonException ze ) {
-               logger.error( "Error processing Json Label: " + ze.getMessage() );
+               logger.error( "Error processing Save Reusable Block: " + ze.getMessage() );
                jsonLabel = "{}";
             } finally {
                if ( vBlock != null ) {
@@ -1547,7 +1554,7 @@ end debug code */
             View vBlock = null;
             JSONObject jsonPost = getPostData( request );
             String strJson = jsonPost.toJSONString();
-            logger.info( "Save JSON: " + strJson );
+         // logger.info( "Save JSON: " + strJson );
             try {
                vLLD.resetSubobjectTop();
                vBlock = vLLD.newView();
@@ -1565,22 +1572,27 @@ end debug code */
                   sortBlocks( vLLD );
                   cr = vLLD.cursor( "LLD_Panel" ).setNext();
                }
-            // logger.debug( "After Sort Blocks LLD OI: " );
+            // logger.info( "After Sort Blocks LLD OI: " );
             // displaySPLD( vLLD, null, "" );
             // vLLD.logObjectInstance();
-            // logger.debug( "Saved JSON to OI" );
+            // logger.info( "Saved JSON to OI" );
                if ( action.equals( "saveLabelCommit" ) ) {
                   EntityCursor ec = vLLD.cursor( "LLD_SpecialSectionAttribute" );
                   cr = ec.setFirstWithinOi();
                   while ( cr.isSet() ) {
                      EntityCursor ec2 = vLLD.cursor( "LLD_SpecialSectionAttrBlock" );
                      if ( ec2.hasAny() == false ) {
+                        logger.info( "Deleting : LLD_SpecialSectionAttribute" );
+                        ec.logEntity( true );
                         ec.deleteEntity( CursorPosition.NONE );
                      }
                      cr = ec.setNextWithinOi();
                   }
                   vLLD.resetSubobjectTop();
+               // logger.info( "Before commit LLD OI: " );
+               // displaySPLD( vLLD, null, "" );
                   vLLD.commit();
+               // logger.info( "After commit LLD OI: " );
                // displaySPLD( vLLD, null, "" );
                }
                if ( action.equals( "saveLabelRefresh" ) || action.equals( "saveReusableBlock" ) || action.equals( "applyReusableBlock" ) ) {
@@ -1589,7 +1601,7 @@ end debug code */
                      String blockName = request.getParameter( "blockName" );
                      String parms = request.getParameter( "parms" );
                      applyReusableBlock( vLLD, vBlock, blockTag, blockName, parms );
-                  // logger.debug( "After saveReusableBlock" + blockName );
+                  // logger.info( "After saveReusableBlock" + blockName );
                   // vLLD.logObjectInstance();
                   }
                   if ( action.equals( "applyReusableBlock" ) == false ) {
@@ -1601,10 +1613,10 @@ end debug code */
                                .activate();
                      vLLD.setName( viewName, Level.TASK );
                   }
-               // logger.debug( "After RefreshLabel" );
+               // logger.info( "After RefreshLabel" );
                // vLLD.logObjectInstance();
                   jsonLabel = convertLLD_ToJSON( vLLD );
-               // logger.debug( "Completed refresh Json Label: " + jsonLabel );
+               // logger.info( "Completed refresh Json Label: " + jsonLabel );
                } else {
                   jsonLabel = "{}";
                }
@@ -1628,12 +1640,11 @@ end debug code */
       } else if ( action.equals( "loadLabel" ) ) {
       // We are just going to get the SPLD_LLD and its children and rename SPLD_LLD to LLD
          try {
-            logger.info( "LoadLabel OI: " );
-            displaySPLD( vLLD, null, "" );
+         // logger.info( "LoadLabel OI: " );
+         // displaySPLD( vLLD, null, "" );
          // vLLD.logObjectInstance();
             jsonLabel = convertLLD_ToJSON( vLLD );
-            logger.info( "LoadLabel JSON: " + jsonLabel );
-         // jsonLabel = jsonLabel.replaceFirst( "\"TZLLD\",", "\"TZLLD\",\n      \"fileName\" : \"" + fileName + "\"," );
+         // logger.info( "LoadLabel JSON: " + jsonLabel );
          } catch( ZeidonException ze ) {
             logger.error( "Error loading Json Label: " + ze.getMessage() );
             jsonLabel = "{ \"Error\" : \"" + ze.getMessage() + "\" }";
@@ -1649,9 +1660,9 @@ end debug code */
          BufferedWriter writer = new BufferedWriter( sw );
          JsonUtils.writeXodToJsonStream( vLLD, writer );
          StringBuffer sb = sw.getBuffer();
-      // logger.debug( "LLD XOD: " + sb.toString() );
+      // logger.info( "LLD XOD: " + sb.toString() );
          StringBuffer oea = getSkeletalLodEntities( sb );
-      // logger.debug( "LLD ER: " + oea.toString() );
+      // logger.info( "LLD ER: " + oea.toString() );
          response.setContentType( "text/json" );
          // response.getWriter().write( jsonLabel );
          response.getWriter().write( new Gson().toJson( oea.toString() ) );

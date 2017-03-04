@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSLCSubregProductUpdate   Generate Timestamp: 20161019144229552 --%>
+<%-- wSLCSubregProductUpdate   Generate Timestamp: 20170201115021965 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -1081,6 +1081,7 @@ else
    <input name="zFocusCtrl" id="zFocusCtrl" type="hidden" value="<%=strFocusCtrl%>">
    <input name="zOpenFile" id="zOpenFile" type="hidden" value="<%=strOpenFile%>">
    <input name="zDateFormat" id="zDateFormat" type="hidden" value="<%=strDateFormat%>">
+   <input name="zDateSequence" id="zDateSequence" type="hidden" value="MDY">
    <input name="zLoginName" id="zLoginName" type="hidden" value="<%=strLoginName%>">
    <input name="zKeyRole" id="zKeyRole" type="hidden" value="<%=strKeyRole%>">
    <input name="zOpenPopupWindow" id="zOpenPopupWindow" type="hidden" value="<%=strOpenPopupWindow%>">
@@ -1567,13 +1568,12 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
 <% /* Grid2:Grid */ %>
-<table  cols=6 style=""  name="Grid2" id="Grid2">
+<table  cols=5 style=""  name="Grid2" id="Grid2">
 
 <thead><tr>
 
    <th>Description</th>
-   <th>SLC Description</th>
-   <th>SLC Version</th>
+   <th>Base SLC Description</th>
    <th>Update</th>
    <th>Delete</th>
    <th>Copy</th>
@@ -1596,7 +1596,6 @@ try
       String strTag;
       String strGridEditCtl2;
       String strGridEditCtl3;
-      String strGridEditCtl4;
       String strBitmapBtn2;
       String strBitmapBtn3;
       String strBitmapBtn5;
@@ -1637,26 +1636,12 @@ try
          if ( StringUtils.isBlank( strGridEditCtl3 ) )
             strGridEditCtl3 = "&nbsp";
 
-         strGridEditCtl4 = "";
-         nRC = vGrid2.cursor( "SubregLabelContent" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-         {
-            strGridEditCtl4 = vGrid2.cursor( "SubregLabelContent" ).getAttribute( "Version" ).getString( "" );
-
-            if ( strGridEditCtl4 == null )
-               strGridEditCtl4 = "";
-         }
-
-         if ( StringUtils.isBlank( strGridEditCtl4 ) )
-            strGridEditCtl4 = "&nbsp";
-
 %>
 
 <tr<%=strOdd%>>
 
    <td><a href="#" onclick="GOTO_UpdateSubregProductSPLD( this.id )" id="GridEditCtl2::<%=strEntityKey%>"><%=strGridEditCtl2%></a></td>
    <td><a href="#" onclick="GOTO_UpdateSubregProductSPLD( this.id )" id="GridEditCtl3::<%=strEntityKey%>"><%=strGridEditCtl3%></a></td>
-   <td><a href="#" onclick="GOTO_UpdateSubregProductSPLD( this.id )" id="GridEditCtl4::<%=strEntityKey%>"><%=strGridEditCtl4%></a></td>
    <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BitmapBtn2" onclick="GOTO_UpdateSubregProductSPLD( this.id )" id="BitmapBtn2::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
    <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BitmapBtn3" onclick="GOTO_DeleteSPLD( this.id )" id="BitmapBtn3::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
    <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BitmapBtn5" onclick="GOTO_CopySPLD_Version( this.id )" id="BitmapBtn5::<%=strEntityKey%>"><img src="./images/ePammsCopy.png" alt="Copy"></a></td>

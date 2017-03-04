@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCDilutionGroup   Generate Timestamp: 20160914193417149 --%>
+<%-- wMLCDilutionGroup   Generate Timestamp: 20170201101524989 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -79,7 +79,7 @@ public int DoInputMapping( HttpServletRequest request,
          }
       }
 
-      // EditBox: Text
+      // MLEdit: Text
       nRC = mMasLC.cursor( "M_DilutionGroup" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 ) // CursorResult.SET
       {
@@ -364,18 +364,18 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-         View mMasLCAuto = task.getViewByName( "mMasLC" );
-         EntityCursor cursor = mMasLCAuto.cursor( "M_DilutionGroup" );
-            if ( cursor.isNull() )
-               nRC = 0;
-            else
-            {
-               if ( cursor.isVersioned( ) )
-               {
-                  cursor.acceptSubobject( );
-               }
-            nRC = 0;
+      View mMasLC = task.getViewByName( "mMasLC" );
+      EntityCursor cursor = mMasLC.cursor( "M_DilutionGroup" );
+      if ( cursor.isNull() )
+         nRC = 0;
+      else
+      {
+         if ( cursor.isVersioned( ) )
+         {
+            cursor.acceptSubobject( );
          }
+         nRC = 0;
+      }
 
       }
       catch ( Exception e )
@@ -405,18 +405,18 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-         View mMasLCAuto = task.getViewByName( "mMasLC" );
-         EntityCursor cursor = mMasLCAuto.cursor( "M_DilutionGroup" );
-            if ( cursor.isNull() )
-               nRC = 0;
-            else
-            {
-               if ( cursor.isVersioned( ) )
-               {
-                  cursor.acceptSubobject( );
-               }
-            nRC = 0;
+      View mMasLC = task.getViewByName( "mMasLC" );
+      EntityCursor cursor = mMasLC.cursor( "M_DilutionGroup" );
+      if ( cursor.isNull() )
+         nRC = 0;
+      else
+      {
+         if ( cursor.isVersioned( ) )
+         {
+            cursor.acceptSubobject( );
          }
+         nRC = 0;
+      }
 
       }
       catch ( Exception e )
@@ -441,18 +441,18 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-         View mMasLCAuto = task.getViewByName( "mMasLC" );
-         EntityCursor cursor = mMasLCAuto.cursor( "M_DilutionGroup" );
-            if ( cursor.isNull() )
-               nRC = 0;
-            else
-            {
-               if ( cursor.isVersioned( ) )
-               {
-                  cursor.cancelSubobject( );
-               }
-            nRC = 0;
+      View mMasLC = task.getViewByName( "mMasLC" );
+      EntityCursor cursor = mMasLC.cursor( "M_DilutionGroup" );
+      if ( cursor.isNull() )
+         nRC = 0;
+      else
+      {
+         if ( cursor.isVersioned( ) )
+         {
+            cursor.cancelSubobject( );
          }
+         nRC = 0;
+      }
 
       }
       catch ( Exception e )
@@ -477,18 +477,18 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-         View mMasLCAuto = task.getViewByName( "mMasLC" );
-         EntityCursor cursor = mMasLCAuto.cursor( "M_DilutionGroupItem" );
-            if ( cursor.isNull() )
-               nRC = 0;
-            else
-            {
-               if ( cursor.isVersioned( ) )
-               {
-                  cursor.cancelSubobject( );
-               }
-            nRC = 0;
+      View mMasLC = task.getViewByName( "mMasLC" );
+      EntityCursor cursor = mMasLC.cursor( "M_DilutionGroupItem" );
+      if ( cursor.isNull() )
+         nRC = 0;
+      else
+      {
+         if ( cursor.isVersioned( ) )
+         {
+            cursor.cancelSubobject( );
          }
+         nRC = 0;
+      }
 
       }
       catch ( Exception e )
@@ -518,9 +518,9 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-         View mMasLCAuto = task.getViewByName( "mMasLC" );
-         EntityCursor cursor = mMasLCAuto.cursor( "M_DilutionChartEntry" );
-         cursor.createTemporalEntity( );
+      View mMasLC = task.getViewByName( "mMasLC" );
+      EntityCursor cursor = mMasLC.cursor( "M_DilutionChartEntry" );
+      cursor.createTemporalEntity( );
 
       }
       catch ( Exception e )
@@ -642,8 +642,8 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-         EntityCursor cursor = mMasLC.cursor( "M_DilutionChartEntry" );
-         cursor.createTemporalSubobjectVersion( );
+      EntityCursor cursor = mMasLC.cursor( "M_DilutionChartEntry" );
+      cursor.createTemporalSubobjectVersion( );
 
       }
       catch ( Exception e )
@@ -697,9 +697,9 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-         View mMasLCAuto = task.getViewByName( "mMasLC" );
-         EntityCursor cursor = mMasLCAuto.cursor( "M_DilutionGroupItem" );
-         cursor.createTemporalEntity( );
+      View mMasLC = task.getViewByName( "mMasLC" );
+      EntityCursor cursor = mMasLC.cursor( "M_DilutionGroupItem" );
+      cursor.createTemporalEntity( );
 
       }
       catch ( Exception e )
@@ -821,8 +821,8 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-         EntityCursor cursor = mMasLC.cursor( "M_DilutionGroupItem" );
-         cursor.createTemporalSubobjectVersion( );
+      EntityCursor cursor = mMasLC.cursor( "M_DilutionGroupItem" );
+      cursor.createTemporalSubobjectVersion( );
 
       }
       catch ( Exception e )
@@ -1127,6 +1127,7 @@ else
    <input name="zFocusCtrl" id="zFocusCtrl" type="hidden" value="<%=strFocusCtrl%>">
    <input name="zOpenFile" id="zOpenFile" type="hidden" value="<%=strOpenFile%>">
    <input name="zDateFormat" id="zDateFormat" type="hidden" value="<%=strDateFormat%>">
+   <input name="zDateSequence" id="zDateSequence" type="hidden" value="MDY">
    <input name="zLoginName" id="zLoginName" type="hidden" value="<%=strLoginName%>">
    <input name="zKeyRole" id="zKeyRole" type="hidden" value="<%=strKeyRole%>">
    <input name="zOpenPopupWindow" id="zOpenPopupWindow" type="hidden" value="<%=strOpenPopupWindow%>">
@@ -1148,7 +1149,7 @@ else
 <div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GBDilution:GroupBox */ %>
 
-<div id="GBDilution" name="GBDilution" class="listgroup"   style="float:left;position:relative; width:770px; height:194px;">  <!-- GBDilution --> 
+<div id="GBDilution" name="GBDilution" class="listgroup"   style="float:left;position:relative; width:770px; height:214px;">  <!-- GBDilution --> 
 
 <% /* DilutionGroup:Text */ %>
 
@@ -1203,8 +1204,9 @@ else
 
 <label  id="Text:" name="Text:" style="width:138px;height:16px;position:absolute;left:18px;top:58px;">Text:</label>
 
-<% /* Text:EditBox */ %>
+<% /* Text:MLEdit */ %>
 <%
+   // : Text
    strErrorMapValue = VmlOperation.CheckError( "Text", strError );
    if ( !StringUtils.isBlank( strErrorMapValue ) )
    {
@@ -1216,37 +1218,29 @@ else
       strErrorColor = "";
       mMasLC = task.getViewByName( "mMasLC" );
       if ( VmlOperation.isValid( mMasLC ) == false )
-         task.log( ).debug( "Invalid View: " + "Text" );
+         task.log( ).info( "Invalid View: " + "Text" );
       else
       {
          nRC = mMasLC.cursor( "M_DilutionGroup" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            try
-            {
-               strErrorMapValue = mMasLC.cursor( "M_DilutionGroup" ).getAttribute( "Text" ).getString( "" );
-            }
-            catch (Exception e)
-            {
-               out.println("There is an error on Text: " + e.getMessage());
-               task.log().error( "*** Error on ctrl Text", e );
-            }
+            strErrorMapValue = mMasLC.cursor( "M_DilutionGroup" ).getAttribute( "Text" ).getString( "" );
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
 
-            task.log( ).debug( "M_DilutionGroup.Text: " + strErrorMapValue );
+            task.log( ).info( "M_DilutionGroup.Text: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist for Text: " + "mMasLC.M_DilutionGroup" );
+            task.log( ).info( "Entity does not exist for Text: " + "mMasLC.M_DilutionGroup" );
       }
    }
 %>
 
-<input name="Text" id="Text" maxlength="254" style="width:574px;position:absolute;left:164px;top:58px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<textarea name="Text" id="Text" maxlength="254" style="width:574px;height:36px;position:absolute;left:164px;top:58px;border:solid;border-width:2px;border-style:groove;" wrap="wrap"><%=strErrorMapValue%></textarea>
 
 <% /* Ratio::Text */ %>
 
-<label  id="Ratio:" name="Ratio:" style="width:138px;height:16px;position:absolute;left:18px;top:80px;">Ratio:</label>
+<label  id="Ratio:" name="Ratio:" style="width:138px;height:16px;position:absolute;left:18px;top:100px;">Ratio:</label>
 
 <% /* Ratio:EditBox */ %>
 <%
@@ -1287,11 +1281,11 @@ else
    }
 %>
 
-<input name="Ratio" id="Ratio" maxlength="4" style="width:574px;position:absolute;left:164px;top:80px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="Ratio" id="Ratio" maxlength="4" style="width:574px;position:absolute;left:164px;top:100px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* UnitsNumerator::Text */ %>
 
-<label  id="UnitsNumerator:" name="UnitsNumerator:" style="width:138px;height:16px;position:absolute;left:18px;top:102px;">Units Numerator:</label>
+<label  id="UnitsNumerator:" name="UnitsNumerator:" style="width:138px;height:16px;position:absolute;left:18px;top:122px;">Units Numerator:</label>
 
 <% /* UnitsNumerator:EditBox */ %>
 <%
@@ -1332,11 +1326,11 @@ else
    }
 %>
 
-<input name="UnitsNumerator" id="UnitsNumerator" maxlength="4" style="width:574px;position:absolute;left:164px;top:102px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="UnitsNumerator" id="UnitsNumerator" maxlength="4" style="width:574px;position:absolute;left:164px;top:122px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* UnitsDenominator::Text */ %>
 
-<label  id="UnitsDenominator:" name="UnitsDenominator:" style="width:138px;height:16px;position:absolute;left:18px;top:124px;">Units Denominator:</label>
+<label  id="UnitsDenominator:" name="UnitsDenominator:" style="width:138px;height:16px;position:absolute;left:18px;top:144px;">Units Denominator:</label>
 
 <% /* UnitsDenominator:EditBox */ %>
 <%
@@ -1377,11 +1371,11 @@ else
    }
 %>
 
-<input name="UnitsDenominator" id="UnitsDenominator" maxlength="4" style="width:574px;position:absolute;left:164px;top:124px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="UnitsDenominator" id="UnitsDenominator" maxlength="4" style="width:574px;position:absolute;left:164px;top:144px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* ReviewerNote::Text */ %>
 
-<label  id="ReviewerNote:" name="ReviewerNote:" style="width:138px;height:16px;position:absolute;left:18px;top:146px;">ReviewerNote:</label>
+<label  id="ReviewerNote:" name="ReviewerNote:" style="width:138px;height:16px;position:absolute;left:18px;top:166px;">ReviewerNote:</label>
 
 <% /* ReviewerNote:EditBox */ %>
 <%
@@ -1422,11 +1416,11 @@ else
    }
 %>
 
-<input name="ReviewerNote" id="ReviewerNote" maxlength="2048" style="width:574px;position:absolute;left:164px;top:146px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="ReviewerNote" id="ReviewerNote" maxlength="2048" style="width:574px;position:absolute;left:164px;top:166px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* ReviewerNoteTable::Text */ %>
 
-<label  id="ReviewerNoteTable:" name="ReviewerNoteTable:" style="width:138px;height:16px;position:absolute;left:18px;top:168px;">ReviewerNoteTable:</label>
+<label  id="ReviewerNoteTable:" name="ReviewerNoteTable:" style="width:138px;height:16px;position:absolute;left:18px;top:188px;">ReviewerNoteTable:</label>
 
 <% /* ReviewerNoteTable:EditBox */ %>
 <%
@@ -1467,7 +1461,7 @@ else
    }
 %>
 
-<input name="ReviewerNoteTable" id="ReviewerNoteTable" maxlength="2048" style="width:574px;position:absolute;left:164px;top:168px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="ReviewerNoteTable" id="ReviewerNoteTable" maxlength="2048" style="width:574px;position:absolute;left:164px;top:188px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 
 </div>  <!--  GBDilution --> 

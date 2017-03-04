@@ -673,7 +673,7 @@ omSubLC_dMarkUsgTxtSubUsgNames( View     mSubLC,
                   sb_szTempString_1 = new StringBuilder( 32 );
                else
                   sb_szTempString_1 = new StringBuilder( szTempString_1 );
-                               GetVariableFromAttribute( sb_szTempString_1, mi_lTempInteger_3, 'S', 255, mSubLC2, "S_InsertTextMarketUsage", "Text", "", 0 );
+                               GetVariableFromAttribute( sb_szTempString_1, mi_lTempInteger_3, 'S', 4097, mSubLC2, "S_InsertTextMarketUsage", "Text", "", 0 );
                lTempInteger_3 = mi_lTempInteger_3.intValue( );
                szTempString_1 = sb_szTempString_1.toString( );}
                 {StringBuilder sb_szUsageText;
@@ -1348,7 +1348,7 @@ omSubLC_dMarketUsgNameFootnote( View     mSubLC,
                   sb_szTempString_1 = new StringBuilder( 32 );
                else
                   sb_szTempString_1 = new StringBuilder( szTempString_1 );
-                               GetVariableFromAttribute( sb_szTempString_1, mi_lTempInteger_6, 'S', 255, mSubLC2, "S_InsertTextMarketUsage", "Text", "", 0 );
+                               GetVariableFromAttribute( sb_szTempString_1, mi_lTempInteger_6, 'S', 4097, mSubLC2, "S_InsertTextMarketUsage", "Text", "", 0 );
                lTempInteger_6 = mi_lTempInteger_6.intValue( );
                szTempString_1 = sb_szTempString_1.toString( );}
                 {StringBuilder sb_szClassification;
@@ -1675,7 +1675,7 @@ omSubLC_dUsageNameFootnote( View     mSubLC,
                   sb_szTempString_1 = new StringBuilder( 32 );
                else
                   sb_szTempString_1 = new StringBuilder( szTempString_1 );
-                               GetVariableFromAttribute( sb_szTempString_1, mi_lTempInteger_6, 'S', 255, mSubLC2, "S_InsertTextUsage", "Text", "", 0 );
+                               GetVariableFromAttribute( sb_szTempString_1, mi_lTempInteger_6, 'S', 4097, mSubLC2, "S_InsertTextUsage", "Text", "", 0 );
                lTempInteger_6 = mi_lTempInteger_6.intValue( );
                szTempString_1 = sb_szTempString_1.toString( );}
                 {StringBuilder sb_szClassification;
@@ -1806,7 +1806,7 @@ omSubLC_dUsageKeywordText( View     mSubLC,
                   sb_szTempString_0 = new StringBuilder( 32 );
                else
                   sb_szTempString_0 = new StringBuilder( szTempString_0 );
-                               GetVariableFromAttribute( sb_szTempString_0, mi_lTempInteger_1, 'S', 255, mSubLC, "S_InsertTextUsage", "Text", "", 0 );
+                               GetVariableFromAttribute( sb_szTempString_0, mi_lTempInteger_1, 'S', 4097, mSubLC, "S_InsertTextUsage", "Text", "", 0 );
                lTempInteger_1 = mi_lTempInteger_1.intValue( );
                szTempString_0 = sb_szTempString_0.toString( );}
                 {StringBuilder sb_szGeneratedString;
@@ -2860,7 +2860,7 @@ omSubLC_DuplicateSLC( View     NewSLC,
       sb_szTempString_0 = new StringBuilder( 32 );
    else
       sb_szTempString_0 = new StringBuilder( szTempString_0 );
-      ZeidonStringConcat( sb_szTempString_0, 1, 0, " (Duplicate)", 1, 0, 2049 );
+      ZeidonStringConcat( sb_szTempString_0, 1, 0, " (Duplicate)", 1, 0, 4097 );
    szTempString_0 = sb_szTempString_0.toString( );}
    SetAttributeFromString( NewSLC, "SubregLabelContent", "Description", szTempString_0 );
    //:INCLUDE NewSLC.SubregProduct FROM PreviousSLC.SubregProduct
@@ -3402,7 +3402,8 @@ omSubLC_BuildSLC_FromMLC( View     NewSLC,
    int      lTempInteger_1 = 0;
 
 
-   //:// IssueError( NewSLC, 0, 0, "Start of Build SLC" )
+   //:// TraceLineS( "BuildSLC_FromMLC MLC", "=====================>>>>>>>>" )
+   //:// DisplayObjectInstance( SrcMLC, "", "" )
 
    //:// Create a new SLC from an MLC and tie it back to the MLC.
 
@@ -3801,6 +3802,8 @@ omSubLC_BuildSLC_FromMLC( View     NewSLC,
 
    //:END
    return( 0 );
+// // TraceLineS( "BuildSLC_FromMLC SLC", "=====================>>>>>>>>" )
+// // DisplayObjectInstance( NewSLC, "", "" )
 // END
 } 
 
@@ -4888,7 +4891,7 @@ omSubLC_dSD_KeywordText( View     mSubLC,
                   sb_szTempString_0 = new StringBuilder( 32 );
                else
                   sb_szTempString_0 = new StringBuilder( szTempString_0 );
-                               GetVariableFromAttribute( sb_szTempString_0, mi_lTempInteger_1, 'S', 255, mSubLC, "S_InsertTextSD", "Text", "", 0 );
+                               GetVariableFromAttribute( sb_szTempString_0, mi_lTempInteger_1, 'S', 4097, mSubLC, "S_InsertTextSD", "Text", "", 0 );
                lTempInteger_1 = mi_lTempInteger_1.intValue( );
                szTempString_0 = sb_szTempString_0.toString( );}
                 {StringBuilder sb_szGeneratedString;
@@ -4909,6 +4912,540 @@ omSubLC_dSD_KeywordText( View     mSubLC,
          //:// Store the resulting value in the object.
          //:StoreStringInRecord( mSubLC, InternalEntityStructure, InternalAttribStructure, szGeneratedString )
          StoreStringInRecord( mSubLC, InternalEntityStructure, InternalAttribStructure, szGeneratedString );
+         //:RETURN 0
+         if(8==8)return( 0 );
+
+         //:// end zDERIVED_GET
+         //:OF   zDERIVED_SET:
+         case zDERIVED_SET :
+            break ;
+      } 
+
+
+      //:  // end zDERIVED_SET
+      //:END  // case
+      return( 0 );
+   } 
+
+
+   //:DERIVED ATTRIBUTE OPERATION
+   //:dDU_StmtTitleTxtKey( VIEW mSubLC BASED ON LOD mSubLC,
+   //:                  STRING ( 32 ) InternalEntityStructure,
+   //:                  STRING ( 32 ) InternalAttribStructure,
+   //:                  SHORT GetOrSetFlag )
+
+   //:STRING ( 2048 ) szDisplayStatement
+public int 
+omSubLC_dDU_StmtTitleTxtKey( View     mSubLC,
+                             String InternalEntityStructure,
+                             String InternalAttribStructure,
+                             Integer   GetOrSetFlag )
+{
+   String   szDisplayStatement = null;
+   //:STRING ( 256 )  szStatementTitle
+   String   szStatementTitle = null;
+   //:STRING ( 2048 ) szStatementText
+   String   szStatementText = null;
+   int      lTempInteger_0 = 0;
+   int      lTempInteger_1 = 0;
+
+
+   //:CASE GetOrSetFlag
+   switch( GetOrSetFlag )
+   { 
+      //:OF   zDERIVED_GET:
+      case zDERIVED_GET :
+
+         //:// Directions For Use Display Statement Text is a combination of Title/Text/Keywords.
+         //:szStatementText = mSubLC.S_DirectionsForUseStatement.Text
+         {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
+         StringBuilder sb_szStatementText;
+         if ( szStatementText == null )
+            sb_szStatementText = new StringBuilder( 32 );
+         else
+            sb_szStatementText = new StringBuilder( szStatementText );
+                   GetVariableFromAttribute( sb_szStatementText, mi_lTempInteger_0, 'S', 2049, mSubLC, "S_DirectionsForUseStatement", "Text", "", 0 );
+         lTempInteger_0 = mi_lTempInteger_0.intValue( );
+         szStatementText = sb_szStatementText.toString( );}
+         //:IF szStatementText != ""
+         if ( ZeidonStringCompare( szStatementText, 1, 0, "", 1, 0, 2049 ) != 0 )
+         { 
+            //:GenerateKeywordTextIntoString( mSubLC, szStatementText,
+            //:                            "S_InsertTextKeywordDU", "S_InsertTextDU", ", " )
+            {
+             ZGlobal1_Operation m_ZGlobal1_Operation = new ZGlobal1_Operation( mSubLC );
+             {StringBuilder sb_szStatementText;
+            if ( szStatementText == null )
+               sb_szStatementText = new StringBuilder( 32 );
+            else
+               sb_szStatementText = new StringBuilder( szStatementText );
+                         m_ZGlobal1_Operation.GenerateKeywordTextIntoString( mSubLC, sb_szStatementText, "S_InsertTextKeywordDU", "S_InsertTextDU", ", " );
+            szStatementText = sb_szStatementText.toString( );}
+             // m_ZGlobal1_Operation = null;  // permit gc  (unnecessary)
+            }
+         } 
+
+         //:END
+
+         //:szStatementTitle = mSubLC.S_DirectionsForUseStatement.Title
+         {MutableInt mi_lTempInteger_1 = new MutableInt( lTempInteger_1 );
+         StringBuilder sb_szStatementTitle;
+         if ( szStatementTitle == null )
+            sb_szStatementTitle = new StringBuilder( 32 );
+         else
+            sb_szStatementTitle = new StringBuilder( szStatementTitle );
+                   GetVariableFromAttribute( sb_szStatementTitle, mi_lTempInteger_1, 'S', 257, mSubLC, "S_DirectionsForUseStatement", "Title", "", 0 );
+         lTempInteger_1 = mi_lTempInteger_1.intValue( );
+         szStatementTitle = sb_szStatementTitle.toString( );}
+         //:IF szStatementTitle != ""
+         if ( ZeidonStringCompare( szStatementTitle, 1, 0, "", 1, 0, 257 ) != 0 )
+         { 
+            //:GenerateKeywordTextIntoString( mSubLC, szStatementTitle,
+            //:                            "S_InsertTextKeywordDU", "S_InsertTextDU", ", " )
+            {
+             ZGlobal1_Operation m_ZGlobal1_Operation = new ZGlobal1_Operation( mSubLC );
+             {StringBuilder sb_szStatementTitle;
+            if ( szStatementTitle == null )
+               sb_szStatementTitle = new StringBuilder( 32 );
+            else
+               sb_szStatementTitle = new StringBuilder( szStatementTitle );
+                         m_ZGlobal1_Operation.GenerateKeywordTextIntoString( mSubLC, sb_szStatementTitle, "S_InsertTextKeywordDU", "S_InsertTextDU", ", " );
+            szStatementTitle = sb_szStatementTitle.toString( );}
+             // m_ZGlobal1_Operation = null;  // permit gc  (unnecessary)
+            }
+         } 
+
+         //:END
+
+         //:IF szStatementTitle != ""
+         if ( ZeidonStringCompare( szStatementTitle, 1, 0, "", 1, 0, 257 ) != 0 )
+         { 
+            //:szDisplayStatement = szStatementTitle
+             {StringBuilder sb_szDisplayStatement;
+            if ( szDisplayStatement == null )
+               sb_szDisplayStatement = new StringBuilder( 32 );
+            else
+               sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
+                        ZeidonStringCopy( sb_szDisplayStatement, 1, 0, szStatementTitle, 1, 0, 2049 );
+            szDisplayStatement = sb_szDisplayStatement.toString( );}
+            //:IF szStatementText != ""
+            if ( ZeidonStringCompare( szStatementText, 1, 0, "", 1, 0, 2049 ) != 0 )
+            { 
+               //:szDisplayStatement = szDisplayStatement + " --- " + szStatementText
+                {StringBuilder sb_szDisplayStatement;
+               if ( szDisplayStatement == null )
+                  sb_szDisplayStatement = new StringBuilder( 32 );
+               else
+                  sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
+                              ZeidonStringConcat( sb_szDisplayStatement, 1, 0, " --- ", 1, 0, 2049 );
+               szDisplayStatement = sb_szDisplayStatement.toString( );}
+                {StringBuilder sb_szDisplayStatement;
+               if ( szDisplayStatement == null )
+                  sb_szDisplayStatement = new StringBuilder( 32 );
+               else
+                  sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
+                              ZeidonStringConcat( sb_szDisplayStatement, 1, 0, szStatementText, 1, 0, 2049 );
+               szDisplayStatement = sb_szDisplayStatement.toString( );}
+            } 
+
+            //:END
+            //:ELSE
+         } 
+         else
+         { 
+            //:szDisplayStatement = szStatementText
+             {StringBuilder sb_szDisplayStatement;
+            if ( szDisplayStatement == null )
+               sb_szDisplayStatement = new StringBuilder( 32 );
+            else
+               sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
+                        ZeidonStringCopy( sb_szDisplayStatement, 1, 0, szStatementText, 1, 0, 2049 );
+            szDisplayStatement = sb_szDisplayStatement.toString( );}
+         } 
+
+         //:END
+
+         //:// Store the calculated value in the object.
+         //:StoreStringInRecord( mSubLC, InternalEntityStructure, InternalAttribStructure, szDisplayStatement )
+         StoreStringInRecord( mSubLC, InternalEntityStructure, InternalAttribStructure, szDisplayStatement );
+         break ;
+
+      //:  // end zDERIVED_GET
+      //:OF   zDERIVED_SET:
+      case zDERIVED_SET :
+         break ;
+   } 
+
+
+   //:     // end zDERIVED_SET
+   //:END  // case
+   return( 0 );
+// END
+} 
+
+
+//:DERIVED ATTRIBUTE OPERATION
+//:dDU_SubStmtTitleText( VIEW mSubLC BASED ON LOD mSubLC,
+//:                      STRING ( 32 ) InternalEntityStructure,
+//:                      STRING ( 32 ) InternalAttribStructure,
+//:                      SHORT GetOrSetFlag )
+
+//:   STRING ( 2048 ) szDisplayStatement
+public int 
+omSubLC_dDU_SubStmtTitleText( View     mSubLC,
+                              String InternalEntityStructure,
+                              String InternalAttribStructure,
+                              Integer   GetOrSetFlag )
+{
+   String   szDisplayStatement = null;
+   //:STRING ( 2048 ) szStatementText
+   String   szStatementText = null;
+   //:STRING ( 256 )  szTitle
+   String   szTitle = null;
+   int      lTempInteger_0 = 0;
+   int      lTempInteger_1 = 0;
+
+
+   //:CASE GetOrSetFlag
+   switch( GetOrSetFlag )
+   { 
+      //:OF   zDERIVED_GET:
+      case zDERIVED_GET :
+
+         //:// Directions For Use Display Statement Text is a combination of Title and Text.
+         //:szTitle = mSubLC.S_DirectionsForUseSubStatement.Title
+         {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
+         StringBuilder sb_szTitle;
+         if ( szTitle == null )
+            sb_szTitle = new StringBuilder( 32 );
+         else
+            sb_szTitle = new StringBuilder( szTitle );
+                   GetVariableFromAttribute( sb_szTitle, mi_lTempInteger_0, 'S', 257, mSubLC, "S_DirectionsForUseSubStatement", "Title", "", 0 );
+         lTempInteger_0 = mi_lTempInteger_0.intValue( );
+         szTitle = sb_szTitle.toString( );}
+         //:szStatementText = mSubLC.S_DirectionsForUseSubStatement.Text
+         {MutableInt mi_lTempInteger_1 = new MutableInt( lTempInteger_1 );
+         StringBuilder sb_szStatementText;
+         if ( szStatementText == null )
+            sb_szStatementText = new StringBuilder( 32 );
+         else
+            sb_szStatementText = new StringBuilder( szStatementText );
+                   GetVariableFromAttribute( sb_szStatementText, mi_lTempInteger_1, 'S', 2049, mSubLC, "S_DirectionsForUseSubStatement", "Text", "", 0 );
+         lTempInteger_1 = mi_lTempInteger_1.intValue( );
+         szStatementText = sb_szStatementText.toString( );}
+         //:IF szTitle != ""
+         if ( ZeidonStringCompare( szTitle, 1, 0, "", 1, 0, 257 ) != 0 )
+         { 
+            //:szDisplayStatement = szTitle + " --- " + szStatementText
+             {StringBuilder sb_szDisplayStatement;
+            if ( szDisplayStatement == null )
+               sb_szDisplayStatement = new StringBuilder( 32 );
+            else
+               sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
+                        ZeidonStringCopy( sb_szDisplayStatement, 1, 0, szTitle, 1, 0, 2049 );
+            szDisplayStatement = sb_szDisplayStatement.toString( );}
+             {StringBuilder sb_szDisplayStatement;
+            if ( szDisplayStatement == null )
+               sb_szDisplayStatement = new StringBuilder( 32 );
+            else
+               sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
+                        ZeidonStringConcat( sb_szDisplayStatement, 1, 0, " --- ", 1, 0, 2049 );
+            szDisplayStatement = sb_szDisplayStatement.toString( );}
+             {StringBuilder sb_szDisplayStatement;
+            if ( szDisplayStatement == null )
+               sb_szDisplayStatement = new StringBuilder( 32 );
+            else
+               sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
+                        ZeidonStringConcat( sb_szDisplayStatement, 1, 0, szStatementText, 1, 0, 2049 );
+            szDisplayStatement = sb_szDisplayStatement.toString( );}
+            //:ELSE
+         } 
+         else
+         { 
+            //:szDisplayStatement = szStatementText
+             {StringBuilder sb_szDisplayStatement;
+            if ( szDisplayStatement == null )
+               sb_szDisplayStatement = new StringBuilder( 32 );
+            else
+               sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
+                        ZeidonStringCopy( sb_szDisplayStatement, 1, 0, szStatementText, 1, 0, 2049 );
+            szDisplayStatement = sb_szDisplayStatement.toString( );}
+         } 
+
+         //:END
+
+         //:// Store the calculated value in the object.
+         //:StoreStringInRecord( mSubLC, InternalEntityStructure, InternalAttribStructure, szDisplayStatement )
+         StoreStringInRecord( mSubLC, InternalEntityStructure, InternalAttribStructure, szDisplayStatement );
+         //:RETURN 0
+         if(8==8)return( 0 );
+
+         //:// end zDERIVED_GET
+         //:OF   zDERIVED_SET:
+         case zDERIVED_SET :
+            break ;
+      } 
+
+
+      //:  // end zDERIVED_SET
+      //:END  // case
+      return( 0 );
+   } 
+
+
+   //:DERIVED ATTRIBUTE OPERATION
+   //:dDU_SubStmtTitleTxtKey( VIEW mSubLC BASED ON LOD mSubLC,
+   //:                     STRING ( 32 ) InternalEntityStructure,
+   //:                     STRING ( 32 ) InternalAttribStructure,
+   //:                     SHORT GetOrSetFlag )
+
+   //:STRING ( 2048 ) szDisplayStatement
+public int 
+omSubLC_dDU_SubStmtTitleTxtKey( View     mSubLC,
+                                String InternalEntityStructure,
+                                String InternalAttribStructure,
+                                Integer   GetOrSetFlag )
+{
+   String   szDisplayStatement = null;
+   //:STRING ( 256 )  szStatementTitle
+   String   szStatementTitle = null;
+   //:STRING ( 2048 ) szStatementText
+   String   szStatementText = null;
+   int      lTempInteger_0 = 0;
+   int      lTempInteger_1 = 0;
+
+
+   //:CASE GetOrSetFlag
+   switch( GetOrSetFlag )
+   { 
+      //:OF   zDERIVED_GET:
+      case zDERIVED_GET :
+
+         //:// Directions For Use Display Statement Text is a combination of Title/Text/Keywords.
+         //:SetViewToSubobject( mSubLC, "S_DirectionsForUseSubStatement" )
+         SetViewToSubobject( mSubLC, "S_DirectionsForUseSubStatement" );
+
+         //:szStatementText = mSubLC.S_DirectionsForUseStatement.Text
+         {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
+         StringBuilder sb_szStatementText;
+         if ( szStatementText == null )
+            sb_szStatementText = new StringBuilder( 32 );
+         else
+            sb_szStatementText = new StringBuilder( szStatementText );
+                   GetVariableFromAttribute( sb_szStatementText, mi_lTempInteger_0, 'S', 2049, mSubLC, "S_DirectionsForUseStatement", "Text", "", 0 );
+         lTempInteger_0 = mi_lTempInteger_0.intValue( );
+         szStatementText = sb_szStatementText.toString( );}
+         //:IF szStatementText != ""
+         if ( ZeidonStringCompare( szStatementText, 1, 0, "", 1, 0, 2049 ) != 0 )
+         { 
+            //:GenerateKeywordTextIntoString( mSubLC, szStatementText,
+            //:                            "S_InsertTextKeywordDU", "S_InsertTextDU", ", " )
+            {
+             ZGlobal1_Operation m_ZGlobal1_Operation = new ZGlobal1_Operation( mSubLC );
+             {StringBuilder sb_szStatementText;
+            if ( szStatementText == null )
+               sb_szStatementText = new StringBuilder( 32 );
+            else
+               sb_szStatementText = new StringBuilder( szStatementText );
+                         m_ZGlobal1_Operation.GenerateKeywordTextIntoString( mSubLC, sb_szStatementText, "S_InsertTextKeywordDU", "S_InsertTextDU", ", " );
+            szStatementText = sb_szStatementText.toString( );}
+             // m_ZGlobal1_Operation = null;  // permit gc  (unnecessary)
+            }
+         } 
+
+         //:END
+
+         //:szStatementTitle = mSubLC.S_DirectionsForUseStatement.Title
+         {MutableInt mi_lTempInteger_1 = new MutableInt( lTempInteger_1 );
+         StringBuilder sb_szStatementTitle;
+         if ( szStatementTitle == null )
+            sb_szStatementTitle = new StringBuilder( 32 );
+         else
+            sb_szStatementTitle = new StringBuilder( szStatementTitle );
+                   GetVariableFromAttribute( sb_szStatementTitle, mi_lTempInteger_1, 'S', 257, mSubLC, "S_DirectionsForUseStatement", "Title", "", 0 );
+         lTempInteger_1 = mi_lTempInteger_1.intValue( );
+         szStatementTitle = sb_szStatementTitle.toString( );}
+         //:IF szStatementTitle != ""
+         if ( ZeidonStringCompare( szStatementTitle, 1, 0, "", 1, 0, 257 ) != 0 )
+         { 
+            //:GenerateKeywordTextIntoString( mSubLC, szStatementTitle,
+            //:                            "S_InsertTextKeywordDU", "S_InsertTextDU", ", " )
+            {
+             ZGlobal1_Operation m_ZGlobal1_Operation = new ZGlobal1_Operation( mSubLC );
+             {StringBuilder sb_szStatementTitle;
+            if ( szStatementTitle == null )
+               sb_szStatementTitle = new StringBuilder( 32 );
+            else
+               sb_szStatementTitle = new StringBuilder( szStatementTitle );
+                         m_ZGlobal1_Operation.GenerateKeywordTextIntoString( mSubLC, sb_szStatementTitle, "S_InsertTextKeywordDU", "S_InsertTextDU", ", " );
+            szStatementTitle = sb_szStatementTitle.toString( );}
+             // m_ZGlobal1_Operation = null;  // permit gc  (unnecessary)
+            }
+         } 
+
+         //:END
+
+         //:IF szStatementTitle != ""
+         if ( ZeidonStringCompare( szStatementTitle, 1, 0, "", 1, 0, 257 ) != 0 )
+         { 
+            //:szDisplayStatement = szStatementTitle
+             {StringBuilder sb_szDisplayStatement;
+            if ( szDisplayStatement == null )
+               sb_szDisplayStatement = new StringBuilder( 32 );
+            else
+               sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
+                        ZeidonStringCopy( sb_szDisplayStatement, 1, 0, szStatementTitle, 1, 0, 2049 );
+            szDisplayStatement = sb_szDisplayStatement.toString( );}
+            //:IF szStatementText != ""
+            if ( ZeidonStringCompare( szStatementText, 1, 0, "", 1, 0, 2049 ) != 0 )
+            { 
+               //:szDisplayStatement = szDisplayStatement + " --- " + szStatementText
+                {StringBuilder sb_szDisplayStatement;
+               if ( szDisplayStatement == null )
+                  sb_szDisplayStatement = new StringBuilder( 32 );
+               else
+                  sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
+                              ZeidonStringConcat( sb_szDisplayStatement, 1, 0, " --- ", 1, 0, 2049 );
+               szDisplayStatement = sb_szDisplayStatement.toString( );}
+                {StringBuilder sb_szDisplayStatement;
+               if ( szDisplayStatement == null )
+                  sb_szDisplayStatement = new StringBuilder( 32 );
+               else
+                  sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
+                              ZeidonStringConcat( sb_szDisplayStatement, 1, 0, szStatementText, 1, 0, 2049 );
+               szDisplayStatement = sb_szDisplayStatement.toString( );}
+            } 
+
+            //:END
+            //:ELSE
+         } 
+         else
+         { 
+            //:szDisplayStatement = szStatementText
+             {StringBuilder sb_szDisplayStatement;
+            if ( szDisplayStatement == null )
+               sb_szDisplayStatement = new StringBuilder( 32 );
+            else
+               sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
+                        ZeidonStringCopy( sb_szDisplayStatement, 1, 0, szStatementText, 1, 0, 2049 );
+            szDisplayStatement = sb_szDisplayStatement.toString( );}
+         } 
+
+         //:END
+
+         //:ResetViewFromSubobject( mSubLC )
+         ResetViewFromSubobject( mSubLC );
+
+         //:// Store the calculated value in the object.
+         //:StoreStringInRecord( mSubLC, InternalEntityStructure, InternalAttribStructure, szDisplayStatement )
+         StoreStringInRecord( mSubLC, InternalEntityStructure, InternalAttribStructure, szDisplayStatement );
+         break ;
+
+      //:  // end zDERIVED_GET
+      //:OF   zDERIVED_SET:
+      case zDERIVED_SET :
+         break ;
+   } 
+
+
+   //:     // end zDERIVED_SET
+   //:END  // case
+   return( 0 );
+// END
+} 
+
+
+//:DERIVED ATTRIBUTE OPERATION
+//:dDU_KeywordText( VIEW mSubLC BASED ON LOD mSubLC,
+//:                 STRING ( 32 ) InternalEntityStructure,
+//:                 STRING ( 32 ) InternalAttribStructure,
+//:                 SHORT GetOrSetFlag )
+
+//:   STRING ( 2048 ) szKeyValue
+public int 
+omSubLC_dDU_KeywordText( View     mSubLC,
+                         String InternalEntityStructure,
+                         String InternalAttribStructure,
+                         Integer   GetOrSetFlag )
+{
+   String   szKeyValue = null;
+   int      RESULT = 0;
+   int      lTempInteger_0 = 0;
+   String   szTempString_0 = null;
+   int      lTempInteger_1 = 0;
+
+
+   //:CASE GetOrSetFlag
+   switch( GetOrSetFlag )
+   { 
+      //:OF   zDERIVED_GET:
+      case zDERIVED_GET :
+
+         //:// Concatenate all the Keyword values for a Directions For Use Keyword entry.
+         //:szKeyValue = ""
+          {StringBuilder sb_szKeyValue;
+         if ( szKeyValue == null )
+            sb_szKeyValue = new StringBuilder( 32 );
+         else
+            sb_szKeyValue = new StringBuilder( szKeyValue );
+                  ZeidonStringCopy( sb_szKeyValue, 1, 0, "", 1, 0, 2049 );
+         szKeyValue = sb_szKeyValue.toString( );}
+         //:FOR EACH mSubLC.S_InsertTextDU
+         RESULT = SetCursorFirstEntity( mSubLC, "S_InsertTextDU", "" );
+         while ( RESULT > zCURSOR_UNCHANGED )
+         { 
+            //:IF szKeyValue = ""
+            if ( ZeidonStringCompare( szKeyValue, 1, 0, "", 1, 0, 2049 ) == 0 )
+            { 
+               //:szKeyValue = mSubLC.S_InsertTextDU.Text
+               {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
+               StringBuilder sb_szKeyValue;
+               if ( szKeyValue == null )
+                  sb_szKeyValue = new StringBuilder( 32 );
+               else
+                  sb_szKeyValue = new StringBuilder( szKeyValue );
+                               GetVariableFromAttribute( sb_szKeyValue, mi_lTempInteger_0, 'S', 2049, mSubLC, "S_InsertTextDU", "Text", "", 0 );
+               lTempInteger_0 = mi_lTempInteger_0.intValue( );
+               szKeyValue = sb_szKeyValue.toString( );}
+               //:ELSE
+            } 
+            else
+            { 
+               //:szKeyValue = szKeyValue + ", " + mSubLC.S_InsertTextDU.Text
+                {StringBuilder sb_szKeyValue;
+               if ( szKeyValue == null )
+                  sb_szKeyValue = new StringBuilder( 32 );
+               else
+                  sb_szKeyValue = new StringBuilder( szKeyValue );
+                              ZeidonStringConcat( sb_szKeyValue, 1, 0, ", ", 1, 0, 2049 );
+               szKeyValue = sb_szKeyValue.toString( );}
+               {MutableInt mi_lTempInteger_1 = new MutableInt( lTempInteger_1 );
+               StringBuilder sb_szTempString_0;
+               if ( szTempString_0 == null )
+                  sb_szTempString_0 = new StringBuilder( 32 );
+               else
+                  sb_szTempString_0 = new StringBuilder( szTempString_0 );
+                               GetVariableFromAttribute( sb_szTempString_0, mi_lTempInteger_1, 'S', 4097, mSubLC, "S_InsertTextDU", "Text", "", 0 );
+               lTempInteger_1 = mi_lTempInteger_1.intValue( );
+               szTempString_0 = sb_szTempString_0.toString( );}
+                {StringBuilder sb_szKeyValue;
+               if ( szKeyValue == null )
+                  sb_szKeyValue = new StringBuilder( 32 );
+               else
+                  sb_szKeyValue = new StringBuilder( szKeyValue );
+                              ZeidonStringConcat( sb_szKeyValue, 1, 0, szTempString_0, 1, 0, 2049 );
+               szKeyValue = sb_szKeyValue.toString( );}
+            } 
+
+            RESULT = SetCursorNextEntity( mSubLC, "S_InsertTextDU", "" );
+            //:END
+         } 
+
+         //:END
+
+         //:// Store the resulting value in the object.
+         //:StoreStringInRecord( mSubLC, InternalEntityStructure, InternalAttribStructure, szKeyValue )
+         StoreStringInRecord( mSubLC, InternalEntityStructure, InternalAttribStructure, szKeyValue );
          //:RETURN 0
          if(8==8)return( 0 );
 
@@ -4971,7 +5508,7 @@ omSubLC_dGenStmtTitleText( View     mSubLC,
                   sb_szTempString_0 = new StringBuilder( 32 );
                else
                   sb_szTempString_0 = new StringBuilder( szTempString_0 );
-                               GetVariableFromAttribute( sb_szTempString_0, mi_lTempInteger_0, 'S', 255, mSubLC, "S_GeneralStatement", "Title", "", 0 );
+                               GetVariableFromAttribute( sb_szTempString_0, mi_lTempInteger_0, 'S', 4097, mSubLC, "S_GeneralStatement", "Title", "", 0 );
                lTempInteger_0 = mi_lTempInteger_0.intValue( );
                szTempString_0 = sb_szTempString_0.toString( );}
                 {StringBuilder sb_szCombinedText;
@@ -5032,7 +5569,7 @@ omSubLC_dGenStmtTitleText( View     mSubLC,
                sb_szTempString_1 = new StringBuilder( 32 );
             else
                sb_szTempString_1 = new StringBuilder( szTempString_1 );
-                         GetVariableFromAttribute( sb_szTempString_1, mi_lTempInteger_2, 'S', 2049, mSubLC, "S_GeneralStatement", "Text", "", 0 );
+                         GetVariableFromAttribute( sb_szTempString_1, mi_lTempInteger_2, 'S', 4097, mSubLC, "S_GeneralStatement", "Text", "", 0 );
             lTempInteger_2 = mi_lTempInteger_2.intValue( );
             szTempString_1 = sb_szTempString_1.toString( );}
              {StringBuilder sb_szCombinedText;
@@ -5067,7 +5604,7 @@ omSubLC_dGenStmtTitleText( View     mSubLC,
                sb_szTempString_2 = new StringBuilder( 32 );
             else
                sb_szTempString_2 = new StringBuilder( szTempString_2 );
-                         GetVariableFromAttribute( sb_szTempString_2, mi_lTempInteger_3, 'S', 2049, mSubLC, "S_GeneralStatement", "Text", "", 0 );
+                         GetVariableFromAttribute( sb_szTempString_2, mi_lTempInteger_3, 'S', 4097, mSubLC, "S_GeneralStatement", "Text", "", 0 );
             lTempInteger_3 = mi_lTempInteger_3.intValue( );
             szTempString_2 = sb_szTempString_2.toString( );}
              {StringBuilder sb_szCombinedText;
@@ -6192,7 +6729,7 @@ omSubLC_BuildCompEntriesForSLC( View     mSubLC )
                sb_szTempString_1 = new StringBuilder( 32 );
             else
                sb_szTempString_1 = new StringBuilder( szTempString_1 );
-                         GetVariableFromAttribute( sb_szTempString_1, mi_lTempInteger_1, 'S', 255, mSubLC, "S_MarketingSection", "Title", "", 0 );
+                         GetVariableFromAttribute( sb_szTempString_1, mi_lTempInteger_1, 'S', 4097, mSubLC, "S_MarketingSection", "Title", "", 0 );
             lTempInteger_1 = mi_lTempInteger_1.intValue( );
             szTempString_1 = sb_szTempString_1.toString( );}
              {StringBuilder sb_szTempString_0;
@@ -7278,7 +7815,7 @@ omSubLC_dPathogenNameKeyFoot( View     mSubLC,
                   sb_szTempString_1 = new StringBuilder( 32 );
                else
                   sb_szTempString_1 = new StringBuilder( szTempString_1 );
-                               GetVariableFromAttribute( sb_szTempString_1, mi_lTempInteger_6, 'S', 255, mSubLC2, "S_InsertTextUsage", "Text", "", 0 );
+                               GetVariableFromAttribute( sb_szTempString_1, mi_lTempInteger_6, 'S', 4097, mSubLC2, "S_InsertTextUsage", "Text", "", 0 );
                lTempInteger_6 = mi_lTempInteger_6.intValue( );
                szTempString_1 = sb_szTempString_1.toString( );}
                 {StringBuilder sb_szClassification;
@@ -7451,7 +7988,7 @@ omSubLC_dUsgTextSubUsageNames( View     mSubLC,
                      sb_szTempString_1 = new StringBuilder( 32 );
                   else
                      sb_szTempString_1 = new StringBuilder( szTempString_1 );
-                                     GetVariableFromAttribute( sb_szTempString_1, mi_lTempInteger_4, 'S', 255, mSubLC2, "S_InsertTextUsage", "Text", "", 0 );
+                                     GetVariableFromAttribute( sb_szTempString_1, mi_lTempInteger_4, 'S', 4097, mSubLC2, "S_InsertTextUsage", "Text", "", 0 );
                   lTempInteger_4 = mi_lTempInteger_4.intValue( );
                   szTempString_1 = sb_szTempString_1.toString( );}
                    {StringBuilder sb_szUsageText;
@@ -7719,7 +8256,7 @@ omSubLC_dMarketingKeywordText( View     mSubLC,
                   sb_szTempString_0 = new StringBuilder( 32 );
                else
                   sb_szTempString_0 = new StringBuilder( szTempString_0 );
-                               GetVariableFromAttribute( sb_szTempString_0, mi_lTempInteger_0, 'S', 255, mSubLC, "S_InsertTextMarketing", "Text", "", 0 );
+                               GetVariableFromAttribute( sb_szTempString_0, mi_lTempInteger_0, 'S', 4097, mSubLC, "S_InsertTextMarketing", "Text", "", 0 );
                lTempInteger_0 = mi_lTempInteger_0.intValue( );
                szTempString_0 = sb_szTempString_0.toString( );}
                 {StringBuilder sb_szKeyValue;
@@ -7754,7 +8291,7 @@ omSubLC_dMarketingKeywordText( View     mSubLC,
                   sb_szTempString_1 = new StringBuilder( 32 );
                else
                   sb_szTempString_1 = new StringBuilder( szTempString_1 );
-                               GetVariableFromAttribute( sb_szTempString_1, mi_lTempInteger_1, 'S', 255, mSubLC, "S_InsertTextMarketing", "Text", "", 0 );
+                               GetVariableFromAttribute( sb_szTempString_1, mi_lTempInteger_1, 'S', 4097, mSubLC, "S_InsertTextMarketing", "Text", "", 0 );
                lTempInteger_1 = mi_lTempInteger_1.intValue( );
                szTempString_1 = sb_szTempString_1.toString( );}
                 {StringBuilder sb_szKeyValue;
@@ -8215,6 +8752,68 @@ omSubLC_dSymbolText( View     mSubLC,
 
          //:StoreStringInRecord( mSubLC, InternalEntityStructure, InternalAttribStructure, Text )
          StoreStringInRecord( mSubLC, InternalEntityStructure, InternalAttribStructure, Text );
+         //:RETURN 0
+         if(8==8)return( 0 );
+
+         //:// end zDERIVED_GET
+         //:OF   zDERIVED_SET:
+         case zDERIVED_SET :
+            break ;
+      } 
+
+
+      //:  // end zDERIVED_SET
+      //:END  // case
+      return( 0 );
+   } 
+
+
+   //:DERIVED ATTRIBUTE OPERATION
+   //:dCombinedContainerVol( VIEW mSubLC BASED ON LOD mSubLC,
+   //:                    STRING ( 32 ) InternalEntityStructure,
+   //:                    STRING ( 32 ) InternalAttribStructure,
+   //:                    SHORT GetOrSetFlag )
+
+   //:STRING ( 256 ) szCombinedName
+public int 
+omSubLC_dCombinedContainerVol( View     mSubLC,
+                               String InternalEntityStructure,
+                               String InternalAttribStructure,
+                               Integer   GetOrSetFlag )
+{
+   String   szCombinedName = null;
+   //:STRING ( 20 )  szContainerVolume
+   String   szContainerVolume = null;
+
+
+   //:CASE GetOrSetFlag
+   switch( GetOrSetFlag )
+   { 
+      //:OF   zDERIVED_GET:
+      case zDERIVED_GET :
+
+         //:// Combine each volume name that drives this section.
+         //:szCombinedName = "???"
+          {StringBuilder sb_szCombinedName;
+         if ( szCombinedName == null )
+            sb_szCombinedName = new StringBuilder( 32 );
+         else
+            sb_szCombinedName = new StringBuilder( szCombinedName );
+                  ZeidonStringCopy( sb_szCombinedName, 1, 0, "???", 1, 0, 257 );
+         szCombinedName = sb_szCombinedName.toString( );}
+         //:/*    FOR EACH mSubLC.M_StorageDisposalDrivingConVol
+         //:???         GetStringFromAttributeByContext( szContainerVolume, mSubLC, "M_StorageDisposalDrivingConVol", "ContainerVolume", "", 20 )
+         //:IF szCombinedName = ""
+         //:   szCombinedName = szContainerVolume
+         //:ELSE
+         //:   szCombinedName = szCombinedName + ", " + szContainerVolume
+         //:END
+         //:END
+         //:*/
+
+         //:// Store the calculated value in the object.
+         //:StoreStringInRecord( mSubLC, InternalEntityStructure, InternalAttribStructure, szCombinedName )
+         StoreStringInRecord( mSubLC, InternalEntityStructure, InternalAttribStructure, szCombinedName );
          //:RETURN 0
          if(8==8)return( 0 );
 

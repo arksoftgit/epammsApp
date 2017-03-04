@@ -1,4 +1,4 @@
-// wSLCFirstAidSection   Generate Timestamp: 20161019144228752
+// wSLCFirstAidSection   Generate Timestamp: 20170302140656221
 
 var isWindowClosing = true;
 var timerID = null;
@@ -188,6 +188,21 @@ function CheckAllInGrid(id, CheckBoxName) // triggered by no text checkbox
       {
          wcontrol.checked = check;
       }
+   }
+}
+
+function Refresh( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wSLCFirstAidSection.zAction.value = "Refresh";
+      document.wSLCFirstAidSection.submit( );
    }
 }
 

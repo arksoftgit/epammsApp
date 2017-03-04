@@ -1,4 +1,4 @@
-z1000-Zeidon    WWEBXFER TZZOLODO                         12/23/16   13:50:56 1.0a2   
+z1000-Zeidon    WWEBXFER TZZOLODO                         02/28/17   10:50:07 1.0a2   
 eLOD       1
 aZKey      1157145
 aNextZKeyToAssign 110007348
@@ -612,11 +612,11 @@ aZKey      110007341
 
 eDomainRec 6
 aZKey      68568087
-aName      TextDescription
-aDomainType A
+aName      Description
+aDomainType E
 aDataType  S
-aMaxStringLth 2048
-aDesc      Long text
+aMaxStringLth 4096
+aDesc      Long text, no validation
 aContextRestriction N
 
 eLOD_AttributeRec 4
@@ -2027,7 +2027,7 @@ eER_Attribute 4
 eDomain    5
 
 eLOD_Entity 2
-awkSelectedAttributeForDragSort 3
+awkSelectedAttributeForDragSort 2
 
 eLOD_Attribute 3
 awkSequence 1

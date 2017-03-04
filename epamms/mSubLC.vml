@@ -389,6 +389,189 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
+//  OPERATION: dDU_StmtTitleTxtKey
+//
+/////////////////////////////////////////////////////////////////////////////
+DERIVED ATTRIBUTE OPERATION
+dDU_StmtTitleTxtKey( VIEW mSubLC BASED ON LOD mSubLC,
+                     STRING ( 32 ) InternalEntityStructure,
+                     STRING ( 32 ) InternalAttribStructure,
+                     SHORT GetOrSetFlag )
+
+   STRING ( 2048 ) szDisplayStatement
+   STRING ( 256 )  szStatementTitle
+   STRING ( 2048 ) szStatementText
+
+   CASE GetOrSetFlag
+   OF   zDERIVED_GET:
+
+      // Directions For Use Display Statement Text is a combination of Title/Text/Keywords.
+      szStatementText = mSubLC.S_DirectionsForUseStatement.Text
+      IF szStatementText != ""
+         GenerateKeywordTextIntoString( mSubLC, szStatementText,
+                                        "S_InsertTextKeywordDU", "S_InsertTextDU", ", " )
+      END
+
+      szStatementTitle = mSubLC.S_DirectionsForUseStatement.Title
+      IF szStatementTitle != ""
+         GenerateKeywordTextIntoString( mSubLC, szStatementTitle,
+                                        "S_InsertTextKeywordDU", "S_InsertTextDU", ", " )
+      END
+
+      IF szStatementTitle != ""
+         szDisplayStatement = szStatementTitle
+         IF szStatementText != ""
+            szDisplayStatement = szDisplayStatement + " --- " + szStatementText
+         END
+      ELSE
+         szDisplayStatement = szStatementText
+      END
+
+      // Store the calculated value in the object.
+      StoreStringInRecord( mSubLC, InternalEntityStructure, InternalAttribStructure, szDisplayStatement )
+
+        // end zDERIVED_GET
+   OF   zDERIVED_SET:
+
+        // end zDERIVED_SET
+   END  // case
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: dDU_SubStmtTitleText
+//
+/////////////////////////////////////////////////////////////////////////////
+DERIVED ATTRIBUTE OPERATION
+dDU_SubStmtTitleText( VIEW mSubLC BASED ON LOD mSubLC,
+                      STRING ( 32 ) InternalEntityStructure,
+                      STRING ( 32 ) InternalAttribStructure,
+                      SHORT GetOrSetFlag )
+
+   STRING ( 2048 ) szDisplayStatement
+   STRING ( 2048 ) szStatementText
+   STRING ( 256 )  szTitle
+
+   CASE GetOrSetFlag
+   OF   zDERIVED_GET:
+
+      // Directions For Use Display Statement Text is a combination of Title and Text.
+      szTitle = mSubLC.S_DirectionsForUseSubStatement.Title
+      szStatementText = mSubLC.S_DirectionsForUseSubStatement.Text
+      IF szTitle != ""
+         szDisplayStatement = szTitle + " --- " + szStatementText
+      ELSE
+         szDisplayStatement = szStatementText
+      END
+
+      // Store the calculated value in the object.
+      StoreStringInRecord( mSubLC, InternalEntityStructure, InternalAttribStructure, szDisplayStatement )
+      RETURN 0
+
+        // end zDERIVED_GET
+   OF   zDERIVED_SET:
+
+        // end zDERIVED_SET
+   END  // case
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: dDU_SubStmtTitleTxtKey
+//
+/////////////////////////////////////////////////////////////////////////////
+DERIVED ATTRIBUTE OPERATION
+dDU_SubStmtTitleTxtKey( VIEW mSubLC BASED ON LOD mSubLC,
+                        STRING ( 32 ) InternalEntityStructure,
+                        STRING ( 32 ) InternalAttribStructure,
+                        SHORT GetOrSetFlag )
+
+   STRING ( 2048 ) szDisplayStatement
+   STRING ( 256 )  szStatementTitle
+   STRING ( 2048 ) szStatementText
+
+   CASE GetOrSetFlag
+   OF   zDERIVED_GET:
+
+      // Directions For Use Display Statement Text is a combination of Title/Text/Keywords.
+      SetViewToSubobject( mSubLC, "S_DirectionsForUseSubStatement" )
+      
+      szStatementText = mSubLC.S_DirectionsForUseStatement.Text
+      IF szStatementText != ""
+         GenerateKeywordTextIntoString( mSubLC, szStatementText,
+                                        "S_InsertTextKeywordDU", "S_InsertTextDU", ", " )
+      END
+
+      szStatementTitle = mSubLC.S_DirectionsForUseStatement.Title
+      IF szStatementTitle != ""
+         GenerateKeywordTextIntoString( mSubLC, szStatementTitle,
+                                        "S_InsertTextKeywordDU", "S_InsertTextDU", ", " )
+      END
+
+      IF szStatementTitle != ""
+         szDisplayStatement = szStatementTitle
+         IF szStatementText != ""
+            szDisplayStatement = szDisplayStatement + " --- " + szStatementText
+         END
+      ELSE
+         szDisplayStatement = szStatementText
+      END
+
+      ResetViewFromSubobject( mSubLC )
+
+      // Store the calculated value in the object.
+      StoreStringInRecord( mSubLC, InternalEntityStructure, InternalAttribStructure, szDisplayStatement )
+
+        // end zDERIVED_GET
+   OF   zDERIVED_SET:
+
+        // end zDERIVED_SET
+   END  // case
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: dDU_KeywordText
+//
+/////////////////////////////////////////////////////////////////////////////
+DERIVED ATTRIBUTE OPERATION
+dDU_KeywordText( VIEW mSubLC BASED ON LOD mSubLC,
+                 STRING ( 32 ) InternalEntityStructure,
+                 STRING ( 32 ) InternalAttribStructure,
+                 SHORT GetOrSetFlag )
+
+   STRING ( 2048 ) szKeyValue
+
+   CASE GetOrSetFlag
+   OF   zDERIVED_GET:
+
+      // Concatenate all the Keyword values for a Directions For Use Keyword entry.
+      szKeyValue = ""
+      FOR EACH mSubLC.S_InsertTextDU
+         IF szKeyValue = ""
+            szKeyValue = mSubLC.S_InsertTextDU.Text
+         ELSE
+            szKeyValue = szKeyValue + ", " + mSubLC.S_InsertTextDU.Text
+         END
+      END
+
+      // Store the resulting value in the object.
+      StoreStringInRecord( mSubLC, InternalEntityStructure, InternalAttribStructure, szKeyValue )
+      RETURN 0
+
+        // end zDERIVED_GET
+   OF   zDERIVED_SET:
+
+        // end zDERIVED_SET
+   END  // case
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
 // OPERATION: dGenStmtTitleText
 //
 /////////////////////////////////////////////////////////////////////////////
@@ -1766,7 +1949,8 @@ BuildSLC_FromMLC( VIEW NewSLC BASED ON LOD mSubLC,
 
    STRING ( 32 ) szVersion
 
-// IssueError( NewSLC, 0, 0, "Start of Build SLC" )
+// TraceLineS( "BuildSLC_FromMLC MLC", "=====================>>>>>>>>" )
+// DisplayObjectInstance( SrcMLC, "", "" )
 
    // Create a new SLC from an MLC and tie it back to the MLC.
 
@@ -1935,6 +2119,9 @@ BuildSLC_FromMLC( VIEW NewSLC BASED ON LOD mSubLC,
          END
       END
    END
+
+// TraceLineS( "BuildSLC_FromMLC SLC", "=====================>>>>>>>>" )
+// DisplayObjectInstance( NewSLC, "", "" )
 
 END
 
@@ -2679,6 +2866,47 @@ dSymbolText( VIEW mSubLC BASED ON LOD mSubLC,
 
         StoreStringInRecord( mSubLC, InternalEntityStructure, InternalAttribStructure, Text )
         RETURN 0
+
+        // end zDERIVED_GET
+   OF   zDERIVED_SET:
+
+        // end zDERIVED_SET
+   END  // case
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: dCombinedContainerVol
+//
+/////////////////////////////////////////////////////////////////////////////
+DERIVED ATTRIBUTE OPERATION
+dCombinedContainerVol( VIEW mSubLC BASED ON LOD mSubLC,
+                       STRING ( 32 ) InternalEntityStructure,
+                       STRING ( 32 ) InternalAttribStructure,
+                       SHORT GetOrSetFlag )
+
+   STRING ( 256 ) szCombinedName
+   STRING ( 20 )  szContainerVolume
+
+   CASE GetOrSetFlag
+   OF   zDERIVED_GET:
+
+      // Combine each volume name that drives this section.
+      szCombinedName = "???"
+/*    FOR EACH mSubLC.M_StorageDisposalDrivingConVol
+  ???         GetStringFromAttributeByContext( szContainerVolume, mSubLC, "M_StorageDisposalDrivingConVol", "ContainerVolume", "", 20 )
+         IF szCombinedName = ""
+            szCombinedName = szContainerVolume
+         ELSE
+            szCombinedName = szCombinedName + ", " + szContainerVolume
+         END
+      END
+*/
+
+      // Store the calculated value in the object.
+      StoreStringInRecord( mSubLC, InternalEntityStructure, InternalAttribStructure, szCombinedName )
+      RETURN 0
 
         // end zDERIVED_GET
    OF   zDERIVED_SET:

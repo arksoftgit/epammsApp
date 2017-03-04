@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSLCDirectionsForUseSection   Generate Timestamp: 20161108114653406 --%>
+<%-- wSLCDirectionsForUseSection   Generate Timestamp: 20170303150953141 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -577,6 +577,7 @@ else
    <input name="zFocusCtrl" id="zFocusCtrl" type="hidden" value="<%=strFocusCtrl%>">
    <input name="zOpenFile" id="zOpenFile" type="hidden" value="<%=strOpenFile%>">
    <input name="zDateFormat" id="zDateFormat" type="hidden" value="<%=strDateFormat%>">
+   <input name="zDateSequence" id="zDateSequence" type="hidden" value="MDY">
    <input name="zLoginName" id="zLoginName" type="hidden" value="<%=strLoginName%>">
    <input name="zKeyRole" id="zKeyRole" type="hidden" value="<%=strKeyRole%>">
    <input name="zOpenPopupWindow" id="zOpenPopupWindow" type="hidden" value="<%=strOpenPopupWindow%>">
@@ -598,25 +599,52 @@ else
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GBDirectionsForUseSection:GroupBox */ %>
 
-<div id="GBDirectionsForUseSection" name="GBDirectionsForUseSection" class="withborder"   style="float:left;position:relative; width:780px; height:90px;">  <!-- GBDirectionsForUseSection --> 
+<div id="GBDirectionsForUseSection" name="GBDirectionsForUseSection" class="withborder"   style="float:left;position:relative; width:866px; height:204px;">  <!-- GBDirectionsForUseSection --> 
 
 <% /* DirectionsForUseSection:Text */ %>
 
 <label class="listheader"  id="DirectionsForUseSection" name="DirectionsForUseSection" style="">Directions for Use Section</label>
 
-<% /* GroupBox2:GroupBox */ %>
+<% /* Category::Text */ %>
 
-<div id="GroupBox2" name="GroupBox2" style="width:754px;height:56px;position:absolute;left:14px;top:28px;">  <!-- GroupBox2 --> 
+<label class="text12lightright"  id="Category:" name="Category:" style="">  ... Category:</label>
 
-<% /* DirectionsUseTitle::Text */ %>
-
-<label  id="DirectionsUseTitle:" name="DirectionsUseTitle:" style="">Name:</label>
-
-<% /* Text6:Text */ %>
+<% /* DFU_CategoryName:Text */ %>
 <% strTextDisplayValue = "";
    mSubLC = task.getViewByName( "mSubLC" );
    if ( VmlOperation.isValid( mSubLC ) == false )
-      task.log( ).debug( "Invalid View: " + "Text6" );
+      task.log( ).debug( "Invalid View: " + "DFU_CategoryName" );
+   else
+   {
+      nRC = mSubLC.cursor( "S_DirectionsForUseCategory" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+      {
+      try
+      {
+         strTextDisplayValue = mSubLC.cursor( "S_DirectionsForUseCategory" ).getAttribute( "Name" ).getString( "" );
+      }
+      catch (Exception e)
+      {
+         out.println("There is an error on DFU_CategoryName: " + e.getMessage());
+         task.log().info( "*** Error on ctrl DFU_CategoryName" + e.getMessage() );
+      }
+         if ( strTextDisplayValue == null )
+            strTextDisplayValue = "";
+      }
+   }
+%>
+
+<label class="text12light"  id="DFU_CategoryName" name="DFU_CategoryName" style=""><%=strTextDisplayValue%></label>
+
+<% /* DirectionsUseName::Text */ %>
+
+<label  id="DirectionsUseName:" name="DirectionsUseName:" style="">Name:</label>
+
+<% /* DirectionsUseName:Text */ %>
+<% strTextDisplayValue = "";
+   mSubLC = task.getViewByName( "mSubLC" );
+   if ( VmlOperation.isValid( mSubLC ) == false )
+      task.log( ).debug( "Invalid View: " + "DirectionsUseName" );
    else
    {
       nRC = mSubLC.cursor( "S_DirectionsForUseSection" ).checkExistenceOfEntity( ).toInt();
@@ -628,8 +656,8 @@ else
       }
       catch (Exception e)
       {
-         out.println("There is an error on Text6: " + e.getMessage());
-         task.log().info( "*** Error on ctrl Text6" + e.getMessage() );
+         out.println("There is an error on DirectionsUseName: " + e.getMessage());
+         task.log().info( "*** Error on ctrl DirectionsUseName" + e.getMessage() );
       }
          if ( strTextDisplayValue == null )
             strTextDisplayValue = "";
@@ -637,17 +665,17 @@ else
    }
 %>
 
-<label  id="Text6" name="Text6" style=""><%=strTextDisplayValue%></label>
+<label class="text12"  id="DirectionsUseName" name="DirectionsUseName"  title="Required Name to differentiate Directions for Use Sections within a list" style=""><%=strTextDisplayValue%></label>
 
-<% /* Text2:Text */ %>
+<% /* DirectionsForUseTitle::Text */ %>
 
-<label  id="Text2" name="Text2" style="">Title:</label>
+<label  id="DirectionsForUseTitle:" name="DirectionsForUseTitle:" style="">Title:</label>
 
-<% /* Text3:Text */ %>
+<% /* DirectionsForUseTitle:Text */ %>
 <% strTextDisplayValue = "";
    mSubLC = task.getViewByName( "mSubLC" );
    if ( VmlOperation.isValid( mSubLC ) == false )
-      task.log( ).debug( "Invalid View: " + "Text3" );
+      task.log( ).debug( "Invalid View: " + "DirectionsForUseTitle" );
    else
    {
       nRC = mSubLC.cursor( "S_DirectionsForUseSection" ).checkExistenceOfEntity( ).toInt();
@@ -659,8 +687,8 @@ else
       }
       catch (Exception e)
       {
-         out.println("There is an error on Text3: " + e.getMessage());
-         task.log().info( "*** Error on ctrl Text3" + e.getMessage() );
+         out.println("There is an error on DirectionsForUseTitle: " + e.getMessage());
+         task.log().info( "*** Error on ctrl DirectionsForUseTitle" + e.getMessage() );
       }
          if ( strTextDisplayValue == null )
             strTextDisplayValue = "";
@@ -668,10 +696,132 @@ else
    }
 %>
 
-<label  id="Text3" name="Text3" style=""><%=strTextDisplayValue%></label>
+<label class="text12"  id="DirectionsForUseTitle" name="DirectionsForUseTitle"  title="Optional Title to appear with text on generated label" style=""><%=strTextDisplayValue%></label>
 
+<% /* TitleNote::Text */ %>
 
-</div>  <!--  GroupBox2 --> 
+<label  id="TitleNote:" name="TitleNote:" style="">Title Note:</label>
+
+<% /* TitleNote:Text */ %>
+<% strTextDisplayValue = "";
+   mSubLC = task.getViewByName( "mSubLC" );
+   if ( VmlOperation.isValid( mSubLC ) == false )
+      task.log( ).debug( "Invalid View: " + "TitleNote" );
+   else
+   {
+      nRC = mSubLC.cursor( "S_DirectionsForUseSection" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+      {
+      try
+      {
+         strTextDisplayValue = mSubLC.cursor( "S_DirectionsForUseSection" ).getAttribute( "HeadNote" ).getString( "" );
+      }
+      catch (Exception e)
+      {
+         out.println("There is an error on TitleNote: " + e.getMessage());
+         task.log().info( "*** Error on ctrl TitleNote" + e.getMessage() );
+      }
+         if ( strTextDisplayValue == null )
+            strTextDisplayValue = "";
+      }
+   }
+%>
+
+<label class="text12"  id="TitleNote" name="TitleNote"  title="Optional Title to appear with text on generated label" style=""><%=strTextDisplayValue%></label>
+
+<% /* Subtitle::Text */ %>
+
+<label  id="Subtitle:" name="Subtitle:" style="">Subtitle:</label>
+
+<% /* Subtitle:Text */ %>
+<% strTextDisplayValue = "";
+   mSubLC = task.getViewByName( "mSubLC" );
+   if ( VmlOperation.isValid( mSubLC ) == false )
+      task.log( ).debug( "Invalid View: " + "Subtitle" );
+   else
+   {
+      nRC = mSubLC.cursor( "S_DirectionsForUseSection" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+      {
+      try
+      {
+         strTextDisplayValue = mSubLC.cursor( "S_DirectionsForUseSection" ).getAttribute( "Subtitle" ).getString( "" );
+      }
+      catch (Exception e)
+      {
+         out.println("There is an error on Subtitle: " + e.getMessage());
+         task.log().info( "*** Error on ctrl Subtitle" + e.getMessage() );
+      }
+         if ( strTextDisplayValue == null )
+            strTextDisplayValue = "";
+      }
+   }
+%>
+
+<label class="text12"  id="Subtitle" name="Subtitle"  title="Optional Title to appear with text on generated label" style=""><%=strTextDisplayValue%></label>
+
+<% /* SectionEndNote::Text */ %>
+
+<label  id="SectionEndNote:" name="SectionEndNote:" style="">End Note:</label>
+
+<% /* SectionNote:Text */ %>
+<% strTextDisplayValue = "";
+   mSubLC = task.getViewByName( "mSubLC" );
+   if ( VmlOperation.isValid( mSubLC ) == false )
+      task.log( ).debug( "Invalid View: " + "SectionNote" );
+   else
+   {
+      nRC = mSubLC.cursor( "S_DirectionsForUseSection" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+      {
+      try
+      {
+         strTextDisplayValue = mSubLC.cursor( "S_DirectionsForUseSection" ).getAttribute( "TailNote" ).getString( "" );
+      }
+      catch (Exception e)
+      {
+         out.println("There is an error on SectionNote: " + e.getMessage());
+         task.log().info( "*** Error on ctrl SectionNote" + e.getMessage() );
+      }
+         if ( strTextDisplayValue == null )
+            strTextDisplayValue = "";
+      }
+   }
+%>
+
+<label class="text12"  id="SectionNote" name="SectionNote"  title="Optional Title to appear with text on generated label" style=""><%=strTextDisplayValue%></label>
+
+<% /* ExclusiveXOR::Text */ %>
+
+<label  id="ExclusiveXOR:" name="ExclusiveXOR:" style="">Exclusive To:</label>
+
+<% /* NameXOR:Text */ %>
+<% strTextDisplayValue = "";
+   mSubLC = task.getViewByName( "mSubLC" );
+   if ( VmlOperation.isValid( mSubLC ) == false )
+      task.log( ).debug( "Invalid View: " + "NameXOR" );
+   else
+   {
+      nRC = mSubLC.cursor( "S_DirectionsForUseXORSection" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+      {
+      try
+      {
+         strTextDisplayValue = mSubLC.cursor( "S_DirectionsForUseXORSection" ).getAttribute( "Name" ).getString( "" );
+      }
+      catch (Exception e)
+      {
+         out.println("There is an error on NameXOR: " + e.getMessage());
+         task.log().info( "*** Error on ctrl NameXOR" + e.getMessage() );
+      }
+         if ( strTextDisplayValue == null )
+            strTextDisplayValue = "";
+      }
+   }
+%>
+
+<label  id="NameXOR" name="NameXOR" style=""><%=strTextDisplayValue%></label>
+
 
 </div>  <!--  GBDirectionsForUseSection --> 
 </div>  <!-- End of a new line -->
@@ -683,10 +833,10 @@ else
 <div style="height:4px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:6px;float:left;"></div>   <!-- Width Spacer -->
+<div style="height:1px;width:18px;float:left;"></div>   <!-- Width Spacer -->
 <% /* Tab1:Tab */ %>
 
-<div id="Tab1" class="tab-pane" style="width:774px;"> <!-- Beginning of Tab Control Tab1 -->
+<div id="Tab1" class="tab-pane" style="width:798px;"> <!-- Beginning of Tab Control Tab1 -->
 <script type="text/javascript">Tab1 = new WebFXTabPane( document.getElementById( "Tab1" ) );</script>
 
 <div id="TabCtl1" class="tab-page " > <!-- Tab item TabCtl1 -->
@@ -766,7 +916,7 @@ try
          nRC = vGridDirectionsUse.cursor( "S_DirectionsForUseStatement" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditDirectionsUse = vGridDirectionsUse.cursor( "S_DirectionsForUseStatement" ).getAttribute( "Text" ).getString( "" );
+            strGridEditDirectionsUse = vGridDirectionsUse.cursor( "S_DirectionsForUseStatement" ).getAttribute( "dDU_StatementTitleTextKeyword" ).getString( "" );
 
             if ( strGridEditDirectionsUse == null )
                strGridEditDirectionsUse = "";
@@ -1085,7 +1235,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 
 
  <!-- This is added as a line spacer -->
-<div style="height:586px;width:100px;"></div>
+<div style="height:472px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:32px;float:left;"></div>   <!-- Width Spacer -->

@@ -6928,7 +6928,6 @@ ioe.printStackTrace();
    private static final String[] HtmlEntityList = {
       "nbsp",   "#160",
       "bullet", "#149",
-      "deg",    "#176",
       "tilde",  "#126",
       "florin", "#131",
       "elip",   "#133",
@@ -6962,6 +6961,7 @@ ioe.printStackTrace();
       "shy",    "#173",
       "reg",    "#174",
       "macr",   "#175",
+      "deg",    "#176",
       "plusmn", "#177",
       "sup2",   "#178",
       "sup3",   "#179",

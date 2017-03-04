@@ -681,6 +681,29 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
+//  OPERATION: CancelDirectionsSubStatement
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+CancelDirectionsSubStatement( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+   SHORT nRC
+
+   nRC = CancelSubobject( mMasLC, "M_DirectionsForUseStatement" )
+   IF nRC < 0
+      MessageSend( ViewToWindow, "", "Cancel Directions For Use Sub-statement",
+                   "The Directions For Use Sub-Statement (Cancel) contains errors.",
+                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+      RETURN nRC
+   END
+   ResetViewFromSubobject( mMasLC )
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
 //  OPERATION: AddNewDirectionsSubStatement
 //
 /////////////////////////////////////////////////////////////////////////////
@@ -747,29 +770,6 @@ PreviousDirectionsSubStatement( VIEW ViewToWindow )
    END
    SET CURSOR PREVIOUS mMasLC.M_DirectionsForUseStatement
    CreateTemporalSubobjectVersion( mMasLC, "M_DirectionsForUseStatement" )
-
-END
-
-/////////////////////////////////////////////////////////////////////////////
-//
-//  OPERATION: CancelDirectionsSubStatement
-//
-/////////////////////////////////////////////////////////////////////////////
-DIALOG OPERATION
-CancelDirectionsSubStatement( VIEW ViewToWindow )
-
-   VIEW mMasLC REGISTERED AS mMasLC
-   SHORT nRC
-
-   nRC = CancelSubobject( mMasLC, "M_DirectionsForUseStatement" )
-   IF nRC < 0
-      MessageSend( ViewToWindow, "", "Cancel Directions For Use Sub-statement",
-                   "The Directions For Use Sub-Statement (Cancel) contains errors.",
-                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
-      SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
-      RETURN nRC
-   END
-   ResetViewFromSubobject( mMasLC )
 
 END
 

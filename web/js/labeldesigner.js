@@ -262,7 +262,7 @@ $(function() {
                         data: null,
                      // beforeSend - callback function that is executed before the request is sent
                         success: function( data, textStatus, jqXHR ) {
-                                    console.log( "saveReusableBlock: success status: " + textStatus + "   data: " + data );
+                                 // console.log( "saveReusableBlock: success status: " + textStatus + "   data: " + data );
                                     var jsonObj = jsonStringToJsonObject( data );
                                     setReusableBlocks( jsonObj[0].ReusableBlocks );
                                  },
@@ -318,7 +318,7 @@ $(function() {
    //        - if there is a parent of the selected element, select the parent
    //        - set the element as the first selected and add as the only element in the selected list
    $("body").on( "dblclick", ".canvas-element", function(e) {
-      console.log( "Double Click on canvas-element: " + this.id + " has been pressed!" );
+   // console.log( "Double Click on canvas-element: " + this.id + " has been pressed!" );
       if ( $(this).hasClass( "panel" ) === false ) {
          var sectionType = $(this).data( "z_^l^l^d_^section^type" );
          sessionStorage.setItem( "epamms_section_type", sectionType );
@@ -1133,7 +1133,11 @@ $(function() {
                $("#zImageNameToggle").hide();
                $("#zClaimListTypeToggle").hide();
                $("#zMarketingSectionToggle").hide();
-               options = optionsDflt;
+               if ( sectionType === "DirectionsForUse" || sectionType === "FirstAid" ) {
+                  options = "<option value=\"^header\">Header</option>" + optionsDflt;
+               } else {
+                  options = optionsDflt;
+               }
             } else {
                $("#zCheckContinuationBlockToggle").hide();
             // console.log( "   Hiding capitalize" );
@@ -1146,7 +1150,7 @@ $(function() {
                   options = "<option value=\"^hazards ^warning\">Hazards Warning</option><option value=\"^hazards ^signal ^word\">Hazards Signal Word</option><option value=\"^hazards ^precautionary\">Hazards Precautionary</option>";
                } else if ( sectionType === "Ingredients" ) {
                   // Ingredients:   Ingredients Title / Ingredients Items / Ingredients Inert / Ingredients Total
-                  options = "<option value=\"^title\">Ingredients Title</option><option value=\"^ingredients ^items\">Ingredients Items</option><option value=\"^ingredients ^inert\">Ingredients Inert</option><option value=\"^ingredients ^total\">Ingredients Total</option>";
+                  options = "<option value=\"^ingredients ^title\">Ingredients Title</option><option value=\"^ingredients ^items\">Ingredients Items</option><option value=\"^ingredients ^inert\">Ingredients Inert</option><option value=\"^ingredients ^total\">Ingredients Total</option>";
                } else if ( sectionType === "NetContents" || sectionType === "EPA_RegAndEstNbr" ) {
                   options = "<option value=\"^text\">Text</option>"
                } else {
@@ -1997,7 +2001,7 @@ function ConvertWysiwygLabelDesignToZeidonJson( action, viewName, callback_func,
       reuseBlockName = $("#zReusableBlocks").val();
    }
    var jsonLabel = GetCurrentLabel();
-   console.log( "ConvertWysiwygLabelDesignToZeidonJson: " + jsonLabel );
+// console.log( "ConvertWysiwygLabelDesignToZeidonJson: " + jsonLabel );
    if ( jsonString === null ) {
       jsonString = "{}";
    }
@@ -2298,7 +2302,7 @@ public class FileServer {
                      if ( index > 0 ) {
                         entity = entityName.substring( 0, index );
                         name = entityName.substring( index + 1 );
-                        console.log( "Processing entity: " + entity + "   name: " + name + "   attribute: " + zeidonAttribute + "   value: " + value );
+                     // console.log( "Processing entity: " + entity + "   name: " + name + "   attribute: " + zeidonAttribute + "   value: " + value );
                         if ( firstAttributeIn.isFirst ) {
                            firstAttributeIn.isFirst = false;
                            json += ", \n\"LLD_SpecialSectionAttrBlock\" : [ { \".meta\" : { \"created\" : \"true\" }, \"Name\" : \"" + specialBlockData.getName() + "\"";
@@ -2334,7 +2338,7 @@ public class FileServer {
          var firstAttribute = new Object();
          
          idx = -1;
-         console.log( "Checking element: " + $element.attr( "id" ) );
+      // console.log( "Checking element: " + $element.attr( "id" ) );
          $.each( $element.data(), function( key, value ) {
             idx++;
             if ( typeof value === "string" || typeof value === "number" ) {
@@ -2352,7 +2356,7 @@ public class FileServer {
                         if ( index > 0 ) {
                            entity = entityName.substring( 0, index );
                            name = entityName.substring( index + 1 );
-                           console.log( "Adding special entity: " + entity + "  Name: " + name + "  Attribute: " + zeidonAttribute + "   Value: " + value + "  for element: " + $element.attr( "id" ) );
+                        // console.log( "Adding special entity: " + entity + "  Name: " + name + "  Attribute: " + zeidonAttribute + "   Value: " + value + "  for element: " + $element.attr( "id" ) );
                            specialBlockData = new SpecialBlockData( entityName, entity, name, idx );
                            specialBlockMap.addItem( entityName, specialBlockData );
                         }
@@ -2385,9 +2389,9 @@ public class FileServer {
             }
             json += " } ]";
          }
-         var uniqueId = $element.attr( "id" );
-         var map = specialBlockMap.size() > 0 ? specialBlockMap.toString( "BlockMap" ) : "";
-         console.log( "Entity array for element: " + uniqueId + "   " + map );
+      // var uniqueId = $element.attr( "id" );
+      // var map = specialBlockMap.size() > 0 ? specialBlockMap.toString( "BlockMap" ) : "";
+      // console.log( "Entity array for element: " + uniqueId + "   " + map );
       }
 
       return json;
@@ -2870,7 +2874,7 @@ public class FileServer {
                            var color = "";
                            var specialBlockSection = objSpecialBlockProp.Name;
                            var prefix = specialSection + "." + specialBlockSection + ".";
-                           console.log( "AddSpecialAttributes SpecialBlockSection: " + prefix );
+                        // console.log( "AddSpecialAttributes SpecialBlockSection: " + prefix );
                            for ( var prop in objSpecialBlockProp ) {
                               if ( prop !== ".meta" ) {
                                  if ( prop === "SpecialAttributeTextColor" ) {
@@ -2887,7 +2891,7 @@ public class FileServer {
                                     // of possible subregistrant colors.  Used elsewhere.
                                  */                                                                                       
                                  } else {
-                                    console.log( "   AddSpecialAttributes SpecialBlock: " + prop + "." + objSpecialBlockProp[prop] );
+                                 // console.log( "   AddSpecialAttributes SpecialBlock: " + prop + "." + objSpecialBlockProp[prop] );
                                     addZeidonAttributeToElement( $block, prefix + zeidonAttributeToKey( prop ), objSpecialBlockProp[prop], false );
                                  }
                               }
@@ -3917,18 +3921,23 @@ public class FileServer {
          $select.find('option:not(:first)').remove(); // wipe out all but the first option
       // $select.find('optgroup:not(:first)').remove(); // wipe out all but the first optgroup
          var sectionType = "";
+         var currentType;
          var $optgroup = null;
          $.each( jsonReusable, function( index, item ) {
-            if ( item.LLD_SectionType !== sectionType ) {
-               sectionType = item.LLD_SectionType;
-               if ( sectionType !== "" ) {
+            currentType = item.LLD_SectionType;
+            if ( currentType === "" ) {
+               currentType = "Group";
+            }
+            if ( currentType !== sectionType ) {
+               sectionType = currentType;
+            // if ( sectionType !== "" ) {  cannot happen anymore
                   if ( $optgroup !== null ) {
                      $optgroup.appendTo( $select );
                   }
                   $optgroup = $('<optgroup label="' + sectionType + '"></optgroup>');
-               }
-            }
-            if ( sectionType !== "" ) {
+            // }
+         // }
+         // if ( sectionType !== "" ) {
                var $option = $("<option></option>");
                $option.val( item.Name );
                $option.text( item.Name + ":" + item.Description );
@@ -3994,8 +4003,8 @@ public class FileServer {
          });
       // $listPanel.multiSelect( "refresh" );
       // $listLabel.multiSelect( "refresh" );
-         console.log( "Selecting Panel: " + selectedPanel );
-         console.log( "Selecting Label: " + selectedLabel );
+      // console.log( "Selecting Panel: " + selectedPanel );
+      // console.log( "Selecting Label: " + selectedLabel );
          $listPanel.val( selectedPanel.split( ',' ) );
          $listLabel.val( selectedLabel.split( ',' ) );
          $listPanel.width( 190 );

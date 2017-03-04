@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSLCDirectionsForUse   Generate Timestamp: 20161019144228540 --%>
+<%-- wSLCDirectionsForUse   Generate Timestamp: 20170302164955217 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -1181,6 +1181,7 @@ else
    <input name="zFocusCtrl" id="zFocusCtrl" type="hidden" value="<%=strFocusCtrl%>">
    <input name="zOpenFile" id="zOpenFile" type="hidden" value="<%=strOpenFile%>">
    <input name="zDateFormat" id="zDateFormat" type="hidden" value="<%=strDateFormat%>">
+   <input name="zDateSequence" id="zDateSequence" type="hidden" value="MDY">
    <input name="zLoginName" id="zLoginName" type="hidden" value="<%=strLoginName%>">
    <input name="zKeyRole" id="zKeyRole" type="hidden" value="<%=strKeyRole%>">
    <input name="zOpenPopupWindow" id="zOpenPopupWindow" type="hidden" value="<%=strOpenPopupWindow%>">
@@ -1202,11 +1203,38 @@ else
 <div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GBDFU_Sections:GroupBox */ %>
 
-<div id="GBDFU_Sections" name="GBDFU_Sections" class="listgroup"   style="float:left;position:relative; width:798px; height:36px;">  <!-- GBDFU_Sections --> 
+<div id="GBDFU_Sections" name="GBDFU_Sections" class="listgroup"   style="float:left;position:relative; width:798px; height:52px;">  <!-- GBDFU_Sections --> 
 
 <% /* DirectionsForUse:Text */ %>
 
 <label class="groupbox"  id="DirectionsForUse" name="DirectionsForUse" style="width:238px;height:16px;position:absolute;left:6px;top:12px;">Directions for Use</label>
+
+<% /* Text:Text */ %>
+<% strTextDisplayValue = "";
+   mSubLC = task.getViewByName( "mSubLC" );
+   if ( VmlOperation.isValid( mSubLC ) == false )
+      task.log( ).debug( "Invalid View: " + "Text" );
+   else
+   {
+      nRC = mSubLC.cursor( "SubregLabelContent" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+      {
+      try
+      {
+         strTextDisplayValue = mSubLC.cursor( "SubregLabelContent" ).getAttribute( "TextDFU" ).getString( "" );
+      }
+      catch (Exception e)
+      {
+         out.println("There is an error on Text: " + e.getMessage());
+         task.log().info( "*** Error on ctrl Text" + e.getMessage() );
+      }
+         if ( strTextDisplayValue == null )
+            strTextDisplayValue = "";
+      }
+   }
+%>
+
+<label class="text12"  id="Text" name="Text" style="width:750px;height:12px;position:absolute;left:6px;top:34px;"><%=strTextDisplayValue%></label>
 
 
 </div>  <!--  GBDFU_Sections --> 
@@ -1216,7 +1244,7 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:10px;width:100px;"></div>
+<div style="height:6px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->

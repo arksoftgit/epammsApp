@@ -171,14 +171,10 @@ ProcessUserLogin( View     ViewToWindow )
    //:// there are no Users for a Primary/Subregistrant, the only login possible for the specified Primary/Subregistrant is the
    //:// administrator for that Primary/Subregistrant.
 
-   //:TraceLineS( "pePamms OI:", "" )
-   TraceLineS( "pePamms OI:", "" );
-   //:DisplayObjectInstance( pePamms, "", "" )
-   DisplayObjectInstance( pePamms, "", "" );
-   //:TraceLineS( "pePamms Entity Instance:", "" )
-   TraceLineS( "pePamms Entity Instance:", "" );
-   //:DisplayEntityInstance( pePamms, "Organization" )
-   DisplayEntityInstance( pePamms, "Organization" );
+   //:// TraceLineS( "pePamms OI:", "" )
+   //:// DisplayObjectInstance( pePamms, "", "" )
+   //:// TraceLineS( "pePamms Entity Instance:", "" )
+   //:// DisplayEntityInstance( pePamms, "Organization" )
 
    //:szLoginRegistrant = wWebXfer.Root.AttemptLoginRegistrant  // e.g. Lonza (a primary registrant) or ATP (Alpha Tech Pet - a subregistrant)
    {MutableInt mi_lTempInteger_1 = new MutableInt( lTempInteger_1 );
@@ -258,10 +254,8 @@ ProcessUserLogin( View     ViewToWindow )
       DropView( vTempViewVar_1 );
       //:NAME VIEW sePamms "sePamms"
       SetNameForView( sePamms, "sePamms", null, zLEVEL_TASK );
-      //:TraceLineS( "sePamms Entity Instance:", "" )
-      TraceLineS( "sePamms Entity Instance:", "" );
-      //:DisplayObjectInstance( sePamms, "", "" )
-      DisplayObjectInstance( sePamms, "", "" );
+      //:// TraceLineS( "sePamms Entity Instance:", "" )
+      //:// DisplayObjectInstance( sePamms, "", "" )
 
       //:// We cannot use SET CURSOR FIRST WHERE since we need a case insensitive comparison.
       //:// SET CURSOR FIRST sePamms.Subregistrant WHERE sePamms.Organization.LoginName = szLoginRegistrant
@@ -282,10 +276,8 @@ ProcessUserLogin( View     ViewToWindow )
       //:   SET CURSOR NEXT sePamms.Subregistrant
       //:END
       //:*/
-      //:TraceLineS( "sePamms OI looking for: ", szLoginRegistrant )
-      TraceLineS( "sePamms OI looking for: ", szLoginRegistrant );
-      //:DisplayEntityInstance( sePamms, "Organization" )
-      DisplayEntityInstance( sePamms, "Organization" );
+      //:// TraceLineS( "sePamms OI looking for: ", szLoginRegistrant )
+      //:// DisplayEntityInstance( sePamms, "Organization" )
       //:IF RESULT >= 0
       if ( RESULT >= 0 )
       { 
@@ -374,10 +366,8 @@ ProcessUserLogin( View     ViewToWindow )
 
    //:NAME VIEW qOrganiz "qOrganizLogin"
    SetNameForView( qOrganiz, "qOrganizLogin", null, zLEVEL_TASK );
-   //:TraceLineS( "qOrganiz OI:", "" )
-   TraceLineS( "qOrganiz OI:", "" );
-   //:DisplayObjectInstance( qOrganiz, "", "" )
-   DisplayObjectInstance( qOrganiz, "", "" );
+   //:// TraceLineS( "qOrganiz OI:", "" )
+   //:// DisplayObjectInstance( qOrganiz, "", "" )
    //:IF qOrganiz.Organization DOES NOT EXIST
    lTempInteger_7 = CheckExistenceOfEntity( qOrganiz, "Organization" );
    if ( lTempInteger_7 != 0 )
@@ -589,8 +579,7 @@ ProcessUserLogin( View     ViewToWindow )
       if ( nRC != 0 )
       { 
 
-         //:TraceLineS( "//////* Invalid Login Password: ", szAttemptPassword )
-         TraceLineS( "//////* Invalid Login Password: ", szAttemptPassword );
+         //:// TraceLineS( "//////* Invalid Login Password: ", szAttemptPassword )
          //:MessageSend( ViewToWindow, "", "Login",
          //:             "Invalid User Login",
          //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
@@ -628,10 +617,8 @@ ProcessUserLogin( View     ViewToWindow )
    DropView( vTempViewVar_3 );
    //:NAME VIEW qOrganiz "qOrganizLogin"
    SetNameForView( qOrganiz, "qOrganizLogin", null, zLEVEL_TASK );
-   //:TraceLineS( "qOrganizLogin OI:", "" )
-   TraceLineS( "qOrganizLogin OI:", "" );
-   //:DisplayObjectInstance( qOrganiz, "", "" )
-   DisplayObjectInstance( qOrganiz, "", "" );
+   //:// TraceLineS( "qOrganizLogin OI:", "" )
+   //:// DisplayObjectInstance( qOrganiz, "", "" )
 
    //:GET VIEW mOrganizInit NAMED "mOrganizInit"
    RESULT = GetViewByName( mOrganizInit, "mOrganizInit", ViewToWindow, zLEVEL_TASK );
@@ -640,10 +627,8 @@ ProcessUserLogin( View     ViewToWindow )
    o_fnLocalBuildQual_5( ViewToWindow, vTempViewVar_4, lID );
    RESULT = ActivateObjectInstance( mOrganiz, "mOrganiz", ViewToWindow, vTempViewVar_4, zSINGLE );
    DropView( vTempViewVar_4 );
-   //:TraceLineS( "mOrganiz OI:", "" )
-   TraceLineS( "mOrganiz OI:", "" );
-   //:DisplayObjectInstance( mOrganiz, "", "" )
-   DisplayObjectInstance( mOrganiz, "", "" );
+   //:// TraceLineS( "mOrganiz OI:", "" )
+   //:// DisplayObjectInstance( mOrganiz, "", "" )
    //:NAME VIEW mOrganiz "mOrganiz"
    SetNameForView( mOrganiz, "mOrganiz", null, zLEVEL_TASK );
    //:IF mOrganizInit != 0
@@ -908,11 +893,11 @@ o_fnLocalBuildQual_42( View     vSubtask,
 
    RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
    CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "MasterLabelContent" );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "SubregLabelContent" );
    CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "MasterLabelContent" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "SubregLabelContent" );
    SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Value", "10" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Value", "58" );
    SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
    return( 0 );
 } 
@@ -930,7 +915,61 @@ o_fnLocalBuildQual_43( View     vSubtask,
    CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
    SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "SubregLabelContent" );
    SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Value", "6" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Value", "59" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+   return( 0 );
+} 
+
+
+private int 
+o_fnLocalBuildQual_44( View     vSubtask,
+                       zVIEW    vQualObject )
+{
+   int      RESULT = 0;
+
+   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
+   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "SubregLabelContent" );
+   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "SubregLabelContent" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Value", "60" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+   return( 0 );
+} 
+
+
+private int 
+o_fnLocalBuildQual_45( View     vSubtask,
+                       zVIEW    vQualObject )
+{
+   int      RESULT = 0;
+
+   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
+   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "SubregLabelContent" );
+   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "SubregLabelContent" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Value", "61" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+   return( 0 );
+} 
+
+
+private int 
+o_fnLocalBuildQual_46( View     vSubtask,
+                       zVIEW    vQualObject )
+{
+   int      RESULT = 0;
+
+   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
+   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "SubregLabelContent" );
+   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "SubregLabelContent" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Value", "62" );
    SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
    return( 0 );
 } 
@@ -8877,69 +8916,98 @@ GOTO_UserList( View     ViewToWindow )
 //:DIALOG OPERATION
 //:TEST_IncludeError( VIEW ViewToWindow )
 
+//:/* Appears to be fixed ... dks 2017.03.02
+
 //:   VIEW mMasLC    BASED ON LOD mMasLC
+//:   VIEW mSubLC    BASED ON LOD mSubLC
+//:   VIEW mSubLCNew BASED ON LOD mSubLC
+//:   
+//:   // Include Updatable Entity Error
+//:   
+//:   // Include an entity that is updatable in the LOD but has not been actually updated.
+//:   
+//:   ACTIVATE mMasLC WHERE mMasLC.MasterLabelContent.ID = 10
+//:   NAME VIEW mMasLC "mMasLC"
+//:   
+//:   ACTIVATE mSubLC WHERE mSubLC.SubregLabelContent.ID = 6
+//:   NAME VIEW mSubLC "mSubLC"
+//:   
+//:   // Create new mSubLC OI from initial mSubLC and include mMasLC updatable entity.
+//:   ACTIVATE mSubLCNew EMPTY 
+//:   NAME VIEW mSubLCNew "mSubLCNew"
+//:   CREATE ENTITY mSubLCNew.SubregLabelContent 
+//:   mSubLCNew.SubregLabelContent.Version     = "Copy Include Test"
+//:   mSubLCNew.SubregLabelContent.Description = "Copy Include Test"
+//:   INCLUDE mSubLCNew.SubregProduct FROM mSubLC.SubregProduct 
+//:   INCLUDE mSubLCNew.MasterLabelContent FROM mMasLC.MasterLabelContent 
+//:   CREATE ENTITY mSubLCNew.S_GeneralSection 
+//:   SetMatchingAttributesByName( mSubLCNew, "S_GeneralSection", mMasLC, "M_GeneralSection", zSET_NULL )
+//:   INCLUDE mSubLCNew.M_GeneralSection FROM mMasLC.M_GeneralSection 
+//:   CREATE ENTITY mSubLCNew.S_GeneralStatement 
+//:   SetMatchingAttributesByName( mSubLCNew, "S_GeneralStatement", mMasLC, "M_GeneralStatement", zSET_NULL )
+//:   INCLUDE mSubLCNew.M_GeneralStatement FROM mMasLC.M_GeneralSubStatement 
+//:   TraceLineS( "Display SubLC Before Commit", "" )
+//:   DisplayObjectInstance( mSubLCNew, "", "" )
+//:   COMMIT mSubLCNew
+//:   ACTIVATE mSubLCNew WHERE mSubLCNew.SubregLabelContent.ID = 62
+//:   TraceLineS( "Display SubLC After Activate", "" )
+//:   DisplayObjectInstance( mSubLCNew, "", "" )
+//:*/
+//:   VIEW mSubLCNew BASED ON LOD mSubLC
 public int 
 TEST_IncludeError( View     ViewToWindow )
 {
-   zVIEW    mMasLC = new zVIEW( );
-   //:VIEW mSubLC    BASED ON LOD mSubLC
-   zVIEW    mSubLC = new zVIEW( );
-   //:VIEW mSubLCNew BASED ON LOD mSubLC
    zVIEW    mSubLCNew = new zVIEW( );
    zVIEW    vTempViewVar_0 = new zVIEW( );
    int      RESULT = 0;
    zVIEW    vTempViewVar_1 = new zVIEW( );
+   zVIEW    vTempViewVar_2 = new zVIEW( );
+   zVIEW    vTempViewVar_3 = new zVIEW( );
+   zVIEW    vTempViewVar_4 = new zVIEW( );
 
 
-   //:// Include Updatable Entity Error
-
-   //:// Include an entity that is updatable in the LOD but has not been actually updated.
-
-   //:ACTIVATE mMasLC WHERE mMasLC.MasterLabelContent.ID = 10
+   //:ACTIVATE mSubLCNew WHERE mSubLCNew.SubregLabelContent.ID = 58
    o_fnLocalBuildQual_42( ViewToWindow, vTempViewVar_0 );
-   RESULT = ActivateObjectInstance( mMasLC, "mMasLC", ViewToWindow, vTempViewVar_0, zSINGLE );
+   RESULT = ActivateObjectInstance( mSubLCNew, "mSubLC", ViewToWindow, vTempViewVar_0, zSINGLE );
    DropView( vTempViewVar_0 );
-   //:NAME VIEW mMasLC "mMasLC"
-   SetNameForView( mMasLC, "mMasLC", null, zLEVEL_TASK );
-
-   //:ACTIVATE mSubLC WHERE mSubLC.SubregLabelContent.ID = 6
+   //:DeleteEntity( mSubLCNew, "subreglabelcontent", zREPOS_NONE )
+   DeleteEntity( mSubLCNew, "subreglabelcontent", zREPOS_NONE );
+   //:COMMIT mSubLCNew
+   RESULT = CommitObjectInstance( mSubLCNew );
+   //:ACTIVATE mSubLCNew WHERE mSubLCNew.SubregLabelContent.ID = 59
    o_fnLocalBuildQual_43( ViewToWindow, vTempViewVar_1 );
-   RESULT = ActivateObjectInstance( mSubLC, "mSubLC", ViewToWindow, vTempViewVar_1, zSINGLE );
+   RESULT = ActivateObjectInstance( mSubLCNew, "mSubLC", ViewToWindow, vTempViewVar_1, zSINGLE );
    DropView( vTempViewVar_1 );
-   //:NAME VIEW mSubLC "mSubLC"
-   SetNameForView( mSubLC, "mSubLC", null, zLEVEL_TASK );
-
-   //:// Create new mSubLC OI from initial mSubLC and include mMasLC updatable entity.
-   //:ACTIVATE mSubLCNew EMPTY 
-   RESULT = ActivateEmptyObjectInstance( mSubLCNew, "mSubLC", ViewToWindow, zSINGLE );
-   //:NAME VIEW mSubLCNew "mSubLCNew"
-   SetNameForView( mSubLCNew, "mSubLCNew", null, zLEVEL_TASK );
-   //:CREATE ENTITY mSubLCNew.SubregLabelContent 
-   RESULT = CreateEntity( mSubLCNew, "SubregLabelContent", zPOS_AFTER );
-   //:mSubLCNew.SubregLabelContent.Version     = "Copy Include Test"
-   SetAttributeFromString( mSubLCNew, "SubregLabelContent", "Version", "Copy Include Test" );
-   //:mSubLCNew.SubregLabelContent.Description = "Copy Include Test"
-   SetAttributeFromString( mSubLCNew, "SubregLabelContent", "Description", "Copy Include Test" );
-   //:INCLUDE mSubLCNew.SubregProduct FROM mSubLC.SubregProduct 
-   RESULT = IncludeSubobjectFromSubobject( mSubLCNew, "SubregProduct", mSubLC, "SubregProduct", zPOS_AFTER );
-   //:INCLUDE mSubLCNew.MasterLabelContent FROM mMasLC.MasterLabelContent 
-   RESULT = IncludeSubobjectFromSubobject( mSubLCNew, "MasterLabelContent", mMasLC, "MasterLabelContent", zPOS_AFTER );
-   //:CREATE ENTITY mSubLCNew.S_GeneralSection 
-   RESULT = CreateEntity( mSubLCNew, "S_GeneralSection", zPOS_AFTER );
-   //:SetMatchingAttributesByName( mSubLCNew, "S_GeneralSection", mMasLC, "M_GeneralSection", zSET_NULL )
-   SetMatchingAttributesByName( mSubLCNew, "S_GeneralSection", mMasLC, "M_GeneralSection", zSET_NULL );
-   //:INCLUDE mSubLCNew.M_GeneralSection FROM mMasLC.M_GeneralSection 
-   RESULT = IncludeSubobjectFromSubobject( mSubLCNew, "M_GeneralSection", mMasLC, "M_GeneralSection", zPOS_AFTER );
-   //:CREATE ENTITY mSubLCNew.S_GeneralStatement 
-   RESULT = CreateEntity( mSubLCNew, "S_GeneralStatement", zPOS_AFTER );
-   //:SetMatchingAttributesByName( mSubLCNew, "S_GeneralStatement", mMasLC, "M_GeneralStatement", zSET_NULL )
-   SetMatchingAttributesByName( mSubLCNew, "S_GeneralStatement", mMasLC, "M_GeneralStatement", zSET_NULL );
-   //:INCLUDE mSubLCNew.M_GeneralStatement FROM mMasLC.M_GeneralSubStatement 
-   RESULT = IncludeSubobjectFromSubobject( mSubLCNew, "M_GeneralStatement", mMasLC, "M_GeneralSubStatement", zPOS_AFTER );
+   //:DeleteEntity( mSubLCNew, "subreglabelcontent", zREPOS_NONE )
+   DeleteEntity( mSubLCNew, "subreglabelcontent", zREPOS_NONE );
+   //:COMMIT mSubLCNew
+   RESULT = CommitObjectInstance( mSubLCNew );
+   //:ACTIVATE mSubLCNew WHERE mSubLCNew.SubregLabelContent.ID = 60
+   o_fnLocalBuildQual_44( ViewToWindow, vTempViewVar_2 );
+   RESULT = ActivateObjectInstance( mSubLCNew, "mSubLC", ViewToWindow, vTempViewVar_2, zSINGLE );
+   DropView( vTempViewVar_2 );
+   //:DeleteEntity( mSubLCNew, "subreglabelcontent", zREPOS_NONE )
+   DeleteEntity( mSubLCNew, "subreglabelcontent", zREPOS_NONE );
+   //:COMMIT mSubLCNew
+   RESULT = CommitObjectInstance( mSubLCNew );
+   //:ACTIVATE mSubLCNew WHERE mSubLCNew.SubregLabelContent.ID = 61
+   o_fnLocalBuildQual_45( ViewToWindow, vTempViewVar_3 );
+   RESULT = ActivateObjectInstance( mSubLCNew, "mSubLC", ViewToWindow, vTempViewVar_3, zSINGLE );
+   DropView( vTempViewVar_3 );
+   //:DeleteEntity( mSubLCNew, "subreglabelcontent", zREPOS_NONE )
+   DeleteEntity( mSubLCNew, "subreglabelcontent", zREPOS_NONE );
+   //:COMMIT mSubLCNew
+   RESULT = CommitObjectInstance( mSubLCNew );
+   //:ACTIVATE mSubLCNew WHERE mSubLCNew.SubregLabelContent.ID = 62
+   o_fnLocalBuildQual_46( ViewToWindow, vTempViewVar_4 );
+   RESULT = ActivateObjectInstance( mSubLCNew, "mSubLC", ViewToWindow, vTempViewVar_4, zSINGLE );
+   DropView( vTempViewVar_4 );
+   //:DeleteEntity( mSubLCNew, "subreglabelcontent", zREPOS_NONE )
+   DeleteEntity( mSubLCNew, "subreglabelcontent", zREPOS_NONE );
    //:COMMIT mSubLCNew
    RESULT = CommitObjectInstance( mSubLCNew );
    return( 0 );
-//      
+//  
 // END
 } 
 

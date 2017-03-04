@@ -865,12 +865,12 @@ else
                   </div> <!-- zpool -->  <!-- End of: Block Types -->
                   <!--
                   // Make sure that the appropriate Keyword entries are set up for a given Section/Block Type.
-                  // Directions for Use:   Header / Title / Text
-                  // First Aid:   Header / Title / Text
+                  // Directions for Use:  Header / Title / Text
+                  // First Aid:  Header / Title / Text
                   // Human Hazard:  Hazards Warning / Hazards Signal Word / Hazards Precautionary
-                  // Ingredients:   Ingredients Title / Ingredients Items / Ingredients Inert / Ingredients Total
-                  // Marketing:   Title / Text / Column List
-                  // Default:   Title / Text
+                  // Ingredients:  Ingredients Title / Ingredients Items / Ingredients Inert / Ingredients Total
+                  // Marketing:  Title / Text / Column List
+                  // Default:  Title / Text
 
                   Fields Common to All Block Types
                      1. Block Tag (display)
@@ -1053,12 +1053,12 @@ else
                      <hr>
                      &nbsp;
                      <!--
-                     // Directions for Use:   Title / Text / Header
-                     // First Aid:   Title / Text / Header
+                     // Directions for Use:  Header / Title / Text
+                     // First Aid:  Header / Title / Text
                      // Human Hazard:  Hazards Warning / Hazards Signal Word / Hazards Precautionary
-                     // Ingredients:   Ingredients Title / Ingredients Items / Ingredients Inert / Ingredients Total
-                     // Marketing:   Title / Text / Column List
-                     // Default:   Title / Text
+                     // Ingredients:  Ingredients Title / Ingredients Items / Ingredients Inert / Ingredients Total
+                     // Marketing:  Title / Text / Column List
+                     // Default:  Title / Text
                      -->
                      <div id="zBlockFormatTypeToggle" style="overflow:hidden; white-space:nowrap;display:hidden;">
                         <label for="zBlockFormatType">Special Formatting:</label>

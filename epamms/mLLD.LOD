@@ -1,4 +1,4 @@
-z1000-Zeidon    MLLD     TZZOLODO                         11/18/16   15:02:17 1.0a2   
+z1000-Zeidon    MLLD     TZZOLODO                         01/12/17   16:50:16 1.0a2   
 eLOD       1
 aZKey      3
 aName      mLLD
@@ -49,9 +49,9 @@ aZKey      120134830
 aCreate    Y
 aDelete    Y
 aUpdate    Y
-aInclude   N
+aInclude   Y
 aInclSrc   Y
-aExclude   N
+aExclude   Y
 aRecursive N
 aDerived   N
 aWork      N
@@ -637,7 +637,7 @@ aName      LLD_Block
 aZKey      69021553
 aPurpose   A
 aER_DiagramPosX 243
-aER_DiagramPosY 45
+aER_DiagramPosY 38
 
 eER_RelLinkRec 7
 aName      is linked to
@@ -651,12 +651,12 @@ aTE_NoForeignKeyPrefix N
 eER_RelTypeRec 8
 aZKey      4495116
 aFact      Added thru ER Dialog
-aER_DiagramBendPosX 255
-aER_DiagramBendPosY 41
-aER_DiagramE1PosX 249
-aER_DiagramE1PosY 44
-aER_DiagramE2PosX 252
-aER_DiagramE2PosY 45
+aER_DiagramBendPosX 0
+aER_DiagramBendPosY 0
+aER_DiagramE1PosX 0
+aER_DiagramE1PosY 0
+aER_DiagramE2PosX 0
+aER_DiagramE2PosY 0
 
 eLOD_EntityChild 6
 aName      LLD_SpecialSectionAttribute
@@ -1046,18 +1046,18 @@ aAutoSeq   N
 aHangingForeignKeyEntity N
 aZKey      4322595
 aCardMin   0
-aCardMax   1
+aCardMax   m
 aTE_NoForeignKeyPrefix N
 
 eER_RelTypeRec 9
 aZKey      4322593
 aFact      Added thru ER Dialog
 aER_DiagramBendPosX 249
-aER_DiagramBendPosY 59
+aER_DiagramBendPosY 55
 aER_DiagramE1PosX 249
-aER_DiagramE1PosY 50
-aER_DiagramE2PosX 238
-aER_DiagramE2PosY 59
+aER_DiagramE1PosY 43
+aER_DiagramE2PosX 252
+aER_DiagramE2PosY 55
 
 eLOD_AttributeRec 7
 aZKey      120134886
@@ -1082,8 +1082,8 @@ eER_EntityRec 7
 aName      LLD_SpecialSectionAttribute
 aZKey      4322587
 aPurpose   A
-aER_DiagramPosX 229
-aER_DiagramPosY 55
+aER_DiagramPosX 253
+aER_DiagramPosY 53
 
 eER_RelLinkRec 7
 aName      contains
@@ -1098,12 +1098,12 @@ aTE_NoForeignKeyPrefix N
 eER_RelTypeRec 8
 aZKey      4322590
 aFact      Added thru ER Dialog
-aER_DiagramBendPosX 247
-aER_DiagramBendPosY 57
-aER_DiagramE1PosX 247
-aER_DiagramE1PosY 50
-aER_DiagramE2PosX 238
-aER_DiagramE2PosY 57
+aER_DiagramBendPosX 257
+aER_DiagramBendPosY 40
+aER_DiagramE1PosX 252
+aER_DiagramE1PosY 40
+aER_DiagramE2PosX 257
+aER_DiagramE2PosY 52
 
 eLOD_AttributeRec 6
 aZKey      120134838
@@ -1471,9 +1471,9 @@ aFact      Added thru ER Dialog
 aER_DiagramBendPosX 0
 aER_DiagramBendPosY 0
 aER_DiagramE1PosX 247
-aER_DiagramE1PosY 36
+aER_DiagramE1PosY 30
 aER_DiagramE2PosX 247
-aER_DiagramE2PosY 44
+aER_DiagramE2PosY 37
 
 eLOD_AttributeRec 5
 aZKey      120134831
@@ -1954,7 +1954,7 @@ aName      LLD_Panel
 aZKey      69011498
 aPurpose   A
 aER_DiagramPosX 243
-aER_DiagramPosY 31
+aER_DiagramPosY 25
 
 eER_RelLinkRec 5
 aName      has
@@ -1968,9 +1968,9 @@ aFact      Added thru ER Dialog
 aER_DiagramBendPosX 0
 aER_DiagramBendPosY 0
 aER_DiagramE1PosX 247
-aER_DiagramE1PosY 23
+aER_DiagramE1PosY 18
 aER_DiagramE2PosX 247
-aER_DiagramE2PosY 30
+aER_DiagramE2PosY 24
 
 eLOD_AttributeRec 4
 aZKey      120134827
@@ -2046,7 +2046,7 @@ aName      LLD_Page
 aZKey      120085484
 aPurpose   A
 aER_DiagramPosX 243
-aER_DiagramPosY 18
+aER_DiagramPosY 13
 
 eER_RelLinkRec 4
 aName      has
@@ -2063,9 +2063,9 @@ aFact      Added thru ER Dialog
 aER_DiagramBendPosX 0
 aER_DiagramBendPosY 0
 aER_DiagramE1PosX 247
-aER_DiagramE1PosY 9
+aER_DiagramE1PosY 7
 aER_DiagramE2PosX 247
-aER_DiagramE2PosY 17
+aER_DiagramE2PosY 12
 
 eLOD_AttributeRec 3
 aZKey      5
@@ -2278,10 +2278,10 @@ aName      LLD
 aZKey      69011483
 aPurpose   F
 aER_DiagramPosX 243
-aER_DiagramPosY 4
+aER_DiagramPosY 2
 
 eLOD_Entity 2
-awkSelectedAttributeForDragSort 1
+awkSelectedAttributeForDragSort 2
 
 eLOD_Attribute 3
 awkSequence 1
@@ -4094,7 +4094,7 @@ i472       17
 i475       11
 i478       17
 i481       107
-i484       29
+i484       8
 i487       119
 i490       122
 i493       125
@@ -4274,7 +4274,7 @@ i785       480
 i786       107
 i787       482
 i788       483
-i789       29
+i789       8
 i790       485
 i791       486
 i792       119

@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wStartUpePammsPortal   Generate Timestamp: 20160620105931338 --%>
+<%-- wStartUpePammsPortal   Generate Timestamp: 20170302100307188 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -980,6 +980,7 @@ else
    <input name="zFocusCtrl" id="zFocusCtrl" type="hidden" value="<%=strFocusCtrl%>">
    <input name="zOpenFile" id="zOpenFile" type="hidden" value="<%=strOpenFile%>">
    <input name="zDateFormat" id="zDateFormat" type="hidden" value="<%=strDateFormat%>">
+   <input name="zDateSequence" id="zDateSequence" type="hidden" value="MDY">
    <input name="zLoginName" id="zLoginName" type="hidden" value="<%=strLoginName%>">
    <input name="zKeyRole" id="zKeyRole" type="hidden" value="<%=strKeyRole%>">
    <input name="zOpenPopupWindow" id="zOpenPopupWindow" type="hidden" value="<%=strOpenPopupWindow%>">
@@ -1025,19 +1026,6 @@ else
 %>
 
 <label  id="WelcomeText" name="WelcomeText" style="width:856px;height:32px;"><%=strTextDisplayValue%></label>
-
-</div>  <!-- End of a new line -->
-
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
-
-
- <!-- This is added as a line spacer -->
-<div style="height:46px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<span style="height:60px;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
-<% /* Test:PushBtn */ %>
-<button type="button" name="Test" id="Test" value="" onclick="TEST_IncludeError( )" style="width:190px;height:60px;">TEST_IncludeError</button>
 
 </div>  <!-- End of a new line -->
 

@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCDirectionsForUseSection   Generate Timestamp: 20161108114605662 --%>
+<%-- wMLCDirectionsForUseSection --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -711,9 +711,9 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-         View mMasLCAuto = task.getViewByName( "mMasLC" );
-         EntityCursor cursor = mMasLCAuto.cursor( "M_InsertTextKeywordSectionDU" );
-         cursor.createTemporalEntity( );
+      View mMasLC = task.getViewByName( "mMasLC" );
+      EntityCursor cursor = mMasLC.cursor( "M_InsertTextKeywordSectionDU" );
+      cursor.createTemporalEntity( );
 
       }
       catch ( Exception e )
@@ -770,14 +770,14 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-         EntityCursor cursor = mMasLC.cursor( "M_InsertTextKeywordSectionDU" );
-            if ( cursor.isNull() )
-               nRC = 0;
-            else
-            {
-               cursor.deleteEntity( CursorPosition.NEXT );
-            nRC = 0;
-         }
+      EntityCursor cursor = mMasLC.cursor( "M_InsertTextKeywordSectionDU" );
+      if ( cursor.isNull() )
+         nRC = 0;
+      else
+      {
+         cursor.deleteEntity( CursorPosition.NEXT );
+         nRC = 0;
+      }
 
       }
       catch ( Exception e )
@@ -851,8 +851,8 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-         EntityCursor cursor = mMasLC.cursor( "M_InsertTextKeywordSectionDU" );
-         cursor.createTemporalSubobjectVersion( );
+      EntityCursor cursor = mMasLC.cursor( "M_InsertTextKeywordSectionDU" );
+      cursor.createTemporalSubobjectVersion( );
 
       }
       catch ( Exception e )
@@ -1029,18 +1029,18 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-         View mMasLCAuto = task.getViewByName( "mMasLC" );
-         EntityCursor cursor = mMasLCAuto.cursor( "M_DirectionsForUseSection" );
-            if ( cursor.isNull() )
-               nRC = 0;
-            else
-            {
-               if ( cursor.isVersioned( ) )
-               {
-                  cursor.cancelSubobject( );
-               }
-            nRC = 0;
+      View mMasLC = task.getViewByName( "mMasLC" );
+      EntityCursor cursor = mMasLC.cursor( "M_DirectionsForUseSection" );
+      if ( cursor.isNull() )
+         nRC = 0;
+      else
+      {
+         if ( cursor.isVersioned( ) )
+         {
+            cursor.cancelSubobject( );
          }
+         nRC = 0;
+      }
 
       }
       catch ( Exception e )
@@ -1162,14 +1162,14 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-         EntityCursor cursor = mMasLC.cursor( "M_DirectionsForUseReviewerNote" );
-            if ( cursor.isNull() )
-               nRC = 0;
-            else
-            {
-               cursor.deleteEntity( CursorPosition.NEXT );
-            nRC = 0;
-         }
+      EntityCursor cursor = mMasLC.cursor( "M_DirectionsForUseReviewerNote" );
+      if ( cursor.isNull() )
+         nRC = 0;
+      else
+      {
+         cursor.deleteEntity( CursorPosition.NEXT );
+         nRC = 0;
+      }
 
       }
       catch ( Exception e )
@@ -1264,8 +1264,8 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-         EntityCursor cursor = mMasLC.cursor( "M_DirectionsForUseStatement" );
-         cursor.createTemporalSubobjectVersion( );
+      EntityCursor cursor = mMasLC.cursor( "M_DirectionsForUseStatement" );
+      cursor.createTemporalSubobjectVersion( );
 
       }
       catch ( Exception e )
@@ -1295,9 +1295,9 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-         View mMasLCAuto = task.getViewByName( "mMasLC" );
-         EntityCursor cursor = mMasLCAuto.cursor( "M_DirectionsForUseReviewerNote" );
-         cursor.createTemporalEntity( );
+      View mMasLC = task.getViewByName( "mMasLC" );
+      EntityCursor cursor = mMasLC.cursor( "M_DirectionsForUseReviewerNote" );
+      cursor.createTemporalEntity( );
 
       }
       catch ( Exception e )
@@ -1354,8 +1354,8 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-         EntityCursor cursor = mMasLC.cursor( "M_DirectionsForUseReviewerNote" );
-         cursor.createTemporalSubobjectVersion( );
+      EntityCursor cursor = mMasLC.cursor( "M_DirectionsForUseReviewerNote" );
+      cursor.createTemporalSubobjectVersion( );
 
       }
       catch ( Exception e )
@@ -1738,6 +1738,7 @@ else
    <input name="zFocusCtrl" id="zFocusCtrl" type="hidden" value="<%=strFocusCtrl%>">
    <input name="zOpenFile" id="zOpenFile" type="hidden" value="<%=strOpenFile%>">
    <input name="zDateFormat" id="zDateFormat" type="hidden" value="<%=strDateFormat%>">
+   <input name="zDateSequence" id="zDateSequence" type="hidden" value="MDY">
    <input name="zLoginName" id="zLoginName" type="hidden" value="<%=strLoginName%>">
    <input name="zKeyRole" id="zKeyRole" type="hidden" value="<%=strKeyRole%>">
    <input name="zOpenPopupWindow" id="zOpenPopupWindow" type="hidden" value="<%=strOpenPopupWindow%>">
@@ -1867,7 +1868,7 @@ else
    }
 %>
 
-<input class="text12" name="DirectionsUseName" id="DirectionsUseName" maxlength="254"  title="Required Name to differentiate Directions for Use Sections within a list"style="width:650px;<%=strErrorColor%>" tabindex=-1  type="text" value="<%=strErrorMapValue%>" >
+<input class="text12"  name="DirectionsUseName" id="DirectionsUseName"  title="Required Name to differentiate Directions for Use Sections within a list" style="width:650px;<%=strErrorColor%>" tabindex=-1  type="text"  value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>
@@ -1962,7 +1963,7 @@ else
    }
 %>
 
-<input class="text12" name="TitleNote" id="TitleNote" maxlength="2048"  title="Optional Title to appear with text on generated label"style="width:650px;<%=strErrorColor%>" tabindex=-1  type="text" value="<%=strErrorMapValue%>" >
+<input class="text12"  name="TitleNote" id="TitleNote"  title="Optional Title to appear with text on generated label" style="width:650px;<%=strErrorColor%>" tabindex=-1  type="text"  value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>
@@ -2057,7 +2058,7 @@ else
    }
 %>
 
-<input class="text12" name="DirectionsForUseReviewerNote" id="DirectionsForUseReviewerNote" maxlength="2048"  title="Optional Title to appear with text on generated label"style="width:650px;<%=strErrorColor%>" tabindex=-1  type="text" value="<%=strErrorMapValue%>" >
+<input class="text12"  name="DirectionsForUseReviewerNote" id="DirectionsForUseReviewerNote"  title="Optional Title to appear with text on generated label" style="width:650px;<%=strErrorColor%>" tabindex=-1  type="text"  value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>
@@ -2108,7 +2109,7 @@ else
    }
 %>
 
-<input class="text12" name="SectionNote" id="SectionNote" maxlength="2048"  title="Optional Title to appear with text on generated label"style="width:650px;<%=strErrorColor%>" tabindex=-1  type="text" value="<%=strErrorMapValue%>" >
+<input class="text12"  name="SectionNote" id="SectionNote"  title="Optional Title to appear with text on generated label" style="width:650px;<%=strErrorColor%>" tabindex=-1  type="text"  value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>
@@ -2147,10 +2148,10 @@ else
       mMasLC = task.getViewByName( "mMasLC" );
       if ( VmlOperation.isValid( mMasLC ) )
       {
-         nRC = mMasLC.cursor( "M_DirectionsForUseXOR_Section" ).checkExistenceOfEntity( ).toInt();
+         nRC = mMasLC.cursor( "M_DirectionsForUseXORSection" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strComboCurrentValue = mMasLC.cursor( "M_DirectionsForUseXOR_Section" ).getAttribute( "Name" ).getString( "" );
+            strComboCurrentValue = mMasLC.cursor( "M_DirectionsForUseXORSection" ).getAttribute( "Name" ).getString( "" );
             if ( strComboCurrentValue == null )
                strComboCurrentValue = "";
          }
@@ -2324,7 +2325,7 @@ else
 <span style="width:172px;height:26px;position:absolute;left:432px;top:4px;">Exclusive Statements</span>
 
 <% /* NewStatement:PushBtn */ %>
-<button type="button" class="newbutton"  title="Go to add one orNewStatement" id="NewStatement" value="" onclick="GOTO_DirsForUseStatementAdd( )" style="width:78px;height:26px;position:absolute;left:598px;top:4px;" tabindex=-1 >New</button>
+<button type="button" class="newbutton"  title="Go to add one or more lines of Directions for Use Statement text" name="NewStatement" id="NewStatement" value="" onclick="GOTO_DirsForUseStatementAdd( )" style="width:78px;height:26px;position:absolute;left:598px;top:4px;" tabindex=-1 >New</button>
 
 <% /* PBSortStatements:PushBtn */ %>
 <button type="button" class="newbutton" name="PBSortStatements" id="PBSortStatements" value="" onclick="Sort( )" style="width:78px;height:26px;position:absolute;left:694px;top:4px;" tabindex=-1 >Sort</button>
@@ -2451,7 +2452,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 <label class="listheader"  id="Text4" name="Text4" style="">Claims/Applications/Locations that Drive this Section to be Included in the SLC based on this MLC</label>
 
 <% /* PushBtn3:PushBtn */ %>
-<button type="button" class="newbutton"  title="Go to add or remPushBtn3" id="PushBtn3" value="" onclick="GOTO_SelectRemoveDrivingDU( )" style="width:130px;height:26px;position:absolute;left:642px;top:4px;" tabindex=-1 >Select/Remove</button>
+<button type="button" class="newbutton"  title="Go to add or remove Usage entries to be tied to this Statement" name="PushBtn3" id="PushBtn3" value="" onclick="GOTO_SelectRemoveDrivingDU( )" style="width:130px;height:26px;position:absolute;left:642px;top:4px;" tabindex=-1 >Select/Remove</button>
 
 
 </div>  <!--  GroupBox8 --> 
@@ -2824,7 +2825,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 <label class="listheader"  id="Note" name="Note" style="">Notes to Reviewer</label>
 
 <% /* NewNote:PushBtn */ %>
-<button type="button" class="newbutton"  title="Go to add one orNewNote" id="NewNote" value="" onclick="GOTO_ReviewerNoteAdd( )" style="width:78px;height:26px;position:absolute;left:578px;top:4px;" tabindex=-1 >New</button>
+<button type="button" class="newbutton"  title="Go to add one or more lines of Directions for Use Statement text" name="NewNote" id="NewNote" value="" onclick="GOTO_ReviewerNoteAdd( )" style="width:78px;height:26px;position:absolute;left:578px;top:4px;" tabindex=-1 >New</button>
 
 
 </div>  <!--  GroupBox4 --> 

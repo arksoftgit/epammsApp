@@ -1846,3 +1846,65 @@ SetListItemPosition( VIEW ViewToWindow )
    // just to set position
 
 END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: GOTO_DirsForUseSubStmtUpdate
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+GOTO_DirsForUseSubStmtUpdate( VIEW ViewToWindow )
+
+   VIEW mSubLC REGISTERED AS mSubLC
+
+   SetViewToSubobject( mSubLC, "S_DirectionsForUseSubStatement" )
+   CreateTemporalSubobjectVersion( mSubLC, "S_DirectionsForUseStatement" )
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: AcceptDirectionsSubStatement
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+AcceptDirectionsSubStatement( VIEW ViewToWindow )
+
+   VIEW mSubLC REGISTERED AS mSubLC
+   SHORT nRC
+
+   nRC = AcceptSubobject( mSubLC, "S_DirectionsForUseStatement" )
+   IF nRC < 0
+      MessageSend( ViewToWindow, "", "Accept Directions For Use Sub-statement",
+                   "The Directions For Use Sub-Statement (Accept) contains errors.",
+                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+      RETURN nRC
+   END
+   ResetViewFromSubobject( mSubLC )
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: CancelDirectionsSubStatement
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+CancelDirectionsSubStatement( VIEW ViewToWindow )
+
+   VIEW mSubLC REGISTERED AS mSubLC
+   SHORT nRC
+
+   nRC = CancelSubobject( mSubLC, "S_DirectionsForUseStatement" )
+   IF nRC < 0
+      MessageSend( ViewToWindow, "", "Cancel Directions For Use Sub-statement",
+                   "The Directions For Use Sub-Statement (Cancel) contains errors.",
+                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+      RETURN nRC
+   END
+   ResetViewFromSubobject( mSubLC )
+
+END

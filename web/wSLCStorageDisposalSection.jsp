@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSLCStorageDisposalSection   Generate Timestamp: 20161101134903897 --%>
+<%-- wSLCStorageDisposalSection   Generate Timestamp: 20170302124856916 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -539,6 +539,7 @@ else
    <input name="zFocusCtrl" id="zFocusCtrl" type="hidden" value="<%=strFocusCtrl%>">
    <input name="zOpenFile" id="zOpenFile" type="hidden" value="<%=strOpenFile%>">
    <input name="zDateFormat" id="zDateFormat" type="hidden" value="<%=strDateFormat%>">
+   <input name="zDateSequence" id="zDateSequence" type="hidden" value="MDY">
    <input name="zLoginName" id="zLoginName" type="hidden" value="<%=strLoginName%>">
    <input name="zKeyRole" id="zKeyRole" type="hidden" value="<%=strKeyRole%>">
    <input name="zOpenPopupWindow" id="zOpenPopupWindow" type="hidden" value="<%=strOpenPopupWindow%>">
@@ -762,7 +763,7 @@ try
          nRC = vGridStorDisp.cursor( "S_StorageDisposalStatement" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditStorDispText = vGridStorDisp.cursor( "S_StorageDisposalStatement" ).getAttribute( "dSD_TitleText" ).getString( "" );
+            strGridEditStorDispText = vGridStorDisp.cursor( "S_StorageDisposalStatement" ).getAttribute( "dSD_TitleTextKey" ).getString( "" );
 
             if ( strGridEditStorDispText == null )
                strGridEditStorDispText = "";
