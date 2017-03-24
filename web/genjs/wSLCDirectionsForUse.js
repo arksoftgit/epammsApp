@@ -1,4 +1,4 @@
-// wSLCDirectionsForUse   Generate Timestamp: 20170302164955217
+// wSLCDirectionsForUse   Generate Timestamp: 20170324152343801
 
 var isWindowClosing = true;
 var timerID = null;

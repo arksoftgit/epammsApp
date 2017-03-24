@@ -1,4 +1,4 @@
-// wSLCEnvironmentalHazards   Generate Timestamp: 20161019144228689
+// wSLCEnvironmentalHazards   Generate Timestamp: 20170324152503283
 
 var isWindowClosing = true;
 var timerID = null;
