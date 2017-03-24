@@ -698,6 +698,25 @@ o_fnLocalBuildQual_9( View     vSubtask,
 } 
 
 
+private int 
+o_fnLocalBuildQual_0( View     vSubtask,
+                      zVIEW    vQualObject,
+                      String   szTempString_0 )
+{
+   int      RESULT = 0;
+
+   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
+   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "Subregistrant" );
+   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "SubregOrganization" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "Name" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Value", szTempString_0.toString( ) );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+   return( 0 );
+} 
+
+
 //:DIALOG OPERATION
 //:SaveReusableBlock( VIEW ViewToWindow )
 //:   VIEW wWebXfer REGISTERED AS wWebXfer
@@ -7315,9 +7334,6 @@ SetSPLD_Resume( View     ViewToWindow )
    RESULT = GetViewByName( mSubProd, "mSubProd", ViewToWindow, zLEVEL_TASK );
    RESULT = GetViewByName( mSubreg, "mSubreg", ViewToWindow, zLEVEL_TASK );
 
-   //:SaveSPLD( ViewToWindow )
-   SaveSPLD( ViewToWindow );
-
    //:GET VIEW mUser NAMED "mUser"
    RESULT = GetViewByName( mUser, "mUser", ViewToWindow, zLEVEL_TASK );
    //:IF mUser != 0
@@ -7719,25 +7735,6 @@ o_TraverseSPLD( View     mSPLDef,
    //:RETURN 0
    return( 0 );
 // END
-} 
-
-
-private int 
-o_fnLocalBuildQual_0( View     vSubtask,
-                      zVIEW    vQualObject,
-                      String   szTempString_0 )
-{
-   int      RESULT = 0;
-
-   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
-   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "Subregistrant" );
-   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "SubregOrganization" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "Name" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Value", szTempString_0.toString( ) );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
-   return( 0 );
 } 
 
 

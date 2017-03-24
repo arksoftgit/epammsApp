@@ -138,6 +138,7 @@ omSPLDef_GeneratePDF_Label( View     mSPLDef )
    double  dTempDecimal_3 = 0.0;
    int      lTempInteger_4 = 0;
    int      lTempInteger_5 = 0;
+   int      lTempInteger_6 = 0;
    double  dTempDecimal_4 = 0.0;
 
    RESULT = GetViewByName( wWebXfer, "wWebXfer", mSPLDef, zLEVEL_TASK );
@@ -1383,6 +1384,27 @@ omSPLDef_GeneratePDF_Label( View     mSPLDef )
       {
          throw ZeidonException.wrapException( e );
       }
+      //:szWriteBuffer = "                  -->"
+       {StringBuilder sb_szWriteBuffer;
+      if ( szWriteBuffer == null )
+         sb_szWriteBuffer = new StringBuilder( 32 );
+      else
+         sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
+            ZeidonStringCopy( sb_szWriteBuffer, 1, 0, "                  -->", 1, 0, 32001 );
+      szWriteBuffer = sb_szWriteBuffer.toString( );}
+      //:WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+      try
+      {
+          {
+       ZGlobal1_Operation m_ZGlobal1_Operation = new ZGlobal1_Operation( mSPLDef );
+       m_ZGlobal1_Operation.WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 );
+       // m_ZGlobal1_Operation = null;  // permit gc  (unnecessary)
+      };
+      }
+      catch ( Exception e )
+      {
+         throw ZeidonException.wrapException( e );
+      }
       //:szWriteBuffer = ""
        {StringBuilder sb_szWriteBuffer;
       if ( szWriteBuffer == null )
@@ -1404,58 +1426,188 @@ omSPLDef_GeneratePDF_Label( View     mSPLDef )
       {
          throw ZeidonException.wrapException( e );
       }
-      //:szWriteBuffer = " -->"
-       {StringBuilder sb_szWriteBuffer;
-      if ( szWriteBuffer == null )
-         sb_szWriteBuffer = new StringBuilder( 32 );
-      else
-         sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
-            ZeidonStringCopy( sb_szWriteBuffer, 1, 0, " -->", 1, 0, 32001 );
-      szWriteBuffer = sb_szWriteBuffer.toString( );}
-      //:WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
-      try
-      {
-          {
-       ZGlobal1_Operation m_ZGlobal1_Operation = new ZGlobal1_Operation( mSPLDef );
-       m_ZGlobal1_Operation.WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 );
-       // m_ZGlobal1_Operation = null;  // permit gc  (unnecessary)
-      };
-      }
-      catch ( Exception e )
-      {
-         throw ZeidonException.wrapException( e );
-      }
 
-      //:// Process each Block within the Panel.
-      //:CreateViewFromView( mSPLDefPDF, mSPLDef )
-      CreateViewFromView( mSPLDefPDF, mSPLDef );
-      //:CreateViewFromView( mSPLDefContinue, mSPLDef )
-      CreateViewFromView( mSPLDefContinue, mSPLDef );
-      //:NAME VIEW mSPLDefPDF "mSPLDefPDF"
-      SetNameForView( mSPLDefPDF, "mSPLDefPDF", null, zLEVEL_TASK );
-      //://NAME VIEW mSPLDefContinue "mSPLDefContinue"
-      //://NAME VIEW mSPLDef "mSPLDef"
-
-      //:// Top call to ProcessPDF_Blocks <<=====================
-      //:szLeadingBlanks = "               "
-       {StringBuilder sb_szLeadingBlanks;
-      if ( szLeadingBlanks == null )
-         sb_szLeadingBlanks = new StringBuilder( 32 );
-      else
-         sb_szLeadingBlanks = new StringBuilder( szLeadingBlanks );
-            ZeidonStringCopy( sb_szLeadingBlanks, 1, 0, "               ", 1, 0, 51 );
-      szLeadingBlanks = sb_szLeadingBlanks.toString( );}
-      //:nRC = ProcessPDF_Blocks( mSPLDef, mSPLDefPDF, mSPLDefContinue, lFile, szLeadingBlanks, szWriteBuffer )
-      nRC = omSPLDef_ProcessPDF_Blocks( mSPLDef, mSPLDefPDF, mSPLDefContinue, lFile, szLeadingBlanks, szWriteBuffer );
-      //:DropView( mSPLDefContinue )
-      DropView( mSPLDefContinue );
-      //:DropView( mSPLDefPDF )
-      DropView( mSPLDefPDF );
-      //:IF nRC = 2
-      if ( nRC == 2 )
+      //:IF mSPLDef.LLD_Block EXISTS
+      lTempInteger_6 = CheckExistenceOfEntity( mSPLDef, "LLD_Block" );
+      if ( lTempInteger_6 == 0 )
       { 
-         //:RETURN 2
-         if(8==8)return( 2 );
+
+         //:// Process each Block within the Panel.
+         //:CreateViewFromView( mSPLDefPDF, mSPLDef )
+         CreateViewFromView( mSPLDefPDF, mSPLDef );
+         //:CreateViewFromView( mSPLDefContinue, mSPLDef )
+         CreateViewFromView( mSPLDefContinue, mSPLDef );
+         //:NAME VIEW mSPLDefPDF "mSPLDefPDF"
+         SetNameForView( mSPLDefPDF, "mSPLDefPDF", null, zLEVEL_TASK );
+         //://NAME VIEW mSPLDefContinue "mSPLDefContinue"
+         //://NAME VIEW mSPLDef "mSPLDef"
+
+         //:// Top call to ProcessPDF_Blocks <<=====================
+         //:szLeadingBlanks = "               "
+          {StringBuilder sb_szLeadingBlanks;
+         if ( szLeadingBlanks == null )
+            sb_szLeadingBlanks = new StringBuilder( 32 );
+         else
+            sb_szLeadingBlanks = new StringBuilder( szLeadingBlanks );
+                  ZeidonStringCopy( sb_szLeadingBlanks, 1, 0, "               ", 1, 0, 51 );
+         szLeadingBlanks = sb_szLeadingBlanks.toString( );}
+         //:nRC = ProcessPDF_Blocks( mSPLDef, mSPLDefPDF, mSPLDefContinue, lFile, szLeadingBlanks, szWriteBuffer )
+         nRC = omSPLDef_ProcessPDF_Blocks( mSPLDef, mSPLDefPDF, mSPLDefContinue, lFile, szLeadingBlanks, szWriteBuffer );
+         //:DropView( mSPLDefContinue )
+         DropView( mSPLDefContinue );
+         //:DropView( mSPLDefPDF )
+         DropView( mSPLDefPDF );
+         //:IF nRC = 2
+         if ( nRC == 2 )
+         { 
+            //:RETURN 2
+            if(8==8)return( 2 );
+         } 
+
+         //:END
+         //:ELSE
+      } 
+      else
+      { 
+         //:WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+         try
+         {
+             {
+          ZGlobal1_Operation m_ZGlobal1_Operation = new ZGlobal1_Operation( mSPLDef );
+          m_ZGlobal1_Operation.WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 );
+          // m_ZGlobal1_Operation = null;  // permit gc  (unnecessary)
+         };
+         }
+         catch ( Exception e )
+         {
+            throw ZeidonException.wrapException( e );
+         }
+         //:szWriteBuffer = "                  <fo:block-container position=^absolute^ top=^-0.2in^ left=^-0.2in^>"
+          {StringBuilder sb_szWriteBuffer;
+         if ( szWriteBuffer == null )
+            sb_szWriteBuffer = new StringBuilder( 32 );
+         else
+            sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
+                  ZeidonStringCopy( sb_szWriteBuffer, 1, 0, "                  <fo:block-container position=^absolute^ top=^-0.2in^ left=^-0.2in^>", 1, 0, 32001 );
+         szWriteBuffer = sb_szWriteBuffer.toString( );}
+         //:WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+         try
+         {
+             {
+          ZGlobal1_Operation m_ZGlobal1_Operation = new ZGlobal1_Operation( mSPLDef );
+          m_ZGlobal1_Operation.WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 );
+          // m_ZGlobal1_Operation = null;  // permit gc  (unnecessary)
+         };
+         }
+         catch ( Exception e )
+         {
+            throw ZeidonException.wrapException( e );
+         }
+         //:szWriteBuffer = "                     <fo:block text-align=^left^>"
+          {StringBuilder sb_szWriteBuffer;
+         if ( szWriteBuffer == null )
+            sb_szWriteBuffer = new StringBuilder( 32 );
+         else
+            sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
+                  ZeidonStringCopy( sb_szWriteBuffer, 1, 0, "                     <fo:block text-align=^left^>", 1, 0, 32001 );
+         szWriteBuffer = sb_szWriteBuffer.toString( );}
+         //:WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+         try
+         {
+             {
+          ZGlobal1_Operation m_ZGlobal1_Operation = new ZGlobal1_Operation( mSPLDef );
+          m_ZGlobal1_Operation.WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 );
+          // m_ZGlobal1_Operation = null;  // permit gc  (unnecessary)
+         };
+         }
+         catch ( Exception e )
+         {
+            throw ZeidonException.wrapException( e );
+         }
+         //:szWriteBuffer = "      Empty Panel"
+          {StringBuilder sb_szWriteBuffer;
+         if ( szWriteBuffer == null )
+            sb_szWriteBuffer = new StringBuilder( 32 );
+         else
+            sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
+                  ZeidonStringCopy( sb_szWriteBuffer, 1, 0, "      Empty Panel", 1, 0, 32001 );
+         szWriteBuffer = sb_szWriteBuffer.toString( );}
+         //:WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+         try
+         {
+             {
+          ZGlobal1_Operation m_ZGlobal1_Operation = new ZGlobal1_Operation( mSPLDef );
+          m_ZGlobal1_Operation.WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 );
+          // m_ZGlobal1_Operation = null;  // permit gc  (unnecessary)
+         };
+         }
+         catch ( Exception e )
+         {
+            throw ZeidonException.wrapException( e );
+         }
+         //:szWriteBuffer = "                     </fo:block>"
+          {StringBuilder sb_szWriteBuffer;
+         if ( szWriteBuffer == null )
+            sb_szWriteBuffer = new StringBuilder( 32 );
+         else
+            sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
+                  ZeidonStringCopy( sb_szWriteBuffer, 1, 0, "                     </fo:block>", 1, 0, 32001 );
+         szWriteBuffer = sb_szWriteBuffer.toString( );}
+         //:WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+         try
+         {
+             {
+          ZGlobal1_Operation m_ZGlobal1_Operation = new ZGlobal1_Operation( mSPLDef );
+          m_ZGlobal1_Operation.WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 );
+          // m_ZGlobal1_Operation = null;  // permit gc  (unnecessary)
+         };
+         }
+         catch ( Exception e )
+         {
+            throw ZeidonException.wrapException( e );
+         }
+         //:szWriteBuffer = "                  </fo:block-container>"
+          {StringBuilder sb_szWriteBuffer;
+         if ( szWriteBuffer == null )
+            sb_szWriteBuffer = new StringBuilder( 32 );
+         else
+            sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
+                  ZeidonStringCopy( sb_szWriteBuffer, 1, 0, "                  </fo:block-container>", 1, 0, 32001 );
+         szWriteBuffer = sb_szWriteBuffer.toString( );}
+         //:WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+         try
+         {
+             {
+          ZGlobal1_Operation m_ZGlobal1_Operation = new ZGlobal1_Operation( mSPLDef );
+          m_ZGlobal1_Operation.WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 );
+          // m_ZGlobal1_Operation = null;  // permit gc  (unnecessary)
+         };
+         }
+         catch ( Exception e )
+         {
+            throw ZeidonException.wrapException( e );
+         }
+         //:szWriteBuffer = ""
+          {StringBuilder sb_szWriteBuffer;
+         if ( szWriteBuffer == null )
+            sb_szWriteBuffer = new StringBuilder( 32 );
+         else
+            sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
+                  ZeidonStringCopy( sb_szWriteBuffer, 1, 0, "", 1, 0, 32001 );
+         szWriteBuffer = sb_szWriteBuffer.toString( );}
+         //:WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+         try
+         {
+             {
+          ZGlobal1_Operation m_ZGlobal1_Operation = new ZGlobal1_Operation( mSPLDef );
+          m_ZGlobal1_Operation.WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 );
+          // m_ZGlobal1_Operation = null;  // permit gc  (unnecessary)
+         };
+         }
+         catch ( Exception e )
+         {
+            throw ZeidonException.wrapException( e );
+         }
       } 
 
       //:END
@@ -4260,7 +4412,7 @@ omSPLDef_FormatContinueBlock( View     mSPLDefPDF,
             sb_szTempString_0 = new StringBuilder( 32 );
          else
             sb_szTempString_0 = new StringBuilder( szTempString_0 );
-                   GetVariableFromAttribute( sb_szTempString_0, mi_lTempInteger_0, 'S', 2049, mSPLDefPDF, "SPLD_LLD", "ContNextPageTextDirForUse", "", 0 );
+                   GetVariableFromAttribute( sb_szTempString_0, mi_lTempInteger_0, 'S', 4097, mSPLDefPDF, "SPLD_LLD", "ContNextPageTextDirForUse", "", 0 );
          lTempInteger_0 = mi_lTempInteger_0.intValue( );
          szTempString_0 = sb_szTempString_0.toString( );}
           {StringBuilder sb_szWriteBuffer;
@@ -4295,7 +4447,7 @@ omSPLDef_FormatContinueBlock( View     mSPLDefPDF,
             sb_szTempString_1 = new StringBuilder( 32 );
          else
             sb_szTempString_1 = new StringBuilder( szTempString_1 );
-                   GetVariableFromAttribute( sb_szTempString_1, mi_lTempInteger_1, 'S', 2049, mSPLDefPDF, "SPLD_LLD", "ContNextPageTextMarketing", "", 0 );
+                   GetVariableFromAttribute( sb_szTempString_1, mi_lTempInteger_1, 'S', 4097, mSPLDefPDF, "SPLD_LLD", "ContNextPageTextMarketing", "", 0 );
          lTempInteger_1 = mi_lTempInteger_1.intValue( );
          szTempString_1 = sb_szTempString_1.toString( );}
           {StringBuilder sb_szWriteBuffer;
@@ -7102,7 +7254,7 @@ omSPLDef_GeneratePDF_ClmList( View     mSPLDef,
          sb_szTempString_1 = new StringBuilder( 32 );
       else
          sb_szTempString_1 = new StringBuilder( szTempString_1 );
-             GetVariableFromAttribute( sb_szTempString_1, mi_lTempInteger_13, 'S', 255, mSPLDef, "SPLD_UsageFootnote", "Text", "", 0 );
+             GetVariableFromAttribute( sb_szTempString_1, mi_lTempInteger_13, 'S', 4097, mSPLDef, "SPLD_UsageFootnote", "Text", "", 0 );
       lTempInteger_13 = mi_lTempInteger_13.intValue( );
       szTempString_1 = sb_szTempString_1.toString( );}
        {StringBuilder sb_szFootnoteText;
@@ -9382,10 +9534,6 @@ omSPLDef_CopyDirsForUseStmts( View     NewSPLD,
       //:INCLUDE NewSPLD.S_DirectionsForUseStatement FROM SrcSLC.S_DirectionsForUseStatement
       RESULT = IncludeSubobjectFromSubobject( NewSPLD, "S_DirectionsForUseStatement", SrcSLC, "S_DirectionsForUseStatement", zPOS_AFTER );
 
-      //:// // Temporary code created by DonC on 1/13/2016 because NotForUseType was set to NotNull in the ER.
-      //:// IF NewSPLD.SPLD_DirectionsForUseStatement.NotForUseType = ""
-      //://    NewSPLD.SPLD_DirectionsForUseStatement.NotForUseType = "NA"
-      //:// END
       //:FOR EACH SrcSLC.S_InsertTextKeywordDU
       RESULT = SetCursorFirstEntity( SrcSLC, "S_InsertTextKeywordDU", "" );
       while ( RESULT > zCURSOR_UNCHANGED )
@@ -10258,10 +10406,8 @@ omSPLDef_BuildSPLD_FromSLC( View     NewSPLD,
 
 
    //:// Build a new SPLD from the selected Subregistrant Label Content entry.
-   //:TraceLineS( "BuildSPLD_FromSLC SLC", "=====================>>>>>>>>" )
-   TraceLineS( "BuildSPLD_FromSLC SLC", "=====================>>>>>>>>" );
-   //:DisplayObjectInstance( SrcSLC, "", "" )
-   DisplayObjectInstance( SrcSLC, "", "" );
+   //:// TraceLineS( "BuildSPLD_FromSLC SLC", "=====================>>>>>>>>" )
+   //:// DisplayObjectInstance( SrcSLC, "", "" )
 
    //:// Tie back to SLC, if necessary.
    //:IF NewSPLD.SubregLabelContent DOES NOT EXIST
@@ -10567,7 +10713,11 @@ omSPLDef_BuildSPLD_FromSLC( View     NewSPLD,
       RESULT = CreateEntity( NewSPLD, "SPLD_DilutionGroup", zPOS_AFTER );
       //:SetMatchingAttributesByName( NewSPLD, "SPLD_DilutionGroup", SrcSLC, "S_DilutionGroup", zSET_NULL )
       SetMatchingAttributesByName( NewSPLD, "SPLD_DilutionGroup", SrcSLC, "S_DilutionGroup", zSET_NULL );
-      //:// NewSPLD.S_DilutionGroup.PrimarySLC_ID = SrcSLC.S_DilutionGroup.ID
+      //:// TraceLineS( "SPLD_FromSLC SPLD_DilutionGroup ", "=====================>>>>>>>>" )
+      //:// DisplayEntityInstance( NewSPLD, "SPLD_DilutionGroup" )
+      //:// NewSPLD.SPLD_DilutionGroup.PrimarySLC_ID = SrcSLC.S_DilutionGroup.ID
+      //:// INCLUDE NewSPLD.SPLD_DilutionGroup FROM SrcSLC.M_DilutionGroup
+      //:// Dilution Chart Entries
       //:FOR EACH SrcSLC.S_DilutionChartEntry
       RESULT = SetCursorFirstEntity( SrcSLC, "S_DilutionChartEntry", "" );
       while ( RESULT > zCURSOR_UNCHANGED )
@@ -10579,7 +10729,11 @@ omSPLDef_BuildSPLD_FromSLC( View     NewSPLD,
          RESULT = SetCursorNextEntity( SrcSLC, "S_DilutionChartEntry", "" );
       } 
 
+      //:// TraceLineS( "SPLD_FromSLC SPLD_DilutionChartEntry ", "=====================>>>>>>>>" )
+      //:// DisplayEntityInstance( NewSPLD, "SPLD_DilutionChartEntry" )
+      //:// NewSPLD.SPLD_DilutionChartEntry.PrimarySLC_ID = SrcSLC.SLC_DilutionChartEntry.ID
       //:END
+      //:// Dilution Group Items
       //:FOR EACH SrcSLC.S_DilutionGroupItem
       RESULT = SetCursorFirstEntity( SrcSLC, "S_DilutionGroupItem", "" );
       while ( RESULT > zCURSOR_UNCHANGED )
@@ -10592,6 +10746,9 @@ omSPLDef_BuildSPLD_FromSLC( View     NewSPLD,
       } 
 
       RESULT = SetCursorNextEntity( SrcSLC, "S_DilutionGroup", "" );
+      //:// TraceLineS( "SPLD_FromMLC SPLD_DilutionGroupItem ", "=====================>>>>>>>>" )
+      //:// DisplayEntityInstance( NewSPLD, "SPLD_DilutionGroupItem" )
+      //:// NewSPLD.SPLD_DilutionGroupItem.PrimarySLC_ID = SrcSLC.SLC_DilutionGroupItem.ID
       //:END
    } 
 
@@ -10680,11 +10837,9 @@ omSPLDef_BuildSPLD_FromSLC( View     NewSPLD,
    //:// Go to build Directions For Use and Marketing Usage entries.
    //:BuildUsageEntriesFrSLC( NewSPLD, SrcSLC )
    omSPLDef_BuildUsageEntriesFrSLC( NewSPLD, SrcSLC );
-   //:TraceLineS( "BuildSPLD_FromSLC NewSPLD", "=====================>>>>>>>>" )
-   TraceLineS( "BuildSPLD_FromSLC NewSPLD", "=====================>>>>>>>>" );
-   //:DisplayObjectInstance( NewSPLD, "", "" )
-   DisplayObjectInstance( NewSPLD, "", "" );
    return( 0 );
+// // TraceLineS( "BuildSPLD_FromSLC NewSPLD", "=====================>>>>>>>>" )
+// // DisplayObjectInstance( NewSPLD, "", "" )
 // END
 } 
 
@@ -10715,10 +10870,6 @@ omSPLDef_RebuildSPLD_FromSLC( View     NewSPLD,
 //       FOR EACH SrcSLC.S_DirectionsForUseStatement
 //          CREATE ENTITY NewSPLD.SPLD_DirectionsForUseStatement
 //          SetMatchingAttributesByName( NewSPLD, "SPLD_DirectionsForUseStatement", SrcSLC, "S_DirectionsForUseStatement", zSET_NULL )
-//       // // Temporary code created by DonC on 1/13/2016 because NotForUseType was set to NotNull in the ER.
-//       // IF NewSPLD.SPLD_DirectionsForUseStatement.NotForUseType = ""
-//       //    NewSPLD.SPLD_DirectionsForUseStatement.NotForUseType = "NA"
-//       // END
 //       END
 //    END
 //    // Build Marketing Entries (without Usage entries).
@@ -11412,11 +11563,6 @@ omSPLDef_DuplicateSPLD( View     NewSPLD,
          RESULT = CreateEntity( NewSPLD, "SPLD_DirectionsForUseStatement", zPOS_AFTER );
          //:SetMatchingAttributesByName( NewSPLD, "SPLD_DirectionsForUseStatement", SourceSPLD, "SPLD_DirectionsForUseStatement", zSET_NULL )
          SetMatchingAttributesByName( NewSPLD, "SPLD_DirectionsForUseStatement", SourceSPLD, "SPLD_DirectionsForUseStatement", zSET_NULL );
-
-         //:// // Temporary code created by DonC on 1/13/2016 because NotForUseType was set to NotNull in the ER.
-         //:// IF NewSPLD.SPLD_DirectionsForUseStatement.NotForUseType = ""
-         //://    NewSPLD.SPLD_DirectionsForUseStatement.NotForUseType = "NA"
-         //:// END
          //:INCLUDE NewSPLD.S_DirectionsForUseStatement FROM SourceSPLD.S_DirectionsForUseStatement
          RESULT = IncludeSubobjectFromSubobject( NewSPLD, "S_DirectionsForUseStatement", SourceSPLD, "S_DirectionsForUseStatement", zPOS_AFTER );
 

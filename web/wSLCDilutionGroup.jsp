@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSLCDilutionGroup   Generate Timestamp: 20161020083549305 --%>
+<%-- wSLCDilutionGroup   Generate Timestamp: 20170306173653215 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -312,57 +312,13 @@ if ( strActionToProcess != null )
 
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "CancelChartItem" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "ReturnToParent" ) )
    {
       bDone = true;
       VmlOperation.SetZeidonSessionAttribute( session, task, "wSLCDilutionGroup", strActionToProcess );
 
       // Next Window
       strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_ReturnToParent, "", "" );
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_DilutionChartItemDisplay" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wSLCDilutionGroup", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Position on the entity that was selected in the grid.
-      String strEntityKey = (String) request.getParameter( "zTableRowSelect" );
-      View mSubLC;
-      mSubLC = task.getViewByName( "mSubLC" );
-      if ( VmlOperation.isValid( mSubLC ) )
-      {
-         lEKey = java.lang.Long.parseLong( strEntityKey );
-         csrRC = mSubLC.cursor( "S_DilutionChartEntry" ).setByEntityKey( lEKey );
-         if ( !csrRC.isSet() )
-         {
-            boolean bFound = false;
-            csrRCk = mSubLC.cursor( "S_DilutionChartEntry" ).setFirst( );
-            while ( csrRCk.isSet() && !bFound )
-            {
-               lEKey = mSubLC.cursor( "S_DilutionChartEntry" ).getEntityKey( );
-               strKey = Long.toString( lEKey );
-               if ( StringUtils.equals( strKey, strEntityKey ) )
-               {
-                  // Stop while loop because we have positioned on the correct entity.
-                  bFound = true;
-               }
-               else
-                  csrRCk = mSubLC.cursor( "S_DilutionChartEntry" ).setNextContinue( );
-            } // Grid
-         }
-      }
-
-      // Next Window
-      strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_StartModalSubwindow, "wSLC", "DilutionGroupItem" );
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
@@ -574,7 +530,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="Return" name="Return"><a href="#"  onclick="CancelChartItem()">Return</a></li>
+       <li id="Return" name="Return"><a href="#"  onclick="ReturnToParent()">Return</a></li>
 <%
    }
 %>
@@ -699,6 +655,7 @@ else
    <input name="zFocusCtrl" id="zFocusCtrl" type="hidden" value="<%=strFocusCtrl%>">
    <input name="zOpenFile" id="zOpenFile" type="hidden" value="<%=strOpenFile%>">
    <input name="zDateFormat" id="zDateFormat" type="hidden" value="<%=strDateFormat%>">
+   <input name="zDateSequence" id="zDateSequence" type="hidden" value="MDY">
    <input name="zLoginName" id="zLoginName" type="hidden" value="<%=strLoginName%>">
    <input name="zKeyRole" id="zKeyRole" type="hidden" value="<%=strKeyRole%>">
    <input name="zOpenPopupWindow" id="zOpenPopupWindow" type="hidden" value="<%=strOpenPopupWindow%>">
@@ -972,14 +929,14 @@ else
 <div style="height:6px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
+<div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox8:GroupBox */ %>
 
 <div id="GroupBox8" name="GroupBox8"   style="float:left;position:relative; width:686px; height:30px;">  <!-- GroupBox8 --> 
 
 <% /* DilutionChartItem:Text */ %>
 
-<label class="listheader"  id="DilutionChartItem" name="DilutionChartItem" style="width:434px;height:16px;position:absolute;left:12px;top:4px;">Dilution Chart Item</label>
+<label class="listheader"  id="DilutionChartItem" name="DilutionChartItem" style="width:434px;height:16px;position:absolute;left:4px;top:4px;">Dilution Chart Item</label>
 
 
 </div>  <!--  GroupBox8 --> 
@@ -988,13 +945,10 @@ else
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
 
 
- <!-- This is added as a line spacer -->
-<div style="height:10px;width:100px;"></div>
-
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GridDilutionGroupItems:Grid */ %>
-<table class="sortable"  cols=5 style=""  name="GridDilutionGroupItems" id="GridDilutionGroupItems">
+<table class="sortable"  cols=4 style=""  name="GridDilutionGroupItems" id="GridDilutionGroupItems">
 
 <thead bgcolor=green><tr>
 
@@ -1002,7 +956,6 @@ else
    <th>Product Amount</th>
    <th>Water Amount</th>
    <th>Contact Time</th>
-   <th>Update</th>
 
 </tr></thead>
 
@@ -1024,7 +977,6 @@ try
       String strProductAmount;
       String strWaterAmount;
       String strContactTime;
-      String strBMBDisplayDilutionChartItem;
       
       View vGridDilutionGroupItems;
       vGridDilutionGroupItems = mSubLC.newView( );
@@ -1092,11 +1044,10 @@ try
 
 <tr<%=strOdd%>>
 
-   <td><a href="#" onclick="GOTO_DilutionChartItemDisplay( this.id )" id="Use::<%=strEntityKey%>"><%=strUse%></a></td>
-   <td><a href="#" onclick="GOTO_DilutionChartItemDisplay( this.id )" id="ProductAmount::<%=strEntityKey%>"><%=strProductAmount%></a></td>
-   <td><a href="#" onclick="GOTO_DilutionChartItemDisplay( this.id )" id="WaterAmount::<%=strEntityKey%>"><%=strWaterAmount%></a></td>
-   <td><a href="#" onclick="GOTO_DilutionChartItemDisplay( this.id )" id="ContactTime::<%=strEntityKey%>"><%=strContactTime%></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDisplayDilutionChartItem" onclick="GOTO_DilutionChartItemDisplay( this.id )" id="BMBDisplayDilutionChartItem::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
+   <td><%=strUse%></td>
+   <td><%=strProductAmount%></td>
+   <td><%=strWaterAmount%></td>
+   <td><%=strContactTime%></td>
 
 </tr>
 

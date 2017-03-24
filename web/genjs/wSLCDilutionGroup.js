@@ -1,4 +1,4 @@
-// wSLCDilutionGroup   Generate Timestamp: 20161020083549305
+// wSLCDilutionGroup   Generate Timestamp: 20170306173653215
 
 var isWindowClosing = true;
 var timerID = null;
@@ -191,7 +191,7 @@ function CheckAllInGrid(id, CheckBoxName) // triggered by no text checkbox
    }
 }
 
-function CancelChartItem( )
+function ReturnToParent( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -201,26 +201,7 @@ function CancelChartItem( )
    {
       _DisableFormElements( true );
 
-      document.wSLCDilutionGroup.zAction.value = "CancelChartItem";
-      document.wSLCDilutionGroup.submit( );
-   }
-}
-
-function GOTO_DilutionChartItemDisplay( strTagEntityKey )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      var nIdx = strTagEntityKey.lastIndexOf( '::' );
-      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
-
-      document.wSLCDilutionGroup.zTableRowSelect.value = strEntityKey;
-      _DisableFormElements( true );
-
-      document.wSLCDilutionGroup.zAction.value = "GOTO_DilutionChartItemDisplay";
+      document.wSLCDilutionGroup.zAction.value = "ReturnToParent";
       document.wSLCDilutionGroup.submit( );
    }
 }

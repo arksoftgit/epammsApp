@@ -218,25 +218,42 @@ GeneratePDF_Label( VIEW mSPLDef BASED ON LOD mSPLDef )
       WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
       szWriteBuffer = "                  </fo:block-container>"
       WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+      szWriteBuffer = "                  -->"
+      WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
       szWriteBuffer = ""
       WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
-      szWriteBuffer = " -->"
-      WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
 
-      // Process each Block within the Panel.
-      CreateViewFromView( mSPLDefPDF, mSPLDef )
-      CreateViewFromView( mSPLDefContinue, mSPLDef )
-      NAME VIEW mSPLDefPDF "mSPLDefPDF"
-      //NAME VIEW mSPLDefContinue "mSPLDefContinue"
-      //NAME VIEW mSPLDef "mSPLDef"
+      IF mSPLDef.LLD_Block EXISTS
+      
+         // Process each Block within the Panel.
+         CreateViewFromView( mSPLDefPDF, mSPLDef )
+         CreateViewFromView( mSPLDefContinue, mSPLDef )
+         NAME VIEW mSPLDefPDF "mSPLDefPDF"
+         //NAME VIEW mSPLDefContinue "mSPLDefContinue"
+         //NAME VIEW mSPLDef "mSPLDef"
 
-      // Top call to ProcessPDF_Blocks <<=====================
-      szLeadingBlanks = "               "
-      nRC = ProcessPDF_Blocks( mSPLDef, mSPLDefPDF, mSPLDefContinue, lFile, szLeadingBlanks, szWriteBuffer )
-      DropView( mSPLDefContinue )
-      DropView( mSPLDefPDF )
-      IF nRC = 2
-         RETURN 2
+         // Top call to ProcessPDF_Blocks <<=====================
+         szLeadingBlanks = "               "
+         nRC = ProcessPDF_Blocks( mSPLDef, mSPLDefPDF, mSPLDefContinue, lFile, szLeadingBlanks, szWriteBuffer )
+         DropView( mSPLDefContinue )
+         DropView( mSPLDefPDF )
+         IF nRC = 2
+            RETURN 2
+         END
+      ELSE
+         WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+         szWriteBuffer = "                  <fo:block-container position=^absolute^ top=^-0.2in^ left=^-0.2in^>"
+         WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+         szWriteBuffer = "                     <fo:block text-align=^left^>"
+         WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+         szWriteBuffer = "      Empty Panel"
+         WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+         szWriteBuffer = "                     </fo:block>"
+         WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+         szWriteBuffer = "                  </fo:block-container>"
+         WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+         szWriteBuffer = ""
+         WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
       END
 
       // Close Panel Container.
@@ -2865,10 +2882,6 @@ CopyDirsForUseStmts( VIEW NewSPLD BASED ON LOD mSPLDef,
                                    SrcSLC, "S_DirectionsForUseStatement", zSET_NULL )
       INCLUDE NewSPLD.S_DirectionsForUseStatement FROM SrcSLC.S_DirectionsForUseStatement
 
-   // // Temporary code created by DonC on 1/13/2016 because NotForUseType was set to NotNull in the ER.
-   // IF NewSPLD.SPLD_DirectionsForUseStatement.NotForUseType = ""
-   //    NewSPLD.SPLD_DirectionsForUseStatement.NotForUseType = "NA"
-   // END
       FOR EACH SrcSLC.S_InsertTextKeywordDU
          CREATE ENTITY NewSPLD.SPLD_InsertTextKeywordDU
          SetMatchingAttributesByName( NewSPLD, "SPLD_InsertTextKeywordDU", SrcSLC, "S_InsertTextKeywordDU", zSET_NULL )
@@ -3008,8 +3021,8 @@ BuildSPLD_FromSLC( VIEW NewSPLD  BASED ON LOD mSPLDef,
    VIEW mSPLDef2 BASED ON LOD mSPLDef
 
    // Build a new SPLD from the selected Subregistrant Label Content entry.
-   TraceLineS( "BuildSPLD_FromSLC SLC", "=====================>>>>>>>>" )
-   DisplayObjectInstance( SrcSLC, "", "" )
+// TraceLineS( "BuildSPLD_FromSLC SLC", "=====================>>>>>>>>" )
+// DisplayObjectInstance( SrcSLC, "", "" )
 
    // Tie back to SLC, if necessary.
    IF NewSPLD.SubregLabelContent DOES NOT EXIST
@@ -3125,14 +3138,25 @@ BuildSPLD_FromSLC( VIEW NewSPLD  BASED ON LOD mSPLDef,
    FOR EACH SrcSLC.S_DilutionGroup
       CREATE ENTITY NewSPLD.SPLD_DilutionGroup
       SetMatchingAttributesByName( NewSPLD, "SPLD_DilutionGroup", SrcSLC, "S_DilutionGroup", zSET_NULL )
-   // NewSPLD.S_DilutionGroup.PrimarySLC_ID = SrcSLC.S_DilutionGroup.ID
+   // TraceLineS( "SPLD_FromSLC SPLD_DilutionGroup ", "=====================>>>>>>>>" )
+   // DisplayEntityInstance( NewSPLD, "SPLD_DilutionGroup" )
+   // NewSPLD.SPLD_DilutionGroup.PrimarySLC_ID = SrcSLC.S_DilutionGroup.ID
+   // INCLUDE NewSPLD.SPLD_DilutionGroup FROM SrcSLC.M_DilutionGroup
+      // Dilution Chart Entries
       FOR EACH SrcSLC.S_DilutionChartEntry
          CREATE ENTITY NewSPLD.SPLD_DilutionChartEntry
          SetMatchingAttributesByName( NewSPLD, "SPLD_DilutionChartEntry", SrcSLC, "S_DilutionChartEntry", zSET_NULL )
+      // TraceLineS( "SPLD_FromSLC SPLD_DilutionChartEntry ", "=====================>>>>>>>>" )
+      // DisplayEntityInstance( NewSPLD, "SPLD_DilutionChartEntry" )
+      // NewSPLD.SPLD_DilutionChartEntry.PrimarySLC_ID = SrcSLC.SLC_DilutionChartEntry.ID
       END
+      // Dilution Group Items
       FOR EACH SrcSLC.S_DilutionGroupItem
          CREATE ENTITY NewSPLD.SPLD_DilutionGroupItem
          SetMatchingAttributesByName( NewSPLD, "SPLD_DilutionGroupItem", SrcSLC, "S_DilutionGroupItem", zSET_NULL )
+      // TraceLineS( "SPLD_FromMLC SPLD_DilutionGroupItem ", "=====================>>>>>>>>" )
+      // DisplayEntityInstance( NewSPLD, "SPLD_DilutionGroupItem" )
+      // NewSPLD.SPLD_DilutionGroupItem.PrimarySLC_ID = SrcSLC.SLC_DilutionGroupItem.ID
       END
    END
 
@@ -3170,8 +3194,8 @@ BuildSPLD_FromSLC( VIEW NewSPLD  BASED ON LOD mSPLDef,
 
    // Go to build Directions For Use and Marketing Usage entries.
    BuildUsageEntriesFrSLC( NewSPLD, SrcSLC )
-   TraceLineS( "BuildSPLD_FromSLC NewSPLD", "=====================>>>>>>>>" )
-   DisplayObjectInstance( NewSPLD, "", "" )
+// TraceLineS( "BuildSPLD_FromSLC NewSPLD", "=====================>>>>>>>>" )
+// DisplayObjectInstance( NewSPLD, "", "" )
 
 END
 
@@ -3202,11 +3226,6 @@ RebuildSPLD_FromSLC( VIEW NewSPLD BASED ON LOD mSPLDef,
       FOR EACH SrcSLC.S_DirectionsForUseStatement
          CREATE ENTITY NewSPLD.SPLD_DirectionsForUseStatement
          SetMatchingAttributesByName( NewSPLD, "SPLD_DirectionsForUseStatement", SrcSLC, "S_DirectionsForUseStatement", zSET_NULL )
-
-      // // Temporary code created by DonC on 1/13/2016 because NotForUseType was set to NotNull in the ER.
-      // IF NewSPLD.SPLD_DirectionsForUseStatement.NotForUseType = ""
-      //    NewSPLD.SPLD_DirectionsForUseStatement.NotForUseType = "NA"
-      // END
       END
    END
    // Build Marketing Entries (without Usage entries).
@@ -3416,11 +3435,6 @@ DuplicateSPLD( VIEW NewSPLD    BASED ON LOD mSPLDef,
       FOR EACH SourceSPLD.SPLD_DirectionsForUseStatement
          CREATE ENTITY NewSPLD.SPLD_DirectionsForUseStatement
          SetMatchingAttributesByName( NewSPLD, "SPLD_DirectionsForUseStatement", SourceSPLD, "SPLD_DirectionsForUseStatement", zSET_NULL )
-
-      // // Temporary code created by DonC on 1/13/2016 because NotForUseType was set to NotNull in the ER.
-      // IF NewSPLD.SPLD_DirectionsForUseStatement.NotForUseType = ""
-      //    NewSPLD.SPLD_DirectionsForUseStatement.NotForUseType = "NA"
-      // END
          INCLUDE NewSPLD.S_DirectionsForUseStatement FROM SourceSPLD.S_DirectionsForUseStatement
 
          // UsageOrder entries

@@ -1,4 +1,4 @@
-// wSLCSubregProductsList   Generate Timestamp: 20161019144229516
+// wSLCSubregProductsList   Generate Timestamp: 20170317131050991
 
 var isWindowClosing = true;
 var timerID = null;
@@ -171,30 +171,6 @@ function _AfterPageLoaded( )
    else
       timerID = null; // No timeout specified
 
-   // Prebuild action has javascript code entered by user.
-   var thisLi;
-   if ( keyRole == "Subregistrant" )  // if we are a Subregistrant
-   {
-      thisLi = document.getElementById( "lmSubregistrants" );
-      thisLi.style.visibility = "hidden";
-      thisLi.style.display = "none";
-      thisLi = document.getElementById( "lmTrackingNotificationCompliance" );
-      thisLi.style.visibility = "hidden";
-      thisLi.style.display = "none";
-    }
-    else
-// if ( keyRole == "P" ) // if we are a Primary Registrant
-    {
-       thisLi = document.getElementById( "lmStateRegistrations" );
-       thisLi.style.visibility = "hidden";
-       thisLi.style.display = "none";
-    }
-
-   // Cannot go to product management if already there.
-   thisLi = document.getElementById( "lmProductManagement" );
-   thisLi.disabled = true;
-   // END of Javascript code entered by user.
-
 var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title ); }
    isWindowClosing = true;
 }
@@ -314,6 +290,8 @@ function InitListSubregProducts( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      _DisableFormElements( true );
+
       document.wSLCSubregProductsList.zAction.value = "InitListSubregProducts";
       document.wSLCSubregProductsList.submit( );
    }

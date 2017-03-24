@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="15">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="19">
         <file>
             <url>web/js/labeldesigner.js</url>
             <bookmark id="15">
@@ -31,19 +31,34 @@
         </file>
         <file>
             <url>src/java/com/ajax/GraphicalLabelDesignerServlet.java</url>
+            <bookmark id="19">
+                <name/>
+                <line>369</line>
+                <key/>
+            </bookmark>
+            <bookmark id="18">
+                <name/>
+                <line>691</line>
+                <key/>
+            </bookmark>
             <bookmark id="11">
                 <name/>
-                <line>802</line>
+                <line>839</line>
+                <key/>
+            </bookmark>
+            <bookmark id="17">
+                <name/>
+                <line>1411</line>
                 <key/>
             </bookmark>
             <bookmark id="7">
                 <name/>
-                <line>1566</line>
+                <line>1604</line>
                 <key/>
             </bookmark>
             <bookmark id="9">
                 <name/>
-                <line>1577</line>
+                <line>1615</line>
                 <key/>
             </bookmark>
         </file>

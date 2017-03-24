@@ -607,14 +607,14 @@ GOTO_StorageDisposalSubStatement( VIEW ViewToWindow )
 
    VIEW mSubLC REGISTERED AS mSubLC
 
-   TraceLineS( "###################################################### Prior mSubLC", "" )
-   DisplayEntityInstance( mSubLC, "S_StorageDisposalStatement" )
+// TraceLineS( "###################################################### Prior mSubLC", "" )
+// DisplayEntityInstance( mSubLC, "S_StorageDisposalStatement" )
 
    // Get to subobject: S_StorageDisposalSubStatement.
    SetViewToSubobject( mSubLC, "S_StorageDisposalSubStatement" )
 
-   TraceLineS( "###################################################### After mSubLC", "" )
-   DisplayEntityInstance( mSubLC, "S_StorageDisposalStatement" )
+// TraceLineS( "###################################################### After mSubLC", "" )
+// DisplayEntityInstance( mSubLC, "S_StorageDisposalStatement" )
 
 END
 
@@ -1295,6 +1295,7 @@ GOTO_UpdateSubregProductSLC( VIEW ViewToWindow )
    NAME VIEW mMasLC "mMasLC"
    BuildCompEntriesForMLC( mMasLC )
    BuildWorkVariables( mSubLC, mMasLC )
+// DisplayObjectInstance( mSubLC, "", "" )
 
 END
 
@@ -1906,5 +1907,20 @@ CancelDirectionsSubStatement( VIEW ViewToWindow )
       RETURN nRC
    END
    ResetViewFromSubobject( mSubLC )
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: GOTO_DilutionGroupDisplay
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+GOTO_DilutionGroupDisplay( VIEW ViewToWindow )
+
+   VIEW mSubLC REGISTERED AS mSubLC
+
+   TraceLineS( "###################################################### DilutionGroupDisplay", "" )
+   DisplayEntityInstance( mSubLC, "S_DilutionGroup" )
 
 END

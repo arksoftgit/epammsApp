@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSPLDSPLD_BlockSpecialFormatDef   Generate Timestamp: 20160620105929547 --%>
+<%-- wSPLDSPLD_BlockSpecialFormatDef   Generate Timestamp: 20170324091329075 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -823,6 +823,7 @@ else
    <input name="zFocusCtrl" id="zFocusCtrl" type="hidden" value="<%=strFocusCtrl%>">
    <input name="zOpenFile" id="zOpenFile" type="hidden" value="<%=strOpenFile%>">
    <input name="zDateFormat" id="zDateFormat" type="hidden" value="<%=strDateFormat%>">
+   <input name="zDateSequence" id="zDateSequence" type="hidden" value="MDY">
    <input name="zLoginName" id="zLoginName" type="hidden" value="<%=strLoginName%>">
    <input name="zKeyRole" id="zKeyRole" type="hidden" value="<%=strKeyRole%>">
    <input name="zOpenPopupWindow" id="zOpenPopupWindow" type="hidden" value="<%=strOpenPopupWindow%>">
@@ -937,7 +938,7 @@ else
 <td valign="top" style="width:128px;">
 <% /* TX1:Text */ %>
 
-<span  id="TX1" name="TX1" style="width:128px;height:26px;">  (Ex. .05)</span>
+<span  id="TX1" name="TX1" style="width:128px;height:26px;">  (e.g. .05)</span>
 
 </td>
 </tr>
@@ -994,7 +995,7 @@ else
 <td valign="top" style="width:128px;">
 <% /* TX2:Text */ %>
 
-<span  id="TX2" name="TX2" style="width:128px;height:26px;">  (Ex. .05)</span>
+<span  id="TX2" name="TX2" style="width:128px;height:26px;">  (e.g. .05)</span>
 
 </td>
 </tr>
@@ -1051,7 +1052,7 @@ else
 <td valign="top" style="width:128px;">
 <% /* TX3:Text */ %>
 
-<span  id="TX3" name="TX3" style="width:128px;height:26px;">  (Ex. .05)</span>
+<span  id="TX3" name="TX3" style="width:128px;height:26px;">  (e.g. .05)</span>
 
 </td>
 </tr>
@@ -1108,7 +1109,7 @@ else
 <td valign="top" style="width:128px;">
 <% /* TX4:Text */ %>
 
-<span  id="TX4" name="TX4" style="width:128px;height:26px;">  (Ex. .05)</span>
+<span  id="TX4" name="TX4" style="width:128px;height:26px;">  (e.g. .05)</span>
 
 </td>
 </tr>
@@ -1123,7 +1124,7 @@ else
 <% /* TextAlign:ComboBox */ %>
 <% strErrorMapValue = "";  %>
 
-<select  name="TextAlign" id="TextAlign" size="1" style="width:98px;" onchange="TextAlignOnChange( )">
+<select  name="TextAlign" id="TextAlign" size="1" style="width:98px;" onchange="TextAlignOnChange( )" >
 
 <%
    boolean inListTextAlign = false;
@@ -1214,7 +1215,7 @@ else
 <% /* FontFamily:ComboBox */ %>
 <% strErrorMapValue = "";  %>
 
-<select  name="FontFamily" id="FontFamily" size="1" style="width:98px;" onchange="FontFamilyOnChange( )">
+<select  name="FontFamily" id="FontFamily" size="1" style="width:98px;" onchange="FontFamilyOnChange( )" >
 
 <%
    boolean inListFontFamily = false;
@@ -1305,7 +1306,7 @@ else
 <% /* FontSize:ComboBox */ %>
 <% strErrorMapValue = "";  %>
 
-<select  name="FontSize" id="FontSize" size="1" style="width:98px;" onchange="FontSizeOnChange( )">
+<select  name="FontSize" id="FontSize" size="1" style="width:98px;" onchange="FontSizeOnChange( )" >
 
 <%
    boolean inListFontSize = false;
@@ -1396,7 +1397,7 @@ else
 <% /* FontWeight:ComboBox */ %>
 <% strErrorMapValue = "";  %>
 
-<select  name="FontWeight" id="FontWeight" size="1" style="width:98px;" onchange="FontWeightOnChange( )">
+<select  name="FontWeight" id="FontWeight" size="1" style="width:98px;" onchange="FontWeightOnChange( )" >
 
 <%
    boolean inListFontWeight = false;
@@ -1628,7 +1629,7 @@ else
 <% /* TitlePosition:ComboBox */ %>
 <% strErrorMapValue = "";  %>
 
-<select  name="TitlePosition" id="TitlePosition" size="1" style="width:252px;" onchange="TitlePositionOnChange( )">
+<select  name="TitlePosition" id="TitlePosition" size="1" style="width:252px;" onchange="TitlePositionOnChange( )" >
 
 <%
    boolean inListTitlePosition = false;

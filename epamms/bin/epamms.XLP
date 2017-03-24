@@ -1,4 +1,4 @@
-z1000-Zeidon    EPAMMS   TZCMLPLO                         03/03/17   20:10:59 1.0a2   
+z1000-Zeidon    EPAMMS   TZCMLPLO                         03/24/17   09:13:26 1.0a2   
 eLPLR      1
 aName      epamms
 aDesc      ePamms Application
@@ -1127,8 +1127,8 @@ Additions:
 1. Added a relationship between M_UsageOrdering, S_UsageOrdering and SPLD_UsageOrdering and their corresponding DirectionsForUse and Marketing Statement entities.
 2. Added Default attributes to LLD and SPLD_LLD.
 3. Add 
-aLastSyncDate 20170303104003604
-aLastUpdateDate 20170303104003604
+aLastSyncDate 20170307152500286
+aLastUpdateDate 20170307152500286
 
 eW_MetaType 2
 aType      5
@@ -1151,8 +1151,8 @@ aStatus    1
 aUpdateInd 2
 aName      ePamms
 aDesc      ePamms Application
-aLastSyncDate 20170303104154268
-aLastUpdateDate 20170303104154268
+aLastSyncDate 20170307152542077
+aLastUpdateDate 20170307152542077
 
 eW_MetaType 2
 aType      7
@@ -1440,8 +1440,8 @@ aStatus    1
 aUpdateInd 2
 aName      mSPLDef
 aDesc      Subregistrant Physical Label Maintenance
-aLastSyncDate 20170223173534080
-aLastUpdateDate 20170223173534080
+aLastSyncDate 20170315115543036
+aLastUpdateDate 20170315115543036
 
 eW_MetaDef 3
 aCPLR_ZKey 69035258
@@ -1449,8 +1449,8 @@ aStatus    1
 aUpdateInd 2
 aName      mSubLC
 aDesc      Subregistrant Label Content Maintenance
-aLastSyncDate 20170303191214619
-aLastUpdateDate 20170303191214619
+aLastSyncDate 20170307104949722
+aLastUpdateDate 20170307104949722
 
 eW_MetaDef 3
 aCPLR_ZKey 1157934
@@ -2275,8 +2275,8 @@ aStatus    1
 aUpdateInd 2
 aName      wSLC
 aDesc      Subregistrant Label Content
-aLastSyncDate 20170303201059433
-aLastUpdateDate 20170303201059433
+aLastSyncDate 20170317131048242
+aLastUpdateDate 20170317131048242
 
 eW_MetaDef 3
 aCPLR_ZKey 11205
@@ -2284,8 +2284,8 @@ aStatus    1
 aUpdateInd 2
 aName      wSPLD
 aDesc      Subregistrant Physical Label Definition
-aLastSyncDate 20170103191154883
-aLastUpdateDate 20170103191154883
+aLastSyncDate 20170324091326281
+aLastUpdateDate 20170324091326281
 
 eW_MetaDef 3
 aCPLR_ZKey 93086489

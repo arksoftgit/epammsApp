@@ -2765,8 +2765,9 @@ public class FileServer {
             uniqueId = "UID" + id;
          }
       }
+      var uidNbr = parseInt( uniqueId.replace( /[^0-9\.]/g, '' ), 10 );
       if ( uniqueId.indexOf( "UID" ) === 0 && $.isNumeric( uniqueId.substring( 3 ) ) ) {
-         var uidNbr = parseInt( uniqueId.substring( 3 ) );
+         uidNbr = parseInt( uniqueId.substring( 3 ) );
          if ( ! $.isNumeric( uidNbr ) ) {
             console.log( "AddHtmlLabelElementAttributes invalid uidNbr: " + uidNbr );
          } else if ( g_generateTag < uidNbr ) {
@@ -2843,7 +2844,7 @@ public class FileServer {
             // if ( prop === "Tag" || prop === "Top" || prop === "Left" || prop === "Height" || prop === "Width" )  {
             //   continue;
             // } else {
-                  addZeidonAttributeToElement( $element, prop, String( obj[prop], true ) );
+                  addZeidonAttributeToElement( $element, prop, String( obj[prop] ), true );
             // }
             }
          }
@@ -2912,7 +2913,7 @@ public class FileServer {
       if ( div === "block" || div === "panel" || div === "page" || div === "label" ) {
       // console.log( "Processing div: " + div );
          var $el = AddHtmlLabelElementAttributes( $root, $parentElement, parentId, obj, div, depth );
-         addZeidonAttributeToElement( $el, "_EOI", "Y", true );  // existed on OI
+      // addZeidonAttributeToElement( $el, "_EOI", "Y", true );  // existed on OI  ... now using wSyncId
          addZeidonAttributeToElement( $el, "wE", div, true );
          addZeidonAttributeToElement( $el, "wPID", parentId, true );
          addZeidonAttributeToElement( $el, "wPE", $parentElement.data( "z_w^e" ), true );

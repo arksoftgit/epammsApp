@@ -63,6 +63,7 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
    private static ObjectEngine oe = null;
    private static Integer i = 0;
    private static KZOEP1AA m_KZOEP1AA = null;
+   private int g_SyncId;
 
    /*
     * @see HttpServlet#HttpServlet()
@@ -370,6 +371,7 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
       int k;
       String s;
       String attr;
+      EntityInstance ei;
       EntityCursor ec = vLLD.cursor( "SPLD_HumanHazardSection" );
       String jsonSelectedHazard = "{ \"Panel\" : \"" + ec.getAttribute( "PanelLoc" ).getString() +
                                                       "\", \"Label\" : \"" + ec.getAttribute( "LabelLoc" ).getString() + "\" }";
@@ -481,9 +483,26 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
          StringBuffer sb = sw.getBuffer();
       */
 
-         StringBuilder sb = new StringBuilder( vLLD.serializeOi().asJson().withIncremental().toStringWriter().toString() );
+         // Set sync id for each block.
+         vLLD.resetSubobjectTop();
+         ec = vLLD.cursor( "SPLD_LLD" );
+         g_SyncId = 1;
+         ec.getAttribute( "wSyncId" ).setValue( g_SyncId++ );
+         Iterator<? extends EntityInstance> hierInstanceIterator = ec.getChildrenHier( false ).iterator();
+         while ( hierInstanceIterator.hasNext() ) {
+            ei = hierInstanceIterator.next();
+            if ( ei.getEntityDef().getName().equals( "LLD_Block" ) || ei.getEntityDef().getName().equals( "LLD_SubBlock" ) ||
+                 ei.getEntityDef().getName().equals( "LLD_Panel" ) || ei.getEntityDef().getName().equals( "LLD_Page" ) ) { // || ei.getEntityDef().getName().equals( "SPLD_LLD" ) ) {
+               ei.getAttribute( "wSyncId" ).setValue( g_SyncId++ );
+            }
+         }
+         hierInstanceIterator = null;
+         vLLD.resetSubobjectTop();
+      //xdisplaySPLD( vLLD, null, "" );
 
+         StringBuilder sb = new StringBuilder( vLLD.serializeOi().asJson().withIncremental().toStringWriter().toString() );
       // logger.info( "LLD Json Label from OI: " + sb.toString() );
+
          int posSPLD = sb.indexOf( "SubregPhysicalLabelDef" );
          int posLBracket = sb.indexOf( "[", posSPLD );
          posLBracket = sb.indexOf( "[", posLBracket + 1 ); // get to second "left bracket"
@@ -663,7 +682,25 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
             if ( depth >= -1 ) {
                EntityCursor ec = vBlock.getCursor( entity );
             // if ( ec.isNull() == false ) {  // the ec.isNull may be true ==> no entities, but we may want to create one!
-               String ID = (String) jo.get( "ID" );
+               Integer syncId;
+               String ID = (String) jo.get( "wSyncId" );
+               if ( ID != null ) {
+                  syncId = Integer.parseInt( ID );
+               } else {
+                  syncId = null;
+               }
+               ID = (String) jo.get( "ID" );
+               if ( ID != null ) {
+                  try {
+                     String is = ID.replaceAll( "[^\\d]", "" );
+                     int id = Integer.parseInt( is );
+                     if ( id <= 0 ) {
+                        ID = null;
+                     }
+                  } catch ( NumberFormatException e ) {
+                     ID = null;        
+                  }
+               }
                CursorResult cr;
                /*
                if ( ID != null && ID.isEmpty() == false ) {
@@ -687,8 +724,8 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
                   if ( entity.equals( "LLD_Page" ) ) {
                      Object op = jo.get( "LLD_Panel" ); // if there are no panels we will delete the page
                      if ( op == null ) {
-                        if ( ID != null && ID.isEmpty() == false ) {
-                           cr = ec.setFirst( "ID", ID );
+                        if ( syncId != null && syncId > 0 ) { // ID != null && ID.isEmpty() == false ) {
+                           cr = ec.setFirst( "wSyncId", syncId );
                            if ( cr.isSet() ) {
                               ec.getEntityInstance();
                               logger.info( "Deleting entity: " + entity );
@@ -702,7 +739,7 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
 
                   String _DeleteEntity = (String)jo.get( "_Delete" );
                   boolean deleteEntity = (_DeleteEntity != null && _DeleteEntity.charAt( 0 ) == 'Y') ? true : false;
-                  if ( ID == null || ID.isEmpty() ) {  // if we are in a create situation, take care of that right now
+                  if ( syncId == null || syncId <= 0 ) { //ID == null || ID.isEmpty() ) {  // if we are in a create situation, take care of that right now
                      String wID = (String) jo.get( "wID" );
                      if ( deleteEntity ) {
                         cr = ec.setFirstWithinOi( "wID", wID );
@@ -763,6 +800,8 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
                               wPE = "LLD_Panel";
                            } else if ( wPE.equals( "block" ) ) {
                               wPE = "LLD_Block";
+                           } else if ( wPE.equals( "special" ) ) {
+                              wPE = "LLD_SpecialSectionAttribute";
                            } else {
                               logger.error( "Cannot create entity: " + entity + "  for parent: " + wPE );
                               return;
@@ -832,9 +871,9 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
                      }
                   } else {
                      // Get position on the corresponding entity in the OI.
-                     cr = ec.setFirst( "ID", ID );
+                     cr = ec.setFirst( "wSyncId", syncId );
                      if ( cr.isSet() == false ) {
-                        cr = ec.setFirstWithinOi( "ID", ID );
+                        cr = ec.setFirstWithinOi( "wSyncId", syncId );
                         if ( cr.isSet() == false ) {
                            // Locate using wID because if it exists ... ID only exists if the entity came from the database.
                            String wID = (String) jo.get( "wID" );
@@ -1376,7 +1415,13 @@ end debug code */
       EntityCursor ec = vBlock.getCursor( "LLD_Block" );
       ec.createEntity( CursorPosition.LAST );
       ec.setMatchingAttributesByName( ecb, SetMatchingFlags.DEFAULT );
-      ec.getAttribute( "wID" ).setValue( ec.getAttribute( "Tag" ).getString() );
+      String tag = "RB_" + ec.getAttribute( "Tag" ).getString();
+      ec.getAttribute( "Tag" ).setValue( tag );
+      ec.getAttribute( "wID" ).setValue( tag );
+      ec.getAttribute( "wSyncId" ).setValue( g_SyncId++ );
+   // ec.getAttribute( "ID" ).setValue( -g_SyncId );  don't do this since the ID cannot be reset back to null
+   // ec.getAttribute( "ID" ).setValue( null );
+   //xec.logEntity( false );
       ecb = mBlockRU.getCursor( "LLD_SpecialSectionAttribute" );
       CursorResult cr = ecb.setFirst();
       while ( cr.isSet() ) {
@@ -1554,18 +1599,18 @@ end debug code */
             View vBlock = null;
             JSONObject jsonPost = getPostData( request );
             String strJson = jsonPost.toJSONString();
-         // logger.info( "Save JSON: " + strJson );
+            logger.info( "Save JSON: " + strJson );
             try {
                vLLD.resetSubobjectTop();
                vBlock = vLLD.newView();
                vBlock.resetSubobjectTop();
-            // logger.info( "Before Apply Json to OI" );
-            // displaySPLD( vLLD, null, "" );
+            //xlogger.info( "Before Apply Json to OI" );
+            //xdisplaySPLD( vLLD, null, "" );
                applyJsonLabelArrayToView( vLLD, vBlock, jsonPost, "", -2, null );  // OIs, SPLD_LLD, depth == 0 for LLD_Page
                vLLD.resetSubobjectTop();
                vLLD.setName( "mSPLDefPanel", Level.TASK );
-            // logger.info( "After Apply Json to OI" );
-            // displaySPLD( vLLD, null, "" );
+            //xlogger.info( "After Apply Json to OI" );
+            //xdisplaySPLD( vLLD, null, "" );
                // Sort the blocks
                CursorResult cr = vLLD.cursor( "LLD_Panel" ).setFirst();
                while ( cr.isSet() ) {
@@ -1601,8 +1646,8 @@ end debug code */
                      String blockName = request.getParameter( "blockName" );
                      String parms = request.getParameter( "parms" );
                      applyReusableBlock( vLLD, vBlock, blockTag, blockName, parms );
-                  // logger.info( "After saveReusableBlock" + blockName );
-                  // vLLD.logObjectInstance();
+                  //xlogger.info( "After saveReusableBlock" + blockName );
+                  //xdisplaySPLD( vLLD, null, "" );
                   }
                   if ( action.equals( "applyReusableBlock" ) == false ) {
                      String id = vLLD.cursor( "SubregPhysicalLabelDef" ).getAttribute( "ID" ).getString();

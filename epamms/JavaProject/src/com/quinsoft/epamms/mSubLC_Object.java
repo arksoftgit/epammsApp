@@ -3665,8 +3665,13 @@ omSubLC_BuildSLC_FromMLC( View     NewSLC,
       RESULT = CreateEntity( NewSLC, "S_DilutionGroup", zPOS_AFTER );
       //:SetMatchingAttributesByName( NewSLC, "S_DilutionGroup", SrcMLC, "M_DilutionGroup", zSET_NULL )
       SetMatchingAttributesByName( NewSLC, "S_DilutionGroup", SrcMLC, "M_DilutionGroup", zSET_NULL );
+      //:// TraceLineS( "SLC_FromMLC S_DilutionGroup ", "=====================>>>>>>>>" )
+      //:// DisplayEntityInstance( NewSLC, "S_DilutionGroup" )
       //:NewSLC.S_DilutionGroup.PrimaryMLC_ID = SrcMLC.M_DilutionGroup.ID
       SetAttributeFromAttribute( NewSLC, "S_DilutionGroup", "PrimaryMLC_ID", SrcMLC, "M_DilutionGroup", "ID" );
+      //:INCLUDE NewSLC.M_DilutionGroup FROM SrcMLC.M_DilutionGroup
+      RESULT = IncludeSubobjectFromSubobject( NewSLC, "M_DilutionGroup", SrcMLC, "M_DilutionGroup", zPOS_AFTER );
+      //:// Dilution Chart Entries
       //:FOR EACH SrcMLC.M_DilutionChartEntry
       RESULT = SetCursorFirstEntity( SrcMLC, "M_DilutionChartEntry", "" );
       while ( RESULT > zCURSOR_UNCHANGED )
@@ -3678,8 +3683,11 @@ omSubLC_BuildSLC_FromMLC( View     NewSLC,
          RESULT = SetCursorNextEntity( SrcMLC, "M_DilutionChartEntry", "" );
       } 
 
+      //:// TraceLineS( "SLC_FromMLC S_DilutionChartEntry ", "=====================>>>>>>>>" )
+      //:// DisplayEntityInstance( NewSLC, "S_DilutionChartEntry" )
       //:// NewSLC.S_DilutionChartEntry.PrimaryMLC_ID = SrcMLC.M_DilutionChartEntry.ID
       //:END
+      //:// Dilution Group Items
       //:FOR EACH SrcMLC.M_DilutionGroupItem
       RESULT = SetCursorFirstEntity( SrcMLC, "M_DilutionGroupItem", "" );
       while ( RESULT > zCURSOR_UNCHANGED )
@@ -3692,6 +3700,8 @@ omSubLC_BuildSLC_FromMLC( View     NewSLC,
       } 
 
       RESULT = SetCursorNextEntity( SrcMLC, "M_DilutionGroup", "" );
+      //:// TraceLineS( "SLC_FromMLC S_DilutionGroupItem ", "=====================>>>>>>>>" )
+      //:// DisplayEntityInstance( NewSLC, "S_DilutionGroupItem" )
       //:// NewSLC.S_DilutionGroupItem.PrimaryMLC_ID = SrcMLC.M_DilutionGroupItem.ID
       //:END
    } 
@@ -7240,9 +7250,7 @@ omSubLC_BuildWorkVariables( View     mSubLC,
    int      RESULT = 0;
    int      lTempInteger_0 = 0;
    int      lTempInteger_1 = 0;
-   String   szTempString_0 = null;
    int      lTempInteger_2 = 0;
-   int      lTempInteger_3 = 0;
 
 
    //:// Build any work variable for the mSubLC.
@@ -7371,15 +7379,7 @@ omSubLC_BuildWorkVariables( View     mSubLC,
 
       //:// IssueError( mSubLC, 0, 0, "Programming Error 3 in BuildWorkVariables" )
       //:END
-      //:TraceLineS( "############ Marketing Section: ", mMasLC.M_MarketingSection.Name )
-      {StringBuilder sb_szTempString_0;
-      if ( szTempString_0 == null )
-         sb_szTempString_0 = new StringBuilder( 32 );
-      else
-         sb_szTempString_0 = new StringBuilder( szTempString_0 );
-             GetStringFromAttribute( sb_szTempString_0, mMasLC, "M_MarketingSection", "Name" );
-      szTempString_0 = sb_szTempString_0.toString( );}
-      TraceLineS( "############ Marketing Section: ", szTempString_0 );
+      //:// TraceLineS( "############ Marketing Section: ", mMasLC.M_MarketingSection.Name )
       //:FOR EACH mMasLC.M_MarketingUsageOrdering
       RESULT = SetCursorFirstEntity( mMasLC, "M_MarketingUsageOrdering", "" );
       while ( RESULT > zCURSOR_UNCHANGED )
@@ -7395,20 +7395,15 @@ omSubLC_BuildWorkVariables( View     mSubLC,
          { 
             //:INCLUDE mSubLC.S_SelectableMarketingUsage FROM mSubLC.S_Usage
             RESULT = IncludeSubobjectFromSubobject( mSubLC, "S_SelectableMarketingUsage", mSubLC, "S_Usage", zPOS_AFTER );
-            //:TraceLineS( "############ INCLUDE ", "" )
-            TraceLineS( "############ INCLUDE ", "" );
          } 
 
-         //:END
-         //:TraceLineI( "############ Marketing PrimaryMLC_ID: ", mSubLC.S_Usage.PrimaryMLC_ID )
-         {MutableInt mi_lTempInteger_3 = new MutableInt( lTempInteger_3 );
-                   GetIntegerFromAttribute( mi_lTempInteger_3, mSubLC, "S_Usage", "PrimaryMLC_ID" );
-         lTempInteger_3 = mi_lTempInteger_3.intValue( );}
-         TraceLineI( "############ Marketing PrimaryMLC_ID: ", lTempInteger_3 );
          RESULT = SetCursorNextEntity( mMasLC, "M_MarketingUsageOrdering", "" );
+         //:// TraceLineS( "############ INCLUDE ", "" )
+         //:END
       } 
 
       RESULT = SetCursorNextEntity( mSubLC, "S_MarketingStatement", "SubregLabelContent" );
+      //:// TraceLineI( "############ Marketing PrimaryMLC_ID: ", mSubLC.S_Usage.PrimaryMLC_ID )
       //:END
    } 
 

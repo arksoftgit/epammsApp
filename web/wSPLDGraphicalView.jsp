@@ -1450,7 +1450,7 @@ else
    <input name="zLoginName" id="zLoginName" type="hidden" value="<%=strLoginName%>">
    <input name="zKeyRole" id="zKeyRole" type="hidden" value="<%=strKeyRole%>">
    <input name="zErrorFlag" id="zErrorFlag" type="hidden" value="<%=strErrorFlag%>">
-   <input name="zTimeout" id="zTimeout" type="hidden" value="360">
+   <input name="zTimeout" id="zTimeout" type="hidden" value="1080">
    <input name="zError" id="zError" type="hidden" value="<%=strErrorMsg%>">
 
 </form>
