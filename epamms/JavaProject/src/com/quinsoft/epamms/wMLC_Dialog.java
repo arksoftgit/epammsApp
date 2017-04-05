@@ -77,25 +77,6 @@ GOTO_PrecautionaryStmtDelete( View     ViewToWindow )
 
 
 private int 
-o_fnLocalBuildQual_5( View     vSubtask,
-                      zVIEW    vQualObject,
-                      int      lTempInteger_0 )
-{
-   int      RESULT = 0;
-
-   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
-   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "MasterLabelContent" );
-   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "MasterLabelContent" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
-   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_0 );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
-   return( 0 );
-} 
-
-
-private int 
 o_fnLocalBuildQual_6( View     vSubtask,
                       zVIEW    vQualObject,
                       int      lID )
@@ -325,6 +306,25 @@ o_fnLocalBuildQual_3( View     vSubtask,
 
 private int 
 o_fnLocalBuildQual_4( View     vSubtask,
+                      zVIEW    vQualObject,
+                      int      lTempInteger_0 )
+{
+   int      RESULT = 0;
+
+   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
+   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "MasterLabelContent" );
+   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "MasterLabelContent" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
+   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_0 );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+   return( 0 );
+} 
+
+
+private int 
+o_fnLocalBuildQual_5( View     vSubtask,
                       zVIEW    vQualObject,
                       int      lTempInteger_0 )
 {
@@ -5102,6 +5102,324 @@ PrebuildDeleteUsageStatements( View     ViewToWindow )
 
 
 //:DIALOG OPERATION
+//:PrebuildKeywordSelection( VIEW ViewToWindow )
+
+//:   VIEW mMasLC REGISTERED AS mMasLC
+public int 
+PrebuildKeywordSelection( View     ViewToWindow )
+{
+   zVIEW    mMasLC = new zVIEW( );
+   int      RESULT = 0;
+
+   RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
+
+   //:// Create list of Usage Entries selected for delete.
+   //:FOR EACH mMasLC.M_SubUsage
+   RESULT = SetCursorFirstEntity( mMasLC, "M_SubUsage", "" );
+   while ( RESULT > zCURSOR_UNCHANGED )
+   { 
+      //:mMasLC.M_SubUsage.wSelected = ""
+      SetAttributeFromString( mMasLC, "M_SubUsage", "wSelected", "" );
+      RESULT = SetCursorNextEntity( mMasLC, "M_SubUsage", "" );
+   } 
+
+   //:END
+   //:FOR EACH mMasLC.M_InsertTextKeywordUsage 
+   RESULT = SetCursorFirstEntity( mMasLC, "M_InsertTextKeywordUsage", "" );
+   while ( RESULT > zCURSOR_UNCHANGED )
+   { 
+      //:mMasLC.M_InsertTextKeywordUsage.wSelected = ""
+      SetAttributeFromString( mMasLC, "M_InsertTextKeywordUsage", "wSelected", "" );
+      RESULT = SetCursorNextEntity( mMasLC, "M_InsertTextKeywordUsage", "" );
+   } 
+
+   //:END
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:MoveSelectedSurfacesToKeyword( VIEW ViewToWindow )
+
+//:   VIEW mMasLC REGISTERED AS mMasLC
+public int 
+MoveSelectedSurfacesToKeyword( View     ViewToWindow )
+{
+   zVIEW    mMasLC = new zVIEW( );
+   int      RESULT = 0;
+   //:SHORT Count
+   int      Count = 0;
+
+   RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
+
+   //:// Ensure there is only one Keyword selected.
+   //:Count = 0
+   Count = 0;
+   //:FOR EACH mMasLC.M_InsertTextKeywordUsage 
+   RESULT = SetCursorFirstEntity( mMasLC, "M_InsertTextKeywordUsage", "" );
+   while ( RESULT > zCURSOR_UNCHANGED )
+   { 
+      //:IF mMasLC.M_InsertTextKeywordUsage.wSelected = "Y"
+      if ( CompareAttributeToString( mMasLC, "M_InsertTextKeywordUsage", "wSelected", "Y" ) == 0 )
+      { 
+         //:Count = Count + 1
+         Count = Count + 1;
+      } 
+
+      RESULT = SetCursorNextEntity( mMasLC, "M_InsertTextKeywordUsage", "" );
+      //:END
+   } 
+
+   //:END
+   //:IF Count != 1
+   if ( Count != 1 )
+   { 
+      //:MessageSend( ViewToWindow, "", "Surface Statement Move Surfaces",
+      //:             "Exactly one Keyword must be selected",
+      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      MessageSend( ViewToWindow, "", "Surface Statement Move Surfaces", "Exactly one Keyword must be selected", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+      //:RETURN 2
+      if(8==8)return( 2 );
+   } 
+
+   //:END
+   //:SET CURSOR FIRST mMasLC.M_InsertTextKeywordUsage WHERE mMasLC.M_InsertTextKeywordUsage.wSelected = "Y"
+   RESULT = SetCursorFirstEntityByString( mMasLC, "M_InsertTextKeywordUsage", "wSelected", "Y", "" );
+   //:FOR EACH mMasLC.M_SubUsage
+   RESULT = SetCursorFirstEntity( mMasLC, "M_SubUsage", "" );
+   while ( RESULT > zCURSOR_UNCHANGED )
+   { 
+      //:IF mMasLC.M_SubUsage.wSelected = "Y"
+      if ( CompareAttributeToString( mMasLC, "M_SubUsage", "wSelected", "Y" ) == 0 )
+      { 
+         //:CREATE ENTITY mMasLC.M_InsertTextUsage 
+         RESULT = CreateEntity( mMasLC, "M_InsertTextUsage", zPOS_AFTER );
+         //:mMasLC.M_InsertTextUsage.Text = mMasLC.M_SubUsage.Name
+         SetAttributeFromAttribute( mMasLC, "M_InsertTextUsage", "Text", mMasLC, "M_SubUsage", "Name" );
+         //:DELETE ENTITY mMasLC.M_SubUsage NONE
+         RESULT = DeleteEntity( mMasLC, "M_SubUsage", zREPOS_NONE );
+      } 
+
+      RESULT = SetCursorNextEntity( mMasLC, "M_SubUsage", "" );
+      //:END
+   } 
+
+   //:END
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:MoveSelectedKeywordToSurfaces( VIEW ViewToWindow )
+
+//:   VIEW mMasLC REGISTERED AS mMasLC
+public int 
+MoveSelectedKeywordToSurfaces( View     ViewToWindow )
+{
+   zVIEW    mMasLC = new zVIEW( );
+   int      RESULT = 0;
+   //:SHORT Count
+   int      Count = 0;
+
+   RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
+
+   //:// Ensure there is only one Keyword selected.
+   //:Count = 0
+   Count = 0;
+   //:FOR EACH mMasLC.M_InsertTextKeywordUsage
+   RESULT = SetCursorFirstEntity( mMasLC, "M_InsertTextKeywordUsage", "" );
+   while ( RESULT > zCURSOR_UNCHANGED )
+   { 
+      //:IF mMasLC.M_InsertTextKeywordUsage.wSelected = "Y"
+      if ( CompareAttributeToString( mMasLC, "M_InsertTextKeywordUsage", "wSelected", "Y" ) == 0 )
+      { 
+         //:Count = Count + 1
+         Count = Count + 1;
+      } 
+
+      RESULT = SetCursorNextEntity( mMasLC, "M_InsertTextKeywordUsage", "" );
+      //:END
+   } 
+
+   //:END
+   //:IF Count != 1
+   if ( Count != 1 )
+   { 
+      //:MessageSend( ViewToWindow, "", "Surface Statement Move Keyword",
+      //:             "Exactly one Keyword must be selected",
+      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      MessageSend( ViewToWindow, "", "Surface Statement Move Keyword", "Exactly one Keyword must be selected", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+      //:RETURN 2
+      if(8==8)return( 2 );
+   } 
+
+   //:END
+   //:SET CURSOR FIRST mMasLC.M_InsertTextKeywordUsage WHERE mMasLC.M_InsertTextKeywordUsage.wSelected = "Y"
+   RESULT = SetCursorFirstEntityByString( mMasLC, "M_InsertTextKeywordUsage", "wSelected", "Y", "" );
+   //:mMasLC.M_InsertTextKeywordUsage.wSelected = ""
+   SetAttributeFromString( mMasLC, "M_InsertTextKeywordUsage", "wSelected", "" );
+   //:FOR EACH mMasLC.M_InsertTextUsage
+   RESULT = SetCursorFirstEntity( mMasLC, "M_InsertTextUsage", "" );
+   while ( RESULT > zCURSOR_UNCHANGED )
+   { 
+      //:CREATE ENTITY mMasLC.M_SubUsage 
+      RESULT = CreateEntity( mMasLC, "M_SubUsage", zPOS_AFTER );
+      //:mMasLC.M_SubUsage.Name = mMasLC.M_InsertTextUsage.Text
+      SetAttributeFromAttribute( mMasLC, "M_SubUsage", "Name", mMasLC, "M_InsertTextUsage", "Text" );
+      //:DELETE ENTITY mMasLC.M_InsertTextUsage NONE
+      RESULT = DeleteEntity( mMasLC, "M_InsertTextUsage", zREPOS_NONE );
+      RESULT = SetCursorNextEntity( mMasLC, "M_InsertTextUsage", "" );
+   } 
+
+   //:END
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:MoveSelectedLocationsToKeyword( VIEW ViewToWindow )
+
+//:   VIEW mMasLC REGISTERED AS mMasLC
+public int 
+MoveSelectedLocationsToKeyword( View     ViewToWindow )
+{
+   zVIEW    mMasLC = new zVIEW( );
+   int      RESULT = 0;
+   //:SHORT Count
+   int      Count = 0;
+
+   RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
+
+   //:// Ensure there is only one Keyword selected.
+   //:Count = 0
+   Count = 0;
+   //:FOR EACH mMasLC.M_InsertTextKeywordUsage 
+   RESULT = SetCursorFirstEntity( mMasLC, "M_InsertTextKeywordUsage", "" );
+   while ( RESULT > zCURSOR_UNCHANGED )
+   { 
+      //:IF mMasLC.M_InsertTextKeywordUsage.wSelected = "Y"
+      if ( CompareAttributeToString( mMasLC, "M_InsertTextKeywordUsage", "wSelected", "Y" ) == 0 )
+      { 
+         //:Count = Count + 1
+         Count = Count + 1;
+      } 
+
+      RESULT = SetCursorNextEntity( mMasLC, "M_InsertTextKeywordUsage", "" );
+      //:END
+   } 
+
+   //:END
+   //:IF Count != 1
+   if ( Count != 1 )
+   { 
+      //:MessageSend( ViewToWindow, "", "Location Statement Move Locations",
+      //:             "Exactly one Keyword must be selected",
+      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      MessageSend( ViewToWindow, "", "Location Statement Move Locations", "Exactly one Keyword must be selected", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+      //:RETURN 2
+      if(8==8)return( 2 );
+   } 
+
+   //:END
+   //:SET CURSOR FIRST mMasLC.M_InsertTextKeywordUsage WHERE mMasLC.M_InsertTextKeywordUsage.wSelected = "Y"
+   RESULT = SetCursorFirstEntityByString( mMasLC, "M_InsertTextKeywordUsage", "wSelected", "Y", "" );
+   //:FOR EACH mMasLC.M_SubUsage
+   RESULT = SetCursorFirstEntity( mMasLC, "M_SubUsage", "" );
+   while ( RESULT > zCURSOR_UNCHANGED )
+   { 
+      //:IF mMasLC.M_SubUsage.wSelected = "Y"
+      if ( CompareAttributeToString( mMasLC, "M_SubUsage", "wSelected", "Y" ) == 0 )
+      { 
+         //:CREATE ENTITY mMasLC.M_InsertTextUsage 
+         RESULT = CreateEntity( mMasLC, "M_InsertTextUsage", zPOS_AFTER );
+         //:mMasLC.M_InsertTextUsage.Text = mMasLC.M_SubUsage.Name
+         SetAttributeFromAttribute( mMasLC, "M_InsertTextUsage", "Text", mMasLC, "M_SubUsage", "Name" );
+         //:DELETE ENTITY mMasLC.M_SubUsage NONE
+         RESULT = DeleteEntity( mMasLC, "M_SubUsage", zREPOS_NONE );
+      } 
+
+      RESULT = SetCursorNextEntity( mMasLC, "M_SubUsage", "" );
+      //:END
+   } 
+
+   //:END
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:MoveSelectedKeywordToLocations( VIEW ViewToWindow )
+
+//:   VIEW mMasLC REGISTERED AS mMasLC
+public int 
+MoveSelectedKeywordToLocations( View     ViewToWindow )
+{
+   zVIEW    mMasLC = new zVIEW( );
+   int      RESULT = 0;
+   //:SHORT Count
+   int      Count = 0;
+
+   RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
+
+   //:// Ensure there is only one Keyword selected.
+   //:Count = 0
+   Count = 0;
+   //:FOR EACH mMasLC.M_InsertTextKeywordUsage
+   RESULT = SetCursorFirstEntity( mMasLC, "M_InsertTextKeywordUsage", "" );
+   while ( RESULT > zCURSOR_UNCHANGED )
+   { 
+      //:IF mMasLC.M_InsertTextKeywordUsage.wSelected = "Y"
+      if ( CompareAttributeToString( mMasLC, "M_InsertTextKeywordUsage", "wSelected", "Y" ) == 0 )
+      { 
+         //:Count = Count + 1
+         Count = Count + 1;
+      } 
+
+      RESULT = SetCursorNextEntity( mMasLC, "M_InsertTextKeywordUsage", "" );
+      //:END
+   } 
+
+   //:END
+   //:IF Count != 1
+   if ( Count != 1 )
+   { 
+      //:MessageSend( ViewToWindow, "", "Location Statement Move Keyword",
+      //:             "Exactly one Keyword must be selected",
+      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      MessageSend( ViewToWindow, "", "Location Statement Move Keyword", "Exactly one Keyword must be selected", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+      //:RETURN 2
+      if(8==8)return( 2 );
+   } 
+
+   //:END
+   //:SET CURSOR FIRST mMasLC.M_InsertTextKeywordUsage WHERE mMasLC.M_InsertTextKeywordUsage.wSelected = "Y"
+   RESULT = SetCursorFirstEntityByString( mMasLC, "M_InsertTextKeywordUsage", "wSelected", "Y", "" );
+   //:mMasLC.M_InsertTextKeywordUsage.wSelected = ""
+   SetAttributeFromString( mMasLC, "M_InsertTextKeywordUsage", "wSelected", "" );
+   //:FOR EACH mMasLC.M_InsertTextUsage
+   RESULT = SetCursorFirstEntity( mMasLC, "M_InsertTextUsage", "" );
+   while ( RESULT > zCURSOR_UNCHANGED )
+   { 
+      //:CREATE ENTITY mMasLC.M_SubUsage 
+      RESULT = CreateEntity( mMasLC, "M_SubUsage", zPOS_AFTER );
+      //:mMasLC.M_SubUsage.Name = mMasLC.M_InsertTextUsage.Text
+      SetAttributeFromAttribute( mMasLC, "M_SubUsage", "Name", mMasLC, "M_InsertTextUsage", "Text" );
+      //:DELETE ENTITY mMasLC.M_InsertTextUsage NONE
+      RESULT = DeleteEntity( mMasLC, "M_InsertTextUsage", zREPOS_NONE );
+      RESULT = SetCursorNextEntity( mMasLC, "M_InsertTextUsage", "" );
+   } 
+
+   //:END
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
 //:EditClaimsSection( VIEW ViewToWindow )
 
 //:   VIEW mMasLC REGISTERED AS mMasLC
@@ -7001,6 +7319,100 @@ AcceptAndReturnSubUsageStatement( View     ViewToWindow )
 
 
 //:DIALOG OPERATION
+//:AcceptAndReturnSubsurfaceStmt( VIEW ViewToWindow )
+
+//:   VIEW mMasLC REGISTERED AS mMasLC
+public int 
+AcceptAndReturnSubsurfaceStmt( View     ViewToWindow )
+{
+   zVIEW    mMasLC = new zVIEW( );
+   int      RESULT = 0;
+
+   RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
+
+   //:mMasLC.M_Usage.UsageType = "S"
+   SetAttributeFromString( mMasLC, "M_Usage", "UsageType", "S" );
+   //:   
+   //:// Accept temporal Usage statement.
+   //:AcceptSubobject( mMasLC, "M_Usage" )
+   AcceptSubobject( mMasLC, "M_Usage" );
+   //:ResetViewFromSubobject( mMasLC )
+   ResetViewFromSubobject( mMasLC );
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:AcceptAndReturnSubLocationStmt( VIEW ViewToWindow )
+
+//:   VIEW mMasLC REGISTERED AS mMasLC
+public int 
+AcceptAndReturnSubLocationStmt( View     ViewToWindow )
+{
+   zVIEW    mMasLC = new zVIEW( );
+   int      RESULT = 0;
+
+   RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
+
+   //:mMasLC.M_Usage.UsageType = "L"
+   SetAttributeFromString( mMasLC, "M_Usage", "UsageType", "L" );
+   //:   
+   //:// Accept temporal Usage statement.
+   //:AcceptSubobject( mMasLC, "M_Usage" )
+   AcceptSubobject( mMasLC, "M_Usage" );
+   //:ResetViewFromSubobject( mMasLC )
+   ResetViewFromSubobject( mMasLC );
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:CancelSubsurfacesStatement( VIEW ViewToWindow )
+
+//:   VIEW mMasLC REGISTERED AS mMasLC
+public int 
+CancelSubsurfacesStatement( View     ViewToWindow )
+{
+   zVIEW    mMasLC = new zVIEW( );
+   int      RESULT = 0;
+
+   RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
+
+   //:// Cancel temporal Usage statement.
+   //:CancelSubobject( mMasLC, "M_Usage" )
+   CancelSubobject( mMasLC, "M_Usage" );
+   //:ResetViewFromSubobject( mMasLC )
+   ResetViewFromSubobject( mMasLC );
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:CancelSubLocationStatement( VIEW ViewToWindow )
+
+//:   VIEW mMasLC REGISTERED AS mMasLC
+public int 
+CancelSubLocationStatement( View     ViewToWindow )
+{
+   zVIEW    mMasLC = new zVIEW( );
+   int      RESULT = 0;
+
+   RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
+
+   //:// Cancel temporal Usage statement.
+   //:CancelSubobject( mMasLC, "M_Usage" )
+   CancelSubobject( mMasLC, "M_Usage" );
+   //:ResetViewFromSubobject( mMasLC )
+   ResetViewFromSubobject( mMasLC );
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
 //:AcceptAddNewSubUsageStatement( VIEW ViewToWindow )
 
 //:   VIEW mMasLC REGISTERED AS mMasLC
@@ -7023,10 +7435,10 @@ AcceptAddNewSubUsageStatement( View     ViewToWindow )
    //:IF nRC < 0
    if ( nRC < 0 )
    { 
-      //:MessageSend( ViewToWindow, "", "Accept and Add New Surface Statement",
-      //:             "Error saving sub-surface statement.",
+      //:MessageSend( ViewToWindow, "", "Accept and Add New Usage Statement",
+      //:             "Error saving surface statement.",
       //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
-      MessageSend( ViewToWindow, "", "Accept and Add New Surface Statement", "Error saving sub-surface statement.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+      MessageSend( ViewToWindow, "", "Accept and Add New Usage Statement", "Error saving surface statement.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
       //:RETURN 2
       if(8==8)return( 2 );
    } 
@@ -7034,6 +7446,45 @@ AcceptAddNewSubUsageStatement( View     ViewToWindow )
    //:END
    //:CreateTemporalEntity( mMasLC, "M_SubUsage", zPOS_AFTER )
    CreateTemporalEntity( mMasLC, "M_SubUsage", zPOS_AFTER );
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:AcceptAddNewSubsurfaceStatement( VIEW ViewToWindow )
+
+//:   VIEW mMasLC REGISTERED AS mMasLC
+public int 
+AcceptAddNewSubsurfaceStatement( View     ViewToWindow )
+{
+   zVIEW    mMasLC = new zVIEW( );
+   int      RESULT = 0;
+   //:SHORT nRC
+   int      nRC = 0;
+
+   RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
+
+   //:mMasLC.M_SubUsage.UsageType = "S"
+   SetAttributeFromString( mMasLC, "M_SubUsage", "UsageType", "S" );
+   //:   
+   //:// Accept temporal Usage statement.
+   //:nRC = AcceptSubobject( mMasLC, "M_Usage" )
+   nRC = AcceptSubobject( mMasLC, "M_Usage" );
+   //:IF nRC < 0
+   if ( nRC < 0 )
+   { 
+      //:MessageSend( ViewToWindow, "", "Accept and Add New Surface Statement",
+      //:             "Error saving subsurface statement.",
+      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      MessageSend( ViewToWindow, "", "Accept and Add New Surface Statement", "Error saving subsurface statement.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+      //:RETURN 2
+      if(8==8)return( 2 );
+   } 
+
+   //:END
+   //:CreateTemporalEntity( mMasLC, "M_Usage", zPOS_AFTER )
+   CreateTemporalEntity( mMasLC, "M_Usage", zPOS_AFTER );
    return( 0 );
 // END
 } 
@@ -7537,7 +7988,7 @@ SaveMarketingSectionVersion( View     ViewToWindow )
    int      RESULT = 0;
 
    RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
-   //:   
+
    //:// Accept temporal NetContents.
    //:AcceptSubobject( mMasLC, "M_MarketingSection" )
    AcceptSubobject( mMasLC, "M_MarketingSection" );
@@ -7552,14 +8003,22 @@ SaveMarketingSectionVersion( View     ViewToWindow )
 
 
 //:DIALOG OPERATION
-//:DummyOperationForPositioning( VIEW ViewToWindow )
+//:PositionOnSubUsage( VIEW ViewToWindow )
 
+//:   VIEW mMasLC REGISTERED AS mMasLC
 public int 
-DummyOperationForPositioning( View     ViewToWindow )
+PositionOnSubUsage( View     ViewToWindow )
 {
+   zVIEW    mMasLC = new zVIEW( );
+   int      RESULT = 0;
 
+   RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
+
+   //:SetViewToSubobject( mMasLC, "M_SubUsage" )
+   SetViewToSubobject( mMasLC, "M_SubUsage" );
+   //:CreateTemporalSubobjectVersion( mMasLC, "M_Usage" )
+   CreateTemporalSubobjectVersion( mMasLC, "M_Usage" );
    return( 0 );
-//    // Do nothing ... for positioning only
 // END
 } 
 

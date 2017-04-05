@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCClaimsFootnoteStatement   Generate Timestamp: 20160914154443810 --%>
+<%-- wMLCSubsurfaceText   Generate Timestamp: 20170403201111543 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -13,7 +13,7 @@
 <%@ page import="com.quinsoft.zeidon.domains.*" %>
 <%@ page import="com.quinsoft.epamms.*" %>
 
-<%!
+<%! 
 
 ObjectEngine objectEngine = com.quinsoft.epamms.ZeidonObjectEngineConfiguration.getObjectEngine();
 
@@ -60,47 +60,22 @@ public int DoInputMapping( HttpServletRequest request,
    mMasLC = task.getViewByName( "mMasLC" );
    if ( VmlOperation.isValid( mMasLC ) )
    {
-      // EditBox: Footnote
-      nRC = mMasLC.cursor( "M_UsageFootnote" ).checkExistenceOfEntity( ).toInt();
+      // EditBox: SurfaceText
+      nRC = mMasLC.cursor( "M_SubUsage" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 ) // CursorResult.SET
       {
-         strMapValue = request.getParameter( "Footnote" );
-         task.log().debug( "Footnote prior to escape: " + strMapValue );
-         strMapValue = StringEscapeUtils.escapeHtml4( strMapValue );
-         task.log().debug( "Footnote after escape: " + strMapValue );
+         strMapValue = request.getParameter( "SurfaceText" );
          try
          {
             if ( webMapping )
-               VmlOperation.CreateMessage( task, "Footnote", "", strMapValue );
+               VmlOperation.CreateMessage( task, "SurfaceText", "", strMapValue );
             else
-               mMasLC.cursor( "M_UsageFootnote" ).getAttribute( "Text" ).setValue( strMapValue, "" );
+               mMasLC.cursor( "M_SubUsage" ).getAttribute( "Name" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
             nMapError = -16;
-            VmlOperation.CreateMessage( task, "Footnote", e.getReason( ), strMapValue );
-         }
-      }
-
-      // MLEdit: Symbol
-      nRC = mMasLC.cursor( "M_UsageFootnote" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 ) // CursorResult.SET
-      {
-         strMapValue = request.getParameter( "Symbol" );
-         task.log().debug( "Symbol prior to TrimTinyHtml: " + strMapValue );
-         strMapValue = VmlOperation.TrimTinyHtml( strMapValue );
-         task.log().debug( "Symbol after TrimTinyHtml: '" + strMapValue + "'" );
-         try
-         {
-            if ( webMapping )
-               VmlOperation.CreateMessage( task, "Symbol", "", strMapValue );
-            else
-               mMasLC.cursor( "M_UsageFootnote" ).getAttribute( "Symbol" ).setValue( strMapValue, "" );
-         }
-         catch ( InvalidAttributeValueException e )
-         {
-            nMapError = -16;
-            VmlOperation.CreateMessage( task, "Symbol", e.getReason( ), strMapValue );
+            VmlOperation.CreateMessage( task, "SurfaceText", e.getReason( ), strMapValue );
          }
       }
 
@@ -164,12 +139,12 @@ String strInputFileName = "";
 strActionToProcess = (String) request.getParameter( "zAction" );
 
 strLastWindow = (String) session.getAttribute( "ZeidonWindow" );
-if ( StringUtils.isBlank( strLastWindow ) )
+if ( StringUtils.isBlank( strLastWindow ) ) 
    strLastWindow = "NoLastWindow";
 
 strLastAction = (String) session.getAttribute( "ZeidonAction" );
 
-if ( strLastWindow.equals("wMLCClaimsFootnoteStatement") && StringUtils.isBlank( strActionToProcess ) && StringUtils.isBlank( strLastAction ) )
+if ( strLastWindow.equals("wMLCSubsurfaceText") && StringUtils.isBlank( strActionToProcess ) && StringUtils.isBlank( strLastAction ) )
 {
    strURL = response.encodeRedirectURL( "logout.jsp" );
    response.sendRedirect( strURL );
@@ -207,9 +182,9 @@ strURL = "";
 bDone = false;
 nRC = 0;
 
-task.log().info("*** wMLCClaimsFootnoteStatement strActionToProcess *** " + strActionToProcess );
-task.log().info("*** wMLCClaimsFootnoteStatement LastWindow *** " + strLastWindow );
-task.log().info("*** wMLCClaimsFootnoteStatement LastAction *** " + strLastAction );
+task.log().info("*** wMLCSubsurfaceText strActionToProcess *** " + strActionToProcess );
+task.log().info("*** wMLCSubsurfaceText LastWindow *** " + strLastWindow );
+task.log().info("*** wMLCSubsurfaceText LastAction *** " + strLastAction );
 
 if ( strActionToProcess != null )
 {
@@ -225,10 +200,86 @@ if ( strActionToProcess != null )
 
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "AcceptFootnoteStatement" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "AcceptAndAddNewSubsurface" ) )
    {
       bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCClaimsFootnoteStatement", strActionToProcess );
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCSubsurfaceText", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Action Operation
+      nRC = 0;
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCSubsurfaceText", "wMLC.AcceptAddNewSubsurfaceStatement" );
+      nOptRC = wMLC.AcceptAddNewSubsurfaceStatement( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "AcceptAndReturnSubUsageStatement" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCSubsurfaceText", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Action Operation
+      nRC = 0;
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCSubsurfaceText", "wMLC.AcceptAndReturnSubsurfaceStmt" );
+      nOptRC = wMLC.AcceptAndReturnSubsurfaceStmt( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReturnToParent, "", "" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "ADD_UsageKeyword" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCSubsurfaceText", strActionToProcess );
 
       // Input Mapping
       nRC = DoInputMapping( request, session, application, false );
@@ -239,64 +290,192 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-         View mMasLCAuto = task.getViewByName( "mMasLC" );
-         EntityCursor cursor = mMasLCAuto.cursor( "M_UsageFootnote" );
-            if ( cursor.isNull() )
-               nRC = 0;
-            else
-            {
-               if ( cursor.isVersioned( ) )
-               {
-                  cursor.acceptSubobject( );
-               }
-            nRC = 0;
-         }
+      View mMasLC = task.getViewByName( "mMasLC" );
+      EntityCursor cursor = mMasLC.cursor( "M_InsertTextKeywordUsage" );
+      cursor.createTemporalEntity( );
 
       }
       catch ( Exception e )
       {
          nRC = 2;
-         VmlOperation.CreateMessage( task, "AcceptFootnoteStatement", e.getMessage( ), "" );
+         VmlOperation.CreateMessage( task, "ADD_UsageKeyword", e.getMessage( ), "" );
          break;
       }
       // Next Window
-      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReturnToParent, "", "" );
+      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "AddUpdateKeywordUsage" );
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "CancelFootnoteStatement" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "CancelSubsurfaceStatement" ) )
    {
       bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCClaimsFootnoteStatement", strActionToProcess );
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCSubsurfaceText", strActionToProcess );
+
+      // Action Operation
+      nRC = 0;
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCSubsurfaceText", "wMLC.CancelSubsurfacesStatement" );
+      nOptRC = wMLC.CancelSubsurfacesStatement( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReturnToParent, "", "" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "DELETE_UsageKeyword" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCSubsurfaceText", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
 
       // Action Auto Object Function
       nRC = 0;
       try
       {
-         View mMasLCAuto = task.getViewByName( "mMasLC" );
-         EntityCursor cursor = mMasLCAuto.cursor( "M_UsageFootnote" );
-            if ( cursor.isNull() )
-               nRC = 0;
-            else
-            {
-               if ( cursor.isVersioned( ) )
-               {
-                  cursor.cancelSubobject( );
-               }
-            nRC = 0;
-         }
+      View mMasLC = task.getViewByName( "mMasLC" );
+      EntityCursor cursor = mMasLC.cursor( "M_InsertTextKeywordUsage" );
+      if ( cursor.isNull() )
+         nRC = 0;
+      else
+      {
+         cursor.deleteEntity( CursorPosition.NEXT );
+         nRC = 0;
+      }
 
       }
       catch ( Exception e )
       {
          nRC = 2;
-         VmlOperation.CreateMessage( task, "CancelFootnoteStatement", e.getMessage( ), "" );
+         VmlOperation.CreateMessage( task, "DELETE_UsageKeyword", e.getMessage( ), "" );
          break;
       }
       // Next Window
-      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReturnToParent, "", "" );
+      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_DisplayGeneratedTextUsage" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCSubsurfaceText", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Action Operation
+      nRC = 0;
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCSubsurfaceText", "wMLC.GOTO_DisplayGeneratedTextUsage" );
+      nOptRC = wMLC.GOTO_DisplayGeneratedTextUsage( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "GeneratedTextDisplay" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_UpdateSurfacesSubStatement" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCSubsurfaceText", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Action Auto Object Function
+      nRC = 0;
+      try
+      {
+      View mMasLC = task.getViewByName( "mMasLC" );
+      EntityCursor cursor = mMasLC.cursor( "M_Usage" );
+      cursor.createTemporalSubobjectVersion( );
+
+      }
+      catch ( Exception e )
+      {
+         nRC = 2;
+         VmlOperation.CreateMessage( task, "GOTO_UpdateSurfacesSubStatement", e.getMessage( ), "" );
+         break;
+      }
+      // Next Window
+      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "SurfacesStatement" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_UsageUpdate" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCSubsurfaceText", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Action Auto Object Function
+      nRC = 0;
+      try
+      {
+      View mMasLC = task.getViewByName( "mMasLC" );
+      EntityCursor cursor = mMasLC.cursor( "M_InsertTextKeywordUsage" );
+      cursor.createTemporalSubobjectVersion( );
+
+      }
+      catch ( Exception e )
+      {
+         nRC = 2;
+         VmlOperation.CreateMessage( task, "GOTO_UsageUpdate", e.getMessage( ), "" );
+         break;
+      }
+      // Next Window
+      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "AddUpdateKeywordUsage" );
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
@@ -321,7 +500,7 @@ if ( strActionToProcess != null )
       bDone = true;
       if ( task != null )
       {
-         task.log().info( "OnUnload UnregisterZeidonApplication: ----->>> " + "wMLCClaimsFootnoteStatement" );
+         task.log().info( "OnUnload UnregisterZeidonApplication: ----->>> " + "wMLCSubsurfaceText" );
          task.dropTask();
          task = null;
          session.setAttribute( "ZeidonTaskId", task );
@@ -338,7 +517,7 @@ if ( strActionToProcess != null )
       bDone = true;
       if ( task != null )
       {
-         task.log().info( "OnUnload UnregisterZeidonApplication: ------->>> " + "wMLCClaimsFootnoteStatement" );
+         task.log().info( "OnUnload UnregisterZeidonApplication: ------->>> " + "wMLCSubsurfaceText" );
          task.dropTask();
          task = null;
          session.setAttribute( "ZeidonTaskId", task );
@@ -353,14 +532,14 @@ if ( strActionToProcess != null )
    while ( bDone == false && strActionToProcess.equals( "_OnResubmitPage" ) )
    {
       bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCClaimsFootnoteStatement", strActionToProcess );
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCSubsurfaceText", strActionToProcess );
 
       // Input Mapping
       nRC = DoInputMapping( request, session, application, false );
       if ( nRC < 0 )
          break;
 
-      strURL = response.encodeRedirectURL( "wMLCClaimsFootnoteStatement.jsp" );
+      strURL = response.encodeRedirectURL( "wMLCSubsurfaceText.jsp" );
       nRC = 1;  //do the redirection
       break;
    }
@@ -371,11 +550,11 @@ if ( strActionToProcess != null )
       {
          if ( nRC > 1 )
          {
-            strURL = response.encodeRedirectURL( "wMLCClaimsFootnoteStatement.jsp" );
+            strURL = response.encodeRedirectURL( "wMLCSubsurfaceText.jsp" );
             task.log().info( "Action Error Redirect to: " + strURL );
          }
 
-         if ( ! strURL.equals("wMLCClaimsFootnoteStatement.jsp") )
+         if ( ! strURL.equals("wMLCSubsurfaceText.jsp") ) 
          {
             response.sendRedirect( strURL );
             // If we are redirecting to a new page, then we need this return so that the rest of this page doesn't get built.
@@ -386,7 +565,7 @@ if ( strActionToProcess != null )
       {
          if ( nRC > -128 )
          {
-            strURL = response.encodeRedirectURL( "wMLCClaimsFootnoteStatement.jsp" );
+            strURL = response.encodeRedirectURL( "wMLCSubsurfaceText.jsp" );
             task.log().info( "Mapping Error Redirect to: " + strURL );
          }
          else
@@ -414,7 +593,7 @@ else
    if ( VmlOperation.isValid( wWebXA ) )
    {
       wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wMLC", "" );
-      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "ClaimsFootnoteStatement", "" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "SubsurfaceText", "" );
    }
 
 %>
@@ -422,7 +601,7 @@ else
 <html>
 <head>
 
-<title>Ingredients Statement</title>
+<title>Surface Text</title>
 
 <%@ include file="./include/head.inc" %>
 <!-- Timeout.inc has a value for nTimeout which is used to determine when to -->
@@ -433,13 +612,7 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
-
-<!-- TinyMCE -->
-<script language="JavaScript" type="text/javascript" src="./js/tinymce/js/tinymce/tinymce.min.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/TinyMCE.js"></script>
-<!-- /TinyMCE -->
-
-<script language="JavaScript" type="text/javascript" src="./genjs/wMLCClaimsFootnoteStatement.js"></script>
+<script language="JavaScript" type="text/javascript" src="./genjs/wMLCSubsurfaceText.js"></script>
 
 </head>
 
@@ -459,11 +632,21 @@ else
 <div id="sidenavigation">
    <ul id="Return" name="Return">
 <%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "SaveAndReturn" );
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "AcceptAndReturn" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="SaveAndReturn" name="SaveAndReturn"><a href="#"  onclick="AcceptFootnoteStatement()">Accept & Return</a></li>
+       <li id="AcceptAndReturn" name="AcceptAndReturn"><a href="#"  onclick="AcceptAndReturnSubUsageStatement()">Accept & Return</a></li>
+<%
+   }
+%>
+
+<%
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "AcceptAddNew" );
+   if ( !csrRC.isSet() ) //if ( nRC < 0 )
+   {
+%>
+       <li id="AcceptAddNew" name="AcceptAddNew"><a href="#"  onclick="AcceptAndAddNewSubsurface()">Accept and Add New</a></li>
 <%
    }
 %>
@@ -473,7 +656,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="CancelAndReturn" name="CancelAndReturn"><a href="#"  onclick="CancelFootnoteStatement()">Cancel & Return</a></li>
+       <li id="CancelAndReturn" name="CancelAndReturn"><a href="#"  onclick="CancelSubsurfaceStatement()">Cancel & Return</a></li>
 <%
    }
 %>
@@ -491,7 +674,7 @@ else
 <!-- END System Maintenance-->
 
 
-<form name="wMLCClaimsFootnoteStatement" id="wMLCClaimsFootnoteStatement" method="post">
+<form name="wMLCSubsurfaceText" id="wMLCSubsurfaceText" method="post">
    <input name="zAction" id="zAction" type="hidden" value="NOVALUE">
    <input name="zTableRowSelect" id="zTableRowSelect" type="hidden" value="NOVALUE">
    <input name="zDisable" id="zDisable" type="hidden" value="NOVALUE">
@@ -571,7 +754,7 @@ else
 
    strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString( "" );
 
-   strFocusCtrl = VmlOperation.GetFocusCtrl( task, "wMLC", "ClaimsFootnoteStatement" );
+   strFocusCtrl = VmlOperation.GetFocusCtrl( task, "wMLC", "SubsurfaceText" );
    strOpenFile = VmlOperation.FindOpenFile( task );
    strDateFormat = "YYYY.MM.DD";
 
@@ -594,6 +777,7 @@ else
    <input name="zFocusCtrl" id="zFocusCtrl" type="hidden" value="<%=strFocusCtrl%>">
    <input name="zOpenFile" id="zOpenFile" type="hidden" value="<%=strOpenFile%>">
    <input name="zDateFormat" id="zDateFormat" type="hidden" value="<%=strDateFormat%>">
+   <input name="zDateSequence" id="zDateSequence" type="hidden" value="MDY">
    <input name="zLoginName" id="zLoginName" type="hidden" value="<%=strLoginName%>">
    <input name="zKeyRole" id="zKeyRole" type="hidden" value="<%=strKeyRole%>">
    <input name="zOpenPopupWindow" id="zOpenPopupWindow" type="hidden" value="<%=strOpenPopupWindow%>">
@@ -615,35 +799,52 @@ else
 <div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox4:GroupBox */ %>
 
-<div id="GroupBox4" name="GroupBox4"   style="float:left;position:relative; width:730px; height:28px;">  <!-- GroupBox4 -->
-
-<% /* PrecautionarySection1:Text */ %>
-
-<label class="groupbox"  id="PrecautionarySection1" name="PrecautionarySection1" style="width:338px;height:16px;position:absolute;left:6px;top:6px;">Claims Footnote Statement</label>
+<div id="GroupBox4" name="GroupBox4" style="width:776px;height:28px;float:left;">  <!-- GroupBox4 --> 
 
 
-</div>  <!--  GroupBox4 -->
+ <!-- This is added as a line spacer -->
+<div style="height:6px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<span style="height:16px;">&nbsp</span>
+<% /* SurfaceText::Text */ %>
+
+<span class="groupbox"  id="SurfaceText:" name="SurfaceText:" style="width:338px;height:16px;">Surface Text</span>
+
+</div>  <!-- End of a new line -->
+
+
+</div>  <!--  GroupBox4 --> 
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
 
 
- <!-- This is added as a line spacer -->
-<div style="height:4px;width:100px;"></div>
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GBPrecautionarySection:GroupBox */ %>
+
+<div id="GBPrecautionarySection" name="GBPrecautionarySection" class="withborder" style="width:776px;height:44px;float:left;">  <!-- GBPrecautionarySection --> 
+
 
 <div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GBIngredientsStatement:GroupBox */ %>
+<div style="height:1px;width:8px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GroupBox2:GroupBox */ %>
+<div id="GroupBox2" name="GroupBox2" style="float:left;width:760px;" >
 
-<div id="GBIngredientsStatement" name="GBIngredientsStatement"   style="float:left;position:relative; width:670px; height:66px;">  <!-- GBIngredientsStatement -->
+<table cols=0 style="width:760px;"  class="grouptable">
 
-<% /* ActiveTitle::Text */ %>
+<tr>
+<td valign="top" style="width:132px;">
+<% /* Name::Text */ %>
 
-<label  id="ActiveTitle:" name="ActiveTitle:" style="width:62px;height:20px;position:absolute;left:8px;top:6px;">Text:</label>
+<span  id="Name:" name="Name:" style="width:128px;height:16px;">Name:</span>
 
-<% /* Footnote:EditBox */ %>
+</td>
+<td valign="top"  class="text12" style="width:614px;">
+<% /* SurfaceText:EditBox */ %>
 <%
-   strErrorMapValue = VmlOperation.CheckError( "Footnote", strError );
+   strErrorMapValue = VmlOperation.CheckError( "SurfaceText", strError );
    if ( !StringUtils.isBlank( strErrorMapValue ) )
    {
       if ( StringUtils.equals( strErrorFlag, "Y" ) )
@@ -654,84 +855,44 @@ else
       strErrorColor = "";
       mMasLC = task.getViewByName( "mMasLC" );
       if ( VmlOperation.isValid( mMasLC ) == false )
-         task.log( ).debug( "Invalid View: " + "Footnote" );
+         task.log( ).debug( "Invalid View: " + "SurfaceText" );
       else
       {
-         nRC = mMasLC.cursor( "M_UsageFootnote" ).checkExistenceOfEntity( ).toInt();
+         nRC = mMasLC.cursor( "M_SubUsage" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
             try
             {
-               strErrorMapValue = mMasLC.cursor( "M_UsageFootnote" ).getAttribute( "Text" ).getString( "" );
-               task.log().debug( "Footnote prior to unescape: " + strErrorMapValue );
-               strErrorMapValue = StringEscapeUtils.unescapeHtml4( strErrorMapValue );
-               task.log().debug( "Footnote after unescape: " + strErrorMapValue );
+               strErrorMapValue = mMasLC.cursor( "M_SubUsage" ).getAttribute( "Name" ).getString( "" );
             }
             catch (Exception e)
             {
-               out.println("There is an error on Footnote: " + e.getMessage());
-               task.log().error( "*** Error on ctrl Footnote", e );
+               out.println("There is an error on SurfaceText: " + e.getMessage());
+               task.log().error( "*** Error on ctrl SurfaceText", e );
             }
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
 
-            task.log( ).debug( "M_UsageFootnote.Text: " + strErrorMapValue );
+            task.log( ).debug( "M_SubUsage.Name: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist for Footnote: " + "mMasLC.M_UsageFootnote" );
+            task.log( ).debug( "Entity does not exist for SurfaceText: " + "mMasLC.M_SubUsage" );
       }
    }
 %>
 
-<input name="Footnote" id="Footnote" maxlength="2048" style="width:594px;position:absolute;left:70px;top:6px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12"  name="SurfaceText" id="SurfaceText" maxlength="4096" style="width:614px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
-<% /* Symbol::Text */ %>
+</td>
+</tr>
+</table>
 
-<label  id="Symbol:" name="Symbol:" style="width:62px;height:20px;position:absolute;left:8px;top:36px;">Symbol:</label>
+</div>  <!-- GroupBox2 --> 
 
-<% /* GroupBox1:GroupBox */ %>
-
-<div id="GroupBox1" name="GroupBox1" style="width:168px;height:18px;position:absolute;left:70px;top:36px;">  <!-- GroupBox1 -->
-
-<% /* Symbol:MLEdit */ %>
-<%
-   // : Symbol
-   strErrorMapValue = VmlOperation.CheckError( "Symbol", strError );
-   if ( !StringUtils.isBlank( strErrorMapValue ) )
-   {
-      if ( StringUtils.equals( strErrorFlag, "Y" ) )
-         strErrorColor = "color:red;";
-   }
-   else
-   {
-      strErrorColor = "";
-      mMasLC = task.getViewByName( "mMasLC" );
-      if ( VmlOperation.isValid( mMasLC ) == false )
-         task.log( ).info( "Invalid View: " + "Symbol" );
-      else
-      {
-         nRC = mMasLC.cursor( "M_UsageFootnote" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-         {
-            strErrorMapValue = mMasLC.cursor( "M_UsageFootnote" ).getAttribute( "Symbol" ).getString( "" );
-            if ( strErrorMapValue == null )
-               strErrorMapValue = "";
-
-            task.log( ).info( "M_UsageFootnote.Symbol: " + strErrorMapValue );
-         }
-         else
-            task.log( ).info( "Entity does not exist for Symbol: " + "mMasLC.M_UsageFootnote" );
-      }
-   }
-%>
-
-<div style="background-color:#eee;border:1px solid #042;width:166px;height:20px;position:absolute;left:0px;top:0px;overflow:auto;">
-<div class="mceSimpleZeidonSpecialCharacters" name="Symbol" id="Symbol" style="width:166px;height:20px;position:absolute;left:0px;top:0px;"><%=strErrorMapValue%></div></div>
+</div>  <!-- End of a new line -->
 
 
-</div>  <!--  GroupBox1 -->
-
-</div>  <!--  GBIngredientsStatement -->
+</div>  <!--  GBPrecautionarySection --> 
 </div>  <!-- End of a new line -->
 
 
@@ -764,7 +925,7 @@ else
 <script type="text/javascript">animatedcollapse.init();</script>
 </html>
 <%
-   session.setAttribute( "ZeidonWindow", "wMLCClaimsFootnoteStatement" );
+   session.setAttribute( "ZeidonWindow", "wMLCSubsurfaceText" );
    session.setAttribute( "ZeidonAction", null );
 
    strActionToProcess = "";

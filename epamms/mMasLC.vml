@@ -707,7 +707,7 @@ END
 /////////////////////////////////////////////////////////////////////////////
 //
 //  OPERATION: dUsgTextSubUsageNames
-//  Display required text + optional atomic usages
+//  Display required text with embedded keywords + optional atomic usages
 //
 /////////////////////////////////////////////////////////////////////////////
 DERIVED ATTRIBUTE OPERATION
@@ -720,6 +720,8 @@ dUsgTextSubUsageNames( VIEW mMasLC BASED ON LOD mMasLC,
    STRING ( 2048 ) szDisplayStatement
    STRING ( 100 ) szUsageName
    STRING ( 100 ) szUsageText
+   STRING ( 1 ) szUsageType
+   SHORT bFirst
 
    CASE GetOrSetFlag
    OF   zDERIVED_GET:
@@ -732,8 +734,39 @@ dUsgTextSubUsageNames( VIEW mMasLC BASED ON LOD mMasLC,
          IF mMasLC.M_InsertTextKeywordUsage EXISTS
             CreateViewFromView( mMasLC2, mMasLC )
             FOR EACH mMasLC2.M_InsertTextKeywordUsage
+               szUsageType = mMasLC2.M_InsertTextKeywordUsage.Type // A - all optional; O - Zero or one allowed; R - at least one required; X - exactly one required
                szUsageName = "{" + mMasLC2.M_InsertTextKeywordUsage.Name + "}"
-               szUsageText = "<b>" + mMasLC2.M_InsertTextUsage.Text + "</b>"
+               bFirst = 1
+               IF szUsageType = "A"
+                  szUsageText = ""
+               ELSE
+                  szUsageText = "["
+               END
+               FOR EACH mMasLC2.M_InsertTextUsage
+                  IF bFirst = 1
+                     bFirst = 0
+                     szUsageText = szUsageText + "<b>" + mMasLC2.M_InsertTextUsage.Text + "</b>"
+                  ELSE
+                    IF szUsageType = "A"
+                       szUsageText = szUsageText + ", <b>" + mMasLC2.M_InsertTextUsage.Text + "</b>"
+                    ELSE
+                    IF szUsageType = "O"
+                       szUsageText = szUsageText + " || <b>" + mMasLC2.M_InsertTextUsage.Text + "</b>"
+                    ELSE
+                    IF szUsageType = "R"
+                       szUsageText = szUsageText + " or <b>" + mMasLC2.M_InsertTextUsage.Text + "</b>"
+                    ELSE
+                 // IF szUsageType = "X"
+                       szUsageText = szUsageText + " / <b>" + mMasLC2.M_InsertTextUsage.Text + "</b>"
+                 // END
+                    END
+                    END
+                    END
+                  END
+               END
+               IF szUsageType != "A"
+                  szUsageText = szUsageText + "]"
+               END
                zSearchAndReplace( szDisplayStatement, 2048, szUsageName, szUsageText )
             END
             DropView( mMasLC2 )

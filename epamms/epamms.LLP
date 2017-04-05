@@ -1,4 +1,4 @@
-z1000-Zeidon    EPAMMS   TZCMLPLO                         03/24/17   15:27:41 1.0a2   
+z1000-Zeidon    EPAMMS   TZCMLPLO                         04/04/17   20:15:39 1.0a2   
 eLPLR      1
 aName      epamms
 aDesc      ePamms Application
@@ -6,7 +6,7 @@ aZKey      4324720
 aPgmSrcDir %kzd%:\lplr\epamms
 aExecDir   %kzd%:\lplr\epamms\bin
 aMetaSrcDir %kzd%:\lplr\epamms
-aTaskUseCount 1
+aTaskUseCount 0
 aLastBuildDate 20170228104819392
 aLPLR_Type 2
 aCurrentCompilerSpec DKS
@@ -511,13 +511,6 @@ eW_MetaType 2
 aType      3
 
 eW_MetaDef 3
-aCPLR_ZKey 68567480
-aStatus    1
-aUpdateInd 2
-aName      Blob
-aLastUpdateDate 20161017192651442
-
-eW_MetaDef 3
 aCPLR_ZKey 68568187
 aStatus    1
 aUpdateInd 2
@@ -910,207 +903,184 @@ aName      AlphaNumericUpperStrip
 aLastUpdateDate 20140411211038000
 
 eW_MetaDef 3
+aCPLR_ZKey 68567480
+aStatus    1
+aName      Blob
+aGroupName Base
+
+eW_MetaDef 3
 aCPLR_ZKey 130001718
 aStatus    1
-aUpdateInd 2
 aName      Units
-aLastUpdateDate 20161017192651442
+aGroupName Base
 
 eW_MetaDef 3
 aCPLR_ZKey 130001711
 aStatus    1
-aUpdateInd 2
 aName      Status
-aLastUpdateDate 20161017192651442
+aGroupName Base
 
 eW_MetaDef 3
 aCPLR_ZKey 110370112
 aStatus    1
-aUpdateInd 2
 aName      ContainerTypeStorageDisposal
-aLastUpdateDate 20161017192651442
+aGroupName Base
 
 eW_MetaDef 3
 aCPLR_ZKey 110226099
 aStatus    1
-aUpdateInd 2
 aName      InsertTextKeywordType
-aLastUpdateDate 20161017192651442
+aGroupName Base
 
 eW_MetaDef 3
 aCPLR_ZKey 110059061
 aStatus    1
-aUpdateInd 2
 aName      ContainerVolumeEnvironmentHazard
-aLastUpdateDate 20161017192651442
+aGroupName Base
 
 eW_MetaDef 3
 aCPLR_ZKey 110059057
 aStatus    1
-aUpdateInd 2
 aName      ContainerVolumeStorageDisposal
-aLastUpdateDate 20161017192651442
+aGroupName Base
 
 eW_MetaDef 3
 aCPLR_ZKey 110006612
 aStatus    1
-aUpdateInd 2
 aName      CompositeSectionType
-aLastUpdateDate 20161017192651442
+aGroupName Base
 
 eW_MetaDef 3
 aCPLR_ZKey 110003579
 aStatus    1
-aUpdateInd 2
 aName      HazardLocationSeparator
-aLastUpdateDate 20161017192651442
+aGroupName Base
 
 eW_MetaDef 3
 aCPLR_ZKey 130001702
 aStatus    1
-aUpdateInd 2
 aName      DonTest
-aLastUpdateDate 20161017192651442
+aGroupName Base
 
 eW_MetaDef 3
 aCPLR_ZKey 4730208
 aStatus    1
-aUpdateInd 2
 aName      DirectionsNotForUseType
-aLastUpdateDate 20161017192651442
+aGroupName Base
 
 eW_MetaDef 3
 aCPLR_ZKey 1186473
 aStatus    1
-aUpdateInd 2
 aName      BoldItalic
-aLastUpdateDate 20161017192651442
+aGroupName Base
 
 eW_MetaDef 3
 aCPLR_ZKey 3934625
 aStatus    1
-aUpdateInd 2
 aName      StorageDisposalSectionType
-aLastUpdateDate 20161017192651442
+aGroupName Base
 
 eW_MetaDef 3
 aCPLR_ZKey 3898401
 aStatus    1
-aUpdateInd 2
 aName      HazardPanel
-aLastUpdateDate 20161017192651442
+aGroupName Base
 
 eW_MetaDef 3
 aCPLR_ZKey 3785525
 aStatus    1
-aUpdateInd 2
 aName      HTML Units
-aLastUpdateDate 20161017192651442
+aGroupName Base
 
 eW_MetaDef 3
 aCPLR_ZKey 2294674
 aStatus    1
-aUpdateInd 2
 aName      REVDate
-aLastUpdateDate 20161017192651442
+aGroupName Base
 
 eW_MetaDef 3
 aCPLR_ZKey 2294672
 aStatus    1
-aUpdateInd 2
 aName      ESLDate
-aLastUpdateDate 20161017192651442
+aGroupName Base
 
 eW_MetaDef 3
 aCPLR_ZKey 70220060
 aStatus    1
-aUpdateInd 2
 aName      ClaimsClassification
-aLastUpdateDate 20161017192651442
+aGroupName Base
 
 eW_MetaDef 3
 aCPLR_ZKey 1639285
 aStatus    1
-aUpdateInd 2
 aName      CompanyRole
-aLastUpdateDate 20161017192651442
+aGroupName Base
 
 eW_MetaDef 3
 aCPLR_ZKey 1266501
 aStatus    1
-aUpdateInd 2
 aName      ActiveInert
-aLastUpdateDate 20161017192651442
+aGroupName Base
 
 eW_MetaDef 3
 aCPLR_ZKey 1206938
 aStatus    1
-aUpdateInd 2
 aName      ContentSectionType
-aLastUpdateDate 20161017192651442
+aGroupName Base
 
 eW_MetaDef 3
 aCPLR_ZKey 1164066
 aStatus    1
-aUpdateInd 2
 aName      ExperienceLevel
-aLastUpdateDate 20161017192651442
+aGroupName Base
 
 eW_MetaDef 3
 aCPLR_ZKey 69055597
 aStatus    1
-aUpdateInd 2
 aName      GeneralSectionType
-aLastUpdateDate 20161017192651442
+aGroupName Base
 
 eW_MetaDef 3
 aCPLR_ZKey 1178868
 aStatus    1
-aUpdateInd 2
 aName      EPA_StatementType
-aLastUpdateDate 20161017192651442
+aGroupName Base
 
 eW_MetaDef 3
 aCPLR_ZKey 1178527
 aStatus    1
-aUpdateInd 2
 aName      ToxicityCategory
-aLastUpdateDate 20161017192651442
+aGroupName Base
 
 eW_MetaDef 3
 aCPLR_ZKey 1178519
 aStatus    1
-aUpdateInd 2
 aName      ChemicalFamily
-aLastUpdateDate 20161017192651442
+aGroupName Base
 
 eW_MetaDef 3
 aCPLR_ZKey 1178421
 aStatus    1
-aUpdateInd 2
 aName      ChildHazardWarning
-aLastUpdateDate 20161017192651442
+aGroupName Base
 
 eW_MetaDef 3
 aCPLR_ZKey 1178406
 aStatus    1
-aUpdateInd 2
 aName      SignalWord
-aLastUpdateDate 20161017192651442
+aGroupName Base
 
 eW_MetaDef 3
 aCPLR_ZKey 68567482
 aStatus    1
-aUpdateInd 2
 aName      Y/N
-aLastUpdateDate 20161017192651442
+aGroupName Base
 
 eW_MetaDef 3
 aCPLR_ZKey 4322633
 aStatus    1
-aUpdateInd 2
 aName      BorderStyle
-aLastUpdateDate 20161017192651442
+aGroupName Base
 
 eW_MetaType 2
 aType      4
@@ -1369,8 +1339,8 @@ aStatus    1
 aUpdateInd 2
 aName      mMasLC
 aDesc      Master Label Content Maintenance
-aLastSyncDate 20161118200218608
-aLastUpdateDate 20161118200218608
+aLastSyncDate 20170404124451936
+aLastUpdateDate 20170404124451936
 
 eW_MetaDef 3
 aCPLR_ZKey 69013382
@@ -2257,8 +2227,8 @@ aStatus    1
 aUpdateInd 2
 aName      wMLC
 aDesc      Master (Primary Registrant) Label Content
-aLastSyncDate 20170303192012888
-aLastUpdateDate 20170303192012888
+aLastSyncDate 20170404201359810
+aLastUpdateDate 20170404201359810
 
 eW_MetaDef 3
 aCPLR_ZKey 1158563
@@ -2275,8 +2245,8 @@ aStatus    1
 aUpdateInd 2
 aName      wSLC
 aDesc      Subregistrant Label Content
-aLastSyncDate 20170324152741891
-aLastUpdateDate 20170324152741891
+aLastSyncDate 20170324153616834
+aLastUpdateDate 20170324153616834
 
 eW_MetaDef 3
 aCPLR_ZKey 11205
@@ -2334,8 +2304,8 @@ aCPLR_ZKey 68567479
 aStatus    1
 aUpdateInd 2
 aName      Base
-aLastSyncDate 20161017192651442
-aLastUpdateDate 20161017192651442
+aLastSyncDate 20170403074827621
+aLastUpdateDate 20170403074827621
 
 eW_MetaDef 3
 aCPLR_ZKey 68567489
@@ -2684,6 +2654,10 @@ eW_MetaType 2
 aType      2003
 
 eW_MetaDef 3
+aCPLR_ZKey 1266501
+aStatus    1
+aName      ActiveInert
+aLastUpdateDate 20170403074827621
 aGroupName Base
 
 eW_MetaDef 3
@@ -2693,42 +2667,90 @@ eW_MetaDef 3
 aGroupName DomainC
 
 eW_MetaDef 3
+aCPLR_ZKey 68567480
+aStatus    1
+aName      Blob
+aLastUpdateDate 20170403074827621
 aGroupName Base
 
 eW_MetaDef 3
+aCPLR_ZKey 1186473
+aStatus    1
+aName      BoldItalic
+aLastUpdateDate 20170403074827621
 aGroupName Base
 
 eW_MetaDef 3
+aCPLR_ZKey 4322633
+aStatus    1
+aName      BorderStyle
+aLastUpdateDate 20170403074827621
 aGroupName Base
 
 eW_MetaDef 3
+aCPLR_ZKey 1178519
+aStatus    1
+aName      ChemicalFamily
+aLastUpdateDate 20170403074827621
 aGroupName Base
 
 eW_MetaDef 3
+aCPLR_ZKey 1178421
+aStatus    1
+aName      ChildHazardWarning
+aLastUpdateDate 20170403074827621
 aGroupName Base
 
 eW_MetaDef 3
+aCPLR_ZKey 70220060
+aStatus    1
+aName      ClaimsClassification
+aLastUpdateDate 20170403074827621
 aGroupName Base
 
 eW_MetaDef 3
 aGroupName Template
 
 eW_MetaDef 3
+aCPLR_ZKey 1639285
+aStatus    1
+aName      CompanyRole
+aLastUpdateDate 20170403074827621
 aGroupName Base
 
 eW_MetaDef 3
+aCPLR_ZKey 110006612
+aStatus    1
+aName      CompositeSectionType
+aLastUpdateDate 20170403074827621
 aGroupName Base
 
 eW_MetaDef 3
+aCPLR_ZKey 110370112
+aStatus    1
+aName      ContainerTypeStorageDisposal
+aLastUpdateDate 20170403074827621
 aGroupName Base
 
 eW_MetaDef 3
+aCPLR_ZKey 110059061
+aStatus    1
+aName      ContainerVolumeEnvironmentHazard
+aLastUpdateDate 20170403074827621
 aGroupName Base
 
 eW_MetaDef 3
+aCPLR_ZKey 110059057
+aStatus    1
+aName      ContainerVolumeStorageDisposal
+aLastUpdateDate 20170403074827621
 aGroupName Base
 
 eW_MetaDef 3
+aCPLR_ZKey 1206938
+aStatus    1
+aName      ContentSectionType
+aLastUpdateDate 20170403074827621
 aGroupName Base
 
 eW_MetaDef 3
@@ -2783,21 +2805,41 @@ eW_MetaDef 3
 aGroupName TZAPDMAA
 
 eW_MetaDef 3
+aCPLR_ZKey 4730208
+aStatus    1
+aName      DirectionsNotForUseType
+aLastUpdateDate 20170403074827621
 aGroupName Base
 
 eW_MetaDef 3
+aCPLR_ZKey 130001702
+aStatus    1
+aName      DonTest
+aLastUpdateDate 20170403074827621
 aGroupName Base
 
 eW_MetaDef 3
 aGroupName TextsA
 
 eW_MetaDef 3
+aCPLR_ZKey 1178868
+aStatus    1
+aName      EPA_StatementType
+aLastUpdateDate 20170403074827621
 aGroupName Base
 
 eW_MetaDef 3
+aCPLR_ZKey 2294672
+aStatus    1
+aName      ESLDate
+aLastUpdateDate 20170403074827621
 aGroupName Base
 
 eW_MetaDef 3
+aCPLR_ZKey 1164066
+aStatus    1
+aName      ExperienceLevel
+aLastUpdateDate 20170403074827621
 aGroupName Base
 
 eW_MetaDef 3
@@ -2828,18 +2870,38 @@ eW_MetaDef 3
 aGroupName TextsA
 
 eW_MetaDef 3
+aCPLR_ZKey 69055597
+aStatus    1
+aName      GeneralSectionType
+aLastUpdateDate 20170403074827621
 aGroupName Base
 
 eW_MetaDef 3
+aCPLR_ZKey 110003579
+aStatus    1
+aName      HazardLocationSeparator
+aLastUpdateDate 20170403074827621
 aGroupName Base
 
 eW_MetaDef 3
+aCPLR_ZKey 3898401
+aStatus    1
+aName      HazardPanel
+aLastUpdateDate 20170403074827621
 aGroupName Base
 
 eW_MetaDef 3
+aCPLR_ZKey 3785525
+aStatus    1
+aName      HTML Units
+aLastUpdateDate 20170403074827621
 aGroupName Base
 
 eW_MetaDef 3
+aCPLR_ZKey 110226099
+aStatus    1
+aName      InsertTextKeywordType
+aLastUpdateDate 20170403074827621
 aGroupName Base
 
 eW_MetaDef 3
@@ -2879,6 +2941,10 @@ eW_MetaDef 3
 aGroupName TextsA
 
 eW_MetaDef 3
+aCPLR_ZKey 2294674
+aStatus    1
+aName      REVDate
+aLastUpdateDate 20170403074827621
 aGroupName Base
 
 eW_MetaDef 3
@@ -2894,15 +2960,27 @@ eW_MetaDef 3
 aGroupName TextsA
 
 eW_MetaDef 3
+aCPLR_ZKey 1178406
+aStatus    1
+aName      SignalWord
+aLastUpdateDate 20170403074827621
 aGroupName Base
 
 eW_MetaDef 3
 aGroupName TablesA
 
 eW_MetaDef 3
+aCPLR_ZKey 130001711
+aStatus    1
+aName      Status
+aLastUpdateDate 20170403074827621
 aGroupName Base
 
 eW_MetaDef 3
+aCPLR_ZKey 3934625
+aStatus    1
+aName      StorageDisposalSectionType
+aLastUpdateDate 20170403074827621
 aGroupName Base
 
 eW_MetaDef 3
@@ -2924,15 +3002,27 @@ eW_MetaDef 3
 aGroupName TZAPDMAB
 
 eW_MetaDef 3
+aCPLR_ZKey 1178527
+aStatus    1
+aName      ToxicityCategory
+aLastUpdateDate 20170403074827621
 aGroupName Base
 
 eW_MetaDef 3
+aCPLR_ZKey 130001718
+aStatus    1
+aName      Units
+aLastUpdateDate 20170403074827621
 aGroupName Base
 
 eW_MetaDef 3
 aGroupName Template
 
 eW_MetaDef 3
+aCPLR_ZKey 68567482
+aStatus    1
+aName      Y/N
+aLastUpdateDate 20170403074827621
 aGroupName Base
 
 eW_MetaDef 3
@@ -3709,92 +3799,62 @@ i408       80
 i409       81
 i410       82
 i411       83
-i413       160
-i414       105
-i415       141
-i416       85
-i417       152
-i418       170
-i419       166
-i420       167
-i421       158
-i422       134
-i423       159
-i424       148
-i425       144
-i426       146
-i427       147
-i428       161
-i429       127
-i430       99
-i431       104
-i432       111
-i433       86
-i434       98
-i435       97
-i436       96
-i437       95
-i438       94
-i439       93
-i440       92
-i441       91
-i442       90
-i443       89
-i444       88
-i445       106
-i446       151
-i447       150
-i448       120
-i449       164
-i450       157
-i451       162
-i452       102
-i453       108
-i454       116
-i455       133
-i456       131
-i457       132
-i458       122
-i459       125
-i460       115
-i461       163
-i462       149
-i463       154
-i464       155
-i465       145
-i466       113
-i467       117
-i468       128
-i469       138
-i470       114
-i471       101
-i472       107
-i473       124
-i474       110
-i475       109
-i476       87
-i477       123
-i478       156
-i479       140
-i480       129
-i481       119
-i482       118
-i483       168
-i484       139
-i485       143
-i486       153
-i487       137
-i488       126
-i489       136
-i490       112
-i491       130
-i492       103
-i493       165
-i494       142
-i495       135
-i496       169
-i497       100
-i498       121
+i414       104
+i415       140
+i422       133
+i429       126
+i430       98
+i431       103
+i432       110
+i433       85
+i434       97
+i435       96
+i436       95
+i437       94
+i438       93
+i439       92
+i440       91
+i441       90
+i442       89
+i443       88
+i444       87
+i445       105
+i448       119
+i452       101
+i453       107
+i454       115
+i455       132
+i456       130
+i457       131
+i458       121
+i459       124
+i460       114
+i466       112
+i467       116
+i468       127
+i469       137
+i470       113
+i471       100
+i472       106
+i473       123
+i474       109
+i475       108
+i476       86
+i477       122
+i479       139
+i480       128
+i481       118
+i482       117
+i484       138
+i487       136
+i488       125
+i489       135
+i490       111
+i491       129
+i492       102
+i495       134
+i497       99
+i498       120
 i500       172
 i502       174
 i504       176

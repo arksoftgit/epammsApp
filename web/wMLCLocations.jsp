@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCLocations   Generate Timestamp: 20160914154445215 --%>
+<%-- wMLCLocations   Generate Timestamp: 20170404201402618 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -565,8 +565,8 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-         EntityCursor cursor = mMasLC.cursor( "M_Usage" );
-         cursor.createTemporalSubobjectVersion( );
+      EntityCursor cursor = mMasLC.cursor( "M_Usage" );
+      cursor.createTemporalSubobjectVersion( );
 
       }
       catch ( Exception e )
@@ -1401,11 +1401,11 @@ else
 %>
 
 <%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "EnvironmentalHazards" );
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "EnvironmentalHazard" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="smEnvironmentalHazards" name="smEnvironmentalHazards"><a href="#"  onclick="smEnvironmentalHazards()">Environmental Hazards</a></li>
+       <li id="smEnvironmentalHazard" name="smEnvironmentalHazard"><a href="#"  onclick="smEnvironmentalHazards()">Environmental Hazard</a></li>
 <%
    }
 %>
@@ -1596,6 +1596,7 @@ else
    <input name="zFocusCtrl" id="zFocusCtrl" type="hidden" value="<%=strFocusCtrl%>">
    <input name="zOpenFile" id="zOpenFile" type="hidden" value="<%=strOpenFile%>">
    <input name="zDateFormat" id="zDateFormat" type="hidden" value="<%=strDateFormat%>">
+   <input name="zDateSequence" id="zDateSequence" type="hidden" value="MDY">
    <input name="zLoginName" id="zLoginName" type="hidden" value="<%=strLoginName%>">
    <input name="zKeyRole" id="zKeyRole" type="hidden" value="<%=strKeyRole%>">
    <input name="zOpenPopupWindow" id="zOpenPopupWindow" type="hidden" value="<%=strOpenPopupWindow%>">
@@ -1657,7 +1658,7 @@ else
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GridLocations:Grid */ %>
-<table class="sortable"  cols=3 style="width:616px;"  name="GridLocations" id="GridLocations">
+<table class="sortable"  cols=3 style="width:632px;"  name="GridLocations" id="GridLocations">
 
 <thead bgcolor=green><tr>
 
@@ -1721,7 +1722,7 @@ try
          nRC = vGridLocations.cursor( "M_Usage" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strLocations = vGridLocations.cursor( "M_Usage" ).getAttribute( "dUsageFullEmbeddedName" ).getString( "" );
+            strLocations = vGridLocations.cursor( "M_Usage" ).getAttribute( "dUsageTextSubUsageNames" ).getString( "" );
 
             if ( strLocations == null )
                strLocations = "";
@@ -2048,7 +2049,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
    }
 %>
 
-<input name="Title" id="Title" maxlength="254" style="width:466px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="Title" id="Title" maxlength="4096" style="width:466px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>
@@ -2099,7 +2100,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
    }
 %>
 
-<input name="ReviewerNote" id="ReviewerNote" maxlength="2048" style="width:466px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="ReviewerNote" id="ReviewerNote" maxlength="4096" style="width:466px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>

@@ -1713,6 +1713,164 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
+//  OPERATION: PrebuildKeywordSelection
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+PrebuildKeywordSelection( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+
+   // Create list of Usage Entries selected for delete.
+   FOR EACH mMasLC.M_SubUsage
+      mMasLC.M_SubUsage.wSelected = ""
+   END
+   FOR EACH mMasLC.M_InsertTextKeywordUsage 
+      mMasLC.M_InsertTextKeywordUsage.wSelected = ""
+   END
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: MoveSelectedSurfacesToKeyword
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+MoveSelectedSurfacesToKeyword( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+   SHORT Count
+
+   // Ensure there is only one Keyword selected.
+   Count = 0
+   FOR EACH mMasLC.M_InsertTextKeywordUsage 
+      IF mMasLC.M_InsertTextKeywordUsage.wSelected = "Y"
+         Count = Count + 1
+      END
+   END
+   IF Count != 1
+      MessageSend( ViewToWindow, "", "Surface Statement Move Surfaces",
+                   "Exactly one Keyword must be selected",
+                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      RETURN 2
+   END
+   SET CURSOR FIRST mMasLC.M_InsertTextKeywordUsage WHERE mMasLC.M_InsertTextKeywordUsage.wSelected = "Y"
+   FOR EACH mMasLC.M_SubUsage
+      IF mMasLC.M_SubUsage.wSelected = "Y"
+         CREATE ENTITY mMasLC.M_InsertTextUsage 
+         mMasLC.M_InsertTextUsage.Text = mMasLC.M_SubUsage.Name
+         DELETE ENTITY mMasLC.M_SubUsage NONE
+      END
+   END
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: MoveSelectedKeywordToSurfaces
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+MoveSelectedKeywordToSurfaces( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+   SHORT Count
+
+   // Ensure there is only one Keyword selected.
+   Count = 0
+   FOR EACH mMasLC.M_InsertTextKeywordUsage
+      IF mMasLC.M_InsertTextKeywordUsage.wSelected = "Y"
+         Count = Count + 1
+      END
+   END
+   IF Count != 1
+      MessageSend( ViewToWindow, "", "Surface Statement Move Keyword",
+                   "Exactly one Keyword must be selected",
+                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      RETURN 2
+   END
+   SET CURSOR FIRST mMasLC.M_InsertTextKeywordUsage WHERE mMasLC.M_InsertTextKeywordUsage.wSelected = "Y"
+   mMasLC.M_InsertTextKeywordUsage.wSelected = ""
+   FOR EACH mMasLC.M_InsertTextUsage
+      CREATE ENTITY mMasLC.M_SubUsage 
+      mMasLC.M_SubUsage.Name = mMasLC.M_InsertTextUsage.Text
+      DELETE ENTITY mMasLC.M_InsertTextUsage NONE
+   END
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: MoveSelectedLocationsToKeyword
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+MoveSelectedLocationsToKeyword( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+   SHORT Count
+
+   // Ensure there is only one Keyword selected.
+   Count = 0
+   FOR EACH mMasLC.M_InsertTextKeywordUsage 
+      IF mMasLC.M_InsertTextKeywordUsage.wSelected = "Y"
+         Count = Count + 1
+      END
+   END
+   IF Count != 1
+      MessageSend( ViewToWindow, "", "Location Statement Move Locations",
+                   "Exactly one Keyword must be selected",
+                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      RETURN 2
+   END
+   SET CURSOR FIRST mMasLC.M_InsertTextKeywordUsage WHERE mMasLC.M_InsertTextKeywordUsage.wSelected = "Y"
+   FOR EACH mMasLC.M_SubUsage
+      IF mMasLC.M_SubUsage.wSelected = "Y"
+         CREATE ENTITY mMasLC.M_InsertTextUsage 
+         mMasLC.M_InsertTextUsage.Text = mMasLC.M_SubUsage.Name
+         DELETE ENTITY mMasLC.M_SubUsage NONE
+      END
+   END
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: MoveSelectedKeywordToLocations
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+MoveSelectedKeywordToLocations( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+   SHORT Count
+
+   // Ensure there is only one Keyword selected.
+   Count = 0
+   FOR EACH mMasLC.M_InsertTextKeywordUsage
+      IF mMasLC.M_InsertTextKeywordUsage.wSelected = "Y"
+         Count = Count + 1
+      END
+   END
+   IF Count != 1
+      MessageSend( ViewToWindow, "", "Location Statement Move Keyword",
+                   "Exactly one Keyword must be selected",
+                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      RETURN 2
+   END
+   SET CURSOR FIRST mMasLC.M_InsertTextKeywordUsage WHERE mMasLC.M_InsertTextKeywordUsage.wSelected = "Y"
+   mMasLC.M_InsertTextKeywordUsage.wSelected = ""
+   FOR EACH mMasLC.M_InsertTextUsage
+      CREATE ENTITY mMasLC.M_SubUsage 
+      mMasLC.M_SubUsage.Name = mMasLC.M_InsertTextUsage.Text
+      DELETE ENTITY mMasLC.M_InsertTextUsage NONE
+   END
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
 //  OPERATION: EditClaimsSection
 //
 /////////////////////////////////////////////////////////////////////////////
@@ -3700,6 +3858,74 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
+//  OPERATION: AcceptAndReturnSubsurfaceStmt
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+AcceptAndReturnSubsurfaceStmt( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+
+   mMasLC.M_Usage.UsageType = "S"
+      
+   // Accept temporal Usage statement.
+   AcceptSubobject( mMasLC, "M_Usage" )
+   ResetViewFromSubobject( mMasLC )
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: AcceptAndReturnSubLocationStmt
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+AcceptAndReturnSubLocationStmt( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+
+   mMasLC.M_Usage.UsageType = "L"
+      
+   // Accept temporal Usage statement.
+   AcceptSubobject( mMasLC, "M_Usage" )
+   ResetViewFromSubobject( mMasLC )
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: CancelSubsurfacesStatement
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+CancelSubsurfacesStatement( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+
+   // Cancel temporal Usage statement.
+   CancelSubobject( mMasLC, "M_Usage" )
+   ResetViewFromSubobject( mMasLC )
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: CancelSubLocationStatement
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+CancelSubLocationStatement( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+
+   // Cancel temporal Usage statement.
+   CancelSubobject( mMasLC, "M_Usage" )
+   ResetViewFromSubobject( mMasLC )
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
 //  OPERATION: AcceptAddNewSubUsageStatement
 //
 /////////////////////////////////////////////////////////////////////////////
@@ -3714,12 +3940,37 @@ AcceptAddNewSubUsageStatement( VIEW ViewToWindow )
    // Accept temporal Usage statement.
    nRC = AcceptSubobject( mMasLC, "M_SubUsage" )
    IF nRC < 0
-      MessageSend( ViewToWindow, "", "Accept and Add New Surface Statement",
-                   "Error saving sub-surface statement.",
+      MessageSend( ViewToWindow, "", "Accept and Add New Usage Statement",
+                   "Error saving surface statement.",
                    zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
       RETURN 2
    END
    CreateTemporalEntity( mMasLC, "M_SubUsage", zPOS_AFTER )
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: AcceptAddNewSubsurfaceStatement
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+AcceptAddNewSubsurfaceStatement( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+   SHORT nRC
+
+   mMasLC.M_SubUsage.UsageType = "S"
+      
+   // Accept temporal Usage statement.
+   nRC = AcceptSubobject( mMasLC, "M_Usage" )
+   IF nRC < 0
+      MessageSend( ViewToWindow, "", "Accept and Add New Surface Statement",
+                   "Error saving subsurface statement.",
+                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      RETURN 2
+   END
+   CreateTemporalEntity( mMasLC, "M_Usage", zPOS_AFTER )
 
 END
 
@@ -4042,7 +4293,7 @@ DIALOG OPERATION
 SaveMarketingSectionVersion( VIEW ViewToWindow )
 
    VIEW mMasLC REGISTERED AS mMasLC
-      
+
    // Accept temporal NetContents.
    AcceptSubobject( mMasLC, "M_MarketingSection" )
    COMMIT mMasLC
@@ -4052,13 +4303,16 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-//  OPERATION: DummyOperationForPositioning
+//  OPERATION: PositionOnSubUsage
 //
 /////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
-DummyOperationForPositioning( VIEW ViewToWindow )
+PositionOnSubUsage( VIEW ViewToWindow )
 
-   // Do nothing ... for positioning only
+   VIEW mMasLC REGISTERED AS mMasLC
+
+   SetViewToSubobject( mMasLC, "M_SubUsage" )
+   CreateTemporalSubobjectVersion( mMasLC, "M_Usage" )
 
 END
 

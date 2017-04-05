@@ -1,4 +1,4 @@
-// wMLCLocationsStatement   Generate Timestamp: 20160914154445329
+// wMLCLocationsStatement   Generate Timestamp: 20170404195448489
 
 var isWindowClosing = true;
 var timerID = null;
@@ -318,7 +318,7 @@ function DELETE_Keyword( strTagEntityKey )
    }
 }
 
-function GOTO_UsageUpdate( strTagEntityKey )
+function GOTO_SubUsageUpdate( strTagEntityKey )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -332,7 +332,7 @@ function GOTO_UsageUpdate( strTagEntityKey )
       document.wMLCLocationsStatement.zTableRowSelect.value = strEntityKey;
       _DisableFormElements( true );
 
-      document.wMLCLocationsStatement.zAction.value = "GOTO_UsageUpdate";
+      document.wMLCLocationsStatement.zAction.value = "GOTO_SubUsageUpdate";
       document.wMLCLocationsStatement.submit( );
    }
 }

@@ -1,4 +1,4 @@
-// wMLCLocationStatementMaintenance   Generate Timestamp: 20160914154445380
+// wMLCLocationStatementMaintenance   Generate Timestamp: 20170404200805283
 
 var isWindowClosing = true;
 var timerID = null;
@@ -202,6 +202,70 @@ function GOTO_AddLocationSubstatements( )
       _DisableFormElements( true );
 
       document.wMLCLocationStatementMaintenance.zAction.value = "GOTO_AddLocationSubstatements";
+      document.wMLCLocationStatementMaintenance.submit( );
+   }
+}
+
+function PrebuildLocationKeywordSelection( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCLocationStatementMaintenance.zAction.value = "PrebuildLocationKeywordSelection";
+      document.wMLCLocationStatementMaintenance.submit( );
+   }
+}
+
+function MoveSelectedLocations( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCLocationStatementMaintenance.zAction.value = "MoveSelectedLocations";
+      document.wMLCLocationStatementMaintenance.submit( );
+   }
+}
+
+function MoveSelectedKeywords( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCLocationStatementMaintenance.zAction.value = "MoveSelectedKeywords";
+      document.wMLCLocationStatementMaintenance.submit( );
+   }
+}
+
+function GOTO_KeywordUpdate( strTagEntityKey )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      var nIdx = strTagEntityKey.lastIndexOf( '::' );
+      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
+
+      document.wMLCLocationStatementMaintenance.zTableRowSelect.value = strEntityKey;
+      _DisableFormElements( true );
+
+      document.wMLCLocationStatementMaintenance.zAction.value = "GOTO_KeywordUpdate";
       document.wMLCLocationStatementMaintenance.submit( );
    }
 }

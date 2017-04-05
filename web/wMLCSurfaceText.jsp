@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCSurfaceText   Generate Timestamp: 20160914154446595 --%>
+<%-- wMLCSurfaceText   Generate Timestamp: 20170404114725628 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -61,7 +61,7 @@ public int DoInputMapping( HttpServletRequest request,
    if ( VmlOperation.isValid( mMasLC ) )
    {
       // EditBox: SurfaceText
-      nRC = mMasLC.cursor( "M_SubUsage" ).checkExistenceOfEntity( ).toInt();
+      nRC = mMasLC.cursor( "M_Usage" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 ) // CursorResult.SET
       {
          strMapValue = request.getParameter( "SurfaceText" );
@@ -70,7 +70,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "SurfaceText", "", strMapValue );
             else
-               mMasLC.cursor( "M_SubUsage" ).getAttribute( "Name" ).setValue( strMapValue, "" );
+               mMasLC.cursor( "M_Usage" ).getAttribute( "Name" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -200,7 +200,7 @@ if ( strActionToProcess != null )
 
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "AcceptAndReturnSubUsageStatement" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "AcceptAndReturnSubsurfaceStmt" ) )
    {
       bDone = true;
       VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCSurfaceText", strActionToProcess );
@@ -212,8 +212,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCSurfaceText", "wMLC.AcceptAndReturnSubUsageStatement" );
-      nOptRC = wMLC.AcceptAndReturnSubUsageStatement( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCSurfaceText", "wMLC.AcceptAndReturnSubsurfaceStmt" );
+      nOptRC = wMLC.AcceptAndReturnSubsurfaceStmt( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -238,7 +238,7 @@ if ( strActionToProcess != null )
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "AcceptAndAddNewSubUsage" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "AcceptAndAddNewSubsurface" ) )
    {
       bDone = true;
       VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCSurfaceText", strActionToProcess );
@@ -250,8 +250,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCSurfaceText", "wMLC.AcceptAddNewSubUsageStatement" );
-      nOptRC = wMLC.AcceptAddNewSubUsageStatement( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCSurfaceText", "wMLC.AcceptAddNewSubsurfaceStatement" );
+      nOptRC = wMLC.AcceptAddNewSubsurfaceStatement( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -290,9 +290,9 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-         View mMasLCAuto = task.getViewByName( "mMasLC" );
-         EntityCursor cursor = mMasLCAuto.cursor( "M_Usage" );
-         cursor.createTemporalSubobjectVersion( );
+      View mMasLC = task.getViewByName( "mMasLC" );
+      EntityCursor cursor = mMasLC.cursor( "M_Usage" );
+      cursor.createTemporalSubobjectVersion( );
 
       }
       catch ( Exception e )
@@ -322,9 +322,9 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-         View mMasLCAuto = task.getViewByName( "mMasLC" );
-         EntityCursor cursor = mMasLCAuto.cursor( "M_InsertTextKeywordUsage" );
-         cursor.createTemporalEntity( );
+      View mMasLC = task.getViewByName( "mMasLC" );
+      EntityCursor cursor = mMasLC.cursor( "M_InsertTextKeywordUsage" );
+      cursor.createTemporalEntity( );
 
       }
       catch ( Exception e )
@@ -340,37 +340,34 @@ if ( strActionToProcess != null )
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "CancelSubUsageStatement" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "CancelSubsurfaceStatement" ) )
    {
       bDone = true;
       VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCSurfaceText", strActionToProcess );
 
-      // Action Auto Object Function
+      // Action Operation
       nRC = 0;
-      try
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCSurfaceText", "wMLC.CancelSubsurfacesStatement" );
+      nOptRC = wMLC.CancelSubsurfacesStatement( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
       {
-         View mMasLCAuto = task.getViewByName( "mMasLC" );
-         EntityCursor cursor = mMasLCAuto.cursor( "M_SubUsage" );
-            if ( cursor.isNull() )
-               nRC = 0;
-            else
-            {
-               if ( cursor.isVersioned( ) )
-               {
-                  cursor.cancelSubobject( );
-               }
-            nRC = 0;
-         }
-
-      }
-      catch ( Exception e )
-      {
-         nRC = 2;
-         VmlOperation.CreateMessage( task, "CancelSubUsageStatement", e.getMessage( ), "" );
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
          break;
       }
-      // Next Window
-      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReturnToParent, "", "" );
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReturnToParent, "", "" );
+      }
+
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
@@ -390,15 +387,15 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-         View mMasLCAuto = task.getViewByName( "mMasLC" );
-         EntityCursor cursor = mMasLCAuto.cursor( "M_InsertTextKeywordUsage" );
-            if ( cursor.isNull() )
-               nRC = 0;
-            else
-            {
-               cursor.deleteEntity( CursorPosition.NEXT );
-            nRC = 0;
-         }
+      View mMasLC = task.getViewByName( "mMasLC" );
+      EntityCursor cursor = mMasLC.cursor( "M_InsertTextKeywordUsage" );
+      if ( cursor.isNull() )
+         nRC = 0;
+      else
+      {
+         cursor.deleteEntity( CursorPosition.NEXT );
+         nRC = 0;
+      }
 
       }
       catch ( Exception e )
@@ -466,9 +463,9 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-         View mMasLCAuto = task.getViewByName( "mMasLC" );
-         EntityCursor cursor = mMasLCAuto.cursor( "M_InsertTextKeywordUsage" );
-         cursor.createTemporalSubobjectVersion( );
+      View mMasLC = task.getViewByName( "mMasLC" );
+      EntityCursor cursor = mMasLC.cursor( "M_InsertTextKeywordUsage" );
+      cursor.createTemporalSubobjectVersion( );
 
       }
       catch ( Exception e )
@@ -639,7 +636,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="AcceptAndReturn" name="AcceptAndReturn"><a href="#"  onclick="AcceptAndReturnSubUsageStatement()">Accept & Return</a></li>
+       <li id="AcceptAndReturn" name="AcceptAndReturn"><a href="#"  onclick="AcceptAndReturnSubsurfaceStmt()">Accept & Return</a></li>
 <%
    }
 %>
@@ -649,7 +646,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="AcceptAddNew" name="AcceptAddNew"><a href="#"  onclick="AcceptAndAddNewSubUsage()">Accept and Add New</a></li>
+       <li id="AcceptAddNew" name="AcceptAddNew"><a href="#"  onclick="AcceptAndAddNewSubsurface()">Accept and Add New</a></li>
 <%
    }
 %>
@@ -659,7 +656,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="CancelAndReturn" name="CancelAndReturn"><a href="#"  onclick="CancelSubUsageStatement()">Cancel & Return</a></li>
+       <li id="CancelAndReturn" name="CancelAndReturn"><a href="#"  onclick="CancelSubsurfaceStatement()">Cancel & Return</a></li>
 <%
    }
 %>
@@ -780,6 +777,7 @@ else
    <input name="zFocusCtrl" id="zFocusCtrl" type="hidden" value="<%=strFocusCtrl%>">
    <input name="zOpenFile" id="zOpenFile" type="hidden" value="<%=strOpenFile%>">
    <input name="zDateFormat" id="zDateFormat" type="hidden" value="<%=strDateFormat%>">
+   <input name="zDateSequence" id="zDateSequence" type="hidden" value="MDY">
    <input name="zLoginName" id="zLoginName" type="hidden" value="<%=strLoginName%>">
    <input name="zKeyRole" id="zKeyRole" type="hidden" value="<%=strKeyRole%>">
    <input name="zOpenPopupWindow" id="zOpenPopupWindow" type="hidden" value="<%=strOpenPopupWindow%>">
@@ -826,7 +824,7 @@ else
 <div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GBPrecautionarySection:GroupBox */ %>
 
-<div id="GBPrecautionarySection" name="GBPrecautionarySection" class="withborder" style="width:776px;height:28px;float:left;">  <!-- GBPrecautionarySection --> 
+<div id="GBPrecautionarySection" name="GBPrecautionarySection" class="withborder" style="width:776px;height:44px;float:left;">  <!-- GBPrecautionarySection --> 
 
 
 <div>  <!-- Beginning of a new line -->
@@ -838,9 +836,9 @@ else
 
 <tr>
 <td valign="top" style="width:132px;">
-<% /* Description::Text */ %>
+<% /* Name::Text */ %>
 
-<span  id="Description:" name="Description:" style="width:128px;height:16px;">Description:</span>
+<span  id="Name:" name="Name:" style="width:128px;height:16px;">Name:</span>
 
 </td>
 <td valign="top"  class="text12" style="width:614px;">
@@ -860,12 +858,12 @@ else
          task.log( ).debug( "Invalid View: " + "SurfaceText" );
       else
       {
-         nRC = mMasLC.cursor( "M_SubUsage" ).checkExistenceOfEntity( ).toInt();
+         nRC = mMasLC.cursor( "M_Usage" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
             try
             {
-               strErrorMapValue = mMasLC.cursor( "M_SubUsage" ).getAttribute( "Name" ).getString( "" );
+               strErrorMapValue = mMasLC.cursor( "M_Usage" ).getAttribute( "Name" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -875,15 +873,15 @@ else
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
 
-            task.log( ).debug( "M_SubUsage.Name: " + strErrorMapValue );
+            task.log( ).debug( "M_Usage.Name: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist for SurfaceText: " + "mMasLC.M_SubUsage" );
+            task.log( ).debug( "Entity does not exist for SurfaceText: " + "mMasLC.M_Usage" );
       }
    }
 %>
 
-<input class="text12" name="SurfaceText" id="SurfaceText" maxlength="254" style="width:614px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12"  name="SurfaceText" id="SurfaceText" maxlength="4096" style="width:614px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>

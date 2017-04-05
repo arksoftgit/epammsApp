@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCSurfaces   Generate Timestamp: 20160914154446376 --%>
+<%-- wMLCSurfaces   Generate Timestamp: 20170404111439857 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -60,7 +60,7 @@ public int DoInputMapping( HttpServletRequest request,
    mMasLC = task.getViewByName( "mMasLC" );
    if ( VmlOperation.isValid( mMasLC ) )
    {
-      // Grid: GridClaims1
+      // Grid: GridClaims
       iTableRowCnt = 0;
 
       // We are creating a temp view to the grid view so that if there are 
@@ -565,8 +565,8 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-         EntityCursor cursor = mMasLC.cursor( "M_Usage" );
-         cursor.createTemporalSubobjectVersion( );
+      EntityCursor cursor = mMasLC.cursor( "M_Usage" );
+      cursor.createTemporalSubobjectVersion( );
 
       }
       catch ( Exception e )
@@ -1401,11 +1401,11 @@ else
 %>
 
 <%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "EnvironmentalHazards" );
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "EnvironmentalHazard" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="smEnvironmentalHazards" name="smEnvironmentalHazards"><a href="#"  onclick="smEnvironmentalHazards()">Environmental Hazards</a></li>
+       <li id="smEnvironmentalHazard" name="smEnvironmentalHazard"><a href="#"  onclick="smEnvironmentalHazards()">Environmental Hazard</a></li>
 <%
    }
 %>
@@ -1596,6 +1596,7 @@ else
    <input name="zFocusCtrl" id="zFocusCtrl" type="hidden" value="<%=strFocusCtrl%>">
    <input name="zOpenFile" id="zOpenFile" type="hidden" value="<%=strOpenFile%>">
    <input name="zDateFormat" id="zDateFormat" type="hidden" value="<%=strDateFormat%>">
+   <input name="zDateSequence" id="zDateSequence" type="hidden" value="MDY">
    <input name="zLoginName" id="zLoginName" type="hidden" value="<%=strLoginName%>">
    <input name="zKeyRole" id="zKeyRole" type="hidden" value="<%=strKeyRole%>">
    <input name="zOpenPopupWindow" id="zOpenPopupWindow" type="hidden" value="<%=strOpenPopupWindow%>">
@@ -1656,8 +1657,8 @@ else
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GridClaims1:Grid */ %>
-<table class="sortable"  cols=3 style="width:638px;"  name="GridClaims1" id="GridClaims1">
+<% /* GridClaims:Grid */ %>
+<table class="sortable"  cols=3 style="width:638px;"  name="GridClaims" id="GridClaims">
 
 <thead bgcolor=green><tr>
 
@@ -1683,24 +1684,24 @@ try
       String strTag;
       String strGS_Select1;
       String strGS_Select1Value;
-      String strSurfaces1;
+      String strSurfaces;
       String strBMBUpdateClaimsStatement1;
       
-      View vGridClaims1;
-      vGridClaims1 = mMasLC.newView( );
-      csrRC2 = vGridClaims1.cursor( "M_Usage" ).setFirst(  );
+      View vGridClaims;
+      vGridClaims = mMasLC.newView( );
+      csrRC2 = vGridClaims.cursor( "M_Usage" ).setFirst(  );
       while ( csrRC2.isSet() )
       {
          strOdd = (iTableRowCnt % 2) != 0 ? " class='odd'" : "";
          iTableRowCnt++;
 
-         lEntityKey = vGridClaims1.cursor( "M_Usage" ).getEntityKey( );
+         lEntityKey = vGridClaims.cursor( "M_Usage" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
          strGS_Select1 = "";
-         nRC = vGridClaims1.cursor( "M_Usage" ).checkExistenceOfEntity( ).toInt();
+         nRC = vGridClaims.cursor( "M_Usage" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGS_Select1 = vGridClaims1.cursor( "M_Usage" ).getAttribute( "wSelected" ).getString( "" );
+            strGS_Select1 = vGridClaims.cursor( "M_Usage" ).getAttribute( "wSelected" ).getString( "" );
 
             if ( strGS_Select1 == null )
                strGS_Select1 = "";
@@ -1717,33 +1718,33 @@ try
             strGS_Select1 = "<input name='" + strGS_Select1Value + "' id='" + strGS_Select1Value + "' value='Y' type='checkbox' > ";
          }
 
-         strSurfaces1 = "";
-         nRC = vGridClaims1.cursor( "M_Usage" ).checkExistenceOfEntity( ).toInt();
+         strSurfaces = "";
+         nRC = vGridClaims.cursor( "M_Usage" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strSurfaces1 = vGridClaims1.cursor( "M_Usage" ).getAttribute( "dUsageFullEmbeddedName" ).getString( "" );
+            strSurfaces = vGridClaims.cursor( "M_Usage" ).getAttribute( "dUsageTextSubUsageNames" ).getString( "" );
 
-            if ( strSurfaces1 == null )
-               strSurfaces1 = "";
+            if ( strSurfaces == null )
+               strSurfaces = "";
          }
 
-         if ( StringUtils.isBlank( strSurfaces1 ) )
-            strSurfaces1 = "&nbsp";
+         if ( StringUtils.isBlank( strSurfaces ) )
+            strSurfaces = "&nbsp";
 
 %>
 
 <tr<%=strOdd%>>
 
    <td nowrap><%=strGS_Select1%></td>
-   <td><a href="#" onclick="GOTO_UpdateSurfacesStatement( this.id )" id="Surfaces1::<%=strEntityKey%>"><%=strSurfaces1%></a></td>
+   <td><a href="#" onclick="GOTO_UpdateSurfacesStatement( this.id )" id="Surfaces::<%=strEntityKey%>"><%=strSurfaces%></a></td>
    <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateClaimsStatement1" onclick="GOTO_UpdateSurfacesStatement( this.id )" id="BMBUpdateClaimsStatement1::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
 
 </tr>
 
 <%
-         csrRC2 = vGridClaims1.cursor( "M_Usage" ).setNextContinue( );
+         csrRC2 = vGridClaims.cursor( "M_Usage" ).setNextContinue( );
       }
-      vGridClaims1.drop( );
+      vGridClaims.drop( );
    }
 }
 catch (Exception e)
@@ -2048,7 +2049,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
    }
 %>
 
-<input name="Title" id="Title" maxlength="254" style="width:466px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="Title" id="Title" maxlength="4096" style="width:466px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>
@@ -2099,7 +2100,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
    }
 %>
 
-<input name="ReviewerNote" id="ReviewerNote" maxlength="2048" style="width:466px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="ReviewerNote" id="ReviewerNote" maxlength="4096" style="width:466px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>

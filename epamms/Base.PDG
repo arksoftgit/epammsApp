@@ -1,4 +1,4 @@
-z1000-Zeidon    BASE     TZDGSRCO                         10/17/16   15:26:51 1.0a2   
+z1000-Zeidon    BASE     TZDGSRCO                         04/03/17   07:48:27 1.0a2   
 eDomainGroup 1
 aZKey      68567479
 aNextZKeyToAssign 130001734
@@ -135,7 +135,7 @@ aInternalValue A
 
 eTableEntry 4
 aZKey      110226102
-aExternalValue Only One Allowed
+aExternalValue Zero or One Allowed
 aInternalValue O
 
 eTableEntry 4

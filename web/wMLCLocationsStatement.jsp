@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCLocationsStatement   Generate Timestamp: 20160914154445329 --%>
+<%-- wMLCLocationsStatement   Generate Timestamp: 20170404195448489 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -231,18 +231,18 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-         View mMasLCAuto = task.getViewByName( "mMasLC" );
-         EntityCursor cursor = mMasLCAuto.cursor( "M_Usage" );
-            if ( cursor.isNull() )
-               nRC = 0;
-            else
-            {
-               if ( cursor.isVersioned( ) )
-               {
-                  cursor.acceptSubobject( );
-               }
-            nRC = 0;
+      View mMasLC = task.getViewByName( "mMasLC" );
+      EntityCursor cursor = mMasLC.cursor( "M_Usage" );
+      if ( cursor.isNull() )
+         nRC = 0;
+      else
+      {
+         if ( cursor.isVersioned( ) )
+         {
+            cursor.acceptSubobject( );
          }
+         nRC = 0;
+      }
 
       }
       catch ( Exception e )
@@ -272,9 +272,9 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-         View mMasLCAuto = task.getViewByName( "mMasLC" );
-         EntityCursor cursor = mMasLCAuto.cursor( "M_InsertTextKeywordUsage" );
-         cursor.createTemporalEntity( );
+      View mMasLC = task.getViewByName( "mMasLC" );
+      EntityCursor cursor = mMasLC.cursor( "M_InsertTextKeywordUsage" );
+      cursor.createTemporalEntity( );
 
       }
       catch ( Exception e )
@@ -299,18 +299,18 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-         View mMasLCAuto = task.getViewByName( "mMasLC" );
-         EntityCursor cursor = mMasLCAuto.cursor( "M_Usage" );
-            if ( cursor.isNull() )
-               nRC = 0;
-            else
-            {
-               if ( cursor.isVersioned( ) )
-               {
-                  cursor.cancelSubobject( );
-               }
-            nRC = 0;
+      View mMasLC = task.getViewByName( "mMasLC" );
+      EntityCursor cursor = mMasLC.cursor( "M_Usage" );
+      if ( cursor.isNull() )
+         nRC = 0;
+      else
+      {
+         if ( cursor.isVersioned( ) )
+         {
+            cursor.cancelSubobject( );
          }
+         nRC = 0;
+      }
 
       }
       catch ( Exception e )
@@ -367,14 +367,14 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-         EntityCursor cursor = mMasLC.cursor( "M_InsertTextKeywordUsage" );
-            if ( cursor.isNull() )
-               nRC = 0;
-            else
-            {
-               cursor.deleteEntity( CursorPosition.NEXT );
-            nRC = 0;
-         }
+      EntityCursor cursor = mMasLC.cursor( "M_InsertTextKeywordUsage" );
+      if ( cursor.isNull() )
+         nRC = 0;
+      else
+      {
+         cursor.deleteEntity( CursorPosition.NEXT );
+         nRC = 0;
+      }
 
       }
       catch ( Exception e )
@@ -465,29 +465,22 @@ if ( strActionToProcess != null )
          }
       }
 
-      // Action Operation
+      // Action Auto Object Function
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCLocationsStatement", "wMLC.DummyOperationForPositioning" );
-      nOptRC = wMLC.DummyOperationForPositioning( new zVIEW( vKZXMLPGO ) );
-      if ( nOptRC == 2 )
+      try
       {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
+      EntityCursor cursor = mMasLC.cursor( "M_InsertTextKeywordUsage" );
+      cursor.createTemporalSubobjectVersion( );
+
+      }
+      catch ( Exception e )
+      {
+         nRC = 2;
+         VmlOperation.CreateMessage( task, "GOTO_KeywordUpdate", e.getMessage( ), "" );
          break;
       }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "MaintainKeyword" );
-      }
-
+      // Next Window
+      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "AddUpdateKeywordUsage" );
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
@@ -534,14 +527,14 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-         EntityCursor cursor = mMasLC.cursor( "M_InsertTextKeywordUsage" );
-            if ( cursor.isNull() )
-               nRC = 0;
-            else
-            {
-               cursor.deleteEntity( CursorPosition.NEXT );
-            nRC = 0;
-         }
+      EntityCursor cursor = mMasLC.cursor( "M_InsertTextKeywordUsage" );
+      if ( cursor.isNull() )
+         nRC = 0;
+      else
+      {
+         cursor.deleteEntity( CursorPosition.NEXT );
+         nRC = 0;
+      }
 
       }
       catch ( Exception e )
@@ -557,7 +550,7 @@ if ( strActionToProcess != null )
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_UsageUpdate" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_SubUsageUpdate" ) )
    {
       bDone = true;
       VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCLocationsStatement", strActionToProcess );
@@ -596,8 +589,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCLocationsStatement", "wMLC.DummyOperationForPositioning" );
-      nOptRC = wMLC.DummyOperationForPositioning( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCLocationsStatement", "wMLC.PositionOnSubUsage" );
+      nOptRC = wMLC.PositionOnSubUsage( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -614,7 +607,7 @@ if ( strActionToProcess != null )
       if ( strNextJSP_Name.equals( "" ) )
       {
          // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "MaintainSubItemName" );
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "SublocationsStatement" );
       }
 
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -872,21 +865,21 @@ else
 %>
 
 <%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "CancelAndReturn" );
-   if ( !csrRC.isSet() ) //if ( nRC < 0 )
-   {
-%>
-       <li id="CancelAndReturn" name="CancelAndReturn"><a href="#"  onclick="CancelLocationsStatement()">Cancel & Return</a></li>
-<%
-   }
-%>
-
-<%
    csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "AddLocationsList" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
        <li id="AddLocationsList" name="AddLocationsList"><a href="#"  onclick="InitLocationsStmtsForInsert()">Add From Locations List</a></li>
+<%
+   }
+%>
+
+<%
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "CancelAndReturn" );
+   if ( !csrRC.isSet() ) //if ( nRC < 0 )
+   {
+%>
+       <li id="CancelAndReturn" name="CancelAndReturn"><a href="#"  onclick="CancelLocationsStatement()">Cancel & Return</a></li>
 <%
    }
 %>
@@ -1007,6 +1000,7 @@ else
    <input name="zFocusCtrl" id="zFocusCtrl" type="hidden" value="<%=strFocusCtrl%>">
    <input name="zOpenFile" id="zOpenFile" type="hidden" value="<%=strOpenFile%>">
    <input name="zDateFormat" id="zDateFormat" type="hidden" value="<%=strDateFormat%>">
+   <input name="zDateSequence" id="zDateSequence" type="hidden" value="MDY">
    <input name="zLoginName" id="zLoginName" type="hidden" value="<%=strLoginName%>">
    <input name="zKeyRole" id="zKeyRole" type="hidden" value="<%=strKeyRole%>">
    <input name="zOpenPopupWindow" id="zOpenPopupWindow" type="hidden" value="<%=strOpenPopupWindow%>">
@@ -1027,23 +1021,27 @@ else
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox4:GroupBox */ %>
+<div id="GroupBox4" name="GroupBox4" style="float:left;width:752px;" >
 
-<div id="GroupBox4" name="GroupBox4" style="width:826px;height:28px;float:left;">  <!-- GroupBox4 --> 
+<table cols=0 style="width:752px;"  class="grouptable">
 
-
- <!-- This is added as a line spacer -->
-<div style="height:6px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<span style="height:16px;">&nbsp</span>
+<tr>
+<td valign="top"  class="groupbox" style="width:584px;">
 <% /* LocationsStatement:Text */ %>
 
 <span class="groupbox"  id="LocationsStatement" name="LocationsStatement" style="width:338px;height:16px;">Locations Statement</span>
 
-</div>  <!-- End of a new line -->
+</td>
+<td valign="top" style="width:132px;">
+<% /* UpdateLocation:PushBtn */ %>
+<button type="button"  id="UpdateLocation" name="UpdateLocation" value="Update Location" onclick="LocationStatementMaintenance( )"  style="width:132px;height:26px;">Update Location</button>
 
+</td>
+</tr>
+</table>
 
-</div>  <!--  GroupBox4 --> 
+</div>  <!-- GroupBox4 --> 
+
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
@@ -1053,7 +1051,7 @@ else
 <div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GBLocationsStatement:GroupBox */ %>
 
-<div id="GBLocationsStatement" name="GBLocationsStatement" class="withborder" style="width:824px;height:28px;float:left;">  <!-- GBLocationsStatement --> 
+<div id="GBLocationsStatement" name="GBLocationsStatement" class="withborder" style="width:824px;height:48px;float:left;">  <!-- GBLocationsStatement --> 
 
 
 <div>  <!-- Beginning of a new line -->
@@ -1065,9 +1063,9 @@ else
 
 <tr>
 <td valign="top" style="width:66px;">
-<% /* Name::Text */ %>
+<% /* Text::Text */ %>
 
-<span  id="Name:" name="Name:" style="width:54px;height:16px;">Name:</span>
+<span  id="Text:" name="Text:" style="width:54px;height:16px;">Text:</span>
 
 </td>
 <td valign="top"  class="text12" style="width:730px;">
@@ -1096,7 +1094,7 @@ else
    }
 %>
 
-<span class="text12"  id="LocationsName" name="LocationsName" style="width:730px;height:16px;"><%=strTextDisplayValue%></span>
+<span class="text12"  id="LocationsName" name="LocationsName" style="width:730px;height:28px;"><%=strTextDisplayValue%></span>
 
 </td>
 </tr>
@@ -1114,7 +1112,7 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:10px;width:100px;"></div>
+<div style="height:20px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
@@ -1124,19 +1122,17 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:8px;width:100px;"></div>
+<div style="height:4px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox3:GroupBox */ %>
 
-<div id="GroupBox3" name="GroupBox3"   style="float:left;position:relative; width:756px; height:30px;">  <!-- GroupBox3 --> 
+<div id="GroupBox3" name="GroupBox3" class="listgroup"   style="float:left;position:relative; width:752px; height:40px;">  <!-- GroupBox3 --> 
 
 <% /* Text1:Text */ %>
 
 <label class="listheader"  id="Text1" name="Text1" style="width:398px;height:16px;position:absolute;left:10px;top:8px;">Sub-Locations</label>
-
-<% /* UpdateLocation:PushBtn */ %>
-<button type="button" name="UpdateLocation" id="UpdateLocation" value="" onclick="LocationStatementMaintenance( )" style="width:134px;height:26px;position:absolute;left:566px;top:8px;">Update Location</button>
 
 
 </div>  <!--  GroupBox3 --> 
@@ -1146,7 +1142,7 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:8px;width:100px;"></div>
+<div style="height:2px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
@@ -1206,8 +1202,8 @@ try
 
 <tr<%=strOdd%>>
 
-   <td><a href="#" onclick="GOTO_UsageUpdate( this.id )" id="LocationText::<%=strEntityKey%>"><%=strLocationText%></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateSubUsage" onclick="GOTO_UsageUpdate( this.id )" id="BMBUpdateSubUsage::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
+   <td><a href="#" onclick="GOTO_SubUsageUpdate( this.id )" id="LocationText::<%=strEntityKey%>"><%=strLocationText%></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateSubUsage" onclick="GOTO_SubUsageUpdate( this.id )" id="BMBUpdateSubUsage::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
    <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteSubUsage" onclick="DELETE_SubUsage( this.id )" id="BMBDeleteSubUsage::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
 
 </tr>
@@ -1249,13 +1245,10 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 <div>  <!-- Beginning of a new line -->
 <% /* GroupBox6:GroupBox */ %>
 
-<div id="GroupBox6" name="GroupBox6"   style="float:left;position:relative; width:756px; height:30px;">  <!-- GroupBox6 --> 
-
-<% /* ShowGeneratedText:PushBtn */ %>
-<button type="button" class="newbutton" name="ShowGeneratedText" id="ShowGeneratedText" value="" onclick="GOTO_DisplayGeneratedTextUsage( )" style="width:158px;height:26px;position:absolute;left:492px;top:4px;">Show Generated Text</button>
+<div id="GroupBox6" name="GroupBox6"   style="float:left;position:relative; width:752px; height:30px;">  <!-- GroupBox6 --> 
 
 <% /* New:PushBtn */ %>
-<button type="button" class="newbutton" name="New" id="New" value="" onclick="ADD_UsageKeyword( )" style="width:66px;height:26px;position:absolute;left:672px;top:4px;">New</button>
+<button type="button" class="newbutton" name="New" id="New" value="" onclick="ADD_UsageKeyword( )" style="width:66px;height:26px;position:absolute;left:594px;top:4px;">New</button>
 
 <% /* Keyword:Text */ %>
 

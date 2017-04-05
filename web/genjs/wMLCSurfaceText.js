@@ -1,4 +1,4 @@
-// wMLCSurfaceText   Generate Timestamp: 20160914154446595
+// wMLCSurfaceText   Generate Timestamp: 20170404114725628
 
 var isWindowClosing = true;
 var timerID = null;
@@ -191,7 +191,7 @@ function CheckAllInGrid(id, CheckBoxName) // triggered by no text checkbox
    }
 }
 
-function AcceptAndReturnSubUsageStatement( )
+function AcceptAndReturnSubsurfaceStmt( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -201,12 +201,12 @@ function AcceptAndReturnSubUsageStatement( )
    {
       _DisableFormElements( true );
 
-      document.wMLCSurfaceText.zAction.value = "AcceptAndReturnSubUsageStatement";
+      document.wMLCSurfaceText.zAction.value = "AcceptAndReturnSubsurfaceStmt";
       document.wMLCSurfaceText.submit( );
    }
 }
 
-function AcceptAndAddNewSubUsage( )
+function AcceptAndAddNewSubsurface( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -216,7 +216,7 @@ function AcceptAndAddNewSubUsage( )
    {
       _DisableFormElements( true );
 
-      document.wMLCSurfaceText.zAction.value = "AcceptAndAddNewSubUsage";
+      document.wMLCSurfaceText.zAction.value = "AcceptAndAddNewSubsurface";
       document.wMLCSurfaceText.submit( );
    }
 }
@@ -251,7 +251,7 @@ function ADD_UsageKeyword( )
    }
 }
 
-function CancelSubUsageStatement( )
+function CancelSubsurfaceStatement( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -261,7 +261,7 @@ function CancelSubUsageStatement( )
    {
       _DisableFormElements( true );
 
-      document.wMLCSurfaceText.zAction.value = "CancelSubUsageStatement";
+      document.wMLCSurfaceText.zAction.value = "CancelSubsurfaceStatement";
       document.wMLCSurfaceText.submit( );
    }
 }

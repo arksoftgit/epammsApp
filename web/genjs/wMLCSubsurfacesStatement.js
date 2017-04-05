@@ -1,4 +1,4 @@
-// wMLCSurfacesStatement   Generate Timestamp: 20170404195459072
+// wMLCSubsurfacesStatement   Generate Timestamp: 20170404195504544
 
 var isWindowClosing = true;
 var timerID = null;
@@ -45,8 +45,8 @@ function _OnAlmostTimeout()
       // If the time is less than one minute, resubmit the page.  Otherwise, go to the timeout window.
       if (tDiff < 60000)
       {
-         document.wMLCSurfacesStatement.zAction.value = "_OnResubmitPage";
-         document.wMLCSurfacesStatement.submit( );
+         document.wMLCSubsurfacesStatement.zAction.value = "_OnResubmitPage";
+         document.wMLCSubsurfacesStatement.submit( );
       }
       else
       {
@@ -61,8 +61,8 @@ function _OnTimeout( )
    {
       _DisableFormElements( true );
 
-      document.wMLCSurfacesStatement.zAction.value = "_OnTimeout";
-      document.wMLCSurfacesStatement.submit( );
+      document.wMLCSubsurfacesStatement.zAction.value = "_OnTimeout";
+      document.wMLCSubsurfacesStatement.submit( );
    }
 }
 
@@ -76,8 +76,8 @@ function _BeforePageUnload( )
       // If the user clicked the window close box, unregister zeidon.
       if (isWindowClosing)
       {
-         document.wMLCSurfacesStatement.zAction.value = "_OnUnload";
-         document.wMLCSurfacesStatement.submit( );
+         document.wMLCSubsurfacesStatement.zAction.value = "_OnUnload";
+         document.wMLCSubsurfacesStatement.submit( );
       }
    }
 }
@@ -130,16 +130,16 @@ function _AfterPageLoaded( )
 {
 // _DisableFormElements( false );
 
-   var szFocusCtrl = document.wMLCSurfacesStatement.zFocusCtrl.value;
+   var szFocusCtrl = document.wMLCSubsurfacesStatement.zFocusCtrl.value;
    if ( szFocusCtrl != "" && szFocusCtrl != "null" )
-      eval( 'document.wMLCSurfacesStatement.' + szFocusCtrl + '.focus( )' );
+      eval( 'document.wMLCSubsurfacesStatement.' + szFocusCtrl + '.focus( )' );
 
    // This is where we put out a message from the previous iteration on this window
-   var szMsg = document.wMLCSurfacesStatement.zError.value;
+   var szMsg = document.wMLCSubsurfacesStatement.zError.value;
    if ( szMsg != "" )
       alert( szMsg ); // "Houston ... We have a problem"
 
-   szMsg = document.wMLCSurfacesStatement.zOpenFile.value;
+   szMsg = document.wMLCSubsurfacesStatement.zOpenFile.value;
    if ( szMsg != "" )
    {
       var NewWin = window.open( szMsg );
@@ -151,10 +151,10 @@ function _AfterPageLoaded( )
       }
    }
 
-   var LoginName = document.wMLCSurfacesStatement.zLoginName.value;
-   var keyRole = document.wMLCSurfacesStatement.zKeyRole.value;
-   document.wMLCSurfacesStatement.zError.value = "";
-   document.wMLCSurfacesStatement.zOpenFile.value = "";
+   var LoginName = document.wMLCSubsurfacesStatement.zLoginName.value;
+   var keyRole = document.wMLCSubsurfacesStatement.zKeyRole.value;
+   document.wMLCSubsurfacesStatement.zError.value = "";
+   document.wMLCSubsurfacesStatement.zOpenFile.value = "";
 
    if ( timerID != null )
    {
@@ -162,7 +162,7 @@ function _AfterPageLoaded( )
       timerID = null;
    }
 
-   var varTimeout = document.wMLCSurfacesStatement.zTimeout.value;
+   var varTimeout = document.wMLCSubsurfacesStatement.zTimeout.value;
    if ( varTimeout > 0 )
    {
       var varDelay = 60000 * varTimeout;  // Timeout value in timeout.inc
@@ -191,7 +191,7 @@ function CheckAllInGrid(id, CheckBoxName) // triggered by no text checkbox
    }
 }
 
-function AcceptAndReturnSurfacesStatement( )
+function AcceptAndReturnSubsurfacesStmt( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -201,8 +201,8 @@ function AcceptAndReturnSurfacesStatement( )
    {
       _DisableFormElements( true );
 
-      document.wMLCSurfacesStatement.zAction.value = "AcceptAndReturnSurfacesStatement";
-      document.wMLCSurfacesStatement.submit( );
+      document.wMLCSubsurfacesStatement.zAction.value = "AcceptAndReturnSubsurfacesStmt";
+      document.wMLCSubsurfacesStatement.submit( );
    }
 }
 
@@ -216,12 +216,12 @@ function ADD_UsageKeyword( )
    {
       _DisableFormElements( true );
 
-      document.wMLCSurfacesStatement.zAction.value = "ADD_UsageKeyword";
-      document.wMLCSurfacesStatement.submit( );
+      document.wMLCSubsurfacesStatement.zAction.value = "ADD_UsageKeyword";
+      document.wMLCSubsurfacesStatement.submit( );
    }
 }
 
-function CancelSurfacesStatement( )
+function CancelSubsurfacesStatement( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -231,50 +231,12 @@ function CancelSurfacesStatement( )
    {
       _DisableFormElements( true );
 
-      document.wMLCSurfacesStatement.zAction.value = "CancelSurfacesStatement";
-      document.wMLCSurfacesStatement.submit( );
+      document.wMLCSubsurfacesStatement.zAction.value = "CancelSubsurfacesStatement";
+      document.wMLCSubsurfacesStatement.submit( );
    }
 }
 
-function DELETE_Keyword( strTagEntityKey )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      var nIdx = strTagEntityKey.lastIndexOf( '::' );
-      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
-
-      document.wMLCSurfacesStatement.zTableRowSelect.value = strEntityKey;
-      _DisableFormElements( true );
-
-      document.wMLCSurfacesStatement.zAction.value = "DELETE_Keyword";
-      document.wMLCSurfacesStatement.submit( );
-   }
-}
-
-function DELETE_SubUsage( strTagEntityKey )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      var nIdx = strTagEntityKey.lastIndexOf( '::' );
-      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
-
-      document.wMLCSurfacesStatement.zTableRowSelect.value = strEntityKey;
-      _DisableFormElements( true );
-
-      document.wMLCSurfacesStatement.zAction.value = "DELETE_SubUsage";
-      document.wMLCSurfacesStatement.submit( );
-   }
-}
-
-function GOTO_AddSurfaceSubstatements( )
+function DELETE_SubUsage( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -284,8 +246,8 @@ function GOTO_AddSurfaceSubstatements( )
    {
       _DisableFormElements( true );
 
-      document.wMLCSurfacesStatement.zAction.value = "GOTO_AddSurfaceSubstatements";
-      document.wMLCSurfacesStatement.submit( );
+      document.wMLCSubsurfacesStatement.zAction.value = "DELETE_SubUsage";
+      document.wMLCSubsurfacesStatement.submit( );
    }
 }
 
@@ -299,8 +261,8 @@ function GOTO_DisplayGeneratedTextUsage( )
    {
       _DisableFormElements( true );
 
-      document.wMLCSurfacesStatement.zAction.value = "GOTO_DisplayGeneratedTextUsage";
-      document.wMLCSurfacesStatement.submit( );
+      document.wMLCSubsurfacesStatement.zAction.value = "GOTO_DisplayGeneratedTextUsage";
+      document.wMLCSubsurfacesStatement.submit( );
    }
 }
 
@@ -315,15 +277,15 @@ function GOTO_KeywordUpdate( strTagEntityKey )
       var nIdx = strTagEntityKey.lastIndexOf( '::' );
       var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
 
-      document.wMLCSurfacesStatement.zTableRowSelect.value = strEntityKey;
+      document.wMLCSubsurfacesStatement.zTableRowSelect.value = strEntityKey;
       _DisableFormElements( true );
 
-      document.wMLCSurfacesStatement.zAction.value = "GOTO_KeywordUpdate";
-      document.wMLCSurfacesStatement.submit( );
+      document.wMLCSubsurfacesStatement.zAction.value = "GOTO_KeywordUpdate";
+      document.wMLCSubsurfacesStatement.submit( );
    }
 }
 
-function GOTO_SubUsageUpdate( strTagEntityKey )
+function DELETE_Keyword( strTagEntityKey )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -334,11 +296,26 @@ function GOTO_SubUsageUpdate( strTagEntityKey )
       var nIdx = strTagEntityKey.lastIndexOf( '::' );
       var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
 
-      document.wMLCSurfacesStatement.zTableRowSelect.value = strEntityKey;
+      document.wMLCSubsurfacesStatement.zTableRowSelect.value = strEntityKey;
       _DisableFormElements( true );
 
-      document.wMLCSurfacesStatement.zAction.value = "GOTO_SubUsageUpdate";
-      document.wMLCSurfacesStatement.submit( );
+      document.wMLCSubsurfacesStatement.zAction.value = "DELETE_Keyword";
+      document.wMLCSubsurfacesStatement.submit( );
+   }
+}
+
+function GOTO_UsageUpdate( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCSubsurfacesStatement.zAction.value = "GOTO_UsageUpdate";
+      document.wMLCSubsurfacesStatement.submit( );
    }
 }
 
@@ -352,23 +329,8 @@ function InitSurfacesStmtsForInsert( )
    {
       _DisableFormElements( true );
 
-      document.wMLCSurfacesStatement.zAction.value = "InitSurfacesStmtsForInsert";
-      document.wMLCSurfacesStatement.submit( );
-   }
-}
-
-function SaveAddNewUsage( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCSurfacesStatement.zAction.value = "SaveAddNewUsage";
-      document.wMLCSurfacesStatement.submit( );
+      document.wMLCSubsurfacesStatement.zAction.value = "InitSurfacesStmtsForInsert";
+      document.wMLCSubsurfacesStatement.submit( );
    }
 }
 
@@ -382,8 +344,23 @@ function SurfaceStatementMaintenance( )
    {
       _DisableFormElements( true );
 
-      document.wMLCSurfacesStatement.zAction.value = "SurfaceStatementMaintenance";
-      document.wMLCSurfacesStatement.submit( );
+      document.wMLCSubsurfacesStatement.zAction.value = "SurfaceStatementMaintenance";
+      document.wMLCSubsurfacesStatement.submit( );
+   }
+}
+
+function SaveAddNewUsage( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCSubsurfacesStatement.zAction.value = "SaveAddNewUsage";
+      document.wMLCSubsurfacesStatement.submit( );
    }
 }
 
