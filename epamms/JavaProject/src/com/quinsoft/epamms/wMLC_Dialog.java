@@ -77,6 +77,25 @@ GOTO_PrecautionaryStmtDelete( View     ViewToWindow )
 
 
 private int 
+o_fnLocalBuildQual_5( View     vSubtask,
+                      zVIEW    vQualObject,
+                      int      lTempInteger_0 )
+{
+   int      RESULT = 0;
+
+   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
+   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "MasterLabelContent" );
+   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "MasterLabelContent" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
+   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_0 );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+   return( 0 );
+} 
+
+
+private int 
 o_fnLocalBuildQual_6( View     vSubtask,
                       zVIEW    vQualObject,
                       int      lID )
@@ -306,25 +325,6 @@ o_fnLocalBuildQual_3( View     vSubtask,
 
 private int 
 o_fnLocalBuildQual_4( View     vSubtask,
-                      zVIEW    vQualObject,
-                      int      lTempInteger_0 )
-{
-   int      RESULT = 0;
-
-   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
-   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "MasterLabelContent" );
-   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "MasterLabelContent" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
-   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_0 );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
-   return( 0 );
-} 
-
-
-private int 
-o_fnLocalBuildQual_5( View     vSubtask,
                       zVIEW    vQualObject,
                       int      lTempInteger_0 )
 {
@@ -2810,6 +2810,27 @@ CancelDirectionsSubStatement( View     ViewToWindow )
    //:END
    //:ResetViewFromSubobject( mMasLC )
    ResetViewFromSubobject( mMasLC );
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:AddNewUsageKeyword( VIEW ViewToWindow )
+
+//:   VIEW mMasLC REGISTERED AS mMasLC
+public int 
+AddNewUsageKeyword( View     ViewToWindow )
+{
+   zVIEW    mMasLC = new zVIEW( );
+   int      RESULT = 0;
+
+   RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
+
+   //:CreateTemporalEntity( mMasLC, "M_InsertTextKeywordUsage", zPOS_AFTER )
+   CreateTemporalEntity( mMasLC, "M_InsertTextKeywordUsage", zPOS_AFTER );
+   //:mMasLC.M_InsertTextKeywordUsage.Type = "A"
+   SetAttributeFromString( mMasLC, "M_InsertTextKeywordUsage", "Type", "A" );
    return( 0 );
 // END
 } 

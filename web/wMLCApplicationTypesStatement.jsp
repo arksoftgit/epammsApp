@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCApplicationTypesStatement   Generate Timestamp: 20160914154443699 --%>
+<%-- wMLCApplicationTypesStatement   Generate Timestamp: 20170406143228133 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -232,18 +232,18 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-         View mMasLCAuto = task.getViewByName( "mMasLC" );
-         EntityCursor cursor = mMasLCAuto.cursor( "M_Usage" );
-            if ( cursor.isNull() )
-               nRC = 0;
-            else
-            {
-               if ( cursor.isVersioned( ) )
-               {
-                  cursor.acceptSubobject( );
-               }
-            nRC = 0;
+      View mMasLC = task.getViewByName( "mMasLC" );
+      EntityCursor cursor = mMasLC.cursor( "M_Usage" );
+      if ( cursor.isNull() )
+         nRC = 0;
+      else
+      {
+         if ( cursor.isVersioned( ) )
+         {
+            cursor.acceptSubobject( );
          }
+         nRC = 0;
+      }
 
       }
       catch ( Exception e )
@@ -269,23 +269,29 @@ if ( strActionToProcess != null )
       if ( nRC < 0 )
          break;
 
-      // Action Auto Object Function
+      // Action Operation
       nRC = 0;
-      try
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCApplicationTypesStatement", "wMLC.AddNewUsageKeyword" );
+      nOptRC = wMLC.AddNewUsageKeyword( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
       {
-         View mMasLCAuto = task.getViewByName( "mMasLC" );
-         EntityCursor cursor = mMasLCAuto.cursor( "M_InsertTextKeywordUsage" );
-         cursor.createTemporalEntity( );
-
-      }
-      catch ( Exception e )
-      {
-         nRC = 2;
-         VmlOperation.CreateMessage( task, "ADD_UsageKeyword", e.getMessage( ), "" );
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
          break;
       }
-      // Next Window
-      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "AddUpdateKeywordUsage" );
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "AddUpdateKeywordUsage" );
+      }
+
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
@@ -300,18 +306,18 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-         View mMasLCAuto = task.getViewByName( "mMasLC" );
-         EntityCursor cursor = mMasLCAuto.cursor( "M_Usage" );
-            if ( cursor.isNull() )
-               nRC = 0;
-            else
-            {
-               if ( cursor.isVersioned( ) )
-               {
-                  cursor.cancelSubobject( );
-               }
-            nRC = 0;
+      View mMasLC = task.getViewByName( "mMasLC" );
+      EntityCursor cursor = mMasLC.cursor( "M_Usage" );
+      if ( cursor.isNull() )
+         nRC = 0;
+      else
+      {
+         if ( cursor.isVersioned( ) )
+         {
+            cursor.cancelSubobject( );
          }
+         nRC = 0;
+      }
 
       }
       catch ( Exception e )
@@ -368,14 +374,14 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-         EntityCursor cursor = mMasLC.cursor( "M_InsertTextKeywordUsage" );
-            if ( cursor.isNull() )
-               nRC = 0;
-            else
-            {
-               cursor.deleteEntity( CursorPosition.NEXT );
-            nRC = 0;
-         }
+      EntityCursor cursor = mMasLC.cursor( "M_InsertTextKeywordUsage" );
+      if ( cursor.isNull() )
+         nRC = 0;
+      else
+      {
+         cursor.deleteEntity( CursorPosition.NEXT );
+         nRC = 0;
+      }
 
       }
       catch ( Exception e )
@@ -470,8 +476,8 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-         EntityCursor cursor = mMasLC.cursor( "M_InsertTextKeywordUsage" );
-         cursor.createTemporalSubobjectVersion( );
+      EntityCursor cursor = mMasLC.cursor( "M_InsertTextKeywordUsage" );
+      cursor.createTemporalSubobjectVersion( );
 
       }
       catch ( Exception e )
@@ -864,6 +870,7 @@ else
    <input name="zFocusCtrl" id="zFocusCtrl" type="hidden" value="<%=strFocusCtrl%>">
    <input name="zOpenFile" id="zOpenFile" type="hidden" value="<%=strOpenFile%>">
    <input name="zDateFormat" id="zDateFormat" type="hidden" value="<%=strDateFormat%>">
+   <input name="zDateSequence" id="zDateSequence" type="hidden" value="MDY">
    <input name="zLoginName" id="zLoginName" type="hidden" value="<%=strLoginName%>">
    <input name="zKeyRole" id="zKeyRole" type="hidden" value="<%=strKeyRole%>">
    <input name="zOpenPopupWindow" id="zOpenPopupWindow" type="hidden" value="<%=strOpenPopupWindow%>">
@@ -967,7 +974,7 @@ else
    }
 %>
 
-<input class="text12" name="PrecautionarySubtitle1" id="PrecautionarySubtitle1" maxlength="254" style="width:312px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12"  name="PrecautionarySubtitle1" id="PrecautionarySubtitle1" maxlength="4096" style="width:312px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>

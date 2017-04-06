@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCOrganismClaimsStatement   Generate Timestamp: 20160914154445889 --%>
+<%-- wMLCOrganismClaimsStatement   Generate Timestamp: 20170406191702894 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -178,7 +178,7 @@ public int DoInputMapping( HttpServletRequest request,
          strTag = "Keyword3::" + strEntityKey;
          strMapValue = request.getParameter( strTag );
          if ( strMapValue != null ) 
-         {
+         { 
             try
             {
                if ( webMapping )
@@ -191,25 +191,25 @@ public int DoInputMapping( HttpServletRequest request,
                nMapError = -16;
                VmlOperation.CreateMessage( task, strTag, e.getReason( ), strMapValue );
          }
-      }
+      } 
 
          strTag = "KeywordText3::" + strEntityKey;
          strMapValue = request.getParameter( strTag );
          if ( strMapValue != null ) 
-         {
+         { 
             try
             {
                if ( webMapping )
                   VmlOperation.CreateMessage( task, "KeywordText3", "", strMapValue );
                else
-                  vGridTmp.cursor( "M_InsertTextUsage" ).getAttribute( "Text" ).setValue( strMapValue, "" );
+                  vGridTmp.cursor( "M_Usage" ).getAttribute( "dUsageKeywordText" ).setValue( strMapValue, "" );
             }
             catch ( InvalidAttributeValueException e )
             {
                nMapError = -16;
                VmlOperation.CreateMessage( task, strTag, e.getReason( ), strMapValue );
          }
-      }
+      } 
 
          csrRC = vGridTmp.cursor( "M_InsertTextKeywordUsage" ).setNextContinue( );
       }
@@ -426,18 +426,18 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-         View mMasLCAuto = task.getViewByName( "mMasLC" );
-         EntityCursor cursor = mMasLCAuto.cursor( "M_Usage" );
-            if ( cursor.isNull() )
-               nRC = 0;
-            else
-            {
-               if ( cursor.isVersioned( ) )
-               {
-                  cursor.acceptSubobject( );
-               }
-            nRC = 0;
+      View mMasLC = task.getViewByName( "mMasLC" );
+      EntityCursor cursor = mMasLC.cursor( "M_Usage" );
+      if ( cursor.isNull() )
+         nRC = 0;
+      else
+      {
+         if ( cursor.isVersioned( ) )
+         {
+            cursor.acceptSubobject( );
          }
+         nRC = 0;
+      }
 
       }
       catch ( Exception e )
@@ -501,23 +501,29 @@ if ( strActionToProcess != null )
       if ( nRC < 0 )
          break;
 
-      // Action Auto Object Function
+      // Action Operation
       nRC = 0;
-      try
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCOrganismClaimsStatement", "wMLC.AddNewUsageKeyword" );
+      nOptRC = wMLC.AddNewUsageKeyword( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
       {
-         View mMasLCAuto = task.getViewByName( "mMasLC" );
-         EntityCursor cursor = mMasLCAuto.cursor( "M_InsertTextKeywordUsage" );
-         cursor.createTemporalEntity( );
-
-      }
-      catch ( Exception e )
-      {
-         nRC = 2;
-         VmlOperation.CreateMessage( task, "ADD_UsageKeyword", e.getMessage( ), "" );
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
          break;
       }
-      // Next Window
-      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "AddUpdateKeywordUsage" );
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "AddUpdateKeywordUsage" );
+      }
+
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
@@ -570,18 +576,18 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-         View mMasLCAuto = task.getViewByName( "mMasLC" );
-         EntityCursor cursor = mMasLCAuto.cursor( "M_Usage" );
-            if ( cursor.isNull() )
-               nRC = 0;
-            else
-            {
-               if ( cursor.isVersioned( ) )
-               {
-                  cursor.cancelSubobject( );
-               }
-            nRC = 0;
+      View mMasLC = task.getViewByName( "mMasLC" );
+      EntityCursor cursor = mMasLC.cursor( "M_Usage" );
+      if ( cursor.isNull() )
+         nRC = 0;
+      else
+      {
+         if ( cursor.isVersioned( ) )
+         {
+            cursor.cancelSubobject( );
          }
+         nRC = 0;
+      }
 
       }
       catch ( Exception e )
@@ -703,14 +709,14 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-         EntityCursor cursor = mMasLC.cursor( "M_InsertTextKeywordUsage" );
-            if ( cursor.isNull() )
-               nRC = 0;
-            else
-            {
-               cursor.deleteEntity( CursorPosition.NEXT );
-            nRC = 0;
-         }
+      EntityCursor cursor = mMasLC.cursor( "M_InsertTextKeywordUsage" );
+      if ( cursor.isNull() )
+         nRC = 0;
+      else
+      {
+         cursor.deleteEntity( CursorPosition.NEXT );
+         nRC = 0;
+      }
 
       }
       catch ( Exception e )
@@ -805,8 +811,8 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-         EntityCursor cursor = mMasLC.cursor( "M_InsertTextKeywordUsage" );
-         cursor.createTemporalSubobjectVersion( );
+      EntityCursor cursor = mMasLC.cursor( "M_InsertTextKeywordUsage" );
+      cursor.createTemporalSubobjectVersion( );
 
       }
       catch ( Exception e )
@@ -1222,6 +1228,7 @@ else
    <input name="zFocusCtrl" id="zFocusCtrl" type="hidden" value="<%=strFocusCtrl%>">
    <input name="zOpenFile" id="zOpenFile" type="hidden" value="<%=strOpenFile%>">
    <input name="zDateFormat" id="zDateFormat" type="hidden" value="<%=strDateFormat%>">
+   <input name="zDateSequence" id="zDateSequence" type="hidden" value="MDY">
    <input name="zLoginName" id="zLoginName" type="hidden" value="<%=strLoginName%>">
    <input name="zKeyRole" id="zKeyRole" type="hidden" value="<%=strKeyRole%>">
    <input name="zOpenPopupWindow" id="zOpenPopupWindow" type="hidden" value="<%=strOpenPopupWindow%>">
@@ -1289,7 +1296,7 @@ else
 <% /* Usage:ComboBox */ %>
 <% strErrorMapValue = "";  %>
 
-<select  name="Usage" id="Usage" size="1" style="width:606px;" onchange="UsageOnChange( )">
+<select  name="Usage" id="Usage" size="1" style="width:606px;" onchange="UsageOnChange( )" >
 
 <%
    boolean inListUsage = false;
@@ -1415,7 +1422,7 @@ else
    }
 %>
 
-<input class="text12" name="PrecautionarySubtitle" id="PrecautionarySubtitle" maxlength="254" style="width:606px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12"  name="PrecautionarySubtitle" id="PrecautionarySubtitle" maxlength="4096" style="width:606px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>
@@ -1603,7 +1610,7 @@ try
       String strKeyword;
       String strKeywordText2;
       String strUpdate;
-      String strDelete2;
+      String strDelete1;
       String strCopy;
       
       View vGrid4;
@@ -1649,7 +1656,7 @@ try
    <td><a href="#" onclick="GOTO_UsageUpdate( this.id )" id="Keyword::<%=strEntityKey%>"><%=strKeyword%></a></td>
    <td><%=strKeywordText2%></td>
    <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="Update" onclick="GOTO_UsageUpdate( this.id )" id="Update::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="Delete2" onclick="DELETE_UsageKeyword( this.id )" id="Delete2::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="Delete1" onclick="DELETE_UsageKeyword( this.id )" id="Delete1::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
    <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="Copy" onclick="COPY_UsageKeywordAndText( this.id )" id="Copy::<%=strEntityKey%>"><img src="./images/ePammsCopy.png" alt="Copy"></a></td>
 
 </tr>
@@ -1750,7 +1757,7 @@ try
       String strKeyword3ErrorColor;
       String strKeywordText3;
       String strKeywordText3ErrorColor;
-      String strDelete;
+      String strDelete2;
       
       View vGrid5;
       vGrid5 = mMasLC.newView( );
@@ -1788,7 +1795,7 @@ try
 
          strKeywordText3 = "";
          strKeywordText3ErrorColor = "";
-         nRC = vGrid5.cursor( "M_InsertTextUsage" ).checkExistenceOfEntity( ).toInt();
+         nRC = vGrid5.cursor( "M_Usage" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
             strTag = "KeywordText3::" + strEntityKey;
@@ -1801,7 +1808,7 @@ try
             }
             else
             {
-               strKeywordText3 = vGrid5.cursor( "M_InsertTextUsage" ).getAttribute( "Text" ).getString( "" );
+               strKeywordText3 = vGrid5.cursor( "M_Usage" ).getAttribute( "dUsageKeywordText" ).getString( "" );
                if ( strKeywordText3 == null )
                   strKeywordText3 = "";
             }
@@ -1816,7 +1823,7 @@ try
 
    <td><input size="30" value="<%=strKeyword3%>"<%=strKeyword3ErrorColor%> name="Keyword3::<%=strEntityKey%>" id="Keyword3::<%=strEntityKey%>" ></td>
    <td><input size="78" value="<%=strKeywordText3%>"<%=strKeywordText3ErrorColor%> name="KeywordText3::<%=strEntityKey%>" id="KeywordText3::<%=strEntityKey%>" ></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="Delete" onclick="DELETE_UsageKeyword( this.id )" id="Delete::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="Delete2" onclick="DELETE_UsageKeyword( this.id )" id="Delete2::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
 
 </tr>
 

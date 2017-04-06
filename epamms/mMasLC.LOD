@@ -1,4 +1,4 @@
-z1000-Zeidon    MMASLC   TZZOLODO                         04/04/17   12:44:51 1.0a2   
+z1000-Zeidon    MMASLC   TZZOLODO                         04/05/17   10:56:20 1.0a2   
 eLOD       1
 aZKey      69033382
 aNextZKeyToAssign 130003420
@@ -4933,7 +4933,7 @@ aIndentLvl 15
 aZKey      130002829
 aCreate    N
 aDelete    N
-aUpdate    N
+aUpdate    Y
 aInclude   N
 aInclSrc   Y
 aExclude   N
