@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSLCMarketing   Generate Timestamp: 20170324152749905 --%>
+<%-- wSLCMarketing   Generate Timestamp: 20170407175612304 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -921,7 +921,7 @@ else
 <html>
 <head>
 
-<title>Subregistrant Marketing</title>
+<title>SLC Marketing</title>
 
 <%@ include file="./include/head.inc" %>
 <!-- Timeout.inc has a value for nTimeout which is used to determine when to -->

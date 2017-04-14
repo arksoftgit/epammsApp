@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCHumanHazard   Generate Timestamp: 20160914154445002 --%>
+<%-- wMLCHumanHazard   Generate Timestamp: 20170407175050010 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -1291,7 +1291,7 @@ else
 <html>
 <head>
 
-<title>Human Hazard Content</title>
+<title>MLC Human Hazard</title>
 
 <%@ include file="./include/head.inc" %>
 <!-- Timeout.inc has a value for nTimeout which is used to determine when to -->
@@ -1422,11 +1422,11 @@ else
 %>
 
 <%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "EnvironmentalHazards" );
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "EnvironmentalHazard" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="smEnvironmentalHazards" name="smEnvironmentalHazards"><a href="#"  onclick="smEnvironmentalHazards()">Environmental Hazards</a></li>
+       <li id="smEnvironmentalHazard" name="smEnvironmentalHazard"><a href="#"  onclick="smEnvironmentalHazards()">Environmental Hazard</a></li>
 <%
    }
 %>
@@ -1617,6 +1617,7 @@ else
    <input name="zFocusCtrl" id="zFocusCtrl" type="hidden" value="<%=strFocusCtrl%>">
    <input name="zOpenFile" id="zOpenFile" type="hidden" value="<%=strOpenFile%>">
    <input name="zDateFormat" id="zDateFormat" type="hidden" value="<%=strDateFormat%>">
+   <input name="zDateSequence" id="zDateSequence" type="hidden" value="MDY">
    <input name="zLoginName" id="zLoginName" type="hidden" value="<%=strLoginName%>">
    <input name="zKeyRole" id="zKeyRole" type="hidden" value="<%=strKeyRole%>">
    <input name="zOpenPopupWindow" id="zOpenPopupWindow" type="hidden" value="<%=strOpenPopupWindow%>">
@@ -1661,7 +1662,7 @@ else
 <% /* ChildHazard:ComboBox */ %>
 <% strErrorMapValue = "";  %>
 
-<select class="text12" name="ChildHazard" id="ChildHazard" size="1" style="width:498px;position:absolute;left:254px;top:6px;" onchange="ChildHazardOnChange( )">
+<select class="text12" name="ChildHazard" id="ChildHazard" size="1" style="width:498px;position:absolute;left:254px;top:6px;" onchange="ChildHazardOnChange( )" >
 
 <%
    boolean inListChildHazard = false;
@@ -1745,7 +1746,7 @@ else
 <% /* SignalWord:ComboBox */ %>
 <% strErrorMapValue = "";  %>
 
-<select  name="SignalWord" id="SignalWord" size="1" style="width:214px;position:absolute;left:254px;top:34px;" onchange="SignalWordOnChange( )">
+<select  name="SignalWord" id="SignalWord" size="1" style="width:214px;position:absolute;left:254px;top:34px;" onchange="SignalWordOnChange( )" >
 
 <%
    boolean inListSignalWord = false;
@@ -1866,7 +1867,7 @@ else
    }
 %>
 
-<textarea name="Statement" id="Statement"  title="This can include Keywords, '{{Precautionary Panel "style="width:498px;height:56px;position:absolute;left:0px;top:0px;border:solid;border-width:4px;border-style:groove;" wrap="wrap"><%=strErrorMapValue%></textarea>
+<textarea name="Statement" id="Statement" maxlength="4096"  title="This can include Keywords, '{{Precautionary Panel Location}}' or '{{Precautionary Label Location}}',  that will cause the insertion of 'right', 'left', 'side', 'back', 'of label' or 'below' at that location in the text based on the Template."style="width:498px;height:56px;position:absolute;left:0px;top:0px;border:solid;border-width:4px;border-style:groove;" wrap="wrap"><%=strErrorMapValue%></textarea>
 
 
 </div>  <!--  GroupBox5 --> 
@@ -1879,7 +1880,7 @@ else
 <% /* LocSeparator:ComboBox */ %>
 <% strErrorMapValue = "";  %>
 
-<select  name="LocSeparator" id="LocSeparator" size="1" style="width:214px;position:absolute;left:178px;top:136px;" onchange="LocSeparatorOnChange( )">
+<select  name="LocSeparator" id="LocSeparator" size="1" style="width:214px;position:absolute;left:178px;top:136px;" onchange="LocSeparatorOnChange( )" >
 
 <%
    boolean inListLocSeparator = false;
@@ -2019,7 +2020,7 @@ else
    }
 %>
 
-<input class="text12" name="PanelLocation1" id="PanelLocation1" maxlength="254" style="width:162px;position:absolute;left:236px;top:166px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12"  name="PanelLocation1" id="PanelLocation1" maxlength="254" style="width:162px;position:absolute;left:236px;top:166px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* LabelLocations::Text */ %>
 
@@ -2064,7 +2065,7 @@ else
    }
 %>
 
-<input class="text12" name="LabelLocation1" id="LabelLocation1" maxlength="254" style="width:162px;position:absolute;left:590px;top:166px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12"  name="LabelLocation1" id="LabelLocation1" maxlength="254" style="width:162px;position:absolute;left:590px;top:166px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* PanelLocation2:EditBox */ %>
 <%
@@ -2351,7 +2352,7 @@ else
    }
 %>
 
-<input class="text12" name="PanelLocation5" id="PanelLocation5" maxlength="254" style="width:162px;position:absolute;left:236px;top:264px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12"  name="PanelLocation5" id="PanelLocation5" maxlength="254" style="width:162px;position:absolute;left:236px;top:264px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* LabelLocation5:EditBox */ %>
 <%
@@ -2392,7 +2393,7 @@ else
    }
 %>
 
-<input class="text12" name="LabelLocation5" id="LabelLocation5" maxlength="254" style="width:162px;position:absolute;left:590px;top:264px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12"  name="LabelLocation5" id="LabelLocation5" maxlength="254" style="width:162px;position:absolute;left:590px;top:264px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* Panel Location6:EditBox */ %>
 <%
@@ -2433,7 +2434,7 @@ else
    }
 %>
 
-<input class="text12" name="Panel Location6" id="Panel Location6" maxlength="254" style="width:162px;position:absolute;left:236px;top:290px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12"  name="Panel Location6" id="Panel Location6" maxlength="254" style="width:162px;position:absolute;left:236px;top:290px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* LabelLocation6:EditBox */ %>
 <%
@@ -2474,7 +2475,7 @@ else
    }
 %>
 
-<input class="text12" name="LabelLocation6" id="LabelLocation6" maxlength="254" style="width:162px;position:absolute;left:590px;top:290px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12"  name="LabelLocation6" id="LabelLocation6" maxlength="254" style="width:162px;position:absolute;left:590px;top:290px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* PanelLocation7:EditBox */ %>
 <%
@@ -2515,7 +2516,7 @@ else
    }
 %>
 
-<input class="text12" name="PanelLocation7" id="PanelLocation7" maxlength="254" style="width:162px;position:absolute;left:236px;top:314px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12"  name="PanelLocation7" id="PanelLocation7" maxlength="254" style="width:162px;position:absolute;left:236px;top:314px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* LabelLocation7:EditBox */ %>
 <%
@@ -2556,7 +2557,7 @@ else
    }
 %>
 
-<input class="text12" name="LabelLocation7" id="LabelLocation7" maxlength="254" style="width:162px;position:absolute;left:590px;top:314px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12"  name="LabelLocation7" id="LabelLocation7" maxlength="254" style="width:162px;position:absolute;left:590px;top:314px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* PanelLocation8:EditBox */ %>
 <%
@@ -2597,7 +2598,7 @@ else
    }
 %>
 
-<input class="text12" name="PanelLocation8" id="PanelLocation8" maxlength="254" style="width:162px;position:absolute;left:236px;top:338px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12"  name="PanelLocation8" id="PanelLocation8" maxlength="254" style="width:162px;position:absolute;left:236px;top:338px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* LabelLocation8:EditBox */ %>
 <%
@@ -2638,7 +2639,7 @@ else
    }
 %>
 
-<input class="text12" name="LabelLocation8" id="LabelLocation8" maxlength="254" style="width:162px;position:absolute;left:590px;top:338px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12"  name="LabelLocation8" id="LabelLocation8" maxlength="254" style="width:162px;position:absolute;left:590px;top:338px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* PanelLocation9:EditBox */ %>
 <%
@@ -2679,7 +2680,7 @@ else
    }
 %>
 
-<input class="text12" name="PanelLocation9" id="PanelLocation9" maxlength="254" style="width:162px;position:absolute;left:236px;top:364px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12"  name="PanelLocation9" id="PanelLocation9" maxlength="254" style="width:162px;position:absolute;left:236px;top:364px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* LabelLocation9:EditBox */ %>
 <%
@@ -2720,7 +2721,7 @@ else
    }
 %>
 
-<input class="text12" name="LabelLocation9" id="LabelLocation9" maxlength="254" style="width:162px;position:absolute;left:590px;top:364px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12"  name="LabelLocation9" id="LabelLocation9" maxlength="254" style="width:162px;position:absolute;left:590px;top:364px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 
 </div>  <!--  GroupBox1 --> 

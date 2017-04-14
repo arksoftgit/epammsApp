@@ -1,4 +1,4 @@
-z1000-Zeidon    MMASLC   TZZOLODO                         04/05/17   10:56:20 1.0a2   
+z1000-Zeidon    MMASLC   TZZOLODO                         04/12/17   18:36:50 1.0a2   
 eLOD       1
 aZKey      69033382
 aNextZKeyToAssign 130003420
@@ -4784,7 +4784,10 @@ aInclSrc   Y
 aExclude   N
 aRecursive N
 aDerived   N
+aWork      N
 aParentDeleteBehave R
+aDupEntityInstance N
+aDupRelationshipInstance N
 aRelLinkIndicator L
 aDesc      Claim, Surface, Application Type, Location (C,S,T,L)
 
@@ -4877,7 +4880,10 @@ aInclSrc   Y
 aExclude   N
 aRecursive N
 aDerived   N
+aWork      N
 aParentDeleteBehave R
+aDupEntityInstance N
+aDupRelationshipInstance N
 aRelLinkIndicator H
 aSeqNo     0
 
@@ -12631,7 +12637,7 @@ eER_RelLink 3
 eER_RelType 4
 
 eLOD_Entity 2
-awkSelectedAttributeForDragSort 5
+awkSelectedAttributeForDragSort 8
 
 eLOD_Attribute 3
 awkSequence 1
@@ -13627,7 +13633,7 @@ eER_RelLink 3
 eER_RelType 4
 
 eLOD_Entity 2
-awkSelectedAttributeForDragSort 12
+awkSelectedAttributeForDragSort 6
 
 eLOD_Attribute 3
 awkSequence 1

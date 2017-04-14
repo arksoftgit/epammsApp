@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCStorageDisposal   Generate Timestamp: 20160914154446099 --%>
+<%-- wMLCStorageDisposal   Generate Timestamp: 20170407175138980 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -60,22 +60,22 @@ public int DoInputMapping( HttpServletRequest request,
    mMasLC = task.getViewByName( "mMasLC" );
    if ( VmlOperation.isValid( mMasLC ) )
    {
-      // EditBox: MarketingTitle
+      // EditBox: StorageAndDisposalTitle
       nRC = mMasLC.cursor( "MasterLabelContent" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 ) // CursorResult.SET
       {
-         strMapValue = request.getParameter( "MarketingTitle" );
+         strMapValue = request.getParameter( "StorageAndDisposalTitle" );
          try
          {
             if ( webMapping )
-               VmlOperation.CreateMessage( task, "MarketingTitle", "", strMapValue );
+               VmlOperation.CreateMessage( task, "StorageAndDisposalTitle", "", strMapValue );
             else
                mMasLC.cursor( "MasterLabelContent" ).getAttribute( "TitleSAD" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
             nMapError = -16;
-            VmlOperation.CreateMessage( task, "MarketingTitle", e.getReason( ), strMapValue );
+            VmlOperation.CreateMessage( task, "StorageAndDisposalTitle", e.getReason( ), strMapValue );
          }
       }
 
@@ -270,9 +270,9 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-         View mMasLCAuto = task.getViewByName( "mMasLC" );
-         EntityCursor cursor = mMasLCAuto.cursor( "M_StorageDisposalSection" );
-         cursor.createTemporalEntity( );
+      View mMasLC = task.getViewByName( "mMasLC" );
+      EntityCursor cursor = mMasLC.cursor( "M_StorageDisposalSection" );
+      cursor.createTemporalEntity( );
 
       }
       catch ( Exception e )
@@ -326,9 +326,9 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-         View mMasLCAuto = task.getViewByName( "mMasLC" );
-         EntityCursor cursor = mMasLCAuto.cursor( "M_StorageDisposalSection" );
-         cursor.createTemporalEntity( );
+      View mMasLC = task.getViewByName( "mMasLC" );
+      EntityCursor cursor = mMasLC.cursor( "M_StorageDisposalSection" );
+      cursor.createTemporalEntity( );
 
       }
       catch ( Exception e )
@@ -1148,7 +1148,7 @@ else
 <html>
 <head>
 
-<title>Storage and Disposal Content</title>
+<title>MLC Storage & Disposal</title>
 
 <%@ include file="./include/head.inc" %>
 <!-- Timeout.inc has a value for nTimeout which is used to determine when to -->
@@ -1281,11 +1281,11 @@ else
 %>
 
 <%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "EnvironmentalHazards" );
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "EnvironmentalHazard" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="smEnvironmentalHazards" name="smEnvironmentalHazards"><a href="#"  onclick="smEnvironmentalHazards()">Environmental Hazards</a></li>
+       <li id="smEnvironmentalHazard" name="smEnvironmentalHazard"><a href="#"  onclick="smEnvironmentalHazards()">Environmental Hazard</a></li>
 <%
    }
 %>
@@ -1476,6 +1476,7 @@ else
    <input name="zFocusCtrl" id="zFocusCtrl" type="hidden" value="<%=strFocusCtrl%>">
    <input name="zOpenFile" id="zOpenFile" type="hidden" value="<%=strOpenFile%>">
    <input name="zDateFormat" id="zDateFormat" type="hidden" value="<%=strDateFormat%>">
+   <input name="zDateSequence" id="zDateSequence" type="hidden" value="MDY">
    <input name="zLoginName" id="zLoginName" type="hidden" value="<%=strLoginName%>">
    <input name="zKeyRole" id="zKeyRole" type="hidden" value="<%=strKeyRole%>">
    <input name="zOpenPopupWindow" id="zOpenPopupWindow" type="hidden" value="<%=strOpenPopupWindow%>">
@@ -1507,9 +1508,9 @@ else
 
 <label  id="MarketingTitle:" name="MarketingTitle:" style="width:110px;height:16px;position:absolute;left:14px;top:34px;">Title:</label>
 
-<% /* MarketingTitle:EditBox */ %>
+<% /* StorageAndDisposalTitle:EditBox */ %>
 <%
-   strErrorMapValue = VmlOperation.CheckError( "MarketingTitle", strError );
+   strErrorMapValue = VmlOperation.CheckError( "StorageAndDisposalTitle", strError );
    if ( !StringUtils.isBlank( strErrorMapValue ) )
    {
       if ( StringUtils.equals( strErrorFlag, "Y" ) )
@@ -1520,7 +1521,7 @@ else
       strErrorColor = "";
       mMasLC = task.getViewByName( "mMasLC" );
       if ( VmlOperation.isValid( mMasLC ) == false )
-         task.log( ).debug( "Invalid View: " + "MarketingTitle" );
+         task.log( ).debug( "Invalid View: " + "StorageAndDisposalTitle" );
       else
       {
          nRC = mMasLC.cursor( "MasterLabelContent" ).checkExistenceOfEntity( ).toInt();
@@ -1532,8 +1533,8 @@ else
             }
             catch (Exception e)
             {
-               out.println("There is an error on MarketingTitle: " + e.getMessage());
-               task.log().error( "*** Error on ctrl MarketingTitle", e );
+               out.println("There is an error on StorageAndDisposalTitle: " + e.getMessage());
+               task.log().error( "*** Error on ctrl StorageAndDisposalTitle", e );
             }
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
@@ -1541,12 +1542,12 @@ else
             task.log( ).debug( "MasterLabelContent.TitleSAD: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist for MarketingTitle: " + "mMasLC.MasterLabelContent" );
+            task.log( ).debug( "Entity does not exist for StorageAndDisposalTitle: " + "mMasLC.MasterLabelContent" );
       }
    }
 %>
 
-<input class="text12" name="MarketingTitle" id="MarketingTitle" maxlength="254" style="width:656px;position:absolute;left:130px;top:34px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12"  name="StorageAndDisposalTitle" id="StorageAndDisposalTitle" maxlength="4096" style="width:656px;position:absolute;left:130px;top:34px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* Text::Text */ %>
 
@@ -1591,7 +1592,7 @@ else
    }
 %>
 
-<input class="text12" name="Text" id="Text" maxlength="2048" style="width:656px;position:absolute;left:130px;top:56px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12"  name="Text" id="Text" maxlength="4096" style="width:656px;position:absolute;left:130px;top:56px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* MarketingReviewerNote::Text */ %>
 
@@ -1636,7 +1637,7 @@ else
    }
 %>
 
-<input class="text12" name="MarketingReviewerNote" id="MarketingReviewerNote" maxlength="2048" style="width:656px;position:absolute;left:130px;top:78px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12"  name="MarketingReviewerNote" id="MarketingReviewerNote" maxlength="4096" style="width:656px;position:absolute;left:130px;top:78px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* New:PushBtn */ %>
 <button type="button" class="newbutton" name="New" id="New" value="" onclick="GOTO_StorageDispSectionAdd( )" style="width:78px;height:26px;position:absolute;left:586px;top:102px;">New</button>

@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSLCPrecautionarySection   Generate Timestamp: 20170324152440954 --%>
+<%-- wSLCPrecautionarySection   Generate Timestamp: 20170407175933376 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -892,7 +892,7 @@ else
 <html>
 <head>
 
-<title>Subregistrant Precautionary Statements</title>
+<title>SLC Precautionary Statements</title>
 
 <%@ include file="./include/head.inc" %>
 <!-- Timeout.inc has a value for nTimeout which is used to determine when to -->

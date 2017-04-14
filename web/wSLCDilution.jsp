@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSLCDilution   Generate Timestamp: 20170324152543129 --%>
+<%-- wSLCDilution   Generate Timestamp: 20170407175845094 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -921,7 +921,7 @@ else
 <html>
 <head>
 
-<title>Subregistrant Dilution Entries</title>
+<title>SLC Dilution Entries</title>
 
 <%@ include file="./include/head.inc" %>
 <!-- Timeout.inc has a value for nTimeout which is used to determine when to -->

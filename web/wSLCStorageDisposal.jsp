@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSLCStorageDisposal   Generate Timestamp: 20170324152303652 --%>
+<%-- wSLCStorageDisposal   Generate Timestamp: 20170407180018943 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -862,7 +862,7 @@ else
 <html>
 <head>
 
-<title>Subregistrant Storage and Disposal</title>
+<title>SLC Storage & Disposal</title>
 
 <%@ include file="./include/head.inc" %>
 <!-- Timeout.inc has a value for nTimeout which is used to determine when to -->

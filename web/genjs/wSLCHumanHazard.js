@@ -1,4 +1,4 @@
-// wSLCHumanHazard   Generate Timestamp: 20170324152218092
+// wSLCHumanHazard   Generate Timestamp: 20170407180057162
 
 var isWindowClosing = true;
 var timerID = null;

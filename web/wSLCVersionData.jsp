@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSLCVersionData   Generate Timestamp: 20170324152157587 --%>
+<%-- wSLCVersionData   Generate Timestamp: 20170407180134345 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -942,7 +942,7 @@ else
 <html>
 <head>
 
-<title>Subregistrant Version Data</title>
+<title>SLC Version Data</title>
 
 <%@ include file="./include/head.inc" %>
 <!-- Timeout.inc has a value for nTimeout which is used to determine when to -->

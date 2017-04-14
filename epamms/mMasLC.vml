@@ -786,7 +786,6 @@ dUsgTextSubUsageNames( VIEW mMasLC BASED ON LOD mMasLC,
 
 END
 
-
 /////////////////////////////////////////////////////////////////////////////
 //
 //  OPERATION: dMarkUsgTxtSubUsgNames
@@ -803,22 +802,59 @@ dMarkUsgTxtSubUsgNames( VIEW mMasLC BASED ON LOD mMasLC,
    STRING ( 2048 ) szDisplayStatement
    STRING ( 100 ) szUsageName
    STRING ( 100 ) szUsageText
+   STRING ( 1 ) szUsageType
+   SHORT bFirst
 
    CASE GetOrSetFlag
    OF   zDERIVED_GET:
 
-      // Display required text combined with optional usage(s).
-      szDisplayStatement = mMasLC.M_MarketingUsage.Name
-      InsertOptionalSubUsages( mMasLC, szDisplayStatement, "M_MarketingSubUsage", 1 )
+      IF mMasLC.M_MarketingUsage EXISTS
+         // Display required text combined with optional usage(s).
+         szDisplayStatement = mMasLC.M_MarketingUsage.Name
+         InsertOptionalSubUsages( mMasLC, szDisplayStatement, "M_MarketingSubUsage", 1 )
 
-      IF mMasLC.M_InsertTextKeywordMarketUsage EXISTS
-         CreateViewFromView( mMasLC2, mMasLC )
-         FOR EACH mMasLC2.M_InsertTextKeywordMarketUsage
-            szUsageName = "{" + mMasLC2.M_InsertTextKeywordMarketUsage.Name + "}"
-            szUsageText = "<b>" + mMasLC2.M_InsertTextMarketUsage.Text + "</b>"
-            zSearchAndReplace( szDisplayStatement, 2048, szUsageName, szUsageText )
+         IF mMasLC.M_InsertTextKeywordMarketUsage EXISTS
+            CreateViewFromView( mMasLC2, mMasLC )
+            FOR EACH mMasLC2.M_InsertTextKeywordMarketUsage
+               szUsageType = mMasLC2.M_InsertTextKeywordMarketUsage.Type // A - all optional; O - Zero or one allowed; R - at least one required; X - exactly one required
+               szUsageName = "{" + mMasLC2.M_InsertTextKeywordMarketUsage.Name + "}"
+               bFirst = 1
+               IF szUsageType = "A"
+                  szUsageText = ""
+               ELSE
+                  szUsageText = "["
+               END
+               FOR EACH mMasLC2.M_InsertTextMarketUsage
+                  IF bFirst = 1
+                     bFirst = 0
+                     szUsageText = szUsageText + "<b>" + mMasLC2.M_InsertTextMarketUsage.Text + "</b>"
+                  ELSE
+                    IF szUsageType = "A"
+                       szUsageText = szUsageText + ", <b>" + mMasLC2.M_InsertTextMarketUsage.Text + "</b>"
+                    ELSE
+                    IF szUsageType = "O"
+                       szUsageText = szUsageText + " || <b>" + mMasLC2.M_InsertTextMarketUsage.Text + "</b>"
+                    ELSE
+                    IF szUsageType = "R"
+                       szUsageText = szUsageText + " or <b>" + mMasLC2.M_InsertTextMarketUsage.Text + "</b>"
+                    ELSE
+                 // IF szUsageType = "X"
+                       szUsageText = szUsageText + " / <b>" + mMasLC2.M_InsertTextMarketUsage.Text + "</b>"
+                 // END
+                    END
+                    END
+                    END
+                  END
+               END
+               IF szUsageType != "A"
+                  szUsageText = szUsageText + "]"
+               END
+               zSearchAndReplace( szDisplayStatement, 2048, szUsageName, szUsageText )
+            END
+            DropView( mMasLC2 )
          END
-         DropView( mMasLC2 )
+      ELSE
+         szDisplayStatement = ""
       END
 
       // Store the calculated value in the object.

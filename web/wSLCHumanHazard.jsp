@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSLCHumanHazard   Generate Timestamp: 20170324152218092 --%>
+<%-- wSLCHumanHazard   Generate Timestamp: 20170407180057162 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -817,7 +817,7 @@ else
 <html>
 <head>
 
-<title>Subregistrant Human Hazard</title>
+<title>SLC Human Hazard</title>
 
 <%@ include file="./include/head.inc" %>
 <!-- Timeout.inc has a value for nTimeout which is used to determine when to -->

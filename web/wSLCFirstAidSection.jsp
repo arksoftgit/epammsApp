@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSLCFirstAidSection   Generate Timestamp: 20170324152247169 --%>
+<%-- wSLCFirstAidSection   Generate Timestamp: 20170407180039792 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -911,7 +911,7 @@ else
 <html>
 <head>
 
-<title>Subregistrant First Aid</title>
+<title>SLC First Aid</title>
 
 <%@ include file="./include/head.inc" %>
 <!-- Timeout.inc has a value for nTimeout which is used to determine when to -->

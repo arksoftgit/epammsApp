@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCVersionData   Generate Timestamp: 20161014132313644 --%>
+<%-- wMLCVersionData   Generate Timestamp: 20170407174951013 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -1059,7 +1059,7 @@ else
 <html>
 <head>
 
-<title>Version Data</title>
+<title>MLC Version Data</title>
 
 <%@ include file="./include/head.inc" %>
 <!-- Timeout.inc has a value for nTimeout which is used to determine when to -->
@@ -1280,7 +1280,7 @@ else
    if ( !csrRC.isSet( ) )
    {
 %>
-       <li id="Marketing" name="Marketing"><a href="#"  onclick="Tables()">Tables</a></li>
+       <li id="smTables" name="smTables"><a href="#"  onclick="Tables()">Tables</a></li>
 <%
    }
 %>
@@ -1290,7 +1290,7 @@ else
    if ( !csrRC.isSet( ) )
    {
 %>
-       <li id="Marketing" name="Marketing"><a href="#"  onclick="FinalizeMasterLabelContent()">Finalize Label</a></li>
+       <li id="smFinalizeLabel" name="smFinalizeLabel"><a href="#"  onclick="FinalizeMasterLabelContent()">Finalize Label</a></li>
 <%
    }
 %>
@@ -1411,6 +1411,7 @@ else
    <input name="zFocusCtrl" id="zFocusCtrl" type="hidden" value="<%=strFocusCtrl%>">
    <input name="zOpenFile" id="zOpenFile" type="hidden" value="<%=strOpenFile%>">
    <input name="zDateFormat" id="zDateFormat" type="hidden" value="<%=strDateFormat%>">
+   <input name="zDateSequence" id="zDateSequence" type="hidden" value="MDY">
    <input name="zLoginName" id="zLoginName" type="hidden" value="<%=strLoginName%>">
    <input name="zKeyRole" id="zKeyRole" type="hidden" value="<%=strKeyRole%>">
    <input name="zOpenPopupWindow" id="zOpenPopupWindow" type="hidden" value="<%=strOpenPopupWindow%>">
@@ -1566,7 +1567,7 @@ else
    }
 %>
 
-<input class="text12" name="MasterLabelContentVersion" id="MasterLabelContentVersion" maxlength="254" style="width:210px;position:absolute;left:172px;top:100px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12"  name="MasterLabelContentVersion" id="MasterLabelContentVersion" maxlength="254" style="width:210px;position:absolute;left:172px;top:100px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* RevisionDate::Text */ %>
 
@@ -1693,7 +1694,7 @@ else
    }
 %>
 
-<input class="text12" name="ReviewerNote" id="ReviewerNote" maxlength="2048" style="width:572px;position:absolute;left:172px;top:226px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12"  name="ReviewerNote" id="ReviewerNote" maxlength="4096" style="width:572px;position:absolute;left:172px;top:226px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* Status::Text */ %>
 
@@ -1814,7 +1815,7 @@ else
    }
 %>
 
-<input class="text12" name="NetContentsTitle" id="NetContentsTitle" maxlength="254" style="width:650px;position:absolute;left:102px;top:14px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12"  name="NetContentsTitle" id="NetContentsTitle" maxlength="4096" style="width:650px;position:absolute;left:102px;top:14px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>

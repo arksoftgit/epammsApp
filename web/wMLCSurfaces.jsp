@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCSurfaces   Generate Timestamp: 20170404111439857 --%>
+<%-- wMLCSurfaces   Generate Timestamp: 20170407175335160 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -1262,7 +1262,7 @@ else
 <html>
 <head>
 
-<title>Surfaces</title>
+<title>MLC Surfaces</title>
 
 <%@ include file="./include/head.inc" %>
 <!-- Timeout.inc has a value for nTimeout which is used to determine when to -->
@@ -1637,13 +1637,13 @@ else
 
 <% /* OrganismClaimsStatements1:Text */ %>
 
-<label class="groupbox"  id="OrganismClaimsStatements1" name="OrganismClaimsStatements1" style="width:238px;height:16px;position:absolute;left:6px;top:12px;">Surfaces Statements</label>
+<label class="groupbox"  id="OrganismClaimsStatements1" name="OrganismClaimsStatements1" style="">Surfaces Statements</label>
 
 <% /* PBDelete1:PushBtn */ %>
-<button type="button" name="PBDelete1" id="PBDelete1" value="" onclick="GOTO_DeleteSelectedEntries( )" style="width:198px;height:26px;position:absolute;left:274px;top:12px;">Delete Selected Surfaces</button>
+<button type="button" name="PBDelete1" id="PBDelete1" value="" onclick="GOTO_DeleteSelectedEntries( )" style="width:198px;height:26px;position:absolute;left:274px;top:12px;" tabindex=-1 >Delete Selected Surfaces</button>
 
 <% /* PBNew1:PushBtn */ %>
-<button type="button" name="PBNew1" id="PBNew1" value="" onclick="ADD_SurfacesUsageItems( )" style="width:78px;height:26px;position:absolute;left:482px;top:12px;">New</button>
+<button type="button" name="PBNew1" id="PBNew1" value="" onclick="ADD_SurfacesUsageItems( )" style="width:78px;height:26px;position:absolute;left:482px;top:12px;" tabindex=-1 >New</button>
 
 
 </div>  <!--  GBClaimsStatements1 --> 
@@ -1776,16 +1776,16 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 
 <% /* OrganismClaimsStatements2:Text */ %>
 
-<label class="groupbox"  id="OrganismClaimsStatements2" name="OrganismClaimsStatements2" style="width:166px;height:16px;position:absolute;left:6px;top:12px;">Surface Groups</label>
+<label class="groupbox"  id="OrganismClaimsStatements2" name="OrganismClaimsStatements2" style="">Surface Groups</label>
 
 <% /* PBDelete2:PushBtn */ %>
-<button type="button" name="PBDelete2" id="PBDelete2" value="" onclick="DELETE_UsageGroupEntriesOnly( )" style="width:258px;height:26px;position:absolute;left:194px;top:12px;">Delete Selected Groups Only</button>
+<button type="button" name="PBDelete2" id="PBDelete2" value="" onclick="DELETE_UsageGroupEntriesOnly( )" style="width:258px;height:26px;position:absolute;left:194px;top:12px;" tabindex=-1 >Delete Selected Groups Only</button>
 
 <% /* PBNew2:PushBtn */ %>
-<button type="button" name="PBNew2" id="PBNew2" value="" onclick="GOTO_AddUsageGroup( )" style="width:78px;height:26px;position:absolute;left:482px;top:12px;">New</button>
+<button type="button" name="PBNew2" id="PBNew2" value="" onclick="GOTO_AddUsageGroup( )" style="width:78px;height:26px;position:absolute;left:482px;top:12px;" tabindex=-1 >New</button>
 
 <% /* PBDelete3:PushBtn */ %>
-<button type="button" name="PBDelete3" id="PBDelete3" value="" onclick="DELETE_UsageGroupEntriesSurfaces( )" style="width:258px;height:26px;position:absolute;left:194px;top:38px;">Delete Selected Groups & Surfaces</button>
+<button type="button" name="PBDelete3" id="PBDelete3" value="" onclick="DELETE_UsageGroupEntriesSurfaces( )" style="width:258px;height:26px;position:absolute;left:194px;top:38px;" tabindex=-1 >Delete Selected Groups & Surfaces</button>
 
 
 </div>  <!--  GBClaimsStatements2 --> 
@@ -2006,7 +2006,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 <td valign="top" style="width:136px;">
 <% /* Title::Text */ %>
 
-<span  id="Title:" name="Title:" style="width:132px;height:20px;">Title:</span>
+<span  id="Title:" name="Title:" style="width:132px;height:20px;" tabindex=-1 >Title:</span>
 
 </td>
 <td valign="top" style="width:466px;">
@@ -2049,7 +2049,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
    }
 %>
 
-<input name="Title" id="Title" maxlength="4096" style="width:466px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="Title" id="Title" maxlength="4096" style="width:466px;<%=strErrorColor%>" tabindex=-1  type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>
@@ -2057,7 +2057,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 <td valign="top" style="width:136px;">
 <% /* ReviewerNote::Text */ %>
 
-<span  id="ReviewerNote:" name="ReviewerNote:" style="width:132px;height:20px;">Note to Reviewer:</span>
+<span  id="ReviewerNote:" name="ReviewerNote:" style="width:132px;height:20px;" tabindex=-1 >Note to Reviewer:</span>
 
 </td>
 <td valign="top" style="width:466px;">
@@ -2100,7 +2100,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
    }
 %>
 
-<input name="ReviewerNote" id="ReviewerNote" maxlength="4096" style="width:466px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="ReviewerNote" id="ReviewerNote" maxlength="4096" style="width:466px;<%=strErrorColor%>" tabindex=-1  type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>

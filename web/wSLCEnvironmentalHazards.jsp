@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSLCEnvironmentalHazards   Generate Timestamp: 20170324152503283 --%>
+<%-- wSLCEnvironmentalHazards   Generate Timestamp: 20170407175916601 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -862,7 +862,7 @@ else
 <html>
 <head>
 
-<title>Subregistrant Environmental Hazards</title>
+<title>SLC Environmental Hazards</title>
 
 <%@ include file="./include/head.inc" %>
 <!-- Timeout.inc has a value for nTimeout which is used to determine when to -->

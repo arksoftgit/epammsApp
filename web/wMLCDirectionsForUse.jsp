@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCDirectionsForUse   Generate Timestamp: 20160914171019349 --%>
+<%-- wMLCDirectionsForUse   Generate Timestamp: 20170407175202714 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -1084,7 +1084,7 @@ else
 <html>
 <head>
 
-<title>Directions for Use</title>
+<title>MLC Directions For Use</title>
 
 <%@ include file="./include/head.inc" %>
 <!-- Timeout.inc has a value for nTimeout which is used to determine when to -->
@@ -1217,11 +1217,11 @@ else
 %>
 
 <%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "EnvironmentalHazards" );
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "EnvironmentalHazard" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="smEnvironmentalHazards" name="smEnvironmentalHazards"><a href="#"  onclick="smEnvironmentalHazards()">Environmental Hazards</a></li>
+       <li id="smEnvironmentalHazard" name="smEnvironmentalHazard"><a href="#"  onclick="smEnvironmentalHazards()">Environmental Hazard</a></li>
 <%
    }
 %>
@@ -1412,6 +1412,7 @@ else
    <input name="zFocusCtrl" id="zFocusCtrl" type="hidden" value="<%=strFocusCtrl%>">
    <input name="zOpenFile" id="zOpenFile" type="hidden" value="<%=strOpenFile%>">
    <input name="zDateFormat" id="zDateFormat" type="hidden" value="<%=strDateFormat%>">
+   <input name="zDateSequence" id="zDateSequence" type="hidden" value="MDY">
    <input name="zLoginName" id="zLoginName" type="hidden" value="<%=strLoginName%>">
    <input name="zKeyRole" id="zKeyRole" type="hidden" value="<%=strKeyRole%>">
    <input name="zOpenPopupWindow" id="zOpenPopupWindow" type="hidden" value="<%=strOpenPopupWindow%>">
@@ -1482,7 +1483,7 @@ else
    }
 %>
 
-<input class="text12" name="DFU_Title" id="DFU_Title" maxlength="254" style="width:656px;position:absolute;left:130px;top:34px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12"  name="DFU_Title" id="DFU_Title" maxlength="4096" style="width:656px;position:absolute;left:130px;top:34px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* Text::Text */ %>
 
@@ -1527,7 +1528,7 @@ else
    }
 %>
 
-<input class="text12" name="Text" id="Text" maxlength="2048" style="width:656px;position:absolute;left:130px;top:56px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12"  name="Text" id="Text" maxlength="4096" style="width:656px;position:absolute;left:130px;top:56px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* DFU_ReviewerNote::Text */ %>
 
@@ -1565,7 +1566,7 @@ else
    }
 %>
 
-<textarea name="DFU_ReviewerNote" id="DFU_ReviewerNote" style="width:656px;height:76px;position:absolute;left:130px;top:78px;border:solid;border-width:4px;border-style:groove;" class="text12" wrap="wrap"><%=strErrorMapValue%></textarea>
+<textarea name="DFU_ReviewerNote" id="DFU_ReviewerNote" maxlength="4096" style="width:656px;height:76px;position:absolute;left:130px;top:78px;border:solid;border-width:4px;border-style:groove;" class="text12" wrap="wrap"><%=strErrorMapValue%></textarea>
 
 <% /* New:PushBtn */ %>
 <button type="button" class="newbutton" name="New" id="New" value="" onclick="GOTO_DU_CategoryAdd( )" style="width:78px;height:26px;position:absolute;left:586px;top:168px;">New</button>

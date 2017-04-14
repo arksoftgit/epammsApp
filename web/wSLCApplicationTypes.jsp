@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSLCApplicationTypes   Generate Timestamp: 20170324152701831 --%>
+<%-- wSLCApplicationTypes   Generate Timestamp: 20170407175733694 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -856,7 +856,7 @@ else
 <html>
 <head>
 
-<title>Subregistrant Application Types</title>
+<title>SLC Application Types</title>
 
 <%@ include file="./include/head.inc" %>
 <!-- Timeout.inc has a value for nTimeout which is used to determine when to -->

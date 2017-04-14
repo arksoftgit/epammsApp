@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSLCSurfaces   Generate Timestamp: 20170324152607154 --%>
+<%-- wSLCSurfaces   Generate Timestamp: 20170407175824569 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -856,7 +856,7 @@ else
 <html>
 <head>
 
-<title>Subregistrant Surfaces</title>
+<title>SLC Surfaces</title>
 
 <%@ include file="./include/head.inc" %>
 <!-- Timeout.inc has a value for nTimeout which is used to determine when to -->
