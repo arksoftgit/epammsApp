@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSLCStorageDisposalSection   Generate Timestamp: 20170302124856916 --%>
+<%-- wSLCStorageDisposalSection   Generate Timestamp: 20170417141137386 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -703,11 +703,11 @@ else
          strRadioGroupValue = mSubLC.cursor( "S_StorageDisposalSection" ).getAttribute( "ExclusiveStatements" ).getString( );
    }
 
-   if ( StringUtils.equals( strRadioGroupValue, "1" ) )
+   if ( StringUtils.equals( strRadioGroupValue, "Y" ) )
       strErrorMapValue = "checked=\"checked\"";
 %>
 
-<input type="checkbox" name="CBExclusive" id="CBExclusive"  disabled  value="1" <%=strErrorMapValue%> style="position:absolute;left:380px;top:12px;">
+<input type="checkbox" name="CBExclusive" id="CBExclusive"  disabled  value="Y" <%=strErrorMapValue%> style="position:absolute;left:380px;top:12px;">
 <span style="width:180px;height:24px;position:absolute;left:410px;top:12px;">Exclusive Statements</span>
 
 

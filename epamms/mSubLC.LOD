@@ -1,4 +1,4 @@
-z1000-Zeidon    MSUBLC   TZZOLODO                         03/07/17   10:49:49 1.0a2   
+z1000-Zeidon    MSUBLC   TZZOLODO                         04/17/17   14:35:46 1.0a2   
 eLOD       1
 aZKey      69035258
 aNextZKeyToAssign 130002818
@@ -8046,9 +8046,9 @@ aZKey      130002708
 eDomainRec 7
 
 eLOD_AttrDerivationOperRec 6
-aName      dUsgFullEmbeddedName
+aName      dUsgTextSubUsageNames
 aClass     0
-aZKey      130002513
+aZKey      130002724
 aType      A
 aReturnDataType N
 
@@ -8067,11 +8067,6 @@ aZKey      130002710
 eDomainRec 7
 
 eLOD_AttrDerivationOperRec 6
-aName      dUsgTextSubUsageNames
-aClass     0
-aZKey      130002724
-aType      A
-aReturnDataType N
 
 eSourceFileForDARec 7
 
@@ -14250,7 +14245,7 @@ eER_RelLink 3
 eER_RelType 4
 
 eLOD_Entity 2
-awkSelectedAttributeForDragSort 17
+awkSelectedAttributeForDragSort 11
 
 eLOD_Attribute 3
 awkSequence 1
@@ -15576,6 +15571,11 @@ aDataType  N
 aZKey      130002512
 
 eOperation 3
+aName      dUsgFullEmbeddedName
+aZKey      130002513
+aType      A
+aReturnDataType N
+aClass     0
 
 eParameter 4
 aShortDesc mSubLC
@@ -17483,6 +17483,7 @@ i1864      33
 i1867      16
 i1869      33
 i1872      16
+i1873      1868
 i1874      33
 i1877      16
 i1879      33
@@ -19602,7 +19603,7 @@ i4250      33
 i4251      1870
 i4252      1871
 i4253      16
-i4254      1873
+i4254      1868
 i4255      33
 i4256      1875
 i4257      1876
@@ -20066,7 +20067,6 @@ i4714      67
 i4719      541
 i4734      108
 i4739      146
-i4749      1868
 i4754      1052
 i4769      1878
 i4774      1888
@@ -20088,7 +20088,7 @@ i4872      334
 i4877      1746
 i4893      1863
 i4898      1883
-i4903      1873
+i4903      1868
 i4908      1514
 i4913      1519
 i4918      1471
@@ -20186,11 +20186,11 @@ i5036      1888
 i5037      33
 i5038      1878
 i5039      33
-i5040      1868
+i5040      4749
 i5041      33
 i5042      1898
 i5043      33
-i5044      1873
+i5044      1868
 i5045      33
 i5046      4926
 i5047      33

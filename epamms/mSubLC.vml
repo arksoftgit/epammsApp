@@ -733,7 +733,6 @@ dMasterProductNameNbr( VIEW mSubLC BASED ON LOD mSubLC,
 
 END
 
-
 /////////////////////////////////////////////////////////////////////////////
 //
 //  OPERATION: dSubregProductNameNbr
@@ -947,6 +946,89 @@ END
 /////////////////////////////////////////////////////////////////////////////
 //
 //  OPERATION: dUsgTextSubUsageNames
+//  Display required text with embedded keywords + optional atomic usages
+//
+/////////////////////////////////////////////////////////////////////////////
+DERIVED ATTRIBUTE OPERATION
+dUsgTextSubUsageNames( VIEW mSubLC BASED ON LOD mSubLC,
+                       STRING ( 32 ) InternalEntityStructure,
+                       STRING ( 32 ) InternalAttribStructure,
+                       SHORT GetOrSetFlag )
+
+   VIEW mSubLC2 BASED ON LOD mSubLC
+   STRING ( 2048 ) szDisplayStatement
+   STRING ( 100 ) szUsageName
+   STRING ( 100 ) szUsageText
+   STRING ( 1 ) szUsageType
+   SHORT bFirst
+
+   CASE GetOrSetFlag
+   OF   zDERIVED_GET:
+
+      IF mSubLC.S_Usage EXISTS
+         // Display required text combined with optional usage(s).
+         szDisplayStatement = mSubLC.S_Usage.Name
+         InsertOptionalSubUsages( mSubLC, szDisplayStatement, "S_SubUsage", 1 )
+
+         IF mSubLC.S_InsertTextKeywordUsage EXISTS
+            CreateViewFromView( mSubLC2, mSubLC )
+            FOR EACH mSubLC2.S_InsertTextKeywordUsage
+               szUsageType = mSubLC2.S_InsertTextKeywordUsage.Type // A - all optional; O - Zero or one allowed; R - at least one required; X - exactly one required
+               szUsageName = "{" + mSubLC2.S_InsertTextKeywordUsage.Name + "}"
+               bFirst = 1
+               IF szUsageType = "A"
+                  szUsageText = ""
+               ELSE
+                  szUsageText = "["
+               END
+               FOR EACH mSubLC2.S_InsertTextUsage
+                  IF bFirst = 1
+                     bFirst = 0
+                     szUsageText = szUsageText + "<b>" + mSubLC2.S_InsertTextUsage.Text + "</b>"
+                  ELSE
+                    IF szUsageType = "A"
+                       szUsageText = szUsageText + ", <b>" + mSubLC2.S_InsertTextUsage.Text + "</b>"
+                    ELSE
+                    IF szUsageType = "O"
+                       szUsageText = szUsageText + " || <b>" + mSubLC2.S_InsertTextUsage.Text + "</b>"
+                    ELSE
+                    IF szUsageType = "R"
+                       szUsageText = szUsageText + " or <b>" + mSubLC2.S_InsertTextUsage.Text + "</b>"
+                    ELSE
+                 // IF szUsageType = "X"
+                       szUsageText = szUsageText + " / <b>" + mSubLC2.S_InsertTextUsage.Text + "</b>"
+                 // END
+                    END
+                    END
+                    END
+                  END
+               END
+               IF szUsageType != "A"
+                  szUsageText = szUsageText + "]"
+               END
+               zSearchAndReplace( szDisplayStatement, 2048, szUsageName, szUsageText )
+            END
+            DropView( mSubLC2 )
+         END
+      ELSE
+         szDisplayStatement = ""
+      END
+
+      // Store the calculated value in the object.
+      StoreStringInRecord( mSubLC, InternalEntityStructure, InternalAttribStructure, szDisplayStatement )
+
+        // end zDERIVED_GET
+   OF   zDERIVED_SET:
+
+        // end zDERIVED_SET
+   END  // case
+
+END
+
+/*
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: dUsgTextSubUsageNames
 //  Display required text + optional atomic usages
 //
 /////////////////////////////////////////////////////////////////////////////
@@ -992,6 +1074,7 @@ dUsgTextSubUsageNames( VIEW mSubLC BASED ON LOD mSubLC,
    END  // case
 
 END
+*/
 
 /////////////////////////////////////////////////////////////////////////////
 //

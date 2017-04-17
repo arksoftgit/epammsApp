@@ -1,4 +1,4 @@
-// wSLCUsageEntriesSelect   Generate Timestamp: 20161028120755915
+// wSLCUsageEntriesSelect   Generate Timestamp: 20170417145719413
 
 var isWindowClosing = true;
 var timerID = null;
