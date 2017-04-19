@@ -1,4 +1,4 @@
-// wMLCOrganismClaims   Generate Timestamp: 20170407175435290
+// wMLCOrganismClaims   Generate Timestamp: 20170419093302982
 
 var isWindowClosing = true;
 var timerID = null;
@@ -521,6 +521,21 @@ function smEditMarketingSect( )
       _DisableFormElements( true );
 
       document.wMLCOrganismClaims.zAction.value = "smEditMarketingSect";
+      document.wMLCOrganismClaims.submit( );
+   }
+}
+
+function smTables( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCOrganismClaims.zAction.value = "smTables";
       document.wMLCOrganismClaims.submit( );
    }
 }

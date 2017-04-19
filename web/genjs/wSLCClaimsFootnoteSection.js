@@ -1,4 +1,4 @@
-// wMLCDirectionsForUse   Generate Timestamp: 20170419093429712
+// wSLCClaimsFootnoteSection   Generate Timestamp: 20170419092530134
 
 var isWindowClosing = true;
 var timerID = null;
@@ -45,8 +45,8 @@ function _OnAlmostTimeout()
       // If the time is less than one minute, resubmit the page.  Otherwise, go to the timeout window.
       if (tDiff < 60000)
       {
-         document.wMLCDirectionsForUse.zAction.value = "_OnResubmitPage";
-         document.wMLCDirectionsForUse.submit( );
+         document.wSLCClaimsFootnoteSection.zAction.value = "_OnResubmitPage";
+         document.wSLCClaimsFootnoteSection.submit( );
       }
       else
       {
@@ -61,8 +61,8 @@ function _OnTimeout( )
    {
       _DisableFormElements( true );
 
-      document.wMLCDirectionsForUse.zAction.value = "_OnTimeout";
-      document.wMLCDirectionsForUse.submit( );
+      document.wSLCClaimsFootnoteSection.zAction.value = "_OnTimeout";
+      document.wSLCClaimsFootnoteSection.submit( );
    }
 }
 
@@ -76,8 +76,8 @@ function _BeforePageUnload( )
       // If the user clicked the window close box, unregister zeidon.
       if (isWindowClosing)
       {
-         document.wMLCDirectionsForUse.zAction.value = "_OnUnload";
-         document.wMLCDirectionsForUse.submit( );
+         document.wSLCClaimsFootnoteSection.zAction.value = "_OnUnload";
+         document.wSLCClaimsFootnoteSection.submit( );
       }
    }
 }
@@ -130,16 +130,16 @@ function _AfterPageLoaded( )
 {
 // _DisableFormElements( false );
 
-   var szFocusCtrl = document.wMLCDirectionsForUse.zFocusCtrl.value;
+   var szFocusCtrl = document.wSLCClaimsFootnoteSection.zFocusCtrl.value;
    if ( szFocusCtrl != "" && szFocusCtrl != "null" )
-      eval( 'document.wMLCDirectionsForUse.' + szFocusCtrl + '.focus( )' );
+      eval( 'document.wSLCClaimsFootnoteSection.' + szFocusCtrl + '.focus( )' );
 
    // This is where we put out a message from the previous iteration on this window
-   var szMsg = document.wMLCDirectionsForUse.zError.value;
+   var szMsg = document.wSLCClaimsFootnoteSection.zError.value;
    if ( szMsg != "" )
       alert( szMsg ); // "Houston ... We have a problem"
 
-   szMsg = document.wMLCDirectionsForUse.zOpenFile.value;
+   szMsg = document.wSLCClaimsFootnoteSection.zOpenFile.value;
    if ( szMsg != "" )
    {
       var NewWin = window.open( szMsg );
@@ -151,10 +151,10 @@ function _AfterPageLoaded( )
       }
    }
 
-   var LoginName = document.wMLCDirectionsForUse.zLoginName.value;
-   var keyRole = document.wMLCDirectionsForUse.zKeyRole.value;
-   document.wMLCDirectionsForUse.zError.value = "";
-   document.wMLCDirectionsForUse.zOpenFile.value = "";
+   var LoginName = document.wSLCClaimsFootnoteSection.zLoginName.value;
+   var keyRole = document.wSLCClaimsFootnoteSection.zKeyRole.value;
+   document.wSLCClaimsFootnoteSection.zError.value = "";
+   document.wSLCClaimsFootnoteSection.zOpenFile.value = "";
 
    if ( timerID != null )
    {
@@ -162,7 +162,7 @@ function _AfterPageLoaded( )
       timerID = null;
    }
 
-   var varTimeout = document.wMLCDirectionsForUse.zTimeout.value;
+   var varTimeout = document.wSLCClaimsFootnoteSection.zTimeout.value;
    if ( varTimeout > 0 )
    {
       var varDelay = 60000 * varTimeout;  // Timeout value in timeout.inc
@@ -191,95 +191,6 @@ function CheckAllInGrid(id, CheckBoxName) // triggered by no text checkbox
    }
 }
 
-function GOTO_DirsForUseCategoryDelete( strTagEntityKey )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      var nIdx = strTagEntityKey.lastIndexOf( '::' );
-      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
-
-      document.wMLCDirectionsForUse.zTableRowSelect.value = strEntityKey;
-      _DisableFormElements( true );
-
-      document.wMLCDirectionsForUse.zAction.value = "GOTO_DirsForUseCategoryDelete";
-      document.wMLCDirectionsForUse.submit( );
-   }
-}
-
-function GOTO_DirsForUseCategoryUpdate( strTagEntityKey )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      var nIdx = strTagEntityKey.lastIndexOf( '::' );
-      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
-
-      document.wMLCDirectionsForUse.zTableRowSelect.value = strEntityKey;
-      _DisableFormElements( true );
-
-      document.wMLCDirectionsForUse.zAction.value = "GOTO_DirsForUseCategoryUpdate";
-      document.wMLCDirectionsForUse.submit( );
-   }
-}
-
-function GOTO_DU_CategoryAdd( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCDirectionsForUse.zAction.value = "GOTO_DU_CategoryAdd";
-      document.wMLCDirectionsForUse.submit( );
-   }
-}
-
-function Sort( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      // Javascript code entered by user.
-
-       document.wMLCDirectionsForUse.zTableRowSelect.value = buildSortTableHtml( "mMasLC", "M_DirectionsForUseCategory", "GridDirectionsForUse",  ["Name","Title"]  );
-
-      // END of Javascript code entered by user.
-
-      _DisableFormElements( true );
-
-      document.wMLCDirectionsForUse.zAction.value = "Sort";
-      document.wMLCDirectionsForUse.submit( );
-   }
-}
-
-function smSaveMLC( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCDirectionsForUse.zAction.value = "smSaveMLC";
-      document.wMLCDirectionsForUse.submit( );
-   }
-}
-
 function smSaveAndReturnMLC( )
 {
 
@@ -290,12 +201,12 @@ function smSaveAndReturnMLC( )
    {
       _DisableFormElements( true );
 
-      document.wMLCDirectionsForUse.zAction.value = "smSaveAndReturnMLC";
-      document.wMLCDirectionsForUse.submit( );
+      document.wSLCClaimsFootnoteSection.zAction.value = "smSaveAndReturnMLC";
+      document.wSLCClaimsFootnoteSection.submit( );
    }
 }
 
-function smCancelAndReturnMLC( )
+function smSaveSLC( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -305,12 +216,12 @@ function smCancelAndReturnMLC( )
    {
       _DisableFormElements( true );
 
-      document.wMLCDirectionsForUse.zAction.value = "smCancelAndReturnMLC";
-      document.wMLCDirectionsForUse.submit( );
+      document.wSLCClaimsFootnoteSection.zAction.value = "smSaveSLC";
+      document.wSLCClaimsFootnoteSection.submit( );
    }
 }
 
-function smEditMasterLabelVersionData( )
+function smCancelAndReturnSLC( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -320,12 +231,12 @@ function smEditMasterLabelVersionData( )
    {
       _DisableFormElements( true );
 
-      document.wMLCDirectionsForUse.zAction.value = "smEditMasterLabelVersionData";
-      document.wMLCDirectionsForUse.submit( );
+      document.wSLCClaimsFootnoteSection.zAction.value = "smCancelAndReturnSLC";
+      document.wSLCClaimsFootnoteSection.submit( );
    }
 }
 
-function smEditIngredientsSect( )
+function smDisplayVersionData( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -335,12 +246,12 @@ function smEditIngredientsSect( )
    {
       _DisableFormElements( true );
 
-      document.wMLCDirectionsForUse.zAction.value = "smEditIngredientsSect";
-      document.wMLCDirectionsForUse.submit( );
+      document.wSLCClaimsFootnoteSection.zAction.value = "smDisplayVersionData";
+      document.wSLCClaimsFootnoteSection.submit( );
    }
 }
 
-function smEditHumanHazardSect( )
+function smDisplayIngredientsSect( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -350,12 +261,12 @@ function smEditHumanHazardSect( )
    {
       _DisableFormElements( true );
 
-      document.wMLCDirectionsForUse.zAction.value = "smEditHumanHazardSect";
-      document.wMLCDirectionsForUse.submit( );
+      document.wSLCClaimsFootnoteSection.zAction.value = "smDisplayIngredientsSect";
+      document.wSLCClaimsFootnoteSection.submit( );
    }
 }
 
-function smEditFirstAidSect( )
+function smDisplayHumanHazardSect( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -365,12 +276,12 @@ function smEditFirstAidSect( )
    {
       _DisableFormElements( true );
 
-      document.wMLCDirectionsForUse.zAction.value = "smEditFirstAidSect";
-      document.wMLCDirectionsForUse.submit( );
+      document.wSLCClaimsFootnoteSection.zAction.value = "smDisplayHumanHazardSect";
+      document.wSLCClaimsFootnoteSection.submit( );
    }
 }
 
-function smEditStorDispSect( )
+function smDisplayFirstAidSection( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -380,12 +291,12 @@ function smEditStorDispSect( )
    {
       _DisableFormElements( true );
 
-      document.wMLCDirectionsForUse.zAction.value = "smEditStorDispSect";
-      document.wMLCDirectionsForUse.submit( );
+      document.wSLCClaimsFootnoteSection.zAction.value = "smDisplayFirstAidSection";
+      document.wSLCClaimsFootnoteSection.submit( );
    }
 }
 
-function smEditDirectionsUseSect( )
+function smDisplayStorDispSect( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -395,12 +306,12 @@ function smEditDirectionsUseSect( )
    {
       _DisableFormElements( true );
 
-      document.wMLCDirectionsForUse.zAction.value = "smEditDirectionsUseSect";
-      document.wMLCDirectionsForUse.submit( );
+      document.wSLCClaimsFootnoteSection.zAction.value = "smDisplayStorDispSect";
+      document.wSLCClaimsFootnoteSection.submit( );
    }
 }
 
-function smEditPrecautionarySection( )
+function smDisplayDirectionsUseSect( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -410,12 +321,12 @@ function smEditPrecautionarySection( )
    {
       _DisableFormElements( true );
 
-      document.wMLCDirectionsForUse.zAction.value = "smEditPrecautionarySection";
-      document.wMLCDirectionsForUse.submit( );
+      document.wSLCClaimsFootnoteSection.zAction.value = "smDisplayDirectionsUseSect";
+      document.wSLCClaimsFootnoteSection.submit( );
    }
 }
 
-function smEnvironmentalHazards( )
+function smDisplayPrecautionarySection( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -425,12 +336,12 @@ function smEnvironmentalHazards( )
    {
       _DisableFormElements( true );
 
-      document.wMLCDirectionsForUse.zAction.value = "smEnvironmentalHazards";
-      document.wMLCDirectionsForUse.submit( );
+      document.wSLCClaimsFootnoteSection.zAction.value = "smDisplayPrecautionarySection";
+      document.wSLCClaimsFootnoteSection.submit( );
    }
 }
 
-function smGOTO_DilutionEntries( )
+function smDisplayHazardSection( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -440,12 +351,12 @@ function smGOTO_DilutionEntries( )
    {
       _DisableFormElements( true );
 
-      document.wMLCDirectionsForUse.zAction.value = "smGOTO_DilutionEntries";
-      document.wMLCDirectionsForUse.submit( );
+      document.wSLCClaimsFootnoteSection.zAction.value = "smDisplayHazardSection";
+      document.wSLCClaimsFootnoteSection.submit( );
    }
 }
 
-function smEditSurfacesSection( )
+function smDilution( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -455,12 +366,12 @@ function smEditSurfacesSection( )
    {
       _DisableFormElements( true );
 
-      document.wMLCDirectionsForUse.zAction.value = "smEditSurfacesSection";
-      document.wMLCDirectionsForUse.submit( );
+      document.wSLCClaimsFootnoteSection.zAction.value = "smDilution";
+      document.wSLCClaimsFootnoteSection.submit( );
    }
 }
 
-function smEditLocationsSection( )
+function smDisplaySurfacesSection( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -470,12 +381,12 @@ function smEditLocationsSection( )
    {
       _DisableFormElements( true );
 
-      document.wMLCDirectionsForUse.zAction.value = "smEditLocationsSection";
-      document.wMLCDirectionsForUse.submit( );
+      document.wSLCClaimsFootnoteSection.zAction.value = "smDisplaySurfacesSection";
+      document.wSLCClaimsFootnoteSection.submit( );
    }
 }
 
-function smEditApplicationTypesSection( )
+function smDisplayLocationsSection( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -485,12 +396,12 @@ function smEditApplicationTypesSection( )
    {
       _DisableFormElements( true );
 
-      document.wMLCDirectionsForUse.zAction.value = "smEditApplicationTypesSection";
-      document.wMLCDirectionsForUse.submit( );
+      document.wSLCClaimsFootnoteSection.zAction.value = "smDisplayLocationsSection";
+      document.wSLCClaimsFootnoteSection.submit( );
    }
 }
 
-function smEditClaimsSection( )
+function smDisplayApplicationTypesSection( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -500,12 +411,12 @@ function smEditClaimsSection( )
    {
       _DisableFormElements( true );
 
-      document.wMLCDirectionsForUse.zAction.value = "smEditClaimsSection";
-      document.wMLCDirectionsForUse.submit( );
+      document.wSLCClaimsFootnoteSection.zAction.value = "smDisplayApplicationTypesSection";
+      document.wSLCClaimsFootnoteSection.submit( );
    }
 }
 
-function smGOTO_ClaimsFootnote( )
+function smDisplayClaimsSection( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -515,12 +426,12 @@ function smGOTO_ClaimsFootnote( )
    {
       _DisableFormElements( true );
 
-      document.wMLCDirectionsForUse.zAction.value = "smGOTO_ClaimsFootnote";
-      document.wMLCDirectionsForUse.submit( );
+      document.wSLCClaimsFootnoteSection.zAction.value = "smDisplayClaimsSection";
+      document.wSLCClaimsFootnoteSection.submit( );
    }
 }
 
-function smEditMarketingSect( )
+function smGOTO_Footnotes( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -530,12 +441,12 @@ function smEditMarketingSect( )
    {
       _DisableFormElements( true );
 
-      document.wMLCDirectionsForUse.zAction.value = "smEditMarketingSect";
-      document.wMLCDirectionsForUse.submit( );
+      document.wSLCClaimsFootnoteSection.zAction.value = "smGOTO_Footnotes";
+      document.wSLCClaimsFootnoteSection.submit( );
    }
 }
 
-function smTables( )
+function smDisplayMarketingSect( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -545,8 +456,23 @@ function smTables( )
    {
       _DisableFormElements( true );
 
-      document.wMLCDirectionsForUse.zAction.value = "smTables";
-      document.wMLCDirectionsForUse.submit( );
+      document.wSLCClaimsFootnoteSection.zAction.value = "smDisplayMarketingSect";
+      document.wSLCClaimsFootnoteSection.submit( );
+   }
+}
+
+function smDisplayTables( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wSLCClaimsFootnoteSection.zAction.value = "smDisplayTables";
+      document.wSLCClaimsFootnoteSection.submit( );
    }
 }
 

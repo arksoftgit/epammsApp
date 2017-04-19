@@ -4661,3 +4661,70 @@ UpdateTable( VIEW ViewToWindow )
    InitTableColumns( ViewToWindow )
 
 END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// OPERATION: CopyMLC_ToNewProductMLC
+//
+// Creates a new MLC for one Product by copying an MLC from a different
+// Product. The two MLC's are not tied together.
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+CopyMLC_ToNewProductMLC( VIEW ViewToWindow )
+
+   VIEW mMasProd  REGISTERED AS mMasProd
+   VIEW mMasProd2 BASED ON LOD  mMasProd
+   VIEW mMasLC    REGISTERED AS mMasLC
+   VIEW NewMLC    BASED ON LOD  mMasLC
+
+   // This check is done by JavaScript, so should never happen.
+   IF mMasProd.MasterProduct.Name = ""
+      MessageSend( ViewToWindow, "", "Copy MLC to new Product MLC",
+                   "A name must be specified.",
+                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+      RETURN 2
+   END
+
+   // If a Product by same name exists, error.
+   ACTIVATE mMasProd2 WHERE mMasProd2.MasterProduct.Name = mMasProd.MasterProduct.Name
+   DropObjectInstance( mMasProd2 )
+   IF RESULT >= 0
+      MessageSend( ViewToWindow, "", "Copy MLC to New Product MLC",
+                   "A unique Product Name must be specified.",
+                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+      RETURN 2
+   END
+
+   ACTIVATE NewMLC EMPTY
+   CREATE ENTITY NewMLC.MasterLabelContent
+   NAME VIEW NewMLC "NewMLC"
+
+   SetMatchingAttributesByName( mMasProd, "MasterProduct", mMasLC, "MasterProduct", zSET_NULL )
+   COMMIT mMasProd
+   INCLUDE NewMLC.MasterProduct FROM mMasProd.MasterProduct
+   DropObjectInstance( mMasProd )
+
+   CopyMLCToNewProduct( NewMLC, mMasLC )
+
+   COMMIT NewMLC
+
+// ListMLCs( ViewToWindow )
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// OPERATION: CancelMLC
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+CancelMLC( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+
+   DropObjectInstance( mMasLC )
+
+END

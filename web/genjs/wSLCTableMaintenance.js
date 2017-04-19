@@ -1,4 +1,4 @@
-// wSLCTableMaintenance   Generate Timestamp: 20161019144229664
+// wSLCTableMaintenance   Generate Timestamp: 20170419092726043
 
 var isWindowClosing = true;
 var timerID = null;
@@ -221,6 +221,291 @@ function DISPLAY_TableData( strTagEntityKey )
       _DisableFormElements( true );
 
       document.wSLCTableMaintenance.zAction.value = "DISPLAY_TableData";
+      document.wSLCTableMaintenance.submit( );
+   }
+}
+
+function smSaveAndReturnMLC( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wSLCTableMaintenance.zAction.value = "smSaveAndReturnMLC";
+      document.wSLCTableMaintenance.submit( );
+   }
+}
+
+function smSaveSLC( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wSLCTableMaintenance.zAction.value = "smSaveSLC";
+      document.wSLCTableMaintenance.submit( );
+   }
+}
+
+function smCancelAndReturnSLC( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wSLCTableMaintenance.zAction.value = "smCancelAndReturnSLC";
+      document.wSLCTableMaintenance.submit( );
+   }
+}
+
+function smDisplayVersionData( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wSLCTableMaintenance.zAction.value = "smDisplayVersionData";
+      document.wSLCTableMaintenance.submit( );
+   }
+}
+
+function smDisplayIngredientsSect( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wSLCTableMaintenance.zAction.value = "smDisplayIngredientsSect";
+      document.wSLCTableMaintenance.submit( );
+   }
+}
+
+function smDisplayHumanHazardSect( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wSLCTableMaintenance.zAction.value = "smDisplayHumanHazardSect";
+      document.wSLCTableMaintenance.submit( );
+   }
+}
+
+function smDisplayFirstAidSection( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wSLCTableMaintenance.zAction.value = "smDisplayFirstAidSection";
+      document.wSLCTableMaintenance.submit( );
+   }
+}
+
+function smDisplayStorDispSect( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wSLCTableMaintenance.zAction.value = "smDisplayStorDispSect";
+      document.wSLCTableMaintenance.submit( );
+   }
+}
+
+function smDisplayDirectionsUseSect( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wSLCTableMaintenance.zAction.value = "smDisplayDirectionsUseSect";
+      document.wSLCTableMaintenance.submit( );
+   }
+}
+
+function smDisplayPrecautionarySection( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wSLCTableMaintenance.zAction.value = "smDisplayPrecautionarySection";
+      document.wSLCTableMaintenance.submit( );
+   }
+}
+
+function smDisplayHazardSection( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wSLCTableMaintenance.zAction.value = "smDisplayHazardSection";
+      document.wSLCTableMaintenance.submit( );
+   }
+}
+
+function smDilution( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wSLCTableMaintenance.zAction.value = "smDilution";
+      document.wSLCTableMaintenance.submit( );
+   }
+}
+
+function smDisplaySurfacesSection( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wSLCTableMaintenance.zAction.value = "smDisplaySurfacesSection";
+      document.wSLCTableMaintenance.submit( );
+   }
+}
+
+function smDisplayLocationsSection( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wSLCTableMaintenance.zAction.value = "smDisplayLocationsSection";
+      document.wSLCTableMaintenance.submit( );
+   }
+}
+
+function smDisplayApplicationTypesSection( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wSLCTableMaintenance.zAction.value = "smDisplayApplicationTypesSection";
+      document.wSLCTableMaintenance.submit( );
+   }
+}
+
+function smDisplayClaimsSection( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wSLCTableMaintenance.zAction.value = "smDisplayClaimsSection";
+      document.wSLCTableMaintenance.submit( );
+   }
+}
+
+function smGOTO_Footnotes( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wSLCTableMaintenance.zAction.value = "smGOTO_Footnotes";
+      document.wSLCTableMaintenance.submit( );
+   }
+}
+
+function smDisplayMarketingSect( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wSLCTableMaintenance.zAction.value = "smDisplayMarketingSect";
+      document.wSLCTableMaintenance.submit( );
+   }
+}
+
+function smDisplayTables( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wSLCTableMaintenance.zAction.value = "smDisplayTables";
       document.wSLCTableMaintenance.submit( );
    }
 }

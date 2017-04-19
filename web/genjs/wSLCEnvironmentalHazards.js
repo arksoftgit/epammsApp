@@ -1,4 +1,4 @@
-// wSLCEnvironmentalHazards   Generate Timestamp: 20170407175916601
+// wSLCEnvironmentalHazards   Generate Timestamp: 20170419092558700
 
 var isWindowClosing = true;
 var timerID = null;
@@ -450,6 +450,21 @@ function smDisplayClaimsSection( )
    }
 }
 
+function smGOTO_Footnotes( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wSLCEnvironmentalHazards.zAction.value = "smGOTO_Footnotes";
+      document.wSLCEnvironmentalHazards.submit( );
+   }
+}
+
 function smDisplayMarketingSect( )
 {
 
@@ -461,6 +476,21 @@ function smDisplayMarketingSect( )
       _DisableFormElements( true );
 
       document.wSLCEnvironmentalHazards.zAction.value = "smDisplayMarketingSect";
+      document.wSLCEnvironmentalHazards.submit( );
+   }
+}
+
+function smDisplayTables( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wSLCEnvironmentalHazards.zAction.value = "smDisplayTables";
       document.wSLCEnvironmentalHazards.submit( );
    }
 }

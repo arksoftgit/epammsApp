@@ -1,4 +1,4 @@
-// wSLCSLC_Sidebar   Generate Timestamp: 20161019144229307
+// wSLCSLC_Sidebar   Generate Timestamp: 20170419091107206
 
 var isWindowClosing = true;
 var timerID = null;
@@ -202,6 +202,36 @@ function CancelAndReturnSLC( )
       _DisableFormElements( true );
 
       document.wSLCSLC_Sidebar.zAction.value = "CancelAndReturnSLC";
+      document.wSLCSLC_Sidebar.submit( );
+   }
+}
+
+function DisplayTables( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wSLCSLC_Sidebar.zAction.value = "DisplayTables";
+      document.wSLCSLC_Sidebar.submit( );
+   }
+}
+
+function GOTO_Footnotes( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wSLCSLC_Sidebar.zAction.value = "GOTO_Footnotes";
       document.wSLCSLC_Sidebar.submit( );
    }
 }

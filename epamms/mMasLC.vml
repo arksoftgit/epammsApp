@@ -2671,14 +2671,14 @@ END
 TRANSFORMATION OPERATION
 BuildCompEntriesForMLC( VIEW mMasLC BASED ON LOD mMasLC )
 
-   STRING ( 2052 ) szDisplayValue
-   STRING ( 2048 ) szOriginalDisplayValue
+   STRING ( 4096 ) szDisplayValue
+   STRING ( 4092 ) szOriginalDisplayValue
    STRING ( 256 )  szName
    INTEGER         MaxDisplayLength
    INTEGER         OriginalStringLength
 
    // Build the flat display of all components subobject.
-   MaxDisplayLength = 2048
+   MaxDisplayLength = 4092
 
    // First clear any current entries.
    FOR EACH mMasLC.CompositeComponentList
@@ -2723,7 +2723,7 @@ BuildCompEntriesForMLC( VIEW mMasLC BASED ON LOD mMasLC )
          szOriginalDisplayValue = mMasLC.M_MarketingStatement.dDisplayKeywordText
          GetAttributeLength( OriginalStringLength, mMasLC, "M_MarketingStatement", "Text" )
          IF MaxDisplayLength < OriginalStringLength
-            szDisplayValue = szOriginalDisplayValue[1:2000] + "....."
+            szDisplayValue = szOriginalDisplayValue[1:4000] + "....."
          ELSE
             szDisplayValue = szOriginalDisplayValue
          END

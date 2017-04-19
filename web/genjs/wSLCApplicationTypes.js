@@ -1,4 +1,4 @@
-// wSLCApplicationTypes   Generate Timestamp: 20170407175733694
+// wSLCApplicationTypes   Generate Timestamp: 20170419092522149
 
 var isWindowClosing = true;
 var timerID = null;
@@ -453,6 +453,21 @@ function smDisplayClaimsSection( )
    }
 }
 
+function smGOTO_Footnotes( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wSLCApplicationTypes.zAction.value = "smGOTO_Footnotes";
+      document.wSLCApplicationTypes.submit( );
+   }
+}
+
 function smDisplayMarketingSect( )
 {
 
@@ -464,6 +479,21 @@ function smDisplayMarketingSect( )
       _DisableFormElements( true );
 
       document.wSLCApplicationTypes.zAction.value = "smDisplayMarketingSect";
+      document.wSLCApplicationTypes.submit( );
+   }
+}
+
+function smDisplayTables( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wSLCApplicationTypes.zAction.value = "smDisplayTables";
       document.wSLCApplicationTypes.submit( );
    }
 }

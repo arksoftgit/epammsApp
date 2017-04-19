@@ -4292,12 +4292,12 @@ omMasLC_dCombinedContainerVol( View     mMasLC,
    //:TRANSFORMATION OPERATION
    //:BuildCompEntriesForMLC( VIEW mMasLC BASED ON LOD mMasLC )
 
-   //:STRING ( 2052 ) szDisplayValue
+   //:STRING ( 4096 ) szDisplayValue
 public int 
 omMasLC_BuildCompEntriesForMLC( View     mMasLC )
 {
    String   szDisplayValue = null;
-   //:STRING ( 2048 ) szOriginalDisplayValue
+   //:STRING ( 4092 ) szOriginalDisplayValue
    String   szOriginalDisplayValue = null;
    //:STRING ( 256 )  szName
    String   szName = null;
@@ -4315,8 +4315,8 @@ omMasLC_BuildCompEntriesForMLC( View     mMasLC )
 
 
    //:// Build the flat display of all components subobject.
-   //:MaxDisplayLength = 2048
-   MaxDisplayLength = 2048;
+   //:MaxDisplayLength = 4092
+   MaxDisplayLength = 4092;
 
    //:// First clear any current entries.
    //:FOR EACH mMasLC.CompositeComponentList
@@ -4380,14 +4380,14 @@ omMasLC_BuildCompEntriesForMLC( View     mMasLC )
                sb_szTempString_0 = new StringBuilder( 32 );
             else
                sb_szTempString_0 = new StringBuilder( szTempString_0 );
-                        ZeidonStringCopy( sb_szTempString_0, 1, 0, szName, 1, 0, 32001 );
+                        ZeidonStringCopy( sb_szTempString_0, 1, 0, szName, 1, 0, 4097 );
             szTempString_0 = sb_szTempString_0.toString( );}
              {StringBuilder sb_szTempString_0;
             if ( szTempString_0 == null )
                sb_szTempString_0 = new StringBuilder( 32 );
             else
                sb_szTempString_0 = new StringBuilder( szTempString_0 );
-                        ZeidonStringConcat( sb_szTempString_0, 1, 0, " - ", 1, 0, 32001 );
+                        ZeidonStringConcat( sb_szTempString_0, 1, 0, " - ", 1, 0, 4097 );
             szTempString_0 = sb_szTempString_0.toString( );}
             {MutableInt mi_lTempInteger_1 = new MutableInt( lTempInteger_1 );
             StringBuilder sb_szTempString_1;
@@ -4403,7 +4403,7 @@ omMasLC_BuildCompEntriesForMLC( View     mMasLC )
                sb_szTempString_0 = new StringBuilder( 32 );
             else
                sb_szTempString_0 = new StringBuilder( szTempString_0 );
-                        ZeidonStringConcat( sb_szTempString_0, 1, 0, szTempString_1, 1, 0, 32001 );
+                        ZeidonStringConcat( sb_szTempString_0, 1, 0, szTempString_1, 1, 0, 4097 );
             szTempString_0 = sb_szTempString_0.toString( );}
             SetAttributeFromString( mMasLC, "CompositeComponentList", "DisplayValue", szTempString_0 );
          } 
@@ -4449,7 +4449,7 @@ omMasLC_BuildCompEntriesForMLC( View     mMasLC )
             sb_szOriginalDisplayValue = new StringBuilder( 32 );
          else
             sb_szOriginalDisplayValue = new StringBuilder( szOriginalDisplayValue );
-                   GetVariableFromAttribute( sb_szOriginalDisplayValue, mi_lTempInteger_2, 'S', 2049, mMasLC, "M_MarketingStatement", "Text", "", 0 );
+                   GetVariableFromAttribute( sb_szOriginalDisplayValue, mi_lTempInteger_2, 'S', 4093, mMasLC, "M_MarketingStatement", "Text", "", 0 );
          lTempInteger_2 = mi_lTempInteger_2.intValue( );
          szOriginalDisplayValue = sb_szOriginalDisplayValue.toString( );}
          //:mMasLC.CompositeComponentList.Value              = szOriginalDisplayValue
@@ -4461,7 +4461,7 @@ omMasLC_BuildCompEntriesForMLC( View     mMasLC )
             sb_szOriginalDisplayValue = new StringBuilder( 32 );
          else
             sb_szOriginalDisplayValue = new StringBuilder( szOriginalDisplayValue );
-                   GetVariableFromAttribute( sb_szOriginalDisplayValue, mi_lTempInteger_3, 'S', 2049, mMasLC, "M_MarketingStatement", "dDisplayKeywordText", "", 0 );
+                   GetVariableFromAttribute( sb_szOriginalDisplayValue, mi_lTempInteger_3, 'S', 4093, mMasLC, "M_MarketingStatement", "dDisplayKeywordText", "", 0 );
          lTempInteger_3 = mi_lTempInteger_3.intValue( );
          szOriginalDisplayValue = sb_szOriginalDisplayValue.toString( );}
          //:GetAttributeLength( OriginalStringLength, mMasLC, "M_MarketingStatement", "Text" )
@@ -4471,20 +4471,20 @@ omMasLC_BuildCompEntriesForMLC( View     mMasLC )
          //:IF MaxDisplayLength < OriginalStringLength
          if ( MaxDisplayLength < OriginalStringLength )
          { 
-            //:szDisplayValue = szOriginalDisplayValue[1:2000] + "....."
+            //:szDisplayValue = szOriginalDisplayValue[1:4000] + "....."
              {StringBuilder sb_szDisplayValue;
             if ( szDisplayValue == null )
                sb_szDisplayValue = new StringBuilder( 32 );
             else
                sb_szDisplayValue = new StringBuilder( szDisplayValue );
-                        ZeidonStringCopy( sb_szDisplayValue, 1, 0, szOriginalDisplayValue, 1, 2000, 2053 );
+                        ZeidonStringCopy( sb_szDisplayValue, 1, 0, szOriginalDisplayValue, 1, 4000, 4097 );
             szDisplayValue = sb_szDisplayValue.toString( );}
              {StringBuilder sb_szDisplayValue;
             if ( szDisplayValue == null )
                sb_szDisplayValue = new StringBuilder( 32 );
             else
                sb_szDisplayValue = new StringBuilder( szDisplayValue );
-                        ZeidonStringConcat( sb_szDisplayValue, 1, 0, ".....", 1, 0, 2053 );
+                        ZeidonStringConcat( sb_szDisplayValue, 1, 0, ".....", 1, 0, 4097 );
             szDisplayValue = sb_szDisplayValue.toString( );}
             //:ELSE
          } 
@@ -4496,7 +4496,7 @@ omMasLC_BuildCompEntriesForMLC( View     mMasLC )
                sb_szDisplayValue = new StringBuilder( 32 );
             else
                sb_szDisplayValue = new StringBuilder( szDisplayValue );
-                        ZeidonStringCopy( sb_szDisplayValue, 1, 0, szOriginalDisplayValue, 1, 0, 2053 );
+                        ZeidonStringCopy( sb_szDisplayValue, 1, 0, szOriginalDisplayValue, 1, 0, 4097 );
             szDisplayValue = sb_szDisplayValue.toString( );}
          } 
 

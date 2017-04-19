@@ -248,6 +248,25 @@ o_fnLocalBuildQual_13( View     vSubtask,
 
 
 private int 
+o_fnLocalBuildQual_14( View     vSubtask,
+                       zVIEW    vQualObject,
+                       String   szTempString_0 )
+{
+   int      RESULT = 0;
+
+   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
+   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "MasterProduct" );
+   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "MasterProduct" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "Name" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Value", szTempString_0.toString( ) );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+   return( 0 );
+} 
+
+
+private int 
 o_fnLocalBuildQual_0( View     vSubtask,
                       zVIEW    vQualObject,
                       int      MasProdID )
@@ -339,6 +358,122 @@ o_fnLocalBuildQual_4( View     vSubtask,
    SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_0 );
    SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
    return( 0 );
+} 
+
+
+//:DIALOG OPERATION
+//:CancelMLC( VIEW ViewToWindow )
+
+//:   VIEW mMasLC REGISTERED AS mMasLC
+public int 
+CancelMLC( View     ViewToWindow )
+{
+   zVIEW    mMasLC = new zVIEW( );
+   int      RESULT = 0;
+
+   RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
+
+   //:DropObjectInstance( mMasLC )
+   DropObjectInstance( mMasLC );
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:CopyMLC_ToNewProductMLC( VIEW ViewToWindow )
+
+//:   VIEW mMasProd  REGISTERED AS mMasProd
+public int 
+CopyMLC_ToNewProductMLC( View     ViewToWindow )
+{
+   zVIEW    mMasProd = new zVIEW( );
+   int      RESULT = 0;
+   //:VIEW mMasProd2 BASED ON LOD  mMasProd
+   zVIEW    mMasProd2 = new zVIEW( );
+   //:VIEW mMasLC    REGISTERED AS mMasLC
+   zVIEW    mMasLC = new zVIEW( );
+   //:VIEW NewMLC    BASED ON LOD  mMasLC
+   zVIEW    NewMLC = new zVIEW( );
+   String   szTempString_0 = null;
+   zVIEW    vTempViewVar_0 = new zVIEW( );
+
+   RESULT = GetViewByName( mMasProd, "mMasProd", ViewToWindow, zLEVEL_TASK );
+   RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
+
+   //:// This check is done by JavaScript, so should never happen.
+   //:IF mMasProd.MasterProduct.Name = ""
+   if ( CompareAttributeToString( mMasProd, "MasterProduct", "Name", "" ) == 0 )
+   { 
+      //:MessageSend( ViewToWindow, "", "Copy MLC to new Product MLC",
+      //:             "A name must be specified.",
+      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      MessageSend( ViewToWindow, "", "Copy MLC to new Product MLC", "A name must be specified.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+      //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
+      //:RETURN 2
+      if(8==8)return( 2 );
+   } 
+
+   //:END
+
+   //:// If a Product by same name exists, error.
+   //:ACTIVATE mMasProd2 WHERE mMasProd2.MasterProduct.Name = mMasProd.MasterProduct.Name
+   {StringBuilder sb_szTempString_0;
+   if ( szTempString_0 == null )
+      sb_szTempString_0 = new StringBuilder( 32 );
+   else
+      sb_szTempString_0 = new StringBuilder( szTempString_0 );
+       GetStringFromAttribute( sb_szTempString_0, mMasProd, "MasterProduct", "Name" );
+   szTempString_0 = sb_szTempString_0.toString( );}
+   o_fnLocalBuildQual_14( ViewToWindow, vTempViewVar_0, szTempString_0 );
+   RESULT = ActivateObjectInstance( mMasProd2, "mMasProd", ViewToWindow, vTempViewVar_0, zSINGLE );
+   DropView( vTempViewVar_0 );
+   //:DropObjectInstance( mMasProd2 )
+   DropObjectInstance( mMasProd2 );
+   //:IF RESULT >= 0
+   if ( RESULT >= 0 )
+   { 
+      //:MessageSend( ViewToWindow, "", "Copy MLC to New Product MLC",
+      //:             "A unique Product Name must be specified.",
+      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      MessageSend( ViewToWindow, "", "Copy MLC to New Product MLC", "A unique Product Name must be specified.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+      //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
+      //:RETURN 2
+      if(8==8)return( 2 );
+   } 
+
+   //:END
+
+   //:ACTIVATE NewMLC EMPTY
+   RESULT = ActivateEmptyObjectInstance( NewMLC, "mMasLC", ViewToWindow, zSINGLE );
+   //:CREATE ENTITY NewMLC.MasterLabelContent
+   RESULT = CreateEntity( NewMLC, "MasterLabelContent", zPOS_AFTER );
+   //:NAME VIEW NewMLC "NewMLC"
+   SetNameForView( NewMLC, "NewMLC", null, zLEVEL_TASK );
+
+   //:SetMatchingAttributesByName( mMasProd, "MasterProduct", mMasLC, "MasterProduct", zSET_NULL )
+   SetMatchingAttributesByName( mMasProd, "MasterProduct", mMasLC, "MasterProduct", zSET_NULL );
+   //:COMMIT mMasProd
+   RESULT = CommitObjectInstance( mMasProd );
+   //:INCLUDE NewMLC.MasterProduct FROM mMasProd.MasterProduct
+   RESULT = IncludeSubobjectFromSubobject( NewMLC, "MasterProduct", mMasProd, "MasterProduct", zPOS_AFTER );
+   //:DropObjectInstance( mMasProd )
+   DropObjectInstance( mMasProd );
+
+   //:CopyMLCToNewProduct( NewMLC, mMasLC )
+   {
+    mMasLC_Object m_mMasLC_Object = new mMasLC_Object( NewMLC );
+    m_mMasLC_Object.omMasLC_CopyMLCToNewProduct( NewMLC, mMasLC );
+    // m_mMasLC_Object = null;  // permit gc  (unnecessary)
+   }
+
+   //:COMMIT NewMLC
+   RESULT = CommitObjectInstance( NewMLC );
+   return( 0 );
+// // ListMLCs( ViewToWindow )
+// END
 } 
 
 

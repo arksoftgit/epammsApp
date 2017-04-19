@@ -1,4 +1,4 @@
-// wMLCDilution   Generate Timestamp: 20170407175313472
+// wMLCDilution   Generate Timestamp: 20170419093355469
 
 var isWindowClosing = true;
 var timerID = null;
@@ -555,6 +555,21 @@ function smEditMarketingSect( )
       _DisableFormElements( true );
 
       document.wMLCDilution.zAction.value = "smEditMarketingSect";
+      document.wMLCDilution.submit( );
+   }
+}
+
+function smTables( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCDilution.zAction.value = "smTables";
       document.wMLCDilution.submit( );
    }
 }

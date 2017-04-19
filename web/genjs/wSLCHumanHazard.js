@@ -1,4 +1,4 @@
-// wSLCHumanHazard   Generate Timestamp: 20170407180057162
+// wSLCHumanHazard   Generate Timestamp: 20170419092623155
 
 var isWindowClosing = true;
 var timerID = null;
@@ -446,6 +446,21 @@ function smDisplayClaimsSection( )
    }
 }
 
+function smGOTO_Footnotes( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wSLCHumanHazard.zAction.value = "smGOTO_Footnotes";
+      document.wSLCHumanHazard.submit( );
+   }
+}
+
 function smDisplayMarketingSect( )
 {
 
@@ -457,6 +472,21 @@ function smDisplayMarketingSect( )
       _DisableFormElements( true );
 
       document.wSLCHumanHazard.zAction.value = "smDisplayMarketingSect";
+      document.wSLCHumanHazard.submit( );
+   }
+}
+
+function smDisplayTables( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wSLCHumanHazard.zAction.value = "smDisplayTables";
       document.wSLCHumanHazard.submit( );
    }
 }

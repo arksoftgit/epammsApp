@@ -1,4 +1,4 @@
-// wMLCApplicationTypes   Generate Timestamp: 20170407175418225
+// wMLCApplicationTypes   Generate Timestamp: 20170419093326533
 
 var isWindowClosing = true;
 var timerID = null;
@@ -596,6 +596,21 @@ function smEditMarketingSect( )
       _DisableFormElements( true );
 
       document.wMLCApplicationTypes.zAction.value = "smEditMarketingSect";
+      document.wMLCApplicationTypes.submit( );
+   }
+}
+
+function smTables( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCApplicationTypes.zAction.value = "smTables";
       document.wMLCApplicationTypes.submit( );
    }
 }

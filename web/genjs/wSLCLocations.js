@@ -1,4 +1,4 @@
-// wSLCLocations   Generate Timestamp: 20170407175755352
+// wSLCLocations   Generate Timestamp: 20170419092634587
 
 var isWindowClosing = true;
 var timerID = null;
@@ -453,6 +453,21 @@ function smDisplayClaimsSection( )
    }
 }
 
+function smGOTO_Footnotes( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wSLCLocations.zAction.value = "smGOTO_Footnotes";
+      document.wSLCLocations.submit( );
+   }
+}
+
 function smDisplayMarketingSect( )
 {
 
@@ -464,6 +479,21 @@ function smDisplayMarketingSect( )
       _DisableFormElements( true );
 
       document.wSLCLocations.zAction.value = "smDisplayMarketingSect";
+      document.wSLCLocations.submit( );
+   }
+}
+
+function smDisplayTables( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wSLCLocations.zAction.value = "smDisplayTables";
       document.wSLCLocations.submit( );
    }
 }

@@ -1,4 +1,4 @@
-// wSLCDirectionsForUse   Generate Timestamp: 20170407175951130
+// wSLCDirectionsForUse   Generate Timestamp: 20170419092545421
 
 var isWindowClosing = true;
 var timerID = null;
@@ -450,6 +450,21 @@ function smDisplayClaimsSection( )
    }
 }
 
+function smGOTO_Footnotes( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wSLCDirectionsForUse.zAction.value = "smGOTO_Footnotes";
+      document.wSLCDirectionsForUse.submit( );
+   }
+}
+
 function smDisplayMarketingSect( )
 {
 
@@ -461,6 +476,21 @@ function smDisplayMarketingSect( )
       _DisableFormElements( true );
 
       document.wSLCDirectionsForUse.zAction.value = "smDisplayMarketingSect";
+      document.wSLCDirectionsForUse.submit( );
+   }
+}
+
+function smDisplayTables( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wSLCDirectionsForUse.zAction.value = "smDisplayTables";
       document.wSLCDirectionsForUse.submit( );
    }
 }

@@ -1,4 +1,4 @@
-// wMLCEnvironmentalHazards   Generate Timestamp: 20170407175251056
+// wMLCEnvironmentalHazards   Generate Timestamp: 20170419093403653
 
 var isWindowClosing = true;
 var timerID = null;
@@ -558,6 +558,21 @@ function smEditMarketingSect( )
       _DisableFormElements( true );
 
       document.wMLCEnvironmentalHazards.zAction.value = "smEditMarketingSect";
+      document.wMLCEnvironmentalHazards.submit( );
+   }
+}
+
+function smTables( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCEnvironmentalHazards.zAction.value = "smTables";
       document.wMLCEnvironmentalHazards.submit( );
    }
 }

@@ -1,4 +1,4 @@
-// wSLCOrganismClaims   Generate Timestamp: 20170407175643572
+// wSLCOrganismClaims   Generate Timestamp: 20170419092651601
 
 var isWindowClosing = true;
 var timerID = null;
@@ -453,6 +453,21 @@ function smDisplayClaimsSection( )
    }
 }
 
+function smGOTO_Footnotes( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wSLCOrganismClaims.zAction.value = "smGOTO_Footnotes";
+      document.wSLCOrganismClaims.submit( );
+   }
+}
+
 function smDisplayMarketingSect( )
 {
 
@@ -464,6 +479,21 @@ function smDisplayMarketingSect( )
       _DisableFormElements( true );
 
       document.wSLCOrganismClaims.zAction.value = "smDisplayMarketingSect";
+      document.wSLCOrganismClaims.submit( );
+   }
+}
+
+function smDisplayTables( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wSLCOrganismClaims.zAction.value = "smDisplayTables";
       document.wSLCOrganismClaims.submit( );
    }
 }
