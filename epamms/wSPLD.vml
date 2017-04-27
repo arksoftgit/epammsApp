@@ -961,6 +961,8 @@ SaveSPLD_AndReturn( VIEW ViewToWindow )
       RETURN 2
    END
 
+   SubregProductID = mSPLDef.SubregProduct.ID
+
    // Other than the COMMIT, the following block of code is for debugging purposes
 // SubregProductID = mSPLDef.SubregPhysicalLabelDef.ID
 // TraceLineS( "SaveSPLD_AndReturn", "#1" )
@@ -995,10 +997,14 @@ SaveSPLD_AndReturn( VIEW ViewToWindow )
    END
 
    // Reactivate the lSPLDLST object.
-   SubregProductID = lSPLDLST.SubregProduct.ID
+// SubregProductID = lSPLDLST.SubregProduct.ID
+   TraceLineI( "SaveSPLD_AndReturn lSPLDLST Before ID:", SubregProductID )
+   DisplayObjectInstance( lSPLDLST, "", "" )
    DropObjectInstance( lSPLDLST )
    ACTIVATE lSPLDLST Multiple WHERE lSPLDLST.SubregProduct.ID = SubregProductID
    NAME VIEW lSPLDLST "lSPLDLST"
+   TraceLineS( "SaveSPLD_AndReturn lSPLDLST:: ", "After" )
+   DisplayObjectInstance( lSPLDLST, "", "" )
 
 END
 
@@ -1036,6 +1042,66 @@ CancelSPLD( VIEW ViewToWindow )
       DropNameForView( mSubLC, "mSubLC", ViewToWindow, zLEVEL_TASK )
       DropObjectInstance( mSubLC )
    END
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: DisplayPrecautionarySection
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+DisplayPrecautionarySection( VIEW ViewToWindow )
+
+   VIEW mSPLDef REGISTERED AS mSPLDef
+
+   // Position on "Precautionary" General Statement.
+   SET CURSOR FIRST mSPLDef.SPLD_GeneralSection WHERE mSPLDef.SPLD_GeneralSection.SectionType = "P"
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: DisplayHazardsSection
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+DisplayHazardsSection( VIEW ViewToWindow )
+
+   VIEW mSPLDef REGISTERED AS mSPLDef
+
+   // Position on "Hazards" General Statement.
+   SET CURSOR FIRST mSPLDef.SPLD_GeneralSection WHERE mSPLDef.SPLD_GeneralSection.SectionType = "E"
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: DisplayPhysicalChemicalHazards
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+DisplayPhysicalChemicalHazards( VIEW ViewToWindow )
+
+   VIEW mSPLDef REGISTERED AS mSPLDef
+
+   // Position on "Hazards" General Statement.
+   SET CURSOR FIRST mSPLDef.SPLD_GeneralSection WHERE mSPLDef.SPLD_GeneralSection.SectionType = "C"
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: DisplayFirstAidSection
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+DisplayFirstAidSection( VIEW ViewToWindow )
+
+   VIEW mSPLDef REGISTERED AS mSPLDef
+
+   // Position on "First Aid" General Statement.
+   SET CURSOR FIRST mSPLDef.SPLD_GeneralSection WHERE mSPLDef.SPLD_GeneralSection.SectionType = "F"
 
 END
 
@@ -1326,6 +1392,13 @@ fnGenerateSPLD_Label( VIEW ViewToWindow, SHORT bBorders )
       NAME VIEW mSPLDef "mSPLDefPanel"
    END
 
+   IF mSPLDef.LLD_Panel DOES NOT EXIST
+      MessageSend( ViewToWindow, "", "Generate Label",
+                   "Label is not defined.",
+                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      RETURN 2
+   END
+
 /*
    // Sort Panels and Blocks by position and sort the blocks so that any "continued" block is the first one in the panel.
    TraceLineS( "Ordering Panels/Blocks + continuation", "  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<" )
@@ -1554,6 +1627,9 @@ END
 DIALOG OPERATION
 ExecuteJOE_Test1( VIEW ViewToWindow )
 
+VIEW mSPLDef  REGISTERED AS mSPLDef
+DisplayEntityInstance( mSPLDef, "SPLD_StorageDisposalSection" )
+/*
    VIEW mSPLDef  BASED ON LOD mSPLDef
    VIEW mSPLDef2 BASED ON LOD mSPLDef
 
@@ -1650,7 +1726,7 @@ ExecuteJOE_Test1( VIEW ViewToWindow )
    ResetViewFromSubobject( mSPLDef )
 
    TraceLineS( "*** JOE Test 1 successfully completed", "" )
-
+*/
    // Recursive code that didn't quite work.
    /*FOR EACH mSPLDef.LLD_SubBlock
       IF mSPLDef.LLD_SubBlock.Type = "Block"
@@ -3449,5 +3525,33 @@ CancelReusableBlock( VIEW ViewToWindow )
    VIEW mBlockRU BASED ON LOD mBlockRU
    GET VIEW mBlockRU NAMED "ReusableBlock"
    DropObjectInstance( mBlockRU )
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: GOTO_DilutionGroupDisplay
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+GOTO_DilutionGroupDisplay( VIEW ViewToWindow )
+
+   VIEW mSPLDef REGISTERED AS mSPLDef
+
+   TraceLineS( "###################################################### DilutionGroupDisplay", "" )
+   DisplayEntityInstance( mSPLDef, "SPLD_DilutionGroup" )
+
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: SetListItemPosition
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+SetListItemPosition( VIEW ViewToWindow )
+
+   // just to set position
 
 END

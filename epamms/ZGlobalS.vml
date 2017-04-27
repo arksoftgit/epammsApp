@@ -343,6 +343,18 @@ BuildCompEntriesForSPLD( VIEW mSPLDef BASED ON LOD mSPLDef )
    IF mSPLDef.SPLD_HumanHazardSection.PanelLoc5 != ""
       szCompositeLocation = szCompositeLocation + " / " + mSPLDef.SPLD_HumanHazardSection.PanelLoc5
    END
+   IF mSPLDef.SPLD_HumanHazardSection.PanelLoc6 != ""
+      szCompositeLocation = szCompositeLocation + " / " + mSPLDef.SPLD_HumanHazardSection.PanelLoc6
+   END
+   IF mSPLDef.SPLD_HumanHazardSection.PanelLoc7 != ""
+      szCompositeLocation = szCompositeLocation + " / " + mSPLDef.SPLD_HumanHazardSection.PanelLoc7
+   END
+   IF mSPLDef.SPLD_HumanHazardSection.PanelLoc8 != ""
+      szCompositeLocation = szCompositeLocation + " / " + mSPLDef.SPLD_HumanHazardSection.PanelLoc8
+   END
+   IF mSPLDef.SPLD_HumanHazardSection.PanelLoc9 != ""
+      szCompositeLocation = szCompositeLocation + " / " + mSPLDef.SPLD_HumanHazardSection.PanelLoc9
+   END
    mSPLDef.CompositeComponentList.DisplayValue   = szCompositeLocation
 
 END

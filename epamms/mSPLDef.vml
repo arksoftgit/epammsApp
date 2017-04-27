@@ -2883,11 +2883,15 @@ CopyDirsForUseStmts( VIEW NewSPLD BASED ON LOD mSPLDef,
       INCLUDE NewSPLD.S_DirectionsForUseStatement FROM SrcSLC.S_DirectionsForUseStatement
 
       FOR EACH SrcSLC.S_InsertTextKeywordDU
-         CREATE ENTITY NewSPLD.SPLD_InsertTextKeywordDU
-         SetMatchingAttributesByName( NewSPLD, "SPLD_InsertTextKeywordDU", SrcSLC, "S_InsertTextKeywordDU", zSET_NULL )
-         FOR EACH SrcSLC.S_InsertTextDU
-            CREATE ENTITY NewSPLD.SPLD_InsertTextDU
-            SetMatchingAttributesByName( NewSPLD, "SPLD_InsertTextDU", SrcSLC, "S_InsertTextDU", zSET_NULL )
+         IF SrcSLC.S_InsertTextKeywordDU.Selected = "Y"
+            CREATE ENTITY NewSPLD.SPLD_InsertTextKeywordDU
+            SetMatchingAttributesByName( NewSPLD, "SPLD_InsertTextKeywordDU", SrcSLC, "S_InsertTextKeywordDU", zSET_NULL )
+            FOR EACH SrcSLC.S_InsertTextDU
+               IF SrcSLC.S_InsertTextDU.Selected = "Y"
+                  CREATE ENTITY NewSPLD.SPLD_InsertTextDU
+                  SetMatchingAttributesByName( NewSPLD, "SPLD_InsertTextDU", SrcSLC, "S_InsertTextDU", zSET_NULL )
+               END
+            END
          END
       END
       FOR EACH SrcSLC.S_DirectionsUsageOrdering
@@ -2924,11 +2928,15 @@ CopyDirsForUseSection( VIEW NewSPLD BASED ON LOD mSPLDef,
    SetMatchingAttributesByName( NewSPLD, "SPLD_DirectionsForUseSection", SrcSLC, "S_DirectionsForUseSection", zSET_NULL )
    INCLUDE NewSPLD.S_DirectionsForUseSection FROM SrcSLC.S_DirectionsForUseSection
    FOR EACH SrcSLC.S_InsertTextKeywordSectionDU
-      CREATE ENTITY NewSPLD.SPLD_InsertTextKeywordSectionDU
-      SetMatchingAttributesByName( NewSPLD, "SPLD_InsertTextKeywordSectionDU", SrcSLC, "S_InsertTextKeywordSectionDU", zSET_NULL )
-      FOR EACH SrcSLC.S_InsertTextSectionDU
-         CREATE ENTITY NewSPLD.SPLD_InsertTextSectionDU
-         SetMatchingAttributesByName( NewSPLD, "SPLD_InsertTextSectionDU", SrcSLC, "S_InsertTextSectionDU", zSET_NULL )
+      IF SrcSLC.S_InsertTextKeywordSectionDU.Selected = "Y"
+         CREATE ENTITY NewSPLD.SPLD_InsertTextKeywordSectionDU
+         SetMatchingAttributesByName( NewSPLD, "SPLD_InsertTextKeywordSectionDU", SrcSLC, "S_InsertTextKeywordSectionDU", zSET_NULL )
+         FOR EACH SrcSLC.S_InsertTextSectionDU
+            IF SrcSLC.S_InsertTextSectionDU.Selected = "Y"
+               CREATE ENTITY NewSPLD.SPLD_InsertTextSectionDU
+               SetMatchingAttributesByName( NewSPLD, "SPLD_InsertTextSectionDU", SrcSLC, "S_InsertTextSectionDU", zSET_NULL )
+            END
+         END
       END
    END
    CopyDirsForUseStmts( NewSPLD, SrcSLC )
@@ -2947,11 +2955,15 @@ CopyStorDispStmts( VIEW NewSPLD BASED ON LOD mSPLDef,
       CREATE ENTITY NewSPLD.SPLD_StorageDisposalStatement
       SetMatchingAttributesByName( NewSPLD, "SPLD_StorageDisposalStatement", SrcSLC, "S_StorageDisposalStatement", zSET_NULL )
       FOR EACH SrcSLC.S_InsertTextKeywordSD
-         CREATE ENTITY NewSPLD.SPLD_InsertTextKeywordSD
-         SetMatchingAttributesByName( NewSPLD, "SPLD_InsertTextKeywordSD", SrcSLC, "S_InsertTextKeywordSD", zSET_NULL )
-         FOR EACH SrcSLC.S_InsertTextSD
-            CREATE ENTITY NewSPLD.SPLD_InsertTextSD
-            SetMatchingAttributesByName( NewSPLD, "SPLD_InsertTextSD", SrcSLC, "S_InsertTextSD", zSET_NULL )
+         IF SrcSLC.S_InsertTextKeywordSD.Selected = "Y"
+            CREATE ENTITY NewSPLD.SPLD_InsertTextKeywordSD
+            SetMatchingAttributesByName( NewSPLD, "SPLD_InsertTextKeywordSD", SrcSLC, "S_InsertTextKeywordSD", zSET_NULL )
+            FOR EACH SrcSLC.S_InsertTextSD
+               IF SrcSLC.S_InsertTextSD.Selected = "Y"
+                  CREATE ENTITY NewSPLD.SPLD_InsertTextSD
+                  SetMatchingAttributesByName( NewSPLD, "SPLD_InsertTextSD", SrcSLC, "S_InsertTextSD", zSET_NULL )
+               END
+            END
          END
       END
       IF SrcSLC.S_StorageDisposalSubStatement EXISTS
@@ -2984,11 +2996,15 @@ CopyUsagesRecursive( VIEW NewSPLD BASED ON LOD mSPLDef,
       NewSPLD.SPLD_Usage.PrimarySLC_ID = SrcSLC.S_Usage.ID
       INCLUDE NewSPLD.S_Usage FROM SrcSLC.S_Usage
       FOR EACH SrcSLC.S_InsertTextKeywordUsage
-         CREATE ENTITY NewSPLD.SPLD_InsertTextKeywordUsage
-         SetMatchingAttributesByName( NewSPLD, "SPLD_InsertTextKeywordUsage", SrcSLC, "S_InsertTextKeywordUsage", zSET_NULL )
-         FOR EACH SrcSLC.S_InsertTextUsage
-            CREATE ENTITY NewSPLD.SPLD_InsertTextUsage
-            SetMatchingAttributesByName( NewSPLD, "SPLD_InsertTextUsage", SrcSLC, "S_InsertTextUsage", zSET_NULL )
+         IF SrcSLC.S_InsertTextKeywordUsage.Selected = "Y"
+            CREATE ENTITY NewSPLD.SPLD_InsertTextKeywordUsage
+            SetMatchingAttributesByName( NewSPLD, "SPLD_InsertTextKeywordUsage", SrcSLC, "S_InsertTextKeywordUsage", zSET_NULL )
+            FOR EACH SrcSLC.S_InsertTextUsage
+               IF SrcSLC.S_InsertTextUsage.Selected = "Y"
+                  CREATE ENTITY NewSPLD.SPLD_InsertTextUsage
+                  SetMatchingAttributesByName( NewSPLD, "SPLD_InsertTextUsage", SrcSLC, "S_InsertTextUsage", zSET_NULL )
+               END
+            END
          END
       END
       IF SrcSLC.S_UsageFootnoteUsed EXISTS
@@ -3062,11 +3078,15 @@ BuildSPLD_FromSLC( VIEW NewSPLD  BASED ON LOD mSPLDef,
          SetMatchingAttributesByName( NewSPLD, "SPLD_GeneralStatement", SrcSLC, "S_GeneralStatement", zSET_NULL )
          INCLUDE NewSPLD.S_GeneralStatement FROM SrcSLC.S_GeneralStatement
          FOR EACH SrcSLC.S_InsertTextKeyword
-            CREATE ENTITY NewSPLD.SPLD_InsertTextKeyword
-            SetMatchingAttributesByName( NewSPLD, "SPLD_InsertTextKeyword", SrcSLC, "S_InsertTextKeyword", zSET_NULL )
-            FOR EACH SrcSLC.S_InsertText
-               CREATE ENTITY NewSPLD.SPLD_InsertText
-               SetMatchingAttributesByName( NewSPLD, "SPLD_InsertText", SrcSLC, "S_InsertText", zSET_NULL )
+            IF SrcSLC.S_InsertTextKeyword.Selected = "Y"
+               CREATE ENTITY NewSPLD.SPLD_InsertTextKeyword
+               SetMatchingAttributesByName( NewSPLD, "SPLD_InsertTextKeyword", SrcSLC, "S_InsertTextKeyword", zSET_NULL )
+               FOR EACH SrcSLC.S_InsertText
+                  IF SrcSLC.S_InsertText.Selected = "Y"
+                     CREATE ENTITY NewSPLD.SPLD_InsertText
+                     SetMatchingAttributesByName( NewSPLD, "SPLD_InsertText", SrcSLC, "S_InsertText", zSET_NULL )
+                  END
+               END
             END
          END
       END
@@ -3079,11 +3099,15 @@ BuildSPLD_FromSLC( VIEW NewSPLD  BASED ON LOD mSPLDef,
             SetMatchingAttributesByName( NewSPLD, "SPLD_GeneralSubStatement", SrcSLC, "S_GeneralSubStatement", zSET_NULL )
             INCLUDE NewSPLD.S_GeneralSubStatement FROM SrcSLC.S_GeneralSubStatement
             FOR EACH SrcSLC.S_InsertTextKeywordGeneral
-               CREATE ENTITY NewSPLD.SPLD_InsertTextKeywordGeneral
-               SetMatchingAttributesByName( NewSPLD, "SPLD_InsertTextKeywordGeneral", SrcSLC, "S_InsertTextKeywordGeneral", zSET_NULL )
-               FOR EACH SrcSLC.S_InsertTextGeneral
-                  CREATE ENTITY NewSPLD.SPLD_InsertTextGeneral
-                  SetMatchingAttributesByName( NewSPLD, "SPLD_InsertTextGeneral", SrcSLC, "S_InsertTextGeneral", zSET_NULL )
+               IF SrcSLC.S_InsertTextKeywordGeneral.Selected = "Y"
+                  CREATE ENTITY NewSPLD.SPLD_InsertTextKeywordGeneral
+                  SetMatchingAttributesByName( NewSPLD, "SPLD_InsertTextKeywordGeneral", SrcSLC, "S_InsertTextKeywordGeneral", zSET_NULL )
+                  FOR EACH SrcSLC.S_InsertTextGeneral
+                     IF SrcSLC.S_InsertTextGeneral.Selected = "Y"
+                        CREATE ENTITY NewSPLD.SPLD_InsertTextGeneral
+                        SetMatchingAttributesByName( NewSPLD, "SPLD_InsertTextGeneral", SrcSLC, "S_InsertTextGeneral", zSET_NULL )
+                     END
+                  END
                END
             END
          END
@@ -3189,6 +3213,18 @@ BuildSPLD_FromSLC( VIEW NewSPLD  BASED ON LOD mSPLDef,
          CREATE ENTITY NewSPLD.SPLD_MarketingStatement
          SetMatchingAttributesByName( NewSPLD, "SPLD_MarketingStatement", SrcSLC, "S_MarketingStatement", zSET_NULL )
          INCLUDE NewSPLD.S_MarketingStatement FROM SrcSLC.S_MarketingStatement
+         FOR EACH SrcSLC.S_InsertTextKeywordMarketing
+            IF SrcSLC.S_InsertTextKeywordMarketing.Selected = "Y"
+               CREATE ENTITY NewSPLD.SPLD_InsertTextKeywordMarketing
+               SetMatchingAttributesByName( NewSPLD, "SPLD_InsertTextKeywordMarketing", SrcSLC, "S_InsertTextKeywordMarketing", zSET_NULL )
+               FOR EACH SrcSLC.S_InsertTextMarketing
+                  IF SrcSLC.S_InsertTextMarketing.Selected = "Y"
+                     CREATE ENTITY NewSPLD.SPLD_InsertTextMarketing
+                     SetMatchingAttributesByName( NewSPLD, "SPLD_InsertTextMarketing", SrcSLC, "S_InsertTextMarketing", zSET_NULL )
+                  END
+               END
+            END
+         END
       END
    END
 
@@ -3716,6 +3752,49 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
+// OPERATION: dGenStmtTitleText
+//
+/////////////////////////////////////////////////////////////////////////////
+DERIVED ATTRIBUTE OPERATION
+dGenStmtTitleText( VIEW mSPLDef BASED ON LOD mSPLDef,
+                   STRING ( 32 ) InternalEntityStructure,
+                   STRING ( 32 ) InternalAttribStructure,
+                   SHORT GetOrSetFlag )
+
+   VIEW mSubLC2 BASED ON LOD mSPLDef
+   STRING ( 2048 ) szCombinedText
+
+   CASE GetOrSetFlag
+   OF   zDERIVED_GET:
+
+      // If Combined and a Title exists, concatenate Title and Text.  Otherwise, just show text.
+      // Bold Title and Text as specified.
+      IF mSPLDef.SPLD_GeneralSection.Combined = "Y" AND mSPLDef.SPLD_GeneralStatement.Title != ""
+         IF mSPLDef.SPLD_GeneralSection.BoldTitle = "Y"
+            szCombinedText = "<b>" + mSPLDef.SPLD_GeneralStatement.Title + "</b>"
+         ELSE
+            szCombinedText = mSPLDef.SPLD_GeneralStatement.Title
+         END
+      END
+      IF mSPLDef.SPLD_GeneralSection.BoldText = "Y"
+         szCombinedText = szCombinedText + "<b> " + mSPLDef.SPLD_GeneralStatement.Text + "</b>"
+      ELSE
+         szCombinedText = szCombinedText + " " + mSPLDef.SPLD_GeneralStatement.Text
+      END
+
+      // Store the calculated value in the object.
+      StoreStringInRecord( mSPLDef, InternalEntityStructure, InternalAttribStructure, szCombinedText )
+
+        // end zDERIVED_GET
+   OF   zDERIVED_SET:
+
+        // end zDERIVED_SET
+   END  // case
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
 //  OPERATION: dPanelName
 //
 /////////////////////////////////////////////////////////////////////////////
@@ -3976,6 +4055,26 @@ dFullHazardStatement( VIEW mSPLDef BASED ON LOD mSPLDef,
                szReplaceString = szReplaceString + szOpenSeparator + szLocation + szCloseSeparator
             END
 
+            szLocation = mSPLDef.SPLD_HumanHazardSection.PanelLoc6
+            IF szLocation != ""
+               szReplaceString = szReplaceString + szOpenSeparator + szLocation + szCloseSeparator
+            END
+
+            szLocation = mSPLDef.SPLD_HumanHazardSection.PanelLoc7
+            IF szLocation != ""
+               szReplaceString = szReplaceString + szOpenSeparator + szLocation + szCloseSeparator
+            END
+
+            szLocation = mSPLDef.SPLD_HumanHazardSection.PanelLoc8
+            IF szLocation != ""
+               szReplaceString = szReplaceString + szOpenSeparator + szLocation + szCloseSeparator
+            END
+
+            szLocation = mSPLDef.SPLD_HumanHazardSection.PanelLoc9
+            IF szLocation != ""
+               szReplaceString = szReplaceString + szOpenSeparator + szLocation + szCloseSeparator
+            END
+
             zReplaceSubString( szString, nPosStart, nPosEnd, szReplaceString )
          END
 
@@ -4009,6 +4108,26 @@ dFullHazardStatement( VIEW mSPLDef BASED ON LOD mSPLDef,
             END
 
             szLocation = mSPLDef.SPLD_HumanHazardSection.LabelLoc5
+            IF szLocation != ""
+               szReplaceString = szReplaceString + szOpenSeparator + szLocation + szCloseSeparator
+            END
+
+            szLocation = mSPLDef.SPLD_HumanHazardSection.LabelLoc6
+            IF szLocation != ""
+               szReplaceString = szReplaceString + szOpenSeparator + szLocation + szCloseSeparator
+            END
+
+            szLocation = mSPLDef.SPLD_HumanHazardSection.LabelLoc7
+            IF szLocation != ""
+               szReplaceString = szReplaceString + szOpenSeparator + szLocation + szCloseSeparator
+            END
+
+            szLocation = mSPLDef.SPLD_HumanHazardSection.LabelLoc8
+            IF szLocation != ""
+               szReplaceString = szReplaceString + szOpenSeparator + szLocation + szCloseSeparator
+            END
+
+            szLocation = mSPLDef.SPLD_HumanHazardSection.LabelLoc9
             IF szLocation != ""
                szReplaceString = szReplaceString + szOpenSeparator + szLocation + szCloseSeparator
             END
@@ -4844,6 +4963,257 @@ dColorName( VIEW mSPLDef BASED ON LOD mSPLDef,
        // Store the calculated value in the object.
        StoreStringInRecord( mSPLDef, InternalEntityStructure, InternalAttribStructure, szName )
        RETURN 0
+
+        // end zDERIVED_GET
+   OF   zDERIVED_SET:
+
+        // end zDERIVED_SET
+   END  // case
+
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: dSD_TitleText
+//
+/////////////////////////////////////////////////////////////////////////////
+DERIVED ATTRIBUTE OPERATION
+dSD_TitleText( VIEW mSPLDef BASED ON LOD mSPLDef,
+               STRING ( 32 ) InternalEntityStructure,
+               STRING ( 32 ) InternalAttribStructure,
+               SHORT GetOrSetFlag )
+
+   STRING ( 2048 ) szDisplayStatement
+   STRING ( 2048 ) szStatementText
+   STRING ( 256 )  szTitle
+
+   CASE GetOrSetFlag
+   OF   zDERIVED_GET:
+
+      // Storage and Disposal Display Statement Text is a combination of Title and Text.
+      szTitle = mSPLDef.SPLD_StorageDisposalStatement.Title
+      szStatementText = mSPLDef.SPLD_StorageDisposalStatement.Text
+      IF szTitle != ""
+         szDisplayStatement = szTitle + " --- " + szStatementText
+      ELSE
+         szDisplayStatement = szStatementText
+      END
+
+
+      // Store the calculated value in the object.
+      StoreStringInRecord( mSPLDef, InternalEntityStructure, InternalAttribStructure, szDisplayStatement )
+      RETURN 0
+
+        // end zDERIVED_GET
+   OF   zDERIVED_SET:
+
+        // end zDERIVED_SET
+   END  // case
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: dSD_SubTitleText
+//
+/////////////////////////////////////////////////////////////////////////////
+DERIVED ATTRIBUTE OPERATION
+dSD_SubTitleText( VIEW mSPLDef BASED ON LOD mSPLDef,
+                  STRING ( 32 ) InternalEntityStructure,
+                  STRING ( 32 ) InternalAttribStructure,
+                  SHORT GetOrSetFlag )
+
+   STRING ( 2048 ) szDisplayStatement
+   STRING ( 2048 ) szStatementText
+   STRING ( 256 )  szTitle
+
+   CASE GetOrSetFlag
+   OF   zDERIVED_GET:
+
+      // Storage and Disposal Display Statement Text is a combination of Title and Text.
+      szTitle = mSPLDef.SPLD_StorageDisposalSubStmt.Title
+      szStatementText = mSPLDef.SPLD_StorageDisposalSubStmt.Text
+      IF szTitle != ""
+         szDisplayStatement = szTitle + " --- " + szStatementText
+      ELSE
+         szDisplayStatement = szStatementText
+      END
+
+
+      // Store the calculated value in the object.
+      StoreStringInRecord( mSPLDef, InternalEntityStructure, InternalAttribStructure, szDisplayStatement )
+      RETURN 0
+
+        // end zDERIVED_GET
+   OF   zDERIVED_SET:
+
+        // end zDERIVED_SET
+   END  // case
+
+END
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: dSD_StmtTitleKey
+//
+/////////////////////////////////////////////////////////////////////////////
+DERIVED ATTRIBUTE OPERATION
+dSD_StmtTitleKey( VIEW mSPLDef BASED ON LOD mSPLDef,
+                  STRING ( 32 ) InternalEntityStructure,
+                  STRING ( 32 ) InternalAttribStructure,
+                  SHORT GetOrSetFlag )
+
+   STRING ( 2048 ) szStatementTitle
+
+   CASE GetOrSetFlag
+   OF   zDERIVED_GET:
+
+      // Storage and Disposal Display Statement Title is a combination of Title/Keywords.
+      szStatementTitle = mSPLDef.SPLD_StorageDisposalStatement.Title
+      IF szStatementTitle != ""
+         GenerateKeywordTextIntoString( mSPLDef, szStatementTitle,
+                                        "SPLD_InsertTextKeywordSD", "SPLD_InsertTextSD", ", " )
+      END
+
+      // Store the calculated value in the object.
+      StoreStringInRecord( mSPLDef, InternalEntityStructure, InternalAttribStructure, szStatementTitle )
+
+        // end zDERIVED_GET
+   OF   zDERIVED_SET:
+
+        // end zDERIVED_SET
+   END  // case
+
+END
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: dSD_StmtTextKey
+//
+/////////////////////////////////////////////////////////////////////////////
+DERIVED ATTRIBUTE OPERATION
+dSD_StmtTextKey( VIEW mSPLDef BASED ON LOD mSPLDef,
+                 STRING ( 32 ) InternalEntityStructure,
+                 STRING ( 32 ) InternalAttribStructure,
+                 SHORT GetOrSetFlag )
+
+   STRING ( 2048 ) szStatementText
+
+   CASE GetOrSetFlag
+   OF   zDERIVED_GET:
+
+      // Storage and Disposal Display Statement Text is a combination of Text/Keywords.
+      szStatementText = mSPLDef.SPLD_StorageDisposalStatement.Text
+      IF szStatementText != ""
+         GenerateKeywordTextIntoString( mSPLDef, szStatementText,
+                                        "SPLD_InsertTextKeywordSD", "SPLD_InsertTextSD", ", " )
+      END
+
+      // Store the calculated value in the object.
+      StoreStringInRecord( mSPLDef, InternalEntityStructure, InternalAttribStructure, szStatementText )
+
+        // end zDERIVED_GET
+   OF   zDERIVED_SET:
+
+        // end zDERIVED_SET
+   END  // case
+
+END
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: dSD_StmtTitleTxtKey
+//
+/////////////////////////////////////////////////////////////////////////////
+DERIVED ATTRIBUTE OPERATION
+dSD_StmtTitleTxtKey( VIEW mSPLDef BASED ON LOD mSPLDef,
+                     STRING ( 32 ) InternalEntityStructure,
+                     STRING ( 32 ) InternalAttribStructure,
+                     SHORT GetOrSetFlag )
+
+   STRING ( 2048 ) szDisplayStatement
+   STRING ( 256 )  szStatementTitle
+   STRING ( 2048 ) szStatementText
+
+   CASE GetOrSetFlag
+   OF   zDERIVED_GET:
+
+      // Storage and Disposal Display Statement Text is a combination of Title/Text/Keywords.
+      szStatementText = mSPLDef.SPLD_StorageDisposalStatement.Text
+      IF szStatementText != ""
+         GenerateKeywordTextIntoString( mSPLDef, szStatementText,
+                                        "SPLD_InsertTextKeywordSD", "SPLD_InsertTextSD", ", " )
+      END
+
+      szStatementTitle = mSPLDef.SPLD_StorageDisposalStatement.Title
+      IF szStatementTitle != ""
+         GenerateKeywordTextIntoString( mSPLDef, szStatementTitle,
+                                        "SPLD_InsertTextKeywordSD", "SPLD_InsertTextSD", ", " )
+         szDisplayStatement = szStatementTitle
+         IF szStatementText != ""
+            szDisplayStatement = szDisplayStatement + " --- " + szStatementText
+         END
+      ELSE
+         szDisplayStatement = szStatementText
+      END
+
+      // Store the calculated value in the object.
+      StoreStringInRecord( mSPLDef, InternalEntityStructure, InternalAttribStructure, szDisplayStatement )
+
+        // end zDERIVED_GET
+   OF   zDERIVED_SET:
+
+        // end zDERIVED_SET
+   END  // case
+
+END
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: dSD_SubStmtTitleTxtKey
+//
+/////////////////////////////////////////////////////////////////////////////
+DERIVED ATTRIBUTE OPERATION
+dSD_SubStmtTitleTxtKey( VIEW mSPLDef BASED ON LOD mSPLDef,
+                        STRING ( 32 ) InternalEntityStructure,
+                        STRING ( 32 ) InternalAttribStructure,
+                        SHORT GetOrSetFlag )
+
+   STRING ( 2048 ) szDisplayStatement
+   STRING ( 256 )  szStatementTitle
+   STRING ( 2048 ) szStatementText
+
+   CASE GetOrSetFlag
+   OF   zDERIVED_GET:
+
+      // Storage and Disposal Display Statement Text is a combination of Title/Text/Keywords.
+      SetViewToSubobject( mSPLDef, "SPLD_StorageDisposalSubStatement" )
+      szStatementText = mSPLDef.SPLD_StorageDisposalStatement.Text
+      IF szStatementText != ""
+         GenerateKeywordTextIntoString( mSPLDef, szStatementText,
+                                        "SPLD_InsertTextKeywordSD", "SPLD_InsertTextSD", ", " )
+      END
+
+      szStatementTitle = mSPLDef.SPLD_StorageDisposalStatement.Title
+      IF szStatementTitle != ""
+         GenerateKeywordTextIntoString( mSPLDef, szStatementTitle,
+                                        "SPLD_InsertTextKeywordSD", "SPLD_InsertTextSD", ", " )
+      END
+
+      IF szStatementTitle != ""
+         szDisplayStatement = szStatementTitle
+         IF szStatementText != ""
+            szDisplayStatement = szDisplayStatement + " --- " + szStatementText
+         END
+      ELSE
+         szDisplayStatement = szStatementText
+      END
+
+      ResetViewFromSubobject( mSPLDef )
+      
+      // Store the calculated value in the object.
+      StoreStringInRecord( mSPLDef, InternalEntityStructure, InternalAttribStructure, szDisplayStatement )
 
         // end zDERIVED_GET
    OF   zDERIVED_SET:

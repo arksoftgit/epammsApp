@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSLCStorageDisposalStatement   Generate Timestamp: 20161019144229460 --%>
+<%-- wSLCStorageDisposalStatement   Generate Timestamp: 20170421105246802 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -80,6 +80,28 @@ public int DoInputMapping( HttpServletRequest request,
          lEntityKey = vGridTmp.cursor( "S_InsertTextKeywordSD" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
          iTableRowCnt++;
+
+         strTag = "GridCheckCtl" + strEntityKey;
+         strMapValue = request.getParameter( strTag );
+         // If the checkbox is not checked, then set to the unchecked value.
+         if (strMapValue == null || strMapValue.isEmpty() )
+            strMapValue = "N";
+
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "GridCheckCtl", "", strMapValue );
+            else
+               if ( strMapValue != null )
+                  vGridTmp.cursor( "S_InsertTextKeywordSD" ).getAttribute( "Selected" ).setValue( strMapValue, "" );
+               else
+                  vGridTmp.cursor( "S_InsertTextKeywordSD" ).getAttribute( "Selected" ).setValue( "", "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, strTag, e.getReason( ), strMapValue );
+         }
 
          csrRC = vGridTmp.cursor( "S_InsertTextKeywordSD" ).setNextContinue( );
       }
@@ -597,6 +619,7 @@ else
    <input name="zFocusCtrl" id="zFocusCtrl" type="hidden" value="<%=strFocusCtrl%>">
    <input name="zOpenFile" id="zOpenFile" type="hidden" value="<%=strOpenFile%>">
    <input name="zDateFormat" id="zDateFormat" type="hidden" value="<%=strDateFormat%>">
+   <input name="zDateSequence" id="zDateSequence" type="hidden" value="MDY">
    <input name="zLoginName" id="zLoginName" type="hidden" value="<%=strLoginName%>">
    <input name="zKeyRole" id="zKeyRole" type="hidden" value="<%=strKeyRole%>">
    <input name="zOpenPopupWindow" id="zOpenPopupWindow" type="hidden" value="<%=strOpenPopupWindow%>">
@@ -814,7 +837,7 @@ else
 <% /* CBSize1:ComboBox */ %>
 <% strErrorMapValue = "";  %>
 
-<select  name="CBSize1" id="CBSize1" size="1" style="width:592px;"  disabled onchange="CBSize1OnChange( )">
+<select  name="CBSize1" id="CBSize1" size="1" style="width:592px;"  disabled onchange="CBSize1OnChange( )" >
 
 <%
    boolean inListCBSize1 = false;
@@ -904,7 +927,7 @@ else
 <% /* CBType1:ComboBox */ %>
 <% strErrorMapValue = "";  %>
 
-<select  name="CBType1" id="CBType1" size="1" style="width:592px;"  disabled onchange="CBType1OnChange( )">
+<select  name="CBType1" id="CBType1" size="1" style="width:592px;"  disabled onchange="CBType1OnChange( )" >
 
 <%
    boolean inListCBType1 = false;
@@ -1031,10 +1054,11 @@ else
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
 <% /* Grid5:Grid */ %>
-<table class="sortable"  cols=2 style=""  name="Grid5" id="Grid5">
+<table class="sortable"  cols=3 style=""  name="Grid5" id="Grid5">
 
 <thead bgcolor=green><tr>
 
+   <th class="gridheading"><input type="checkbox" onclick="CheckAllInGrid(this,'GridCheckCtl')"></th>
    <th>Keyword</th>
    <th>Keyword Text</th>
 
@@ -1054,6 +1078,8 @@ try
       String strButtonName;
       String strOdd;
       String strTag;
+      String strGridCheckCtl;
+      String strGridCheckCtlValue;
       String strGridEditCtl5;
       String strGridEditCtl6;
       
@@ -1067,6 +1093,27 @@ try
 
          lEntityKey = vGrid5.cursor( "S_InsertTextKeywordSD" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
+         strGridCheckCtl = "";
+         nRC = vGrid5.cursor( "S_InsertTextKeywordSD" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            strGridCheckCtl = vGrid5.cursor( "S_InsertTextKeywordSD" ).getAttribute( "Selected" ).getString( "" );
+
+            if ( strGridCheckCtl == null )
+               strGridCheckCtl = "";
+         }
+
+         if ( StringUtils.equals( strGridCheckCtl, "Y" ) )
+         {
+            strGridCheckCtlValue = "GridCheckCtl" + strEntityKey;
+            strGridCheckCtl = "<input name='" + strGridCheckCtlValue + "' id='" + strGridCheckCtlValue + "' value='Y' type='checkbox'  CHECKED > ";
+         }
+         else
+         {
+            strGridCheckCtlValue = "GridCheckCtl" + strEntityKey;
+            strGridCheckCtl = "<input name='" + strGridCheckCtlValue + "' id='" + strGridCheckCtlValue + "' value='Y' type='checkbox' > ";
+         }
+
          strGridEditCtl5 = "";
          nRC = vGrid5.cursor( "S_InsertTextKeywordSD" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
@@ -1097,6 +1144,7 @@ try
 
 <tr<%=strOdd%>>
 
+   <td nowrap><%=strGridCheckCtl%></td>
    <td><%=strGridEditCtl5%></td>
    <td><%=strGridEditCtl6%></td>
 

@@ -1,4 +1,4 @@
-// wSPLDSPLD_Components   Generate Timestamp: 20160620105929579
+// wSPLDSPLD_Components   Generate Timestamp: 20170427124533094
 
 var isWindowClosing = true;
 var timerID = null;
@@ -191,21 +191,6 @@ function CheckAllInGrid(id, CheckBoxName) // triggered by no text checkbox
    }
 }
 
-function CancelAndReturn( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wSPLDSPLD_Components.zAction.value = "CancelAndReturn";
-      document.wSPLDSPLD_Components.submit( );
-   }
-}
-
 function GOTO_UpdateSPLD_Statement( strTagEntityKey )
 {
 
@@ -255,7 +240,7 @@ function DisplayLLD( )
    }
 }
 
-function SaveAndReturn( )
+function smSaveAndReturn( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -265,7 +250,307 @@ function SaveAndReturn( )
    {
       _DisableFormElements( true );
 
-      document.wSPLDSPLD_Components.zAction.value = "SaveAndReturn";
+      document.wSPLDSPLD_Components.zAction.value = "smSaveAndReturn";
+      document.wSPLDSPLD_Components.submit( );
+   }
+}
+
+function smCancelAndReturn( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wSPLDSPLD_Components.zAction.value = "smCancelAndReturn";
+      document.wSPLDSPLD_Components.submit( );
+   }
+}
+
+function smSaveSPLD( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wSPLDSPLD_Components.zAction.value = "smSaveSPLD";
+      document.wSPLDSPLD_Components.submit( );
+   }
+}
+
+function smGraphicalView( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wSPLDSPLD_Components.zAction.value = "smGraphicalView";
+      document.wSPLDSPLD_Components.submit( );
+   }
+}
+
+function smGENERATE_SPLD_Label( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wSPLDSPLD_Components.zAction.value = "smGENERATE_SPLD_Label";
+      document.wSPLDSPLD_Components.submit( );
+   }
+}
+
+function smGenerateLabelDottedBorders( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wSPLDSPLD_Components.zAction.value = "smGenerateLabelDottedBorders";
+      document.wSPLDSPLD_Components.submit( );
+   }
+}
+
+function smGOTO_UpdateSPLD( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wSPLDSPLD_Components.zAction.value = "smGOTO_UpdateSPLD";
+      document.wSPLDSPLD_Components.submit( );
+   }
+}
+
+function smGOTO_DisplaySPLD_Components( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wSPLDSPLD_Components.zAction.value = "smGOTO_DisplaySPLD_Components";
+      document.wSPLDSPLD_Components.submit( );
+   }
+}
+
+function smIngredients( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wSPLDSPLD_Components.zAction.value = "smIngredients";
+      document.wSPLDSPLD_Components.submit( );
+   }
+}
+
+function smHumanHazard( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wSPLDSPLD_Components.zAction.value = "smHumanHazard";
+      document.wSPLDSPLD_Components.submit( );
+   }
+}
+
+function smFirstAid( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wSPLDSPLD_Components.zAction.value = "smFirstAid";
+      document.wSPLDSPLD_Components.submit( );
+   }
+}
+
+function smStorageDisposal( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wSPLDSPLD_Components.zAction.value = "smStorageDisposal";
+      document.wSPLDSPLD_Components.submit( );
+   }
+}
+
+function smDirectionsForUse( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wSPLDSPLD_Components.zAction.value = "smDirectionsForUse";
+      document.wSPLDSPLD_Components.submit( );
+   }
+}
+
+function smPrecautionary( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wSPLDSPLD_Components.zAction.value = "smPrecautionary";
+      document.wSPLDSPLD_Components.submit( );
+   }
+}
+
+function smEnvironmentalHazard( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wSPLDSPLD_Components.zAction.value = "smEnvironmentalHazard";
+      document.wSPLDSPLD_Components.submit( );
+   }
+}
+
+function smDilution( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wSPLDSPLD_Components.zAction.value = "smDilution";
+      document.wSPLDSPLD_Components.submit( );
+   }
+}
+
+function smTables( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wSPLDSPLD_Components.zAction.value = "smTables";
+      document.wSPLDSPLD_Components.submit( );
+   }
+}
+
+function smCopySPLD( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wSPLDSPLD_Components.zAction.value = "smCopySPLD";
+      document.wSPLDSPLD_Components.submit( );
+   }
+}
+
+function smGOTO_SelectLLD_ForSPLD( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wSPLDSPLD_Components.zAction.value = "smGOTO_SelectLLD_ForSPLD";
+      document.wSPLDSPLD_Components.submit( );
+   }
+}
+
+function smGOTO_GenerateLLD( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wSPLDSPLD_Components.zAction.value = "smGOTO_GenerateLLD";
+      document.wSPLDSPLD_Components.submit( );
+   }
+}
+
+function smCLEAN_SPLD_Data( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wSPLDSPLD_Components.zAction.value = "smCLEAN_SPLD_Data";
       document.wSPLDSPLD_Components.submit( );
    }
 }

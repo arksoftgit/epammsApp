@@ -4756,6 +4756,45 @@ omMasLC_BuildCompEntriesForMLC( View     mMasLC )
 //    IF mMasLC.M_HumanHazardSection.PanelLoc5 != ""
 //       szCompositeLocation = szCompositeLocation + " / " + mMasLC.M_HumanHazardSection.PanelLoc5
 //    END
+//    IF mMasLC.M_HumanHazardSection.PanelLoc6 != ""
+//       szCompositeLocation = szCompositeLocation + " / " + mMasLC.M_HumanHazardSection.PanelLoc6
+//    END
+//    IF mMasLC.M_HumanHazardSection.PanelLoc7 != ""
+//       szCompositeLocation = szCompositeLocation + " / " + mMasLC.M_HumanHazardSection.PanelLoc7
+//    END
+//    IF mMasLC.M_HumanHazardSection.PanelLoc8 != ""
+//       szCompositeLocation = szCompositeLocation + " / " + mMasLC.M_HumanHazardSection.PanelLoc8
+//    END
+//    IF mMasLC.M_HumanHazardSection.PanelLoc9 != ""
+//       szCompositeLocation = szCompositeLocation + " / " + mMasLC.M_HumanHazardSection.PanelLoc9
+//    END
+//    IF mMasLC.M_HumanHazardSection.LabelLoc1 != ""
+//       szCompositeLocation = szCompositeLocation + " / " + mMasLC.M_HumanHazardSection.LabelLoc1
+//    END
+//    IF mMasLC.M_HumanHazardSection.LabelLoc2 != ""
+//       szCompositeLocation = szCompositeLocation + " / " + mMasLC.M_HumanHazardSection.LabelLoc2
+//    END
+//    IF mMasLC.M_HumanHazardSection.LabelLoc3 != ""
+//       szCompositeLocation = szCompositeLocation + " / " + mMasLC.M_HumanHazardSection.LabelLoc3
+//    END
+//    IF mMasLC.M_HumanHazardSection.LabelLoc4 != ""
+//       szCompositeLocation = szCompositeLocation + " / " + mMasLC.M_HumanHazardSection.LabelLoc4
+//    END
+//    IF mMasLC.M_HumanHazardSection.LabelLoc5 != ""
+//       szCompositeLocation = szCompositeLocation + " / " + mMasLC.M_HumanHazardSection.LabelLoc5
+//    END
+//    IF mMasLC.M_HumanHazardSection.LabelLoc6 != ""
+//       szCompositeLocation = szCompositeLocation + " / " + mMasLC.M_HumanHazardSection.LabelLoc6
+//    END
+//    IF mMasLC.M_HumanHazardSection.LabelLoc7 != ""
+//       szCompositeLocation = szCompositeLocation + " / " + mMasLC.M_HumanHazardSection.LabelLoc7
+//    END
+//    IF mMasLC.M_HumanHazardSection.LabelLoc8 != ""
+//       szCompositeLocation = szCompositeLocation + " / " + mMasLC.M_HumanHazardSection.LabelLoc8
+//    END
+//    IF mMasLC.M_HumanHazardSection.LabelLoc9 != ""
+//       szCompositeLocation = szCompositeLocation + " / " + mMasLC.M_HumanHazardSection.LabelLoc9
+//    END
 //    mMasLC.CompositeComponentList.DisplayValue   = szCompositeLocation
 //    // Usage Section
 //    CREATE ENTITY mMasLC.CompositeComponentList
@@ -4805,6 +4844,32 @@ omMasLC_BuildFullCompEntries( View     mMasLC )
    int      lTempInteger_3 = 0;
    String   szTempString_4 = null;
    int      lTempInteger_4 = 0;
+   String   szTempString_5 = null;
+   int      lTempInteger_5 = 0;
+   String   szTempString_6 = null;
+   int      lTempInteger_6 = 0;
+   String   szTempString_7 = null;
+   int      lTempInteger_7 = 0;
+   String   szTempString_8 = null;
+   int      lTempInteger_8 = 0;
+   String   szTempString_9 = null;
+   int      lTempInteger_9 = 0;
+   String   szTempString_10 = null;
+   int      lTempInteger_10 = 0;
+   String   szTempString_11 = null;
+   int      lTempInteger_11 = 0;
+   String   szTempString_12 = null;
+   int      lTempInteger_12 = 0;
+   String   szTempString_13 = null;
+   int      lTempInteger_13 = 0;
+   String   szTempString_14 = null;
+   int      lTempInteger_14 = 0;
+   String   szTempString_15 = null;
+   int      lTempInteger_15 = 0;
+   String   szTempString_16 = null;
+   int      lTempInteger_16 = 0;
+   String   szTempString_17 = null;
+   int      lTempInteger_17 = 0;
 
 
    //:// Build the flat display of all components subobject.
@@ -5257,6 +5322,396 @@ omMasLC_BuildFullCompEntries( View     mMasLC )
       else
          sb_szCompositeLocation = new StringBuilder( szCompositeLocation );
             ZeidonStringConcat( sb_szCompositeLocation, 1, 0, szTempString_4, 1, 0, 2049 );
+      szCompositeLocation = sb_szCompositeLocation.toString( );}
+   } 
+
+   //:END
+   //:IF mMasLC.M_HumanHazardSection.PanelLoc6 != ""
+   if ( CompareAttributeToString( mMasLC, "M_HumanHazardSection", "PanelLoc6", "" ) != 0 )
+   { 
+      //:szCompositeLocation = szCompositeLocation + " / " + mMasLC.M_HumanHazardSection.PanelLoc6
+       {StringBuilder sb_szCompositeLocation;
+      if ( szCompositeLocation == null )
+         sb_szCompositeLocation = new StringBuilder( 32 );
+      else
+         sb_szCompositeLocation = new StringBuilder( szCompositeLocation );
+            ZeidonStringConcat( sb_szCompositeLocation, 1, 0, " / ", 1, 0, 2049 );
+      szCompositeLocation = sb_szCompositeLocation.toString( );}
+      {MutableInt mi_lTempInteger_5 = new MutableInt( lTempInteger_5 );
+      StringBuilder sb_szTempString_5;
+      if ( szTempString_5 == null )
+         sb_szTempString_5 = new StringBuilder( 32 );
+      else
+         sb_szTempString_5 = new StringBuilder( szTempString_5 );
+             GetVariableFromAttribute( sb_szTempString_5, mi_lTempInteger_5, 'S', 255, mMasLC, "M_HumanHazardSection", "PanelLoc6", "", 0 );
+      lTempInteger_5 = mi_lTempInteger_5.intValue( );
+      szTempString_5 = sb_szTempString_5.toString( );}
+       {StringBuilder sb_szCompositeLocation;
+      if ( szCompositeLocation == null )
+         sb_szCompositeLocation = new StringBuilder( 32 );
+      else
+         sb_szCompositeLocation = new StringBuilder( szCompositeLocation );
+            ZeidonStringConcat( sb_szCompositeLocation, 1, 0, szTempString_5, 1, 0, 2049 );
+      szCompositeLocation = sb_szCompositeLocation.toString( );}
+   } 
+
+   //:END
+   //:IF mMasLC.M_HumanHazardSection.PanelLoc7 != ""
+   if ( CompareAttributeToString( mMasLC, "M_HumanHazardSection", "PanelLoc7", "" ) != 0 )
+   { 
+      //:szCompositeLocation = szCompositeLocation + " / " + mMasLC.M_HumanHazardSection.PanelLoc7
+       {StringBuilder sb_szCompositeLocation;
+      if ( szCompositeLocation == null )
+         sb_szCompositeLocation = new StringBuilder( 32 );
+      else
+         sb_szCompositeLocation = new StringBuilder( szCompositeLocation );
+            ZeidonStringConcat( sb_szCompositeLocation, 1, 0, " / ", 1, 0, 2049 );
+      szCompositeLocation = sb_szCompositeLocation.toString( );}
+      {MutableInt mi_lTempInteger_6 = new MutableInt( lTempInteger_6 );
+      StringBuilder sb_szTempString_6;
+      if ( szTempString_6 == null )
+         sb_szTempString_6 = new StringBuilder( 32 );
+      else
+         sb_szTempString_6 = new StringBuilder( szTempString_6 );
+             GetVariableFromAttribute( sb_szTempString_6, mi_lTempInteger_6, 'S', 255, mMasLC, "M_HumanHazardSection", "PanelLoc7", "", 0 );
+      lTempInteger_6 = mi_lTempInteger_6.intValue( );
+      szTempString_6 = sb_szTempString_6.toString( );}
+       {StringBuilder sb_szCompositeLocation;
+      if ( szCompositeLocation == null )
+         sb_szCompositeLocation = new StringBuilder( 32 );
+      else
+         sb_szCompositeLocation = new StringBuilder( szCompositeLocation );
+            ZeidonStringConcat( sb_szCompositeLocation, 1, 0, szTempString_6, 1, 0, 2049 );
+      szCompositeLocation = sb_szCompositeLocation.toString( );}
+   } 
+
+   //:END
+   //:IF mMasLC.M_HumanHazardSection.PanelLoc8 != ""
+   if ( CompareAttributeToString( mMasLC, "M_HumanHazardSection", "PanelLoc8", "" ) != 0 )
+   { 
+      //:szCompositeLocation = szCompositeLocation + " / " + mMasLC.M_HumanHazardSection.PanelLoc8
+       {StringBuilder sb_szCompositeLocation;
+      if ( szCompositeLocation == null )
+         sb_szCompositeLocation = new StringBuilder( 32 );
+      else
+         sb_szCompositeLocation = new StringBuilder( szCompositeLocation );
+            ZeidonStringConcat( sb_szCompositeLocation, 1, 0, " / ", 1, 0, 2049 );
+      szCompositeLocation = sb_szCompositeLocation.toString( );}
+      {MutableInt mi_lTempInteger_7 = new MutableInt( lTempInteger_7 );
+      StringBuilder sb_szTempString_7;
+      if ( szTempString_7 == null )
+         sb_szTempString_7 = new StringBuilder( 32 );
+      else
+         sb_szTempString_7 = new StringBuilder( szTempString_7 );
+             GetVariableFromAttribute( sb_szTempString_7, mi_lTempInteger_7, 'S', 255, mMasLC, "M_HumanHazardSection", "PanelLoc8", "", 0 );
+      lTempInteger_7 = mi_lTempInteger_7.intValue( );
+      szTempString_7 = sb_szTempString_7.toString( );}
+       {StringBuilder sb_szCompositeLocation;
+      if ( szCompositeLocation == null )
+         sb_szCompositeLocation = new StringBuilder( 32 );
+      else
+         sb_szCompositeLocation = new StringBuilder( szCompositeLocation );
+            ZeidonStringConcat( sb_szCompositeLocation, 1, 0, szTempString_7, 1, 0, 2049 );
+      szCompositeLocation = sb_szCompositeLocation.toString( );}
+   } 
+
+   //:END
+   //:IF mMasLC.M_HumanHazardSection.PanelLoc9 != ""
+   if ( CompareAttributeToString( mMasLC, "M_HumanHazardSection", "PanelLoc9", "" ) != 0 )
+   { 
+      //:szCompositeLocation = szCompositeLocation + " / " + mMasLC.M_HumanHazardSection.PanelLoc9
+       {StringBuilder sb_szCompositeLocation;
+      if ( szCompositeLocation == null )
+         sb_szCompositeLocation = new StringBuilder( 32 );
+      else
+         sb_szCompositeLocation = new StringBuilder( szCompositeLocation );
+            ZeidonStringConcat( sb_szCompositeLocation, 1, 0, " / ", 1, 0, 2049 );
+      szCompositeLocation = sb_szCompositeLocation.toString( );}
+      {MutableInt mi_lTempInteger_8 = new MutableInt( lTempInteger_8 );
+      StringBuilder sb_szTempString_8;
+      if ( szTempString_8 == null )
+         sb_szTempString_8 = new StringBuilder( 32 );
+      else
+         sb_szTempString_8 = new StringBuilder( szTempString_8 );
+             GetVariableFromAttribute( sb_szTempString_8, mi_lTempInteger_8, 'S', 255, mMasLC, "M_HumanHazardSection", "PanelLoc9", "", 0 );
+      lTempInteger_8 = mi_lTempInteger_8.intValue( );
+      szTempString_8 = sb_szTempString_8.toString( );}
+       {StringBuilder sb_szCompositeLocation;
+      if ( szCompositeLocation == null )
+         sb_szCompositeLocation = new StringBuilder( 32 );
+      else
+         sb_szCompositeLocation = new StringBuilder( szCompositeLocation );
+            ZeidonStringConcat( sb_szCompositeLocation, 1, 0, szTempString_8, 1, 0, 2049 );
+      szCompositeLocation = sb_szCompositeLocation.toString( );}
+   } 
+
+   //:END
+   //:IF mMasLC.M_HumanHazardSection.LabelLoc1 != ""
+   if ( CompareAttributeToString( mMasLC, "M_HumanHazardSection", "LabelLoc1", "" ) != 0 )
+   { 
+      //:szCompositeLocation = szCompositeLocation + " / " + mMasLC.M_HumanHazardSection.LabelLoc1
+       {StringBuilder sb_szCompositeLocation;
+      if ( szCompositeLocation == null )
+         sb_szCompositeLocation = new StringBuilder( 32 );
+      else
+         sb_szCompositeLocation = new StringBuilder( szCompositeLocation );
+            ZeidonStringConcat( sb_szCompositeLocation, 1, 0, " / ", 1, 0, 2049 );
+      szCompositeLocation = sb_szCompositeLocation.toString( );}
+      {MutableInt mi_lTempInteger_9 = new MutableInt( lTempInteger_9 );
+      StringBuilder sb_szTempString_9;
+      if ( szTempString_9 == null )
+         sb_szTempString_9 = new StringBuilder( 32 );
+      else
+         sb_szTempString_9 = new StringBuilder( szTempString_9 );
+             GetVariableFromAttribute( sb_szTempString_9, mi_lTempInteger_9, 'S', 255, mMasLC, "M_HumanHazardSection", "LabelLoc1", "", 0 );
+      lTempInteger_9 = mi_lTempInteger_9.intValue( );
+      szTempString_9 = sb_szTempString_9.toString( );}
+       {StringBuilder sb_szCompositeLocation;
+      if ( szCompositeLocation == null )
+         sb_szCompositeLocation = new StringBuilder( 32 );
+      else
+         sb_szCompositeLocation = new StringBuilder( szCompositeLocation );
+            ZeidonStringConcat( sb_szCompositeLocation, 1, 0, szTempString_9, 1, 0, 2049 );
+      szCompositeLocation = sb_szCompositeLocation.toString( );}
+   } 
+
+   //:END
+   //:IF mMasLC.M_HumanHazardSection.LabelLoc2 != ""
+   if ( CompareAttributeToString( mMasLC, "M_HumanHazardSection", "LabelLoc2", "" ) != 0 )
+   { 
+      //:szCompositeLocation = szCompositeLocation + " / " + mMasLC.M_HumanHazardSection.LabelLoc2
+       {StringBuilder sb_szCompositeLocation;
+      if ( szCompositeLocation == null )
+         sb_szCompositeLocation = new StringBuilder( 32 );
+      else
+         sb_szCompositeLocation = new StringBuilder( szCompositeLocation );
+            ZeidonStringConcat( sb_szCompositeLocation, 1, 0, " / ", 1, 0, 2049 );
+      szCompositeLocation = sb_szCompositeLocation.toString( );}
+      {MutableInt mi_lTempInteger_10 = new MutableInt( lTempInteger_10 );
+      StringBuilder sb_szTempString_10;
+      if ( szTempString_10 == null )
+         sb_szTempString_10 = new StringBuilder( 32 );
+      else
+         sb_szTempString_10 = new StringBuilder( szTempString_10 );
+             GetVariableFromAttribute( sb_szTempString_10, mi_lTempInteger_10, 'S', 255, mMasLC, "M_HumanHazardSection", "LabelLoc2", "", 0 );
+      lTempInteger_10 = mi_lTempInteger_10.intValue( );
+      szTempString_10 = sb_szTempString_10.toString( );}
+       {StringBuilder sb_szCompositeLocation;
+      if ( szCompositeLocation == null )
+         sb_szCompositeLocation = new StringBuilder( 32 );
+      else
+         sb_szCompositeLocation = new StringBuilder( szCompositeLocation );
+            ZeidonStringConcat( sb_szCompositeLocation, 1, 0, szTempString_10, 1, 0, 2049 );
+      szCompositeLocation = sb_szCompositeLocation.toString( );}
+   } 
+
+   //:END
+   //:IF mMasLC.M_HumanHazardSection.LabelLoc3 != ""
+   if ( CompareAttributeToString( mMasLC, "M_HumanHazardSection", "LabelLoc3", "" ) != 0 )
+   { 
+      //:szCompositeLocation = szCompositeLocation + " / " + mMasLC.M_HumanHazardSection.LabelLoc3
+       {StringBuilder sb_szCompositeLocation;
+      if ( szCompositeLocation == null )
+         sb_szCompositeLocation = new StringBuilder( 32 );
+      else
+         sb_szCompositeLocation = new StringBuilder( szCompositeLocation );
+            ZeidonStringConcat( sb_szCompositeLocation, 1, 0, " / ", 1, 0, 2049 );
+      szCompositeLocation = sb_szCompositeLocation.toString( );}
+      {MutableInt mi_lTempInteger_11 = new MutableInt( lTempInteger_11 );
+      StringBuilder sb_szTempString_11;
+      if ( szTempString_11 == null )
+         sb_szTempString_11 = new StringBuilder( 32 );
+      else
+         sb_szTempString_11 = new StringBuilder( szTempString_11 );
+             GetVariableFromAttribute( sb_szTempString_11, mi_lTempInteger_11, 'S', 255, mMasLC, "M_HumanHazardSection", "LabelLoc3", "", 0 );
+      lTempInteger_11 = mi_lTempInteger_11.intValue( );
+      szTempString_11 = sb_szTempString_11.toString( );}
+       {StringBuilder sb_szCompositeLocation;
+      if ( szCompositeLocation == null )
+         sb_szCompositeLocation = new StringBuilder( 32 );
+      else
+         sb_szCompositeLocation = new StringBuilder( szCompositeLocation );
+            ZeidonStringConcat( sb_szCompositeLocation, 1, 0, szTempString_11, 1, 0, 2049 );
+      szCompositeLocation = sb_szCompositeLocation.toString( );}
+   } 
+
+   //:END
+   //:IF mMasLC.M_HumanHazardSection.LabelLoc4 != ""
+   if ( CompareAttributeToString( mMasLC, "M_HumanHazardSection", "LabelLoc4", "" ) != 0 )
+   { 
+      //:szCompositeLocation = szCompositeLocation + " / " + mMasLC.M_HumanHazardSection.LabelLoc4
+       {StringBuilder sb_szCompositeLocation;
+      if ( szCompositeLocation == null )
+         sb_szCompositeLocation = new StringBuilder( 32 );
+      else
+         sb_szCompositeLocation = new StringBuilder( szCompositeLocation );
+            ZeidonStringConcat( sb_szCompositeLocation, 1, 0, " / ", 1, 0, 2049 );
+      szCompositeLocation = sb_szCompositeLocation.toString( );}
+      {MutableInt mi_lTempInteger_12 = new MutableInt( lTempInteger_12 );
+      StringBuilder sb_szTempString_12;
+      if ( szTempString_12 == null )
+         sb_szTempString_12 = new StringBuilder( 32 );
+      else
+         sb_szTempString_12 = new StringBuilder( szTempString_12 );
+             GetVariableFromAttribute( sb_szTempString_12, mi_lTempInteger_12, 'S', 255, mMasLC, "M_HumanHazardSection", "LabelLoc4", "", 0 );
+      lTempInteger_12 = mi_lTempInteger_12.intValue( );
+      szTempString_12 = sb_szTempString_12.toString( );}
+       {StringBuilder sb_szCompositeLocation;
+      if ( szCompositeLocation == null )
+         sb_szCompositeLocation = new StringBuilder( 32 );
+      else
+         sb_szCompositeLocation = new StringBuilder( szCompositeLocation );
+            ZeidonStringConcat( sb_szCompositeLocation, 1, 0, szTempString_12, 1, 0, 2049 );
+      szCompositeLocation = sb_szCompositeLocation.toString( );}
+   } 
+
+   //:END
+   //:IF mMasLC.M_HumanHazardSection.LabelLoc5 != ""
+   if ( CompareAttributeToString( mMasLC, "M_HumanHazardSection", "LabelLoc5", "" ) != 0 )
+   { 
+      //:szCompositeLocation = szCompositeLocation + " / " + mMasLC.M_HumanHazardSection.LabelLoc5
+       {StringBuilder sb_szCompositeLocation;
+      if ( szCompositeLocation == null )
+         sb_szCompositeLocation = new StringBuilder( 32 );
+      else
+         sb_szCompositeLocation = new StringBuilder( szCompositeLocation );
+            ZeidonStringConcat( sb_szCompositeLocation, 1, 0, " / ", 1, 0, 2049 );
+      szCompositeLocation = sb_szCompositeLocation.toString( );}
+      {MutableInt mi_lTempInteger_13 = new MutableInt( lTempInteger_13 );
+      StringBuilder sb_szTempString_13;
+      if ( szTempString_13 == null )
+         sb_szTempString_13 = new StringBuilder( 32 );
+      else
+         sb_szTempString_13 = new StringBuilder( szTempString_13 );
+             GetVariableFromAttribute( sb_szTempString_13, mi_lTempInteger_13, 'S', 255, mMasLC, "M_HumanHazardSection", "LabelLoc5", "", 0 );
+      lTempInteger_13 = mi_lTempInteger_13.intValue( );
+      szTempString_13 = sb_szTempString_13.toString( );}
+       {StringBuilder sb_szCompositeLocation;
+      if ( szCompositeLocation == null )
+         sb_szCompositeLocation = new StringBuilder( 32 );
+      else
+         sb_szCompositeLocation = new StringBuilder( szCompositeLocation );
+            ZeidonStringConcat( sb_szCompositeLocation, 1, 0, szTempString_13, 1, 0, 2049 );
+      szCompositeLocation = sb_szCompositeLocation.toString( );}
+   } 
+
+   //:END
+   //:IF mMasLC.M_HumanHazardSection.LabelLoc6 != ""
+   if ( CompareAttributeToString( mMasLC, "M_HumanHazardSection", "LabelLoc6", "" ) != 0 )
+   { 
+      //:szCompositeLocation = szCompositeLocation + " / " + mMasLC.M_HumanHazardSection.LabelLoc6
+       {StringBuilder sb_szCompositeLocation;
+      if ( szCompositeLocation == null )
+         sb_szCompositeLocation = new StringBuilder( 32 );
+      else
+         sb_szCompositeLocation = new StringBuilder( szCompositeLocation );
+            ZeidonStringConcat( sb_szCompositeLocation, 1, 0, " / ", 1, 0, 2049 );
+      szCompositeLocation = sb_szCompositeLocation.toString( );}
+      {MutableInt mi_lTempInteger_14 = new MutableInt( lTempInteger_14 );
+      StringBuilder sb_szTempString_14;
+      if ( szTempString_14 == null )
+         sb_szTempString_14 = new StringBuilder( 32 );
+      else
+         sb_szTempString_14 = new StringBuilder( szTempString_14 );
+             GetVariableFromAttribute( sb_szTempString_14, mi_lTempInteger_14, 'S', 255, mMasLC, "M_HumanHazardSection", "LabelLoc6", "", 0 );
+      lTempInteger_14 = mi_lTempInteger_14.intValue( );
+      szTempString_14 = sb_szTempString_14.toString( );}
+       {StringBuilder sb_szCompositeLocation;
+      if ( szCompositeLocation == null )
+         sb_szCompositeLocation = new StringBuilder( 32 );
+      else
+         sb_szCompositeLocation = new StringBuilder( szCompositeLocation );
+            ZeidonStringConcat( sb_szCompositeLocation, 1, 0, szTempString_14, 1, 0, 2049 );
+      szCompositeLocation = sb_szCompositeLocation.toString( );}
+   } 
+
+   //:END
+   //:IF mMasLC.M_HumanHazardSection.LabelLoc7 != ""
+   if ( CompareAttributeToString( mMasLC, "M_HumanHazardSection", "LabelLoc7", "" ) != 0 )
+   { 
+      //:szCompositeLocation = szCompositeLocation + " / " + mMasLC.M_HumanHazardSection.LabelLoc7
+       {StringBuilder sb_szCompositeLocation;
+      if ( szCompositeLocation == null )
+         sb_szCompositeLocation = new StringBuilder( 32 );
+      else
+         sb_szCompositeLocation = new StringBuilder( szCompositeLocation );
+            ZeidonStringConcat( sb_szCompositeLocation, 1, 0, " / ", 1, 0, 2049 );
+      szCompositeLocation = sb_szCompositeLocation.toString( );}
+      {MutableInt mi_lTempInteger_15 = new MutableInt( lTempInteger_15 );
+      StringBuilder sb_szTempString_15;
+      if ( szTempString_15 == null )
+         sb_szTempString_15 = new StringBuilder( 32 );
+      else
+         sb_szTempString_15 = new StringBuilder( szTempString_15 );
+             GetVariableFromAttribute( sb_szTempString_15, mi_lTempInteger_15, 'S', 255, mMasLC, "M_HumanHazardSection", "LabelLoc7", "", 0 );
+      lTempInteger_15 = mi_lTempInteger_15.intValue( );
+      szTempString_15 = sb_szTempString_15.toString( );}
+       {StringBuilder sb_szCompositeLocation;
+      if ( szCompositeLocation == null )
+         sb_szCompositeLocation = new StringBuilder( 32 );
+      else
+         sb_szCompositeLocation = new StringBuilder( szCompositeLocation );
+            ZeidonStringConcat( sb_szCompositeLocation, 1, 0, szTempString_15, 1, 0, 2049 );
+      szCompositeLocation = sb_szCompositeLocation.toString( );}
+   } 
+
+   //:END
+   //:IF mMasLC.M_HumanHazardSection.LabelLoc8 != ""
+   if ( CompareAttributeToString( mMasLC, "M_HumanHazardSection", "LabelLoc8", "" ) != 0 )
+   { 
+      //:szCompositeLocation = szCompositeLocation + " / " + mMasLC.M_HumanHazardSection.LabelLoc8
+       {StringBuilder sb_szCompositeLocation;
+      if ( szCompositeLocation == null )
+         sb_szCompositeLocation = new StringBuilder( 32 );
+      else
+         sb_szCompositeLocation = new StringBuilder( szCompositeLocation );
+            ZeidonStringConcat( sb_szCompositeLocation, 1, 0, " / ", 1, 0, 2049 );
+      szCompositeLocation = sb_szCompositeLocation.toString( );}
+      {MutableInt mi_lTempInteger_16 = new MutableInt( lTempInteger_16 );
+      StringBuilder sb_szTempString_16;
+      if ( szTempString_16 == null )
+         sb_szTempString_16 = new StringBuilder( 32 );
+      else
+         sb_szTempString_16 = new StringBuilder( szTempString_16 );
+             GetVariableFromAttribute( sb_szTempString_16, mi_lTempInteger_16, 'S', 255, mMasLC, "M_HumanHazardSection", "LabelLoc8", "", 0 );
+      lTempInteger_16 = mi_lTempInteger_16.intValue( );
+      szTempString_16 = sb_szTempString_16.toString( );}
+       {StringBuilder sb_szCompositeLocation;
+      if ( szCompositeLocation == null )
+         sb_szCompositeLocation = new StringBuilder( 32 );
+      else
+         sb_szCompositeLocation = new StringBuilder( szCompositeLocation );
+            ZeidonStringConcat( sb_szCompositeLocation, 1, 0, szTempString_16, 1, 0, 2049 );
+      szCompositeLocation = sb_szCompositeLocation.toString( );}
+   } 
+
+   //:END
+   //:IF mMasLC.M_HumanHazardSection.LabelLoc9 != ""
+   if ( CompareAttributeToString( mMasLC, "M_HumanHazardSection", "LabelLoc9", "" ) != 0 )
+   { 
+      //:szCompositeLocation = szCompositeLocation + " / " + mMasLC.M_HumanHazardSection.LabelLoc9
+       {StringBuilder sb_szCompositeLocation;
+      if ( szCompositeLocation == null )
+         sb_szCompositeLocation = new StringBuilder( 32 );
+      else
+         sb_szCompositeLocation = new StringBuilder( szCompositeLocation );
+            ZeidonStringConcat( sb_szCompositeLocation, 1, 0, " / ", 1, 0, 2049 );
+      szCompositeLocation = sb_szCompositeLocation.toString( );}
+      {MutableInt mi_lTempInteger_17 = new MutableInt( lTempInteger_17 );
+      StringBuilder sb_szTempString_17;
+      if ( szTempString_17 == null )
+         sb_szTempString_17 = new StringBuilder( 32 );
+      else
+         sb_szTempString_17 = new StringBuilder( szTempString_17 );
+             GetVariableFromAttribute( sb_szTempString_17, mi_lTempInteger_17, 'S', 255, mMasLC, "M_HumanHazardSection", "LabelLoc9", "", 0 );
+      lTempInteger_17 = mi_lTempInteger_17.intValue( );
+      szTempString_17 = sb_szTempString_17.toString( );}
+       {StringBuilder sb_szCompositeLocation;
+      if ( szCompositeLocation == null )
+         sb_szCompositeLocation = new StringBuilder( 32 );
+      else
+         sb_szCompositeLocation = new StringBuilder( szCompositeLocation );
+            ZeidonStringConcat( sb_szCompositeLocation, 1, 0, szTempString_17, 1, 0, 2049 );
       szCompositeLocation = sb_szCompositeLocation.toString( );}
    } 
 

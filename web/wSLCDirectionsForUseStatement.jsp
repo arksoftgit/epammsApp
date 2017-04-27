@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSLCDirectionsForUseStatement   Generate Timestamp: 20170303193942388 --%>
+<%-- wSLCDirectionsForUseStatement   Generate Timestamp: 20170421104646248 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -73,6 +73,28 @@ public int DoInputMapping( HttpServletRequest request,
          lEntityKey = vGridTmp.cursor( "S_InsertTextKeywordDU" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
          iTableRowCnt++;
+
+         strTag = "GridCheckCtl" + strEntityKey;
+         strMapValue = request.getParameter( strTag );
+         // If the checkbox is not checked, then set to the unchecked value.
+         if (strMapValue == null || strMapValue.isEmpty() )
+            strMapValue = "N";
+
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "GridCheckCtl", "", strMapValue );
+            else
+               if ( strMapValue != null )
+                  vGridTmp.cursor( "S_InsertTextKeywordDU" ).getAttribute( "Selected" ).setValue( strMapValue, "" );
+               else
+                  vGridTmp.cursor( "S_InsertTextKeywordDU" ).getAttribute( "Selected" ).setValue( "", "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, strTag, e.getReason( ), strMapValue );
+         }
 
          csrRC = vGridTmp.cursor( "S_InsertTextKeywordDU" ).setNextContinue( );
       }
@@ -867,10 +889,11 @@ else
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GridKeywords:Grid */ %>
-<table  cols=2 style=""  name="GridKeywords" id="GridKeywords">
+<table  cols=3 style=""  name="GridKeywords" id="GridKeywords">
 
 <thead><tr>
 
+   <th class="gridheading"><input type="checkbox" onclick="CheckAllInGrid(this,'GridCheckCtl')"></th>
    <th>Keyword</th>
    <th>Keyword Text</th>
 
@@ -890,6 +913,8 @@ try
       String strButtonName;
       String strOdd;
       String strTag;
+      String strGridCheckCtl;
+      String strGridCheckCtlValue;
       String strKeyword;
       String strKeywordText;
       
@@ -903,6 +928,27 @@ try
 
          lEntityKey = vGridKeywords.cursor( "S_InsertTextKeywordDU" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
+         strGridCheckCtl = "";
+         nRC = vGridKeywords.cursor( "S_InsertTextKeywordDU" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            strGridCheckCtl = vGridKeywords.cursor( "S_InsertTextKeywordDU" ).getAttribute( "Selected" ).getString( "" );
+
+            if ( strGridCheckCtl == null )
+               strGridCheckCtl = "";
+         }
+
+         if ( StringUtils.equals( strGridCheckCtl, "Y" ) )
+         {
+            strGridCheckCtlValue = "GridCheckCtl" + strEntityKey;
+            strGridCheckCtl = "<input name='" + strGridCheckCtlValue + "' id='" + strGridCheckCtlValue + "' value='Y' type='checkbox'  CHECKED > ";
+         }
+         else
+         {
+            strGridCheckCtlValue = "GridCheckCtl" + strEntityKey;
+            strGridCheckCtl = "<input name='" + strGridCheckCtlValue + "' id='" + strGridCheckCtlValue + "' value='Y' type='checkbox' > ";
+         }
+
          strKeyword = "";
          nRC = vGridKeywords.cursor( "S_InsertTextKeywordDU" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
@@ -933,6 +979,7 @@ try
 
 <tr<%=strOdd%>>
 
+   <td nowrap><%=strGridCheckCtl%></td>
    <td><%=strKeyword%></td>
    <td><%=strKeywordText%></td>
 

@@ -2076,9 +2076,11 @@ CopyDirsForUseStatements( VIEW NewSLC BASED ON LOD mSubLC,
       FOR EACH SrcMLC.M_InsertTextKeywordDU
          CREATE ENTITY NewSLC.S_InsertTextKeywordDU
          SetMatchingAttributesByName( NewSLC, "S_InsertTextKeywordDU", SrcMLC, "M_InsertTextKeywordDU", zSET_NULL )
+         NewSLC.S_InsertTextKeywordDU.Selected = "Y"
          FOR EACH SrcMLC.M_InsertTextDU
             CREATE ENTITY NewSLC.S_InsertTextDU
             SetMatchingAttributesByName( NewSLC, "S_InsertTextDU", SrcMLC, "M_InsertTextDU", zSET_NULL )
+            NewSLC.S_InsertTextDU.Selected = "Y"
          END
       END
       FOR EACH SrcMLC.M_DirectionsUsageOrdering
@@ -2119,9 +2121,11 @@ CopyDirsForUseSection( VIEW NewSLC BASED ON LOD mSubLC,
    FOR EACH SrcMLC.M_InsertTextKeywordSectionDU
       CREATE ENTITY NewSLC.S_InsertTextKeywordSectionDU
       SetMatchingAttributesByName( NewSLC, "S_InsertTextKeywordSectionDU", SrcMLC, "M_InsertTextKeywordSectionDU", zSET_NULL )
+      NewSLC.S_InsertTextKeywordSectionDU.Selected = "Y"
       FOR EACH SrcMLC.M_InsertTextSectionDU
          CREATE ENTITY NewSLC.S_InsertTextSectionDU
          SetMatchingAttributesByName( NewSLC, "S_InsertTextSectionDU", SrcMLC, "M_InsertTextSectionDU", zSET_NULL )
+         NewSLC.S_InsertTextSectionDU.Selected = "Y"
       END
    END
    CopyDirsForUseStatements( NewSLC, SrcMLC )
@@ -2141,9 +2145,11 @@ CopyStorageDisposalStmts( VIEW NewSLC, VIEW SrcMLC )
       FOR EACH SrcMLC.M_InsertTextKeywordSD
          CREATE ENTITY NewSLC.S_InsertTextKeywordSD
          SetMatchingAttributesByName( NewSLC, "S_InsertTextKeywordSD", SrcMLC, "M_InsertTextKeywordSD", zSET_NULL )
+         NewSLC.S_InsertTextKeywordSD.Selected = "Y"
          FOR EACH SrcMLC.M_InsertTextSD
             CREATE ENTITY NewSLC.S_InsertTextSD
             SetMatchingAttributesByName( NewSLC, "S_InsertTextSD", SrcMLC, "M_InsertTextSD", zSET_NULL )
+            NewSLC.S_InsertTextKeywordSD.Selected = "Y"
          END
       END
       IF SrcMLC.M_StorageDisposalSubStatement EXISTS
@@ -2177,9 +2183,11 @@ CopyUsagesRecursive( VIEW NewSLC, VIEW SrcMLC )
       FOR EACH SrcMLC.M_InsertTextKeywordUsage
          CREATE ENTITY NewSLC.S_InsertTextKeywordUsage
          SetMatchingAttributesByName( NewSLC, "S_InsertTextKeywordUsage", SrcMLC, "M_InsertTextKeywordUsage", zSET_NULL )
+         NewSLC.S_InsertTextKeywordUsage.Selected = "Y"
          FOR EACH SrcMLC.M_InsertTextUsage
             CREATE ENTITY NewSLC.S_InsertTextUsage
             SetMatchingAttributesByName( NewSLC, "S_InsertTextUsage", SrcMLC, "M_InsertTextUsage", zSET_NULL )
+            NewSLC.S_InsertTextUsage.Selected = "Y"
          END
       END
       IF SrcMLC.M_UsageFootnoteUsed EXISTS
@@ -2235,9 +2243,11 @@ BuildSLC_FromMLC( VIEW NewSLC BASED ON LOD mSubLC,
          FOR EACH SrcMLC.M_InsertTextKeyword
             CREATE ENTITY NewSLC.S_InsertTextKeyword
             SetMatchingAttributesByName( NewSLC, "S_InsertTextKeyword", SrcMLC, "M_InsertTextKeyword", zSET_NULL )
+            NewSLC.S_InsertTextKeyword.Selected = "Y"
             FOR EACH SrcMLC.M_InsertText
                CREATE ENTITY NewSLC.S_InsertText
                SetMatchingAttributesByName( NewSLC, "S_InsertText", SrcMLC, "M_InsertText", zSET_NULL )
+               NewSLC.S_InsertText.Selected = "Y"
             END
          END
       END
@@ -2252,9 +2262,11 @@ BuildSLC_FromMLC( VIEW NewSLC BASED ON LOD mSubLC,
             FOR EACH SrcMLC.M_InsertTextKeywordGeneral
                CREATE ENTITY NewSLC.S_InsertTextKeywordGeneral
                SetMatchingAttributesByName( NewSLC, "S_InsertTextKeywordGeneral", SrcMLC, "M_InsertTextKeywordGeneral", zSET_NULL )
+               NewSLC.S_InsertTextKeywordGeneral.Selected = "Y"
                FOR EACH SrcMLC.M_InsertTextGeneral
                   CREATE ENTITY NewSLC.S_InsertTextGeneral
                   SetMatchingAttributesByName( NewSLC, "S_InsertTextGeneral", SrcMLC, "M_InsertTextGeneral", zSET_NULL )
+                  NewSLC.S_InsertTextGeneral.Selected = "Y"
                END
             END
          END
@@ -2383,9 +2395,11 @@ BuildSLC_FromMLC( VIEW NewSLC BASED ON LOD mSubLC,
          FOR EACH SrcMLC.M_InsertTextKeywordMarketing
             CREATE ENTITY NewSLC.S_InsertTextKeywordMarketing
             SetMatchingAttributesByName( NewSLC, "S_InsertTextKeywordMarketing", SrcMLC, "M_InsertTextKeywordMarketing", zSET_NULL )
+            NewSLC.S_InsertTextKeywordMarketing.Selected = "Y"
             FOR EACH SrcMLC.M_InsertTextMarketing
                CREATE ENTITY NewSLC.S_InsertTextMarketing
                SetMatchingAttributesByName( NewSLC, "S_InsertTextMarketing", SrcMLC, "M_InsertTextMarketing", zSET_NULL )
+               NewSLC.S_InsertTextMarketing.Selected = "Y"
             END
          END
       END

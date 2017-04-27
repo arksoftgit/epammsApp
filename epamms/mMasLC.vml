@@ -2997,6 +2997,45 @@ BuildCompEntriesForMLC( VIEW mMasLC BASED ON LOD mMasLC )
    IF mMasLC.M_HumanHazardSection.PanelLoc5 != ""
       szCompositeLocation = szCompositeLocation + " / " + mMasLC.M_HumanHazardSection.PanelLoc5
    END
+   IF mMasLC.M_HumanHazardSection.PanelLoc6 != ""
+      szCompositeLocation = szCompositeLocation + " / " + mMasLC.M_HumanHazardSection.PanelLoc6
+   END
+   IF mMasLC.M_HumanHazardSection.PanelLoc7 != ""
+      szCompositeLocation = szCompositeLocation + " / " + mMasLC.M_HumanHazardSection.PanelLoc7
+   END
+   IF mMasLC.M_HumanHazardSection.PanelLoc8 != ""
+      szCompositeLocation = szCompositeLocation + " / " + mMasLC.M_HumanHazardSection.PanelLoc8
+   END
+   IF mMasLC.M_HumanHazardSection.PanelLoc9 != ""
+      szCompositeLocation = szCompositeLocation + " / " + mMasLC.M_HumanHazardSection.PanelLoc9
+   END
+   IF mMasLC.M_HumanHazardSection.LabelLoc1 != ""
+      szCompositeLocation = szCompositeLocation + " / " + mMasLC.M_HumanHazardSection.LabelLoc1
+   END
+   IF mMasLC.M_HumanHazardSection.LabelLoc2 != ""
+      szCompositeLocation = szCompositeLocation + " / " + mMasLC.M_HumanHazardSection.LabelLoc2
+   END
+   IF mMasLC.M_HumanHazardSection.LabelLoc3 != ""
+      szCompositeLocation = szCompositeLocation + " / " + mMasLC.M_HumanHazardSection.LabelLoc3
+   END
+   IF mMasLC.M_HumanHazardSection.LabelLoc4 != ""
+      szCompositeLocation = szCompositeLocation + " / " + mMasLC.M_HumanHazardSection.LabelLoc4
+   END
+   IF mMasLC.M_HumanHazardSection.LabelLoc5 != ""
+      szCompositeLocation = szCompositeLocation + " / " + mMasLC.M_HumanHazardSection.LabelLoc5
+   END
+   IF mMasLC.M_HumanHazardSection.LabelLoc6 != ""
+      szCompositeLocation = szCompositeLocation + " / " + mMasLC.M_HumanHazardSection.LabelLoc6
+   END
+   IF mMasLC.M_HumanHazardSection.LabelLoc7 != ""
+      szCompositeLocation = szCompositeLocation + " / " + mMasLC.M_HumanHazardSection.LabelLoc7
+   END
+   IF mMasLC.M_HumanHazardSection.LabelLoc8 != ""
+      szCompositeLocation = szCompositeLocation + " / " + mMasLC.M_HumanHazardSection.LabelLoc8
+   END
+   IF mMasLC.M_HumanHazardSection.LabelLoc9 != ""
+      szCompositeLocation = szCompositeLocation + " / " + mMasLC.M_HumanHazardSection.LabelLoc9
+   END
    mMasLC.CompositeComponentList.DisplayValue   = szCompositeLocation
 
    // Usage Section
@@ -3189,6 +3228,45 @@ BuildFullCompEntries( VIEW mMasLC BASED ON LOD mMasLC )
    END
    IF mMasLC.M_HumanHazardSection.PanelLoc5 != ""
       szCompositeLocation = szCompositeLocation + " / " + mMasLC.M_HumanHazardSection.PanelLoc5
+   END
+   IF mMasLC.M_HumanHazardSection.PanelLoc6 != ""
+      szCompositeLocation = szCompositeLocation + " / " + mMasLC.M_HumanHazardSection.PanelLoc6
+   END
+   IF mMasLC.M_HumanHazardSection.PanelLoc7 != ""
+      szCompositeLocation = szCompositeLocation + " / " + mMasLC.M_HumanHazardSection.PanelLoc7
+   END
+   IF mMasLC.M_HumanHazardSection.PanelLoc8 != ""
+      szCompositeLocation = szCompositeLocation + " / " + mMasLC.M_HumanHazardSection.PanelLoc8
+   END
+   IF mMasLC.M_HumanHazardSection.PanelLoc9 != ""
+      szCompositeLocation = szCompositeLocation + " / " + mMasLC.M_HumanHazardSection.PanelLoc9
+   END
+   IF mMasLC.M_HumanHazardSection.LabelLoc1 != ""
+      szCompositeLocation = szCompositeLocation + " / " + mMasLC.M_HumanHazardSection.LabelLoc1
+   END
+   IF mMasLC.M_HumanHazardSection.LabelLoc2 != ""
+      szCompositeLocation = szCompositeLocation + " / " + mMasLC.M_HumanHazardSection.LabelLoc2
+   END
+   IF mMasLC.M_HumanHazardSection.LabelLoc3 != ""
+      szCompositeLocation = szCompositeLocation + " / " + mMasLC.M_HumanHazardSection.LabelLoc3
+   END
+   IF mMasLC.M_HumanHazardSection.LabelLoc4 != ""
+      szCompositeLocation = szCompositeLocation + " / " + mMasLC.M_HumanHazardSection.LabelLoc4
+   END
+   IF mMasLC.M_HumanHazardSection.LabelLoc5 != ""
+      szCompositeLocation = szCompositeLocation + " / " + mMasLC.M_HumanHazardSection.LabelLoc5
+   END
+   IF mMasLC.M_HumanHazardSection.LabelLoc6 != ""
+      szCompositeLocation = szCompositeLocation + " / " + mMasLC.M_HumanHazardSection.LabelLoc6
+   END
+   IF mMasLC.M_HumanHazardSection.LabelLoc7 != ""
+      szCompositeLocation = szCompositeLocation + " / " + mMasLC.M_HumanHazardSection.LabelLoc7
+   END
+   IF mMasLC.M_HumanHazardSection.LabelLoc8 != ""
+      szCompositeLocation = szCompositeLocation + " / " + mMasLC.M_HumanHazardSection.LabelLoc8
+   END
+   IF mMasLC.M_HumanHazardSection.LabelLoc9 != ""
+      szCompositeLocation = szCompositeLocation + " / " + mMasLC.M_HumanHazardSection.LabelLoc9
    END
    mMasLC.CompositeComponentList.DisplayValue   = szCompositeLocation
 

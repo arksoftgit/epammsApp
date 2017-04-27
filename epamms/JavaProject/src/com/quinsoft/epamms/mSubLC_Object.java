@@ -3679,6 +3679,8 @@ omSubLC_CopyStorageDisposalStmts( View     NewSLC,
          RESULT = CreateEntity( NewSLC, "S_InsertTextKeywordSD", zPOS_AFTER );
          //:SetMatchingAttributesByName( NewSLC, "S_InsertTextKeywordSD", SrcMLC, "M_InsertTextKeywordSD", zSET_NULL )
          SetMatchingAttributesByName( NewSLC, "S_InsertTextKeywordSD", SrcMLC, "M_InsertTextKeywordSD", zSET_NULL );
+         //:NewSLC.S_InsertTextKeywordSD.Selected = "Y"
+         SetAttributeFromString( NewSLC, "S_InsertTextKeywordSD", "Selected", "Y" );
          //:FOR EACH SrcMLC.M_InsertTextSD
          RESULT = SetCursorFirstEntity( SrcMLC, "M_InsertTextSD", "" );
          while ( RESULT > zCURSOR_UNCHANGED )
@@ -3687,6 +3689,8 @@ omSubLC_CopyStorageDisposalStmts( View     NewSLC,
             RESULT = CreateEntity( NewSLC, "S_InsertTextSD", zPOS_AFTER );
             //:SetMatchingAttributesByName( NewSLC, "S_InsertTextSD", SrcMLC, "M_InsertTextSD", zSET_NULL )
             SetMatchingAttributesByName( NewSLC, "S_InsertTextSD", SrcMLC, "M_InsertTextSD", zSET_NULL );
+            //:NewSLC.S_InsertTextKeywordSD.Selected = "Y"
+            SetAttributeFromString( NewSLC, "S_InsertTextKeywordSD", "Selected", "Y" );
             RESULT = SetCursorNextEntity( SrcMLC, "M_InsertTextSD", "" );
          } 
 
@@ -3764,6 +3768,8 @@ omSubLC_CopyUsagesRecursive( View     NewSLC,
          RESULT = CreateEntity( NewSLC, "S_InsertTextKeywordUsage", zPOS_AFTER );
          //:SetMatchingAttributesByName( NewSLC, "S_InsertTextKeywordUsage", SrcMLC, "M_InsertTextKeywordUsage", zSET_NULL )
          SetMatchingAttributesByName( NewSLC, "S_InsertTextKeywordUsage", SrcMLC, "M_InsertTextKeywordUsage", zSET_NULL );
+         //:NewSLC.S_InsertTextKeywordUsage.Selected = "Y"
+         SetAttributeFromString( NewSLC, "S_InsertTextKeywordUsage", "Selected", "Y" );
          //:FOR EACH SrcMLC.M_InsertTextUsage
          RESULT = SetCursorFirstEntity( SrcMLC, "M_InsertTextUsage", "" );
          while ( RESULT > zCURSOR_UNCHANGED )
@@ -3772,6 +3778,8 @@ omSubLC_CopyUsagesRecursive( View     NewSLC,
             RESULT = CreateEntity( NewSLC, "S_InsertTextUsage", zPOS_AFTER );
             //:SetMatchingAttributesByName( NewSLC, "S_InsertTextUsage", SrcMLC, "M_InsertTextUsage", zSET_NULL )
             SetMatchingAttributesByName( NewSLC, "S_InsertTextUsage", SrcMLC, "M_InsertTextUsage", zSET_NULL );
+            //:NewSLC.S_InsertTextUsage.Selected = "Y"
+            SetAttributeFromString( NewSLC, "S_InsertTextUsage", "Selected", "Y" );
             RESULT = SetCursorNextEntity( SrcMLC, "M_InsertTextUsage", "" );
          } 
 
@@ -3898,6 +3906,8 @@ omSubLC_BuildSLC_FromMLC( View     NewSLC,
             RESULT = CreateEntity( NewSLC, "S_InsertTextKeyword", zPOS_AFTER );
             //:SetMatchingAttributesByName( NewSLC, "S_InsertTextKeyword", SrcMLC, "M_InsertTextKeyword", zSET_NULL )
             SetMatchingAttributesByName( NewSLC, "S_InsertTextKeyword", SrcMLC, "M_InsertTextKeyword", zSET_NULL );
+            //:NewSLC.S_InsertTextKeyword.Selected = "Y"
+            SetAttributeFromString( NewSLC, "S_InsertTextKeyword", "Selected", "Y" );
             //:FOR EACH SrcMLC.M_InsertText
             RESULT = SetCursorFirstEntity( SrcMLC, "M_InsertText", "" );
             while ( RESULT > zCURSOR_UNCHANGED )
@@ -3906,6 +3916,8 @@ omSubLC_BuildSLC_FromMLC( View     NewSLC,
                RESULT = CreateEntity( NewSLC, "S_InsertText", zPOS_AFTER );
                //:SetMatchingAttributesByName( NewSLC, "S_InsertText", SrcMLC, "M_InsertText", zSET_NULL )
                SetMatchingAttributesByName( NewSLC, "S_InsertText", SrcMLC, "M_InsertText", zSET_NULL );
+               //:NewSLC.S_InsertText.Selected = "Y"
+               SetAttributeFromString( NewSLC, "S_InsertText", "Selected", "Y" );
                RESULT = SetCursorNextEntity( SrcMLC, "M_InsertText", "" );
             } 
 
@@ -3946,6 +3958,8 @@ omSubLC_BuildSLC_FromMLC( View     NewSLC,
                RESULT = CreateEntity( NewSLC, "S_InsertTextKeywordGeneral", zPOS_AFTER );
                //:SetMatchingAttributesByName( NewSLC, "S_InsertTextKeywordGeneral", SrcMLC, "M_InsertTextKeywordGeneral", zSET_NULL )
                SetMatchingAttributesByName( NewSLC, "S_InsertTextKeywordGeneral", SrcMLC, "M_InsertTextKeywordGeneral", zSET_NULL );
+               //:NewSLC.S_InsertTextKeywordGeneral.Selected = "Y"
+               SetAttributeFromString( NewSLC, "S_InsertTextKeywordGeneral", "Selected", "Y" );
                //:FOR EACH SrcMLC.M_InsertTextGeneral
                RESULT = SetCursorFirstEntity( SrcMLC, "M_InsertTextGeneral", "" );
                while ( RESULT > zCURSOR_UNCHANGED )
@@ -3954,6 +3968,8 @@ omSubLC_BuildSLC_FromMLC( View     NewSLC,
                   RESULT = CreateEntity( NewSLC, "S_InsertTextGeneral", zPOS_AFTER );
                   //:SetMatchingAttributesByName( NewSLC, "S_InsertTextGeneral", SrcMLC, "M_InsertTextGeneral", zSET_NULL )
                   SetMatchingAttributesByName( NewSLC, "S_InsertTextGeneral", SrcMLC, "M_InsertTextGeneral", zSET_NULL );
+                  //:NewSLC.S_InsertTextGeneral.Selected = "Y"
+                  SetAttributeFromString( NewSLC, "S_InsertTextGeneral", "Selected", "Y" );
                   RESULT = SetCursorNextEntity( SrcMLC, "M_InsertTextGeneral", "" );
                } 
 
@@ -4235,6 +4251,8 @@ omSubLC_BuildSLC_FromMLC( View     NewSLC,
             RESULT = CreateEntity( NewSLC, "S_InsertTextKeywordMarketing", zPOS_AFTER );
             //:SetMatchingAttributesByName( NewSLC, "S_InsertTextKeywordMarketing", SrcMLC, "M_InsertTextKeywordMarketing", zSET_NULL )
             SetMatchingAttributesByName( NewSLC, "S_InsertTextKeywordMarketing", SrcMLC, "M_InsertTextKeywordMarketing", zSET_NULL );
+            //:NewSLC.S_InsertTextKeywordMarketing.Selected = "Y"
+            SetAttributeFromString( NewSLC, "S_InsertTextKeywordMarketing", "Selected", "Y" );
             //:FOR EACH SrcMLC.M_InsertTextMarketing
             RESULT = SetCursorFirstEntity( SrcMLC, "M_InsertTextMarketing", "" );
             while ( RESULT > zCURSOR_UNCHANGED )
@@ -4243,6 +4261,8 @@ omSubLC_BuildSLC_FromMLC( View     NewSLC,
                RESULT = CreateEntity( NewSLC, "S_InsertTextMarketing", zPOS_AFTER );
                //:SetMatchingAttributesByName( NewSLC, "S_InsertTextMarketing", SrcMLC, "M_InsertTextMarketing", zSET_NULL )
                SetMatchingAttributesByName( NewSLC, "S_InsertTextMarketing", SrcMLC, "M_InsertTextMarketing", zSET_NULL );
+               //:NewSLC.S_InsertTextMarketing.Selected = "Y"
+               SetAttributeFromString( NewSLC, "S_InsertTextMarketing", "Selected", "Y" );
                RESULT = SetCursorNextEntity( SrcMLC, "M_InsertTextMarketing", "" );
             } 
 
@@ -4410,6 +4430,8 @@ omSubLC_CopyDirsForUseStatements( View     NewSLC,
          RESULT = CreateEntity( NewSLC, "S_InsertTextKeywordDU", zPOS_AFTER );
          //:SetMatchingAttributesByName( NewSLC, "S_InsertTextKeywordDU", SrcMLC, "M_InsertTextKeywordDU", zSET_NULL )
          SetMatchingAttributesByName( NewSLC, "S_InsertTextKeywordDU", SrcMLC, "M_InsertTextKeywordDU", zSET_NULL );
+         //:NewSLC.S_InsertTextKeywordDU.Selected = "Y"
+         SetAttributeFromString( NewSLC, "S_InsertTextKeywordDU", "Selected", "Y" );
          //:FOR EACH SrcMLC.M_InsertTextDU
          RESULT = SetCursorFirstEntity( SrcMLC, "M_InsertTextDU", "" );
          while ( RESULT > zCURSOR_UNCHANGED )
@@ -4418,6 +4440,8 @@ omSubLC_CopyDirsForUseStatements( View     NewSLC,
             RESULT = CreateEntity( NewSLC, "S_InsertTextDU", zPOS_AFTER );
             //:SetMatchingAttributesByName( NewSLC, "S_InsertTextDU", SrcMLC, "M_InsertTextDU", zSET_NULL )
             SetMatchingAttributesByName( NewSLC, "S_InsertTextDU", SrcMLC, "M_InsertTextDU", zSET_NULL );
+            //:NewSLC.S_InsertTextDU.Selected = "Y"
+            SetAttributeFromString( NewSLC, "S_InsertTextDU", "Selected", "Y" );
             RESULT = SetCursorNextEntity( SrcMLC, "M_InsertTextDU", "" );
          } 
 
@@ -9053,6 +9077,8 @@ omSubLC_CopyDirsForUseSection( View     NewSLC,
       RESULT = CreateEntity( NewSLC, "S_InsertTextKeywordSectionDU", zPOS_AFTER );
       //:SetMatchingAttributesByName( NewSLC, "S_InsertTextKeywordSectionDU", SrcMLC, "M_InsertTextKeywordSectionDU", zSET_NULL )
       SetMatchingAttributesByName( NewSLC, "S_InsertTextKeywordSectionDU", SrcMLC, "M_InsertTextKeywordSectionDU", zSET_NULL );
+      //:NewSLC.S_InsertTextKeywordSectionDU.Selected = "Y"
+      SetAttributeFromString( NewSLC, "S_InsertTextKeywordSectionDU", "Selected", "Y" );
       //:FOR EACH SrcMLC.M_InsertTextSectionDU
       RESULT = SetCursorFirstEntity( SrcMLC, "M_InsertTextSectionDU", "" );
       while ( RESULT > zCURSOR_UNCHANGED )
@@ -9061,6 +9087,8 @@ omSubLC_CopyDirsForUseSection( View     NewSLC,
          RESULT = CreateEntity( NewSLC, "S_InsertTextSectionDU", zPOS_AFTER );
          //:SetMatchingAttributesByName( NewSLC, "S_InsertTextSectionDU", SrcMLC, "M_InsertTextSectionDU", zSET_NULL )
          SetMatchingAttributesByName( NewSLC, "S_InsertTextSectionDU", SrcMLC, "M_InsertTextSectionDU", zSET_NULL );
+         //:NewSLC.S_InsertTextSectionDU.Selected = "Y"
+         SetAttributeFromString( NewSLC, "S_InsertTextSectionDU", "Selected", "Y" );
          RESULT = SetCursorNextEntity( SrcMLC, "M_InsertTextSectionDU", "" );
       } 
 

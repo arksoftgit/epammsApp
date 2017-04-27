@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSLCMarketingStatement   Generate Timestamp: 20161019144229024 --%>
+<%-- wSLCMarketingStatement   Generate Timestamp: 20170421104945868 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -73,6 +73,28 @@ public int DoInputMapping( HttpServletRequest request,
          lEntityKey = vGridTmp.cursor( "S_InsertTextKeywordMarketing" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
          iTableRowCnt++;
+
+         strTag = "GridCheckCtl1" + strEntityKey;
+         strMapValue = request.getParameter( strTag );
+         // If the checkbox is not checked, then set to the unchecked value.
+         if (strMapValue == null || strMapValue.isEmpty() )
+            strMapValue = "N";
+
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "GridCheckCtl1", "", strMapValue );
+            else
+               if ( strMapValue != null )
+                  vGridTmp.cursor( "S_InsertTextKeywordMarketing" ).getAttribute( "Selected" ).setValue( strMapValue, "" );
+               else
+                  vGridTmp.cursor( "S_InsertTextKeywordMarketing" ).getAttribute( "Selected" ).setValue( "", "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, strTag, e.getReason( ), strMapValue );
+         }
 
          csrRC = vGridTmp.cursor( "S_InsertTextKeywordMarketing" ).setNextContinue( );
       }
@@ -231,18 +253,18 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-         View mSubLCAuto = task.getViewByName( "mSubLC" );
-         EntityCursor cursor = mSubLCAuto.cursor( "S_MarketingStatement" );
-            if ( cursor.isNull() )
-               nRC = 0;
-            else
-            {
-               if ( cursor.isVersioned( ) )
-               {
-                  cursor.acceptSubobject( );
-               }
-            nRC = 0;
+      View mSubLC = task.getViewByName( "mSubLC" );
+      EntityCursor cursor = mSubLC.cursor( "S_MarketingStatement" );
+      if ( cursor.isNull() )
+         nRC = 0;
+      else
+      {
+         if ( cursor.isVersioned( ) )
+         {
+            cursor.acceptSubobject( );
          }
+         nRC = 0;
+      }
 
       }
       catch ( Exception e )
@@ -267,18 +289,18 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-         View mSubLCAuto = task.getViewByName( "mSubLC" );
-         EntityCursor cursor = mSubLCAuto.cursor( "S_MarketingStatement" );
-            if ( cursor.isNull() )
-               nRC = 0;
-            else
-            {
-               if ( cursor.isVersioned( ) )
-               {
-                  cursor.cancelSubobject( );
-               }
-            nRC = 0;
+      View mSubLC = task.getViewByName( "mSubLC" );
+      EntityCursor cursor = mSubLC.cursor( "S_MarketingStatement" );
+      if ( cursor.isNull() )
+         nRC = 0;
+      else
+      {
+         if ( cursor.isVersioned( ) )
+         {
+            cursor.cancelSubobject( );
          }
+         nRC = 0;
+      }
 
       }
       catch ( Exception e )
@@ -703,6 +725,7 @@ else
    <input name="zFocusCtrl" id="zFocusCtrl" type="hidden" value="<%=strFocusCtrl%>">
    <input name="zOpenFile" id="zOpenFile" type="hidden" value="<%=strOpenFile%>">
    <input name="zDateFormat" id="zDateFormat" type="hidden" value="<%=strDateFormat%>">
+   <input name="zDateSequence" id="zDateSequence" type="hidden" value="MDY">
    <input name="zLoginName" id="zLoginName" type="hidden" value="<%=strLoginName%>">
    <input name="zKeyRole" id="zKeyRole" type="hidden" value="<%=strKeyRole%>">
    <input name="zOpenPopupWindow" id="zOpenPopupWindow" type="hidden" value="<%=strOpenPopupWindow%>">
@@ -872,10 +895,11 @@ else
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
 <% /* Grid4:Grid */ %>
-<table  cols=2 style=""  name="Grid4" id="Grid4">
+<table  cols=3 style=""  name="Grid4" id="Grid4">
 
 <thead><tr>
 
+   <th class="gridheading"><input type="checkbox" onclick="CheckAllInGrid(this,'GridCheckCtl1')"></th>
    <th>Keyword</th>
    <th>Keyword Text</th>
 
@@ -895,6 +919,8 @@ try
       String strButtonName;
       String strOdd;
       String strTag;
+      String strGridCheckCtl1;
+      String strGridCheckCtl1Value;
       String strGridEditCtl6;
       String strGridEditCtl7;
       
@@ -908,6 +934,27 @@ try
 
          lEntityKey = vGrid4.cursor( "S_InsertTextKeywordMarketing" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
+         strGridCheckCtl1 = "";
+         nRC = vGrid4.cursor( "S_InsertTextKeywordMarketing" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            strGridCheckCtl1 = vGrid4.cursor( "S_InsertTextKeywordMarketing" ).getAttribute( "Selected" ).getString( "" );
+
+            if ( strGridCheckCtl1 == null )
+               strGridCheckCtl1 = "";
+         }
+
+         if ( StringUtils.equals( strGridCheckCtl1, "Y" ) )
+         {
+            strGridCheckCtl1Value = "GridCheckCtl1" + strEntityKey;
+            strGridCheckCtl1 = "<input name='" + strGridCheckCtl1Value + "' id='" + strGridCheckCtl1Value + "' value='Y' type='checkbox'  CHECKED > ";
+         }
+         else
+         {
+            strGridCheckCtl1Value = "GridCheckCtl1" + strEntityKey;
+            strGridCheckCtl1 = "<input name='" + strGridCheckCtl1Value + "' id='" + strGridCheckCtl1Value + "' value='Y' type='checkbox' > ";
+         }
+
          strGridEditCtl6 = "";
          nRC = vGrid4.cursor( "S_InsertTextKeywordMarketing" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
@@ -938,6 +985,7 @@ try
 
 <tr<%=strOdd%>>
 
+   <td nowrap><%=strGridCheckCtl1%></td>
    <td><%=strGridEditCtl6%></td>
    <td><%=strGridEditCtl7%></td>
 

@@ -9538,19 +9538,31 @@ omSPLDef_CopyDirsForUseStmts( View     NewSPLD,
       RESULT = SetCursorFirstEntity( SrcSLC, "S_InsertTextKeywordDU", "" );
       while ( RESULT > zCURSOR_UNCHANGED )
       { 
-         //:CREATE ENTITY NewSPLD.SPLD_InsertTextKeywordDU
-         RESULT = CreateEntity( NewSPLD, "SPLD_InsertTextKeywordDU", zPOS_AFTER );
-         //:SetMatchingAttributesByName( NewSPLD, "SPLD_InsertTextKeywordDU", SrcSLC, "S_InsertTextKeywordDU", zSET_NULL )
-         SetMatchingAttributesByName( NewSPLD, "SPLD_InsertTextKeywordDU", SrcSLC, "S_InsertTextKeywordDU", zSET_NULL );
-         //:FOR EACH SrcSLC.S_InsertTextDU
-         RESULT = SetCursorFirstEntity( SrcSLC, "S_InsertTextDU", "" );
-         while ( RESULT > zCURSOR_UNCHANGED )
+         //:IF SrcSLC.S_InsertTextKeywordDU.Selected = "Y"
+         if ( CompareAttributeToString( SrcSLC, "S_InsertTextKeywordDU", "Selected", "Y" ) == 0 )
          { 
-            //:CREATE ENTITY NewSPLD.SPLD_InsertTextDU
-            RESULT = CreateEntity( NewSPLD, "SPLD_InsertTextDU", zPOS_AFTER );
-            //:SetMatchingAttributesByName( NewSPLD, "SPLD_InsertTextDU", SrcSLC, "S_InsertTextDU", zSET_NULL )
-            SetMatchingAttributesByName( NewSPLD, "SPLD_InsertTextDU", SrcSLC, "S_InsertTextDU", zSET_NULL );
-            RESULT = SetCursorNextEntity( SrcSLC, "S_InsertTextDU", "" );
+            //:CREATE ENTITY NewSPLD.SPLD_InsertTextKeywordDU
+            RESULT = CreateEntity( NewSPLD, "SPLD_InsertTextKeywordDU", zPOS_AFTER );
+            //:SetMatchingAttributesByName( NewSPLD, "SPLD_InsertTextKeywordDU", SrcSLC, "S_InsertTextKeywordDU", zSET_NULL )
+            SetMatchingAttributesByName( NewSPLD, "SPLD_InsertTextKeywordDU", SrcSLC, "S_InsertTextKeywordDU", zSET_NULL );
+            //:FOR EACH SrcSLC.S_InsertTextDU
+            RESULT = SetCursorFirstEntity( SrcSLC, "S_InsertTextDU", "" );
+            while ( RESULT > zCURSOR_UNCHANGED )
+            { 
+               //:IF SrcSLC.S_InsertTextDU.Selected = "Y"
+               if ( CompareAttributeToString( SrcSLC, "S_InsertTextDU", "Selected", "Y" ) == 0 )
+               { 
+                  //:CREATE ENTITY NewSPLD.SPLD_InsertTextDU
+                  RESULT = CreateEntity( NewSPLD, "SPLD_InsertTextDU", zPOS_AFTER );
+                  //:SetMatchingAttributesByName( NewSPLD, "SPLD_InsertTextDU", SrcSLC, "S_InsertTextDU", zSET_NULL )
+                  SetMatchingAttributesByName( NewSPLD, "SPLD_InsertTextDU", SrcSLC, "S_InsertTextDU", zSET_NULL );
+               } 
+
+               RESULT = SetCursorNextEntity( SrcSLC, "S_InsertTextDU", "" );
+               //:END
+            } 
+
+            //:END
          } 
 
          RESULT = SetCursorNextEntity( SrcSLC, "S_InsertTextKeywordDU", "" );
@@ -9642,19 +9654,31 @@ omSPLDef_CopyUsagesRecursive( View     NewSPLD,
       RESULT = SetCursorFirstEntity( SrcSLC, "S_InsertTextKeywordUsage", "" );
       while ( RESULT > zCURSOR_UNCHANGED )
       { 
-         //:CREATE ENTITY NewSPLD.SPLD_InsertTextKeywordUsage
-         RESULT = CreateEntity( NewSPLD, "SPLD_InsertTextKeywordUsage", zPOS_AFTER );
-         //:SetMatchingAttributesByName( NewSPLD, "SPLD_InsertTextKeywordUsage", SrcSLC, "S_InsertTextKeywordUsage", zSET_NULL )
-         SetMatchingAttributesByName( NewSPLD, "SPLD_InsertTextKeywordUsage", SrcSLC, "S_InsertTextKeywordUsage", zSET_NULL );
-         //:FOR EACH SrcSLC.S_InsertTextUsage
-         RESULT = SetCursorFirstEntity( SrcSLC, "S_InsertTextUsage", "" );
-         while ( RESULT > zCURSOR_UNCHANGED )
+         //:IF SrcSLC.S_InsertTextKeywordUsage.Selected = "Y"
+         if ( CompareAttributeToString( SrcSLC, "S_InsertTextKeywordUsage", "Selected", "Y" ) == 0 )
          { 
-            //:CREATE ENTITY NewSPLD.SPLD_InsertTextUsage
-            RESULT = CreateEntity( NewSPLD, "SPLD_InsertTextUsage", zPOS_AFTER );
-            //:SetMatchingAttributesByName( NewSPLD, "SPLD_InsertTextUsage", SrcSLC, "S_InsertTextUsage", zSET_NULL )
-            SetMatchingAttributesByName( NewSPLD, "SPLD_InsertTextUsage", SrcSLC, "S_InsertTextUsage", zSET_NULL );
-            RESULT = SetCursorNextEntity( SrcSLC, "S_InsertTextUsage", "" );
+            //:CREATE ENTITY NewSPLD.SPLD_InsertTextKeywordUsage
+            RESULT = CreateEntity( NewSPLD, "SPLD_InsertTextKeywordUsage", zPOS_AFTER );
+            //:SetMatchingAttributesByName( NewSPLD, "SPLD_InsertTextKeywordUsage", SrcSLC, "S_InsertTextKeywordUsage", zSET_NULL )
+            SetMatchingAttributesByName( NewSPLD, "SPLD_InsertTextKeywordUsage", SrcSLC, "S_InsertTextKeywordUsage", zSET_NULL );
+            //:FOR EACH SrcSLC.S_InsertTextUsage
+            RESULT = SetCursorFirstEntity( SrcSLC, "S_InsertTextUsage", "" );
+            while ( RESULT > zCURSOR_UNCHANGED )
+            { 
+               //:IF SrcSLC.S_InsertTextUsage.Selected = "Y"
+               if ( CompareAttributeToString( SrcSLC, "S_InsertTextUsage", "Selected", "Y" ) == 0 )
+               { 
+                  //:CREATE ENTITY NewSPLD.SPLD_InsertTextUsage
+                  RESULT = CreateEntity( NewSPLD, "SPLD_InsertTextUsage", zPOS_AFTER );
+                  //:SetMatchingAttributesByName( NewSPLD, "SPLD_InsertTextUsage", SrcSLC, "S_InsertTextUsage", zSET_NULL )
+                  SetMatchingAttributesByName( NewSPLD, "SPLD_InsertTextUsage", SrcSLC, "S_InsertTextUsage", zSET_NULL );
+               } 
+
+               RESULT = SetCursorNextEntity( SrcSLC, "S_InsertTextUsage", "" );
+               //:END
+            } 
+
+            //:END
          } 
 
          RESULT = SetCursorNextEntity( SrcSLC, "S_InsertTextKeywordUsage", "" );
@@ -9738,19 +9762,31 @@ omSPLDef_CopyDirsForUseSection( View     NewSPLD,
    RESULT = SetCursorFirstEntity( SrcSLC, "S_InsertTextKeywordSectionDU", "" );
    while ( RESULT > zCURSOR_UNCHANGED )
    { 
-      //:CREATE ENTITY NewSPLD.SPLD_InsertTextKeywordSectionDU
-      RESULT = CreateEntity( NewSPLD, "SPLD_InsertTextKeywordSectionDU", zPOS_AFTER );
-      //:SetMatchingAttributesByName( NewSPLD, "SPLD_InsertTextKeywordSectionDU", SrcSLC, "S_InsertTextKeywordSectionDU", zSET_NULL )
-      SetMatchingAttributesByName( NewSPLD, "SPLD_InsertTextKeywordSectionDU", SrcSLC, "S_InsertTextKeywordSectionDU", zSET_NULL );
-      //:FOR EACH SrcSLC.S_InsertTextSectionDU
-      RESULT = SetCursorFirstEntity( SrcSLC, "S_InsertTextSectionDU", "" );
-      while ( RESULT > zCURSOR_UNCHANGED )
+      //:IF SrcSLC.S_InsertTextKeywordSectionDU.Selected = "Y"
+      if ( CompareAttributeToString( SrcSLC, "S_InsertTextKeywordSectionDU", "Selected", "Y" ) == 0 )
       { 
-         //:CREATE ENTITY NewSPLD.SPLD_InsertTextSectionDU
-         RESULT = CreateEntity( NewSPLD, "SPLD_InsertTextSectionDU", zPOS_AFTER );
-         //:SetMatchingAttributesByName( NewSPLD, "SPLD_InsertTextSectionDU", SrcSLC, "S_InsertTextSectionDU", zSET_NULL )
-         SetMatchingAttributesByName( NewSPLD, "SPLD_InsertTextSectionDU", SrcSLC, "S_InsertTextSectionDU", zSET_NULL );
-         RESULT = SetCursorNextEntity( SrcSLC, "S_InsertTextSectionDU", "" );
+         //:CREATE ENTITY NewSPLD.SPLD_InsertTextKeywordSectionDU
+         RESULT = CreateEntity( NewSPLD, "SPLD_InsertTextKeywordSectionDU", zPOS_AFTER );
+         //:SetMatchingAttributesByName( NewSPLD, "SPLD_InsertTextKeywordSectionDU", SrcSLC, "S_InsertTextKeywordSectionDU", zSET_NULL )
+         SetMatchingAttributesByName( NewSPLD, "SPLD_InsertTextKeywordSectionDU", SrcSLC, "S_InsertTextKeywordSectionDU", zSET_NULL );
+         //:FOR EACH SrcSLC.S_InsertTextSectionDU
+         RESULT = SetCursorFirstEntity( SrcSLC, "S_InsertTextSectionDU", "" );
+         while ( RESULT > zCURSOR_UNCHANGED )
+         { 
+            //:IF SrcSLC.S_InsertTextSectionDU.Selected = "Y"
+            if ( CompareAttributeToString( SrcSLC, "S_InsertTextSectionDU", "Selected", "Y" ) == 0 )
+            { 
+               //:CREATE ENTITY NewSPLD.SPLD_InsertTextSectionDU
+               RESULT = CreateEntity( NewSPLD, "SPLD_InsertTextSectionDU", zPOS_AFTER );
+               //:SetMatchingAttributesByName( NewSPLD, "SPLD_InsertTextSectionDU", SrcSLC, "S_InsertTextSectionDU", zSET_NULL )
+               SetMatchingAttributesByName( NewSPLD, "SPLD_InsertTextSectionDU", SrcSLC, "S_InsertTextSectionDU", zSET_NULL );
+            } 
+
+            RESULT = SetCursorNextEntity( SrcSLC, "S_InsertTextSectionDU", "" );
+            //:END
+         } 
+
+         //:END
       } 
 
       RESULT = SetCursorNextEntity( SrcSLC, "S_InsertTextKeywordSectionDU", "" );
@@ -10390,11 +10426,186 @@ omSPLDef_dIngredientName( View     mSPLDef,
    } 
 
 
-   //:TRANSFORMATION OPERATION
-   //:BuildSPLD_FromSLC( VIEW NewSPLD  BASED ON LOD mSPLDef,
-   //:                VIEW SrcSLC   BASED ON LOD mSubLC )
+   //:DERIVED ATTRIBUTE OPERATION
+   //:dGenStmtTitleText( VIEW mSPLDef BASED ON LOD mSPLDef,
+   //:                STRING ( 32 ) InternalEntityStructure,
+   //:                STRING ( 32 ) InternalAttribStructure,
+   //:                SHORT GetOrSetFlag )
 
-   //:VIEW mSPLDef2 BASED ON LOD mSPLDef
+   //:VIEW mSubLC2 BASED ON LOD mSPLDef
+public int 
+omSPLDef_dGenStmtTitleText( View     mSPLDef,
+                            String InternalEntityStructure,
+                            String InternalAttribStructure,
+                            Integer   GetOrSetFlag )
+{
+   zVIEW    mSubLC2 = new zVIEW( );
+   //:STRING ( 2048 ) szCombinedText
+   String   szCombinedText = null;
+   String   szTempString_0 = null;
+   int      lTempInteger_0 = 0;
+   int      lTempInteger_1 = 0;
+   String   szTempString_1 = null;
+   int      lTempInteger_2 = 0;
+   String   szTempString_2 = null;
+   int      lTempInteger_3 = 0;
+
+
+   //:CASE GetOrSetFlag
+   switch( GetOrSetFlag )
+   { 
+      //:OF   zDERIVED_GET:
+      case zDERIVED_GET :
+
+         //:// If Combined and a Title exists, concatenate Title and Text.  Otherwise, just show text.
+         //:// Bold Title and Text as specified.
+         //:IF mSPLDef.SPLD_GeneralSection.Combined = "Y" AND mSPLDef.SPLD_GeneralStatement.Title != ""
+         if ( CompareAttributeToString( mSPLDef, "SPLD_GeneralSection", "Combined", "Y" ) == 0 && CompareAttributeToString( mSPLDef, "SPLD_GeneralStatement", "Title", "" ) != 0 )
+         { 
+            //:IF mSPLDef.SPLD_GeneralSection.BoldTitle = "Y"
+            if ( CompareAttributeToString( mSPLDef, "SPLD_GeneralSection", "BoldTitle", "Y" ) == 0 )
+            { 
+               //:szCombinedText = "<b>" + mSPLDef.SPLD_GeneralStatement.Title + "</b>"
+               {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
+               StringBuilder sb_szTempString_0;
+               if ( szTempString_0 == null )
+                  sb_szTempString_0 = new StringBuilder( 32 );
+               else
+                  sb_szTempString_0 = new StringBuilder( szTempString_0 );
+                               GetVariableFromAttribute( sb_szTempString_0, mi_lTempInteger_0, 'S', 4097, mSPLDef, "SPLD_GeneralStatement", "Title", "", 0 );
+               lTempInteger_0 = mi_lTempInteger_0.intValue( );
+               szTempString_0 = sb_szTempString_0.toString( );}
+                {StringBuilder sb_szCombinedText;
+               if ( szCombinedText == null )
+                  sb_szCombinedText = new StringBuilder( 32 );
+               else
+                  sb_szCombinedText = new StringBuilder( szCombinedText );
+                              ZeidonStringCopy( sb_szCombinedText, 1, 0, "<b>", 1, 0, 2049 );
+               szCombinedText = sb_szCombinedText.toString( );}
+                {StringBuilder sb_szCombinedText;
+               if ( szCombinedText == null )
+                  sb_szCombinedText = new StringBuilder( 32 );
+               else
+                  sb_szCombinedText = new StringBuilder( szCombinedText );
+                              ZeidonStringConcat( sb_szCombinedText, 1, 0, szTempString_0, 1, 0, 2049 );
+               szCombinedText = sb_szCombinedText.toString( );}
+                {StringBuilder sb_szCombinedText;
+               if ( szCombinedText == null )
+                  sb_szCombinedText = new StringBuilder( 32 );
+               else
+                  sb_szCombinedText = new StringBuilder( szCombinedText );
+                              ZeidonStringConcat( sb_szCombinedText, 1, 0, "</b>", 1, 0, 2049 );
+               szCombinedText = sb_szCombinedText.toString( );}
+               //:ELSE
+            } 
+            else
+            { 
+               //:szCombinedText = mSPLDef.SPLD_GeneralStatement.Title
+               {MutableInt mi_lTempInteger_1 = new MutableInt( lTempInteger_1 );
+               StringBuilder sb_szCombinedText;
+               if ( szCombinedText == null )
+                  sb_szCombinedText = new StringBuilder( 32 );
+               else
+                  sb_szCombinedText = new StringBuilder( szCombinedText );
+                               GetVariableFromAttribute( sb_szCombinedText, mi_lTempInteger_1, 'S', 2049, mSPLDef, "SPLD_GeneralStatement", "Title", "", 0 );
+               lTempInteger_1 = mi_lTempInteger_1.intValue( );
+               szCombinedText = sb_szCombinedText.toString( );}
+            } 
+
+            //:END
+         } 
+
+         //:END
+         //:IF mSPLDef.SPLD_GeneralSection.BoldText = "Y"
+         if ( CompareAttributeToString( mSPLDef, "SPLD_GeneralSection", "BoldText", "Y" ) == 0 )
+         { 
+            //:szCombinedText = szCombinedText + "<b> " + mSPLDef.SPLD_GeneralStatement.Text + "</b>"
+             {StringBuilder sb_szCombinedText;
+            if ( szCombinedText == null )
+               sb_szCombinedText = new StringBuilder( 32 );
+            else
+               sb_szCombinedText = new StringBuilder( szCombinedText );
+                        ZeidonStringConcat( sb_szCombinedText, 1, 0, "<b> ", 1, 0, 2049 );
+            szCombinedText = sb_szCombinedText.toString( );}
+            {MutableInt mi_lTempInteger_2 = new MutableInt( lTempInteger_2 );
+            StringBuilder sb_szTempString_1;
+            if ( szTempString_1 == null )
+               sb_szTempString_1 = new StringBuilder( 32 );
+            else
+               sb_szTempString_1 = new StringBuilder( szTempString_1 );
+                         GetVariableFromAttribute( sb_szTempString_1, mi_lTempInteger_2, 'S', 4097, mSPLDef, "SPLD_GeneralStatement", "Text", "", 0 );
+            lTempInteger_2 = mi_lTempInteger_2.intValue( );
+            szTempString_1 = sb_szTempString_1.toString( );}
+             {StringBuilder sb_szCombinedText;
+            if ( szCombinedText == null )
+               sb_szCombinedText = new StringBuilder( 32 );
+            else
+               sb_szCombinedText = new StringBuilder( szCombinedText );
+                        ZeidonStringConcat( sb_szCombinedText, 1, 0, szTempString_1, 1, 0, 2049 );
+            szCombinedText = sb_szCombinedText.toString( );}
+             {StringBuilder sb_szCombinedText;
+            if ( szCombinedText == null )
+               sb_szCombinedText = new StringBuilder( 32 );
+            else
+               sb_szCombinedText = new StringBuilder( szCombinedText );
+                        ZeidonStringConcat( sb_szCombinedText, 1, 0, "</b>", 1, 0, 2049 );
+            szCombinedText = sb_szCombinedText.toString( );}
+            //:ELSE
+         } 
+         else
+         { 
+            //:szCombinedText = szCombinedText + " " + mSPLDef.SPLD_GeneralStatement.Text
+             {StringBuilder sb_szCombinedText;
+            if ( szCombinedText == null )
+               sb_szCombinedText = new StringBuilder( 32 );
+            else
+               sb_szCombinedText = new StringBuilder( szCombinedText );
+                        ZeidonStringConcat( sb_szCombinedText, 1, 0, " ", 1, 0, 2049 );
+            szCombinedText = sb_szCombinedText.toString( );}
+            {MutableInt mi_lTempInteger_3 = new MutableInt( lTempInteger_3 );
+            StringBuilder sb_szTempString_2;
+            if ( szTempString_2 == null )
+               sb_szTempString_2 = new StringBuilder( 32 );
+            else
+               sb_szTempString_2 = new StringBuilder( szTempString_2 );
+                         GetVariableFromAttribute( sb_szTempString_2, mi_lTempInteger_3, 'S', 4097, mSPLDef, "SPLD_GeneralStatement", "Text", "", 0 );
+            lTempInteger_3 = mi_lTempInteger_3.intValue( );
+            szTempString_2 = sb_szTempString_2.toString( );}
+             {StringBuilder sb_szCombinedText;
+            if ( szCombinedText == null )
+               sb_szCombinedText = new StringBuilder( 32 );
+            else
+               sb_szCombinedText = new StringBuilder( szCombinedText );
+                        ZeidonStringConcat( sb_szCombinedText, 1, 0, szTempString_2, 1, 0, 2049 );
+            szCombinedText = sb_szCombinedText.toString( );}
+         } 
+
+         //:END
+
+         //:// Store the calculated value in the object.
+         //:StoreStringInRecord( mSPLDef, InternalEntityStructure, InternalAttribStructure, szCombinedText )
+         StoreStringInRecord( mSPLDef, InternalEntityStructure, InternalAttribStructure, szCombinedText );
+         break ;
+
+      //:  // end zDERIVED_GET
+      //:OF   zDERIVED_SET:
+      case zDERIVED_SET :
+         break ;
+   } 
+
+
+   //:     // end zDERIVED_SET
+   //:END  // case
+   return( 0 );
+// END
+} 
+
+
+//:TRANSFORMATION OPERATION
+//:BuildSPLD_FromSLC( VIEW NewSPLD  BASED ON LOD mSPLDef,
+//:                   VIEW SrcSLC   BASED ON LOD mSubLC )
+
+//:   VIEW mSPLDef2 BASED ON LOD mSPLDef
 public int 
 omSPLDef_BuildSPLD_FromSLC( View     NewSPLD,
                             View     SrcSLC )
@@ -10517,19 +10728,31 @@ omSPLDef_BuildSPLD_FromSLC( View     NewSPLD,
          RESULT = SetCursorFirstEntity( SrcSLC, "S_InsertTextKeyword", "" );
          while ( RESULT > zCURSOR_UNCHANGED )
          { 
-            //:CREATE ENTITY NewSPLD.SPLD_InsertTextKeyword
-            RESULT = CreateEntity( NewSPLD, "SPLD_InsertTextKeyword", zPOS_AFTER );
-            //:SetMatchingAttributesByName( NewSPLD, "SPLD_InsertTextKeyword", SrcSLC, "S_InsertTextKeyword", zSET_NULL )
-            SetMatchingAttributesByName( NewSPLD, "SPLD_InsertTextKeyword", SrcSLC, "S_InsertTextKeyword", zSET_NULL );
-            //:FOR EACH SrcSLC.S_InsertText
-            RESULT = SetCursorFirstEntity( SrcSLC, "S_InsertText", "" );
-            while ( RESULT > zCURSOR_UNCHANGED )
+            //:IF SrcSLC.S_InsertTextKeyword.Selected = "Y"
+            if ( CompareAttributeToString( SrcSLC, "S_InsertTextKeyword", "Selected", "Y" ) == 0 )
             { 
-               //:CREATE ENTITY NewSPLD.SPLD_InsertText
-               RESULT = CreateEntity( NewSPLD, "SPLD_InsertText", zPOS_AFTER );
-               //:SetMatchingAttributesByName( NewSPLD, "SPLD_InsertText", SrcSLC, "S_InsertText", zSET_NULL )
-               SetMatchingAttributesByName( NewSPLD, "SPLD_InsertText", SrcSLC, "S_InsertText", zSET_NULL );
-               RESULT = SetCursorNextEntity( SrcSLC, "S_InsertText", "" );
+               //:CREATE ENTITY NewSPLD.SPLD_InsertTextKeyword
+               RESULT = CreateEntity( NewSPLD, "SPLD_InsertTextKeyword", zPOS_AFTER );
+               //:SetMatchingAttributesByName( NewSPLD, "SPLD_InsertTextKeyword", SrcSLC, "S_InsertTextKeyword", zSET_NULL )
+               SetMatchingAttributesByName( NewSPLD, "SPLD_InsertTextKeyword", SrcSLC, "S_InsertTextKeyword", zSET_NULL );
+               //:FOR EACH SrcSLC.S_InsertText
+               RESULT = SetCursorFirstEntity( SrcSLC, "S_InsertText", "" );
+               while ( RESULT > zCURSOR_UNCHANGED )
+               { 
+                  //:IF SrcSLC.S_InsertText.Selected = "Y"
+                  if ( CompareAttributeToString( SrcSLC, "S_InsertText", "Selected", "Y" ) == 0 )
+                  { 
+                     //:CREATE ENTITY NewSPLD.SPLD_InsertText
+                     RESULT = CreateEntity( NewSPLD, "SPLD_InsertText", zPOS_AFTER );
+                     //:SetMatchingAttributesByName( NewSPLD, "SPLD_InsertText", SrcSLC, "S_InsertText", zSET_NULL )
+                     SetMatchingAttributesByName( NewSPLD, "SPLD_InsertText", SrcSLC, "S_InsertText", zSET_NULL );
+                  } 
+
+                  RESULT = SetCursorNextEntity( SrcSLC, "S_InsertText", "" );
+                  //:END
+               } 
+
+               //:END
             } 
 
             RESULT = SetCursorNextEntity( SrcSLC, "S_InsertTextKeyword", "" );
@@ -10565,19 +10788,31 @@ omSPLDef_BuildSPLD_FromSLC( View     NewSPLD,
             RESULT = SetCursorFirstEntity( SrcSLC, "S_InsertTextKeywordGeneral", "" );
             while ( RESULT > zCURSOR_UNCHANGED )
             { 
-               //:CREATE ENTITY NewSPLD.SPLD_InsertTextKeywordGeneral
-               RESULT = CreateEntity( NewSPLD, "SPLD_InsertTextKeywordGeneral", zPOS_AFTER );
-               //:SetMatchingAttributesByName( NewSPLD, "SPLD_InsertTextKeywordGeneral", SrcSLC, "S_InsertTextKeywordGeneral", zSET_NULL )
-               SetMatchingAttributesByName( NewSPLD, "SPLD_InsertTextKeywordGeneral", SrcSLC, "S_InsertTextKeywordGeneral", zSET_NULL );
-               //:FOR EACH SrcSLC.S_InsertTextGeneral
-               RESULT = SetCursorFirstEntity( SrcSLC, "S_InsertTextGeneral", "" );
-               while ( RESULT > zCURSOR_UNCHANGED )
+               //:IF SrcSLC.S_InsertTextKeywordGeneral.Selected = "Y"
+               if ( CompareAttributeToString( SrcSLC, "S_InsertTextKeywordGeneral", "Selected", "Y" ) == 0 )
                { 
-                  //:CREATE ENTITY NewSPLD.SPLD_InsertTextGeneral
-                  RESULT = CreateEntity( NewSPLD, "SPLD_InsertTextGeneral", zPOS_AFTER );
-                  //:SetMatchingAttributesByName( NewSPLD, "SPLD_InsertTextGeneral", SrcSLC, "S_InsertTextGeneral", zSET_NULL )
-                  SetMatchingAttributesByName( NewSPLD, "SPLD_InsertTextGeneral", SrcSLC, "S_InsertTextGeneral", zSET_NULL );
-                  RESULT = SetCursorNextEntity( SrcSLC, "S_InsertTextGeneral", "" );
+                  //:CREATE ENTITY NewSPLD.SPLD_InsertTextKeywordGeneral
+                  RESULT = CreateEntity( NewSPLD, "SPLD_InsertTextKeywordGeneral", zPOS_AFTER );
+                  //:SetMatchingAttributesByName( NewSPLD, "SPLD_InsertTextKeywordGeneral", SrcSLC, "S_InsertTextKeywordGeneral", zSET_NULL )
+                  SetMatchingAttributesByName( NewSPLD, "SPLD_InsertTextKeywordGeneral", SrcSLC, "S_InsertTextKeywordGeneral", zSET_NULL );
+                  //:FOR EACH SrcSLC.S_InsertTextGeneral
+                  RESULT = SetCursorFirstEntity( SrcSLC, "S_InsertTextGeneral", "" );
+                  while ( RESULT > zCURSOR_UNCHANGED )
+                  { 
+                     //:IF SrcSLC.S_InsertTextGeneral.Selected = "Y"
+                     if ( CompareAttributeToString( SrcSLC, "S_InsertTextGeneral", "Selected", "Y" ) == 0 )
+                     { 
+                        //:CREATE ENTITY NewSPLD.SPLD_InsertTextGeneral
+                        RESULT = CreateEntity( NewSPLD, "SPLD_InsertTextGeneral", zPOS_AFTER );
+                        //:SetMatchingAttributesByName( NewSPLD, "SPLD_InsertTextGeneral", SrcSLC, "S_InsertTextGeneral", zSET_NULL )
+                        SetMatchingAttributesByName( NewSPLD, "SPLD_InsertTextGeneral", SrcSLC, "S_InsertTextGeneral", zSET_NULL );
+                     } 
+
+                     RESULT = SetCursorNextEntity( SrcSLC, "S_InsertTextGeneral", "" );
+                     //:END
+                  } 
+
+                  //:END
                } 
 
                RESULT = SetCursorNextEntity( SrcSLC, "S_InsertTextKeywordGeneral", "" );
@@ -10825,7 +11060,43 @@ omSPLDef_BuildSPLD_FromSLC( View     NewSPLD,
          SetMatchingAttributesByName( NewSPLD, "SPLD_MarketingStatement", SrcSLC, "S_MarketingStatement", zSET_NULL );
          //:INCLUDE NewSPLD.S_MarketingStatement FROM SrcSLC.S_MarketingStatement
          RESULT = IncludeSubobjectFromSubobject( NewSPLD, "S_MarketingStatement", SrcSLC, "S_MarketingStatement", zPOS_AFTER );
+         //:FOR EACH SrcSLC.S_InsertTextKeywordMarketing
+         RESULT = SetCursorFirstEntity( SrcSLC, "S_InsertTextKeywordMarketing", "" );
+         while ( RESULT > zCURSOR_UNCHANGED )
+         { 
+            //:IF SrcSLC.S_InsertTextKeywordMarketing.Selected = "Y"
+            if ( CompareAttributeToString( SrcSLC, "S_InsertTextKeywordMarketing", "Selected", "Y" ) == 0 )
+            { 
+               //:CREATE ENTITY NewSPLD.SPLD_InsertTextKeywordMarketing
+               RESULT = CreateEntity( NewSPLD, "SPLD_InsertTextKeywordMarketing", zPOS_AFTER );
+               //:SetMatchingAttributesByName( NewSPLD, "SPLD_InsertTextKeywordMarketing", SrcSLC, "S_InsertTextKeywordMarketing", zSET_NULL )
+               SetMatchingAttributesByName( NewSPLD, "SPLD_InsertTextKeywordMarketing", SrcSLC, "S_InsertTextKeywordMarketing", zSET_NULL );
+               //:FOR EACH SrcSLC.S_InsertTextMarketing
+               RESULT = SetCursorFirstEntity( SrcSLC, "S_InsertTextMarketing", "" );
+               while ( RESULT > zCURSOR_UNCHANGED )
+               { 
+                  //:IF SrcSLC.S_InsertTextMarketing.Selected = "Y"
+                  if ( CompareAttributeToString( SrcSLC, "S_InsertTextMarketing", "Selected", "Y" ) == 0 )
+                  { 
+                     //:CREATE ENTITY NewSPLD.SPLD_InsertTextMarketing
+                     RESULT = CreateEntity( NewSPLD, "SPLD_InsertTextMarketing", zPOS_AFTER );
+                     //:SetMatchingAttributesByName( NewSPLD, "SPLD_InsertTextMarketing", SrcSLC, "S_InsertTextMarketing", zSET_NULL )
+                     SetMatchingAttributesByName( NewSPLD, "SPLD_InsertTextMarketing", SrcSLC, "S_InsertTextMarketing", zSET_NULL );
+                  } 
+
+                  RESULT = SetCursorNextEntity( SrcSLC, "S_InsertTextMarketing", "" );
+                  //:END
+               } 
+
+               //:END
+            } 
+
+            RESULT = SetCursorNextEntity( SrcSLC, "S_InsertTextKeywordMarketing", "" );
+            //:END
+         } 
+
          RESULT = SetCursorNextEntity( SrcSLC, "S_MarketingStatement", "" );
+         //:END
       } 
 
       RESULT = SetCursorNextEntity( SrcSLC, "S_MarketingSection", "" );
@@ -11887,6 +12158,14 @@ omSPLDef_dFullHazardStatement( View     mSPLDef,
    int      lTempInteger_11 = 0;
    int      lTempInteger_12 = 0;
    int      lTempInteger_13 = 0;
+   int      lTempInteger_14 = 0;
+   int      lTempInteger_15 = 0;
+   int      lTempInteger_16 = 0;
+   int      lTempInteger_17 = 0;
+   int      lTempInteger_18 = 0;
+   int      lTempInteger_19 = 0;
+   int      lTempInteger_20 = 0;
+   int      lTempInteger_21 = 0;
 
 
    //:CASE GetOrSetFlag
@@ -12206,6 +12485,162 @@ omSPLDef_dFullHazardStatement( View     mSPLDef,
 
                //:END
 
+               //:szLocation = mSPLDef.SPLD_HumanHazardSection.PanelLoc6
+               {MutableInt mi_lTempInteger_9 = new MutableInt( lTempInteger_9 );
+               StringBuilder sb_szLocation;
+               if ( szLocation == null )
+                  sb_szLocation = new StringBuilder( 32 );
+               else
+                  sb_szLocation = new StringBuilder( szLocation );
+                               GetVariableFromAttribute( sb_szLocation, mi_lTempInteger_9, 'S', 257, mSPLDef, "SPLD_HumanHazardSection", "PanelLoc6", "", 0 );
+               lTempInteger_9 = mi_lTempInteger_9.intValue( );
+               szLocation = sb_szLocation.toString( );}
+               //:IF szLocation != ""
+               if ( ZeidonStringCompare( szLocation, 1, 0, "", 1, 0, 257 ) != 0 )
+               { 
+                  //:szReplaceString = szReplaceString + szOpenSeparator + szLocation + szCloseSeparator
+                   {StringBuilder sb_szReplaceString;
+                  if ( szReplaceString == null )
+                     sb_szReplaceString = new StringBuilder( 32 );
+                  else
+                     sb_szReplaceString = new StringBuilder( szReplaceString );
+                                    ZeidonStringConcat( sb_szReplaceString, 1, 0, szOpenSeparator, 1, 0, 257 );
+                  szReplaceString = sb_szReplaceString.toString( );}
+                   {StringBuilder sb_szReplaceString;
+                  if ( szReplaceString == null )
+                     sb_szReplaceString = new StringBuilder( 32 );
+                  else
+                     sb_szReplaceString = new StringBuilder( szReplaceString );
+                                    ZeidonStringConcat( sb_szReplaceString, 1, 0, szLocation, 1, 0, 257 );
+                  szReplaceString = sb_szReplaceString.toString( );}
+                   {StringBuilder sb_szReplaceString;
+                  if ( szReplaceString == null )
+                     sb_szReplaceString = new StringBuilder( 32 );
+                  else
+                     sb_szReplaceString = new StringBuilder( szReplaceString );
+                                    ZeidonStringConcat( sb_szReplaceString, 1, 0, szCloseSeparator, 1, 0, 257 );
+                  szReplaceString = sb_szReplaceString.toString( );}
+               } 
+
+               //:END
+
+               //:szLocation = mSPLDef.SPLD_HumanHazardSection.PanelLoc7
+               {MutableInt mi_lTempInteger_10 = new MutableInt( lTempInteger_10 );
+               StringBuilder sb_szLocation;
+               if ( szLocation == null )
+                  sb_szLocation = new StringBuilder( 32 );
+               else
+                  sb_szLocation = new StringBuilder( szLocation );
+                               GetVariableFromAttribute( sb_szLocation, mi_lTempInteger_10, 'S', 257, mSPLDef, "SPLD_HumanHazardSection", "PanelLoc7", "", 0 );
+               lTempInteger_10 = mi_lTempInteger_10.intValue( );
+               szLocation = sb_szLocation.toString( );}
+               //:IF szLocation != ""
+               if ( ZeidonStringCompare( szLocation, 1, 0, "", 1, 0, 257 ) != 0 )
+               { 
+                  //:szReplaceString = szReplaceString + szOpenSeparator + szLocation + szCloseSeparator
+                   {StringBuilder sb_szReplaceString;
+                  if ( szReplaceString == null )
+                     sb_szReplaceString = new StringBuilder( 32 );
+                  else
+                     sb_szReplaceString = new StringBuilder( szReplaceString );
+                                    ZeidonStringConcat( sb_szReplaceString, 1, 0, szOpenSeparator, 1, 0, 257 );
+                  szReplaceString = sb_szReplaceString.toString( );}
+                   {StringBuilder sb_szReplaceString;
+                  if ( szReplaceString == null )
+                     sb_szReplaceString = new StringBuilder( 32 );
+                  else
+                     sb_szReplaceString = new StringBuilder( szReplaceString );
+                                    ZeidonStringConcat( sb_szReplaceString, 1, 0, szLocation, 1, 0, 257 );
+                  szReplaceString = sb_szReplaceString.toString( );}
+                   {StringBuilder sb_szReplaceString;
+                  if ( szReplaceString == null )
+                     sb_szReplaceString = new StringBuilder( 32 );
+                  else
+                     sb_szReplaceString = new StringBuilder( szReplaceString );
+                                    ZeidonStringConcat( sb_szReplaceString, 1, 0, szCloseSeparator, 1, 0, 257 );
+                  szReplaceString = sb_szReplaceString.toString( );}
+               } 
+
+               //:END
+
+               //:szLocation = mSPLDef.SPLD_HumanHazardSection.PanelLoc8
+               {MutableInt mi_lTempInteger_11 = new MutableInt( lTempInteger_11 );
+               StringBuilder sb_szLocation;
+               if ( szLocation == null )
+                  sb_szLocation = new StringBuilder( 32 );
+               else
+                  sb_szLocation = new StringBuilder( szLocation );
+                               GetVariableFromAttribute( sb_szLocation, mi_lTempInteger_11, 'S', 257, mSPLDef, "SPLD_HumanHazardSection", "PanelLoc8", "", 0 );
+               lTempInteger_11 = mi_lTempInteger_11.intValue( );
+               szLocation = sb_szLocation.toString( );}
+               //:IF szLocation != ""
+               if ( ZeidonStringCompare( szLocation, 1, 0, "", 1, 0, 257 ) != 0 )
+               { 
+                  //:szReplaceString = szReplaceString + szOpenSeparator + szLocation + szCloseSeparator
+                   {StringBuilder sb_szReplaceString;
+                  if ( szReplaceString == null )
+                     sb_szReplaceString = new StringBuilder( 32 );
+                  else
+                     sb_szReplaceString = new StringBuilder( szReplaceString );
+                                    ZeidonStringConcat( sb_szReplaceString, 1, 0, szOpenSeparator, 1, 0, 257 );
+                  szReplaceString = sb_szReplaceString.toString( );}
+                   {StringBuilder sb_szReplaceString;
+                  if ( szReplaceString == null )
+                     sb_szReplaceString = new StringBuilder( 32 );
+                  else
+                     sb_szReplaceString = new StringBuilder( szReplaceString );
+                                    ZeidonStringConcat( sb_szReplaceString, 1, 0, szLocation, 1, 0, 257 );
+                  szReplaceString = sb_szReplaceString.toString( );}
+                   {StringBuilder sb_szReplaceString;
+                  if ( szReplaceString == null )
+                     sb_szReplaceString = new StringBuilder( 32 );
+                  else
+                     sb_szReplaceString = new StringBuilder( szReplaceString );
+                                    ZeidonStringConcat( sb_szReplaceString, 1, 0, szCloseSeparator, 1, 0, 257 );
+                  szReplaceString = sb_szReplaceString.toString( );}
+               } 
+
+               //:END
+
+               //:szLocation = mSPLDef.SPLD_HumanHazardSection.PanelLoc9
+               {MutableInt mi_lTempInteger_12 = new MutableInt( lTempInteger_12 );
+               StringBuilder sb_szLocation;
+               if ( szLocation == null )
+                  sb_szLocation = new StringBuilder( 32 );
+               else
+                  sb_szLocation = new StringBuilder( szLocation );
+                               GetVariableFromAttribute( sb_szLocation, mi_lTempInteger_12, 'S', 257, mSPLDef, "SPLD_HumanHazardSection", "PanelLoc9", "", 0 );
+               lTempInteger_12 = mi_lTempInteger_12.intValue( );
+               szLocation = sb_szLocation.toString( );}
+               //:IF szLocation != ""
+               if ( ZeidonStringCompare( szLocation, 1, 0, "", 1, 0, 257 ) != 0 )
+               { 
+                  //:szReplaceString = szReplaceString + szOpenSeparator + szLocation + szCloseSeparator
+                   {StringBuilder sb_szReplaceString;
+                  if ( szReplaceString == null )
+                     sb_szReplaceString = new StringBuilder( 32 );
+                  else
+                     sb_szReplaceString = new StringBuilder( szReplaceString );
+                                    ZeidonStringConcat( sb_szReplaceString, 1, 0, szOpenSeparator, 1, 0, 257 );
+                  szReplaceString = sb_szReplaceString.toString( );}
+                   {StringBuilder sb_szReplaceString;
+                  if ( szReplaceString == null )
+                     sb_szReplaceString = new StringBuilder( 32 );
+                  else
+                     sb_szReplaceString = new StringBuilder( szReplaceString );
+                                    ZeidonStringConcat( sb_szReplaceString, 1, 0, szLocation, 1, 0, 257 );
+                  szReplaceString = sb_szReplaceString.toString( );}
+                   {StringBuilder sb_szReplaceString;
+                  if ( szReplaceString == null )
+                     sb_szReplaceString = new StringBuilder( 32 );
+                  else
+                     sb_szReplaceString = new StringBuilder( szReplaceString );
+                                    ZeidonStringConcat( sb_szReplaceString, 1, 0, szCloseSeparator, 1, 0, 257 );
+                  szReplaceString = sb_szReplaceString.toString( );}
+               } 
+
+               //:END
+
                //:zReplaceSubString( szString, nPosStart, nPosEnd, szReplaceString )
                {StringBuilder sb_szString;
                if ( szString == null )
@@ -12235,14 +12670,14 @@ omSPLDef_dFullHazardStatement( View     mSPLDef,
                               ZeidonStringCopy( sb_szReplaceString, 1, 0, "", 1, 0, 257 );
                szReplaceString = sb_szReplaceString.toString( );}
                //:szLocation = mSPLDef.SPLD_HumanHazardSection.LabelLoc1
-               {MutableInt mi_lTempInteger_9 = new MutableInt( lTempInteger_9 );
+               {MutableInt mi_lTempInteger_13 = new MutableInt( lTempInteger_13 );
                StringBuilder sb_szLocation;
                if ( szLocation == null )
                   sb_szLocation = new StringBuilder( 32 );
                else
                   sb_szLocation = new StringBuilder( szLocation );
-                               GetVariableFromAttribute( sb_szLocation, mi_lTempInteger_9, 'S', 257, mSPLDef, "SPLD_HumanHazardSection", "LabelLoc1", "", 0 );
-               lTempInteger_9 = mi_lTempInteger_9.intValue( );
+                               GetVariableFromAttribute( sb_szLocation, mi_lTempInteger_13, 'S', 257, mSPLDef, "SPLD_HumanHazardSection", "LabelLoc1", "", 0 );
+               lTempInteger_13 = mi_lTempInteger_13.intValue( );
                szLocation = sb_szLocation.toString( );}
                //:IF szLocation != ""
                if ( ZeidonStringCompare( szLocation, 1, 0, "", 1, 0, 257 ) != 0 )
@@ -12292,14 +12727,14 @@ omSPLDef_dFullHazardStatement( View     mSPLDef,
                //:END
 
                //:szLocation = mSPLDef.SPLD_HumanHazardSection.LabelLoc2
-               {MutableInt mi_lTempInteger_10 = new MutableInt( lTempInteger_10 );
+               {MutableInt mi_lTempInteger_14 = new MutableInt( lTempInteger_14 );
                StringBuilder sb_szLocation;
                if ( szLocation == null )
                   sb_szLocation = new StringBuilder( 32 );
                else
                   sb_szLocation = new StringBuilder( szLocation );
-                               GetVariableFromAttribute( sb_szLocation, mi_lTempInteger_10, 'S', 257, mSPLDef, "SPLD_HumanHazardSection", "LabelLoc2", "", 0 );
-               lTempInteger_10 = mi_lTempInteger_10.intValue( );
+                               GetVariableFromAttribute( sb_szLocation, mi_lTempInteger_14, 'S', 257, mSPLDef, "SPLD_HumanHazardSection", "LabelLoc2", "", 0 );
+               lTempInteger_14 = mi_lTempInteger_14.intValue( );
                szLocation = sb_szLocation.toString( );}
                //:IF szLocation != ""
                if ( ZeidonStringCompare( szLocation, 1, 0, "", 1, 0, 257 ) != 0 )
@@ -12331,14 +12766,14 @@ omSPLDef_dFullHazardStatement( View     mSPLDef,
                //:END
 
                //:szLocation = mSPLDef.SPLD_HumanHazardSection.LabelLoc3
-               {MutableInt mi_lTempInteger_11 = new MutableInt( lTempInteger_11 );
+               {MutableInt mi_lTempInteger_15 = new MutableInt( lTempInteger_15 );
                StringBuilder sb_szLocation;
                if ( szLocation == null )
                   sb_szLocation = new StringBuilder( 32 );
                else
                   sb_szLocation = new StringBuilder( szLocation );
-                               GetVariableFromAttribute( sb_szLocation, mi_lTempInteger_11, 'S', 257, mSPLDef, "SPLD_HumanHazardSection", "LabelLoc3", "", 0 );
-               lTempInteger_11 = mi_lTempInteger_11.intValue( );
+                               GetVariableFromAttribute( sb_szLocation, mi_lTempInteger_15, 'S', 257, mSPLDef, "SPLD_HumanHazardSection", "LabelLoc3", "", 0 );
+               lTempInteger_15 = mi_lTempInteger_15.intValue( );
                szLocation = sb_szLocation.toString( );}
                //:IF szLocation != ""
                if ( ZeidonStringCompare( szLocation, 1, 0, "", 1, 0, 257 ) != 0 )
@@ -12370,14 +12805,14 @@ omSPLDef_dFullHazardStatement( View     mSPLDef,
                //:END
 
                //:szLocation = mSPLDef.SPLD_HumanHazardSection.LabelLoc4
-               {MutableInt mi_lTempInteger_12 = new MutableInt( lTempInteger_12 );
+               {MutableInt mi_lTempInteger_16 = new MutableInt( lTempInteger_16 );
                StringBuilder sb_szLocation;
                if ( szLocation == null )
                   sb_szLocation = new StringBuilder( 32 );
                else
                   sb_szLocation = new StringBuilder( szLocation );
-                               GetVariableFromAttribute( sb_szLocation, mi_lTempInteger_12, 'S', 257, mSPLDef, "SPLD_HumanHazardSection", "LabelLoc4", "", 0 );
-               lTempInteger_12 = mi_lTempInteger_12.intValue( );
+                               GetVariableFromAttribute( sb_szLocation, mi_lTempInteger_16, 'S', 257, mSPLDef, "SPLD_HumanHazardSection", "LabelLoc4", "", 0 );
+               lTempInteger_16 = mi_lTempInteger_16.intValue( );
                szLocation = sb_szLocation.toString( );}
                //:IF szLocation != ""
                if ( ZeidonStringCompare( szLocation, 1, 0, "", 1, 0, 257 ) != 0 )
@@ -12409,14 +12844,170 @@ omSPLDef_dFullHazardStatement( View     mSPLDef,
                //:END
 
                //:szLocation = mSPLDef.SPLD_HumanHazardSection.LabelLoc5
-               {MutableInt mi_lTempInteger_13 = new MutableInt( lTempInteger_13 );
+               {MutableInt mi_lTempInteger_17 = new MutableInt( lTempInteger_17 );
                StringBuilder sb_szLocation;
                if ( szLocation == null )
                   sb_szLocation = new StringBuilder( 32 );
                else
                   sb_szLocation = new StringBuilder( szLocation );
-                               GetVariableFromAttribute( sb_szLocation, mi_lTempInteger_13, 'S', 257, mSPLDef, "SPLD_HumanHazardSection", "LabelLoc5", "", 0 );
-               lTempInteger_13 = mi_lTempInteger_13.intValue( );
+                               GetVariableFromAttribute( sb_szLocation, mi_lTempInteger_17, 'S', 257, mSPLDef, "SPLD_HumanHazardSection", "LabelLoc5", "", 0 );
+               lTempInteger_17 = mi_lTempInteger_17.intValue( );
+               szLocation = sb_szLocation.toString( );}
+               //:IF szLocation != ""
+               if ( ZeidonStringCompare( szLocation, 1, 0, "", 1, 0, 257 ) != 0 )
+               { 
+                  //:szReplaceString = szReplaceString + szOpenSeparator + szLocation + szCloseSeparator
+                   {StringBuilder sb_szReplaceString;
+                  if ( szReplaceString == null )
+                     sb_szReplaceString = new StringBuilder( 32 );
+                  else
+                     sb_szReplaceString = new StringBuilder( szReplaceString );
+                                    ZeidonStringConcat( sb_szReplaceString, 1, 0, szOpenSeparator, 1, 0, 257 );
+                  szReplaceString = sb_szReplaceString.toString( );}
+                   {StringBuilder sb_szReplaceString;
+                  if ( szReplaceString == null )
+                     sb_szReplaceString = new StringBuilder( 32 );
+                  else
+                     sb_szReplaceString = new StringBuilder( szReplaceString );
+                                    ZeidonStringConcat( sb_szReplaceString, 1, 0, szLocation, 1, 0, 257 );
+                  szReplaceString = sb_szReplaceString.toString( );}
+                   {StringBuilder sb_szReplaceString;
+                  if ( szReplaceString == null )
+                     sb_szReplaceString = new StringBuilder( 32 );
+                  else
+                     sb_szReplaceString = new StringBuilder( szReplaceString );
+                                    ZeidonStringConcat( sb_szReplaceString, 1, 0, szCloseSeparator, 1, 0, 257 );
+                  szReplaceString = sb_szReplaceString.toString( );}
+               } 
+
+               //:END
+
+               //:szLocation = mSPLDef.SPLD_HumanHazardSection.LabelLoc6
+               {MutableInt mi_lTempInteger_18 = new MutableInt( lTempInteger_18 );
+               StringBuilder sb_szLocation;
+               if ( szLocation == null )
+                  sb_szLocation = new StringBuilder( 32 );
+               else
+                  sb_szLocation = new StringBuilder( szLocation );
+                               GetVariableFromAttribute( sb_szLocation, mi_lTempInteger_18, 'S', 257, mSPLDef, "SPLD_HumanHazardSection", "LabelLoc6", "", 0 );
+               lTempInteger_18 = mi_lTempInteger_18.intValue( );
+               szLocation = sb_szLocation.toString( );}
+               //:IF szLocation != ""
+               if ( ZeidonStringCompare( szLocation, 1, 0, "", 1, 0, 257 ) != 0 )
+               { 
+                  //:szReplaceString = szReplaceString + szOpenSeparator + szLocation + szCloseSeparator
+                   {StringBuilder sb_szReplaceString;
+                  if ( szReplaceString == null )
+                     sb_szReplaceString = new StringBuilder( 32 );
+                  else
+                     sb_szReplaceString = new StringBuilder( szReplaceString );
+                                    ZeidonStringConcat( sb_szReplaceString, 1, 0, szOpenSeparator, 1, 0, 257 );
+                  szReplaceString = sb_szReplaceString.toString( );}
+                   {StringBuilder sb_szReplaceString;
+                  if ( szReplaceString == null )
+                     sb_szReplaceString = new StringBuilder( 32 );
+                  else
+                     sb_szReplaceString = new StringBuilder( szReplaceString );
+                                    ZeidonStringConcat( sb_szReplaceString, 1, 0, szLocation, 1, 0, 257 );
+                  szReplaceString = sb_szReplaceString.toString( );}
+                   {StringBuilder sb_szReplaceString;
+                  if ( szReplaceString == null )
+                     sb_szReplaceString = new StringBuilder( 32 );
+                  else
+                     sb_szReplaceString = new StringBuilder( szReplaceString );
+                                    ZeidonStringConcat( sb_szReplaceString, 1, 0, szCloseSeparator, 1, 0, 257 );
+                  szReplaceString = sb_szReplaceString.toString( );}
+               } 
+
+               //:END
+
+               //:szLocation = mSPLDef.SPLD_HumanHazardSection.LabelLoc7
+               {MutableInt mi_lTempInteger_19 = new MutableInt( lTempInteger_19 );
+               StringBuilder sb_szLocation;
+               if ( szLocation == null )
+                  sb_szLocation = new StringBuilder( 32 );
+               else
+                  sb_szLocation = new StringBuilder( szLocation );
+                               GetVariableFromAttribute( sb_szLocation, mi_lTempInteger_19, 'S', 257, mSPLDef, "SPLD_HumanHazardSection", "LabelLoc7", "", 0 );
+               lTempInteger_19 = mi_lTempInteger_19.intValue( );
+               szLocation = sb_szLocation.toString( );}
+               //:IF szLocation != ""
+               if ( ZeidonStringCompare( szLocation, 1, 0, "", 1, 0, 257 ) != 0 )
+               { 
+                  //:szReplaceString = szReplaceString + szOpenSeparator + szLocation + szCloseSeparator
+                   {StringBuilder sb_szReplaceString;
+                  if ( szReplaceString == null )
+                     sb_szReplaceString = new StringBuilder( 32 );
+                  else
+                     sb_szReplaceString = new StringBuilder( szReplaceString );
+                                    ZeidonStringConcat( sb_szReplaceString, 1, 0, szOpenSeparator, 1, 0, 257 );
+                  szReplaceString = sb_szReplaceString.toString( );}
+                   {StringBuilder sb_szReplaceString;
+                  if ( szReplaceString == null )
+                     sb_szReplaceString = new StringBuilder( 32 );
+                  else
+                     sb_szReplaceString = new StringBuilder( szReplaceString );
+                                    ZeidonStringConcat( sb_szReplaceString, 1, 0, szLocation, 1, 0, 257 );
+                  szReplaceString = sb_szReplaceString.toString( );}
+                   {StringBuilder sb_szReplaceString;
+                  if ( szReplaceString == null )
+                     sb_szReplaceString = new StringBuilder( 32 );
+                  else
+                     sb_szReplaceString = new StringBuilder( szReplaceString );
+                                    ZeidonStringConcat( sb_szReplaceString, 1, 0, szCloseSeparator, 1, 0, 257 );
+                  szReplaceString = sb_szReplaceString.toString( );}
+               } 
+
+               //:END
+
+               //:szLocation = mSPLDef.SPLD_HumanHazardSection.LabelLoc8
+               {MutableInt mi_lTempInteger_20 = new MutableInt( lTempInteger_20 );
+               StringBuilder sb_szLocation;
+               if ( szLocation == null )
+                  sb_szLocation = new StringBuilder( 32 );
+               else
+                  sb_szLocation = new StringBuilder( szLocation );
+                               GetVariableFromAttribute( sb_szLocation, mi_lTempInteger_20, 'S', 257, mSPLDef, "SPLD_HumanHazardSection", "LabelLoc8", "", 0 );
+               lTempInteger_20 = mi_lTempInteger_20.intValue( );
+               szLocation = sb_szLocation.toString( );}
+               //:IF szLocation != ""
+               if ( ZeidonStringCompare( szLocation, 1, 0, "", 1, 0, 257 ) != 0 )
+               { 
+                  //:szReplaceString = szReplaceString + szOpenSeparator + szLocation + szCloseSeparator
+                   {StringBuilder sb_szReplaceString;
+                  if ( szReplaceString == null )
+                     sb_szReplaceString = new StringBuilder( 32 );
+                  else
+                     sb_szReplaceString = new StringBuilder( szReplaceString );
+                                    ZeidonStringConcat( sb_szReplaceString, 1, 0, szOpenSeparator, 1, 0, 257 );
+                  szReplaceString = sb_szReplaceString.toString( );}
+                   {StringBuilder sb_szReplaceString;
+                  if ( szReplaceString == null )
+                     sb_szReplaceString = new StringBuilder( 32 );
+                  else
+                     sb_szReplaceString = new StringBuilder( szReplaceString );
+                                    ZeidonStringConcat( sb_szReplaceString, 1, 0, szLocation, 1, 0, 257 );
+                  szReplaceString = sb_szReplaceString.toString( );}
+                   {StringBuilder sb_szReplaceString;
+                  if ( szReplaceString == null )
+                     sb_szReplaceString = new StringBuilder( 32 );
+                  else
+                     sb_szReplaceString = new StringBuilder( szReplaceString );
+                                    ZeidonStringConcat( sb_szReplaceString, 1, 0, szCloseSeparator, 1, 0, 257 );
+                  szReplaceString = sb_szReplaceString.toString( );}
+               } 
+
+               //:END
+
+               //:szLocation = mSPLDef.SPLD_HumanHazardSection.LabelLoc9
+               {MutableInt mi_lTempInteger_21 = new MutableInt( lTempInteger_21 );
+               StringBuilder sb_szLocation;
+               if ( szLocation == null )
+                  sb_szLocation = new StringBuilder( 32 );
+               else
+                  sb_szLocation = new StringBuilder( szLocation );
+                               GetVariableFromAttribute( sb_szLocation, mi_lTempInteger_21, 'S', 257, mSPLDef, "SPLD_HumanHazardSection", "LabelLoc9", "", 0 );
+               lTempInteger_21 = mi_lTempInteger_21.intValue( );
                szLocation = sb_szLocation.toString( );}
                //:IF szLocation != ""
                if ( ZeidonStringCompare( szLocation, 1, 0, "", 1, 0, 257 ) != 0 )
@@ -18645,7 +19236,683 @@ omSPLDef_dColorName( View     mSPLDef,
    } 
 
 
-   //:TRANSFORMATION OPERATION
+   //:DERIVED ATTRIBUTE OPERATION
+   //:dSD_TitleText( VIEW mSPLDef BASED ON LOD mSPLDef,
+   //:            STRING ( 32 ) InternalEntityStructure,
+   //:            STRING ( 32 ) InternalAttribStructure,
+   //:            SHORT GetOrSetFlag )
+
+   //:STRING ( 2048 ) szDisplayStatement
+public int 
+omSPLDef_dSD_TitleText( View     mSPLDef,
+                        String InternalEntityStructure,
+                        String InternalAttribStructure,
+                        Integer   GetOrSetFlag )
+{
+   String   szDisplayStatement = null;
+   //:STRING ( 2048 ) szStatementText
+   String   szStatementText = null;
+   //:STRING ( 256 )  szTitle
+   String   szTitle = null;
+   int      lTempInteger_0 = 0;
+   int      lTempInteger_1 = 0;
+
+
+   //:CASE GetOrSetFlag
+   switch( GetOrSetFlag )
+   { 
+      //:OF   zDERIVED_GET:
+      case zDERIVED_GET :
+
+         //:// Storage and Disposal Display Statement Text is a combination of Title and Text.
+         //:szTitle = mSPLDef.SPLD_StorageDisposalStatement.Title
+         {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
+         StringBuilder sb_szTitle;
+         if ( szTitle == null )
+            sb_szTitle = new StringBuilder( 32 );
+         else
+            sb_szTitle = new StringBuilder( szTitle );
+                   GetVariableFromAttribute( sb_szTitle, mi_lTempInteger_0, 'S', 257, mSPLDef, "SPLD_StorageDisposalStatement", "Title", "", 0 );
+         lTempInteger_0 = mi_lTempInteger_0.intValue( );
+         szTitle = sb_szTitle.toString( );}
+         //:szStatementText = mSPLDef.SPLD_StorageDisposalStatement.Text
+         {MutableInt mi_lTempInteger_1 = new MutableInt( lTempInteger_1 );
+         StringBuilder sb_szStatementText;
+         if ( szStatementText == null )
+            sb_szStatementText = new StringBuilder( 32 );
+         else
+            sb_szStatementText = new StringBuilder( szStatementText );
+                   GetVariableFromAttribute( sb_szStatementText, mi_lTempInteger_1, 'S', 2049, mSPLDef, "SPLD_StorageDisposalStatement", "Text", "", 0 );
+         lTempInteger_1 = mi_lTempInteger_1.intValue( );
+         szStatementText = sb_szStatementText.toString( );}
+         //:IF szTitle != ""
+         if ( ZeidonStringCompare( szTitle, 1, 0, "", 1, 0, 257 ) != 0 )
+         { 
+            //:szDisplayStatement = szTitle + " --- " + szStatementText
+             {StringBuilder sb_szDisplayStatement;
+            if ( szDisplayStatement == null )
+               sb_szDisplayStatement = new StringBuilder( 32 );
+            else
+               sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
+                        ZeidonStringCopy( sb_szDisplayStatement, 1, 0, szTitle, 1, 0, 2049 );
+            szDisplayStatement = sb_szDisplayStatement.toString( );}
+             {StringBuilder sb_szDisplayStatement;
+            if ( szDisplayStatement == null )
+               sb_szDisplayStatement = new StringBuilder( 32 );
+            else
+               sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
+                        ZeidonStringConcat( sb_szDisplayStatement, 1, 0, " --- ", 1, 0, 2049 );
+            szDisplayStatement = sb_szDisplayStatement.toString( );}
+             {StringBuilder sb_szDisplayStatement;
+            if ( szDisplayStatement == null )
+               sb_szDisplayStatement = new StringBuilder( 32 );
+            else
+               sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
+                        ZeidonStringConcat( sb_szDisplayStatement, 1, 0, szStatementText, 1, 0, 2049 );
+            szDisplayStatement = sb_szDisplayStatement.toString( );}
+            //:ELSE
+         } 
+         else
+         { 
+            //:szDisplayStatement = szStatementText
+             {StringBuilder sb_szDisplayStatement;
+            if ( szDisplayStatement == null )
+               sb_szDisplayStatement = new StringBuilder( 32 );
+            else
+               sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
+                        ZeidonStringCopy( sb_szDisplayStatement, 1, 0, szStatementText, 1, 0, 2049 );
+            szDisplayStatement = sb_szDisplayStatement.toString( );}
+         } 
+
+         //:END
+
+
+         //:// Store the calculated value in the object.
+         //:StoreStringInRecord( mSPLDef, InternalEntityStructure, InternalAttribStructure, szDisplayStatement )
+         StoreStringInRecord( mSPLDef, InternalEntityStructure, InternalAttribStructure, szDisplayStatement );
+         //:RETURN 0
+         if(8==8)return( 0 );
+
+         //:// end zDERIVED_GET
+         //:OF   zDERIVED_SET:
+         case zDERIVED_SET :
+            break ;
+      } 
+
+
+      //:  // end zDERIVED_SET
+      //:END  // case
+      return( 0 );
+   } 
+
+
+   //:DERIVED ATTRIBUTE OPERATION
+   //:dSD_SubTitleText( VIEW mSPLDef BASED ON LOD mSPLDef,
+   //:               STRING ( 32 ) InternalEntityStructure,
+   //:               STRING ( 32 ) InternalAttribStructure,
+   //:               SHORT GetOrSetFlag )
+
+   //:STRING ( 2048 ) szDisplayStatement
+public int 
+omSPLDef_dSD_SubTitleText( View     mSPLDef,
+                           String InternalEntityStructure,
+                           String InternalAttribStructure,
+                           Integer   GetOrSetFlag )
+{
+   String   szDisplayStatement = null;
+   //:STRING ( 2048 ) szStatementText
+   String   szStatementText = null;
+   //:STRING ( 256 )  szTitle
+   String   szTitle = null;
+   int      lTempInteger_0 = 0;
+   int      lTempInteger_1 = 0;
+
+
+   //:CASE GetOrSetFlag
+   switch( GetOrSetFlag )
+   { 
+      //:OF   zDERIVED_GET:
+      case zDERIVED_GET :
+
+         //:// Storage and Disposal Display Statement Text is a combination of Title and Text.
+         //:szTitle = mSPLDef.SPLD_StorageDisposalSubStmt.Title
+         {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
+         StringBuilder sb_szTitle;
+         if ( szTitle == null )
+            sb_szTitle = new StringBuilder( 32 );
+         else
+            sb_szTitle = new StringBuilder( szTitle );
+                   GetVariableFromAttribute( sb_szTitle, mi_lTempInteger_0, 'S', 257, mSPLDef, "SPLD_StorageDisposalSubStmt", "Title", "", 0 );
+         lTempInteger_0 = mi_lTempInteger_0.intValue( );
+         szTitle = sb_szTitle.toString( );}
+         //:szStatementText = mSPLDef.SPLD_StorageDisposalSubStmt.Text
+         {MutableInt mi_lTempInteger_1 = new MutableInt( lTempInteger_1 );
+         StringBuilder sb_szStatementText;
+         if ( szStatementText == null )
+            sb_szStatementText = new StringBuilder( 32 );
+         else
+            sb_szStatementText = new StringBuilder( szStatementText );
+                   GetVariableFromAttribute( sb_szStatementText, mi_lTempInteger_1, 'S', 2049, mSPLDef, "SPLD_StorageDisposalSubStmt", "Text", "", 0 );
+         lTempInteger_1 = mi_lTempInteger_1.intValue( );
+         szStatementText = sb_szStatementText.toString( );}
+         //:IF szTitle != ""
+         if ( ZeidonStringCompare( szTitle, 1, 0, "", 1, 0, 257 ) != 0 )
+         { 
+            //:szDisplayStatement = szTitle + " --- " + szStatementText
+             {StringBuilder sb_szDisplayStatement;
+            if ( szDisplayStatement == null )
+               sb_szDisplayStatement = new StringBuilder( 32 );
+            else
+               sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
+                        ZeidonStringCopy( sb_szDisplayStatement, 1, 0, szTitle, 1, 0, 2049 );
+            szDisplayStatement = sb_szDisplayStatement.toString( );}
+             {StringBuilder sb_szDisplayStatement;
+            if ( szDisplayStatement == null )
+               sb_szDisplayStatement = new StringBuilder( 32 );
+            else
+               sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
+                        ZeidonStringConcat( sb_szDisplayStatement, 1, 0, " --- ", 1, 0, 2049 );
+            szDisplayStatement = sb_szDisplayStatement.toString( );}
+             {StringBuilder sb_szDisplayStatement;
+            if ( szDisplayStatement == null )
+               sb_szDisplayStatement = new StringBuilder( 32 );
+            else
+               sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
+                        ZeidonStringConcat( sb_szDisplayStatement, 1, 0, szStatementText, 1, 0, 2049 );
+            szDisplayStatement = sb_szDisplayStatement.toString( );}
+            //:ELSE
+         } 
+         else
+         { 
+            //:szDisplayStatement = szStatementText
+             {StringBuilder sb_szDisplayStatement;
+            if ( szDisplayStatement == null )
+               sb_szDisplayStatement = new StringBuilder( 32 );
+            else
+               sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
+                        ZeidonStringCopy( sb_szDisplayStatement, 1, 0, szStatementText, 1, 0, 2049 );
+            szDisplayStatement = sb_szDisplayStatement.toString( );}
+         } 
+
+         //:END
+
+
+         //:// Store the calculated value in the object.
+         //:StoreStringInRecord( mSPLDef, InternalEntityStructure, InternalAttribStructure, szDisplayStatement )
+         StoreStringInRecord( mSPLDef, InternalEntityStructure, InternalAttribStructure, szDisplayStatement );
+         //:RETURN 0
+         if(8==8)return( 0 );
+
+         //:// end zDERIVED_GET
+         //:OF   zDERIVED_SET:
+         case zDERIVED_SET :
+            break ;
+      } 
+
+
+      //:  // end zDERIVED_SET
+      //:END  // case
+      return( 0 );
+   } 
+
+
+   //:DERIVED ATTRIBUTE OPERATION
+   //:dSD_StmtTitleKey( VIEW mSPLDef BASED ON LOD mSPLDef,
+   //:               STRING ( 32 ) InternalEntityStructure,
+   //:               STRING ( 32 ) InternalAttribStructure,
+   //:               SHORT GetOrSetFlag )
+
+   //:STRING ( 2048 ) szStatementTitle
+public int 
+omSPLDef_dSD_StmtTitleKey( View     mSPLDef,
+                           String InternalEntityStructure,
+                           String InternalAttribStructure,
+                           Integer   GetOrSetFlag )
+{
+   String   szStatementTitle = null;
+   int      lTempInteger_0 = 0;
+
+
+   //:CASE GetOrSetFlag
+   switch( GetOrSetFlag )
+   { 
+      //:OF   zDERIVED_GET:
+      case zDERIVED_GET :
+
+         //:// Storage and Disposal Display Statement Title is a combination of Title/Keywords.
+         //:szStatementTitle = mSPLDef.SPLD_StorageDisposalStatement.Title
+         {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
+         StringBuilder sb_szStatementTitle;
+         if ( szStatementTitle == null )
+            sb_szStatementTitle = new StringBuilder( 32 );
+         else
+            sb_szStatementTitle = new StringBuilder( szStatementTitle );
+                   GetVariableFromAttribute( sb_szStatementTitle, mi_lTempInteger_0, 'S', 2049, mSPLDef, "SPLD_StorageDisposalStatement", "Title", "", 0 );
+         lTempInteger_0 = mi_lTempInteger_0.intValue( );
+         szStatementTitle = sb_szStatementTitle.toString( );}
+         //:IF szStatementTitle != ""
+         if ( ZeidonStringCompare( szStatementTitle, 1, 0, "", 1, 0, 2049 ) != 0 )
+         { 
+            //:GenerateKeywordTextIntoString( mSPLDef, szStatementTitle,
+            //:                            "SPLD_InsertTextKeywordSD", "SPLD_InsertTextSD", ", " )
+            {
+             ZGlobal1_Operation m_ZGlobal1_Operation = new ZGlobal1_Operation( mSPLDef );
+             {StringBuilder sb_szStatementTitle;
+            if ( szStatementTitle == null )
+               sb_szStatementTitle = new StringBuilder( 32 );
+            else
+               sb_szStatementTitle = new StringBuilder( szStatementTitle );
+                         m_ZGlobal1_Operation.GenerateKeywordTextIntoString( mSPLDef, sb_szStatementTitle, "SPLD_InsertTextKeywordSD", "SPLD_InsertTextSD", ", " );
+            szStatementTitle = sb_szStatementTitle.toString( );}
+             // m_ZGlobal1_Operation = null;  // permit gc  (unnecessary)
+            }
+         } 
+
+         //:END
+
+         //:// Store the calculated value in the object.
+         //:StoreStringInRecord( mSPLDef, InternalEntityStructure, InternalAttribStructure, szStatementTitle )
+         StoreStringInRecord( mSPLDef, InternalEntityStructure, InternalAttribStructure, szStatementTitle );
+         break ;
+
+      //:  // end zDERIVED_GET
+      //:OF   zDERIVED_SET:
+      case zDERIVED_SET :
+         break ;
+   } 
+
+
+   //:     // end zDERIVED_SET
+   //:END  // case
+   return( 0 );
+// END
+} 
+
+
+//:DERIVED ATTRIBUTE OPERATION
+//:dSD_StmtTextKey( VIEW mSPLDef BASED ON LOD mSPLDef,
+//:                 STRING ( 32 ) InternalEntityStructure,
+//:                 STRING ( 32 ) InternalAttribStructure,
+//:                 SHORT GetOrSetFlag )
+
+//:   STRING ( 2048 ) szStatementText
+public int 
+omSPLDef_dSD_StmtTextKey( View     mSPLDef,
+                          String InternalEntityStructure,
+                          String InternalAttribStructure,
+                          Integer   GetOrSetFlag )
+{
+   String   szStatementText = null;
+   int      lTempInteger_0 = 0;
+
+
+   //:CASE GetOrSetFlag
+   switch( GetOrSetFlag )
+   { 
+      //:OF   zDERIVED_GET:
+      case zDERIVED_GET :
+
+         //:// Storage and Disposal Display Statement Text is a combination of Text/Keywords.
+         //:szStatementText = mSPLDef.SPLD_StorageDisposalStatement.Text
+         {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
+         StringBuilder sb_szStatementText;
+         if ( szStatementText == null )
+            sb_szStatementText = new StringBuilder( 32 );
+         else
+            sb_szStatementText = new StringBuilder( szStatementText );
+                   GetVariableFromAttribute( sb_szStatementText, mi_lTempInteger_0, 'S', 2049, mSPLDef, "SPLD_StorageDisposalStatement", "Text", "", 0 );
+         lTempInteger_0 = mi_lTempInteger_0.intValue( );
+         szStatementText = sb_szStatementText.toString( );}
+         //:IF szStatementText != ""
+         if ( ZeidonStringCompare( szStatementText, 1, 0, "", 1, 0, 2049 ) != 0 )
+         { 
+            //:GenerateKeywordTextIntoString( mSPLDef, szStatementText,
+            //:                            "SPLD_InsertTextKeywordSD", "SPLD_InsertTextSD", ", " )
+            {
+             ZGlobal1_Operation m_ZGlobal1_Operation = new ZGlobal1_Operation( mSPLDef );
+             {StringBuilder sb_szStatementText;
+            if ( szStatementText == null )
+               sb_szStatementText = new StringBuilder( 32 );
+            else
+               sb_szStatementText = new StringBuilder( szStatementText );
+                         m_ZGlobal1_Operation.GenerateKeywordTextIntoString( mSPLDef, sb_szStatementText, "SPLD_InsertTextKeywordSD", "SPLD_InsertTextSD", ", " );
+            szStatementText = sb_szStatementText.toString( );}
+             // m_ZGlobal1_Operation = null;  // permit gc  (unnecessary)
+            }
+         } 
+
+         //:END
+
+         //:// Store the calculated value in the object.
+         //:StoreStringInRecord( mSPLDef, InternalEntityStructure, InternalAttribStructure, szStatementText )
+         StoreStringInRecord( mSPLDef, InternalEntityStructure, InternalAttribStructure, szStatementText );
+         break ;
+
+      //:  // end zDERIVED_GET
+      //:OF   zDERIVED_SET:
+      case zDERIVED_SET :
+         break ;
+   } 
+
+
+   //:     // end zDERIVED_SET
+   //:END  // case
+   return( 0 );
+// END
+} 
+
+
+//:DERIVED ATTRIBUTE OPERATION
+//:dSD_StmtTitleTxtKey( VIEW mSPLDef BASED ON LOD mSPLDef,
+//:                     STRING ( 32 ) InternalEntityStructure,
+//:                     STRING ( 32 ) InternalAttribStructure,
+//:                     SHORT GetOrSetFlag )
+
+//:   STRING ( 2048 ) szDisplayStatement
+public int 
+omSPLDef_dSD_StmtTitleTxtKey( View     mSPLDef,
+                              String InternalEntityStructure,
+                              String InternalAttribStructure,
+                              Integer   GetOrSetFlag )
+{
+   String   szDisplayStatement = null;
+   //:STRING ( 256 )  szStatementTitle
+   String   szStatementTitle = null;
+   //:STRING ( 2048 ) szStatementText
+   String   szStatementText = null;
+   int      lTempInteger_0 = 0;
+   int      lTempInteger_1 = 0;
+
+
+   //:CASE GetOrSetFlag
+   switch( GetOrSetFlag )
+   { 
+      //:OF   zDERIVED_GET:
+      case zDERIVED_GET :
+
+         //:// Storage and Disposal Display Statement Text is a combination of Title/Text/Keywords.
+         //:szStatementText = mSPLDef.SPLD_StorageDisposalStatement.Text
+         {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
+         StringBuilder sb_szStatementText;
+         if ( szStatementText == null )
+            sb_szStatementText = new StringBuilder( 32 );
+         else
+            sb_szStatementText = new StringBuilder( szStatementText );
+                   GetVariableFromAttribute( sb_szStatementText, mi_lTempInteger_0, 'S', 2049, mSPLDef, "SPLD_StorageDisposalStatement", "Text", "", 0 );
+         lTempInteger_0 = mi_lTempInteger_0.intValue( );
+         szStatementText = sb_szStatementText.toString( );}
+         //:IF szStatementText != ""
+         if ( ZeidonStringCompare( szStatementText, 1, 0, "", 1, 0, 2049 ) != 0 )
+         { 
+            //:GenerateKeywordTextIntoString( mSPLDef, szStatementText,
+            //:                            "SPLD_InsertTextKeywordSD", "SPLD_InsertTextSD", ", " )
+            {
+             ZGlobal1_Operation m_ZGlobal1_Operation = new ZGlobal1_Operation( mSPLDef );
+             {StringBuilder sb_szStatementText;
+            if ( szStatementText == null )
+               sb_szStatementText = new StringBuilder( 32 );
+            else
+               sb_szStatementText = new StringBuilder( szStatementText );
+                         m_ZGlobal1_Operation.GenerateKeywordTextIntoString( mSPLDef, sb_szStatementText, "SPLD_InsertTextKeywordSD", "SPLD_InsertTextSD", ", " );
+            szStatementText = sb_szStatementText.toString( );}
+             // m_ZGlobal1_Operation = null;  // permit gc  (unnecessary)
+            }
+         } 
+
+         //:END
+
+         //:szStatementTitle = mSPLDef.SPLD_StorageDisposalStatement.Title
+         {MutableInt mi_lTempInteger_1 = new MutableInt( lTempInteger_1 );
+         StringBuilder sb_szStatementTitle;
+         if ( szStatementTitle == null )
+            sb_szStatementTitle = new StringBuilder( 32 );
+         else
+            sb_szStatementTitle = new StringBuilder( szStatementTitle );
+                   GetVariableFromAttribute( sb_szStatementTitle, mi_lTempInteger_1, 'S', 257, mSPLDef, "SPLD_StorageDisposalStatement", "Title", "", 0 );
+         lTempInteger_1 = mi_lTempInteger_1.intValue( );
+         szStatementTitle = sb_szStatementTitle.toString( );}
+         //:IF szStatementTitle != ""
+         if ( ZeidonStringCompare( szStatementTitle, 1, 0, "", 1, 0, 257 ) != 0 )
+         { 
+            //:GenerateKeywordTextIntoString( mSPLDef, szStatementTitle,
+            //:                            "SPLD_InsertTextKeywordSD", "SPLD_InsertTextSD", ", " )
+            {
+             ZGlobal1_Operation m_ZGlobal1_Operation = new ZGlobal1_Operation( mSPLDef );
+             {StringBuilder sb_szStatementTitle;
+            if ( szStatementTitle == null )
+               sb_szStatementTitle = new StringBuilder( 32 );
+            else
+               sb_szStatementTitle = new StringBuilder( szStatementTitle );
+                         m_ZGlobal1_Operation.GenerateKeywordTextIntoString( mSPLDef, sb_szStatementTitle, "SPLD_InsertTextKeywordSD", "SPLD_InsertTextSD", ", " );
+            szStatementTitle = sb_szStatementTitle.toString( );}
+             // m_ZGlobal1_Operation = null;  // permit gc  (unnecessary)
+            }
+            //:szDisplayStatement = szStatementTitle
+             {StringBuilder sb_szDisplayStatement;
+            if ( szDisplayStatement == null )
+               sb_szDisplayStatement = new StringBuilder( 32 );
+            else
+               sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
+                        ZeidonStringCopy( sb_szDisplayStatement, 1, 0, szStatementTitle, 1, 0, 2049 );
+            szDisplayStatement = sb_szDisplayStatement.toString( );}
+            //:IF szStatementText != ""
+            if ( ZeidonStringCompare( szStatementText, 1, 0, "", 1, 0, 2049 ) != 0 )
+            { 
+               //:szDisplayStatement = szDisplayStatement + " --- " + szStatementText
+                {StringBuilder sb_szDisplayStatement;
+               if ( szDisplayStatement == null )
+                  sb_szDisplayStatement = new StringBuilder( 32 );
+               else
+                  sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
+                              ZeidonStringConcat( sb_szDisplayStatement, 1, 0, " --- ", 1, 0, 2049 );
+               szDisplayStatement = sb_szDisplayStatement.toString( );}
+                {StringBuilder sb_szDisplayStatement;
+               if ( szDisplayStatement == null )
+                  sb_szDisplayStatement = new StringBuilder( 32 );
+               else
+                  sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
+                              ZeidonStringConcat( sb_szDisplayStatement, 1, 0, szStatementText, 1, 0, 2049 );
+               szDisplayStatement = sb_szDisplayStatement.toString( );}
+            } 
+
+            //:END
+            //:ELSE
+         } 
+         else
+         { 
+            //:szDisplayStatement = szStatementText
+             {StringBuilder sb_szDisplayStatement;
+            if ( szDisplayStatement == null )
+               sb_szDisplayStatement = new StringBuilder( 32 );
+            else
+               sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
+                        ZeidonStringCopy( sb_szDisplayStatement, 1, 0, szStatementText, 1, 0, 2049 );
+            szDisplayStatement = sb_szDisplayStatement.toString( );}
+         } 
+
+         //:END
+
+         //:// Store the calculated value in the object.
+         //:StoreStringInRecord( mSPLDef, InternalEntityStructure, InternalAttribStructure, szDisplayStatement )
+         StoreStringInRecord( mSPLDef, InternalEntityStructure, InternalAttribStructure, szDisplayStatement );
+         break ;
+
+      //:  // end zDERIVED_GET
+      //:OF   zDERIVED_SET:
+      case zDERIVED_SET :
+         break ;
+   } 
+
+
+   //:     // end zDERIVED_SET
+   //:END  // case
+   return( 0 );
+// END
+} 
+
+
+//:DERIVED ATTRIBUTE OPERATION
+//:dSD_SubStmtTitleTxtKey( VIEW mSPLDef BASED ON LOD mSPLDef,
+//:                        STRING ( 32 ) InternalEntityStructure,
+//:                        STRING ( 32 ) InternalAttribStructure,
+//:                        SHORT GetOrSetFlag )
+
+//:   STRING ( 2048 ) szDisplayStatement
+public int 
+omSPLDef_dSD_SubStmtTitleTxtKey( View     mSPLDef,
+                                 String InternalEntityStructure,
+                                 String InternalAttribStructure,
+                                 Integer   GetOrSetFlag )
+{
+   String   szDisplayStatement = null;
+   //:STRING ( 256 )  szStatementTitle
+   String   szStatementTitle = null;
+   //:STRING ( 2048 ) szStatementText
+   String   szStatementText = null;
+   int      lTempInteger_0 = 0;
+   int      lTempInteger_1 = 0;
+
+
+   //:CASE GetOrSetFlag
+   switch( GetOrSetFlag )
+   { 
+      //:OF   zDERIVED_GET:
+      case zDERIVED_GET :
+
+         //:// Storage and Disposal Display Statement Text is a combination of Title/Text/Keywords.
+         //:SetViewToSubobject( mSPLDef, "SPLD_StorageDisposalSubStatement" )
+         SetViewToSubobject( mSPLDef, "SPLD_StorageDisposalSubStatement" );
+         //:szStatementText = mSPLDef.SPLD_StorageDisposalStatement.Text
+         {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
+         StringBuilder sb_szStatementText;
+         if ( szStatementText == null )
+            sb_szStatementText = new StringBuilder( 32 );
+         else
+            sb_szStatementText = new StringBuilder( szStatementText );
+                   GetVariableFromAttribute( sb_szStatementText, mi_lTempInteger_0, 'S', 2049, mSPLDef, "SPLD_StorageDisposalStatement", "Text", "", 0 );
+         lTempInteger_0 = mi_lTempInteger_0.intValue( );
+         szStatementText = sb_szStatementText.toString( );}
+         //:IF szStatementText != ""
+         if ( ZeidonStringCompare( szStatementText, 1, 0, "", 1, 0, 2049 ) != 0 )
+         { 
+            //:GenerateKeywordTextIntoString( mSPLDef, szStatementText,
+            //:                            "SPLD_InsertTextKeywordSD", "SPLD_InsertTextSD", ", " )
+            {
+             ZGlobal1_Operation m_ZGlobal1_Operation = new ZGlobal1_Operation( mSPLDef );
+             {StringBuilder sb_szStatementText;
+            if ( szStatementText == null )
+               sb_szStatementText = new StringBuilder( 32 );
+            else
+               sb_szStatementText = new StringBuilder( szStatementText );
+                         m_ZGlobal1_Operation.GenerateKeywordTextIntoString( mSPLDef, sb_szStatementText, "SPLD_InsertTextKeywordSD", "SPLD_InsertTextSD", ", " );
+            szStatementText = sb_szStatementText.toString( );}
+             // m_ZGlobal1_Operation = null;  // permit gc  (unnecessary)
+            }
+         } 
+
+         //:END
+
+         //:szStatementTitle = mSPLDef.SPLD_StorageDisposalStatement.Title
+         {MutableInt mi_lTempInteger_1 = new MutableInt( lTempInteger_1 );
+         StringBuilder sb_szStatementTitle;
+         if ( szStatementTitle == null )
+            sb_szStatementTitle = new StringBuilder( 32 );
+         else
+            sb_szStatementTitle = new StringBuilder( szStatementTitle );
+                   GetVariableFromAttribute( sb_szStatementTitle, mi_lTempInteger_1, 'S', 257, mSPLDef, "SPLD_StorageDisposalStatement", "Title", "", 0 );
+         lTempInteger_1 = mi_lTempInteger_1.intValue( );
+         szStatementTitle = sb_szStatementTitle.toString( );}
+         //:IF szStatementTitle != ""
+         if ( ZeidonStringCompare( szStatementTitle, 1, 0, "", 1, 0, 257 ) != 0 )
+         { 
+            //:GenerateKeywordTextIntoString( mSPLDef, szStatementTitle,
+            //:                            "SPLD_InsertTextKeywordSD", "SPLD_InsertTextSD", ", " )
+            {
+             ZGlobal1_Operation m_ZGlobal1_Operation = new ZGlobal1_Operation( mSPLDef );
+             {StringBuilder sb_szStatementTitle;
+            if ( szStatementTitle == null )
+               sb_szStatementTitle = new StringBuilder( 32 );
+            else
+               sb_szStatementTitle = new StringBuilder( szStatementTitle );
+                         m_ZGlobal1_Operation.GenerateKeywordTextIntoString( mSPLDef, sb_szStatementTitle, "SPLD_InsertTextKeywordSD", "SPLD_InsertTextSD", ", " );
+            szStatementTitle = sb_szStatementTitle.toString( );}
+             // m_ZGlobal1_Operation = null;  // permit gc  (unnecessary)
+            }
+         } 
+
+         //:END
+
+         //:IF szStatementTitle != ""
+         if ( ZeidonStringCompare( szStatementTitle, 1, 0, "", 1, 0, 257 ) != 0 )
+         { 
+            //:szDisplayStatement = szStatementTitle
+             {StringBuilder sb_szDisplayStatement;
+            if ( szDisplayStatement == null )
+               sb_szDisplayStatement = new StringBuilder( 32 );
+            else
+               sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
+                        ZeidonStringCopy( sb_szDisplayStatement, 1, 0, szStatementTitle, 1, 0, 2049 );
+            szDisplayStatement = sb_szDisplayStatement.toString( );}
+            //:IF szStatementText != ""
+            if ( ZeidonStringCompare( szStatementText, 1, 0, "", 1, 0, 2049 ) != 0 )
+            { 
+               //:szDisplayStatement = szDisplayStatement + " --- " + szStatementText
+                {StringBuilder sb_szDisplayStatement;
+               if ( szDisplayStatement == null )
+                  sb_szDisplayStatement = new StringBuilder( 32 );
+               else
+                  sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
+                              ZeidonStringConcat( sb_szDisplayStatement, 1, 0, " --- ", 1, 0, 2049 );
+               szDisplayStatement = sb_szDisplayStatement.toString( );}
+                {StringBuilder sb_szDisplayStatement;
+               if ( szDisplayStatement == null )
+                  sb_szDisplayStatement = new StringBuilder( 32 );
+               else
+                  sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
+                              ZeidonStringConcat( sb_szDisplayStatement, 1, 0, szStatementText, 1, 0, 2049 );
+               szDisplayStatement = sb_szDisplayStatement.toString( );}
+            } 
+
+            //:END
+            //:ELSE
+         } 
+         else
+         { 
+            //:szDisplayStatement = szStatementText
+             {StringBuilder sb_szDisplayStatement;
+            if ( szDisplayStatement == null )
+               sb_szDisplayStatement = new StringBuilder( 32 );
+            else
+               sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
+                        ZeidonStringCopy( sb_szDisplayStatement, 1, 0, szStatementText, 1, 0, 2049 );
+            szDisplayStatement = sb_szDisplayStatement.toString( );}
+         } 
+
+         //:END
+
+         //:ResetViewFromSubobject( mSPLDef )
+         ResetViewFromSubobject( mSPLDef );
+
+         //:// Store the calculated value in the object.
+         //:StoreStringInRecord( mSPLDef, InternalEntityStructure, InternalAttribStructure, szDisplayStatement )
+         StoreStringInRecord( mSPLDef, InternalEntityStructure, InternalAttribStructure, szDisplayStatement );
+         break ;
+
+      //:  // end zDERIVED_GET
+      //:OF   zDERIVED_SET:
+      case zDERIVED_SET :
+         break ;
+   } 
+
+
+   //:     // end zDERIVED_SET
+   //:END  // case
+   return( 0 );
+// END
+} 
+
+
+//:TRANSFORMATION OPERATION
 public int 
 omSPLDef_BuildSPLD_FromSPLD( View     NewSPLD,
                              View     SourceSPLD,
@@ -18903,19 +20170,31 @@ omSPLDef_CopyStorDispStmts( View     NewSPLD,
       RESULT = SetCursorFirstEntity( SrcSLC, "S_InsertTextKeywordSD", "" );
       while ( RESULT > zCURSOR_UNCHANGED )
       { 
-         //:CREATE ENTITY NewSPLD.SPLD_InsertTextKeywordSD
-         RESULT = CreateEntity( NewSPLD, "SPLD_InsertTextKeywordSD", zPOS_AFTER );
-         //:SetMatchingAttributesByName( NewSPLD, "SPLD_InsertTextKeywordSD", SrcSLC, "S_InsertTextKeywordSD", zSET_NULL )
-         SetMatchingAttributesByName( NewSPLD, "SPLD_InsertTextKeywordSD", SrcSLC, "S_InsertTextKeywordSD", zSET_NULL );
-         //:FOR EACH SrcSLC.S_InsertTextSD
-         RESULT = SetCursorFirstEntity( SrcSLC, "S_InsertTextSD", "" );
-         while ( RESULT > zCURSOR_UNCHANGED )
+         //:IF SrcSLC.S_InsertTextKeywordSD.Selected = "Y"
+         if ( CompareAttributeToString( SrcSLC, "S_InsertTextKeywordSD", "Selected", "Y" ) == 0 )
          { 
-            //:CREATE ENTITY NewSPLD.SPLD_InsertTextSD
-            RESULT = CreateEntity( NewSPLD, "SPLD_InsertTextSD", zPOS_AFTER );
-            //:SetMatchingAttributesByName( NewSPLD, "SPLD_InsertTextSD", SrcSLC, "S_InsertTextSD", zSET_NULL )
-            SetMatchingAttributesByName( NewSPLD, "SPLD_InsertTextSD", SrcSLC, "S_InsertTextSD", zSET_NULL );
-            RESULT = SetCursorNextEntity( SrcSLC, "S_InsertTextSD", "" );
+            //:CREATE ENTITY NewSPLD.SPLD_InsertTextKeywordSD
+            RESULT = CreateEntity( NewSPLD, "SPLD_InsertTextKeywordSD", zPOS_AFTER );
+            //:SetMatchingAttributesByName( NewSPLD, "SPLD_InsertTextKeywordSD", SrcSLC, "S_InsertTextKeywordSD", zSET_NULL )
+            SetMatchingAttributesByName( NewSPLD, "SPLD_InsertTextKeywordSD", SrcSLC, "S_InsertTextKeywordSD", zSET_NULL );
+            //:FOR EACH SrcSLC.S_InsertTextSD
+            RESULT = SetCursorFirstEntity( SrcSLC, "S_InsertTextSD", "" );
+            while ( RESULT > zCURSOR_UNCHANGED )
+            { 
+               //:IF SrcSLC.S_InsertTextSD.Selected = "Y"
+               if ( CompareAttributeToString( SrcSLC, "S_InsertTextSD", "Selected", "Y" ) == 0 )
+               { 
+                  //:CREATE ENTITY NewSPLD.SPLD_InsertTextSD
+                  RESULT = CreateEntity( NewSPLD, "SPLD_InsertTextSD", zPOS_AFTER );
+                  //:SetMatchingAttributesByName( NewSPLD, "SPLD_InsertTextSD", SrcSLC, "S_InsertTextSD", zSET_NULL )
+                  SetMatchingAttributesByName( NewSPLD, "SPLD_InsertTextSD", SrcSLC, "S_InsertTextSD", zSET_NULL );
+               } 
+
+               RESULT = SetCursorNextEntity( SrcSLC, "S_InsertTextSD", "" );
+               //:END
+            } 
+
+            //:END
          } 
 
          RESULT = SetCursorNextEntity( SrcSLC, "S_InsertTextKeywordSD", "" );
