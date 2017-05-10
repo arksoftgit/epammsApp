@@ -939,28 +939,28 @@ omSubLC_dDisplayUsageName( View     mSubLC,
             //:IF mSubLC.S_UsageFootnoteUsed.ID != ""
             if ( CompareAttributeToString( mSubLC, "S_UsageFootnoteUsed", "ID", "" ) != 0 )
             { 
-               //:SET CURSOR FIRST mSubLC.MLC_UsageFootnote WHERE mSubLC.MLC_UsageFootnote.ID = mSubLC.S_UsageFootnoteUsed.ID
+               //:SET CURSOR FIRST mSubLC.S_UsageFootnote WHERE mSubLC.S_UsageFootnote.ID = mSubLC.S_UsageFootnoteUsed.ID
                {MutableInt mi_lTempInteger_1 = new MutableInt( lTempInteger_1 );
                                GetIntegerFromAttribute( mi_lTempInteger_1, mSubLC, "S_UsageFootnoteUsed", "ID" );
                lTempInteger_1 = mi_lTempInteger_1.intValue( );}
-               RESULT = SetCursorFirstEntityByInteger( mSubLC, "MLC_UsageFootnote", "ID", lTempInteger_1, "" );
-               //:IF mSubLC.MLC_UsageFootnote.wFootNoteRelativeNumber = ""
-               if ( CompareAttributeToString( mSubLC, "MLC_UsageFootnote", "wFootNoteRelativeNumber", "" ) == 0 )
+               RESULT = SetCursorFirstEntityByInteger( mSubLC, "S_UsageFootnote", "ID", lTempInteger_1, "" );
+               //:IF mSubLC.S_UsageFootnote.wFootNoteRelativeNumber = ""
+               if ( CompareAttributeToString( mSubLC, "S_UsageFootnote", "wFootNoteRelativeNumber", "" ) == 0 )
                { 
                   //:// Relative numbers haven't be set, so set them here.
                   //:CreateViewFromView( mSubLC2, mSubLC )
                   CreateViewFromView( mSubLC2, mSubLC );
                   //:Count = 0
                   Count = 0;
-                  //:FOR EACH mSubLC2.MLC_UsageFootnote
-                  RESULT = SetCursorFirstEntity( mSubLC2, "MLC_UsageFootnote", "" );
+                  //:FOR EACH mSubLC2.S_UsageFootnote
+                  RESULT = SetCursorFirstEntity( mSubLC2, "S_UsageFootnote", "" );
                   while ( RESULT > zCURSOR_UNCHANGED )
                   { 
                      //:Count = Count + 1
                      Count = Count + 1;
-                     //:mSubLC2.MLC_UsageFootnote.wFootNoteRelativeNumber = Count
-                     SetAttributeFromInteger( mSubLC2, "MLC_UsageFootnote", "wFootNoteRelativeNumber", Count );
-                     RESULT = SetCursorNextEntity( mSubLC2, "MLC_UsageFootnote", "" );
+                     //:mSubLC2.S_UsageFootnote.wFootNoteRelativeNumber = Count
+                     SetAttributeFromInteger( mSubLC2, "S_UsageFootnote", "wFootNoteRelativeNumber", Count );
+                     RESULT = SetCursorNextEntity( mSubLC2, "S_UsageFootnote", "" );
                   } 
 
                   //:END
@@ -969,14 +969,14 @@ omSubLC_dDisplayUsageName( View     mSubLC,
                } 
 
                //:END
-               //:szFootnoteNumber = mSubLC.MLC_UsageFootnote.wFootNoteRelativeNumber
+               //:szFootnoteNumber = mSubLC.S_UsageFootnote.wFootNoteRelativeNumber
                {MutableInt mi_lTempInteger_2 = new MutableInt( lTempInteger_2 );
                StringBuilder sb_szFootnoteNumber;
                if ( szFootnoteNumber == null )
                   sb_szFootnoteNumber = new StringBuilder( 32 );
                else
                   sb_szFootnoteNumber = new StringBuilder( szFootnoteNumber );
-                               GetVariableFromAttribute( sb_szFootnoteNumber, mi_lTempInteger_2, 'S', 4, mSubLC, "MLC_UsageFootnote", "wFootNoteRelativeNumber", "", 0 );
+                               GetVariableFromAttribute( sb_szFootnoteNumber, mi_lTempInteger_2, 'S', 4, mSubLC, "S_UsageFootnote", "wFootNoteRelativeNumber", "", 0 );
                lTempInteger_2 = mi_lTempInteger_2.intValue( );
                szFootnoteNumber = sb_szFootnoteNumber.toString( );}
                //:szCombinedName = szCombinedName + "<sup> " + szFootnoteNumber + "</sup>"
@@ -4067,6 +4067,8 @@ omSubLC_BuildSLC_FromMLC( View     NewSLC,
       RESULT = CreateEntity( NewSLC, "S_StorageDisposalSection", zPOS_AFTER );
       //:SetMatchingAttributesByName( NewSLC, "S_StorageDisposalSection", SrcMLC, "M_StorageDisposalSection", zSET_NULL )
       SetMatchingAttributesByName( NewSLC, "S_StorageDisposalSection", SrcMLC, "M_StorageDisposalSection", zSET_NULL );
+      //:NewSLC.S_StorageDisposalSection.Selected = "Y"
+      SetAttributeFromString( NewSLC, "S_StorageDisposalSection", "Selected", "Y" );
       //:CopyStorageDisposalStmts( NewSLC, SrcMLC )
       omSubLC_CopyStorageDisposalStmts( NewSLC, SrcMLC );
       RESULT = SetCursorNextEntity( SrcMLC, "M_StorageDisposalSection", "" );

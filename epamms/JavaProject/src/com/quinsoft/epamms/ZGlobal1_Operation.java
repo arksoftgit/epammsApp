@@ -14,7 +14,7 @@
     You should have received a copy of the GNU Lesser General Public License
     along with Zeidon JOE.  If not, see <http://www.gnu.org/licenses/>.
 
-    Copyright (c) 2009 - 2016 Arksoft, Inc.
+    Copyright (c) 2009 - 2017 Arksoft, Inc.
 **/
 
 package com.quinsoft.epamms;
@@ -4836,6 +4836,7 @@ public class ZGlobal1_Operation extends VmlOperation
                   if ( chKeywordType == 'R' || chKeywordType == 'X' ) {
                      sbTarget.append( '[' );
                   }
+                  cr = v2.cursor( szKeywordTextEntityName ).setFirst( );
                   while ( cr.isSet() ) {
                      // There are Text entries for the Keyword specified, so loop through all.
                      count++;
@@ -4911,7 +4912,7 @@ public class ZGlobal1_Operation extends VmlOperation
          }
       }
 
-      return( 0 );
+      return( changed ? 1 : 0 );
    }
    
    public int
@@ -5022,7 +5023,7 @@ public class ZGlobal1_Operation extends VmlOperation
          }
       }
 
-      return( 0 );
+      return( changed ? 1 : 0 );
    }
 
    /////////////////////////////////////////////////////////////////////////////

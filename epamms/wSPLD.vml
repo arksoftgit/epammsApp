@@ -3555,3 +3555,86 @@ SetListItemPosition( VIEW ViewToWindow )
    // just to set position
 
 END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: GOTO_StorageDisposalSubStatement
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+GOTO_StorageDisposalSubStatement( VIEW ViewToWindow )
+
+   VIEW mSPLDef REGISTERED AS mSPLDef
+
+// TraceLineS( "###################################################### Prior mSPLDef", "" )
+// DisplayEntityInstance( mSPLDef, "SPLD_StorageDisposalStatement" )
+
+   // Get to subobject: SPLD_StorageDisposalSubStatement.
+   SetViewToSubobject( mSPLDef, "SPLD_StorageDisposalSubStmt" )
+
+// TraceLineS( "###################################################### After mSPLDef", "" )
+// DisplayEntityInstance( mSPLDef, "SPLD_StorageDisposalStatement" )
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: RETURN_StorageDisposalSubStmt
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+RETURN_StorageDisposalSubStmt( VIEW ViewToWindow )
+
+   VIEW mSPLDef REGISTERED AS mSPLDef
+   
+   ResetViewFromSubobject( mSPLDef )
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: GOTO_DirsForUseSubStmtUpdate
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+GOTO_DirsForUseSubStmtUpdate( VIEW ViewToWindow )
+
+   VIEW mSPLDef REGISTERED AS mSPLDef
+
+// TraceLineS( "###################################################### Prior mSPLDef", "" )
+// DisplayEntityInstance( mSPLDef, "SPLD_StorageDisposalStatement" )
+
+   // Get to subobject: SPLD_StorageDisposalSubStatement.
+   SetViewToSubobject( mSPLDef, "SPLD_DirectionsForUseSubStmt" )
+   CreateTemporalSubobjectVersion( mSPLDef, "SPLD_DirectionsForUseStatement" )
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: RETURN_StorageDisposalSubStmt
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+ACCEPT_DirsForUseSubStmt( VIEW ViewToWindow )
+
+   VIEW mSPLDef REGISTERED AS mSPLDef
+   AcceptSubobject( mSPLDef, "SPLD_DirectionsForUseStatement" )
+
+   ResetViewFromSubobject( mSPLDef )
+
+END
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: RETURN_StorageDisposalSubStmt
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+CANCEL_DirsForUseSubStmt( VIEW ViewToWindow )
+
+   VIEW mSPLDef REGISTERED AS mSPLDef
+   
+   CancelSubobject( mSPLDef, "SPLD_DirectionsForUseStatement" )
+   ResetViewFromSubobject( mSPLDef )
+
+END

@@ -1,4 +1,4 @@
-// wSPLDSPLD_Sidebar   Generate Timestamp: 20170427093954931
+// wSPLDSPLD_Sidebar   Generate Timestamp: 20170427155030819
 
 var isWindowClosing = true;
 var timerID = null;
@@ -356,7 +356,7 @@ function GENERATE_SPLD_Label( )
    }
 }
 
-function GENERATE_SPLD_LabelDottedBorders( )
+function GenerateLabelDottedBorders( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -366,7 +366,7 @@ function GENERATE_SPLD_LabelDottedBorders( )
    {
       _DisableFormElements( true );
 
-      document.wSPLDSPLD_Sidebar.zAction.value = "GENERATE_SPLD_LabelDottedBorders";
+      document.wSPLDSPLD_Sidebar.zAction.value = "GenerateLabelDottedBorders";
       document.wSPLDSPLD_Sidebar.submit( );
    }
 }

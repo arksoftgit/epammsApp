@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSLCDirectionsForUseSection   Generate Timestamp: 20170303201102478 --%>
+<%-- wSLCDirectionsForUseSection   Generate Timestamp: 20170509112930075 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -417,7 +417,7 @@ else
 <html>
 <head>
 
-<title>Directions For Use Section</title>
+<title>SLC Directions For Use Section</title>
 
 <%@ include file="./include/head.inc" %>
 <!-- Timeout.inc has a value for nTimeout which is used to determine when to -->
@@ -599,7 +599,7 @@ else
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GBDirectionsForUseSection:GroupBox */ %>
 
-<div id="GBDirectionsForUseSection" name="GBDirectionsForUseSection" class="withborder" style="width:866px;float:left;">  <!-- GBDirectionsForUseSection --> 
+<div id="GBDirectionsForUseSection" name="GBDirectionsForUseSection" class="withborder" style="width:814px;float:left;">  <!-- GBDirectionsForUseSection --> 
 
 
  <!-- This is added as a line spacer -->
@@ -683,7 +683,7 @@ else
    }
 %>
 
-<span class="text12"  id="DirectionsUseName" name="DirectionsUseName"  title="Required Name to differentiate Directions for Use Sections within a list" style="width:650px;height:16px;"><%=strTextDisplayValue%></span>
+<span class="text12"  id="DirectionsUseName" name="DirectionsUseName"  title="Required Name to differentiate Directions for Use Sections within a list" style="width:618px;height:16px;"><%=strTextDisplayValue%></span>
 
 </div>  <!-- End of a new line -->
 
@@ -691,7 +691,7 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:2px;width:100px;"></div>
+<div style="height:6px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <span style="height:16px;">&nbsp&nbsp&nbsp&nbsp&nbsp</span>
@@ -724,7 +724,7 @@ else
    }
 %>
 
-<span class="text12"  id="DirectionsForUseTitle" name="DirectionsForUseTitle"  title="Optional Title to appear with text on generated label" style="width:650px;height:32px;"><%=strTextDisplayValue%></span>
+<span class="text12"  id="DirectionsForUseTitle" name="DirectionsForUseTitle"  title="Optional Title to appear with text on generated label" style="width:618px;height:32px;"><%=strTextDisplayValue%></span>
 
 </div>  <!-- End of a new line -->
 
@@ -732,7 +732,7 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:4px;width:100px;"></div>
+<div style="height:6px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <span style="height:16px;">&nbsp&nbsp&nbsp&nbsp&nbsp</span>
@@ -765,7 +765,7 @@ else
    }
 %>
 
-<span class="text12"  id="TitleNote" name="TitleNote"  title="Optional Title to appear with text on generated label" style="width:650px;height:16px;"><%=strTextDisplayValue%></span>
+<span class="text12"  id="TitleNote" name="TitleNote"  title="Optional Title to appear with text on generated label" style="width:618px;height:16px;"><%=strTextDisplayValue%></span>
 
 </div>  <!-- End of a new line -->
 
@@ -806,7 +806,7 @@ else
    }
 %>
 
-<span class="text12"  id="Subtitle" name="Subtitle"  title="Optional Title to appear with text on generated label" style="width:650px;height:32px;"><%=strTextDisplayValue%></span>
+<span class="text12"  id="Subtitle" name="Subtitle"  title="Optional Title to appear with text on generated label" style="width:618px;height:32px;"><%=strTextDisplayValue%></span>
 
 </div>  <!-- End of a new line -->
 
@@ -814,7 +814,7 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:10px;width:100px;"></div>
+<div style="height:14px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <span style="height:16px;">&nbsp&nbsp&nbsp&nbsp&nbsp</span>
@@ -847,7 +847,7 @@ else
    }
 %>
 
-<span class="text12"  id="SectionNote" name="SectionNote"  title="Optional Title to appear with text on generated label" style="width:650px;height:16px;"><%=strTextDisplayValue%></span>
+<span class="text12"  id="SectionNote" name="SectionNote"  title="Optional Title to appear with text on generated label" style="width:618px;height:16px;"><%=strTextDisplayValue%></span>
 
 </div>  <!-- End of a new line -->
 
@@ -855,7 +855,7 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:4px;width:100px;"></div>
+<div style="height:6px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <span style="height:16px;">&nbsp&nbsp&nbsp&nbsp&nbsp</span>
@@ -1305,7 +1305,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 
 
  <!-- This is added as a line spacer -->
-<div style="height:468px;width:100px;"></div>
+<div style="height:448px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:32px;float:left;"></div>   <!-- Width Spacer -->

@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSLCStorageDisposal   Generate Timestamp: 20170419092707509 --%>
+<%-- wSLCStorageDisposal   Generate Timestamp: 20170505175655825 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -73,6 +73,28 @@ public int DoInputMapping( HttpServletRequest request,
          lEntityKey = vGridTmp.cursor( "S_StorageDisposalSection" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
          iTableRowCnt++;
+
+         strTag = "GridCheckCtl1" + strEntityKey;
+         strMapValue = request.getParameter( strTag );
+         // If the checkbox is not checked, then set to the unchecked value.
+         if (strMapValue == null || strMapValue.isEmpty() )
+            strMapValue = "N";
+
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "GridCheckCtl1", "", strMapValue );
+            else
+               if ( strMapValue != null )
+                  vGridTmp.cursor( "S_StorageDisposalSection" ).getAttribute( "Selected" ).setValue( strMapValue, "" );
+               else
+                  vGridTmp.cursor( "S_StorageDisposalSection" ).getAttribute( "Selected" ).setValue( "", "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, strTag, e.getReason( ), strMapValue );
+         }
 
          csrRC = vGridTmp.cursor( "S_StorageDisposalSection" ).setNextContinue( );
       }
@@ -1352,10 +1374,11 @@ else
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GridStorDisp:Grid */ %>
-<table  cols=3 style="width:792px;"  name="GridStorDisp" id="GridStorDisp">
+<table  cols=4 style="width:792px;"  name="GridStorDisp" id="GridStorDisp">
 
 <thead><tr>
 
+   <th class="gridheading"><input type="checkbox" onclick="CheckAllInGrid(this,'GridCheckCtl1')"></th>
    <th>Section Name</th>
    <th>Section Title</th>
    <th>Display</th>
@@ -1376,6 +1399,8 @@ try
       String strButtonName;
       String strOdd;
       String strTag;
+      String strGridCheckCtl1;
+      String strGridCheckCtl1Value;
       String strGridEditStorDispName;
       String strGridEditStorDispTitle;
       String strBMBDisplaySD_Section;
@@ -1390,6 +1415,27 @@ try
 
          lEntityKey = vGridStorDisp.cursor( "S_StorageDisposalSection" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
+         strGridCheckCtl1 = "";
+         nRC = vGridStorDisp.cursor( "S_StorageDisposalSection" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            strGridCheckCtl1 = vGridStorDisp.cursor( "S_StorageDisposalSection" ).getAttribute( "Selected" ).getString( "" );
+
+            if ( strGridCheckCtl1 == null )
+               strGridCheckCtl1 = "";
+         }
+
+         if ( StringUtils.equals( strGridCheckCtl1, "Y" ) )
+         {
+            strGridCheckCtl1Value = "GridCheckCtl1" + strEntityKey;
+            strGridCheckCtl1 = "<input name='" + strGridCheckCtl1Value + "' id='" + strGridCheckCtl1Value + "' value='Y' type='checkbox'  CHECKED > ";
+         }
+         else
+         {
+            strGridCheckCtl1Value = "GridCheckCtl1" + strEntityKey;
+            strGridCheckCtl1 = "<input name='" + strGridCheckCtl1Value + "' id='" + strGridCheckCtl1Value + "' value='Y' type='checkbox' > ";
+         }
+
          strGridEditStorDispName = "";
          nRC = vGridStorDisp.cursor( "S_StorageDisposalSection" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
@@ -1420,6 +1466,7 @@ try
 
 <tr<%=strOdd%>>
 
+   <td nowrap><%=strGridCheckCtl1%></td>
    <td><a href="#" onclick="GOTO_StorageDisposalSection( this.id )" id="GridEditStorDispName::<%=strEntityKey%>"><%=strGridEditStorDispName%></a></td>
    <td><a href="#" onclick="GOTO_StorageDisposalSection( this.id )" id="GridEditStorDispTitle::<%=strEntityKey%>"><%=strGridEditStorDispTitle%></a></td>
    <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDisplaySD_Section" onclick="GOTO_StorageDisposalSection( this.id )" id="BMBDisplaySD_Section::<%=strEntityKey%>"><img src="./images/ePammsDisplay.png" alt="Display"></a></td>

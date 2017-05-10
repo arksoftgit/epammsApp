@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSLCDirectionsForUseCategory   Generate Timestamp: 20170302154229294 --%>
+<%-- wSLCDirectionsForUseCategory   Generate Timestamp: 20170509112942775 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -380,7 +380,7 @@ else
 <html>
 <head>
 
-<title>Directions For Use Category</title>
+<title>SLC Directions For Use Category</title>
 
 <%@ include file="./include/head.inc" %>
 <!-- Timeout.inc has a value for nTimeout which is used to determine when to -->

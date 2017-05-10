@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSLCStorageDisposalSection   Generate Timestamp: 20170417141137386 --%>
+<%-- wSLCStorageDisposalSection   Generate Timestamp: 20170505162436164 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -73,6 +73,28 @@ public int DoInputMapping( HttpServletRequest request,
          lEntityKey = vGridTmp.cursor( "S_StorageDisposalStatement" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
          iTableRowCnt++;
+
+         strTag = "GridCheckCtl" + strEntityKey;
+         strMapValue = request.getParameter( strTag );
+         // If the checkbox is not checked, then set to the unchecked value.
+         if (strMapValue == null || strMapValue.isEmpty() )
+            strMapValue = "N";
+
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "GridCheckCtl", "", strMapValue );
+            else
+               if ( strMapValue != null )
+                  vGridTmp.cursor( "S_StorageDisposalStatement" ).getAttribute( "Selected" ).setValue( strMapValue, "" );
+               else
+                  vGridTmp.cursor( "S_StorageDisposalStatement" ).getAttribute( "Selected" ).setValue( "", "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, strTag, e.getReason( ), strMapValue );
+         }
 
          csrRC = vGridTmp.cursor( "S_StorageDisposalStatement" ).setNextContinue( );
       }
@@ -380,7 +402,7 @@ else
 <html>
 <head>
 
-<title>Storage and Disposal Section</title>
+<title>SLC Storage & Disposal Section</title>
 
 <%@ include file="./include/head.inc" %>
 <!-- Timeout.inc has a value for nTimeout which is used to determine when to -->
@@ -723,10 +745,11 @@ else
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GridStorDisp:Grid */ %>
-<table  cols=2 style="width:792px;"  name="GridStorDisp" id="GridStorDisp">
+<table  cols=3 style="width:792px;"  name="GridStorDisp" id="GridStorDisp">
 
 <thead><tr>
 
+   <th class="gridheading"><input type="checkbox" onclick="CheckAllInGrid(this,'GridCheckCtl')"></th>
    <th>Statement Title/Text</th>
    <th>Display</th>
 
@@ -746,6 +769,8 @@ try
       String strButtonName;
       String strOdd;
       String strTag;
+      String strGridCheckCtl;
+      String strGridCheckCtlValue;
       String strGridEditStorDispText;
       String strBMBDisplaySD_Statement;
       
@@ -759,6 +784,27 @@ try
 
          lEntityKey = vGridStorDisp.cursor( "S_StorageDisposalStatement" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
+         strGridCheckCtl = "";
+         nRC = vGridStorDisp.cursor( "S_StorageDisposalStatement" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            strGridCheckCtl = vGridStorDisp.cursor( "S_StorageDisposalStatement" ).getAttribute( "Selected" ).getString( "" );
+
+            if ( strGridCheckCtl == null )
+               strGridCheckCtl = "";
+         }
+
+         if ( StringUtils.equals( strGridCheckCtl, "Y" ) )
+         {
+            strGridCheckCtlValue = "GridCheckCtl" + strEntityKey;
+            strGridCheckCtl = "<input name='" + strGridCheckCtlValue + "' id='" + strGridCheckCtlValue + "' value='Y' type='checkbox'  CHECKED > ";
+         }
+         else
+         {
+            strGridCheckCtlValue = "GridCheckCtl" + strEntityKey;
+            strGridCheckCtl = "<input name='" + strGridCheckCtlValue + "' id='" + strGridCheckCtlValue + "' value='Y' type='checkbox' > ";
+         }
+
          strGridEditStorDispText = "";
          nRC = vGridStorDisp.cursor( "S_StorageDisposalStatement" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
@@ -776,6 +822,7 @@ try
 
 <tr<%=strOdd%>>
 
+   <td nowrap><%=strGridCheckCtl%></td>
    <td><a href="#" onclick="GOTO_StorageDisposalStatement( this.id )" id="GridEditStorDispText::<%=strEntityKey%>"><%=strGridEditStorDispText%></a></td>
    <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDisplaySD_Statement" onclick="GOTO_StorageDisposalStatement( this.id )" id="BMBDisplaySD_Statement::<%=strEntityKey%>"><img src="./images/ePammsDisplay.png" alt="Display"></a></td>
 

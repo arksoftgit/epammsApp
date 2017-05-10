@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSLCStorageDisposalSubStatement   Generate Timestamp: 20170421105251345 --%>
+<%-- wSLCStorageDisposalSubStatement   Generate Timestamp: 20170504145501208 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -380,7 +380,7 @@ else
 <html>
 <head>
 
-<title>Storage And Disposal Sub-Statement</title>
+<title>Storage & Disposal Sub-Statement</title>
 
 <%@ include file="./include/head.inc" %>
 <!-- Timeout.inc has a value for nTimeout which is used to determine when to -->
@@ -647,11 +647,11 @@ else
          nRC = mSubLC.cursor( "S_StorageDisposalStatement" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strErrorMapValue = mSubLC.cursor( "S_StorageDisposalStatement" ).getAttribute( "dSD_TitleKey" ).getString( "" );
+            strErrorMapValue = mSubLC.cursor( "S_StorageDisposalStatement" ).getAttribute( "Title" ).getString( "" );
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
 
-            task.log( ).debug( "S_StorageDisposalStatement.dSD_TitleKey: " + strErrorMapValue );
+            task.log( ).debug( "S_StorageDisposalStatement.Title: " + strErrorMapValue );
          }
          else
             task.log( ).debug( "Entity does not exist for MLEdit3: " + "mSubLC.S_StorageDisposalStatement" );
@@ -691,11 +691,11 @@ else
          nRC = mSubLC.cursor( "S_StorageDisposalStatement" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strErrorMapValue = mSubLC.cursor( "S_StorageDisposalStatement" ).getAttribute( "dSD_TextKey" ).getString( "" );
+            strErrorMapValue = mSubLC.cursor( "S_StorageDisposalStatement" ).getAttribute( "Text" ).getString( "" );
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
 
-            task.log( ).debug( "S_StorageDisposalStatement.dSD_TextKey: " + strErrorMapValue );
+            task.log( ).debug( "S_StorageDisposalStatement.Text: " + strErrorMapValue );
          }
          else
             task.log( ).debug( "Entity does not exist for MLEdit2: " + "mSubLC.S_StorageDisposalStatement" );
@@ -958,6 +958,90 @@ else
 
  <!-- This is added as a line spacer -->
 <div style="height:14px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<span style="height:16px;">&nbsp&nbsp</span>
+<% /* StorageDisposalTitle:1:Text */ %>
+
+<span  id="StorageDisposalTitle:1" name="StorageDisposalTitle:1" style="width:70px;height:16px;">Title:</span>
+
+<span style="height:16px;">&nbsp</span>
+<% /* StorageDisposalTitle1:Text */ %>
+<% strTextDisplayValue = "";
+   mSubLC = task.getViewByName( "mSubLC" );
+   if ( VmlOperation.isValid( mSubLC ) == false )
+      task.log( ).debug( "Invalid View: " + "StorageDisposalTitle1" );
+   else
+   {
+      nRC = mSubLC.cursor( "S_StorageDisposalStatement" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+      {
+      try
+      {
+         strTextDisplayValue = mSubLC.cursor( "S_StorageDisposalStatement" ).getAttribute( "dSD_TitleKey" ).getString( "" );
+      }
+      catch (Exception e)
+      {
+         out.println("There is an error on StorageDisposalTitle1: " + e.getMessage());
+         task.log().info( "*** Error on ctrl StorageDisposalTitle1" + e.getMessage() );
+      }
+         if ( strTextDisplayValue == null )
+            strTextDisplayValue = "";
+      }
+   }
+%>
+
+<span class="text12"  id="StorageDisposalTitle1" name="StorageDisposalTitle1"  title="Optional Title to appear with text on generated label" style="width:730px;height:16px;"><%=strTextDisplayValue%></span>
+
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:4px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<span style="height:16px;">&nbsp&nbsp</span>
+<% /* StorageDisposalText:1:Text */ %>
+
+<span  id="StorageDisposalText:1" name="StorageDisposalText:1" style="width:70px;height:16px;">Text:</span>
+
+<span style="height:16px;">&nbsp</span>
+<% /* StorageDisposalText1:Text */ %>
+<% strTextDisplayValue = "";
+   mSubLC = task.getViewByName( "mSubLC" );
+   if ( VmlOperation.isValid( mSubLC ) == false )
+      task.log( ).debug( "Invalid View: " + "StorageDisposalText1" );
+   else
+   {
+      nRC = mSubLC.cursor( "S_StorageDisposalStatement" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+      {
+      try
+      {
+         strTextDisplayValue = mSubLC.cursor( "S_StorageDisposalStatement" ).getAttribute( "dSD_TextKey" ).getString( "" );
+      }
+      catch (Exception e)
+      {
+         out.println("There is an error on StorageDisposalText1: " + e.getMessage());
+         task.log().info( "*** Error on ctrl StorageDisposalText1" + e.getMessage() );
+      }
+         if ( strTextDisplayValue == null )
+            strTextDisplayValue = "";
+      }
+   }
+%>
+
+<span class="text12"  id="StorageDisposalText1" name="StorageDisposalText1"  title="Optional Title to appear with text on generated label" style="width:730px;height:16px;"><%=strTextDisplayValue%></span>
+
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:4px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <% /* GroupBox3:GroupBox */ %>

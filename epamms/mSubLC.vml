@@ -1332,18 +1332,18 @@ dDisplayUsageName( VIEW mSubLC BASED ON LOD mSubLC,
       // Set Footnote Number, if footnote exists.
       IF mSubLC.S_UsageFootnoteUsed EXISTS
          IF mSubLC.S_UsageFootnoteUsed.ID != ""
-            SET CURSOR FIRST mSubLC.MLC_UsageFootnote WHERE mSubLC.MLC_UsageFootnote.ID = mSubLC.S_UsageFootnoteUsed.ID
-            IF mSubLC.MLC_UsageFootnote.wFootNoteRelativeNumber = ""
+            SET CURSOR FIRST mSubLC.S_UsageFootnote WHERE mSubLC.S_UsageFootnote.ID = mSubLC.S_UsageFootnoteUsed.ID
+            IF mSubLC.S_UsageFootnote.wFootNoteRelativeNumber = ""
                // Relative numbers haven't be set, so set them here.
                CreateViewFromView( mSubLC2, mSubLC )
                Count = 0
-               FOR EACH mSubLC2.MLC_UsageFootnote
+               FOR EACH mSubLC2.S_UsageFootnote
                   Count = Count + 1
-                  mSubLC2.MLC_UsageFootnote.wFootNoteRelativeNumber = Count
+                  mSubLC2.S_UsageFootnote.wFootNoteRelativeNumber = Count
                END
                DropView( mSubLC2 )
             END
-            szFootnoteNumber = mSubLC.MLC_UsageFootnote.wFootNoteRelativeNumber
+            szFootnoteNumber = mSubLC.S_UsageFootnote.wFootNoteRelativeNumber
             szCombinedName = szCombinedName + "<sup> " + szFootnoteNumber + "</sup>"
          END
       END
@@ -2306,6 +2306,7 @@ BuildSLC_FromMLC( VIEW NewSLC BASED ON LOD mSubLC,
    FOR EACH SrcMLC.M_StorageDisposalSection
       CREATE ENTITY NewSLC.S_StorageDisposalSection
       SetMatchingAttributesByName( NewSLC, "S_StorageDisposalSection", SrcMLC, "M_StorageDisposalSection", zSET_NULL )
+      NewSLC.S_StorageDisposalSection.Selected = "Y"
       CopyStorageDisposalStmts( NewSLC, SrcMLC )
    END
    /*

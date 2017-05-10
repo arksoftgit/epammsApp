@@ -1,4 +1,4 @@
-// wSPLDSPLD_StorageDisposal   Generate Timestamp: 20170427124618436
+// wSPLDSPLD_StorageDisposal   Generate Timestamp: 20170509200331252
 
 var isWindowClosing = true;
 var timerID = null;
@@ -255,51 +255,6 @@ function smSaveSPLD( )
    }
 }
 
-function smGraphicalView( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wSPLDSPLD_StorageDisposal.zAction.value = "smGraphicalView";
-      document.wSPLDSPLD_StorageDisposal.submit( );
-   }
-}
-
-function smGENERATE_SPLD_Label( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wSPLDSPLD_StorageDisposal.zAction.value = "smGENERATE_SPLD_Label";
-      document.wSPLDSPLD_StorageDisposal.submit( );
-   }
-}
-
-function smGenerateLabelDottedBorders( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wSPLDSPLD_StorageDisposal.zAction.value = "smGenerateLabelDottedBorders";
-      document.wSPLDSPLD_StorageDisposal.submit( );
-   }
-}
-
 function smGOTO_UpdateSPLD( )
 {
 
@@ -311,21 +266,6 @@ function smGOTO_UpdateSPLD( )
       _DisableFormElements( true );
 
       document.wSPLDSPLD_StorageDisposal.zAction.value = "smGOTO_UpdateSPLD";
-      document.wSPLDSPLD_StorageDisposal.submit( );
-   }
-}
-
-function smGOTO_DisplaySPLD_Components( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wSPLDSPLD_StorageDisposal.zAction.value = "smGOTO_DisplaySPLD_Components";
       document.wSPLDSPLD_StorageDisposal.submit( );
    }
 }
@@ -461,6 +401,66 @@ function smTables( )
       _DisableFormElements( true );
 
       document.wSPLDSPLD_StorageDisposal.zAction.value = "smTables";
+      document.wSPLDSPLD_StorageDisposal.submit( );
+   }
+}
+
+function smGOTO_DisplaySPLD_Components( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wSPLDSPLD_StorageDisposal.zAction.value = "smGOTO_DisplaySPLD_Components";
+      document.wSPLDSPLD_StorageDisposal.submit( );
+   }
+}
+
+function smGraphicalView( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wSPLDSPLD_StorageDisposal.zAction.value = "smGraphicalView";
+      document.wSPLDSPLD_StorageDisposal.submit( );
+   }
+}
+
+function smGENERATE_SPLD_Label( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wSPLDSPLD_StorageDisposal.zAction.value = "smGENERATE_SPLD_Label";
+      document.wSPLDSPLD_StorageDisposal.submit( );
+   }
+}
+
+function smGenerateLabelDottedBorders( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wSPLDSPLD_StorageDisposal.zAction.value = "smGenerateLabelDottedBorders";
       document.wSPLDSPLD_StorageDisposal.submit( );
    }
 }

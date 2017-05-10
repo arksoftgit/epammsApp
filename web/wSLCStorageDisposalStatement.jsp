@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSLCStorageDisposalStatement   Generate Timestamp: 20170421105246802 --%>
+<%-- wSLCStorageDisposalStatement   Generate Timestamp: 20170505162426514 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -35,7 +35,6 @@ public int DoInputMapping( HttpServletRequest request,
    String taskId = (String) session.getAttribute( "ZeidonTaskId" );
    Task task = objectEngine.getTaskById( taskId );
 
-   View mMasLC = null;
    View mSubLC = null;
    View mSubLC_Root = null;
    View vGridTmp = null; // temp view to grid view
@@ -58,11 +57,6 @@ public int DoInputMapping( HttpServletRequest request,
 
    if ( webMapping == false )
       session.setAttribute( "ZeidonError", null );
-
-   mMasLC = task.getViewByName( "mMasLC" );
-   if ( VmlOperation.isValid( mMasLC ) )
-   {
-   }
 
    mSubLC = task.getViewByName( "mSubLC" );
    if ( VmlOperation.isValid( mSubLC ) )
@@ -120,6 +114,28 @@ public int DoInputMapping( HttpServletRequest request,
          lEntityKey = vGridTmp.cursor( "S_StorageDisposalSubStatement" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
          iTableRowCnt++;
+
+         strTag = "GridCheckCtl1" + strEntityKey;
+         strMapValue = request.getParameter( strTag );
+         // If the checkbox is not checked, then set to the unchecked value.
+         if (strMapValue == null || strMapValue.isEmpty() )
+            strMapValue = "N";
+
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "GridCheckCtl1", "", strMapValue );
+            else
+               if ( strMapValue != null )
+                  vGridTmp.cursor( "S_StorageDisposalSubStatement" ).getAttribute( "Selected" ).setValue( strMapValue, "" );
+               else
+                  vGridTmp.cursor( "S_StorageDisposalSubStatement" ).getAttribute( "Selected" ).setValue( "", "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, strTag, e.getReason( ), strMapValue );
+         }
 
          csrRC = vGridTmp.cursor( "S_StorageDisposalSubStatement" ).setNextContinue( );
       }
@@ -453,7 +469,7 @@ else
 <html>
 <head>
 
-<title>Storage and Disposal Statement</title>
+<title>SLC Storage & Disposal Statement</title>
 
 <%@ include file="./include/head.inc" %>
 <!-- Timeout.inc has a value for nTimeout which is used to determine when to -->
@@ -720,11 +736,11 @@ else
          nRC = mSubLC.cursor( "S_StorageDisposalStatement" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strErrorMapValue = mSubLC.cursor( "S_StorageDisposalStatement" ).getAttribute( "dSD_TitleKey" ).getString( "" );
+            strErrorMapValue = mSubLC.cursor( "S_StorageDisposalStatement" ).getAttribute( "Title" ).getString( "" );
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
 
-            task.log( ).debug( "S_StorageDisposalStatement.dSD_TitleKey: " + strErrorMapValue );
+            task.log( ).debug( "S_StorageDisposalStatement.Title: " + strErrorMapValue );
          }
          else
             task.log( ).debug( "Entity does not exist for MLEdit4: " + "mSubLC.S_StorageDisposalStatement" );
@@ -764,11 +780,11 @@ else
          nRC = mSubLC.cursor( "S_StorageDisposalStatement" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strErrorMapValue = mSubLC.cursor( "S_StorageDisposalStatement" ).getAttribute( "dSD_TextKey" ).getString( "" );
+            strErrorMapValue = mSubLC.cursor( "S_StorageDisposalStatement" ).getAttribute( "Text" ).getString( "" );
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
 
-            task.log( ).debug( "S_StorageDisposalStatement.dSD_TextKey: " + strErrorMapValue );
+            task.log( ).debug( "S_StorageDisposalStatement.Text: " + strErrorMapValue );
          }
          else
             task.log( ).debug( "Entity does not exist for MLEdit3: " + "mSubLC.S_StorageDisposalStatement" );
@@ -1033,13 +1049,97 @@ else
 <div style="height:14px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
+<span style="height:16px;">&nbsp&nbsp</span>
+<% /* StorageDisposalTitle:1:Text */ %>
+
+<span  id="StorageDisposalTitle:1" name="StorageDisposalTitle:1" style="width:70px;height:16px;">Title:</span>
+
+<span style="height:16px;">&nbsp</span>
+<% /* StorageDisposalTitle1:Text */ %>
+<% strTextDisplayValue = "";
+   mSubLC = task.getViewByName( "mSubLC" );
+   if ( VmlOperation.isValid( mSubLC ) == false )
+      task.log( ).debug( "Invalid View: " + "StorageDisposalTitle1" );
+   else
+   {
+      nRC = mSubLC.cursor( "S_StorageDisposalStatement" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+      {
+      try
+      {
+         strTextDisplayValue = mSubLC.cursor( "S_StorageDisposalStatement" ).getAttribute( "dSD_TitleKey" ).getString( "" );
+      }
+      catch (Exception e)
+      {
+         out.println("There is an error on StorageDisposalTitle1: " + e.getMessage());
+         task.log().info( "*** Error on ctrl StorageDisposalTitle1" + e.getMessage() );
+      }
+         if ( strTextDisplayValue == null )
+            strTextDisplayValue = "";
+      }
+   }
+%>
+
+<span class="text12"  id="StorageDisposalTitle1" name="StorageDisposalTitle1"  title="Optional Title to appear with text on generated label" style="width:730px;height:16px;"><%=strTextDisplayValue%></span>
+
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:4px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<span style="height:16px;">&nbsp&nbsp</span>
+<% /* StorageDisposalText:1:Text */ %>
+
+<span  id="StorageDisposalText:1" name="StorageDisposalText:1" style="width:70px;height:16px;">Text:</span>
+
+<span style="height:16px;">&nbsp</span>
+<% /* StorageDisposalText1:Text */ %>
+<% strTextDisplayValue = "";
+   mSubLC = task.getViewByName( "mSubLC" );
+   if ( VmlOperation.isValid( mSubLC ) == false )
+      task.log( ).debug( "Invalid View: " + "StorageDisposalText1" );
+   else
+   {
+      nRC = mSubLC.cursor( "S_StorageDisposalStatement" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+      {
+      try
+      {
+         strTextDisplayValue = mSubLC.cursor( "S_StorageDisposalStatement" ).getAttribute( "dSD_TextKey" ).getString( "" );
+      }
+      catch (Exception e)
+      {
+         out.println("There is an error on StorageDisposalText1: " + e.getMessage());
+         task.log().info( "*** Error on ctrl StorageDisposalText1" + e.getMessage() );
+      }
+         if ( strTextDisplayValue == null )
+            strTextDisplayValue = "";
+      }
+   }
+%>
+
+<span class="text12"  id="StorageDisposalText1" name="StorageDisposalText1"  title="Optional Title to appear with text on generated label" style="width:730px;height:16px;"><%=strTextDisplayValue%></span>
+
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:2px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
 <% /* GroupBox4:GroupBox */ %>
 
 <div id="GroupBox4" name="GroupBox4"   style="float:left;position:relative; width:756px; height:30px;">  <!-- GroupBox4 --> 
 
 <% /* Text6:Text */ %>
 
-<label class="listheader"  id="Text6" name="Text6" style="width:324px;height:16px;position:absolute;left:10px;top:8px;">Keyword text for Embedding in Statement Text</label>
+<label class="listheader"  id="Text6" name="Text6" style="width:324px;height:16px;position:absolute;left:18px;top:10px;">Keyword text for Embedding in Statement Text</label>
 
 
 </div>  <!--  GroupBox4 --> 
@@ -1049,7 +1149,7 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:8px;width:100px;"></div>
+<div style="height:4px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
@@ -1187,14 +1287,14 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 <% /* ExclusiveStatements:CheckBox */ %>
 <%
    strErrorMapValue = "";
-   mMasLC = task.getViewByName( "mMasLC" );
-   if ( VmlOperation.isValid( mMasLC ) == false )
+   mSubLC = task.getViewByName( "mSubLC" );
+   if ( VmlOperation.isValid( mSubLC ) == false )
       task.log( ).debug( "Invalid View: " + "ExclusiveStatements" );
    else
    {
-      nRC = mMasLC.cursor( "M_StorageDisposalStatement" ).checkExistenceOfEntity( ).toInt();
+      nRC = mSubLC.cursor( "S_StorageDisposalStatement" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
-         strRadioGroupValue = mMasLC.cursor( "M_StorageDisposalStatement" ).getAttribute( "ExclusiveStatements" ).getString( );
+         strRadioGroupValue = mSubLC.cursor( "S_StorageDisposalStatement" ).getAttribute( "ExclusiveStatements" ).getString( );
    }
 
    if ( StringUtils.equals( strRadioGroupValue, "Y" ) )
@@ -1214,10 +1314,11 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GridStorDisp:Grid */ %>
-<table  cols=2 style="width:792px;"  name="GridStorDisp" id="GridStorDisp">
+<table  cols=3 style="width:792px;"  name="GridStorDisp" id="GridStorDisp">
 
 <thead><tr>
 
+   <th class="gridheading"><input type="checkbox" onclick="CheckAllInGrid(this,'GridCheckCtl1')"></th>
    <th>Statement Title/Text</th>
    <th>Display</th>
 
@@ -1237,6 +1338,8 @@ try
       String strButtonName;
       String strOdd;
       String strTag;
+      String strGridCheckCtl1;
+      String strGridCheckCtl1Value;
       String strGridEditStorDispText;
       String strBMBDisplaySD_Statement;
       
@@ -1250,11 +1353,32 @@ try
 
          lEntityKey = vGridStorDisp.cursor( "S_StorageDisposalSubStatement" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
+         strGridCheckCtl1 = "";
+         nRC = vGridStorDisp.cursor( "S_StorageDisposalSubStatement" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            strGridCheckCtl1 = vGridStorDisp.cursor( "S_StorageDisposalSubStatement" ).getAttribute( "Selected" ).getString( "" );
+
+            if ( strGridCheckCtl1 == null )
+               strGridCheckCtl1 = "";
+         }
+
+         if ( StringUtils.equals( strGridCheckCtl1, "Y" ) )
+         {
+            strGridCheckCtl1Value = "GridCheckCtl1" + strEntityKey;
+            strGridCheckCtl1 = "<input name='" + strGridCheckCtl1Value + "' id='" + strGridCheckCtl1Value + "' value='Y' type='checkbox'  CHECKED > ";
+         }
+         else
+         {
+            strGridCheckCtl1Value = "GridCheckCtl1" + strEntityKey;
+            strGridCheckCtl1 = "<input name='" + strGridCheckCtl1Value + "' id='" + strGridCheckCtl1Value + "' value='Y' type='checkbox' > ";
+         }
+
          strGridEditStorDispText = "";
          nRC = vGridStorDisp.cursor( "S_StorageDisposalSubStatement" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditStorDispText = vGridStorDisp.cursor( "S_StorageDisposalSubStatement" ).getAttribute( "dSD_SubTitleText" ).getString( "" );
+            strGridEditStorDispText = vGridStorDisp.cursor( "S_StorageDisposalSubStatement" ).getAttribute( "dSD_SubTitleTextKey" ).getString( "" );
 
             if ( strGridEditStorDispText == null )
                strGridEditStorDispText = "";
@@ -1267,6 +1391,7 @@ try
 
 <tr<%=strOdd%>>
 
+   <td nowrap><%=strGridCheckCtl1%></td>
    <td><a href="#" onclick="GOTO_StorageDisposaSublStatement( this.id )" id="GridEditStorDispText::<%=strEntityKey%>"><%=strGridEditStorDispText%></a></td>
    <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDisplaySD_Statement" onclick="GOTO_StorageDisposaSublStatement( this.id )" id="BMBDisplaySD_Statement::<%=strEntityKey%>"><img src="./images/ePammsDisplay.png" alt="Display"></a></td>
 

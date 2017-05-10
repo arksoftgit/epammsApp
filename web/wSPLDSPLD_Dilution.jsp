@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSPLDSPLD_Dilution   Generate Timestamp: 20170427124525965 --%>
+<%-- wSPLDSPLD_Dilution   Generate Timestamp: 20170510135606463 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -35,7 +35,7 @@ public int DoInputMapping( HttpServletRequest request,
    String taskId = (String) session.getAttribute( "ZeidonTaskId" );
    Task task = objectEngine.getTaskById( taskId );
 
-   View mSubLC = null;
+   View mSPLDef = null;
    View vGridTmp = null; // temp view to grid view
    View vRepeatingGrp = null; // temp view to repeating group view
    String strDateFormat = "";
@@ -57,11 +57,11 @@ public int DoInputMapping( HttpServletRequest request,
    if ( webMapping == false )
       session.setAttribute( "ZeidonError", null );
 
-   mSubLC = task.getViewByName( "mSubLC" );
-   if ( VmlOperation.isValid( mSubLC ) )
+   mSPLDef = task.getViewByName( "mSPLDef" );
+   if ( VmlOperation.isValid( mSPLDef ) )
    {
       // EditBox: StrengthTitle
-      nRC = mSubLC.cursor( "SubregLabelContent" ).checkExistenceOfEntity( ).toInt();
+      nRC = mSPLDef.cursor( "SPLD_DilutionGroup" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 ) // CursorResult.SET
       {
          strMapValue = request.getParameter( "StrengthTitle" );
@@ -70,7 +70,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "StrengthTitle", "", strMapValue );
             else
-               mSubLC.cursor( "SubregLabelContent" ).getAttribute( "DilutionChartStrengthTitle" ).setValue( strMapValue, "" );
+               mSPLDef.cursor( "SPLD_DilutionGroup" ).getAttribute( "Title" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -80,7 +80,7 @@ public int DoInputMapping( HttpServletRequest request,
       }
 
       // EditBox: StrengthText
-      nRC = mSubLC.cursor( "SubregLabelContent" ).checkExistenceOfEntity( ).toInt();
+      nRC = mSPLDef.cursor( "SPLD_DilutionGroup" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 ) // CursorResult.SET
       {
          strMapValue = request.getParameter( "StrengthText" );
@@ -89,7 +89,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "StrengthText", "", strMapValue );
             else
-               mSubLC.cursor( "SubregLabelContent" ).getAttribute( "DilutionChartStrengthText" ).setValue( strMapValue, "" );
+               mSPLDef.cursor( "SPLD_DilutionGroup" ).getAttribute( "Text" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -104,15 +104,15 @@ public int DoInputMapping( HttpServletRequest request,
       // We are creating a temp view to the grid view so that if there are 
       // grids on the same window with the same view we do not mess up the 
       // entity positions. 
-      vGridTmp = mSubLC.newView( );
-      csrRC = vGridTmp.cursor( "S_DilutionGroup" ).setFirst(  );
+      vGridTmp = mSPLDef.newView( );
+      csrRC = vGridTmp.cursor( "SPLD_DilutionGroup" ).setFirst(  );
       while ( csrRC.isSet() )
       {
-         lEntityKey = vGridTmp.cursor( "S_DilutionGroup" ).getEntityKey( );
+         lEntityKey = vGridTmp.cursor( "SPLD_DilutionGroup" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
          iTableRowCnt++;
 
-         csrRC = vGridTmp.cursor( "S_DilutionGroup" ).setNextContinue( );
+         csrRC = vGridTmp.cursor( "SPLD_DilutionGroup" ).setNextContinue( );
       }
 
       vGridTmp.drop( );
@@ -249,19 +249,19 @@ if ( strActionToProcess != null )
 
       // Position on the entity that was selected in the grid.
       String strEntityKey = (String) request.getParameter( "zTableRowSelect" );
-      View mSubLC;
-      mSubLC = task.getViewByName( "mSubLC" );
-      if ( VmlOperation.isValid( mSubLC ) )
+      View mSPLDef;
+      mSPLDef = task.getViewByName( "mSPLDef" );
+      if ( VmlOperation.isValid( mSPLDef ) )
       {
          lEKey = java.lang.Long.parseLong( strEntityKey );
-         csrRC = mSubLC.cursor( "S_DilutionGroup" ).setByEntityKey( lEKey );
+         csrRC = mSPLDef.cursor( "SPLD_DilutionGroup" ).setByEntityKey( lEKey );
          if ( !csrRC.isSet() )
          {
             boolean bFound = false;
-            csrRCk = mSubLC.cursor( "S_DilutionGroup" ).setFirst( );
+            csrRCk = mSPLDef.cursor( "SPLD_DilutionGroup" ).setFirst( );
             while ( csrRCk.isSet() && !bFound )
             {
-               lEKey = mSubLC.cursor( "S_DilutionGroup" ).getEntityKey( );
+               lEKey = mSPLDef.cursor( "SPLD_DilutionGroup" ).getEntityKey( );
                strKey = Long.toString( lEKey );
                if ( StringUtils.equals( strKey, strEntityKey ) )
                {
@@ -269,7 +269,7 @@ if ( strActionToProcess != null )
                   bFound = true;
                }
                else
-                  csrRCk = mSubLC.cursor( "S_DilutionGroup" ).setNextContinue( );
+                  csrRCk = mSPLDef.cursor( "SPLD_DilutionGroup" ).setNextContinue( );
             } // Grid
          }
       }
@@ -294,7 +294,7 @@ if ( strActionToProcess != null )
       if ( strNextJSP_Name.equals( "" ) )
       {
          // Next Window
-         strNextJSP_Name = wSPLD.SetWebRedirection( vKZXMLPGO, wSPLD.zWAB_StartModalSubwindow, "wSLC", "DilutionGroup" );
+         strNextJSP_Name = wSPLD.SetWebRedirection( vKZXMLPGO, wSPLD.zWAB_StartModalSubwindow, "wSPLD", "DilutionGroup" );
       }
 
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -425,120 +425,6 @@ if ( strActionToProcess != null )
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "smGraphicalView" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wSPLDSPLD_Dilution", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDSPLD_Dilution", "wSPLD.SetSPLD_Resume" );
-      nOptRC = wSPLD.SetSPLD_Resume( new zVIEW( vKZXMLPGO ) );
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wSPLD.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wSPLD.SetWebRedirection( vKZXMLPGO, wSPLD.zWAB_StartModalSubwindow, "wSPLD", "GraphicalView" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "smGENERATE_SPLD_Label" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wSPLDSPLD_Dilution", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDSPLD_Dilution", "wSPLD.GENERATE_SPLD_Label" );
-      nOptRC = wSPLD.GENERATE_SPLD_Label( new zVIEW( vKZXMLPGO ) );
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wSPLD.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wSPLD.SetWebRedirection( vKZXMLPGO, wSPLD.zWAB_StayOnWindowWithRefresh, "", "" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "smGenerateLabelDottedBorders" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wSPLDSPLD_Dilution", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDSPLD_Dilution", "wSPLD.GENERATE_SPLD_LabelDottedBorders" );
-      nOptRC = wSPLD.GENERATE_SPLD_LabelDottedBorders( new zVIEW( vKZXMLPGO ) );
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wSPLD.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wSPLD.SetWebRedirection( vKZXMLPGO, wSPLD.zWAB_StayOnWindowWithRefresh, "", "" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
    while ( bDone == false && StringUtils.equals( strActionToProcess, "smGOTO_UpdateSPLD" ) )
    {
       bDone = true;
@@ -551,23 +437,6 @@ if ( strActionToProcess != null )
 
       // Next Window
       strNextJSP_Name = wSPLD.SetWebRedirection( vKZXMLPGO, wSPLD.zWAB_ReplaceWindowWithModalWindow, "wSPLD", "SPLD_UpdateLLD" );
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "smGOTO_DisplaySPLD_Components" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wSPLDSPLD_Dilution", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Next Window
-      strNextJSP_Name = wSPLD.SetWebRedirection( vKZXMLPGO, wSPLD.zWAB_ReplaceWindowWithModalWindow, "wSPLD", "SPLD_Components" );
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
@@ -771,8 +640,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDSPLD_Dilution", "wSPLD.DisplayPhysicalChemicalHazards" );
-      nOptRC = wSPLD.DisplayPhysicalChemicalHazards( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDSPLD_Dilution", "wSPLD.DisplayHazardsSection" );
+      nOptRC = wSPLD.DisplayHazardsSection( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -826,6 +695,137 @@ if ( strActionToProcess != null )
 
       // Next Window
       strNextJSP_Name = wSPLD.SetWebRedirection( vKZXMLPGO, wSPLD.zWAB_ReplaceWindowWithModalWindow, "wSPLD", "SPLD_TableMaintenance" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "smGOTO_DisplaySPLD_Components" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wSPLDSPLD_Dilution", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Next Window
+      strNextJSP_Name = wSPLD.SetWebRedirection( vKZXMLPGO, wSPLD.zWAB_ReplaceWindowWithModalWindow, "wSPLD", "SPLD_Components" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "smGraphicalView" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wSPLDSPLD_Dilution", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Action Operation
+      nRC = 0;
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDSPLD_Dilution", "wSPLD.SetSPLD_Resume" );
+      nOptRC = wSPLD.SetSPLD_Resume( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wSPLD.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wSPLD.SetWebRedirection( vKZXMLPGO, wSPLD.zWAB_StartModalSubwindow, "wSPLD", "GraphicalView" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "smGENERATE_SPLD_Label" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wSPLDSPLD_Dilution", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Action Operation
+      nRC = 0;
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDSPLD_Dilution", "wSPLD.GENERATE_SPLD_Label" );
+      nOptRC = wSPLD.GENERATE_SPLD_Label( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wSPLD.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wSPLD.SetWebRedirection( vKZXMLPGO, wSPLD.zWAB_StayOnWindowWithRefresh, "", "" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "smGenerateLabelDottedBorders" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wSPLDSPLD_Dilution", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Action Operation
+      nRC = 0;
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDSPLD_Dilution", "wSPLD.GENERATE_SPLD_LabelDottedBorders" );
+      nOptRC = wSPLD.GENERATE_SPLD_LabelDottedBorders( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wSPLD.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wSPLD.SetWebRedirection( vKZXMLPGO, wSPLD.zWAB_StayOnWindowWithRefresh, "", "" );
+      }
+
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
@@ -1087,51 +1087,11 @@ else
 %>
 
 <%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "GraphicalView" );
-   if ( !csrRC.isSet() ) //if ( nRC < 0 )
-   {
-%>
-       <li id="smGraphicalView" name="smGraphicalView"><a href="#"  onclick="smGraphicalView()">Graphical View</a></li>
-<%
-   }
-%>
-
-<%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "GenerateLabel" );
-   if ( !csrRC.isSet() ) //if ( nRC < 0 )
-   {
-%>
-       <li id="smGenerateLabel" name="smGenerateLabel"><a href="#"  onclick="smGENERATE_SPLD_Label()">Generate Label</a></li>
-<%
-   }
-%>
-
-<%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "GenerateLabelDottedBorders" );
-   if ( !csrRC.isSet() ) //if ( nRC < 0 )
-   {
-%>
-       <li id="smGenerateLabelDottedBorders" name="smGenerateLabelDottedBorders"><a href="#"  onclick="smGenerateLabelDottedBorders()">Generate Label/Borders</a></li>
-<%
-   }
-%>
-
-<%
    csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "UpdateSPLD" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
        <li id="smUpdateSPLD" name="smUpdateSPLD"><a href="#"  onclick="smGOTO_UpdateSPLD()">Update SPLD</a></li>
-<%
-   }
-%>
-
-<%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "Components" );
-   if ( !csrRC.isSet() ) //if ( nRC < 0 )
-   {
-%>
-       <li id="smComponents" name="smComponents"><a href="#"  onclick="smGOTO_DisplaySPLD_Components()">Components</a></li>
 <%
    }
 %>
@@ -1227,6 +1187,46 @@ else
 %>
 
 <%
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "Components" );
+   if ( !csrRC.isSet() ) //if ( nRC < 0 )
+   {
+%>
+       <li id="smComponents" name="smComponents"><a href="#"  onclick="smGOTO_DisplaySPLD_Components()">Components</a></li>
+<%
+   }
+%>
+
+<%
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "GraphicalView" );
+   if ( !csrRC.isSet() ) //if ( nRC < 0 )
+   {
+%>
+       <li id="smGraphicalView" name="smGraphicalView"><a href="#"  onclick="smGraphicalView()">Graphical View</a></li>
+<%
+   }
+%>
+
+<%
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "GenerateLabel" );
+   if ( !csrRC.isSet() ) //if ( nRC < 0 )
+   {
+%>
+       <li id="smGenerateLabel" name="smGenerateLabel"><a href="#"  onclick="smGENERATE_SPLD_Label()">Generate Label</a></li>
+<%
+   }
+%>
+
+<%
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "GenerateLabelDottedBorders" );
+   if ( !csrRC.isSet() ) //if ( nRC < 0 )
+   {
+%>
+       <li id="smGenerateLabelDottedBorders" name="smGenerateLabelDottedBorders"><a href="#"  onclick="smGenerateLabelDottedBorders()">Label with Borders</a></li>
+<%
+   }
+%>
+
+<%
    csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "CopySPLD" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
@@ -1285,19 +1285,15 @@ else
    <input name="zDisable" id="zDisable" type="hidden" value="NOVALUE">
 
 <%
-   View lMLC = null;
-   View lSPLDLST = null;
    View mLLD_LST = null;
-   View mMasLC = null;
-   View mPrimReg = null;
-   View ReusableBlock = null;
+   View lSPLDLST = null;
+   View mSubProd = null;
    View mSPLDef = null;
-   View mMasProd = null;
    View mSPLDefBlock = null;
    View mSPLDefPanel = null;
    View mSubLC = null;
-   View mSubProd = null;
-   View mSubreg = null;
+   View mMasLC = null;
+   View ReusableBlock = null;
    View wWebXfer = null;
    String strRadioGroupValue = "";
    String strComboCurrentValue = "";
@@ -1458,17 +1454,17 @@ else
    else
    {
       strErrorColor = "";
-      mSubLC = task.getViewByName( "mSubLC" );
-      if ( VmlOperation.isValid( mSubLC ) == false )
+      mSPLDef = task.getViewByName( "mSPLDef" );
+      if ( VmlOperation.isValid( mSPLDef ) == false )
          task.log( ).debug( "Invalid View: " + "StrengthTitle" );
       else
       {
-         nRC = mSubLC.cursor( "SubregLabelContent" ).checkExistenceOfEntity( ).toInt();
+         nRC = mSPLDef.cursor( "SPLD_DilutionGroup" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
             try
             {
-               strErrorMapValue = mSubLC.cursor( "SubregLabelContent" ).getAttribute( "DilutionChartStrengthTitle" ).getString( "" );
+               strErrorMapValue = mSPLDef.cursor( "SPLD_DilutionGroup" ).getAttribute( "Title" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -1478,10 +1474,10 @@ else
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
 
-            task.log( ).debug( "SubregLabelContent.DilutionChartStrengthTitle: " + strErrorMapValue );
+            task.log( ).debug( "SPLD_DilutionGroup.Title: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist for StrengthTitle: " + "mSubLC.SubregLabelContent" );
+            task.log( ).debug( "Entity does not exist for StrengthTitle: " + "mSPLDef.SPLD_DilutionGroup" );
       }
    }
 %>
@@ -1509,17 +1505,17 @@ else
    else
    {
       strErrorColor = "";
-      mSubLC = task.getViewByName( "mSubLC" );
-      if ( VmlOperation.isValid( mSubLC ) == false )
+      mSPLDef = task.getViewByName( "mSPLDef" );
+      if ( VmlOperation.isValid( mSPLDef ) == false )
          task.log( ).debug( "Invalid View: " + "StrengthText" );
       else
       {
-         nRC = mSubLC.cursor( "SubregLabelContent" ).checkExistenceOfEntity( ).toInt();
+         nRC = mSPLDef.cursor( "SPLD_DilutionGroup" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
             try
             {
-               strErrorMapValue = mSubLC.cursor( "SubregLabelContent" ).getAttribute( "DilutionChartStrengthText" ).getString( "" );
+               strErrorMapValue = mSPLDef.cursor( "SPLD_DilutionGroup" ).getAttribute( "Text" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -1529,10 +1525,10 @@ else
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
 
-            task.log( ).debug( "SubregLabelContent.DilutionChartStrengthText: " + strErrorMapValue );
+            task.log( ).debug( "SPLD_DilutionGroup.Text: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist for StrengthText: " + "mSubLC.SubregLabelContent" );
+            task.log( ).debug( "Entity does not exist for StrengthText: " + "mSPLDef.SPLD_DilutionGroup" );
       }
    }
 %>
@@ -1609,8 +1605,8 @@ else
 try
 {
    iTableRowCnt = 0;
-   mSubLC = task.getViewByName( "mSubLC" );
-   if ( VmlOperation.isValid( mSubLC ) )
+   mSPLDef = task.getViewByName( "mSPLDef" );
+   if ( VmlOperation.isValid( mSPLDef ) )
    {
       long   lEntityKey;
       String strEntityKey;
@@ -1625,20 +1621,20 @@ try
       String strBMBDisplayDilutionGroup;
       
       View vGridDilutionGroups;
-      vGridDilutionGroups = mSubLC.newView( );
-      csrRC2 = vGridDilutionGroups.cursor( "S_DilutionGroup" ).setFirst(  );
+      vGridDilutionGroups = mSPLDef.newView( );
+      csrRC2 = vGridDilutionGroups.cursor( "SPLD_DilutionGroup" ).setFirst(  );
       while ( csrRC2.isSet() )
       {
          strOdd = (iTableRowCnt % 2) != 0 ? " class='odd'" : "";
          iTableRowCnt++;
 
-         lEntityKey = vGridDilutionGroups.cursor( "S_DilutionGroup" ).getEntityKey( );
+         lEntityKey = vGridDilutionGroups.cursor( "SPLD_DilutionGroup" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
          strTitle = "";
-         nRC = vGridDilutionGroups.cursor( "S_DilutionGroup" ).checkExistenceOfEntity( ).toInt();
+         nRC = vGridDilutionGroups.cursor( "SPLD_DilutionGroup" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strTitle = vGridDilutionGroups.cursor( "S_DilutionGroup" ).getAttribute( "Title" ).getString( "" );
+            strTitle = vGridDilutionGroups.cursor( "SPLD_DilutionGroup" ).getAttribute( "Title" ).getString( "" );
 
             if ( strTitle == null )
                strTitle = "";
@@ -1648,10 +1644,10 @@ try
             strTitle = "&nbsp";
 
          strText = "";
-         nRC = vGridDilutionGroups.cursor( "S_DilutionGroup" ).checkExistenceOfEntity( ).toInt();
+         nRC = vGridDilutionGroups.cursor( "SPLD_DilutionGroup" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strText = vGridDilutionGroups.cursor( "S_DilutionGroup" ).getAttribute( "Text" ).getString( "" );
+            strText = vGridDilutionGroups.cursor( "SPLD_DilutionGroup" ).getAttribute( "Text" ).getString( "" );
 
             if ( strText == null )
                strText = "";
@@ -1661,10 +1657,10 @@ try
             strText = "&nbsp";
 
          strRatio = "";
-         nRC = vGridDilutionGroups.cursor( "S_DilutionGroup" ).checkExistenceOfEntity( ).toInt();
+         nRC = vGridDilutionGroups.cursor( "SPLD_DilutionGroup" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strRatio = vGridDilutionGroups.cursor( "S_DilutionGroup" ).getAttribute( "Ratio" ).getString( "" );
+            strRatio = vGridDilutionGroups.cursor( "SPLD_DilutionGroup" ).getAttribute( "Ratio" ).getString( "" );
 
             if ( strRatio == null )
                strRatio = "";
@@ -1674,10 +1670,10 @@ try
             strRatio = "&nbsp";
 
          strUnitsNumerator = "";
-         nRC = vGridDilutionGroups.cursor( "S_DilutionGroup" ).checkExistenceOfEntity( ).toInt();
+         nRC = vGridDilutionGroups.cursor( "SPLD_DilutionGroup" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strUnitsNumerator = vGridDilutionGroups.cursor( "S_DilutionGroup" ).getAttribute( "UnitsNumerator" ).getString( "" );
+            strUnitsNumerator = vGridDilutionGroups.cursor( "SPLD_DilutionGroup" ).getAttribute( "UnitsNumerator" ).getString( "" );
 
             if ( strUnitsNumerator == null )
                strUnitsNumerator = "";
@@ -1687,10 +1683,10 @@ try
             strUnitsNumerator = "&nbsp";
 
          strUnitsDenominator = "";
-         nRC = vGridDilutionGroups.cursor( "S_DilutionGroup" ).checkExistenceOfEntity( ).toInt();
+         nRC = vGridDilutionGroups.cursor( "SPLD_DilutionGroup" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strUnitsDenominator = vGridDilutionGroups.cursor( "S_DilutionGroup" ).getAttribute( "UnitsDenominator" ).getString( "" );
+            strUnitsDenominator = vGridDilutionGroups.cursor( "SPLD_DilutionGroup" ).getAttribute( "UnitsDenominator" ).getString( "" );
 
             if ( strUnitsDenominator == null )
                strUnitsDenominator = "";
@@ -1713,7 +1709,7 @@ try
 </tr>
 
 <%
-         csrRC2 = vGridDilutionGroups.cursor( "S_DilutionGroup" ).setNextContinue( );
+         csrRC2 = vGridDilutionGroups.cursor( "SPLD_DilutionGroup" ).setNextContinue( );
       }
       vGridDilutionGroups.drop( );
    }

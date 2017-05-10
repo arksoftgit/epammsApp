@@ -129,7 +129,7 @@ olMLCATgt_BuildDifferencesMLC( View     lMLCATgt,
          sb_szTempString_1 = new StringBuilder( 32 );
       else
          sb_szTempString_1 = new StringBuilder( szTempString_1 );
-             GetVariableFromAttribute( sb_szTempString_1, mi_lTempInteger_0, 'S', 255, lMLCATgt, "M_GeneralSection", "Title", "", 0 );
+             GetVariableFromAttribute( sb_szTempString_1, mi_lTempInteger_0, 'S', 4097, lMLCATgt, "M_GeneralSection", "Title", "", 0 );
       lTempInteger_0 = mi_lTempInteger_0.intValue( );
       szTempString_1 = sb_szTempString_1.toString( );}
        {StringBuilder sb_szTempString_0;
@@ -137,14 +137,14 @@ olMLCATgt_BuildDifferencesMLC( View     lMLCATgt,
          sb_szTempString_0 = new StringBuilder( 32 );
       else
          sb_szTempString_0 = new StringBuilder( szTempString_0 );
-            ZeidonStringCopy( sb_szTempString_0, 1, 0, "General: ", 1, 0, 255 );
+            ZeidonStringCopy( sb_szTempString_0, 1, 0, "General: ", 1, 0, 1026 );
       szTempString_0 = sb_szTempString_0.toString( );}
        {StringBuilder sb_szTempString_0;
       if ( szTempString_0 == null )
          sb_szTempString_0 = new StringBuilder( 32 );
       else
          sb_szTempString_0 = new StringBuilder( szTempString_0 );
-            ZeidonStringConcat( sb_szTempString_0, 1, 0, szTempString_1, 1, 0, 255 );
+            ZeidonStringConcat( sb_szTempString_0, 1, 0, szTempString_1, 1, 0, 1026 );
       szTempString_0 = sb_szTempString_0.toString( );}
       SetAttributeFromString( lMLCATgt, "ComparisonDifference", "Title", szTempString_0 );
       //:lMLCATgt.ComparisonDifference.TitleFlag = "Y"
@@ -696,7 +696,7 @@ olMLCATgt_BuildDifferencesMLC( View     lMLCATgt,
          sb_szTempString_7 = new StringBuilder( 32 );
       else
          sb_szTempString_7 = new StringBuilder( szTempString_7 );
-             GetVariableFromAttribute( sb_szTempString_7, mi_lTempInteger_7, 'S', 255, lMLCATgt, "M_StorageDisposalSection", "Title", "", 0 );
+             GetVariableFromAttribute( sb_szTempString_7, mi_lTempInteger_7, 'S', 4097, lMLCATgt, "M_StorageDisposalSection", "Title", "", 0 );
       lTempInteger_7 = mi_lTempInteger_7.intValue( );
       szTempString_7 = sb_szTempString_7.toString( );}
        {StringBuilder sb_szTempString_6;
@@ -704,14 +704,14 @@ olMLCATgt_BuildDifferencesMLC( View     lMLCATgt,
          sb_szTempString_6 = new StringBuilder( 32 );
       else
          sb_szTempString_6 = new StringBuilder( szTempString_6 );
-            ZeidonStringCopy( sb_szTempString_6, 1, 0, "Storage + Disposal: ", 1, 0, 255 );
+            ZeidonStringCopy( sb_szTempString_6, 1, 0, "Storage + Disposal: ", 1, 0, 4097 );
       szTempString_6 = sb_szTempString_6.toString( );}
        {StringBuilder sb_szTempString_6;
       if ( szTempString_6 == null )
          sb_szTempString_6 = new StringBuilder( 32 );
       else
          sb_szTempString_6 = new StringBuilder( szTempString_6 );
-            ZeidonStringConcat( sb_szTempString_6, 1, 0, szTempString_7, 1, 0, 255 );
+            ZeidonStringConcat( sb_szTempString_6, 1, 0, szTempString_7, 1, 0, 4097 );
       szTempString_6 = sb_szTempString_6.toString( );}
       SetAttributeFromString( lMLCATgt, "ComparisonDifference", "Title", szTempString_6 );
       //:lMLCATgt.ComparisonDifference.TitleFlag = "Y"
@@ -940,7 +940,7 @@ olMLCATgt_BuildDifferencesMLC( View     lMLCATgt,
          sb_szTempString_9 = new StringBuilder( 32 );
       else
          sb_szTempString_9 = new StringBuilder( szTempString_9 );
-             GetVariableFromAttribute( sb_szTempString_9, mi_lTempInteger_12, 'S', 255, lMLCATgt, "M_DirectionsForUseSection", "Title", "", 0 );
+             GetVariableFromAttribute( sb_szTempString_9, mi_lTempInteger_12, 'S', 4097, lMLCATgt, "M_DirectionsForUseSection", "Title", "", 0 );
       lTempInteger_12 = mi_lTempInteger_12.intValue( );
       szTempString_9 = sb_szTempString_9.toString( );}
        {StringBuilder sb_szTempString_8;
@@ -948,14 +948,14 @@ olMLCATgt_BuildDifferencesMLC( View     lMLCATgt,
          sb_szTempString_8 = new StringBuilder( 32 );
       else
          sb_szTempString_8 = new StringBuilder( szTempString_8 );
-            ZeidonStringCopy( sb_szTempString_8, 1, 0, "Directions For Use: ", 1, 0, 255 );
+            ZeidonStringCopy( sb_szTempString_8, 1, 0, "Directions For Use: ", 1, 0, 4097 );
       szTempString_8 = sb_szTempString_8.toString( );}
        {StringBuilder sb_szTempString_8;
       if ( szTempString_8 == null )
          sb_szTempString_8 = new StringBuilder( 32 );
       else
          sb_szTempString_8 = new StringBuilder( szTempString_8 );
-            ZeidonStringConcat( sb_szTempString_8, 1, 0, szTempString_9, 1, 0, 255 );
+            ZeidonStringConcat( sb_szTempString_8, 1, 0, szTempString_9, 1, 0, 4097 );
       szTempString_8 = sb_szTempString_8.toString( );}
       SetAttributeFromString( lMLCATgt, "ComparisonDifference", "Title", szTempString_8 );
       //:lMLCATgt.ComparisonDifference.TitleFlag = "Y"
@@ -1311,7 +1311,7 @@ olMLCATgt_BuildDifferencesMLC( View     lMLCATgt,
          sb_szTempString_13 = new StringBuilder( 32 );
       else
          sb_szTempString_13 = new StringBuilder( szTempString_13 );
-             GetVariableFromAttribute( sb_szTempString_13, mi_lTempInteger_18, 'S', 255, lMLCATgt, "M_MarketingSection", "Title", "", 0 );
+             GetVariableFromAttribute( sb_szTempString_13, mi_lTempInteger_18, 'S', 4097, lMLCATgt, "M_MarketingSection", "Title", "", 0 );
       lTempInteger_18 = mi_lTempInteger_18.intValue( );
       szTempString_13 = sb_szTempString_13.toString( );}
        {StringBuilder sb_szTempString_12;
@@ -1319,14 +1319,14 @@ olMLCATgt_BuildDifferencesMLC( View     lMLCATgt,
          sb_szTempString_12 = new StringBuilder( 32 );
       else
          sb_szTempString_12 = new StringBuilder( szTempString_12 );
-            ZeidonStringCopy( sb_szTempString_12, 1, 0, "Marketing: ", 1, 0, 255 );
+            ZeidonStringCopy( sb_szTempString_12, 1, 0, "Marketing: ", 1, 0, 4097 );
       szTempString_12 = sb_szTempString_12.toString( );}
        {StringBuilder sb_szTempString_12;
       if ( szTempString_12 == null )
          sb_szTempString_12 = new StringBuilder( 32 );
       else
          sb_szTempString_12 = new StringBuilder( szTempString_12 );
-            ZeidonStringConcat( sb_szTempString_12, 1, 0, szTempString_13, 1, 0, 255 );
+            ZeidonStringConcat( sb_szTempString_12, 1, 0, szTempString_13, 1, 0, 4097 );
       szTempString_12 = sb_szTempString_12.toString( );}
       SetAttributeFromString( lMLCATgt, "ComparisonDifference", "Title", szTempString_12 );
       //:lMLCATgt.ComparisonDifference.TitleFlag = "Y"

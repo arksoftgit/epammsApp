@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSPLDSelectLLD_ForSPLD   Generate Timestamp: 20160620105929449 --%>
+<%-- wSPLDSelectLLD_ForSPLD   Generate Timestamp: 20170428100859857 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -457,18 +457,13 @@ else
    <input name="zDisable" id="zDisable" type="hidden" value="NOVALUE">
 
 <%
-   View lMLC = null;
-   View lSPLDLST = null;
    View mLLD_LST = null;
-   View mMasLC = null;
-   View mPrimReg = null;
-   View ReusableBlock = null;
+   View lSPLDLST = null;
+   View mSubProd = null;
    View mSPLDef = null;
    View mSPLDefBlock = null;
    View mSPLDefPanel = null;
-   View mSubLC = null;
-   View mSubProd = null;
-   View mSubreg = null;
+   View ReusableBlock = null;
    View wWebXfer = null;
    String strRadioGroupValue = "";
    String strComboCurrentValue = "";
@@ -558,6 +553,7 @@ else
    <input name="zFocusCtrl" id="zFocusCtrl" type="hidden" value="<%=strFocusCtrl%>">
    <input name="zOpenFile" id="zOpenFile" type="hidden" value="<%=strOpenFile%>">
    <input name="zDateFormat" id="zDateFormat" type="hidden" value="<%=strDateFormat%>">
+   <input name="zDateSequence" id="zDateSequence" type="hidden" value="MDY">
    <input name="zLoginName" id="zLoginName" type="hidden" value="<%=strLoginName%>">
    <input name="zKeyRole" id="zKeyRole" type="hidden" value="<%=strKeyRole%>">
    <input name="zOpenPopupWindow" id="zOpenPopupWindow" type="hidden" value="<%=strOpenPopupWindow%>">

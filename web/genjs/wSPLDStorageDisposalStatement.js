@@ -1,3 +1,5 @@
+// wSPLDStorageDisposalStatement   Generate Timestamp: 20170509200308364
+
 var isWindowClosing = true;
 var timerID = null;
 onerror = handleErr;
@@ -82,31 +84,17 @@ function _BeforePageUnload( )
 
 function _IsDocDisabled( )
 {
-   var theForm;
-   var j;
-   var k;
+   var bRC = false;
 
-   for ( j = 0; j < document.forms.length; j++ )
-   {
-      theForm = document.forms[ j ];
-      for ( k = 0; k < theForm.length; k++ )
-      {
-         if ( theForm.elements[ k ].name == "zDisable" )
-            return theForm.elements[ k ].disabled;
-      }
+   var $el = $("#zDisable");
+   if ( $el.length > 0 ) {
+      bRC = $el[0].disabled;
    }
-
-   return false;
+   return bRC ? true : false;
 }
 
 function _DisableFormElements( bDisabled )
 {
-   var theForm;
-   var type;
-   var lis;
-   var thisLi;
-   var j;
-   var k;
    var bRC = false;
 
    if ( bDisabled && timerID != null )
@@ -128,35 +116,13 @@ function _DisableFormElements( bDisabled )
       }
    }
 
-   // We want to set some fields as disabled (like buttons and comboboxes) so that
-   // while the jsp code is processing, users can not select these controls.
-   for ( j = 0; j < document.forms.length; j++ )
-   {
-      theForm = document.forms[ j ];
-      for ( k = 0; k < theForm.length; k++ )
-      {
-         type = theForm.elements[ k ].type;
-
-         if ( type == "button" || type == "submit" || (type != null && type.indexOf( "select" ) == 0) )
-         {
-            theForm.elements[ k ].disabled = bDisabled;
-         }
-         else
-         if ( theForm.elements[ k ].name == "zDisable" )
-         {
-            theForm.elements[ k ].disabled = bDisabled;
-            bRC = true;
-         }
-      }
+   var $el = $("#zDisable");
+   if ( $el.length > 0 ) {
+      $el[0].disabled = true;
+      bRC = true;
    }
 
-   lis = document.getElementsByTagName( "li" );
-   for ( k = 0; k < lis.length; k++ )
-   {
-      thisLi = lis[ k ];
-      thisLi.disabled = bDisabled;
-   }
-
+   $.blockUI({ message: '<h1><img src="./images/busy.gif" /></h1>', overlayCSS: { backgroundColor: '#eee' } });
    return bRC;
 }
 
@@ -185,6 +151,8 @@ function _AfterPageLoaded( )
       }
    }
 
+   var LoginName = document.wSPLDStorageDisposalStatement.zLoginName.value;
+   var keyRole = document.wSPLDStorageDisposalStatement.zKeyRole.value;
    document.wSPLDStorageDisposalStatement.zError.value = "";
    document.wSPLDStorageDisposalStatement.zOpenFile.value = "";
 
@@ -193,6 +161,9 @@ function _AfterPageLoaded( )
       clearTimeout( timerID );
       timerID = null;
    }
+
+   document.wSPLDStorageDisposalStatement.hCBSize.value = document.wSPLDStorageDisposalStatement.CBSize.value
+   document.wSPLDStorageDisposalStatement.hCBType.value = document.wSPLDStorageDisposalStatement.CBType.value
 
    var varTimeout = document.wSPLDStorageDisposalStatement.zTimeout.value;
    if ( varTimeout > 0 )
@@ -203,10 +174,11 @@ function _AfterPageLoaded( )
    else
       timerID = null; // No timeout specified
 
+var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title ); }
    isWindowClosing = true;
 }
 
-function CheckAllInGrid(id, CheckBoxName)
+function CheckAllInGrid(id, CheckBoxName) // triggered by no text checkbox
 {
    var wcontrols = id.form.elements;
    var check = id.checked;
@@ -222,7 +194,26 @@ function CheckAllInGrid(id, CheckBoxName)
    }
 }
 
-function AcceptStorDispStmt( )
+function GOTO_StorageDisposaSubStatement( strTagEntityKey )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      var nIdx = strTagEntityKey.lastIndexOf( '::' );
+      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
+
+      document.wSPLDStorageDisposalStatement.zTableRowSelect.value = strEntityKey;
+      _DisableFormElements( true );
+
+      document.wSPLDStorageDisposalStatement.zAction.value = "GOTO_StorageDisposaSubStatement";
+      document.wSPLDStorageDisposalStatement.submit( );
+   }
+}
+
+function Return( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -232,12 +223,12 @@ function AcceptStorDispStmt( )
    {
       _DisableFormElements( true );
 
-      document.wSPLDStorageDisposalStatement.zAction.value = "AcceptStorDispStmt";
+      document.wSPLDStorageDisposalStatement.zAction.value = "Return";
       document.wSPLDStorageDisposalStatement.submit( );
    }
 }
 
-function InitStorDispStmt( )
+function CBSizeOnChange( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -245,45 +236,11 @@ function InitStorDispStmt( )
 
    if ( _IsDocDisabled( ) == false )
    {
-      // Javascript code entered by user.
-
-   // We knock out Login and Template as options.
-   var thisLi;
-
-   thisLi = document.getElementById( "lmTemplate" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-   thisLi = document.getElementById( "lmLogin" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-
-   if ( keyRole == "S" ) // if we are a Subregistrant
-   {
-      thisLi = document.getElementById( "lmSubregistrants" );
-      thisLi.style.visibility = "hidden";
-      thisLi.style.display = "none";
-      thisLi = document.getElementById( "lmTrackingNotificationCompliance" );
-      thisLi.style.visibility = "hidden";
-      thisLi.style.display = "none";
-    }
-   else
-   if ( keyRole == "P" ) // if we are a Primary Registrant
-   {
-      thisLi = document.getElementById( "lmStateRegistrations" );
-      thisLi.style.visibility = "hidden";
-      thisLi.style.display = "none";
-   }
-
-   // Cannot go to product management if already there.
-   thisLi = document.getElementById( "lmProductManagement" );
-   thisLi.disabled = true;
-
-      // END of Javascript code entered by user.
-
+      document.wSPLDStorageDisposalStatement.hCBSize.value = document.wSPLDStorageDisposalStatement.CBSize.value;
    }
 }
 
-function CancelStorDispStmt( )
+function CBTypeOnChange( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -291,280 +248,7 @@ function CancelStorDispStmt( )
 
    if ( _IsDocDisabled( ) == false )
    {
-      _DisableFormElements( true );
-
-      document.wSPLDStorageDisposalStatement.zAction.value = "CancelStorDispStmt";
-      document.wSPLDStorageDisposalStatement.submit( );
-   }
-}
-
-function SaveAddNewStorDispStmt( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wSPLDStorageDisposalStatement.zAction.value = "SaveAddNewStorDispStmt";
-      document.wSPLDStorageDisposalStatement.submit( );
-   }
-}
-
-function smAcceptStorDispStmt( )
-{
-
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wSPLDStorageDisposalStatement.zAction.value = "smAcceptStorDispStmt";
-      document.wSPLDStorageDisposalStatement.submit( );
-   }
-}
-
-function mProductManagement( )
-{
-
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-
-      // Javascript code entered by user.
-
-   var thisLi = document.getElementById( "lmProductManagement" );
-   if ( thisLi.disabled == true )
-      return;
-
-      // END of Javascript code entered by user.
-
-      _DisableFormElements( true );
-
-      document.wSPLDStorageDisposalStatement.zAction.value = "mProductManagement";
-      document.wSPLDStorageDisposalStatement.submit( );
-   }
-}
-
-function mSubregistrants( )
-{
-
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-
-      // Javascript code entered by user.
-
-   var thisLi = document.getElementById( "lmSubregistrants" );
-   if ( thisLi.disabled == true )
-      return;
-
-      // END of Javascript code entered by user.
-
-      _DisableFormElements( true );
-
-      document.wSPLDStorageDisposalStatement.zAction.value = "mSubregistrants";
-      document.wSPLDStorageDisposalStatement.submit( );
-   }
-}
-
-function mTrackingNotificationCompliance( )
-{
-
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-
-      // Javascript code entered by user.
-
-   var thisLi = document.getElementById( "lmTrackingNotificationCompliance" );
-   if ( thisLi.disabled == true )
-      return;
-
-      // END of Javascript code entered by user.
-
-      _DisableFormElements( true );
-
-      document.wSPLDStorageDisposalStatement.zAction.value = "mTrackingNotificationCompliance";
-      document.wSPLDStorageDisposalStatement.submit( );
-   }
-}
-
-function mStateRegistrations( )
-{
-
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-
-      // Javascript code entered by user.
-
-   var thisLi = document.getElementById( "lmStateRegistrations" );
-   if ( thisLi.disabled == true )
-      return;
-
-      // END of Javascript code entered by user.
-
-      _DisableFormElements( true );
-
-      document.wSPLDStorageDisposalStatement.zAction.value = "mStateRegistrations";
-      document.wSPLDStorageDisposalStatement.submit( );
-   }
-}
-
-function mMarketingFulfillment( )
-{
-
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-
-      // Javascript code entered by user.
-
-   var thisLi = document.getElementById( "lmMarketingFulfillment" );
-   if ( thisLi.disabled == true )
-      return;
-
-      // END of Javascript code entered by user.
-
-      _DisableFormElements( true );
-
-      document.wSPLDStorageDisposalStatement.zAction.value = "mMarketingFulfillment";
-      document.wSPLDStorageDisposalStatement.submit( );
-   }
-}
-
-function mWebDevelopment( )
-{
-
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-
-      // Javascript code entered by user.
-
-   var thisLi = document.getElementById( "lmWebDevelopment" );
-   if ( thisLi.disabled == true )
-      return;
-
-      // END of Javascript code entered by user.
-
-      _DisableFormElements( true );
-
-      document.wSPLDStorageDisposalStatement.zAction.value = "mWebDevelopment";
-      document.wSPLDStorageDisposalStatement.submit( );
-   }
-}
-
-function mAdministration( )
-{
-
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-
-      // Javascript code entered by user.
-
-   var thisLi = document.getElementById( "lmCompanyProfile" );
-   if ( thisLi.disabled == true )
-      return;
-
-      // END of Javascript code entered by user.
-
-      _DisableFormElements( true );
-
-      document.wSPLDStorageDisposalStatement.zAction.value = "mAdministration";
-      document.wSPLDStorageDisposalStatement.submit( );
-   }
-}
-
-function mLogin( )
-{
-
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-
-      // Javascript code entered by user.
-
-   var thisLi = document.getElementById( "lmLogin" );
-   if ( thisLi.disabled == true )
-      return;
-
-      // END of Javascript code entered by user.
-
-      _DisableFormElements( true );
-
-      document.wSPLDStorageDisposalStatement.zAction.value = "mLogin";
-      document.wSPLDStorageDisposalStatement.submit( );
-   }
-}
-
-function mLogout( )
-{
-
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-
-      // Javascript code entered by user.
-
-   var thisLi = document.getElementById( "lmLogout" );
-   if ( thisLi.disabled == true )
-      return;
-
-      // END of Javascript code entered by user.
-
-      _DisableFormElements( true );
-
-      document.wSPLDStorageDisposalStatement.zAction.value = "_OnUnload";
-      document.wSPLDStorageDisposalStatement.submit( );
-   }
-}
-
-function mTemplate( )
-{
-
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-
-      // Javascript code entered by user.
-
-   var thisLi = document.getElementById( "lmTemplate" );
-   if ( thisLi.disabled == true )
-      return;
-
-      // END of Javascript code entered by user.
-
-      _DisableFormElements( true );
-
-      document.wSPLDStorageDisposalStatement.zAction.value = "mTemplate";
-      document.wSPLDStorageDisposalStatement.submit( );
+      document.wSPLDStorageDisposalStatement.hCBType.value = document.wSPLDStorageDisposalStatement.CBType.value;
    }
 }
 
