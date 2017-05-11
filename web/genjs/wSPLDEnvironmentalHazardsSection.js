@@ -1,4 +1,4 @@
-// wSPLDSPLD_DirectionsForUseCategory   Generate Timestamp: 20170511114547434
+// wSPLDEnvironmentalHazardsSection   Generate Timestamp: 20170510192446392
 
 var isWindowClosing = true;
 var timerID = null;
@@ -45,8 +45,8 @@ function _OnAlmostTimeout()
       // If the time is less than one minute, resubmit the page.  Otherwise, go to the timeout window.
       if (tDiff < 60000)
       {
-         document.wSPLDSPLD_DirectionsForUseCategory.zAction.value = "_OnResubmitPage";
-         document.wSPLDSPLD_DirectionsForUseCategory.submit( );
+         document.wSPLDEnvironmentalHazardsSection.zAction.value = "_OnResubmitPage";
+         document.wSPLDEnvironmentalHazardsSection.submit( );
       }
       else
       {
@@ -61,8 +61,8 @@ function _OnTimeout( )
    {
       _DisableFormElements( true );
 
-      document.wSPLDSPLD_DirectionsForUseCategory.zAction.value = "_OnTimeout";
-      document.wSPLDSPLD_DirectionsForUseCategory.submit( );
+      document.wSPLDEnvironmentalHazardsSection.zAction.value = "_OnTimeout";
+      document.wSPLDEnvironmentalHazardsSection.submit( );
    }
 }
 
@@ -76,8 +76,8 @@ function _BeforePageUnload( )
       // If the user clicked the window close box, unregister zeidon.
       if (isWindowClosing)
       {
-         document.wSPLDSPLD_DirectionsForUseCategory.zAction.value = "_OnUnload";
-         document.wSPLDSPLD_DirectionsForUseCategory.submit( );
+         document.wSPLDEnvironmentalHazardsSection.zAction.value = "_OnUnload";
+         document.wSPLDEnvironmentalHazardsSection.submit( );
       }
    }
 }
@@ -130,16 +130,16 @@ function _AfterPageLoaded( )
 {
 // _DisableFormElements( false );
 
-   var szFocusCtrl = document.wSPLDSPLD_DirectionsForUseCategory.zFocusCtrl.value;
+   var szFocusCtrl = document.wSPLDEnvironmentalHazardsSection.zFocusCtrl.value;
    if ( szFocusCtrl != "" && szFocusCtrl != "null" )
-      eval( 'document.wSPLDSPLD_DirectionsForUseCategory.' + szFocusCtrl + '.focus( )' );
+      eval( 'document.wSPLDEnvironmentalHazardsSection.' + szFocusCtrl + '.focus( )' );
 
    // This is where we put out a message from the previous iteration on this window
-   var szMsg = document.wSPLDSPLD_DirectionsForUseCategory.zError.value;
+   var szMsg = document.wSPLDEnvironmentalHazardsSection.zError.value;
    if ( szMsg != "" )
       alert( szMsg ); // "Houston ... We have a problem"
 
-   szMsg = document.wSPLDSPLD_DirectionsForUseCategory.zOpenFile.value;
+   szMsg = document.wSPLDEnvironmentalHazardsSection.zOpenFile.value;
    if ( szMsg != "" )
    {
       var NewWin = window.open( szMsg );
@@ -151,10 +151,10 @@ function _AfterPageLoaded( )
       }
    }
 
-   var LoginName = document.wSPLDSPLD_DirectionsForUseCategory.zLoginName.value;
-   var keyRole = document.wSPLDSPLD_DirectionsForUseCategory.zKeyRole.value;
-   document.wSPLDSPLD_DirectionsForUseCategory.zError.value = "";
-   document.wSPLDSPLD_DirectionsForUseCategory.zOpenFile.value = "";
+   var LoginName = document.wSPLDEnvironmentalHazardsSection.zLoginName.value;
+   var keyRole = document.wSPLDEnvironmentalHazardsSection.zKeyRole.value;
+   document.wSPLDEnvironmentalHazardsSection.zError.value = "";
+   document.wSPLDEnvironmentalHazardsSection.zOpenFile.value = "";
 
    if ( timerID != null )
    {
@@ -162,7 +162,7 @@ function _AfterPageLoaded( )
       timerID = null;
    }
 
-   var varTimeout = document.wSPLDSPLD_DirectionsForUseCategory.zTimeout.value;
+   var varTimeout = document.wSPLDEnvironmentalHazardsSection.zTimeout.value;
    if ( varTimeout > 0 )
    {
       var varDelay = 60000 * varTimeout;  // Timeout value in timeout.inc
@@ -191,26 +191,7 @@ function CheckAllInGrid(id, CheckBoxName) // triggered by no text checkbox
    }
 }
 
-function GOTO_DirsForUseSection( strTagEntityKey )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      var nIdx = strTagEntityKey.lastIndexOf( '::' );
-      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
-
-      document.wSPLDSPLD_DirectionsForUseCategory.zTableRowSelect.value = strEntityKey;
-      _DisableFormElements( true );
-
-      document.wSPLDSPLD_DirectionsForUseCategory.zAction.value = "GOTO_DirsForUseSection";
-      document.wSPLDSPLD_DirectionsForUseCategory.submit( );
-   }
-}
-
-function Return( )
+function ReturnToHazards( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -220,8 +201,8 @@ function Return( )
    {
       _DisableFormElements( true );
 
-      document.wSPLDSPLD_DirectionsForUseCategory.zAction.value = "Return";
-      document.wSPLDSPLD_DirectionsForUseCategory.submit( );
+      document.wSPLDEnvironmentalHazardsSection.zAction.value = "ReturnToHazards";
+      document.wSPLDEnvironmentalHazardsSection.submit( );
    }
 }
 

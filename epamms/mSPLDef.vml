@@ -5611,3 +5611,115 @@ dDU_SubStmtTitleTxtKey( VIEW mSPLDef BASED ON LOD mSPLDef,
 
 END
 
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: dDU_SectionTitleKeyword
+//
+/////////////////////////////////////////////////////////////////////////////
+DERIVED ATTRIBUTE OPERATION
+dDU_SectionTitleKeyword( VIEW mSPLDef BASED ON LOD mSPLDef,
+                         STRING ( 32 ) InternalEntityStructure,
+                         STRING ( 32 ) InternalAttribStructure,
+                         SHORT GetOrSetFlag )
+
+   STRING ( 2048 ) szDisplayStatement
+
+   CASE GetOrSetFlag
+   OF   zDERIVED_GET:
+
+      // Directions For Use Display Section Title embeds keywords into the Title.
+      szDisplayStatement = mSPLDef.SPLD_DirectionsForUseSection.Title
+
+      IF szDisplayStatement != ""
+         GenerateKeywordTextIntoString( mSPLDef, szDisplayStatement,
+                                        "SPLD_InsertTextKeywordSectionDU", "SPLD_InsertTextSectionDU", ", " )
+      END
+
+      // Store the calculated value in the object.
+      StoreStringInRecord( mSPLDef, InternalEntityStructure, InternalAttribStructure, szDisplayStatement )
+      RETURN 0
+
+        // end zDERIVED_GET
+   OF   zDERIVED_SET:
+
+        // end zDERIVED_SET
+   END  // case
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: dDU_SectionTextKeyword
+//
+/////////////////////////////////////////////////////////////////////////////
+DERIVED ATTRIBUTE OPERATION
+dDU_SectionTextKeyword( VIEW mSPLDef BASED ON LOD mSPLDef,
+                        STRING ( 32 ) InternalEntityStructure,
+                        STRING ( 32 ) InternalAttribStructure,
+                        SHORT GetOrSetFlag )
+
+   STRING ( 2048 ) szDisplayStatement
+   STRING ( 2048 ) szStatementText
+   STRING ( 256 )  szTitle
+
+   CASE GetOrSetFlag
+   OF   zDERIVED_GET:
+
+      // Directions For Use Display Section Text embeds keywords into the Text.
+      szDisplayStatement = mSPLDef.SPLD_DirectionsForUseSection.Subtitle
+
+      IF szDisplayStatement != ""
+         GenerateKeywordTextIntoString( mSPLDef, szDisplayStatement,
+                                        "SPLD_InsertTextKeywordSectionDU", "SPLD_InsertTextSectionDU", ", " )
+      END
+
+      // Store the calculated value in the object.
+      StoreStringInRecord( mSPLDef, InternalEntityStructure, InternalAttribStructure, szDisplayStatement )
+      RETURN 0
+
+        // end zDERIVED_GET
+   OF   zDERIVED_SET:
+
+        // end zDERIVED_SET
+   END  // case
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: dDU_SectTitleOrTxtKey
+//
+/////////////////////////////////////////////////////////////////////////////
+DERIVED ATTRIBUTE OPERATION
+dDU_SectTitleOrTxtKey( VIEW mSPLDef BASED ON LOD mSPLDef,
+                       STRING ( 32 ) InternalEntityStructure,
+                       STRING ( 32 ) InternalAttribStructure,
+                       SHORT GetOrSetFlag )
+
+   STRING ( 2048 ) szDisplayStatement
+
+   CASE GetOrSetFlag
+   OF   zDERIVED_GET:
+
+      // Directions For Use Display Section Title embeds keywords into the Title.
+      szDisplayStatement = mSPLDef.SPLD_DirectionsForUseSection.Title
+      IF szDisplayStatement = ""
+         szDisplayStatement = mSPLDef.SPLD_DirectionsForUseSection.Subtitle
+      END
+
+      IF szDisplayStatement != ""
+         GenerateKeywordTextIntoString( mSPLDef, szDisplayStatement,
+                                        "SPLD_InsertTextKeywordSectionDU", "SPLD_InsertTextSectionDU", ", " )
+      END
+
+      // Store the calculated value in the object.
+      StoreStringInRecord( mSPLDef, InternalEntityStructure, InternalAttribStructure, szDisplayStatement )
+      RETURN 0
+
+        // end zDERIVED_GET
+   OF   zDERIVED_SET:
+
+        // end zDERIVED_SET
+   END  // case
+
+END

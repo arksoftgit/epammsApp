@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSLCDirectionsForUseCategory   Generate Timestamp: 20170509112942775 --%>
+<%-- wSLCDirectionsForUseCategory   Generate Timestamp: 20170511114519398 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -703,7 +703,7 @@ try
          nRC = vGridDFU_Sections.cursor( "S_DirectionsForUseSection" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridTitle = vGridDFU_Sections.cursor( "S_DirectionsForUseSection" ).getAttribute( "Title" ).getString( "" );
+            strGridTitle = vGridDFU_Sections.cursor( "S_DirectionsForUseSection" ).getAttribute( "dDU_SectionTitleOrTextKeyword" ).getString( "" );
 
             if ( strGridTitle == null )
                strGridTitle = "";

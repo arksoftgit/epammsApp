@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSLCDirectionsForUseSection   Generate Timestamp: 20170509112930075 --%>
+<%-- wSLCDirectionsForUseSection   Generate Timestamp: 20170511111646712 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -35,7 +35,6 @@ public int DoInputMapping( HttpServletRequest request,
    String taskId = (String) session.getAttribute( "ZeidonTaskId" );
    Task task = objectEngine.getTaskById( taskId );
 
-   View mMasLC = null;
    View mSubLC = null;
    View vGridTmp = null; // temp view to grid view
    View vRepeatingGrp = null; // temp view to repeating group view
@@ -58,29 +57,6 @@ public int DoInputMapping( HttpServletRequest request,
    if ( webMapping == false )
       session.setAttribute( "ZeidonError", null );
 
-   mMasLC = task.getViewByName( "mMasLC" );
-   if ( VmlOperation.isValid( mMasLC ) )
-   {
-      // Grid: Grid2
-      iTableRowCnt = 0;
-
-      // We are creating a temp view to the grid view so that if there are 
-      // grids on the same window with the same view we do not mess up the 
-      // entity positions. 
-      vGridTmp = mMasLC.newView( );
-      csrRC = vGridTmp.cursor( "M_ClaimsDrivingUsage" ).setFirst(  );
-      while ( csrRC.isSet() )
-      {
-         lEntityKey = vGridTmp.cursor( "M_ClaimsDrivingUsage" ).getEntityKey( );
-         strEntityKey = Long.toString( lEntityKey );
-         iTableRowCnt++;
-
-         csrRC = vGridTmp.cursor( "M_ClaimsDrivingUsage" ).setNextContinue( );
-      }
-
-      vGridTmp.drop( );
-   }
-
    mSubLC = task.getViewByName( "mSubLC" );
    if ( VmlOperation.isValid( mSubLC ) )
    {
@@ -99,6 +75,42 @@ public int DoInputMapping( HttpServletRequest request,
          iTableRowCnt++;
 
          csrRC = vGridTmp.cursor( "S_DirectionsForUseStatement" ).setNextContinue( );
+      }
+
+      vGridTmp.drop( );
+      // Grid: Grid2
+      iTableRowCnt = 0;
+
+      // We are creating a temp view to the grid view so that if there are 
+      // grids on the same window with the same view we do not mess up the 
+      // entity positions. 
+      vGridTmp = mSubLC.newView( );
+      csrRC = vGridTmp.cursor( "S_ClaimsDrivingUsage" ).setFirst(  );
+      while ( csrRC.isSet() )
+      {
+         lEntityKey = vGridTmp.cursor( "S_ClaimsDrivingUsage" ).getEntityKey( );
+         strEntityKey = Long.toString( lEntityKey );
+         iTableRowCnt++;
+
+         csrRC = vGridTmp.cursor( "S_ClaimsDrivingUsage" ).setNextContinue( );
+      }
+
+      vGridTmp.drop( );
+      // Grid: GridDFU_SectionKeywords
+      iTableRowCnt = 0;
+
+      // We are creating a temp view to the grid view so that if there are 
+      // grids on the same window with the same view we do not mess up the 
+      // entity positions. 
+      vGridTmp = mSubLC.newView( );
+      csrRC = vGridTmp.cursor( "S_InsertTextKeywordSectionDU" ).setFirst(  );
+      while ( csrRC.isSet() )
+      {
+         lEntityKey = vGridTmp.cursor( "S_InsertTextKeywordSectionDU" ).getEntityKey( );
+         strEntityKey = Long.toString( lEntityKey );
+         iTableRowCnt++;
+
+         csrRC = vGridTmp.cursor( "S_InsertTextKeywordSectionDU" ).setNextContinue( );
       }
 
       vGridTmp.drop( );
@@ -609,12 +621,12 @@ else
 <span style="height:16px;">&nbsp</span>
 <% /* DirectionsForUseSection:Text */ %>
 
-<span class="listheader"  id="DirectionsForUseSection" name="DirectionsForUseSection" style="width:238px;height:16px;">Directions for Use Section</span>
+<span class="listheader"  id="DirectionsForUseSection" name="DirectionsForUseSection" style="width:238px;height:16px;" tabindex=-1 >Directions for Use Section</span>
 
 <span style="height:16px;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
 <% /* Category::Text */ %>
 
-<span class="text12lightright"  id="Category:" name="Category:" style="width:90px;height:16px;">  ... Category:</span>
+<span class="text12lightright"  id="Category:" name="Category:" style="width:90px;height:16px;" tabindex=-1 >  ... Category:</span>
 
 <span style="height:16px;">&nbsp</span>
 <% /* DFU_CategoryName:Text */ %>
@@ -642,7 +654,7 @@ else
    }
 %>
 
-<span class="text12light"  id="DFU_CategoryName" name="DFU_CategoryName" style="width:430px;height:16px;"><%=strTextDisplayValue%></span>
+<span class="text12light"  id="DFU_CategoryName" name="DFU_CategoryName" style="width:430px;height:16px;" tabindex=-1 ><%=strTextDisplayValue%></span>
 
 </div>  <!-- End of a new line -->
 
@@ -656,7 +668,7 @@ else
 <span style="height:16px;">&nbsp&nbsp&nbsp&nbsp&nbsp</span>
 <% /* DirectionsUseName::Text */ %>
 
-<span  id="DirectionsUseName:" name="DirectionsUseName:" style="width:130px;height:16px;">Name:</span>
+<span  id="DirectionsUseName:" name="DirectionsUseName:" style="width:130px;height:16px;" tabindex=-1 >Name:</span>
 
 <% /* DirectionsUseName:Text */ %>
 <% strTextDisplayValue = "";
@@ -683,7 +695,7 @@ else
    }
 %>
 
-<span class="text12"  id="DirectionsUseName" name="DirectionsUseName"  title="Required Name to differentiate Directions for Use Sections within a list" style="width:618px;height:16px;"><%=strTextDisplayValue%></span>
+<span class="text12"  id="DirectionsUseName" name="DirectionsUseName"  title="Required Name to differentiate Directions for Use Sections within a list" style="width:618px;height:16px;" tabindex=-1 ><%=strTextDisplayValue%></span>
 
 </div>  <!-- End of a new line -->
 
@@ -697,7 +709,7 @@ else
 <span style="height:16px;">&nbsp&nbsp&nbsp&nbsp&nbsp</span>
 <% /* DirectionsForUseTitle::Text */ %>
 
-<span  id="DirectionsForUseTitle:" name="DirectionsForUseTitle:" style="width:130px;height:16px;">Title:</span>
+<span  id="DirectionsForUseTitle:" name="DirectionsForUseTitle:" style="width:130px;height:16px;" tabindex=-1 >Title:</span>
 
 <% /* DirectionsForUseTitle:Text */ %>
 <% strTextDisplayValue = "";
@@ -724,7 +736,7 @@ else
    }
 %>
 
-<span class="text12"  id="DirectionsForUseTitle" name="DirectionsForUseTitle"  title="Optional Title to appear with text on generated label" style="width:618px;height:32px;"><%=strTextDisplayValue%></span>
+<span class="text12"  id="DirectionsForUseTitle" name="DirectionsForUseTitle"  title="Optional Title to appear with text on generated label" style="width:618px;height:32px;" tabindex=-1 ><%=strTextDisplayValue%></span>
 
 </div>  <!-- End of a new line -->
 
@@ -738,7 +750,7 @@ else
 <span style="height:16px;">&nbsp&nbsp&nbsp&nbsp&nbsp</span>
 <% /* TitleNote::Text */ %>
 
-<span  id="TitleNote:" name="TitleNote:" style="width:130px;height:16px;">Title Note:</span>
+<span  id="TitleNote:" name="TitleNote:" style="width:130px;height:16px;" tabindex=-1 >Title Note:</span>
 
 <% /* TitleNote:Text */ %>
 <% strTextDisplayValue = "";
@@ -765,7 +777,7 @@ else
    }
 %>
 
-<span class="text12"  id="TitleNote" name="TitleNote"  title="Optional Title to appear with text on generated label" style="width:618px;height:16px;"><%=strTextDisplayValue%></span>
+<span class="text12"  id="TitleNote" name="TitleNote"  title="Optional Title to appear with text on generated label" style="width:618px;height:16px;" tabindex=-1 ><%=strTextDisplayValue%></span>
 
 </div>  <!-- End of a new line -->
 
@@ -779,7 +791,7 @@ else
 <span style="height:16px;">&nbsp&nbsp&nbsp&nbsp&nbsp</span>
 <% /* Subtitle::Text */ %>
 
-<span  id="Subtitle:" name="Subtitle:" style="width:130px;height:16px;">Subtitle:</span>
+<span  id="Subtitle:" name="Subtitle:" style="width:130px;height:16px;" tabindex=-1 >Subtitle:</span>
 
 <% /* Subtitle:Text */ %>
 <% strTextDisplayValue = "";
@@ -806,7 +818,7 @@ else
    }
 %>
 
-<span class="text12"  id="Subtitle" name="Subtitle"  title="Optional Title to appear with text on generated label" style="width:618px;height:32px;"><%=strTextDisplayValue%></span>
+<span class="text12"  id="Subtitle" name="Subtitle"  title="Optional Title to appear with text on generated label" style="width:618px;height:32px;" tabindex=-1 ><%=strTextDisplayValue%></span>
 
 </div>  <!-- End of a new line -->
 
@@ -820,7 +832,7 @@ else
 <span style="height:16px;">&nbsp&nbsp&nbsp&nbsp&nbsp</span>
 <% /* SectionEndNote::Text */ %>
 
-<span  id="SectionEndNote:" name="SectionEndNote:" style="width:130px;height:16px;">End Note:</span>
+<span  id="SectionEndNote:" name="SectionEndNote:" style="width:130px;height:16px;" tabindex=-1 >End Note:</span>
 
 <% /* SectionNote:Text */ %>
 <% strTextDisplayValue = "";
@@ -847,7 +859,7 @@ else
    }
 %>
 
-<span class="text12"  id="SectionNote" name="SectionNote"  title="Optional Title to appear with text on generated label" style="width:618px;height:16px;"><%=strTextDisplayValue%></span>
+<span class="text12"  id="SectionNote" name="SectionNote"  title="Optional Title to appear with text on generated label" style="width:618px;height:16px;" tabindex=-1 ><%=strTextDisplayValue%></span>
 
 </div>  <!-- End of a new line -->
 
@@ -861,7 +873,7 @@ else
 <span style="height:16px;">&nbsp&nbsp&nbsp&nbsp&nbsp</span>
 <% /* ExclusiveXOR::Text */ %>
 
-<span  id="ExclusiveXOR:" name="ExclusiveXOR:" style="width:130px;height:16px;">Exclusive To:</span>
+<span  id="ExclusiveXOR:" name="ExclusiveXOR:" style="width:130px;height:16px;" tabindex=-1 >Exclusive To:</span>
 
 <% /* NameXOR:Text */ %>
 <% strTextDisplayValue = "";
@@ -888,7 +900,7 @@ else
    }
 %>
 
-<span  id="NameXOR" name="NameXOR" style="width:218px;height:16px;"><%=strTextDisplayValue%></span>
+<span  id="NameXOR" name="NameXOR" style="width:218px;height:16px;" tabindex=-1 ><%=strTextDisplayValue%></span>
 
 </div>  <!-- End of a new line -->
 
@@ -931,7 +943,7 @@ else
 
 <% /* Text5:Text */ %>
 
-<label class="listheader"  id="Text5" name="Text5" style="width:434px;height:16px;position:absolute;left:4px;top:4px;">Directions for Use Statements</label>
+<label class="listheader"  id="Text5" name="Text5" style="">Directions for Use Statements</label>
 
 
 </div>  <!--  GroupBox9 --> 
@@ -1027,6 +1039,224 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 
 </div> <!-- End of Tab item TabCtl1 -->
 
+<div id="Keywords" class="tab-page " > <!-- Tab item Keywords -->
+<h2 class="tab"><span>Keywords</span></h2>
+<script type="text/javascript">Tab1.addTabPage( document.getElementById( "Keywords" ) );</script>
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:4px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<span style="height:16px;">&nbsp&nbsp</span>
+<% /* DirectionsForUseTitleKey::Text */ %>
+
+<span  id="DirectionsForUseTitleKey:" name="DirectionsForUseTitleKey:" style="width:70px;height:16px;" tabindex=-1 >Title:</span>
+
+<span style="height:16px;">&nbsp</span>
+<% /* DirectionsForUseTitleKey:Text */ %>
+<% strTextDisplayValue = "";
+   mSubLC = task.getViewByName( "mSubLC" );
+   if ( VmlOperation.isValid( mSubLC ) == false )
+      task.log( ).debug( "Invalid View: " + "DirectionsForUseTitleKey" );
+   else
+   {
+      nRC = mSubLC.cursor( "S_DirectionsForUseSection" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+      {
+      try
+      {
+         strTextDisplayValue = mSubLC.cursor( "S_DirectionsForUseSection" ).getAttribute( "dDU_SectionTitleKeyword" ).getString( "" );
+      }
+      catch (Exception e)
+      {
+         out.println("There is an error on DirectionsForUseTitleKey: " + e.getMessage());
+         task.log().info( "*** Error on ctrl DirectionsForUseTitleKey" + e.getMessage() );
+      }
+         if ( strTextDisplayValue == null )
+            strTextDisplayValue = "";
+      }
+   }
+%>
+
+<span class="text12"  id="DirectionsForUseTitleKey" name="DirectionsForUseTitleKey"  title="Optional Title to appear with text on generated label" style="width:698px;height:16px;" tabindex=-1 ><%=strTextDisplayValue%></span>
+
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:4px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<span style="height:16px;">&nbsp&nbsp</span>
+<% /* SubtitleKey::Text */ %>
+
+<span  id="SubtitleKey:" name="SubtitleKey:" style="width:70px;height:16px;" tabindex=-1 >Subtitle:</span>
+
+<span style="height:16px;">&nbsp</span>
+<% /* SubtitleKey:Text */ %>
+<% strTextDisplayValue = "";
+   mSubLC = task.getViewByName( "mSubLC" );
+   if ( VmlOperation.isValid( mSubLC ) == false )
+      task.log( ).debug( "Invalid View: " + "SubtitleKey" );
+   else
+   {
+      nRC = mSubLC.cursor( "S_DirectionsForUseSection" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+      {
+      try
+      {
+         strTextDisplayValue = mSubLC.cursor( "S_DirectionsForUseSection" ).getAttribute( "dDU_SectionTextKeyword" ).getString( "" );
+      }
+      catch (Exception e)
+      {
+         out.println("There is an error on SubtitleKey: " + e.getMessage());
+         task.log().info( "*** Error on ctrl SubtitleKey" + e.getMessage() );
+      }
+         if ( strTextDisplayValue == null )
+            strTextDisplayValue = "";
+      }
+   }
+%>
+
+<span class="text12"  id="SubtitleKey" name="SubtitleKey"  title="Optional Title to appear with text on generated label" style="width:698px;height:16px;" tabindex=-1 ><%=strTextDisplayValue%></span>
+
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:6px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GroupBox11:GroupBox */ %>
+
+<div id="GroupBox11" name="GroupBox11" style="width:778px;float:left;">  <!-- GroupBox11 --> 
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:8px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<% /* GroupBox7:GroupBox */ %>
+
+<div id="GroupBox7" name="GroupBox7"   style="float:left;position:relative; width:756px; height:30px;">  <!-- GroupBox7 --> 
+
+<% /* KeywordTextEmbedding:Text */ %>
+
+<label class="listheader"  id="KeywordTextEmbedding" name="KeywordTextEmbedding" style="">Keyword text for Embedding in Section Title/Subtitle</label>
+
+
+</div>  <!--  GroupBox7 --> 
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:8px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GridDFU_SectionKeywords:Grid */ %>
+<table  cols=2 style=""  name="GridDFU_SectionKeywords" id="GridDFU_SectionKeywords">
+
+<thead><tr>
+
+   <th>Keyword</th>
+   <th>Keyword Text</th>
+
+</tr></thead>
+
+<tbody>
+
+<%
+try
+{
+   iTableRowCnt = 0;
+   mSubLC = task.getViewByName( "mSubLC" );
+   if ( VmlOperation.isValid( mSubLC ) )
+   {
+      long   lEntityKey;
+      String strEntityKey;
+      String strButtonName;
+      String strOdd;
+      String strTag;
+      String strKeywordName;
+      String strKeywordText;
+      
+      View vGridDFU_SectionKeywords;
+      vGridDFU_SectionKeywords = mSubLC.newView( );
+      csrRC2 = vGridDFU_SectionKeywords.cursor( "S_InsertTextKeywordSectionDU" ).setFirst(  );
+      while ( csrRC2.isSet() )
+      {
+         strOdd = (iTableRowCnt % 2) != 0 ? " class='odd'" : "";
+         iTableRowCnt++;
+
+         lEntityKey = vGridDFU_SectionKeywords.cursor( "S_InsertTextKeywordSectionDU" ).getEntityKey( );
+         strEntityKey = Long.toString( lEntityKey );
+         strKeywordName = "";
+         nRC = vGridDFU_SectionKeywords.cursor( "S_InsertTextKeywordSectionDU" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            strKeywordName = vGridDFU_SectionKeywords.cursor( "S_InsertTextKeywordSectionDU" ).getAttribute( "Name" ).getString( "" );
+
+            if ( strKeywordName == null )
+               strKeywordName = "";
+         }
+
+         if ( StringUtils.isBlank( strKeywordName ) )
+            strKeywordName = "&nbsp";
+
+         strKeywordText = "";
+         nRC = vGridDFU_SectionKeywords.cursor( "S_InsertTextSectionDU" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            strKeywordText = vGridDFU_SectionKeywords.cursor( "S_InsertTextSectionDU" ).getAttribute( "Text" ).getString( "" );
+
+            if ( strKeywordText == null )
+               strKeywordText = "";
+         }
+
+         if ( StringUtils.isBlank( strKeywordText ) )
+            strKeywordText = "&nbsp";
+
+%>
+
+<tr<%=strOdd%>>
+
+   <td><%=strKeywordName%></td>
+   <td><%=strKeywordText%></td>
+
+</tr>
+
+<%
+         csrRC2 = vGridDFU_SectionKeywords.cursor( "S_InsertTextKeywordSectionDU" ).setNextContinue( );
+      }
+      vGridDFU_SectionKeywords.drop( );
+   }
+}
+catch (Exception e)
+{
+out.println("There is an error in grid: " + e.getMessage());
+task.log().info( "*** Error in grid" + e.getMessage() );
+}
+%>
+</tbody>
+</table>
+
+</div>  <!-- End of a new line -->
+
+
+</div>  <!--  GroupBox11 --> 
+</div>  <!-- End of a new line -->
+
+</div> <!-- End of Tab item Keywords -->
+
 <div id="TabCtl2" class="tab-page " > <!-- Tab item TabCtl2 -->
 <h2 class="tab"><span>SLC Claims Driving Section</span></h2>
 <script type="text/javascript">Tab1.addTabPage( document.getElementById( "TabCtl2" ) );</script>
@@ -1052,7 +1282,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 
 <% /* Text4:Text */ %>
 
-<label class="listheader"  id="Text4" name="Text4" style="width:480px;height:16px;position:absolute;left:4px;top:4px;">Claims that Drive the current Section to be included in the SLC</label>
+<label class="listheader"  id="Text4" name="Text4" style="">Claims that Drive the current Section to be included in the SLC</label>
 
 
 </div>  <!--  GroupBox8 --> 
@@ -1186,7 +1416,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 
 <% /* Text7:Text */ %>
 
-<label class="listheader"  id="Text7" name="Text7" style="width:480px;height:16px;position:absolute;left:4px;top:4px;">Claims that Drive the current Section to be included in the SLC</label>
+<label class="listheader"  id="Text7" name="Text7" style="">Claims that Drive the current Section to be included in the SLC</label>
 
 
 </div>  <!--  GroupBox10 --> 
@@ -1216,8 +1446,8 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 try
 {
    iTableRowCnt = 0;
-   mMasLC = task.getViewByName( "mMasLC" );
-   if ( VmlOperation.isValid( mMasLC ) )
+   mSubLC = task.getViewByName( "mSubLC" );
+   if ( VmlOperation.isValid( mSubLC ) )
    {
       long   lEntityKey;
       String strEntityKey;
@@ -1228,20 +1458,20 @@ try
       String strGridEditCtl4;
       
       View vGrid2;
-      vGrid2 = mMasLC.newView( );
-      csrRC2 = vGrid2.cursor( "M_ClaimsDrivingUsage" ).setFirst(  );
+      vGrid2 = mSubLC.newView( );
+      csrRC2 = vGrid2.cursor( "S_ClaimsDrivingUsage" ).setFirst(  );
       while ( csrRC2.isSet() )
       {
          strOdd = (iTableRowCnt % 2) != 0 ? " class='odd'" : "";
          iTableRowCnt++;
 
-         lEntityKey = vGrid2.cursor( "M_ClaimsDrivingUsage" ).getEntityKey( );
+         lEntityKey = vGrid2.cursor( "S_ClaimsDrivingUsage" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
          strGridEditCtl3 = "";
-         nRC = vGrid2.cursor( "M_ClaimsDrivingUsage" ).checkExistenceOfEntity( ).toInt();
+         nRC = vGrid2.cursor( "S_ClaimsDrivingUsage" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl3 = vGrid2.cursor( "M_ClaimsDrivingUsage" ).getAttribute( "ClaimsClassification" ).getString( "" );
+            strGridEditCtl3 = vGrid2.cursor( "S_ClaimsDrivingUsage" ).getAttribute( "ClaimsClassification" ).getString( "" );
 
             if ( strGridEditCtl3 == null )
                strGridEditCtl3 = "";
@@ -1251,10 +1481,10 @@ try
             strGridEditCtl3 = "&nbsp";
 
          strGridEditCtl4 = "";
-         nRC = vGrid2.cursor( "M_ClaimsDrivingUsage" ).checkExistenceOfEntity( ).toInt();
+         nRC = vGrid2.cursor( "S_ClaimsDrivingUsage" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl4 = vGrid2.cursor( "M_ClaimsDrivingUsage" ).getAttribute( "dDisplayUsageName" ).getString( "" );
+            strGridEditCtl4 = vGrid2.cursor( "S_ClaimsDrivingUsage" ).getAttribute( "dDisplayUsageName" ).getString( "" );
 
             if ( strGridEditCtl4 == null )
                strGridEditCtl4 = "";
@@ -1273,7 +1503,7 @@ try
 </tr>
 
 <%
-         csrRC2 = vGrid2.cursor( "M_ClaimsDrivingUsage" ).setNextContinue( );
+         csrRC2 = vGrid2.cursor( "S_ClaimsDrivingUsage" ).setNextContinue( );
       }
       vGrid2.drop( );
    }

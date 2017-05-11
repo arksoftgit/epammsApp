@@ -20334,12 +20334,255 @@ omSPLDef_dDU_SubStmtTitleTxtKey( View     mSPLDef,
 
 
 //:DERIVED ATTRIBUTE OPERATION
-//:dSD_StmtTitleKey( VIEW mSPLDef BASED ON LOD mSPLDef,
-//:                  STRING ( 32 ) InternalEntityStructure,
-//:                  STRING ( 32 ) InternalAttribStructure,
-//:                  SHORT GetOrSetFlag )
+//:dDU_SectionTitleKeyword( VIEW mSPLDef BASED ON LOD mSPLDef,
+//:                         STRING ( 32 ) InternalEntityStructure,
+//:                         STRING ( 32 ) InternalAttribStructure,
+//:                         SHORT GetOrSetFlag )
 
-//:   STRING ( 2048 ) szStatementTitle
+//:   STRING ( 2048 ) szDisplayStatement
+public int 
+omSPLDef_dDU_SectionTitleKeyword( View     mSPLDef,
+                                  String InternalEntityStructure,
+                                  String InternalAttribStructure,
+                                  Integer   GetOrSetFlag )
+{
+   String   szDisplayStatement = null;
+   int      lTempInteger_0 = 0;
+
+
+   //:CASE GetOrSetFlag
+   switch( GetOrSetFlag )
+   { 
+      //:OF   zDERIVED_GET:
+      case zDERIVED_GET :
+
+         //:// Directions For Use Display Section Title embeds keywords into the Title.
+         //:szDisplayStatement = mSPLDef.SPLD_DirectionsForUseSection.Title
+         {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
+         StringBuilder sb_szDisplayStatement;
+         if ( szDisplayStatement == null )
+            sb_szDisplayStatement = new StringBuilder( 32 );
+         else
+            sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
+                   GetVariableFromAttribute( sb_szDisplayStatement, mi_lTempInteger_0, 'S', 2049, mSPLDef, "SPLD_DirectionsForUseSection", "Title", "", 0 );
+         lTempInteger_0 = mi_lTempInteger_0.intValue( );
+         szDisplayStatement = sb_szDisplayStatement.toString( );}
+
+         //:IF szDisplayStatement != ""
+         if ( ZeidonStringCompare( szDisplayStatement, 1, 0, "", 1, 0, 2049 ) != 0 )
+         { 
+            //:GenerateKeywordTextIntoString( mSPLDef, szDisplayStatement,
+            //:                            "SPLD_InsertTextKeywordSectionDU", "SPLD_InsertTextSectionDU", ", " )
+            {
+             ZGlobal1_Operation m_ZGlobal1_Operation = new ZGlobal1_Operation( mSPLDef );
+             {StringBuilder sb_szDisplayStatement;
+            if ( szDisplayStatement == null )
+               sb_szDisplayStatement = new StringBuilder( 32 );
+            else
+               sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
+                         m_ZGlobal1_Operation.GenerateKeywordTextIntoString( mSPLDef, sb_szDisplayStatement, "SPLD_InsertTextKeywordSectionDU", "SPLD_InsertTextSectionDU", ", " );
+            szDisplayStatement = sb_szDisplayStatement.toString( );}
+             // m_ZGlobal1_Operation = null;  // permit gc  (unnecessary)
+            }
+         } 
+
+         //:END
+
+         //:// Store the calculated value in the object.
+         //:StoreStringInRecord( mSPLDef, InternalEntityStructure, InternalAttribStructure, szDisplayStatement )
+         StoreStringInRecord( mSPLDef, InternalEntityStructure, InternalAttribStructure, szDisplayStatement );
+         //:RETURN 0
+         if(8==8)return( 0 );
+
+         //:// end zDERIVED_GET
+         //:OF   zDERIVED_SET:
+         case zDERIVED_SET :
+            break ;
+      } 
+
+
+      //:  // end zDERIVED_SET
+      //:END  // case
+      return( 0 );
+   } 
+
+
+   //:DERIVED ATTRIBUTE OPERATION
+   //:dDU_SectionTextKeyword( VIEW mSPLDef BASED ON LOD mSPLDef,
+   //:                     STRING ( 32 ) InternalEntityStructure,
+   //:                     STRING ( 32 ) InternalAttribStructure,
+   //:                     SHORT GetOrSetFlag )
+
+   //:STRING ( 2048 ) szDisplayStatement
+public int 
+omSPLDef_dDU_SectionTextKeyword( View     mSPLDef,
+                                 String InternalEntityStructure,
+                                 String InternalAttribStructure,
+                                 Integer   GetOrSetFlag )
+{
+   String   szDisplayStatement = null;
+   //:STRING ( 2048 ) szStatementText
+   String   szStatementText = null;
+   //:STRING ( 256 )  szTitle
+   String   szTitle = null;
+   int      lTempInteger_0 = 0;
+
+
+   //:CASE GetOrSetFlag
+   switch( GetOrSetFlag )
+   { 
+      //:OF   zDERIVED_GET:
+      case zDERIVED_GET :
+
+         //:// Directions For Use Display Section Text embeds keywords into the Text.
+         //:szDisplayStatement = mSPLDef.SPLD_DirectionsForUseSection.Subtitle
+         {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
+         StringBuilder sb_szDisplayStatement;
+         if ( szDisplayStatement == null )
+            sb_szDisplayStatement = new StringBuilder( 32 );
+         else
+            sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
+                   GetVariableFromAttribute( sb_szDisplayStatement, mi_lTempInteger_0, 'S', 2049, mSPLDef, "SPLD_DirectionsForUseSection", "Subtitle", "", 0 );
+         lTempInteger_0 = mi_lTempInteger_0.intValue( );
+         szDisplayStatement = sb_szDisplayStatement.toString( );}
+
+         //:IF szDisplayStatement != ""
+         if ( ZeidonStringCompare( szDisplayStatement, 1, 0, "", 1, 0, 2049 ) != 0 )
+         { 
+            //:GenerateKeywordTextIntoString( mSPLDef, szDisplayStatement,
+            //:                            "SPLD_InsertTextKeywordSectionDU", "SPLD_InsertTextSectionDU", ", " )
+            {
+             ZGlobal1_Operation m_ZGlobal1_Operation = new ZGlobal1_Operation( mSPLDef );
+             {StringBuilder sb_szDisplayStatement;
+            if ( szDisplayStatement == null )
+               sb_szDisplayStatement = new StringBuilder( 32 );
+            else
+               sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
+                         m_ZGlobal1_Operation.GenerateKeywordTextIntoString( mSPLDef, sb_szDisplayStatement, "SPLD_InsertTextKeywordSectionDU", "SPLD_InsertTextSectionDU", ", " );
+            szDisplayStatement = sb_szDisplayStatement.toString( );}
+             // m_ZGlobal1_Operation = null;  // permit gc  (unnecessary)
+            }
+         } 
+
+         //:END
+
+         //:// Store the calculated value in the object.
+         //:StoreStringInRecord( mSPLDef, InternalEntityStructure, InternalAttribStructure, szDisplayStatement )
+         StoreStringInRecord( mSPLDef, InternalEntityStructure, InternalAttribStructure, szDisplayStatement );
+         //:RETURN 0
+         if(8==8)return( 0 );
+
+         //:// end zDERIVED_GET
+         //:OF   zDERIVED_SET:
+         case zDERIVED_SET :
+            break ;
+      } 
+
+
+      //:  // end zDERIVED_SET
+      //:END  // case
+      return( 0 );
+   } 
+
+
+   //:DERIVED ATTRIBUTE OPERATION
+   //:dDU_SectTitleOrTxtKey( VIEW mSPLDef BASED ON LOD mSPLDef,
+   //:                    STRING ( 32 ) InternalEntityStructure,
+   //:                    STRING ( 32 ) InternalAttribStructure,
+   //:                    SHORT GetOrSetFlag )
+
+   //:STRING ( 2048 ) szDisplayStatement
+public int 
+omSPLDef_dDU_SectTitleOrTxtKey( View     mSPLDef,
+                                String InternalEntityStructure,
+                                String InternalAttribStructure,
+                                Integer   GetOrSetFlag )
+{
+   String   szDisplayStatement = null;
+   int      lTempInteger_0 = 0;
+   int      lTempInteger_1 = 0;
+
+
+   //:CASE GetOrSetFlag
+   switch( GetOrSetFlag )
+   { 
+      //:OF   zDERIVED_GET:
+      case zDERIVED_GET :
+
+         //:// Directions For Use Display Section Title embeds keywords into the Title.
+         //:szDisplayStatement = mSPLDef.SPLD_DirectionsForUseSection.Title
+         {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
+         StringBuilder sb_szDisplayStatement;
+         if ( szDisplayStatement == null )
+            sb_szDisplayStatement = new StringBuilder( 32 );
+         else
+            sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
+                   GetVariableFromAttribute( sb_szDisplayStatement, mi_lTempInteger_0, 'S', 2049, mSPLDef, "SPLD_DirectionsForUseSection", "Title", "", 0 );
+         lTempInteger_0 = mi_lTempInteger_0.intValue( );
+         szDisplayStatement = sb_szDisplayStatement.toString( );}
+         //:IF szDisplayStatement = ""
+         if ( ZeidonStringCompare( szDisplayStatement, 1, 0, "", 1, 0, 2049 ) == 0 )
+         { 
+            //:szDisplayStatement = mSPLDef.SPLD_DirectionsForUseSection.Subtitle
+            {MutableInt mi_lTempInteger_1 = new MutableInt( lTempInteger_1 );
+            StringBuilder sb_szDisplayStatement;
+            if ( szDisplayStatement == null )
+               sb_szDisplayStatement = new StringBuilder( 32 );
+            else
+               sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
+                         GetVariableFromAttribute( sb_szDisplayStatement, mi_lTempInteger_1, 'S', 2049, mSPLDef, "SPLD_DirectionsForUseSection", "Subtitle", "", 0 );
+            lTempInteger_1 = mi_lTempInteger_1.intValue( );
+            szDisplayStatement = sb_szDisplayStatement.toString( );}
+         } 
+
+         //:END
+
+         //:IF szDisplayStatement != ""
+         if ( ZeidonStringCompare( szDisplayStatement, 1, 0, "", 1, 0, 2049 ) != 0 )
+         { 
+            //:GenerateKeywordTextIntoString( mSPLDef, szDisplayStatement,
+            //:                            "SPLD_InsertTextKeywordSectionDU", "SPLD_InsertTextSectionDU", ", " )
+            {
+             ZGlobal1_Operation m_ZGlobal1_Operation = new ZGlobal1_Operation( mSPLDef );
+             {StringBuilder sb_szDisplayStatement;
+            if ( szDisplayStatement == null )
+               sb_szDisplayStatement = new StringBuilder( 32 );
+            else
+               sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
+                         m_ZGlobal1_Operation.GenerateKeywordTextIntoString( mSPLDef, sb_szDisplayStatement, "SPLD_InsertTextKeywordSectionDU", "SPLD_InsertTextSectionDU", ", " );
+            szDisplayStatement = sb_szDisplayStatement.toString( );}
+             // m_ZGlobal1_Operation = null;  // permit gc  (unnecessary)
+            }
+         } 
+
+         //:END
+
+         //:// Store the calculated value in the object.
+         //:StoreStringInRecord( mSPLDef, InternalEntityStructure, InternalAttribStructure, szDisplayStatement )
+         StoreStringInRecord( mSPLDef, InternalEntityStructure, InternalAttribStructure, szDisplayStatement );
+         //:RETURN 0
+         if(8==8)return( 0 );
+
+         //:// end zDERIVED_GET
+         //:OF   zDERIVED_SET:
+         case zDERIVED_SET :
+            break ;
+      } 
+
+
+      //:  // end zDERIVED_SET
+      //:END  // case
+      return( 0 );
+   } 
+
+
+   //:DERIVED ATTRIBUTE OPERATION
+   //:dSD_StmtTitleKey( VIEW mSPLDef BASED ON LOD mSPLDef,
+   //:               STRING ( 32 ) InternalEntityStructure,
+   //:               STRING ( 32 ) InternalAttribStructure,
+   //:               SHORT GetOrSetFlag )
+
+   //:STRING ( 2048 ) szStatementTitle
 public int 
 omSPLDef_dSD_StmtTitleKey( View     mSPLDef,
                            String InternalEntityStructure,

@@ -3937,13 +3937,13 @@ public class FileServer {
                   }
                   $optgroup = $('<optgroup label="' + sectionType + '"></optgroup>');
             // }
-         // }
+            }
          // if ( sectionType !== "" ) {
                var $option = $("<option></option>");
                $option.val( item.Name );
                $option.text( item.Name + ":" + item.Description );
                $optgroup.append( $option );
-            }
+         // }
          });
          if ( $optgroup !== null ) {
             $optgroup.appendTo( $select );

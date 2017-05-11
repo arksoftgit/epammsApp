@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSPLDSPLD_EnvironmentalHazards   Generate Timestamp: 20170427160416986 --%>
+<%-- wSPLDSPLD_EnvironmentalHazards   Generate Timestamp: 20170510192453621 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -237,7 +237,7 @@ if ( strActionToProcess != null )
       }
 
       // Next Window
-      strNextJSP_Name = wSPLD.SetWebRedirection( vKZXMLPGO, wSPLD.zWAB_StartModalSubwindow, "wSLC", "EnvironmentalHazardsSection" );
+      strNextJSP_Name = wSPLD.SetWebRedirection( vKZXMLPGO, wSPLD.zWAB_StartModalSubwindow, "wSPLD", "EnvironmentalHazardsSection" );
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
@@ -1226,19 +1226,15 @@ else
    <input name="zDisable" id="zDisable" type="hidden" value="NOVALUE">
 
 <%
-   View lMLC = null;
-   View lSPLDLST = null;
    View mLLD_LST = null;
-   View mMasLC = null;
-   View mPrimReg = null;
-   View ReusableBlock = null;
+   View lSPLDLST = null;
+   View mSubProd = null;
    View mSPLDef = null;
-   View mMasProd = null;
    View mSPLDefBlock = null;
    View mSPLDefPanel = null;
    View mSubLC = null;
-   View mSubProd = null;
-   View mSubreg = null;
+   View mMasLC = null;
+   View ReusableBlock = null;
    View wWebXfer = null;
    String strRadioGroupValue = "";
    String strComboCurrentValue = "";

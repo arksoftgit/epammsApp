@@ -1,4 +1,4 @@
-z1000-Zeidon    EPAMMS   TZCMLPLO                         05/10/17   13:56:14 1.0a2   
+z1000-Zeidon    EPAMMS   TZCMLPLO                         05/11/17   11:45:45 1.0a2   
 eLPLR      1
 aName      epamms
 aDesc      ePamms Application
@@ -6,7 +6,7 @@ aZKey      4324720
 aPgmSrcDir %kzd%:\lplr\epamms
 aExecDir   %kzd%:\lplr\epamms\bin
 aMetaSrcDir %kzd%:\lplr\epamms
-aTaskUseCount 0
+aTaskUseCount 1
 aLastBuildDate 20170428090028615
 aLPLR_Type 2
 aCurrentCompilerSpec DKS
@@ -1354,8 +1354,8 @@ aStatus    1
 aUpdateInd 2
 aName      mSPLDef
 aDesc      Subregistrant Physical Label Maintenance
-aLastSyncDate 20170509173656888
-aLastUpdateDate 20170509173656888
+aLastSyncDate 20170511103702440
+aLastUpdateDate 20170511103702440
 
 eW_MetaDef 3
 aCPLR_ZKey 69035258
@@ -1363,8 +1363,8 @@ aStatus    1
 aUpdateInd 2
 aName      mSubLC
 aDesc      Subregistrant Label Content Maintenance
-aLastSyncDate 20170509172644489
-aLastUpdateDate 20170509172644489
+aLastSyncDate 20170511103612463
+aLastUpdateDate 20170511103612463
 
 eW_MetaDef 3
 aCPLR_ZKey 1157934
@@ -2189,8 +2189,8 @@ aStatus    1
 aUpdateInd 2
 aName      wSLC
 aDesc      Subregistrant Label Content
-aLastSyncDate 20170510135542802
-aLastUpdateDate 20170510135542802
+aLastSyncDate 20170511114516045
+aLastUpdateDate 20170511114516045
 
 eW_MetaDef 3
 aCPLR_ZKey 11205
@@ -2198,8 +2198,8 @@ aStatus    1
 aUpdateInd 2
 aName      wSPLD
 aDesc      Subregistrant Physical Label Definition
-aLastSyncDate 20170510135556449
-aLastUpdateDate 20170510135556449
+aLastSyncDate 20170511114545278
+aLastUpdateDate 20170511114545278
 
 eW_MetaDef 3
 aCPLR_ZKey 93086489

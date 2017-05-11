@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSPLDDirectionsForUseSection   Generate Timestamp: 20170510095828813 --%>
+<%-- wSPLDDirectionsForUseSection   Generate Timestamp: 20170511111619435 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -78,7 +78,25 @@ public int DoInputMapping( HttpServletRequest request,
       }
 
       vGridTmp.drop( );
-      // Grid: Grid2
+      // Grid: GridDFU_SectionKeywords
+      iTableRowCnt = 0;
+
+      // We are creating a temp view to the grid view so that if there are 
+      // grids on the same window with the same view we do not mess up the 
+      // entity positions. 
+      vGridTmp = mSPLDef.newView( );
+      csrRC = vGridTmp.cursor( "SPLD_InsertTextKeywordSectionDU" ).setFirst(  );
+      while ( csrRC.isSet() )
+      {
+         lEntityKey = vGridTmp.cursor( "SPLD_InsertTextKeywordSectionDU" ).getEntityKey( );
+         strEntityKey = Long.toString( lEntityKey );
+         iTableRowCnt++;
+
+         csrRC = vGridTmp.cursor( "SPLD_InsertTextKeywordSectionDU" ).setNextContinue( );
+      }
+
+      vGridTmp.drop( );
+      // Grid: Grid1
       iTableRowCnt = 0;
 
       // We are creating a temp view to the grid view so that if there are 
@@ -96,7 +114,7 @@ public int DoInputMapping( HttpServletRequest request,
       }
 
       vGridTmp.drop( );
-      // Grid: Grid1
+      // Grid: Grid2
       iTableRowCnt = 0;
 
       // We are creating a temp view to the grid view so that if there are 
@@ -1032,6 +1050,224 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 </div>  <!-- End of a new line -->
 
 </div> <!-- End of Tab item TabCtl1 -->
+
+<div id="Keywords" class="tab-page " > <!-- Tab item Keywords -->
+<h2 class="tab"><span>Keywords</span></h2>
+<script type="text/javascript">Tab1.addTabPage( document.getElementById( "Keywords" ) );</script>
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:4px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<span style="height:16px;">&nbsp&nbsp</span>
+<% /* DirectionsForUseTitleKey::Text */ %>
+
+<span  id="DirectionsForUseTitleKey:" name="DirectionsForUseTitleKey:" style="width:70px;height:16px;" tabindex=-1 >Title:</span>
+
+<span style="height:16px;">&nbsp</span>
+<% /* DirectionsForUseTitleKey:Text */ %>
+<% strTextDisplayValue = "";
+   mSPLDef = task.getViewByName( "mSPLDef" );
+   if ( VmlOperation.isValid( mSPLDef ) == false )
+      task.log( ).debug( "Invalid View: " + "DirectionsForUseTitleKey" );
+   else
+   {
+      nRC = mSPLDef.cursor( "SPLD_DirectionsForUseSection" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+      {
+      try
+      {
+         strTextDisplayValue = mSPLDef.cursor( "SPLD_DirectionsForUseSection" ).getAttribute( "dDU_SectionTitleKeyword" ).getString( "" );
+      }
+      catch (Exception e)
+      {
+         out.println("There is an error on DirectionsForUseTitleKey: " + e.getMessage());
+         task.log().info( "*** Error on ctrl DirectionsForUseTitleKey" + e.getMessage() );
+      }
+         if ( strTextDisplayValue == null )
+            strTextDisplayValue = "";
+      }
+   }
+%>
+
+<span class="text12"  id="DirectionsForUseTitleKey" name="DirectionsForUseTitleKey"  title="Optional Title to appear with text on generated label" style="width:698px;height:16px;" tabindex=-1 ><%=strTextDisplayValue%></span>
+
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:4px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<span style="height:16px;">&nbsp&nbsp</span>
+<% /* SubtitleKey::Text */ %>
+
+<span  id="SubtitleKey:" name="SubtitleKey:" style="width:70px;height:16px;" tabindex=-1 >Subtitle:</span>
+
+<span style="height:16px;">&nbsp</span>
+<% /* SubtitleKey:Text */ %>
+<% strTextDisplayValue = "";
+   mSPLDef = task.getViewByName( "mSPLDef" );
+   if ( VmlOperation.isValid( mSPLDef ) == false )
+      task.log( ).debug( "Invalid View: " + "SubtitleKey" );
+   else
+   {
+      nRC = mSPLDef.cursor( "SPLD_DirectionsForUseSection" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+      {
+      try
+      {
+         strTextDisplayValue = mSPLDef.cursor( "SPLD_DirectionsForUseSection" ).getAttribute( "dDU_SectionTextKeyword" ).getString( "" );
+      }
+      catch (Exception e)
+      {
+         out.println("There is an error on SubtitleKey: " + e.getMessage());
+         task.log().info( "*** Error on ctrl SubtitleKey" + e.getMessage() );
+      }
+         if ( strTextDisplayValue == null )
+            strTextDisplayValue = "";
+      }
+   }
+%>
+
+<span class="text12"  id="SubtitleKey" name="SubtitleKey"  title="Optional Title to appear with text on generated label" style="width:698px;height:16px;" tabindex=-1 ><%=strTextDisplayValue%></span>
+
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:6px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GroupBox12:GroupBox */ %>
+
+<div id="GroupBox12" name="GroupBox12" style="width:778px;float:left;">  <!-- GroupBox12 --> 
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:8px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<% /* GroupBox11:GroupBox */ %>
+
+<div id="GroupBox11" name="GroupBox11"   style="float:left;position:relative; width:756px; height:30px;">  <!-- GroupBox11 --> 
+
+<% /* KeywordTextEmbedding:Text */ %>
+
+<label class="listheader"  id="KeywordTextEmbedding" name="KeywordTextEmbedding" style="">Keyword text for Embedding in Section Title/Subtitle</label>
+
+
+</div>  <!--  GroupBox11 --> 
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:8px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GridDFU_SectionKeywords:Grid */ %>
+<table  cols=2 style=""  name="GridDFU_SectionKeywords" id="GridDFU_SectionKeywords">
+
+<thead><tr>
+
+   <th>Keyword</th>
+   <th>Keyword Text</th>
+
+</tr></thead>
+
+<tbody>
+
+<%
+try
+{
+   iTableRowCnt = 0;
+   mSPLDef = task.getViewByName( "mSPLDef" );
+   if ( VmlOperation.isValid( mSPLDef ) )
+   {
+      long   lEntityKey;
+      String strEntityKey;
+      String strButtonName;
+      String strOdd;
+      String strTag;
+      String strKeywordName;
+      String strKeywordText;
+      
+      View vGridDFU_SectionKeywords;
+      vGridDFU_SectionKeywords = mSPLDef.newView( );
+      csrRC2 = vGridDFU_SectionKeywords.cursor( "SPLD_InsertTextKeywordSectionDU" ).setFirst(  );
+      while ( csrRC2.isSet() )
+      {
+         strOdd = (iTableRowCnt % 2) != 0 ? " class='odd'" : "";
+         iTableRowCnt++;
+
+         lEntityKey = vGridDFU_SectionKeywords.cursor( "SPLD_InsertTextKeywordSectionDU" ).getEntityKey( );
+         strEntityKey = Long.toString( lEntityKey );
+         strKeywordName = "";
+         nRC = vGridDFU_SectionKeywords.cursor( "SPLD_InsertTextKeywordSectionDU" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            strKeywordName = vGridDFU_SectionKeywords.cursor( "SPLD_InsertTextKeywordSectionDU" ).getAttribute( "Name" ).getString( "" );
+
+            if ( strKeywordName == null )
+               strKeywordName = "";
+         }
+
+         if ( StringUtils.isBlank( strKeywordName ) )
+            strKeywordName = "&nbsp";
+
+         strKeywordText = "";
+         nRC = vGridDFU_SectionKeywords.cursor( "SPLD_InsertTextSectionDU" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            strKeywordText = vGridDFU_SectionKeywords.cursor( "SPLD_InsertTextSectionDU" ).getAttribute( "Text" ).getString( "" );
+
+            if ( strKeywordText == null )
+               strKeywordText = "";
+         }
+
+         if ( StringUtils.isBlank( strKeywordText ) )
+            strKeywordText = "&nbsp";
+
+%>
+
+<tr<%=strOdd%>>
+
+   <td><%=strKeywordName%></td>
+   <td><%=strKeywordText%></td>
+
+</tr>
+
+<%
+         csrRC2 = vGridDFU_SectionKeywords.cursor( "SPLD_InsertTextKeywordSectionDU" ).setNextContinue( );
+      }
+      vGridDFU_SectionKeywords.drop( );
+   }
+}
+catch (Exception e)
+{
+out.println("There is an error in grid: " + e.getMessage());
+task.log().info( "*** Error in grid" + e.getMessage() );
+}
+%>
+</tbody>
+</table>
+
+</div>  <!-- End of a new line -->
+
+
+</div>  <!--  GroupBox12 --> 
+</div>  <!-- End of a new line -->
+
+</div> <!-- End of Tab item Keywords -->
 
 <div id="TabCtl2" class="tab-page " > <!-- Tab item TabCtl2 -->
 <h2 class="tab"><span>SLC Claims Driving Section</span></h2>

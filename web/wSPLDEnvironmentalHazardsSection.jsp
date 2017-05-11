@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSPLDSPLD_DirectionsForUseCategory   Generate Timestamp: 20170511114547434 --%>
+<%-- wSPLDEnvironmentalHazardsSection   Generate Timestamp: 20170510192446392 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -60,21 +60,21 @@ public int DoInputMapping( HttpServletRequest request,
    mSPLDef = task.getViewByName( "mSPLDef" );
    if ( VmlOperation.isValid( mSPLDef ) )
    {
-      // Grid: GridDFU_Sections
+      // Grid: GridEnvironmental
       iTableRowCnt = 0;
 
       // We are creating a temp view to the grid view so that if there are 
       // grids on the same window with the same view we do not mess up the 
       // entity positions. 
       vGridTmp = mSPLDef.newView( );
-      csrRC = vGridTmp.cursor( "SPLD_DirectionsForUseSection" ).setFirst(  );
+      csrRC = vGridTmp.cursor( "SPLD_GeneralSubStatement" ).setFirst(  );
       while ( csrRC.isSet() )
       {
-         lEntityKey = vGridTmp.cursor( "SPLD_DirectionsForUseSection" ).getEntityKey( );
+         lEntityKey = vGridTmp.cursor( "SPLD_GeneralSubStatement" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
          iTableRowCnt++;
 
-         csrRC = vGridTmp.cursor( "SPLD_DirectionsForUseSection" ).setNextContinue( );
+         csrRC = vGridTmp.cursor( "SPLD_GeneralSubStatement" ).setNextContinue( );
       }
 
       vGridTmp.drop( );
@@ -143,7 +143,7 @@ if ( StringUtils.isBlank( strLastWindow ) )
 
 strLastAction = (String) session.getAttribute( "ZeidonAction" );
 
-if ( strLastWindow.equals("wSPLDSPLD_DirectionsForUseCategory") && StringUtils.isBlank( strActionToProcess ) && StringUtils.isBlank( strLastAction ) )
+if ( strLastWindow.equals("wSPLDEnvironmentalHazardsSection") && StringUtils.isBlank( strActionToProcess ) && StringUtils.isBlank( strLastAction ) )
 {
    strURL = response.encodeRedirectURL( "logout.jsp" );
    response.sendRedirect( strURL );
@@ -181,9 +181,9 @@ strURL = "";
 bDone = false;
 nRC = 0;
 
-task.log().info("*** wSPLDSPLD_DirectionsForUseCategory strActionToProcess *** " + strActionToProcess );
-task.log().info("*** wSPLDSPLD_DirectionsForUseCategory LastWindow *** " + strLastWindow );
-task.log().info("*** wSPLDSPLD_DirectionsForUseCategory LastAction *** " + strLastAction );
+task.log().info("*** wSPLDEnvironmentalHazardsSection strActionToProcess *** " + strActionToProcess );
+task.log().info("*** wSPLDEnvironmentalHazardsSection LastWindow *** " + strLastWindow );
+task.log().info("*** wSPLDEnvironmentalHazardsSection LastAction *** " + strLastAction );
 
 if ( strActionToProcess != null )
 {
@@ -199,54 +199,10 @@ if ( strActionToProcess != null )
 
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_DirsForUseSection" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "ReturnToHazards" ) )
    {
       bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wSPLDSPLD_DirectionsForUseCategory", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Position on the entity that was selected in the grid.
-      String strEntityKey = (String) request.getParameter( "zTableRowSelect" );
-      View mSPLDef;
-      mSPLDef = task.getViewByName( "mSPLDef" );
-      if ( VmlOperation.isValid( mSPLDef ) )
-      {
-         lEKey = java.lang.Long.parseLong( strEntityKey );
-         csrRC = mSPLDef.cursor( "SPLD_DirectionsForUseSection" ).setByEntityKey( lEKey );
-         if ( !csrRC.isSet() )
-         {
-            boolean bFound = false;
-            csrRCk = mSPLDef.cursor( "SPLD_DirectionsForUseSection" ).setFirst( );
-            while ( csrRCk.isSet() && !bFound )
-            {
-               lEKey = mSPLDef.cursor( "SPLD_DirectionsForUseSection" ).getEntityKey( );
-               strKey = Long.toString( lEKey );
-               if ( StringUtils.equals( strKey, strEntityKey ) )
-               {
-                  // Stop while loop because we have positioned on the correct entity.
-                  bFound = true;
-               }
-               else
-                  csrRCk = mSPLDef.cursor( "SPLD_DirectionsForUseSection" ).setNextContinue( );
-            } // Grid
-         }
-      }
-
-      // Next Window
-      strNextJSP_Name = wSPLD.SetWebRedirection( vKZXMLPGO, wSPLD.zWAB_StartModalSubwindow, "wSPLD", "DirectionsForUseSection" );
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "Return" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wSPLDSPLD_DirectionsForUseCategory", strActionToProcess );
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wSPLDEnvironmentalHazardsSection", strActionToProcess );
 
       // Input Mapping
       nRC = DoInputMapping( request, session, application, false );
@@ -279,7 +235,7 @@ if ( strActionToProcess != null )
       bDone = true;
       if ( task != null )
       {
-         task.log().info( "OnUnload UnregisterZeidonApplication: ----->>> " + "wSPLDSPLD_DirectionsForUseCategory" );
+         task.log().info( "OnUnload UnregisterZeidonApplication: ----->>> " + "wSPLDEnvironmentalHazardsSection" );
          task.dropTask();
          task = null;
          session.setAttribute( "ZeidonTaskId", task );
@@ -296,7 +252,7 @@ if ( strActionToProcess != null )
       bDone = true;
       if ( task != null )
       {
-         task.log().info( "OnUnload UnregisterZeidonApplication: ------->>> " + "wSPLDSPLD_DirectionsForUseCategory" );
+         task.log().info( "OnUnload UnregisterZeidonApplication: ------->>> " + "wSPLDEnvironmentalHazardsSection" );
          task.dropTask();
          task = null;
          session.setAttribute( "ZeidonTaskId", task );
@@ -311,14 +267,14 @@ if ( strActionToProcess != null )
    while ( bDone == false && strActionToProcess.equals( "_OnResubmitPage" ) )
    {
       bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wSPLDSPLD_DirectionsForUseCategory", strActionToProcess );
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wSPLDEnvironmentalHazardsSection", strActionToProcess );
 
       // Input Mapping
       nRC = DoInputMapping( request, session, application, false );
       if ( nRC < 0 )
          break;
 
-      strURL = response.encodeRedirectURL( "wSPLDSPLD_DirectionsForUseCategory.jsp" );
+      strURL = response.encodeRedirectURL( "wSPLDEnvironmentalHazardsSection.jsp" );
       nRC = 1;  //do the redirection
       break;
    }
@@ -329,11 +285,11 @@ if ( strActionToProcess != null )
       {
          if ( nRC > 1 )
          {
-            strURL = response.encodeRedirectURL( "wSPLDSPLD_DirectionsForUseCategory.jsp" );
+            strURL = response.encodeRedirectURL( "wSPLDEnvironmentalHazardsSection.jsp" );
             task.log().info( "Action Error Redirect to: " + strURL );
          }
 
-         if ( ! strURL.equals("wSPLDSPLD_DirectionsForUseCategory.jsp") ) 
+         if ( ! strURL.equals("wSPLDEnvironmentalHazardsSection.jsp") ) 
          {
             response.sendRedirect( strURL );
             // If we are redirecting to a new page, then we need this return so that the rest of this page doesn't get built.
@@ -344,7 +300,7 @@ if ( strActionToProcess != null )
       {
          if ( nRC > -128 )
          {
-            strURL = response.encodeRedirectURL( "wSPLDSPLD_DirectionsForUseCategory.jsp" );
+            strURL = response.encodeRedirectURL( "wSPLDEnvironmentalHazardsSection.jsp" );
             task.log().info( "Mapping Error Redirect to: " + strURL );
          }
          else
@@ -372,7 +328,7 @@ else
    if ( VmlOperation.isValid( wWebXA ) )
    {
       wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wSPLD", "" );
-      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "SPLD_DirectionsForUseCategory", "" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "EnvironmentalHazardsSection", "" );
    }
 
 %>
@@ -380,7 +336,7 @@ else
 <html>
 <head>
 
-<title>Directions For Use Category</title>
+<title>SPLD Environmental Hazards Section</title>
 
 <%@ include file="./include/head.inc" %>
 <!-- Timeout.inc has a value for nTimeout which is used to determine when to -->
@@ -391,7 +347,7 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
-<script language="JavaScript" type="text/javascript" src="./genjs/wSPLDSPLD_DirectionsForUseCategory.js"></script>
+<script language="JavaScript" type="text/javascript" src="./genjs/wSPLDEnvironmentalHazardsSection.js"></script>
 
 </head>
 
@@ -415,7 +371,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="Return" name="Return"><a href="#"  onclick="Return()">Return</a></li>
+       <li id="Return" name="Return"><a href="#"  onclick="ReturnToHazards()">Return</a></li>
 <%
    }
 %>
@@ -433,7 +389,7 @@ else
 <!-- END System Maintenance-->
 
 
-<form name="wSPLDSPLD_DirectionsForUseCategory" id="wSPLDSPLD_DirectionsForUseCategory" method="post">
+<form name="wSPLDEnvironmentalHazardsSection" id="wSPLDEnvironmentalHazardsSection" method="post">
    <input name="zAction" id="zAction" type="hidden" value="NOVALUE">
    <input name="zTableRowSelect" id="zTableRowSelect" type="hidden" value="NOVALUE">
    <input name="zDisable" id="zDisable" type="hidden" value="NOVALUE">
@@ -514,7 +470,7 @@ else
 
    strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString( "" );
 
-   strFocusCtrl = VmlOperation.GetFocusCtrl( task, "wSPLD", "SPLD_DirectionsForUseCategory" );
+   strFocusCtrl = VmlOperation.GetFocusCtrl( task, "wSPLD", "EnvironmentalHazardsSection" );
    strOpenFile = VmlOperation.FindOpenFile( task );
    strDateFormat = "YYYY.MM.DD";
 
@@ -553,88 +509,92 @@ else
 
 
  <!-- This is added as a line spacer -->
+<div style="height:2px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GroupBox3:GroupBox */ %>
+
+<div id="GroupBox3" name="GroupBox3" style="width:730px;height:28px;float:left;">  <!-- GroupBox3 --> 
+
+
+ <!-- This is added as a line spacer -->
 <div style="height:6px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GBDFU_Category:GroupBox */ %>
+<span style="height:16px;">&nbsp</span>
+<% /* EnvironmentalHazardsSection:Text */ %>
 
-<div id="GBDFU_Category" name="GBDFU_Category" class="listgroup"   style="float:left;position:relative; width:830px; height:90px;">  <!-- GBDFU_Category --> 
+<span class="groupbox"  id="EnvironmentalHazardsSection" name="EnvironmentalHazardsSection" style="width:338px;height:16px;">Hazards Section</span>
 
-<% /* DirectionsForUseCategory:Text */ %>
-
-<label class="groupbox"  id="DirectionsForUseCategory" name="DirectionsForUseCategory" style="width:238px;height:16px;position:absolute;left:6px;top:12px;">Directions for Use Category</label>
-
-<% /* GroupBox3:GroupBox */ %>
-
-<div id="GroupBox3" name="GroupBox3" style="width:754px;height:56px;position:absolute;left:14px;top:28px;">  <!-- GroupBox3 --> 
-
-<% /* Name::Text */ %>
-
-<label  id="Name:" name="Name:" style="width:130px;height:16px;position:absolute;left:10px;top:12px;">Name:</label>
-
-<% /* Name:Text */ %>
-<% strTextDisplayValue = "";
-   mSPLDef = task.getViewByName( "mSPLDef" );
-   if ( VmlOperation.isValid( mSPLDef ) == false )
-      task.log( ).debug( "Invalid View: " + "Name" );
-   else
-   {
-      nRC = mSPLDef.cursor( "SPLD_DirectionsForUseCategory" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 )
-      {
-      try
-      {
-         strTextDisplayValue = mSPLDef.cursor( "SPLD_DirectionsForUseCategory" ).getAttribute( "Name" ).getString( "" );
-      }
-      catch (Exception e)
-      {
-         out.println("There is an error on Name: " + e.getMessage());
-         task.log().info( "*** Error on ctrl Name" + e.getMessage() );
-      }
-         if ( strTextDisplayValue == null )
-            strTextDisplayValue = "";
-      }
-   }
-%>
-
-<label  id="Name" name="Name" style="width:586px;height:16px;position:absolute;left:142px;top:12px;"><%=strTextDisplayValue%></label>
-
-<% /* Title::Text */ %>
-
-<label  id="Title:" name="Title:" style="width:130px;height:16px;position:absolute;left:10px;top:30px;">Title:</label>
-
-<% /* Title:Text */ %>
-<% strTextDisplayValue = "";
-   mSPLDef = task.getViewByName( "mSPLDef" );
-   if ( VmlOperation.isValid( mSPLDef ) == false )
-      task.log( ).debug( "Invalid View: " + "Title" );
-   else
-   {
-      nRC = mSPLDef.cursor( "SPLD_DirectionsForUseCategory" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 )
-      {
-      try
-      {
-         strTextDisplayValue = mSPLDef.cursor( "SPLD_DirectionsForUseCategory" ).getAttribute( "Title" ).getString( "" );
-      }
-      catch (Exception e)
-      {
-         out.println("There is an error on Title: " + e.getMessage());
-         task.log().info( "*** Error on ctrl Title" + e.getMessage() );
-      }
-         if ( strTextDisplayValue == null )
-            strTextDisplayValue = "";
-      }
-   }
-%>
-
-<label  id="Title" name="Title" style="width:586px;height:16px;position:absolute;left:142px;top:30px;"><%=strTextDisplayValue%></label>
+</div>  <!-- End of a new line -->
 
 
 </div>  <!--  GroupBox3 --> 
+</div>  <!-- End of a new line -->
 
-</div>  <!--  GBDFU_Category --> 
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GBEnvironmentalSection:GroupBox */ %>
+
+<div id="GBEnvironmentalSection" name="GBEnvironmentalSection" class="withborder" style="width:730px;height:62px;float:left;">  <!-- GBEnvironmentalSection --> 
+
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:8px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GroupBox1:GroupBox */ %>
+<div id="GroupBox1" name="GroupBox1" style="float:left;width:640px;" >
+
+<table cols=0 style="width:640px;"  class="grouptable">
+
+<tr>
+<td valign="top" style="width:66px;">
+<% /* EnvironmentalName::Text */ %>
+
+<span  id="EnvironmentalName:" name="EnvironmentalName:" style="width:66px;height:16px;">Name:</span>
+
+</td>
+<td valign="top"  class="text12" style="width:550px;">
+<% /* EnvironmentalName:Text */ %>
+<% strTextDisplayValue = "";
+   mSPLDef = task.getViewByName( "mSPLDef" );
+   if ( VmlOperation.isValid( mSPLDef ) == false )
+      task.log( ).debug( "Invalid View: " + "EnvironmentalName" );
+   else
+   {
+      nRC = mSPLDef.cursor( "SPLD_GeneralSubSection" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+      {
+      try
+      {
+         strTextDisplayValue = mSPLDef.cursor( "SPLD_GeneralSubSection" ).getAttribute( "Name" ).getString( "" );
+      }
+      catch (Exception e)
+      {
+         out.println("There is an error on EnvironmentalName: " + e.getMessage());
+         task.log().info( "*** Error on ctrl EnvironmentalName" + e.getMessage() );
+      }
+         if ( strTextDisplayValue == null )
+            strTextDisplayValue = "";
+      }
+   }
+%>
+
+<span class="text12"  id="EnvironmentalName" name="EnvironmentalName" style="width:550px;height:16px;"><%=strTextDisplayValue%></span>
+
+</td>
+</tr>
+</table>
+
+</div>  <!-- GroupBox1 --> 
+
+</div>  <!-- End of a new line -->
+
+
+</div>  <!--  GBEnvironmentalSection --> 
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
@@ -644,15 +604,86 @@ else
 <div style="height:2px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:22px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GridDFU_Sections:Grid */ %>
-<table  cols=3 style="width:792px;"  name="GridDFU_Sections" id="GridDFU_Sections">
+<div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GroupBox2:GroupBox */ %>
+
+<div id="GroupBox2" name="GroupBox2" style="width:730px;height:34px;float:left;">  <!-- GroupBox2 --> 
+
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GBPrecautionaryStatements:GroupBox */ %>
+<div id="GBPrecautionaryStatements" name="GBPrecautionaryStatements" style="float:left;width:684px;"  class="listgroup">
+
+<table cols=0 style="width:684px;"  class="grouptable">
+
+<tr>
+<td valign="top"  class="listheader" style="width:330px;">
+<% /* EnvironmentalHazardStatements:Text */ %>
+
+<span class="listheader"  id="EnvironmentalHazardStatements" name="EnvironmentalHazardStatements" style="width:238px;height:16px;">Environmental Hazards Statements</span>
+
+</td>
+<td valign="top" style="width:110px;">
+<% /* ContainerSize::Text */ %>
+
+<span  id="ContainerSize:" name="ContainerSize:" style="width:98px;height:16px;">ContainerSize:</span>
+
+</td>
+<td valign="top" style="width:98px;">
+<% /* ContainerSize:Text */ %>
+<% strTextDisplayValue = "";
+   mSPLDef = task.getViewByName( "mSPLDef" );
+   if ( VmlOperation.isValid( mSPLDef ) == false )
+      task.log( ).debug( "Invalid View: " + "ContainerSize" );
+   else
+   {
+      nRC = mSPLDef.cursor( "SPLD_GeneralSubSection" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+      {
+      try
+      {
+         strTextDisplayValue = mSPLDef.cursor( "SPLD_GeneralSubSection" ).getAttribute( "ContainerVolumeEnvironmentHazard" ).getString( "" );
+      }
+      catch (Exception e)
+      {
+         out.println("There is an error on ContainerSize: " + e.getMessage());
+         task.log().info( "*** Error on ctrl ContainerSize" + e.getMessage() );
+      }
+         if ( strTextDisplayValue == null )
+            strTextDisplayValue = "";
+      }
+   }
+%>
+
+<span  id="ContainerSize" name="ContainerSize" style="width:98px;height:16px;"><%=strTextDisplayValue%></span>
+
+</td>
+</tr>
+</table>
+
+</div>  <!-- GBPrecautionaryStatements --> 
+
+</div>  <!-- End of a new line -->
+
+
+</div>  <!--  GroupBox2 --> 
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:10px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GridEnvironmental:Grid */ %>
+<table  cols=1 style="width:710px;"  name="GridEnvironmental" id="GridEnvironmental">
 
 <thead><tr>
 
-   <th>Name</th>
-   <th>Title</th>
-   <th>Display</th>
+   <th>Statement Text</th>
 
 </tr></thead>
 
@@ -670,60 +701,43 @@ try
       String strButtonName;
       String strOdd;
       String strTag;
-      String strGridName;
-      String strGridTitle;
-      String strBMBUpdateDFU_Sect;
+      String strGridEditEnvironmentalText;
       
-      View vGridDFU_Sections;
-      vGridDFU_Sections = mSPLDef.newView( );
-      csrRC2 = vGridDFU_Sections.cursor( "SPLD_DirectionsForUseSection" ).setFirst(  );
+      View vGridEnvironmental;
+      vGridEnvironmental = mSPLDef.newView( );
+      csrRC2 = vGridEnvironmental.cursor( "SPLD_GeneralSubStatement" ).setFirst(  );
       while ( csrRC2.isSet() )
       {
          strOdd = (iTableRowCnt % 2) != 0 ? " class='odd'" : "";
          iTableRowCnt++;
 
-         lEntityKey = vGridDFU_Sections.cursor( "SPLD_DirectionsForUseSection" ).getEntityKey( );
+         lEntityKey = vGridEnvironmental.cursor( "SPLD_GeneralSubStatement" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strGridName = "";
-         nRC = vGridDFU_Sections.cursor( "SPLD_DirectionsForUseSection" ).checkExistenceOfEntity( ).toInt();
+         strGridEditEnvironmentalText = "";
+         nRC = vGridEnvironmental.cursor( "SPLD_GeneralSubStatement" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridName = vGridDFU_Sections.cursor( "SPLD_DirectionsForUseSection" ).getAttribute( "Name" ).getString( "" );
+            strGridEditEnvironmentalText = vGridEnvironmental.cursor( "SPLD_GeneralSubStatement" ).getAttribute( "Text" ).getString( "" );
 
-            if ( strGridName == null )
-               strGridName = "";
+            if ( strGridEditEnvironmentalText == null )
+               strGridEditEnvironmentalText = "";
          }
 
-         if ( StringUtils.isBlank( strGridName ) )
-            strGridName = "&nbsp";
-
-         strGridTitle = "";
-         nRC = vGridDFU_Sections.cursor( "SPLD_DirectionsForUseSection" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-         {
-            strGridTitle = vGridDFU_Sections.cursor( "SPLD_DirectionsForUseSection" ).getAttribute( "dDU_SectionTitleOrTextKeyword" ).getString( "" );
-
-            if ( strGridTitle == null )
-               strGridTitle = "";
-         }
-
-         if ( StringUtils.isBlank( strGridTitle ) )
-            strGridTitle = "&nbsp";
+         if ( StringUtils.isBlank( strGridEditEnvironmentalText ) )
+            strGridEditEnvironmentalText = "&nbsp";
 
 %>
 
 <tr<%=strOdd%>>
 
-   <td><a href="#" onclick="GOTO_DirsForUseSection( this.id )" id="GridName::<%=strEntityKey%>"><%=strGridName%></a></td>
-   <td><a href="#" onclick="GOTO_DirsForUseSection( this.id )" id="GridTitle::<%=strEntityKey%>"><%=strGridTitle%></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateDFU_Sect" onclick="GOTO_DirsForUseSection( this.id )" id="BMBUpdateDFU_Sect::<%=strEntityKey%>"><img src="./images/ePammsDisplay.png" alt="Display"></a></td>
+   <td><%=strGridEditEnvironmentalText%></td>
 
 </tr>
 
 <%
-         csrRC2 = vGridDFU_Sections.cursor( "SPLD_DirectionsForUseSection" ).setNextContinue( );
+         csrRC2 = vGridEnvironmental.cursor( "SPLD_GeneralSubStatement" ).setNextContinue( );
       }
-      vGridDFU_Sections.drop( );
+      vGridEnvironmental.drop( );
    }
 }
 catch (Exception e)
@@ -767,7 +781,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 <script type="text/javascript">animatedcollapse.init();</script>
 </html>
 <%
-   session.setAttribute( "ZeidonWindow", "wSPLDSPLD_DirectionsForUseCategory" );
+   session.setAttribute( "ZeidonWindow", "wSPLDEnvironmentalHazardsSection" );
    session.setAttribute( "ZeidonAction", null );
 
    strActionToProcess = "";

@@ -1689,7 +1689,7 @@ end debug code */
          // displaySPLD( vLLD, null, "" );
          // vLLD.logObjectInstance();
             jsonLabel = convertLLD_ToJSON( vLLD );
-         // logger.info( "LoadLabel JSON: " + jsonLabel );
+            logger.info( "LoadLabel JSON: " + jsonLabel );
          } catch( ZeidonException ze ) {
             logger.error( "Error loading Json Label: " + ze.getMessage() );
             jsonLabel = "{ \"Error\" : \"" + ze.getMessage() + "\" }";
