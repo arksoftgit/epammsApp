@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSPLDSPLD_TableData   Generate Timestamp: 20170427141145031 --%>
+<%-- wSPLDSPLD_TableData   Generate Timestamp: 20170512125615775 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -354,7 +354,7 @@ else
 <html>
 <head>
 
-<title>Table Data</title>
+<title>SPLD Table Data</title>
 
 <%@ include file="./include/head.inc" %>
 <!-- Timeout.inc has a value for nTimeout which is used to determine when to -->

@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSPLDGraphicalView   Generate Timestamp: 20160426145252499 --%>
+<%-- wSPLDGraphicalView   Generate Timestamp: 20170512110254550 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -37,6 +37,7 @@ public int DoInputMapping( HttpServletRequest request,
 
    View mSPLDef = null;
    View vGridTmp = null; // temp view to grid view
+   String strDateFormat = "";
    String strMapValue = "";
    int    nRC = 0;
    CursorResult csrRC = null;
@@ -83,6 +84,7 @@ String strFocusCtrl = "";
 String strBannerName = "";
 String strVMLError = "";
 String strOpenFile = "";
+String strDateFormat = "";
 String strLoginName = "";
 String strKeyRole = "";
 String strLastWindow;
@@ -1443,10 +1445,13 @@ else
 
 
    strOpenFile = VmlOperation.FindOpenFile( task );
+   strDateFormat = "YYYY.MM.DD";
 %>
 
    <input name="zFocusCtrl" id="zFocusCtrl" type="hidden" value="<%=strFocusCtrl%>">
    <input name="zOpenFile" id="zOpenFile" type="hidden" value="<%=strOpenFile%>">
+   <input name="zDateFormat" id="zDateFormat" type="hidden" value="<%=strDateFormat%>">
+   <input name="zDateSequence" id="zDateSequence" type="hidden" value="MDY">
    <input name="zLoginName" id="zLoginName" type="hidden" value="<%=strLoginName%>">
    <input name="zKeyRole" id="zKeyRole" type="hidden" value="<%=strKeyRole%>">
    <input name="zErrorFlag" id="zErrorFlag" type="hidden" value="<%=strErrorFlag%>">

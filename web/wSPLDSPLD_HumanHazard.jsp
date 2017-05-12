@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSPLDSPLD_HumanHazard   Generate Timestamp: 20170427160429384 --%>
+<%-- wSPLDSPLD_HumanHazard   Generate Timestamp: 20170511185338759 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -623,29 +623,8 @@ if ( strActionToProcess != null )
       if ( nRC < 0 )
          break;
 
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDSPLD_HumanHazard", "wSPLD.SetSPLD_Resume" );
-      nOptRC = wSPLD.SetSPLD_Resume( new zVIEW( vKZXMLPGO ) );
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wSPLD.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wSPLD.SetWebRedirection( vKZXMLPGO, wSPLD.zWAB_StartModalSubwindow, "wSPLD", "GraphicalView" );
-      }
-
+      // Next Window
+      strNextJSP_Name = wSPLD.SetWebRedirection( vKZXMLPGO, wSPLD.zWAB_StartModalSubwindow, "wSPLD", "GraphicalView" );
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
@@ -1181,19 +1160,15 @@ else
    <input name="zDisable" id="zDisable" type="hidden" value="NOVALUE">
 
 <%
-   View lMLC = null;
-   View lSPLDLST = null;
    View mLLD_LST = null;
-   View mMasLC = null;
-   View mPrimReg = null;
-   View ReusableBlock = null;
+   View lSPLDLST = null;
+   View mSubProd = null;
    View mSPLDef = null;
-   View mMasProd = null;
    View mSPLDefBlock = null;
    View mSPLDefPanel = null;
    View mSubLC = null;
-   View mSubProd = null;
-   View mSubreg = null;
+   View mMasLC = null;
+   View ReusableBlock = null;
    View wWebXfer = null;
    String strRadioGroupValue = "";
    String strComboCurrentValue = "";

@@ -1,4 +1,4 @@
-// wSPLDGraphicalView   Generate Timestamp: 20160531205245833
+// wSPLDGraphicalView   Generate Timestamp: 20170512110743620
 
 var isWindowClosing = true;
 var timerID = null;
