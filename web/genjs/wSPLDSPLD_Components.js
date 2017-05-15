@@ -69,14 +69,6 @@ function _OnTimeout( )
 function _BeforePageUnload( )
 {
 
-   if ( typeof(Storage) !== "undefined" )
-   {
-      // Code for localStorage/sessionStorage.
-      var storageName = "ePamms.wSPLDSPLD_Components.position"
-      var scrollPosition = '#' + $(document).scrollTop().toString() + '#' + $(document).scrollLeft().toString();
-      localStorage.setItem( storageName, scrollPosition );
-   }
-
    if ( _IsDocDisabled( ) == false )
    {
       // If the user clicked on the window close box, then
@@ -105,6 +97,15 @@ function _IsDocDisabled( )
 function _DisableFormElements( bDisabled )
 {
    var bRC = false;
+
+   if ( typeof(Storage) !== "undefined" )
+   {
+      // Code for localStorage/sessionStorage.
+      var storageName = "ePamms.wSPLDSPLD_Components.position"
+//    var scrollPosition = $(document).scrollTop().toString() + '#' + $(document).scrollLeft().toString();
+      var scrollPosition = document.body.scrollTop + '#' + document.body.scrollLeft;
+      localStorage.setItem( storageName, scrollPosition );
+   }
 
    if ( bDisabled && timerID != null )
    {
@@ -188,7 +189,9 @@ var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title ); }
    {
       var parts = scrollPosition.split( '#' );
    // window.name = $.trim( parts[0] );
-      window.scrollTo( parseInt( parts[parts.length - 1] ), parseInt( parts[parts.length - 2] ) );
+// window.scrollTo( parseInt( parts[parts.length - 1] ), parseInt( parts[parts.length - 2] ) );
+   document.body.scrollTop = parseInt( parts[parts.length - 2] );
+   document.body.scrollLeft = parseInt( parts[parts.length - 1] );
    }
 // $.maintainscroll();
 }

@@ -9,7 +9,7 @@
 
 
          <div class="grid_4 omega" id="footer_address"><img src="./images/epamms_logo_buttons.png" /><br />ePamms, Inc.<br />
-  119 Russell Street, Suite 21<br />
+  25 Porter Road, Suite 210<br />
   Littleton, MA  01460<br />
   978-486-3690 (office)<br />
   978-500-3455 (cell)
