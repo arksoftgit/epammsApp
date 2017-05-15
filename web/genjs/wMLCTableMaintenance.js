@@ -1,4 +1,4 @@
-// wMLCTableMaintenance   Generate Timestamp: 20170419093236556
+// wMLCTableMaintenance   Generate Timestamp: 20170515130232871
 
 var isWindowClosing = true;
 var timerID = null;
@@ -295,7 +295,7 @@ function Sort( )
    {
       // Javascript code entered by user.
 
-       document.wMLCTableMaintenance.zTableRowSelect.value = buildSortTableHtml( "mMasLC", "M_MetaTable", "GridTables",  ["GE_TableName", "GE_TableDescription", "GE_ColumnCnt"]  );
+       document.wMLCTableMaintenance.zTableRowSelect.value = buildSortTableHtml( "mMasLC", "M_MetaTable", "GridTables",  ["Name", "Description", "Columns"]  );
 
       // END of Javascript code entered by user.
 

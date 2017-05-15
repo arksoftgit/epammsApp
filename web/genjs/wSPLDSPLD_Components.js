@@ -68,6 +68,15 @@ function _OnTimeout( )
 
 function _BeforePageUnload( )
 {
+
+   if ( typeof(Storage) !== "undefined" )
+   {
+      // Code for localStorage/sessionStorage.
+      var storageName = "ePamms.wSPLDSPLD_Components.position"
+      var scrollPosition = '#' + $(document).scrollTop().toString() + '#' + $(document).scrollLeft().toString();
+      localStorage.setItem( storageName, scrollPosition );
+   }
+
    if ( _IsDocDisabled( ) == false )
    {
       // If the user clicked on the window close box, then
@@ -173,6 +182,15 @@ function _AfterPageLoaded( )
 
 var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title ); }
    isWindowClosing = true;
+   var storageName = "ePamms.wSPLDSPLD_Components.position";
+   var scrollPosition = localStorage.getItem( storageName );
+   if ( scrollPosition.indexOf('#') > 0 )
+   {
+      var parts = scrollPosition.split( '#' );
+   // window.name = $.trim( parts[0] );
+      window.scrollTo( parseInt( parts[parts.length - 1] ), parseInt( parts[parts.length - 2] ) );
+   }
+// $.maintainscroll();
 }
 
 function CheckAllInGrid(id, CheckBoxName) // triggered by no text checkbox

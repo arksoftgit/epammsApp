@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCTableMaintenance   Generate Timestamp: 20170419093236556 --%>
+<%-- wMLCTableMaintenance   Generate Timestamp: 20170515130232871 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -1197,8 +1197,6 @@ else
 <%@ include file="./include/timeout.inc" %>
 <link rel="stylesheet" type="text/css" href="./css/print.css" media="print" />
 <script language="JavaScript" type="text/javascript" src="./js/common.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/css.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/sts.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/jsoeUtils.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/jsoe.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
@@ -1208,12 +1206,7 @@ else
 
 </head>
 
-<!-- 
-// If we have table sorting on this page, the table sorting does not work in Firefox 
-// (seems to work in IE and Opera).  The solution is to not call _AfterPageLoaded in OnLoad event. 
-// In the Standardista code (sts.js) there is an addEvent that will call _AfterPageLoaded. 
---> 
-<body onSubmit="_DisableFormElements( true )" onBeforeUnload="_BeforePageUnload( )">
+<body onLoad="_AfterPageLoaded( )" onSubmit="_DisableFormElements( true )" onBeforeUnload="_BeforePageUnload( )">
 
 <%@ include file="./include/pagebackground.inc" %>  <!-- just temporary until we get the painter dialog updates from Kelly ... 2011.10.08 dks -->
 
@@ -1644,9 +1637,9 @@ else
 
 </div>  <!--  GBAddTable --> 
 <% /* GridTables:Grid */ %>
-<table class="sortable"  cols=6 style="position:absolute;top:132px;left:14px;"  name="GridTables" id="GridTables">
+<table  cols=6 style="position:absolute;top:132px;left:14px;"  name="GridTables" id="GridTables">
 
-<thead bgcolor=green><tr>
+<thead><tr>
 
    <th>Name</th>
    <th>Description</th>

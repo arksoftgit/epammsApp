@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="19">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="20">
         <file>
             <url>web/js/labeldesigner.js</url>
             <bookmark id="15">
@@ -59,6 +59,14 @@
             <bookmark id="9">
                 <name/>
                 <line>1617</line>
+                <key/>
+            </bookmark>
+        </file>
+        <file>
+            <url>web/wSPLDGraphicalView.jsp</url>
+            <bookmark id="20">
+                <name/>
+                <line>1367</line>
                 <key/>
             </bookmark>
         </file>
