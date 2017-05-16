@@ -1,4 +1,4 @@
-// wSPLDSPLD_Components   Generate Timestamp: 20170511185527999
+// wSPLDSPLD_Components   Generate Timestamp: 20170516093631256
 
 var isWindowClosing = true;
 var timerID = null;
@@ -68,7 +68,6 @@ function _OnTimeout( )
 
 function _BeforePageUnload( )
 {
-
    if ( _IsDocDisabled( ) == false )
    {
       // If the user clicked on the window close box, then
@@ -102,7 +101,6 @@ function _DisableFormElements( bDisabled )
    {
       // Code for localStorage/sessionStorage.
       var storageName = "ePamms.wSPLDSPLD_Components.position"
-//    var scrollPosition = $(document).scrollTop().toString() + '#' + $(document).scrollLeft().toString();
       var scrollPosition = document.body.scrollTop + '#' + document.body.scrollLeft;
       localStorage.setItem( storageName, scrollPosition );
    }
@@ -188,12 +186,9 @@ var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title ); }
    if ( scrollPosition.indexOf('#') > 0 )
    {
       var parts = scrollPosition.split( '#' );
-   // window.name = $.trim( parts[0] );
-// window.scrollTo( parseInt( parts[parts.length - 1] ), parseInt( parts[parts.length - 2] ) );
-   document.body.scrollTop = parseInt( parts[parts.length - 2] );
-   document.body.scrollLeft = parseInt( parts[parts.length - 1] );
+      document.body.scrollTop = parseInt( parts[parts.length - 2] );
+      document.body.scrollLeft = parseInt( parts[parts.length - 1] );
    }
-// $.maintainscroll();
 }
 
 function CheckAllInGrid(id, CheckBoxName) // triggered by no text checkbox
@@ -269,6 +264,19 @@ function smSaveAndReturn( )
 
    if ( _IsDocDisabled( ) == false )
    {
+
+      // Javascript code entered by user.
+
+      if ( typeof(Storage) !== "undefined" )
+      {
+         // Remove scroll position in localStorage/sessionStorage.
+         var storageName = "ePamms.wSPLDSPLD_Components.position"
+         localStorage.setItem( storageName, "" );
+      }
+
+
+      // END of Javascript code entered by user.
+
       _DisableFormElements( true );
 
       document.wSPLDSPLD_Components.zAction.value = "smSaveAndReturn";
@@ -284,6 +292,19 @@ function smCancelAndReturn( )
 
    if ( _IsDocDisabled( ) == false )
    {
+
+      // Javascript code entered by user.
+
+      if ( typeof(Storage) !== "undefined" )
+      {
+         // Remove scroll position in localStorage/sessionStorage.
+         var storageName = "ePamms.wSPLDSPLD_Components.position"
+         localStorage.setItem( storageName, "" );
+      }
+
+
+      // END of Javascript code entered by user.
+
       _DisableFormElements( true );
 
       document.wSPLDSPLD_Components.zAction.value = "smCancelAndReturn";
