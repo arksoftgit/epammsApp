@@ -99,10 +99,10 @@ function _DisableFormElements( bDisabled )
 
    if ( typeof(Storage) !== "undefined" )
    {
-      // Code for localStorage/sessionStorage.
+      // Code for sessionStorage/sessionStorage.
       var storageName = "ePamms.wSPLDSPLD_Components.position"
       var scrollPosition = document.body.scrollTop + '#' + document.body.scrollLeft;
-      localStorage.setItem( storageName, scrollPosition );
+      sessionStorage.setItem( storageName, scrollPosition );
    }
 
    if ( bDisabled && timerID != null )
@@ -182,7 +182,7 @@ function _AfterPageLoaded( )
 var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title ); }
    isWindowClosing = true;
    var storageName = "ePamms.wSPLDSPLD_Components.position";
-   var scrollPosition = localStorage.getItem( storageName );
+   var scrollPosition = sessionStorage.getItem( storageName );
    if ( scrollPosition.indexOf('#') > 0 )
    {
       var parts = scrollPosition.split( '#' );
@@ -264,20 +264,20 @@ function smSaveAndReturn( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      _DisableFormElements( true );
+
 
       // Javascript code entered by user.
 
       if ( typeof(Storage) !== "undefined" )
       {
-         // Remove scroll position in localStorage/sessionStorage.
+         // Remove scroll position in sessionStorage/sessionStorage.
          var storageName = "ePamms.wSPLDSPLD_Components.position"
-         localStorage.setItem( storageName, "" );
+         sessionStorage.setItem( storageName, "" );
       }
 
 
       // END of Javascript code entered by user.
-
-      _DisableFormElements( true );
 
       document.wSPLDSPLD_Components.zAction.value = "smSaveAndReturn";
       document.wSPLDSPLD_Components.submit( );
@@ -293,19 +293,19 @@ function smCancelAndReturn( )
    if ( _IsDocDisabled( ) == false )
    {
 
+      _DisableFormElements( true );
+
       // Javascript code entered by user.
 
       if ( typeof(Storage) !== "undefined" )
       {
-         // Remove scroll position in localStorage/sessionStorage.
+         // Remove scroll position in sessionStorage/sessionStorage.
          var storageName = "ePamms.wSPLDSPLD_Components.position"
-         localStorage.setItem( storageName, "" );
+         sessionStorage.setItem( storageName, "" );
       }
 
 
       // END of Javascript code entered by user.
-
-      _DisableFormElements( true );
 
       document.wSPLDSPLD_Components.zAction.value = "smCancelAndReturn";
       document.wSPLDSPLD_Components.submit( );

@@ -1,9 +1,10 @@
-// wSLCSurfaces   Generate Timestamp: 20170515140314687
+// wSLCSurfaces   Generate Timestamp: 20170518152623986
 
 var isWindowClosing = true;
 var timerID = null;
 onerror = handleErr;
 window.history.forward( 1 );
+var Surfaces;
 
 function handleErr( msg, url, l )
 {
@@ -209,6 +210,25 @@ function GOTO_SelectSurfacesUsageEntries( )
       _DisableFormElements( true );
 
       document.wSLCSurfaces.zAction.value = "GOTO_SelectSurfacesUsageEntries";
+      document.wSLCSurfaces.submit( );
+   }
+}
+
+function GOTO_UpdateUsageGroup( strTagEntityKey )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      var nIdx = strTagEntityKey.lastIndexOf( '::' );
+      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
+
+      document.wSLCSurfaces.zTableRowSelect.value = strEntityKey;
+      _DisableFormElements( true );
+
+      document.wSLCSurfaces.zAction.value = "GOTO_UpdateUsageGroup";
       document.wSLCSurfaces.submit( );
    }
 }

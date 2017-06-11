@@ -1,4 +1,4 @@
-// wMLCLocationsGroup   Generate Timestamp: 20160914154445290
+// wMLCLocationsGroup   Generate Timestamp: 20170608112924912
 
 var isWindowClosing = true;
 var timerID = null;
@@ -255,7 +255,7 @@ function GOTO_UpdateGroupUsageStatement( strTagEntityKey )
    }
 }
 
-function RemoveMLC_UsageEntriesFromGroup( )
+function RemoveUsageEntriesFromGroup( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -265,7 +265,7 @@ function RemoveMLC_UsageEntriesFromGroup( )
    {
       _DisableFormElements( true );
 
-      document.wMLCLocationsGroup.zAction.value = "RemoveMLC_UsageEntriesFromGroup";
+      document.wMLCLocationsGroup.zAction.value = "RemoveUsageEntriesFromGroup";
       document.wMLCLocationsGroup.submit( );
    }
 }

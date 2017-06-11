@@ -2,7 +2,7 @@
 // Project ePamms
 //
 // This is a part of the ePamms applications package.
-// Copyright (c) 2007 - 2016 Arksoft, Inc.
+// Copyright (c) 2007 - 2017 Arksoft, Inc.
 // All Rights Reserved.
 //
 // SUBSYSTEM:    mMasLC        - Primary Registrant Label Content operations
@@ -948,7 +948,12 @@ dUsgNonGroupSubUsages( VIEW mMasLC BASED ON LOD mMasLC,
                        SHORT GetOrSetFlag )
 
    VIEW mMasLC2 BASED ON LOD mMasLC
+   VIEW mMasLC3 BASED ON LOD mMasLC
    STRING ( 2048 ) szDisplayStatement
+   STRING ( 100 ) szUsageName
+   STRING ( 100 ) szUsageText
+   STRING ( 1 ) szUsageType
+   SHORT bFirst
 
    CASE GetOrSetFlag
    OF   zDERIVED_GET:
@@ -958,8 +963,49 @@ dUsgNonGroupSubUsages( VIEW mMasLC BASED ON LOD mMasLC,
       szDisplayStatement = mMasLC2.M_Usage.Name
 
       // Display required text combined with optional usage(s).
-      InsertOptionalSubUsages( mMasLC2, szDisplayStatement, "M_SubUsage", 0 )
+      InsertOptionalSubUsages( mMasLC2, szDisplayStatement, "M_SubUsage", 1 )
       SetFirstCharacterCase( szDisplayStatement, 1 )
+
+      IF mMasLC2.M_InsertTextKeywordUsage EXISTS
+         CreateViewFromView( mMasLC3, mMasLC2 )
+         FOR EACH mMasLC3.M_InsertTextKeywordUsage
+            szUsageType = mMasLC3.M_InsertTextKeywordUsage.Type // A - all optional; O - Zero or one allowed; R - at least one required; X - exactly one required
+            szUsageName = "{" + mMasLC3.M_InsertTextKeywordUsage.Name + "}"
+            bFirst = 1
+            IF szUsageType = "A"
+               szUsageText = ""
+            ELSE
+               szUsageText = "["
+            END
+            FOR EACH mMasLC3.M_InsertTextUsage
+               IF bFirst = 1
+                  bFirst = 0
+                  szUsageText = szUsageText + "<b>" + mMasLC3.M_InsertTextUsage.Text + "</b>"
+               ELSE
+               IF szUsageType = "A"
+                  szUsageText = szUsageText + ", <b>" + mMasLC3.M_InsertTextUsage.Text + "</b>"
+               ELSE
+               IF szUsageType = "O"
+                  szUsageText = szUsageText + " || <b>" + mMasLC3.M_InsertTextUsage.Text + "</b>"
+               ELSE
+               IF szUsageType = "R"
+                  szUsageText = szUsageText + " or <b>" + mMasLC3.M_InsertTextUsage.Text + "</b>"
+               ELSE
+            // IF szUsageType = "X"
+                  szUsageText = szUsageText + " / <b>" + mMasLC3.M_InsertTextUsage.Text + "</b>"
+            // END
+               END
+               END
+               END
+               END
+            END
+            IF szUsageType != "A"
+               szUsageText = szUsageText + "]"
+            END
+            zSearchAndReplace( szDisplayStatement, 2048, szUsageName, szUsageText )
+         END
+         DropView( mMasLC3 )
+      END
 
       // Store the calculated value in the object.
       StoreStringInRecord( mMasLC, InternalEntityStructure, InternalAttribStructure, szDisplayStatement )
@@ -3592,25 +3638,185 @@ dSubUsageCombinedText( VIEW mMasLC BASED ON LOD mMasLC,
                        STRING ( 32 ) InternalAttribStructure,
                        SHORT GetOrSetFlag )
 
-   STRING ( 2048 ) szCombinedText
+   VIEW mMasLC2 BASED ON LOD mMasLC
+   VIEW mMasLC3 BASED ON LOD mMasLC
+   STRING ( 4096 ) szCombinedText
+   STRING ( 2048 ) szDisplayStatement
+   STRING ( 100 ) szUsageName
+   STRING ( 100 ) szUsageText
+   STRING ( 1 ) szUsageType
+   INTEGER ID
+   SHORT bFirst
 
    CASE GetOrSetFlag
    OF   zDERIVED_GET:
 
+      CreateViewFromView( mMasLC2, mMasLC )
+      CreateViewFromView( mMasLC3, mMasLC )
+
       // Expand the current Text attribute by replacing embedded Keywords with the Keyword
       // values in the M_InsertTextMarketing subentities.
       szCombinedText = ""
-      FOR EACH mMasLC.M_UsageGroupUsage
-         IF szCombinedText = ""
-            szCombinedText = mMasLC.M_UsageGroupUsage.Name
+      FOR EACH mMasLC2.M_UsageGroupUsage
+         ID = mMasLC2.M_UsageGroupUsage.ID
+         SET CURSOR FIRST mMasLC3.M_Usage WHERE mMasLC3.M_Usage.ID = ID
+         IF RESULT = 0
+            // Display required text combined with optional usage(s).
+            szDisplayStatement = mMasLC3.M_Usage.Name
+            InsertOptionalSubUsages( mMasLC3, szDisplayStatement, "M_SubUsage", 1 )
+
+            IF mMasLC3.M_InsertTextKeywordUsage EXISTS
+               FOR EACH mMasLC3.M_InsertTextKeywordUsage
+                  szUsageType = mMasLC3.M_InsertTextKeywordUsage.Type // A - all optional; O - Zero or one allowed; R - at least one required; X - exactly one required
+                  szUsageName = "{" + mMasLC3.M_InsertTextKeywordUsage.Name + "}"
+                  bFirst = 1
+                  IF szUsageType = "A"
+                     szUsageText = ""
+                  ELSE
+                     szUsageText = "["
+                  END
+                  FOR EACH mMasLC3.M_InsertTextUsage
+                     IF bFirst = 1
+                        bFirst = 0
+                        szUsageText = szUsageText + "<b>" + mMasLC3.M_InsertTextUsage.Text + "</b>"
+                     ELSE
+                        IF szUsageType = "A"
+                           szUsageText = szUsageText + ", <b>" + mMasLC3.M_InsertTextUsage.Text + "</b>"
+                        ELSE
+                        IF szUsageType = "O"
+                           szUsageText = szUsageText + " || <b>" + mMasLC3.M_InsertTextUsage.Text + "</b>"
+                        ELSE
+                        IF szUsageType = "R"
+                           szUsageText = szUsageText + " or <b>" + mMasLC3.M_InsertTextUsage.Text + "</b>"
+                        ELSE
+                     // IF szUsageType = "X"
+                           szUsageText = szUsageText + " / <b>" + mMasLC3.M_InsertTextUsage.Text + "</b>"
+                     // END
+                        END
+                        END
+                        END
+                     END
+                  END
+                  IF szUsageType != "A"
+                     szUsageText = szUsageText + "]"
+                  END
+                  zSearchAndReplace( szDisplayStatement, 2048, szUsageName, szUsageText )
+               END
+            END
          ELSE
-            szCombinedText = szCombinedText + ", " + mMasLC.M_UsageGroupUsage.Name
+            szDisplayStatement = ""
+         END
+         IF szCombinedText = ""
+            szCombinedText = szDisplayStatement
+         ELSE
+            szCombinedText = szCombinedText + ", " + szDisplayStatement
          END
       END
+
+      DropView( mMasLC2 )
+      DropView( mMasLC3 )
 
       // Store the resulting value in the object.
       StoreStringInRecord( mMasLC, InternalEntityStructure, InternalAttribStructure, szCombinedText )
       RETURN 0
+
+        // end zDERIVED_GET
+   OF   zDERIVED_SET:
+
+        // end zDERIVED_SET
+   END  // case
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: dUsageGroupCombinedText
+//
+/////////////////////////////////////////////////////////////////////////////
+DERIVED ATTRIBUTE OPERATION
+dUsageGroupCombinedText( VIEW mMasLC BASED ON LOD mMasLC,
+                         STRING ( 32 ) InternalEntityStructure,
+                         STRING ( 32 ) InternalAttribStructure,
+                         SHORT GetOrSetFlag )
+
+   VIEW mMasLC2 BASED ON LOD mMasLC
+   STRING ( 2048 ) szDisplayStatement
+   STRING ( 100 ) szUsageName
+   STRING ( 100 ) szUsageText
+   STRING ( 1 ) szUsageType
+   INTEGER ID
+   SHORT bFirst
+// SHORT nRC
+
+   CASE GetOrSetFlag
+   OF   zDERIVED_GET:
+
+      CreateViewFromView( mMasLC2, mMasLC )
+      // Position on the corresponding M_Usage entity and create temporal subobject version.
+      ID = mMasLC.M_UsageGroupUsage.ID
+      IF ID = 0
+         SET CURSOR FIRST mMasLC2.M_Usage WHERE mMasLC2.M_Usage.Name = mMasLC.M_UsageGroupUsage.Name
+      ELSE
+         SET CURSOR FIRST mMasLC2.M_Usage WHERE mMasLC2.M_Usage.ID = ID
+      END
+
+   // TraceLineI( "Combining text for M_UsageGroupUsage: ", ID )
+   // DisplayEntityInstance( mMasLC2, "M_Usage" )
+
+   // nRC = SetCursorFirstEntityByEntityCsr( mMasLC2, "M_Usage", mMasLC, "M_UsageGroupUsage", "" )
+
+      // Expand the current Text attribute by replacing embedded Keywords with the Keyword
+      // values in the M_InsertTextUsage subentities.
+      IF RESULT = 0
+         // Display required text combined with optional usage(s).
+         szDisplayStatement = mMasLC2.M_Usage.Name
+         InsertOptionalSubUsages( mMasLC2, szDisplayStatement, "M_SubUsage", 1 )
+
+         IF mMasLC2.M_InsertTextKeywordUsage EXISTS
+            FOR EACH mMasLC2.M_InsertTextKeywordUsage
+               szUsageType = mMasLC2.M_InsertTextKeywordUsage.Type // A - all optional; O - Zero or one allowed; R - at least one required; X - exactly one required
+               szUsageName = "{" + mMasLC2.M_InsertTextKeywordUsage.Name + "}"
+               bFirst = 1
+               IF szUsageType = "A"
+                  szUsageText = ""
+               ELSE
+                  szUsageText = "["
+               END
+               FOR EACH mMasLC2.M_InsertTextUsage
+                  IF bFirst = 1
+                     bFirst = 0
+                     szUsageText = szUsageText + "<b>" + mMasLC2.M_InsertTextUsage.Text + "</b>"
+                  ELSE
+                    IF szUsageType = "A"
+                       szUsageText = szUsageText + ", <b>" + mMasLC2.M_InsertTextUsage.Text + "</b>"
+                    ELSE
+                    IF szUsageType = "O"
+                       szUsageText = szUsageText + " || <b>" + mMasLC2.M_InsertTextUsage.Text + "</b>"
+                    ELSE
+                    IF szUsageType = "R"
+                       szUsageText = szUsageText + " or <b>" + mMasLC2.M_InsertTextUsage.Text + "</b>"
+                    ELSE
+                 // IF szUsageType = "X"
+                       szUsageText = szUsageText + " / <b>" + mMasLC2.M_InsertTextUsage.Text + "</b>"
+                 // END
+                    END
+                    END
+                    END
+                  END
+               END
+               IF szUsageType != "A"
+                  szUsageText = szUsageText + "]"
+               END
+               zSearchAndReplace( szDisplayStatement, 2048, szUsageName, szUsageText )
+            END
+         END
+      ELSE
+         szDisplayStatement = ""
+      END
+      DropView( mMasLC2 )
+
+      // Store the calculated value in the object.
+      StoreStringInRecord( mMasLC, InternalEntityStructure, InternalAttribStructure, szDisplayStatement )
 
         // end zDERIVED_GET
    OF   zDERIVED_SET:
@@ -3658,6 +3864,7 @@ BuildUsageGroupEntries( VIEW mMasLC BASED ON LOD mMasLC )
 
 END
 
+/*
 /////////////////////////////////////////////////////////////////////////////
 //
 //  OPERATION: BuildUsageKeyEntries
@@ -3732,6 +3939,7 @@ BuildUsageKeyEntries( VIEW mMasLC BASED ON LOD mMasLC,
    END
 
 END
+*/
 
 /////////////////////////////////////////////////////////////////////////////
 //

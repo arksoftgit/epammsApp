@@ -10876,7 +10876,19 @@ omSPLDef_BuildSPLD_FromSLC( View     NewSPLD,
       RESULT = IncludeSubobjectFromSubobject( NewSPLD, "S_UsageType", SrcSLC, "S_UsageType", zPOS_AFTER );
       //:CopyUsagesRecursive( NewSPLD, SrcSLC )
       omSPLDef_CopyUsagesRecursive( NewSPLD, SrcSLC );
+      //:FOR EACH SrcSLC.S_UsageGroup
+      RESULT = SetCursorFirstEntity( SrcSLC, "S_UsageGroup", "" );
+      while ( RESULT > zCURSOR_UNCHANGED )
+      { 
+         //:CREATE ENTITY NewSPLD.SPLD_UsageGroup
+         RESULT = CreateEntity( NewSPLD, "SPLD_UsageGroup", zPOS_AFTER );
+         //:SetMatchingAttributesByName( NewSPLD, "SPLD_UsageGroup", SrcSLC, "S_UsageGroup", zSET_NULL )
+         SetMatchingAttributesByName( NewSPLD, "SPLD_UsageGroup", SrcSLC, "S_UsageGroup", zSET_NULL );
+         RESULT = SetCursorNextEntity( SrcSLC, "S_UsageGroup", "" );
+      } 
+
       RESULT = SetCursorNextEntity( SrcSLC, "S_UsageType", "" );
+      //:END
    } 
 
    //:END

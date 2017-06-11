@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCApplicationTypesGroup   Generate Timestamp: 20160914154443660 --%>
+<%-- wMLCApplicationTypesGroup   Generate Timestamp: 20170608112832481 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -233,8 +233,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCApplicationTypesGroup", "wMLC.DELETE_SelectedGroupUsageEntries" );
-      nOptRC = wMLC.DELETE_SelectedGroupUsageEntries( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCApplicationTypesGroup", "wMLC.DeleteSelectedGroupUsageEntries" );
+      nOptRC = wMLC.DeleteSelectedGroupUsageEntries( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -379,7 +379,7 @@ if ( strActionToProcess != null )
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "RemoveMLC_UsageEntriesFromGroup" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "RemoveUsageEntriesFromGroup" ) )
    {
       bDone = true;
       VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCApplicationTypesGroup", strActionToProcess );
@@ -391,8 +391,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCApplicationTypesGroup", "wMLC.RemoveMLC_UsageEntriesFromGroup" );
-      nOptRC = wMLC.RemoveMLC_UsageEntriesFromGroup( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCApplicationTypesGroup", "wMLC.RemoveUsageEntriesFromGroup" );
+      nOptRC = wMLC.RemoveUsageEntriesFromGroup( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -711,6 +711,7 @@ else
    <input name="zFocusCtrl" id="zFocusCtrl" type="hidden" value="<%=strFocusCtrl%>">
    <input name="zOpenFile" id="zOpenFile" type="hidden" value="<%=strOpenFile%>">
    <input name="zDateFormat" id="zDateFormat" type="hidden" value="<%=strDateFormat%>">
+   <input name="zDateSequence" id="zDateSequence" type="hidden" value="MDY">
    <input name="zLoginName" id="zLoginName" type="hidden" value="<%=strLoginName%>">
    <input name="zKeyRole" id="zKeyRole" type="hidden" value="<%=strKeyRole%>">
    <input name="zOpenPopupWindow" id="zOpenPopupWindow" type="hidden" value="<%=strOpenPopupWindow%>">
@@ -769,7 +770,7 @@ else
 <button type="button" name="PushBtn2" id="PushBtn2" value="" onclick="DELETE_SelectedGroupUsageEntries( )" style="width:336px;height:26px;position:absolute;left:270px;top:12px;">Delete Selected Application Types</button>
 
 <% /* PushBtn1:PushBtn */ %>
-<button type="button" name="PushBtn1" id="PushBtn1" value="" onclick="RemoveMLC_UsageEntriesFromGroup( )" style="width:336px;height:26px;position:absolute;left:270px;top:40px;">Remove Selected Application Types from Group</button>
+<button type="button" name="PushBtn1" id="PushBtn1" value="" onclick="RemoveUsageEntriesFromGroup( )" style="width:336px;height:26px;position:absolute;left:270px;top:40px;">Remove Selected Application Types from Group</button>
 
 <% /* PBNew1:PushBtn */ %>
 <button type="button" name="PBNew1" id="PBNew1" value="" onclick="GOTO_AddGroupUsageStatements( )" style="width:336px;height:26px;position:absolute;left:270px;top:68px;">Add New Application Types to Group</button>

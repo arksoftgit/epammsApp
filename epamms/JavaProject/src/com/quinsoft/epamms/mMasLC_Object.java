@@ -8418,18 +8418,46 @@ omMasLC_dMarketTitleTextKey( View     mMasLC,
    //:                    STRING ( 32 ) InternalAttribStructure,
    //:                    SHORT GetOrSetFlag )
 
-   //:STRING ( 2048 ) szCombinedText
+   //:VIEW mMasLC2 BASED ON LOD mMasLC
 public int 
 omMasLC_dSubUsageCombinedText( View     mMasLC,
                                String InternalEntityStructure,
                                String InternalAttribStructure,
                                Integer   GetOrSetFlag )
 {
+   zVIEW    mMasLC2 = new zVIEW( );
+   //:VIEW mMasLC3 BASED ON LOD mMasLC
+   zVIEW    mMasLC3 = new zVIEW( );
+   //:STRING ( 4096 ) szCombinedText
    String   szCombinedText = null;
+   //:STRING ( 2048 ) szDisplayStatement
+   String   szDisplayStatement = null;
+   //:STRING ( 100 ) szUsageName
+   String   szUsageName = null;
+   //:STRING ( 100 ) szUsageText
+   String   szUsageText = null;
+   //:STRING ( 1 ) szUsageType
+   String   szUsageType = null;
+   //:INTEGER ID
+   int      ID = 0;
+   //:SHORT bFirst
+   int      bFirst = 0;
    int      RESULT = 0;
    int      lTempInteger_0 = 0;
-   String   szTempString_0 = null;
    int      lTempInteger_1 = 0;
+   int      lTempInteger_2 = 0;
+   String   szTempString_0 = null;
+   int      lTempInteger_3 = 0;
+   String   szTempString_1 = null;
+   int      lTempInteger_4 = 0;
+   String   szTempString_2 = null;
+   int      lTempInteger_5 = 0;
+   String   szTempString_3 = null;
+   int      lTempInteger_6 = 0;
+   String   szTempString_4 = null;
+   int      lTempInteger_7 = 0;
+   String   szTempString_5 = null;
+   int      lTempInteger_8 = 0;
 
 
    //:CASE GetOrSetFlag
@@ -8437,6 +8465,11 @@ omMasLC_dSubUsageCombinedText( View     mMasLC,
    { 
       //:OF   zDERIVED_GET:
       case zDERIVED_GET :
+
+         //:CreateViewFromView( mMasLC2, mMasLC )
+         CreateViewFromView( mMasLC2, mMasLC );
+         //:CreateViewFromView( mMasLC3, mMasLC )
+         CreateViewFromView( mMasLC3, mMasLC );
 
          //:// Expand the current Text attribute by replacing embedded Keywords with the Keyword
          //:// values in the M_InsertTextMarketing subentities.
@@ -8446,60 +8479,415 @@ omMasLC_dSubUsageCombinedText( View     mMasLC,
             sb_szCombinedText = new StringBuilder( 32 );
          else
             sb_szCombinedText = new StringBuilder( szCombinedText );
-                  ZeidonStringCopy( sb_szCombinedText, 1, 0, "", 1, 0, 2049 );
+                  ZeidonStringCopy( sb_szCombinedText, 1, 0, "", 1, 0, 4097 );
          szCombinedText = sb_szCombinedText.toString( );}
-         //:FOR EACH mMasLC.M_UsageGroupUsage
-         RESULT = SetCursorFirstEntity( mMasLC, "M_UsageGroupUsage", "" );
+         //:FOR EACH mMasLC2.M_UsageGroupUsage
+         RESULT = SetCursorFirstEntity( mMasLC2, "M_UsageGroupUsage", "" );
          while ( RESULT > zCURSOR_UNCHANGED )
          { 
-            //:IF szCombinedText = ""
-            if ( ZeidonStringCompare( szCombinedText, 1, 0, "", 1, 0, 2049 ) == 0 )
+            //:ID = mMasLC2.M_UsageGroupUsage.ID
+            {MutableInt mi_ID = new MutableInt( ID );
+                         GetIntegerFromAttribute( mi_ID, mMasLC2, "M_UsageGroupUsage", "ID" );
+            ID = mi_ID.intValue( );}
+            //:SET CURSOR FIRST mMasLC3.M_Usage WHERE mMasLC3.M_Usage.ID = ID
+            RESULT = SetCursorFirstEntityByInteger( mMasLC3, "M_Usage", "ID", ID, "" );
+            //:IF RESULT = 0
+            if ( RESULT == 0 )
             { 
-               //:szCombinedText = mMasLC.M_UsageGroupUsage.Name
+               //:// Display required text combined with optional usage(s).
+               //:szDisplayStatement = mMasLC3.M_Usage.Name
                {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
-               StringBuilder sb_szCombinedText;
+               StringBuilder sb_szDisplayStatement;
+               if ( szDisplayStatement == null )
+                  sb_szDisplayStatement = new StringBuilder( 32 );
+               else
+                  sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
+                               GetVariableFromAttribute( sb_szDisplayStatement, mi_lTempInteger_0, 'S', 2049, mMasLC3, "M_Usage", "Name", "", 0 );
+               lTempInteger_0 = mi_lTempInteger_0.intValue( );
+               szDisplayStatement = sb_szDisplayStatement.toString( );}
+               //:InsertOptionalSubUsages( mMasLC3, szDisplayStatement, "M_SubUsage", 1 )
+               {
+                ZGlobal1_Operation m_ZGlobal1_Operation = new ZGlobal1_Operation( mMasLC3 );
+                 {StringBuilder sb_szDisplayStatement;
+               if ( szDisplayStatement == null )
+                  sb_szDisplayStatement = new StringBuilder( 32 );
+               else
+                  sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
+                              m_ZGlobal1_Operation.InsertOptionalSubUsages( mMasLC3, sb_szDisplayStatement, "M_SubUsage", 1 );
+               szDisplayStatement = sb_szDisplayStatement.toString( );}
+                // m_ZGlobal1_Operation = null;  // permit gc  (unnecessary)
+               }
+
+               //:IF mMasLC3.M_InsertTextKeywordUsage EXISTS
+               lTempInteger_1 = CheckExistenceOfEntity( mMasLC3, "M_InsertTextKeywordUsage" );
+               if ( lTempInteger_1 == 0 )
+               { 
+                  //:FOR EACH mMasLC3.M_InsertTextKeywordUsage
+                  RESULT = SetCursorFirstEntity( mMasLC3, "M_InsertTextKeywordUsage", "" );
+                  while ( RESULT > zCURSOR_UNCHANGED )
+                  { 
+                     //:szUsageType = mMasLC3.M_InsertTextKeywordUsage.Type // A - all optional; O - Zero or one allowed; R - at least one required; X - exactly one required
+                     {MutableInt mi_lTempInteger_2 = new MutableInt( lTempInteger_2 );
+                     StringBuilder sb_szUsageType;
+                     if ( szUsageType == null )
+                        sb_szUsageType = new StringBuilder( 32 );
+                     else
+                        sb_szUsageType = new StringBuilder( szUsageType );
+                                           GetVariableFromAttribute( sb_szUsageType, mi_lTempInteger_2, 'S', 2, mMasLC3, "M_InsertTextKeywordUsage", "Type", "", 0 );
+                     lTempInteger_2 = mi_lTempInteger_2.intValue( );
+                     szUsageType = sb_szUsageType.toString( );}
+                     //:szUsageName = "{" + mMasLC3.M_InsertTextKeywordUsage.Name + "}"
+                     {MutableInt mi_lTempInteger_3 = new MutableInt( lTempInteger_3 );
+                     StringBuilder sb_szTempString_0;
+                     if ( szTempString_0 == null )
+                        sb_szTempString_0 = new StringBuilder( 32 );
+                     else
+                        sb_szTempString_0 = new StringBuilder( szTempString_0 );
+                                           GetVariableFromAttribute( sb_szTempString_0, mi_lTempInteger_3, 'S', 255, mMasLC3, "M_InsertTextKeywordUsage", "Name", "", 0 );
+                     lTempInteger_3 = mi_lTempInteger_3.intValue( );
+                     szTempString_0 = sb_szTempString_0.toString( );}
+                      {StringBuilder sb_szUsageName;
+                     if ( szUsageName == null )
+                        sb_szUsageName = new StringBuilder( 32 );
+                     else
+                        sb_szUsageName = new StringBuilder( szUsageName );
+                                          ZeidonStringCopy( sb_szUsageName, 1, 0, "{", 1, 0, 101 );
+                     szUsageName = sb_szUsageName.toString( );}
+                      {StringBuilder sb_szUsageName;
+                     if ( szUsageName == null )
+                        sb_szUsageName = new StringBuilder( 32 );
+                     else
+                        sb_szUsageName = new StringBuilder( szUsageName );
+                                          ZeidonStringConcat( sb_szUsageName, 1, 0, szTempString_0, 1, 0, 101 );
+                     szUsageName = sb_szUsageName.toString( );}
+                      {StringBuilder sb_szUsageName;
+                     if ( szUsageName == null )
+                        sb_szUsageName = new StringBuilder( 32 );
+                     else
+                        sb_szUsageName = new StringBuilder( szUsageName );
+                                          ZeidonStringConcat( sb_szUsageName, 1, 0, "}", 1, 0, 101 );
+                     szUsageName = sb_szUsageName.toString( );}
+                     //:bFirst = 1
+                     bFirst = 1;
+                     //:IF szUsageType = "A"
+                     if ( ZeidonStringCompare( szUsageType, 1, 0, "A", 1, 0, 2 ) == 0 )
+                     { 
+                        //:szUsageText = ""
+                         {StringBuilder sb_szUsageText;
+                        if ( szUsageText == null )
+                           sb_szUsageText = new StringBuilder( 32 );
+                        else
+                           sb_szUsageText = new StringBuilder( szUsageText );
+                                                ZeidonStringCopy( sb_szUsageText, 1, 0, "", 1, 0, 101 );
+                        szUsageText = sb_szUsageText.toString( );}
+                        //:ELSE
+                     } 
+                     else
+                     { 
+                        //:szUsageText = "["
+                         {StringBuilder sb_szUsageText;
+                        if ( szUsageText == null )
+                           sb_szUsageText = new StringBuilder( 32 );
+                        else
+                           sb_szUsageText = new StringBuilder( szUsageText );
+                                                ZeidonStringCopy( sb_szUsageText, 1, 0, "[", 1, 0, 101 );
+                        szUsageText = sb_szUsageText.toString( );}
+                     } 
+
+                     //:END
+                     //:FOR EACH mMasLC3.M_InsertTextUsage
+                     RESULT = SetCursorFirstEntity( mMasLC3, "M_InsertTextUsage", "" );
+                     while ( RESULT > zCURSOR_UNCHANGED )
+                     { 
+                        //:IF bFirst = 1
+                        if ( bFirst == 1 )
+                        { 
+                           //:bFirst = 0
+                           bFirst = 0;
+                           //:szUsageText = szUsageText + "<b>" + mMasLC3.M_InsertTextUsage.Text + "</b>"
+                            {StringBuilder sb_szUsageText;
+                           if ( szUsageText == null )
+                              sb_szUsageText = new StringBuilder( 32 );
+                           else
+                              sb_szUsageText = new StringBuilder( szUsageText );
+                                                      ZeidonStringConcat( sb_szUsageText, 1, 0, "<b>", 1, 0, 101 );
+                           szUsageText = sb_szUsageText.toString( );}
+                           {MutableInt mi_lTempInteger_4 = new MutableInt( lTempInteger_4 );
+                           StringBuilder sb_szTempString_1;
+                           if ( szTempString_1 == null )
+                              sb_szTempString_1 = new StringBuilder( 32 );
+                           else
+                              sb_szTempString_1 = new StringBuilder( szTempString_1 );
+                                                       GetVariableFromAttribute( sb_szTempString_1, mi_lTempInteger_4, 'S', 4097, mMasLC3, "M_InsertTextUsage", "Text", "", 0 );
+                           lTempInteger_4 = mi_lTempInteger_4.intValue( );
+                           szTempString_1 = sb_szTempString_1.toString( );}
+                            {StringBuilder sb_szUsageText;
+                           if ( szUsageText == null )
+                              sb_szUsageText = new StringBuilder( 32 );
+                           else
+                              sb_szUsageText = new StringBuilder( szUsageText );
+                                                      ZeidonStringConcat( sb_szUsageText, 1, 0, szTempString_1, 1, 0, 101 );
+                           szUsageText = sb_szUsageText.toString( );}
+                            {StringBuilder sb_szUsageText;
+                           if ( szUsageText == null )
+                              sb_szUsageText = new StringBuilder( 32 );
+                           else
+                              sb_szUsageText = new StringBuilder( szUsageText );
+                                                      ZeidonStringConcat( sb_szUsageText, 1, 0, "</b>", 1, 0, 101 );
+                           szUsageText = sb_szUsageText.toString( );}
+                           //:ELSE
+                        } 
+                        else
+                        { 
+                           //:IF szUsageType = "A"
+                           if ( ZeidonStringCompare( szUsageType, 1, 0, "A", 1, 0, 2 ) == 0 )
+                           { 
+                              //:szUsageText = szUsageText + ", <b>" + mMasLC3.M_InsertTextUsage.Text + "</b>"
+                               {StringBuilder sb_szUsageText;
+                              if ( szUsageText == null )
+                                 sb_szUsageText = new StringBuilder( 32 );
+                              else
+                                 sb_szUsageText = new StringBuilder( szUsageText );
+                                                            ZeidonStringConcat( sb_szUsageText, 1, 0, ", <b>", 1, 0, 101 );
+                              szUsageText = sb_szUsageText.toString( );}
+                              {MutableInt mi_lTempInteger_5 = new MutableInt( lTempInteger_5 );
+                              StringBuilder sb_szTempString_2;
+                              if ( szTempString_2 == null )
+                                 sb_szTempString_2 = new StringBuilder( 32 );
+                              else
+                                 sb_szTempString_2 = new StringBuilder( szTempString_2 );
+                                                             GetVariableFromAttribute( sb_szTempString_2, mi_lTempInteger_5, 'S', 4097, mMasLC3, "M_InsertTextUsage", "Text", "", 0 );
+                              lTempInteger_5 = mi_lTempInteger_5.intValue( );
+                              szTempString_2 = sb_szTempString_2.toString( );}
+                               {StringBuilder sb_szUsageText;
+                              if ( szUsageText == null )
+                                 sb_szUsageText = new StringBuilder( 32 );
+                              else
+                                 sb_szUsageText = new StringBuilder( szUsageText );
+                                                            ZeidonStringConcat( sb_szUsageText, 1, 0, szTempString_2, 1, 0, 101 );
+                              szUsageText = sb_szUsageText.toString( );}
+                               {StringBuilder sb_szUsageText;
+                              if ( szUsageText == null )
+                                 sb_szUsageText = new StringBuilder( 32 );
+                              else
+                                 sb_szUsageText = new StringBuilder( szUsageText );
+                                                            ZeidonStringConcat( sb_szUsageText, 1, 0, "</b>", 1, 0, 101 );
+                              szUsageText = sb_szUsageText.toString( );}
+                              //:ELSE
+                           } 
+                           else
+                           { 
+                              //:IF szUsageType = "O"
+                              if ( ZeidonStringCompare( szUsageType, 1, 0, "O", 1, 0, 2 ) == 0 )
+                              { 
+                                 //:szUsageText = szUsageText + " || <b>" + mMasLC3.M_InsertTextUsage.Text + "</b>"
+                                  {StringBuilder sb_szUsageText;
+                                 if ( szUsageText == null )
+                                    sb_szUsageText = new StringBuilder( 32 );
+                                 else
+                                    sb_szUsageText = new StringBuilder( szUsageText );
+                                                                  ZeidonStringConcat( sb_szUsageText, 1, 0, " | <b>", 1, 0, 101 );
+                                 szUsageText = sb_szUsageText.toString( );}
+                                 {MutableInt mi_lTempInteger_6 = new MutableInt( lTempInteger_6 );
+                                 StringBuilder sb_szTempString_3;
+                                 if ( szTempString_3 == null )
+                                    sb_szTempString_3 = new StringBuilder( 32 );
+                                 else
+                                    sb_szTempString_3 = new StringBuilder( szTempString_3 );
+                                                                   GetVariableFromAttribute( sb_szTempString_3, mi_lTempInteger_6, 'S', 4097, mMasLC3, "M_InsertTextUsage", "Text", "", 0 );
+                                 lTempInteger_6 = mi_lTempInteger_6.intValue( );
+                                 szTempString_3 = sb_szTempString_3.toString( );}
+                                  {StringBuilder sb_szUsageText;
+                                 if ( szUsageText == null )
+                                    sb_szUsageText = new StringBuilder( 32 );
+                                 else
+                                    sb_szUsageText = new StringBuilder( szUsageText );
+                                                                  ZeidonStringConcat( sb_szUsageText, 1, 0, szTempString_3, 1, 0, 101 );
+                                 szUsageText = sb_szUsageText.toString( );}
+                                  {StringBuilder sb_szUsageText;
+                                 if ( szUsageText == null )
+                                    sb_szUsageText = new StringBuilder( 32 );
+                                 else
+                                    sb_szUsageText = new StringBuilder( szUsageText );
+                                                                  ZeidonStringConcat( sb_szUsageText, 1, 0, "</b>", 1, 0, 101 );
+                                 szUsageText = sb_szUsageText.toString( );}
+                                 //:ELSE
+                              } 
+                              else
+                              { 
+                                 //:IF szUsageType = "R"
+                                 if ( ZeidonStringCompare( szUsageType, 1, 0, "R", 1, 0, 2 ) == 0 )
+                                 { 
+                                    //:szUsageText = szUsageText + " or <b>" + mMasLC3.M_InsertTextUsage.Text + "</b>"
+                                     {StringBuilder sb_szUsageText;
+                                    if ( szUsageText == null )
+                                       sb_szUsageText = new StringBuilder( 32 );
+                                    else
+                                       sb_szUsageText = new StringBuilder( szUsageText );
+                                                                        ZeidonStringConcat( sb_szUsageText, 1, 0, " or <b>", 1, 0, 101 );
+                                    szUsageText = sb_szUsageText.toString( );}
+                                    {MutableInt mi_lTempInteger_7 = new MutableInt( lTempInteger_7 );
+                                    StringBuilder sb_szTempString_4;
+                                    if ( szTempString_4 == null )
+                                       sb_szTempString_4 = new StringBuilder( 32 );
+                                    else
+                                       sb_szTempString_4 = new StringBuilder( szTempString_4 );
+                                                                         GetVariableFromAttribute( sb_szTempString_4, mi_lTempInteger_7, 'S', 4097, mMasLC3, "M_InsertTextUsage", "Text", "", 0 );
+                                    lTempInteger_7 = mi_lTempInteger_7.intValue( );
+                                    szTempString_4 = sb_szTempString_4.toString( );}
+                                     {StringBuilder sb_szUsageText;
+                                    if ( szUsageText == null )
+                                       sb_szUsageText = new StringBuilder( 32 );
+                                    else
+                                       sb_szUsageText = new StringBuilder( szUsageText );
+                                                                        ZeidonStringConcat( sb_szUsageText, 1, 0, szTempString_4, 1, 0, 101 );
+                                    szUsageText = sb_szUsageText.toString( );}
+                                     {StringBuilder sb_szUsageText;
+                                    if ( szUsageText == null )
+                                       sb_szUsageText = new StringBuilder( 32 );
+                                    else
+                                       sb_szUsageText = new StringBuilder( szUsageText );
+                                                                        ZeidonStringConcat( sb_szUsageText, 1, 0, "</b>", 1, 0, 101 );
+                                    szUsageText = sb_szUsageText.toString( );}
+                                    //:ELSE
+                                 } 
+                                 else
+                                 { 
+                                    //:// IF szUsageType = "X"
+                                    //:szUsageText = szUsageText + " / <b>" + mMasLC3.M_InsertTextUsage.Text + "</b>"
+                                     {StringBuilder sb_szUsageText;
+                                    if ( szUsageText == null )
+                                       sb_szUsageText = new StringBuilder( 32 );
+                                    else
+                                       sb_szUsageText = new StringBuilder( szUsageText );
+                                                                        ZeidonStringConcat( sb_szUsageText, 1, 0, " / <b>", 1, 0, 101 );
+                                    szUsageText = sb_szUsageText.toString( );}
+                                    {MutableInt mi_lTempInteger_8 = new MutableInt( lTempInteger_8 );
+                                    StringBuilder sb_szTempString_5;
+                                    if ( szTempString_5 == null )
+                                       sb_szTempString_5 = new StringBuilder( 32 );
+                                    else
+                                       sb_szTempString_5 = new StringBuilder( szTempString_5 );
+                                                                         GetVariableFromAttribute( sb_szTempString_5, mi_lTempInteger_8, 'S', 4097, mMasLC3, "M_InsertTextUsage", "Text", "", 0 );
+                                    lTempInteger_8 = mi_lTempInteger_8.intValue( );
+                                    szTempString_5 = sb_szTempString_5.toString( );}
+                                     {StringBuilder sb_szUsageText;
+                                    if ( szUsageText == null )
+                                       sb_szUsageText = new StringBuilder( 32 );
+                                    else
+                                       sb_szUsageText = new StringBuilder( szUsageText );
+                                                                        ZeidonStringConcat( sb_szUsageText, 1, 0, szTempString_5, 1, 0, 101 );
+                                    szUsageText = sb_szUsageText.toString( );}
+                                     {StringBuilder sb_szUsageText;
+                                    if ( szUsageText == null )
+                                       sb_szUsageText = new StringBuilder( 32 );
+                                    else
+                                       sb_szUsageText = new StringBuilder( szUsageText );
+                                                                        ZeidonStringConcat( sb_szUsageText, 1, 0, "</b>", 1, 0, 101 );
+                                    szUsageText = sb_szUsageText.toString( );}
+                                 } 
+
+                                 //:// END
+                                 //:END
+                              } 
+
+                              //:END
+                           } 
+
+                           //:END
+                        } 
+
+                        RESULT = SetCursorNextEntity( mMasLC3, "M_InsertTextUsage", "" );
+                        //:END
+                     } 
+
+                     //:END
+                     //:IF szUsageType != "A"
+                     if ( ZeidonStringCompare( szUsageType, 1, 0, "A", 1, 0, 2 ) != 0 )
+                     { 
+                        //:szUsageText = szUsageText + "]"
+                         {StringBuilder sb_szUsageText;
+                        if ( szUsageText == null )
+                           sb_szUsageText = new StringBuilder( 32 );
+                        else
+                           sb_szUsageText = new StringBuilder( szUsageText );
+                                                ZeidonStringConcat( sb_szUsageText, 1, 0, "]", 1, 0, 101 );
+                        szUsageText = sb_szUsageText.toString( );}
+                     } 
+
+                     //:END
+                     //:zSearchAndReplace( szDisplayStatement, 2048, szUsageName, szUsageText )
+                     {StringBuilder sb_szDisplayStatement;
+                     if ( szDisplayStatement == null )
+                        sb_szDisplayStatement = new StringBuilder( 32 );
+                     else
+                        sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
+                                           zSearchAndReplace( sb_szDisplayStatement, 2048, szUsageName, szUsageText );
+                     szDisplayStatement = sb_szDisplayStatement.toString( );}
+                     RESULT = SetCursorNextEntity( mMasLC3, "M_InsertTextKeywordUsage", "" );
+                  } 
+
+                  //:END
+               } 
+
+               //:END
+               //:ELSE
+            } 
+            else
+            { 
+               //:szDisplayStatement = ""
+                {StringBuilder sb_szDisplayStatement;
+               if ( szDisplayStatement == null )
+                  sb_szDisplayStatement = new StringBuilder( 32 );
+               else
+                  sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
+                              ZeidonStringCopy( sb_szDisplayStatement, 1, 0, "", 1, 0, 2049 );
+               szDisplayStatement = sb_szDisplayStatement.toString( );}
+            } 
+
+            //:END
+            //:IF szCombinedText = ""
+            if ( ZeidonStringCompare( szCombinedText, 1, 0, "", 1, 0, 4097 ) == 0 )
+            { 
+               //:szCombinedText = szDisplayStatement
+                {StringBuilder sb_szCombinedText;
                if ( szCombinedText == null )
                   sb_szCombinedText = new StringBuilder( 32 );
                else
                   sb_szCombinedText = new StringBuilder( szCombinedText );
-                               GetVariableFromAttribute( sb_szCombinedText, mi_lTempInteger_0, 'S', 2049, mMasLC, "M_UsageGroupUsage", "Name", "", 0 );
-               lTempInteger_0 = mi_lTempInteger_0.intValue( );
+                              ZeidonStringCopy( sb_szCombinedText, 1, 0, szDisplayStatement, 1, 0, 4097 );
                szCombinedText = sb_szCombinedText.toString( );}
                //:ELSE
             } 
             else
             { 
-               //:szCombinedText = szCombinedText + ", " + mMasLC.M_UsageGroupUsage.Name
+               //:szCombinedText = szCombinedText + ", " + szDisplayStatement
                 {StringBuilder sb_szCombinedText;
                if ( szCombinedText == null )
                   sb_szCombinedText = new StringBuilder( 32 );
                else
                   sb_szCombinedText = new StringBuilder( szCombinedText );
-                              ZeidonStringConcat( sb_szCombinedText, 1, 0, ", ", 1, 0, 2049 );
+                              ZeidonStringConcat( sb_szCombinedText, 1, 0, ", ", 1, 0, 4097 );
                szCombinedText = sb_szCombinedText.toString( );}
-               {MutableInt mi_lTempInteger_1 = new MutableInt( lTempInteger_1 );
-               StringBuilder sb_szTempString_0;
-               if ( szTempString_0 == null )
-                  sb_szTempString_0 = new StringBuilder( 32 );
-               else
-                  sb_szTempString_0 = new StringBuilder( szTempString_0 );
-                               GetVariableFromAttribute( sb_szTempString_0, mi_lTempInteger_1, 'S', 4097, mMasLC, "M_UsageGroupUsage", "Name", "", 0 );
-               lTempInteger_1 = mi_lTempInteger_1.intValue( );
-               szTempString_0 = sb_szTempString_0.toString( );}
                 {StringBuilder sb_szCombinedText;
                if ( szCombinedText == null )
                   sb_szCombinedText = new StringBuilder( 32 );
                else
                   sb_szCombinedText = new StringBuilder( szCombinedText );
-                              ZeidonStringConcat( sb_szCombinedText, 1, 0, szTempString_0, 1, 0, 2049 );
+                              ZeidonStringConcat( sb_szCombinedText, 1, 0, szDisplayStatement, 1, 0, 4097 );
                szCombinedText = sb_szCombinedText.toString( );}
             } 
 
-            RESULT = SetCursorNextEntity( mMasLC, "M_UsageGroupUsage", "" );
+            RESULT = SetCursorNextEntity( mMasLC2, "M_UsageGroupUsage", "" );
             //:END
          } 
 
          //:END
+
+         //:DropView( mMasLC2 )
+         DropView( mMasLC2 );
+         //:DropView( mMasLC3 )
+         DropView( mMasLC3 );
 
          //:// Store the resulting value in the object.
          //:StoreStringInRecord( mMasLC, InternalEntityStructure, InternalAttribStructure, szCombinedText )
@@ -8520,7 +8908,471 @@ omMasLC_dSubUsageCombinedText( View     mMasLC,
    } 
 
 
-   //:TRANSFORMATION OPERATION
+   //:DERIVED ATTRIBUTE OPERATION
+   //:dUsageGroupCombinedText( VIEW mMasLC BASED ON LOD mMasLC,
+   //:                      STRING ( 32 ) InternalEntityStructure,
+   //:                      STRING ( 32 ) InternalAttribStructure,
+   //:                      SHORT GetOrSetFlag )
+
+   //:VIEW mMasLC2 BASED ON LOD mMasLC
+public int 
+omMasLC_dUsageGroupCombinedText( View     mMasLC,
+                                 String InternalEntityStructure,
+                                 String InternalAttribStructure,
+                                 Integer   GetOrSetFlag )
+{
+   zVIEW    mMasLC2 = new zVIEW( );
+   //:STRING ( 2048 ) szDisplayStatement
+   String   szDisplayStatement = null;
+   //:STRING ( 100 ) szUsageName
+   String   szUsageName = null;
+   //:STRING ( 100 ) szUsageText
+   String   szUsageText = null;
+   //:STRING ( 1 ) szUsageType
+   String   szUsageType = null;
+   //:INTEGER ID
+   int      ID = 0;
+   //:SHORT bFirst
+   int      bFirst = 0;
+   int      RESULT = 0;
+   String   szTempString_0 = null;
+   int      lTempInteger_0 = 0;
+   int      lTempInteger_1 = 0;
+   int      lTempInteger_2 = 0;
+   int      lTempInteger_3 = 0;
+   String   szTempString_1 = null;
+   int      lTempInteger_4 = 0;
+   String   szTempString_2 = null;
+   int      lTempInteger_5 = 0;
+   String   szTempString_3 = null;
+   int      lTempInteger_6 = 0;
+   String   szTempString_4 = null;
+   int      lTempInteger_7 = 0;
+   String   szTempString_5 = null;
+   int      lTempInteger_8 = 0;
+
+   //:// SHORT nRC
+
+   //:CASE GetOrSetFlag
+   switch( GetOrSetFlag )
+   { 
+      //:OF   zDERIVED_GET:
+      case zDERIVED_GET :
+
+         //:CreateViewFromView( mMasLC2, mMasLC )
+         CreateViewFromView( mMasLC2, mMasLC );
+         //:// Position on the corresponding M_Usage entity and create temporal subobject version.
+         //:ID = mMasLC.M_UsageGroupUsage.ID
+         {MutableInt mi_ID = new MutableInt( ID );
+                   GetIntegerFromAttribute( mi_ID, mMasLC, "M_UsageGroupUsage", "ID" );
+         ID = mi_ID.intValue( );}
+         //:IF ID = 0
+         if ( ID == 0 )
+         { 
+            //:SET CURSOR FIRST mMasLC2.M_Usage WHERE mMasLC2.M_Usage.Name = mMasLC.M_UsageGroupUsage.Name
+            {StringBuilder sb_szTempString_0;
+            if ( szTempString_0 == null )
+               sb_szTempString_0 = new StringBuilder( 32 );
+            else
+               sb_szTempString_0 = new StringBuilder( szTempString_0 );
+                         GetStringFromAttribute( sb_szTempString_0, mMasLC, "M_UsageGroupUsage", "Name" );
+            szTempString_0 = sb_szTempString_0.toString( );}
+            RESULT = SetCursorFirstEntityByString( mMasLC2, "M_Usage", "Name", szTempString_0, "" );
+            //:ELSE
+         } 
+         else
+         { 
+            //:SET CURSOR FIRST mMasLC2.M_Usage WHERE mMasLC2.M_Usage.ID = ID
+            RESULT = SetCursorFirstEntityByInteger( mMasLC2, "M_Usage", "ID", ID, "" );
+         } 
+
+         //:END
+
+         //:// TraceLineI( "Combining text for M_UsageGroupUsage: ", ID )
+         //:// DisplayEntityInstance( mMasLC2, "M_Usage" )
+
+         //:// nRC = SetCursorFirstEntityByEntityCsr( mMasLC2, "M_Usage", mMasLC, "M_UsageGroupUsage", "" )
+
+         //:// Expand the current Text attribute by replacing embedded Keywords with the Keyword
+         //:// values in the M_InsertTextUsage subentities.
+         //:IF RESULT = 0
+         if ( RESULT == 0 )
+         { 
+            //:// Display required text combined with optional usage(s).
+            //:szDisplayStatement = mMasLC2.M_Usage.Name
+            {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
+            StringBuilder sb_szDisplayStatement;
+            if ( szDisplayStatement == null )
+               sb_szDisplayStatement = new StringBuilder( 32 );
+            else
+               sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
+                         GetVariableFromAttribute( sb_szDisplayStatement, mi_lTempInteger_0, 'S', 2049, mMasLC2, "M_Usage", "Name", "", 0 );
+            lTempInteger_0 = mi_lTempInteger_0.intValue( );
+            szDisplayStatement = sb_szDisplayStatement.toString( );}
+            //:InsertOptionalSubUsages( mMasLC2, szDisplayStatement, "M_SubUsage", 1 )
+            {
+             ZGlobal1_Operation m_ZGlobal1_Operation = new ZGlobal1_Operation( mMasLC2 );
+              {StringBuilder sb_szDisplayStatement;
+            if ( szDisplayStatement == null )
+               sb_szDisplayStatement = new StringBuilder( 32 );
+            else
+               sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
+                        m_ZGlobal1_Operation.InsertOptionalSubUsages( mMasLC2, sb_szDisplayStatement, "M_SubUsage", 1 );
+            szDisplayStatement = sb_szDisplayStatement.toString( );}
+             // m_ZGlobal1_Operation = null;  // permit gc  (unnecessary)
+            }
+
+            //:IF mMasLC2.M_InsertTextKeywordUsage EXISTS
+            lTempInteger_1 = CheckExistenceOfEntity( mMasLC2, "M_InsertTextKeywordUsage" );
+            if ( lTempInteger_1 == 0 )
+            { 
+               //:FOR EACH mMasLC2.M_InsertTextKeywordUsage
+               RESULT = SetCursorFirstEntity( mMasLC2, "M_InsertTextKeywordUsage", "" );
+               while ( RESULT > zCURSOR_UNCHANGED )
+               { 
+                  //:szUsageType = mMasLC2.M_InsertTextKeywordUsage.Type // A - all optional; O - Zero or one allowed; R - at least one required; X - exactly one required
+                  {MutableInt mi_lTempInteger_2 = new MutableInt( lTempInteger_2 );
+                  StringBuilder sb_szUsageType;
+                  if ( szUsageType == null )
+                     sb_szUsageType = new StringBuilder( 32 );
+                  else
+                     sb_szUsageType = new StringBuilder( szUsageType );
+                                     GetVariableFromAttribute( sb_szUsageType, mi_lTempInteger_2, 'S', 2, mMasLC2, "M_InsertTextKeywordUsage", "Type", "", 0 );
+                  lTempInteger_2 = mi_lTempInteger_2.intValue( );
+                  szUsageType = sb_szUsageType.toString( );}
+                  //:szUsageName = "{" + mMasLC2.M_InsertTextKeywordUsage.Name + "}"
+                  {MutableInt mi_lTempInteger_3 = new MutableInt( lTempInteger_3 );
+                  StringBuilder sb_szTempString_0;
+                  if ( szTempString_0 == null )
+                     sb_szTempString_0 = new StringBuilder( 32 );
+                  else
+                     sb_szTempString_0 = new StringBuilder( szTempString_0 );
+                                     GetVariableFromAttribute( sb_szTempString_0, mi_lTempInteger_3, 'S', 4097, mMasLC2, "M_InsertTextKeywordUsage", "Name", "", 0 );
+                  lTempInteger_3 = mi_lTempInteger_3.intValue( );
+                  szTempString_0 = sb_szTempString_0.toString( );}
+                   {StringBuilder sb_szUsageName;
+                  if ( szUsageName == null )
+                     sb_szUsageName = new StringBuilder( 32 );
+                  else
+                     sb_szUsageName = new StringBuilder( szUsageName );
+                                    ZeidonStringCopy( sb_szUsageName, 1, 0, "{", 1, 0, 101 );
+                  szUsageName = sb_szUsageName.toString( );}
+                   {StringBuilder sb_szUsageName;
+                  if ( szUsageName == null )
+                     sb_szUsageName = new StringBuilder( 32 );
+                  else
+                     sb_szUsageName = new StringBuilder( szUsageName );
+                                    ZeidonStringConcat( sb_szUsageName, 1, 0, szTempString_0, 1, 0, 101 );
+                  szUsageName = sb_szUsageName.toString( );}
+                   {StringBuilder sb_szUsageName;
+                  if ( szUsageName == null )
+                     sb_szUsageName = new StringBuilder( 32 );
+                  else
+                     sb_szUsageName = new StringBuilder( szUsageName );
+                                    ZeidonStringConcat( sb_szUsageName, 1, 0, "}", 1, 0, 101 );
+                  szUsageName = sb_szUsageName.toString( );}
+                  //:bFirst = 1
+                  bFirst = 1;
+                  //:IF szUsageType = "A"
+                  if ( ZeidonStringCompare( szUsageType, 1, 0, "A", 1, 0, 2 ) == 0 )
+                  { 
+                     //:szUsageText = ""
+                      {StringBuilder sb_szUsageText;
+                     if ( szUsageText == null )
+                        sb_szUsageText = new StringBuilder( 32 );
+                     else
+                        sb_szUsageText = new StringBuilder( szUsageText );
+                                          ZeidonStringCopy( sb_szUsageText, 1, 0, "", 1, 0, 101 );
+                     szUsageText = sb_szUsageText.toString( );}
+                     //:ELSE
+                  } 
+                  else
+                  { 
+                     //:szUsageText = "["
+                      {StringBuilder sb_szUsageText;
+                     if ( szUsageText == null )
+                        sb_szUsageText = new StringBuilder( 32 );
+                     else
+                        sb_szUsageText = new StringBuilder( szUsageText );
+                                          ZeidonStringCopy( sb_szUsageText, 1, 0, "[", 1, 0, 101 );
+                     szUsageText = sb_szUsageText.toString( );}
+                  } 
+
+                  //:END
+                  //:FOR EACH mMasLC2.M_InsertTextUsage
+                  RESULT = SetCursorFirstEntity( mMasLC2, "M_InsertTextUsage", "" );
+                  while ( RESULT > zCURSOR_UNCHANGED )
+                  { 
+                     //:IF bFirst = 1
+                     if ( bFirst == 1 )
+                     { 
+                        //:bFirst = 0
+                        bFirst = 0;
+                        //:szUsageText = szUsageText + "<b>" + mMasLC2.M_InsertTextUsage.Text + "</b>"
+                         {StringBuilder sb_szUsageText;
+                        if ( szUsageText == null )
+                           sb_szUsageText = new StringBuilder( 32 );
+                        else
+                           sb_szUsageText = new StringBuilder( szUsageText );
+                                                ZeidonStringConcat( sb_szUsageText, 1, 0, "<b>", 1, 0, 101 );
+                        szUsageText = sb_szUsageText.toString( );}
+                        {MutableInt mi_lTempInteger_4 = new MutableInt( lTempInteger_4 );
+                        StringBuilder sb_szTempString_1;
+                        if ( szTempString_1 == null )
+                           sb_szTempString_1 = new StringBuilder( 32 );
+                        else
+                           sb_szTempString_1 = new StringBuilder( szTempString_1 );
+                                                 GetVariableFromAttribute( sb_szTempString_1, mi_lTempInteger_4, 'S', 4097, mMasLC2, "M_InsertTextUsage", "Text", "", 0 );
+                        lTempInteger_4 = mi_lTempInteger_4.intValue( );
+                        szTempString_1 = sb_szTempString_1.toString( );}
+                         {StringBuilder sb_szUsageText;
+                        if ( szUsageText == null )
+                           sb_szUsageText = new StringBuilder( 32 );
+                        else
+                           sb_szUsageText = new StringBuilder( szUsageText );
+                                                ZeidonStringConcat( sb_szUsageText, 1, 0, szTempString_1, 1, 0, 101 );
+                        szUsageText = sb_szUsageText.toString( );}
+                         {StringBuilder sb_szUsageText;
+                        if ( szUsageText == null )
+                           sb_szUsageText = new StringBuilder( 32 );
+                        else
+                           sb_szUsageText = new StringBuilder( szUsageText );
+                                                ZeidonStringConcat( sb_szUsageText, 1, 0, "</b>", 1, 0, 101 );
+                        szUsageText = sb_szUsageText.toString( );}
+                        //:ELSE
+                     } 
+                     else
+                     { 
+                        //:IF szUsageType = "A"
+                        if ( ZeidonStringCompare( szUsageType, 1, 0, "A", 1, 0, 2 ) == 0 )
+                        { 
+                           //:szUsageText = szUsageText + ", <b>" + mMasLC2.M_InsertTextUsage.Text + "</b>"
+                            {StringBuilder sb_szUsageText;
+                           if ( szUsageText == null )
+                              sb_szUsageText = new StringBuilder( 32 );
+                           else
+                              sb_szUsageText = new StringBuilder( szUsageText );
+                                                      ZeidonStringConcat( sb_szUsageText, 1, 0, ", <b>", 1, 0, 101 );
+                           szUsageText = sb_szUsageText.toString( );}
+                           {MutableInt mi_lTempInteger_5 = new MutableInt( lTempInteger_5 );
+                           StringBuilder sb_szTempString_2;
+                           if ( szTempString_2 == null )
+                              sb_szTempString_2 = new StringBuilder( 32 );
+                           else
+                              sb_szTempString_2 = new StringBuilder( szTempString_2 );
+                                                       GetVariableFromAttribute( sb_szTempString_2, mi_lTempInteger_5, 'S', 4097, mMasLC2, "M_InsertTextUsage", "Text", "", 0 );
+                           lTempInteger_5 = mi_lTempInteger_5.intValue( );
+                           szTempString_2 = sb_szTempString_2.toString( );}
+                            {StringBuilder sb_szUsageText;
+                           if ( szUsageText == null )
+                              sb_szUsageText = new StringBuilder( 32 );
+                           else
+                              sb_szUsageText = new StringBuilder( szUsageText );
+                                                      ZeidonStringConcat( sb_szUsageText, 1, 0, szTempString_2, 1, 0, 101 );
+                           szUsageText = sb_szUsageText.toString( );}
+                            {StringBuilder sb_szUsageText;
+                           if ( szUsageText == null )
+                              sb_szUsageText = new StringBuilder( 32 );
+                           else
+                              sb_szUsageText = new StringBuilder( szUsageText );
+                                                      ZeidonStringConcat( sb_szUsageText, 1, 0, "</b>", 1, 0, 101 );
+                           szUsageText = sb_szUsageText.toString( );}
+                           //:ELSE
+                        } 
+                        else
+                        { 
+                           //:IF szUsageType = "O"
+                           if ( ZeidonStringCompare( szUsageType, 1, 0, "O", 1, 0, 2 ) == 0 )
+                           { 
+                              //:szUsageText = szUsageText + " || <b>" + mMasLC2.M_InsertTextUsage.Text + "</b>"
+                               {StringBuilder sb_szUsageText;
+                              if ( szUsageText == null )
+                                 sb_szUsageText = new StringBuilder( 32 );
+                              else
+                                 sb_szUsageText = new StringBuilder( szUsageText );
+                                                            ZeidonStringConcat( sb_szUsageText, 1, 0, " | <b>", 1, 0, 101 );
+                              szUsageText = sb_szUsageText.toString( );}
+                              {MutableInt mi_lTempInteger_6 = new MutableInt( lTempInteger_6 );
+                              StringBuilder sb_szTempString_3;
+                              if ( szTempString_3 == null )
+                                 sb_szTempString_3 = new StringBuilder( 32 );
+                              else
+                                 sb_szTempString_3 = new StringBuilder( szTempString_3 );
+                                                             GetVariableFromAttribute( sb_szTempString_3, mi_lTempInteger_6, 'S', 4097, mMasLC2, "M_InsertTextUsage", "Text", "", 0 );
+                              lTempInteger_6 = mi_lTempInteger_6.intValue( );
+                              szTempString_3 = sb_szTempString_3.toString( );}
+                               {StringBuilder sb_szUsageText;
+                              if ( szUsageText == null )
+                                 sb_szUsageText = new StringBuilder( 32 );
+                              else
+                                 sb_szUsageText = new StringBuilder( szUsageText );
+                                                            ZeidonStringConcat( sb_szUsageText, 1, 0, szTempString_3, 1, 0, 101 );
+                              szUsageText = sb_szUsageText.toString( );}
+                               {StringBuilder sb_szUsageText;
+                              if ( szUsageText == null )
+                                 sb_szUsageText = new StringBuilder( 32 );
+                              else
+                                 sb_szUsageText = new StringBuilder( szUsageText );
+                                                            ZeidonStringConcat( sb_szUsageText, 1, 0, "</b>", 1, 0, 101 );
+                              szUsageText = sb_szUsageText.toString( );}
+                              //:ELSE
+                           } 
+                           else
+                           { 
+                              //:IF szUsageType = "R"
+                              if ( ZeidonStringCompare( szUsageType, 1, 0, "R", 1, 0, 2 ) == 0 )
+                              { 
+                                 //:szUsageText = szUsageText + " or <b>" + mMasLC2.M_InsertTextUsage.Text + "</b>"
+                                  {StringBuilder sb_szUsageText;
+                                 if ( szUsageText == null )
+                                    sb_szUsageText = new StringBuilder( 32 );
+                                 else
+                                    sb_szUsageText = new StringBuilder( szUsageText );
+                                                                  ZeidonStringConcat( sb_szUsageText, 1, 0, " or <b>", 1, 0, 101 );
+                                 szUsageText = sb_szUsageText.toString( );}
+                                 {MutableInt mi_lTempInteger_7 = new MutableInt( lTempInteger_7 );
+                                 StringBuilder sb_szTempString_4;
+                                 if ( szTempString_4 == null )
+                                    sb_szTempString_4 = new StringBuilder( 32 );
+                                 else
+                                    sb_szTempString_4 = new StringBuilder( szTempString_4 );
+                                                                   GetVariableFromAttribute( sb_szTempString_4, mi_lTempInteger_7, 'S', 4097, mMasLC2, "M_InsertTextUsage", "Text", "", 0 );
+                                 lTempInteger_7 = mi_lTempInteger_7.intValue( );
+                                 szTempString_4 = sb_szTempString_4.toString( );}
+                                  {StringBuilder sb_szUsageText;
+                                 if ( szUsageText == null )
+                                    sb_szUsageText = new StringBuilder( 32 );
+                                 else
+                                    sb_szUsageText = new StringBuilder( szUsageText );
+                                                                  ZeidonStringConcat( sb_szUsageText, 1, 0, szTempString_4, 1, 0, 101 );
+                                 szUsageText = sb_szUsageText.toString( );}
+                                  {StringBuilder sb_szUsageText;
+                                 if ( szUsageText == null )
+                                    sb_szUsageText = new StringBuilder( 32 );
+                                 else
+                                    sb_szUsageText = new StringBuilder( szUsageText );
+                                                                  ZeidonStringConcat( sb_szUsageText, 1, 0, "</b>", 1, 0, 101 );
+                                 szUsageText = sb_szUsageText.toString( );}
+                                 //:ELSE
+                              } 
+                              else
+                              { 
+                                 //:// IF szUsageType = "X"
+                                 //:szUsageText = szUsageText + " / <b>" + mMasLC2.M_InsertTextUsage.Text + "</b>"
+                                  {StringBuilder sb_szUsageText;
+                                 if ( szUsageText == null )
+                                    sb_szUsageText = new StringBuilder( 32 );
+                                 else
+                                    sb_szUsageText = new StringBuilder( szUsageText );
+                                                                  ZeidonStringConcat( sb_szUsageText, 1, 0, " / <b>", 1, 0, 101 );
+                                 szUsageText = sb_szUsageText.toString( );}
+                                 {MutableInt mi_lTempInteger_8 = new MutableInt( lTempInteger_8 );
+                                 StringBuilder sb_szTempString_5;
+                                 if ( szTempString_5 == null )
+                                    sb_szTempString_5 = new StringBuilder( 32 );
+                                 else
+                                    sb_szTempString_5 = new StringBuilder( szTempString_5 );
+                                                                   GetVariableFromAttribute( sb_szTempString_5, mi_lTempInteger_8, 'S', 4097, mMasLC2, "M_InsertTextUsage", "Text", "", 0 );
+                                 lTempInteger_8 = mi_lTempInteger_8.intValue( );
+                                 szTempString_5 = sb_szTempString_5.toString( );}
+                                  {StringBuilder sb_szUsageText;
+                                 if ( szUsageText == null )
+                                    sb_szUsageText = new StringBuilder( 32 );
+                                 else
+                                    sb_szUsageText = new StringBuilder( szUsageText );
+                                                                  ZeidonStringConcat( sb_szUsageText, 1, 0, szTempString_5, 1, 0, 101 );
+                                 szUsageText = sb_szUsageText.toString( );}
+                                  {StringBuilder sb_szUsageText;
+                                 if ( szUsageText == null )
+                                    sb_szUsageText = new StringBuilder( 32 );
+                                 else
+                                    sb_szUsageText = new StringBuilder( szUsageText );
+                                                                  ZeidonStringConcat( sb_szUsageText, 1, 0, "</b>", 1, 0, 101 );
+                                 szUsageText = sb_szUsageText.toString( );}
+                              } 
+
+                              //:// END
+                              //:END
+                           } 
+
+                           //:END
+                        } 
+
+                        //:END
+                     } 
+
+                     RESULT = SetCursorNextEntity( mMasLC2, "M_InsertTextUsage", "" );
+                     //:END
+                  } 
+
+                  //:END
+                  //:IF szUsageType != "A"
+                  if ( ZeidonStringCompare( szUsageType, 1, 0, "A", 1, 0, 2 ) != 0 )
+                  { 
+                     //:szUsageText = szUsageText + "]"
+                      {StringBuilder sb_szUsageText;
+                     if ( szUsageText == null )
+                        sb_szUsageText = new StringBuilder( 32 );
+                     else
+                        sb_szUsageText = new StringBuilder( szUsageText );
+                                          ZeidonStringConcat( sb_szUsageText, 1, 0, "]", 1, 0, 101 );
+                     szUsageText = sb_szUsageText.toString( );}
+                  } 
+
+                  //:END
+                  //:zSearchAndReplace( szDisplayStatement, 2048, szUsageName, szUsageText )
+                  {StringBuilder sb_szDisplayStatement;
+                  if ( szDisplayStatement == null )
+                     sb_szDisplayStatement = new StringBuilder( 32 );
+                  else
+                     sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
+                                     zSearchAndReplace( sb_szDisplayStatement, 2048, szUsageName, szUsageText );
+                  szDisplayStatement = sb_szDisplayStatement.toString( );}
+                  RESULT = SetCursorNextEntity( mMasLC2, "M_InsertTextKeywordUsage", "" );
+               } 
+
+               //:END
+            } 
+
+            //:END
+            //:ELSE
+         } 
+         else
+         { 
+            //:szDisplayStatement = ""
+             {StringBuilder sb_szDisplayStatement;
+            if ( szDisplayStatement == null )
+               sb_szDisplayStatement = new StringBuilder( 32 );
+            else
+               sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
+                        ZeidonStringCopy( sb_szDisplayStatement, 1, 0, "", 1, 0, 2049 );
+            szDisplayStatement = sb_szDisplayStatement.toString( );}
+         } 
+
+         //:END
+         //:DropView( mMasLC2 )
+         DropView( mMasLC2 );
+
+         //:// Store the calculated value in the object.
+         //:StoreStringInRecord( mMasLC, InternalEntityStructure, InternalAttribStructure, szDisplayStatement )
+         StoreStringInRecord( mMasLC, InternalEntityStructure, InternalAttribStructure, szDisplayStatement );
+         break ;
+
+      //:  // end zDERIVED_GET
+      //:OF   zDERIVED_SET:
+      case zDERIVED_SET :
+         break ;
+   } 
+
+
+   //:     // end zDERIVED_SET
+   //:END  // case
+   return( 0 );
+// END
+} 
+
+
+//:TRANSFORMATION OPERATION
 public int 
 omMasLC_BuildUsageGroupEntries( View     mMasLC )
 {
@@ -8607,158 +9459,6 @@ omMasLC_BuildUsageGroupEntries( View     mMasLC )
       //:OrderEntityForView( mMasLC, "M_Usage", "Name A" )
       OrderEntityForView( mMasLC, "M_Usage", "Name A" );
       RESULT = SetCursorNextEntity( mMasLC, "M_UsageType", "" );
-   } 
-
-   //:END
-   return( 0 );
-// END
-} 
-
-
-//:TRANSFORMATION OPERATION
-//:BuildUsageKeyEntries( VIEW mMasLC BASED ON LOD mMasLC,
-//:                      STRING ( 32 ) SourceKeywordEntityName,
-//:                      STRING ( 32 ) SourceTextEntityName,
-//:                      STRING ( 2048 ) TextValue,
-//:                      STRING ( 2048 ) TitleValue )
-
-//:   VIEW mMasLC_Root REGISTERED AS mMasLC_Root
-public int 
-omMasLC_BuildUsageKeyEntries( View     mMasLC,
-                              String   SourceKeywordEntityName,
-                              String   SourceTextEntityName,
-                              String   TextValue,
-                              String   TitleValue )
-{
-   zVIEW    mMasLC_Root = new zVIEW( );
-   int      RESULT = 0;
-   //:SHORT nRC1
-   int      nRC1 = 0;
-   //:SHORT nRC2
-   int      nRC2 = 0;
-   int      lTempInteger_0 = 0;
-
-   RESULT = GetViewByName( mMasLC_Root, "mMasLC_Root", mMasLC, zLEVEL_TASK );
-
-   //:// Build the M_InsertTextKeywordBase subobject based on the entity names passed in.
-   //:// If the keyword Type allows only a single keyword value, set the selected flag for the first one.
-   //:// Otherwise, set the selected flag for all text entries.
-
-   //:// Then build the actual M_InsertTextKeyword subobject from the selected entries from M_InsertTextKeywordBase.
-
-   //:// Delete any current entries.
-   //:IF mMasLC_Root.DisplayKeywordText EXISTS
-   lTempInteger_0 = CheckExistenceOfEntity( mMasLC_Root, "DisplayKeywordText" );
-   if ( lTempInteger_0 == 0 )
-   { 
-      //:DELETE ENTITY mMasLC_Root.DisplayKeywordText
-      RESULT = DeleteEntity( mMasLC_Root, "DisplayKeywordText", zPOS_NEXT );
-   } 
-
-   //:END
-
-   //:// Create Display entity containing Text and optionally Title.
-   //:CREATE ENTITY mMasLC_Root.DisplayKeywordText
-   RESULT = CreateEntity( mMasLC_Root, "DisplayKeywordText", zPOS_AFTER );
-   //:mMasLC_Root.DisplayKeywordText.Text  = TextValue
-   SetAttributeFromString( mMasLC_Root, "DisplayKeywordText", "Text", TextValue );
-   //:mMasLC_Root.DisplayKeywordText.Title = TitleValue
-   SetAttributeFromString( mMasLC_Root, "DisplayKeywordText", "Title", TitleValue );
-
-   //:// Copy over the basic entities.
-   //:nRC1 = SetCursorFirstEntity( mMasLC, SourceKeywordEntityName, "" )
-   nRC1 = SetCursorFirstEntity( mMasLC, SourceKeywordEntityName, "" );
-   //:LOOP WHILE nRC1 >= zCURSOR_SET
-   while ( nRC1 >= zCURSOR_SET )
-   { 
-      //:CREATE ENTITY mMasLC_Root.M_InsertTextKeywordBase
-      RESULT = CreateEntity( mMasLC_Root, "M_InsertTextKeywordBase", zPOS_AFTER );
-      //:SetMatchingAttributesByName( mMasLC_Root, "M_InsertTextKeywordBase", mMasLC, SourceKeywordEntityName, zSET_ALL )
-      SetMatchingAttributesByName( mMasLC_Root, "M_InsertTextKeywordBase", mMasLC, SourceKeywordEntityName, zSET_ALL );
-
-      //:nRC2 = SetCursorFirstEntity( mMasLC, SourceTextEntityName, "" )
-      nRC2 = SetCursorFirstEntity( mMasLC, SourceTextEntityName, "" );
-      //:LOOP WHILE nRC2 >= zCURSOR_SET
-      while ( nRC2 >= zCURSOR_SET )
-      { 
-         //:CREATE ENTITY mMasLC_Root.M_InsertTextBase
-         RESULT = CreateEntity( mMasLC_Root, "M_InsertTextBase", zPOS_AFTER );
-         //:SetMatchingAttributesByName( mMasLC_Root, "M_InsertTextBase", mMasLC, SourceTextEntityName, zSET_ALL )
-         SetMatchingAttributesByName( mMasLC_Root, "M_InsertTextBase", mMasLC, SourceTextEntityName, zSET_ALL );
-
-         //:nRC2 = SetCursorNextEntity( mMasLC, SourceTextEntityName, "" )
-         nRC2 = SetCursorNextEntity( mMasLC, SourceTextEntityName, "" );
-      } 
-
-      //:END
-      //:nRC1 = SetCursorNextEntity( mMasLC, SourceKeywordEntityName, "" )
-      nRC1 = SetCursorNextEntity( mMasLC, SourceKeywordEntityName, "" );
-   } 
-
-   //:END
-
-   //:// Initialize the selected flags as indicated above.
-   //:FOR EACH mMasLC_Root.M_InsertTextKeywordBase
-   RESULT = SetCursorFirstEntity( mMasLC_Root, "M_InsertTextKeywordBase", "" );
-   while ( RESULT > zCURSOR_UNCHANGED )
-   { 
-      //:IF mMasLC_Root.M_InsertTextKeywordBase.Type = "O"
-      if ( CompareAttributeToString( mMasLC_Root, "M_InsertTextKeywordBase", "Type", "O" ) == 0 )
-      { 
-         //:// Set the flag for the first entry.
-         //:mMasLC_Root.M_InsertTextBase.wSelected = "Y"
-         SetAttributeFromString( mMasLC_Root, "M_InsertTextBase", "wSelected", "Y" );
-         //:ELSE
-      } 
-      else
-      { 
-         //:// Set the flag for all entries.
-         //:FOR EACH mMasLC_Root.M_InsertTextBase
-         RESULT = SetCursorFirstEntity( mMasLC_Root, "M_InsertTextBase", "" );
-         while ( RESULT > zCURSOR_UNCHANGED )
-         { 
-            //:mMasLC_Root.M_InsertTextBase.wSelected = "Y"
-            SetAttributeFromString( mMasLC_Root, "M_InsertTextBase", "wSelected", "Y" );
-            RESULT = SetCursorNextEntity( mMasLC_Root, "M_InsertTextBase", "" );
-         } 
-
-         //:END
-      } 
-
-      RESULT = SetCursorNextEntity( mMasLC_Root, "M_InsertTextKeywordBase", "" );
-      //:END
-   } 
-
-   //:END
-
-   //:// Build the M_InsertTextKeyword subobject as described above.
-   //:FOR EACH mMasLC_Root.M_InsertTextKeywordBase
-   RESULT = SetCursorFirstEntity( mMasLC_Root, "M_InsertTextKeywordBase", "" );
-   while ( RESULT > zCURSOR_UNCHANGED )
-   { 
-      //:CREATE ENTITY mMasLC_Root.M_InsertTextKeyword
-      RESULT = CreateEntity( mMasLC_Root, "M_InsertTextKeyword", zPOS_AFTER );
-      //:SetMatchingAttributesByName( mMasLC_Root, "M_InsertTextKeyword", mMasLC_Root, "M_InsertTextKeywordBase", zSET_ALL )
-      SetMatchingAttributesByName( mMasLC_Root, "M_InsertTextKeyword", mMasLC_Root, "M_InsertTextKeywordBase", zSET_ALL );
-      //:FOR EACH mMasLC_Root.M_InsertTextBase
-      RESULT = SetCursorFirstEntity( mMasLC_Root, "M_InsertTextBase", "" );
-      while ( RESULT > zCURSOR_UNCHANGED )
-      { 
-         //:IF mMasLC_Root.M_InsertTextBase.wSelected = "Y"
-         if ( CompareAttributeToString( mMasLC_Root, "M_InsertTextBase", "wSelected", "Y" ) == 0 )
-         { 
-            //:CREATE ENTITY mMasLC_Root.M_InsertText
-            RESULT = CreateEntity( mMasLC_Root, "M_InsertText", zPOS_AFTER );
-            //:SetMatchingAttributesByName( mMasLC_Root, "M_InsertText", mMasLC_Root, "M_InsertTextBase", zSET_ALL )
-            SetMatchingAttributesByName( mMasLC_Root, "M_InsertText", mMasLC_Root, "M_InsertTextBase", zSET_ALL );
-         } 
-
-         RESULT = SetCursorNextEntity( mMasLC_Root, "M_InsertTextBase", "" );
-         //:END
-      } 
-
-      RESULT = SetCursorNextEntity( mMasLC_Root, "M_InsertTextKeywordBase", "" );
-      //:END
    } 
 
    //:END
@@ -9111,9 +9811,34 @@ omMasLC_dUsgNonGroupSubUsages( View     mMasLC,
                                Integer   GetOrSetFlag )
 {
    zVIEW    mMasLC2 = new zVIEW( );
+   //:VIEW mMasLC3 BASED ON LOD mMasLC
+   zVIEW    mMasLC3 = new zVIEW( );
    //:STRING ( 2048 ) szDisplayStatement
    String   szDisplayStatement = null;
+   //:STRING ( 100 ) szUsageName
+   String   szUsageName = null;
+   //:STRING ( 100 ) szUsageText
+   String   szUsageText = null;
+   //:STRING ( 1 ) szUsageType
+   String   szUsageType = null;
+   //:SHORT bFirst
+   int      bFirst = 0;
    int      lTempInteger_0 = 0;
+   int      lTempInteger_1 = 0;
+   int      RESULT = 0;
+   int      lTempInteger_2 = 0;
+   String   szTempString_0 = null;
+   int      lTempInteger_3 = 0;
+   String   szTempString_1 = null;
+   int      lTempInteger_4 = 0;
+   String   szTempString_2 = null;
+   int      lTempInteger_5 = 0;
+   String   szTempString_3 = null;
+   int      lTempInteger_6 = 0;
+   String   szTempString_4 = null;
+   int      lTempInteger_7 = 0;
+   String   szTempString_5 = null;
+   int      lTempInteger_8 = 0;
 
 
    //:CASE GetOrSetFlag
@@ -9138,7 +9863,7 @@ omMasLC_dUsgNonGroupSubUsages( View     mMasLC,
          szDisplayStatement = sb_szDisplayStatement.toString( );}
 
          //:// Display required text combined with optional usage(s).
-         //:InsertOptionalSubUsages( mMasLC2, szDisplayStatement, "M_SubUsage", 0 )
+         //:InsertOptionalSubUsages( mMasLC2, szDisplayStatement, "M_SubUsage", 1 )
          {
           ZGlobal1_Operation m_ZGlobal1_Operation = new ZGlobal1_Operation( mMasLC2 );
            {StringBuilder sb_szDisplayStatement;
@@ -9146,7 +9871,7 @@ omMasLC_dUsgNonGroupSubUsages( View     mMasLC,
             sb_szDisplayStatement = new StringBuilder( 32 );
          else
             sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
-                  m_ZGlobal1_Operation.InsertOptionalSubUsages( mMasLC2, sb_szDisplayStatement, "M_SubUsage", 0 );
+                  m_ZGlobal1_Operation.InsertOptionalSubUsages( mMasLC2, sb_szDisplayStatement, "M_SubUsage", 1 );
          szDisplayStatement = sb_szDisplayStatement.toString( );}
           // m_ZGlobal1_Operation = null;  // permit gc  (unnecessary)
          }
@@ -9162,6 +9887,324 @@ omMasLC_dUsgNonGroupSubUsages( View     mMasLC,
          szDisplayStatement = sb_szDisplayStatement.toString( );}
           // m_ZGlobal1_Operation = null;  // permit gc  (unnecessary)
          }
+
+         //:IF mMasLC2.M_InsertTextKeywordUsage EXISTS
+         lTempInteger_1 = CheckExistenceOfEntity( mMasLC2, "M_InsertTextKeywordUsage" );
+         if ( lTempInteger_1 == 0 )
+         { 
+            //:CreateViewFromView( mMasLC3, mMasLC2 )
+            CreateViewFromView( mMasLC3, mMasLC2 );
+            //:FOR EACH mMasLC3.M_InsertTextKeywordUsage
+            RESULT = SetCursorFirstEntity( mMasLC3, "M_InsertTextKeywordUsage", "" );
+            while ( RESULT > zCURSOR_UNCHANGED )
+            { 
+               //:szUsageType = mMasLC3.M_InsertTextKeywordUsage.Type // A - all optional; O - Zero or one allowed; R - at least one required; X - exactly one required
+               {MutableInt mi_lTempInteger_2 = new MutableInt( lTempInteger_2 );
+               StringBuilder sb_szUsageType;
+               if ( szUsageType == null )
+                  sb_szUsageType = new StringBuilder( 32 );
+               else
+                  sb_szUsageType = new StringBuilder( szUsageType );
+                               GetVariableFromAttribute( sb_szUsageType, mi_lTempInteger_2, 'S', 2, mMasLC3, "M_InsertTextKeywordUsage", "Type", "", 0 );
+               lTempInteger_2 = mi_lTempInteger_2.intValue( );
+               szUsageType = sb_szUsageType.toString( );}
+               //:szUsageName = "{" + mMasLC3.M_InsertTextKeywordUsage.Name + "}"
+               {MutableInt mi_lTempInteger_3 = new MutableInt( lTempInteger_3 );
+               StringBuilder sb_szTempString_0;
+               if ( szTempString_0 == null )
+                  sb_szTempString_0 = new StringBuilder( 32 );
+               else
+                  sb_szTempString_0 = new StringBuilder( szTempString_0 );
+                               GetVariableFromAttribute( sb_szTempString_0, mi_lTempInteger_3, 'S', 255, mMasLC3, "M_InsertTextKeywordUsage", "Name", "", 0 );
+               lTempInteger_3 = mi_lTempInteger_3.intValue( );
+               szTempString_0 = sb_szTempString_0.toString( );}
+                {StringBuilder sb_szUsageName;
+               if ( szUsageName == null )
+                  sb_szUsageName = new StringBuilder( 32 );
+               else
+                  sb_szUsageName = new StringBuilder( szUsageName );
+                              ZeidonStringCopy( sb_szUsageName, 1, 0, "{", 1, 0, 101 );
+               szUsageName = sb_szUsageName.toString( );}
+                {StringBuilder sb_szUsageName;
+               if ( szUsageName == null )
+                  sb_szUsageName = new StringBuilder( 32 );
+               else
+                  sb_szUsageName = new StringBuilder( szUsageName );
+                              ZeidonStringConcat( sb_szUsageName, 1, 0, szTempString_0, 1, 0, 101 );
+               szUsageName = sb_szUsageName.toString( );}
+                {StringBuilder sb_szUsageName;
+               if ( szUsageName == null )
+                  sb_szUsageName = new StringBuilder( 32 );
+               else
+                  sb_szUsageName = new StringBuilder( szUsageName );
+                              ZeidonStringConcat( sb_szUsageName, 1, 0, "}", 1, 0, 101 );
+               szUsageName = sb_szUsageName.toString( );}
+               //:bFirst = 1
+               bFirst = 1;
+               //:IF szUsageType = "A"
+               if ( ZeidonStringCompare( szUsageType, 1, 0, "A", 1, 0, 2 ) == 0 )
+               { 
+                  //:szUsageText = ""
+                   {StringBuilder sb_szUsageText;
+                  if ( szUsageText == null )
+                     sb_szUsageText = new StringBuilder( 32 );
+                  else
+                     sb_szUsageText = new StringBuilder( szUsageText );
+                                    ZeidonStringCopy( sb_szUsageText, 1, 0, "", 1, 0, 101 );
+                  szUsageText = sb_szUsageText.toString( );}
+                  //:ELSE
+               } 
+               else
+               { 
+                  //:szUsageText = "["
+                   {StringBuilder sb_szUsageText;
+                  if ( szUsageText == null )
+                     sb_szUsageText = new StringBuilder( 32 );
+                  else
+                     sb_szUsageText = new StringBuilder( szUsageText );
+                                    ZeidonStringCopy( sb_szUsageText, 1, 0, "[", 1, 0, 101 );
+                  szUsageText = sb_szUsageText.toString( );}
+               } 
+
+               //:END
+               //:FOR EACH mMasLC3.M_InsertTextUsage
+               RESULT = SetCursorFirstEntity( mMasLC3, "M_InsertTextUsage", "" );
+               while ( RESULT > zCURSOR_UNCHANGED )
+               { 
+                  //:IF bFirst = 1
+                  if ( bFirst == 1 )
+                  { 
+                     //:bFirst = 0
+                     bFirst = 0;
+                     //:szUsageText = szUsageText + "<b>" + mMasLC3.M_InsertTextUsage.Text + "</b>"
+                      {StringBuilder sb_szUsageText;
+                     if ( szUsageText == null )
+                        sb_szUsageText = new StringBuilder( 32 );
+                     else
+                        sb_szUsageText = new StringBuilder( szUsageText );
+                                          ZeidonStringConcat( sb_szUsageText, 1, 0, "<b>", 1, 0, 101 );
+                     szUsageText = sb_szUsageText.toString( );}
+                     {MutableInt mi_lTempInteger_4 = new MutableInt( lTempInteger_4 );
+                     StringBuilder sb_szTempString_1;
+                     if ( szTempString_1 == null )
+                        sb_szTempString_1 = new StringBuilder( 32 );
+                     else
+                        sb_szTempString_1 = new StringBuilder( szTempString_1 );
+                                           GetVariableFromAttribute( sb_szTempString_1, mi_lTempInteger_4, 'S', 4097, mMasLC3, "M_InsertTextUsage", "Text", "", 0 );
+                     lTempInteger_4 = mi_lTempInteger_4.intValue( );
+                     szTempString_1 = sb_szTempString_1.toString( );}
+                      {StringBuilder sb_szUsageText;
+                     if ( szUsageText == null )
+                        sb_szUsageText = new StringBuilder( 32 );
+                     else
+                        sb_szUsageText = new StringBuilder( szUsageText );
+                                          ZeidonStringConcat( sb_szUsageText, 1, 0, szTempString_1, 1, 0, 101 );
+                     szUsageText = sb_szUsageText.toString( );}
+                      {StringBuilder sb_szUsageText;
+                     if ( szUsageText == null )
+                        sb_szUsageText = new StringBuilder( 32 );
+                     else
+                        sb_szUsageText = new StringBuilder( szUsageText );
+                                          ZeidonStringConcat( sb_szUsageText, 1, 0, "</b>", 1, 0, 101 );
+                     szUsageText = sb_szUsageText.toString( );}
+                     //:ELSE
+                  } 
+                  else
+                  { 
+                     //:IF szUsageType = "A"
+                     if ( ZeidonStringCompare( szUsageType, 1, 0, "A", 1, 0, 2 ) == 0 )
+                     { 
+                        //:szUsageText = szUsageText + ", <b>" + mMasLC3.M_InsertTextUsage.Text + "</b>"
+                         {StringBuilder sb_szUsageText;
+                        if ( szUsageText == null )
+                           sb_szUsageText = new StringBuilder( 32 );
+                        else
+                           sb_szUsageText = new StringBuilder( szUsageText );
+                                                ZeidonStringConcat( sb_szUsageText, 1, 0, ", <b>", 1, 0, 101 );
+                        szUsageText = sb_szUsageText.toString( );}
+                        {MutableInt mi_lTempInteger_5 = new MutableInt( lTempInteger_5 );
+                        StringBuilder sb_szTempString_2;
+                        if ( szTempString_2 == null )
+                           sb_szTempString_2 = new StringBuilder( 32 );
+                        else
+                           sb_szTempString_2 = new StringBuilder( szTempString_2 );
+                                                 GetVariableFromAttribute( sb_szTempString_2, mi_lTempInteger_5, 'S', 4097, mMasLC3, "M_InsertTextUsage", "Text", "", 0 );
+                        lTempInteger_5 = mi_lTempInteger_5.intValue( );
+                        szTempString_2 = sb_szTempString_2.toString( );}
+                         {StringBuilder sb_szUsageText;
+                        if ( szUsageText == null )
+                           sb_szUsageText = new StringBuilder( 32 );
+                        else
+                           sb_szUsageText = new StringBuilder( szUsageText );
+                                                ZeidonStringConcat( sb_szUsageText, 1, 0, szTempString_2, 1, 0, 101 );
+                        szUsageText = sb_szUsageText.toString( );}
+                         {StringBuilder sb_szUsageText;
+                        if ( szUsageText == null )
+                           sb_szUsageText = new StringBuilder( 32 );
+                        else
+                           sb_szUsageText = new StringBuilder( szUsageText );
+                                                ZeidonStringConcat( sb_szUsageText, 1, 0, "</b>", 1, 0, 101 );
+                        szUsageText = sb_szUsageText.toString( );}
+                        //:ELSE
+                     } 
+                     else
+                     { 
+                        //:IF szUsageType = "O"
+                        if ( ZeidonStringCompare( szUsageType, 1, 0, "O", 1, 0, 2 ) == 0 )
+                        { 
+                           //:szUsageText = szUsageText + " || <b>" + mMasLC3.M_InsertTextUsage.Text + "</b>"
+                            {StringBuilder sb_szUsageText;
+                           if ( szUsageText == null )
+                              sb_szUsageText = new StringBuilder( 32 );
+                           else
+                              sb_szUsageText = new StringBuilder( szUsageText );
+                                                      ZeidonStringConcat( sb_szUsageText, 1, 0, " | <b>", 1, 0, 101 );
+                           szUsageText = sb_szUsageText.toString( );}
+                           {MutableInt mi_lTempInteger_6 = new MutableInt( lTempInteger_6 );
+                           StringBuilder sb_szTempString_3;
+                           if ( szTempString_3 == null )
+                              sb_szTempString_3 = new StringBuilder( 32 );
+                           else
+                              sb_szTempString_3 = new StringBuilder( szTempString_3 );
+                                                       GetVariableFromAttribute( sb_szTempString_3, mi_lTempInteger_6, 'S', 4097, mMasLC3, "M_InsertTextUsage", "Text", "", 0 );
+                           lTempInteger_6 = mi_lTempInteger_6.intValue( );
+                           szTempString_3 = sb_szTempString_3.toString( );}
+                            {StringBuilder sb_szUsageText;
+                           if ( szUsageText == null )
+                              sb_szUsageText = new StringBuilder( 32 );
+                           else
+                              sb_szUsageText = new StringBuilder( szUsageText );
+                                                      ZeidonStringConcat( sb_szUsageText, 1, 0, szTempString_3, 1, 0, 101 );
+                           szUsageText = sb_szUsageText.toString( );}
+                            {StringBuilder sb_szUsageText;
+                           if ( szUsageText == null )
+                              sb_szUsageText = new StringBuilder( 32 );
+                           else
+                              sb_szUsageText = new StringBuilder( szUsageText );
+                                                      ZeidonStringConcat( sb_szUsageText, 1, 0, "</b>", 1, 0, 101 );
+                           szUsageText = sb_szUsageText.toString( );}
+                           //:ELSE
+                        } 
+                        else
+                        { 
+                           //:IF szUsageType = "R"
+                           if ( ZeidonStringCompare( szUsageType, 1, 0, "R", 1, 0, 2 ) == 0 )
+                           { 
+                              //:szUsageText = szUsageText + " or <b>" + mMasLC3.M_InsertTextUsage.Text + "</b>"
+                               {StringBuilder sb_szUsageText;
+                              if ( szUsageText == null )
+                                 sb_szUsageText = new StringBuilder( 32 );
+                              else
+                                 sb_szUsageText = new StringBuilder( szUsageText );
+                                                            ZeidonStringConcat( sb_szUsageText, 1, 0, " or <b>", 1, 0, 101 );
+                              szUsageText = sb_szUsageText.toString( );}
+                              {MutableInt mi_lTempInteger_7 = new MutableInt( lTempInteger_7 );
+                              StringBuilder sb_szTempString_4;
+                              if ( szTempString_4 == null )
+                                 sb_szTempString_4 = new StringBuilder( 32 );
+                              else
+                                 sb_szTempString_4 = new StringBuilder( szTempString_4 );
+                                                             GetVariableFromAttribute( sb_szTempString_4, mi_lTempInteger_7, 'S', 4097, mMasLC3, "M_InsertTextUsage", "Text", "", 0 );
+                              lTempInteger_7 = mi_lTempInteger_7.intValue( );
+                              szTempString_4 = sb_szTempString_4.toString( );}
+                               {StringBuilder sb_szUsageText;
+                              if ( szUsageText == null )
+                                 sb_szUsageText = new StringBuilder( 32 );
+                              else
+                                 sb_szUsageText = new StringBuilder( szUsageText );
+                                                            ZeidonStringConcat( sb_szUsageText, 1, 0, szTempString_4, 1, 0, 101 );
+                              szUsageText = sb_szUsageText.toString( );}
+                               {StringBuilder sb_szUsageText;
+                              if ( szUsageText == null )
+                                 sb_szUsageText = new StringBuilder( 32 );
+                              else
+                                 sb_szUsageText = new StringBuilder( szUsageText );
+                                                            ZeidonStringConcat( sb_szUsageText, 1, 0, "</b>", 1, 0, 101 );
+                              szUsageText = sb_szUsageText.toString( );}
+                              //:ELSE
+                           } 
+                           else
+                           { 
+                              //:// IF szUsageType = "X"
+                              //:szUsageText = szUsageText + " / <b>" + mMasLC3.M_InsertTextUsage.Text + "</b>"
+                               {StringBuilder sb_szUsageText;
+                              if ( szUsageText == null )
+                                 sb_szUsageText = new StringBuilder( 32 );
+                              else
+                                 sb_szUsageText = new StringBuilder( szUsageText );
+                                                            ZeidonStringConcat( sb_szUsageText, 1, 0, " / <b>", 1, 0, 101 );
+                              szUsageText = sb_szUsageText.toString( );}
+                              {MutableInt mi_lTempInteger_8 = new MutableInt( lTempInteger_8 );
+                              StringBuilder sb_szTempString_5;
+                              if ( szTempString_5 == null )
+                                 sb_szTempString_5 = new StringBuilder( 32 );
+                              else
+                                 sb_szTempString_5 = new StringBuilder( szTempString_5 );
+                                                             GetVariableFromAttribute( sb_szTempString_5, mi_lTempInteger_8, 'S', 4097, mMasLC3, "M_InsertTextUsage", "Text", "", 0 );
+                              lTempInteger_8 = mi_lTempInteger_8.intValue( );
+                              szTempString_5 = sb_szTempString_5.toString( );}
+                               {StringBuilder sb_szUsageText;
+                              if ( szUsageText == null )
+                                 sb_szUsageText = new StringBuilder( 32 );
+                              else
+                                 sb_szUsageText = new StringBuilder( szUsageText );
+                                                            ZeidonStringConcat( sb_szUsageText, 1, 0, szTempString_5, 1, 0, 101 );
+                              szUsageText = sb_szUsageText.toString( );}
+                               {StringBuilder sb_szUsageText;
+                              if ( szUsageText == null )
+                                 sb_szUsageText = new StringBuilder( 32 );
+                              else
+                                 sb_szUsageText = new StringBuilder( szUsageText );
+                                                            ZeidonStringConcat( sb_szUsageText, 1, 0, "</b>", 1, 0, 101 );
+                              szUsageText = sb_szUsageText.toString( );}
+                           } 
+
+                           //:// END
+                           //:END
+                        } 
+
+                        //:END
+                     } 
+
+                     //:END
+                  } 
+
+                  RESULT = SetCursorNextEntity( mMasLC3, "M_InsertTextUsage", "" );
+                  //:END
+               } 
+
+               //:END
+               //:IF szUsageType != "A"
+               if ( ZeidonStringCompare( szUsageType, 1, 0, "A", 1, 0, 2 ) != 0 )
+               { 
+                  //:szUsageText = szUsageText + "]"
+                   {StringBuilder sb_szUsageText;
+                  if ( szUsageText == null )
+                     sb_szUsageText = new StringBuilder( 32 );
+                  else
+                     sb_szUsageText = new StringBuilder( szUsageText );
+                                    ZeidonStringConcat( sb_szUsageText, 1, 0, "]", 1, 0, 101 );
+                  szUsageText = sb_szUsageText.toString( );}
+               } 
+
+               //:END
+               //:zSearchAndReplace( szDisplayStatement, 2048, szUsageName, szUsageText )
+               {StringBuilder sb_szDisplayStatement;
+               if ( szDisplayStatement == null )
+                  sb_szDisplayStatement = new StringBuilder( 32 );
+               else
+                  sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
+                               zSearchAndReplace( sb_szDisplayStatement, 2048, szUsageName, szUsageText );
+               szDisplayStatement = sb_szDisplayStatement.toString( );}
+               RESULT = SetCursorNextEntity( mMasLC3, "M_InsertTextKeywordUsage", "" );
+            } 
+
+            //:END
+            //:DropView( mMasLC3 )
+            DropView( mMasLC3 );
+         } 
+
+         //:END
 
          //:// Store the calculated value in the object.
          //:StoreStringInRecord( mMasLC, InternalEntityStructure, InternalAttribStructure, szDisplayStatement )

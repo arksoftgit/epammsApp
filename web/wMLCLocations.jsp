@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCLocations   Generate Timestamp: 20170419093335925 --%>
+<%-- wMLCLocations   Generate Timestamp: 20170608112933129 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -384,8 +384,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCLocations", "wMLC.DELETE_SelectedUsageEntries" );
-      nOptRC = wMLC.DELETE_SelectedUsageEntries( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCLocations", "wMLC.DeleteSelectedUsageEntries" );
+      nOptRC = wMLC.DeleteSelectedUsageEntries( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -422,8 +422,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCLocations", "wMLC.DELETE_UsageGroupEntries" );
-      nOptRC = wMLC.DELETE_UsageGroupEntries( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCLocations", "wMLC.DeleteUsageGroupEntries" );
+      nOptRC = wMLC.DeleteUsageGroupEntries( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -460,8 +460,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCLocations", "wMLC.DELETE_UsageGroupEntriesOnly" );
-      nOptRC = wMLC.DELETE_UsageGroupEntriesOnly( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCLocations", "wMLC.DeleteUsageGroupEntriesOnly" );
+      nOptRC = wMLC.DeleteUsageGroupEntriesOnly( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection

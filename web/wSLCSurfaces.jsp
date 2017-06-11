@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSLCSurfaces   Generate Timestamp: 20170515140314687 --%>
+<%-- wSLCSurfaces   Generate Timestamp: 20170518152623986 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -60,7 +60,7 @@ public int DoInputMapping( HttpServletRequest request,
    mSubLC = task.getViewByName( "mSubLC" );
    if ( VmlOperation.isValid( mSubLC ) )
    {
-      // Grid: GridClaims
+      // Grid: GridSurfaces
       iTableRowCnt = 0;
 
       // We are creating a temp view to the grid view so that if there are 
@@ -75,6 +75,46 @@ public int DoInputMapping( HttpServletRequest request,
          iTableRowCnt++;
 
          csrRC = vGridTmp.cursor( "S_Usage" ).setNextContinue( );
+      }
+
+      vGridTmp.drop( );
+      // Grid: GridClaims3
+      iTableRowCnt = 0;
+
+      // We are creating a temp view to the grid view so that if there are 
+      // grids on the same window with the same view we do not mess up the 
+      // entity positions. 
+      vGridTmp = mSubLC.newView( );
+      csrRC = vGridTmp.cursor( "S_UsageGroup" ).setFirst(  );
+      while ( csrRC.isSet() )
+      {
+         lEntityKey = vGridTmp.cursor( "S_UsageGroup" ).getEntityKey( );
+         strEntityKey = Long.toString( lEntityKey );
+         iTableRowCnt++;
+
+         strTag = "GS_Select3" + strEntityKey;
+         strMapValue = request.getParameter( strTag );
+         // If the checkbox is not checked, then set to the unchecked value.
+         if (strMapValue == null || strMapValue.isEmpty() )
+            strMapValue = "N";
+
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "GS_Select3", "", strMapValue );
+            else
+               if ( strMapValue != null )
+                  vGridTmp.cursor( "S_UsageGroup" ).getAttribute( "wSelected" ).setValue( strMapValue, "" );
+               else
+                  vGridTmp.cursor( "S_UsageGroup" ).getAttribute( "wSelected" ).setValue( "", "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, strTag, e.getReason( ), strMapValue );
+         }
+
+         csrRC = vGridTmp.cursor( "S_UsageGroup" ).setNextContinue( );
       }
 
       vGridTmp.drop( );
@@ -232,6 +272,50 @@ if ( strActionToProcess != null )
          strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_StartModalSubwindow, "wSLC", "UsageEntriesSelect" );
       }
 
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_UpdateUsageGroup" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wSLCSurfaces", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Position on the entity that was selected in the grid.
+      String strEntityKey = (String) request.getParameter( "zTableRowSelect" );
+      View mSubLC;
+      mSubLC = task.getViewByName( "mSubLC" );
+      if ( VmlOperation.isValid( mSubLC ) )
+      {
+         lEKey = java.lang.Long.parseLong( strEntityKey );
+         csrRC = mSubLC.cursor( "S_UsageGroup" ).setByEntityKey( lEKey );
+         if ( !csrRC.isSet() )
+         {
+            boolean bFound = false;
+            csrRCk = mSubLC.cursor( "S_UsageGroup" ).setFirst( );
+            while ( csrRCk.isSet() && !bFound )
+            {
+               lEKey = mSubLC.cursor( "S_UsageGroup" ).getEntityKey( );
+               strKey = Long.toString( lEKey );
+               if ( StringUtils.equals( strKey, strEntityKey ) )
+               {
+                  // Stop while loop because we have positioned on the correct entity.
+                  bFound = true;
+               }
+               else
+                  csrRCk = mSubLC.cursor( "S_UsageGroup" ).setNextContinue( );
+            } // Grid
+         }
+      }
+
+      // Next Window
+      strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_StartModalSubwindow, "wMLC", "SurfaceGroup" );
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
@@ -903,6 +987,7 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/tabpane.js"></script>
 <script language="JavaScript" type="text/javascript" src="./genjs/wSLCSurfaces.js"></script>
 
 </head>
@@ -1252,35 +1337,47 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:6px;width:100px;"></div>
+<div style="height:10px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:6px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GBClaimsStatements:GroupBox */ %>
+<div style="height:1px;width:20px;float:left;"></div>   <!-- Width Spacer -->
+<% /* Surfaces:Tab */ %>
 
-<div id="GBClaimsStatements" name="GBClaimsStatements" class="withborder"   style="float:left;position:relative; width:616px; height:32px;">  <!-- GBClaimsStatements --> 
+<div id="Surfaces" class="tab-pane" style="width:642px;"> <!-- Beginning of Tab Control Surfaces -->
+<script type="text/javascript">Surfaces = new WebFXTabPane( document.getElementById( "Surfaces" ) );</script>
+
+<div id="IndividualSurfaces" class="tab-page " > <!-- Tab item IndividualSurfaces -->
+<h2 class="tab"><span>Individual Surfaces</span></h2>
+<script type="text/javascript">Surfaces.addTabPage( document.getElementById( "IndividualSurfaces" ) );</script>
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:4px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GBSurfacesStatements:GroupBox */ %>
+
+<div id="GBSurfacesStatements" name="GBSurfacesStatements" class="withborder"   style="float:left;position:relative; width:616px; height:32px;">  <!-- GBSurfacesStatements --> 
 
 <% /* PushBtn4:PushBtn */ %>
-<button type="button" class="newbutton" name="PushBtn4" id="PushBtn4" value="" onclick="GOTO_SelectSurfacesUsageEntries( )" style="width:118px;height:26px;position:absolute;left:488px;top:4px;">Select/Remove</button>
+<button type="button" class="newbutton" name="PushBtn4" id="PushBtn4" value="" onclick="GOTO_SelectSurfacesUsageEntries( )" style="width:118px;height:26px;position:absolute;left:488px;top:4px;" tabindex=-1 >Select/Remove</button>
 
-<% /* OrganismClaimsStatements:Text */ %>
+<% /* IndividualSurfacesStatements:Text */ %>
 
-<label class="groupbox"  id="OrganismClaimsStatements" name="OrganismClaimsStatements" style="width:238px;height:16px;position:absolute;left:6px;top:12px;">Surfaces Statements</label>
+<label class="groupbox"  id="IndividualSurfacesStatements" name="IndividualSurfacesStatements" style="">Surfaces Statements</label>
 
 
-</div>  <!--  GBClaimsStatements --> 
+</div>  <!--  GBSurfacesStatements --> 
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
 
 
- <!-- This is added as a line spacer -->
-<div style="height:6px;width:100px;"></div>
-
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GridClaims:Grid */ %>
-<table class="sortable"  cols=1 style="width:616px;"  name="GridClaims" id="GridClaims">
+<% /* GridSurfaces:Grid */ %>
+<table class="sortable"  cols=1 style="width:616px;"  name="GridSurfaces" id="GridSurfaces">
 
 <thead bgcolor=green><tr>
 
@@ -1302,43 +1399,43 @@ try
       String strButtonName;
       String strOdd;
       String strTag;
-      String strSurfaces;
+      String strGroupSurfacesStatements;
       
-      View vGridClaims;
-      vGridClaims = mSubLC.newView( );
-      csrRC2 = vGridClaims.cursor( "S_Usage" ).setFirst(  );
+      View vGridSurfaces;
+      vGridSurfaces = mSubLC.newView( );
+      csrRC2 = vGridSurfaces.cursor( "S_Usage" ).setFirst(  );
       while ( csrRC2.isSet() )
       {
          strOdd = (iTableRowCnt % 2) != 0 ? " class='odd'" : "";
          iTableRowCnt++;
 
-         lEntityKey = vGridClaims.cursor( "S_Usage" ).getEntityKey( );
+         lEntityKey = vGridSurfaces.cursor( "S_Usage" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strSurfaces = "";
-         nRC = vGridClaims.cursor( "S_Usage" ).checkExistenceOfEntity( ).toInt();
+         strGroupSurfacesStatements = "";
+         nRC = vGridSurfaces.cursor( "S_Usage" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strSurfaces = vGridClaims.cursor( "S_Usage" ).getAttribute( "dUsageFullEmbeddedName" ).getString( "" );
+            strGroupSurfacesStatements = vGridSurfaces.cursor( "S_Usage" ).getAttribute( "dUsageFullEmbeddedName" ).getString( "" );
 
-            if ( strSurfaces == null )
-               strSurfaces = "";
+            if ( strGroupSurfacesStatements == null )
+               strGroupSurfacesStatements = "";
          }
 
-         if ( StringUtils.isBlank( strSurfaces ) )
-            strSurfaces = "&nbsp";
+         if ( StringUtils.isBlank( strGroupSurfacesStatements ) )
+            strGroupSurfacesStatements = "&nbsp";
 
 %>
 
 <tr<%=strOdd%>>
 
-   <td><%=strSurfaces%></td>
+   <td><%=strGroupSurfacesStatements%></td>
 
 </tr>
 
 <%
-         csrRC2 = vGridClaims.cursor( "S_Usage" ).setNextContinue( );
+         csrRC2 = vGridSurfaces.cursor( "S_Usage" ).setNextContinue( );
       }
-      vGridClaims.drop( );
+      vGridSurfaces.drop( );
    }
 }
 catch (Exception e)
@@ -1349,6 +1446,127 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 %>
 </tbody>
 </table>
+
+</div>  <!-- End of a new line -->
+
+</div> <!-- End of Tab item IndividualSurfaces -->
+
+<div id="Group Surfaces" class="tab-page " > <!-- Tab item Group Surfaces -->
+<h2 class="tab"><span>Group Surfaces</span></h2>
+<script type="text/javascript">Surfaces.addTabPage( document.getElementById( "Group Surfaces" ) );</script>
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:8px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:8px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GridClaims3:Grid */ %>
+<table class="sortable"  cols=3 style="width:616px;"  name="GridClaims3" id="GridClaims3">
+
+<thead bgcolor=green><tr>
+
+   <th class="gridheading"><input type="checkbox" onclick="CheckAllInGrid(this,'GS_Select3')"></th>
+   <th>Surface Groups</th>
+   <th>Update</th>
+
+</tr></thead>
+
+<tbody>
+
+<%
+try
+{
+   iTableRowCnt = 0;
+   mSubLC = task.getViewByName( "mSubLC" );
+   if ( VmlOperation.isValid( mSubLC ) )
+   {
+      long   lEntityKey;
+      String strEntityKey;
+      String strButtonName;
+      String strOdd;
+      String strTag;
+      String strGS_Select3;
+      String strGS_Select3Value;
+      String strSurfaces3;
+      String strBMBUpdateClaimsStatement3;
+      
+      View vGridClaims3;
+      vGridClaims3 = mSubLC.newView( );
+      csrRC2 = vGridClaims3.cursor( "S_UsageGroup" ).setFirst(  );
+      while ( csrRC2.isSet() )
+      {
+         strOdd = (iTableRowCnt % 2) != 0 ? " class='odd'" : "";
+         iTableRowCnt++;
+
+         lEntityKey = vGridClaims3.cursor( "S_UsageGroup" ).getEntityKey( );
+         strEntityKey = Long.toString( lEntityKey );
+         strGS_Select3 = "";
+         nRC = vGridClaims3.cursor( "S_UsageGroup" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            strGS_Select3 = vGridClaims3.cursor( "S_UsageGroup" ).getAttribute( "wSelected" ).getString( "" );
+
+            if ( strGS_Select3 == null )
+               strGS_Select3 = "";
+         }
+
+         if ( StringUtils.equals( strGS_Select3, "Y" ) )
+         {
+            strGS_Select3Value = "GS_Select3" + strEntityKey;
+            strGS_Select3 = "<input name='" + strGS_Select3Value + "' id='" + strGS_Select3Value + "' value='Y' type='checkbox'  CHECKED > ";
+         }
+         else
+         {
+            strGS_Select3Value = "GS_Select3" + strEntityKey;
+            strGS_Select3 = "<input name='" + strGS_Select3Value + "' id='" + strGS_Select3Value + "' value='Y' type='checkbox' > ";
+         }
+
+         strSurfaces3 = "";
+         nRC = vGridClaims3.cursor( "S_UsageGroup" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            strSurfaces3 = vGridClaims3.cursor( "S_UsageGroup" ).getAttribute( "Name" ).getString( "" );
+
+            if ( strSurfaces3 == null )
+               strSurfaces3 = "";
+         }
+
+         if ( StringUtils.isBlank( strSurfaces3 ) )
+            strSurfaces3 = "&nbsp";
+
+%>
+
+<tr<%=strOdd%>>
+
+   <td nowrap><%=strGS_Select3%></td>
+   <td><a href="#" onclick="GOTO_UpdateUsageGroup( this.id )" id="Surfaces3::<%=strEntityKey%>"><%=strSurfaces3%></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateClaimsStatement3" onclick="GOTO_UpdateUsageGroup( this.id )" id="BMBUpdateClaimsStatement3::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
+
+</tr>
+
+<%
+         csrRC2 = vGridClaims3.cursor( "S_UsageGroup" ).setNextContinue( );
+      }
+      vGridClaims3.drop( );
+   }
+}
+catch (Exception e)
+{
+out.println("There is an error in grid: " + e.getMessage());
+task.log().info( "*** Error in grid" + e.getMessage() );
+}
+%>
+</tbody>
+</table>
+
+</div>  <!-- End of a new line -->
+
+</div> <!-- End of Tab item Group Surfaces -->
+
+</div> <!-- End of Tab Control Surfaces -->
+
+<script type="text/javascript">setupAllTabs( );</script>
 
 </div>  <!-- End of a new line -->
 

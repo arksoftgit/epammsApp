@@ -2,7 +2,7 @@
 // Project ePamms
 //
 // This is a part of the ePamms applications package.
-// Copyright (c) 2007 - 2016 Arksoft, Inc.
+// Copyright (c) 2007 - 2017 Arksoft, Inc.
 // All Rights Reserved.
 //
 // SUBSYSTEM:    mSubLC        - Subregistrant Label Content operations
@@ -2400,6 +2400,10 @@ BuildSLC_FromMLC( VIEW NewSLC BASED ON LOD mSubLC,
       NewSLC.S_UsageType.PrimaryMLC_ID = SrcMLC.M_UsageType.ID
       INCLUDE NewSLC.M_UsageType FROM SrcMLC.M_UsageType
       CopyUsagesRecursive( NewSLC, SrcMLC )
+      FOR EACH SrcMLC.M_UsageGroup
+         CREATE ENTITY NewSLC.S_UsageGroup
+         SetMatchingAttributesByName( NewSLC, "S_UsageGroup", SrcMLC, "M_UsageGroup", zSET_NULL )
+      END
    END
 
    // Ingredients Section

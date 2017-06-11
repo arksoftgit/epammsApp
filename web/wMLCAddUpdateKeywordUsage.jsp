@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCAddUpdateKeywordUsage   Generate Timestamp: 20170404160231037 --%>
+<%-- wMLCAddUpdateKeywordUsage   Generate Timestamp: 20170523093739244 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -794,7 +794,7 @@ else
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GBStorDispSections3:GroupBox */ %>
 
-<div id="GBStorDispSections3" name="GBStorDispSections3" class="listgroup"   style="float:left;position:relative; width:690px; height:46px;">  <!-- GBStorDispSections3 --> 
+<div id="GBStorDispSections3" name="GBStorDispSections3" class="listgroup"   style="float:left;position:relative; width:646px; height:46px;">  <!-- GBStorDispSections3 --> 
 
 <% /* EnvironmentalHazardsSection1:Text */ %>
 
@@ -825,7 +825,7 @@ else
    }
 %>
 
-<label class="groupbox"  id="TXName1" name="TXName1" style="width:498px;height:34px;position:absolute;left:180px;top:12px;"><%=strTextDisplayValue%></label>
+<label class="groupbox"  id="TXName1" name="TXName1" style="width:456px;height:34px;position:absolute;left:180px;top:12px;"><%=strTextDisplayValue%></label>
 
 
 </div>  <!--  GBStorDispSections3 --> 
@@ -851,7 +851,7 @@ else
 <span  id="DirectionsUseTitle:1" name="DirectionsUseTitle:1" style="width:104px;height:16px;">Keyword:</span>
 
 </td>
-<td valign="top"  class="text12" style="width:184px;">
+<td valign="top"  class="text12" style="width:264px;">
 <% /* DirectionsUseName1:EditBox */ %>
 <%
    strErrorMapValue = VmlOperation.CheckError( "DirectionsUseName1", strError );
@@ -891,7 +891,7 @@ else
    }
 %>
 
-<input class="text12"  name="DirectionsUseName1" id="DirectionsUseName1" maxlength="254"  title="Required Name to differentiate Directions for Use Sections within a list"style="width:184px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12"  name="DirectionsUseName1" id="DirectionsUseName1" maxlength="254"  title="Required Name to differentiate Directions for Use Sections within a list"style="width:264px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>
@@ -902,11 +902,11 @@ else
 <span  id="Text1" name="Text1" style="width:104px;height:16px;">Keyword Type:</span>
 
 </td>
-<td valign="top" style="width:184px;">
+<td valign="top" style="width:266px;">
 <% /* ComboBox1:ComboBox */ %>
 <% strErrorMapValue = "";  %>
 
-<select  name="ComboBox1" id="ComboBox1" size="1" style="width:184px;" onchange="ComboBox1OnChange( )" >
+<select  name="ComboBox1" id="ComboBox1" size="1" style="width:266px;" onchange="ComboBox1OnChange( )" >
 
 <%
    boolean inListComboBox1 = false;
@@ -1001,7 +1001,7 @@ else
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox1:GroupBox */ %>
 
-<div id="GroupBox1" name="GroupBox1" style="width:514px;float:left;">  <!-- GroupBox1 --> 
+<div id="GroupBox1" name="GroupBox1" style="width:646px;float:left;">  <!-- GroupBox1 --> 
 
 
  <!-- This is added as a line spacer -->
@@ -1011,14 +1011,14 @@ else
 <div style="height:1px;width:2px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox7:GroupBox */ %>
 
-<div id="GroupBox7" name="GroupBox7"   style="float:left;position:relative; width:494px; height:30px;">  <!-- GroupBox7 --> 
+<div id="GroupBox7" name="GroupBox7"   style="float:left;position:relative; width:566px; height:30px;">  <!-- GroupBox7 --> 
 
 <% /* Text5:Text */ %>
 
 <label class="listheader"  id="Text5" name="Text5" style="width:240px;height:16px;position:absolute;left:6px;top:4px;">Text Items for Keyword Replace</label>
 
 <% /* PushBtn4:PushBtn */ %>
-<button type="button" class="newbutton" name="PushBtn4" id="PushBtn4" value="" onclick="ADD_UsageKeywordTextItemInit( )" style="width:120px;height:26px;position:absolute;left:356px;top:4px;">Add Blank Entry</button>
+<button type="button" class="newbutton" name="PushBtn4" id="PushBtn4" value="" onclick="ADD_UsageKeywordTextItemInit( )" style="width:120px;height:26px;position:absolute;left:436px;top:4px;">Add Blank Entry</button>
 
 
 </div>  <!--  GroupBox7 --> 
@@ -1100,7 +1100,7 @@ try
 
 <tr<%=strOdd%>>
 
-   <td><input size="53" value="<%=strGridCtrlText11%>"<%=strGridCtrlText11ErrorColor%> name="GridCtrlText11::<%=strEntityKey%>" id="GridCtrlText11::<%=strEntityKey%>" ></td>
+   <td><input size="79" value="<%=strGridCtrlText11%>"<%=strGridCtrlText11ErrorColor%> name="GridCtrlText11::<%=strEntityKey%>" id="GridCtrlText11::<%=strEntityKey%>" ></td>
    <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="DeleteBtn1" onclick="ADD_UsageKeywordTextItem( this.id )" id="DeleteBtn1::<%=strEntityKey%>"><img src="./images/ePammsNew.png" alt="Add"></a></td>
    <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BitmapBtn1" onclick="DELETE_InsertTextItem( this.id )" id="BitmapBtn1::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
 

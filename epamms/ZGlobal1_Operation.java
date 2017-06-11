@@ -14,7 +14,7 @@
     You should have received a copy of the GNU Lesser General Public License
     along with Zeidon JOE.  If not, see <http://www.gnu.org/licenses/>.
 
-    Copyright (c) 2009 - 2016 Arksoft, Inc.
+    Copyright (c) 2009 - 2017 Arksoft, Inc.
 **/
 
 package com.quinsoft.epamms;

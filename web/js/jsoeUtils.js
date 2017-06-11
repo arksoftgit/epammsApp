@@ -784,8 +784,8 @@ function openDebugWin()
    var strHTML="<html>\n" +
       "<head>\n<title>Zeidon View JSON</title>\n" +
       "<link rel=\"stylesheet\" type=\"text/css\" href=\"css/json.css\">\n" +
-      "<script src=\"http://code.jquery.com/jquery-1.10.2.min.js\"></script>\n" +
-      "<script src=\"http://code.jquery.com/ui/1.10.3/jquery-ui.js\"></script>\n" +
+      "<script src=\"https://code.jquery.com/jquery-3.2.1.min.js\"></script>\n" +
+      "<script src=\"https://code.jquery.com/ui/1.12.1/jquery-ui.js\"></script>\n" +
       "<script src=\"js/jquery.blockUI.js\"></script>\n" +
       "<script src=\"js/jsoeUtils.js\"></script>\n" +
       "<script src=\"js/jsoe.js\"></script>\n" +
@@ -1001,10 +1001,10 @@ function buildSortWindow( taskId, viewName, entityName, nextJsp, title, tableId,
       "//#DraggableSortTable { list-style-type: none; margin: 0; padding: 0; width: 60%; }\n" +
       "//#DraggableSortTable li { margin: 0 3px 3px 3px; padding: 0.4em; padding-left: 1.5em; font-size: 1.4em; height: 18px; }\n" +
       "//#DraggableSortTable li span { position: absolute; margin-left: -1.3em; }\n" +
-      "<script src=\"http://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css\"></script>\n" +
+      "<script src=\"https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css\"></script>\n" +
       "</style>\n" +
-      "<script src=\"http://code.jquery.com/jquery-1.10.2.min.js\"></script>\n" +
-      "<script src=\"http://code.jquery.com/ui/1.11.0/jquery-ui.js\"></script>\n" +
+      "<script src=\"https://code.jquery.com/jquery-3.2.1.min.js\"></script>\n" +
+      "<script src=\"https://code.jquery.com/ui/1.12.1/jquery-ui.js\"></script>\n" +
       "<script src=\"js/jquery.blockUI.js\"></script>\n" +
       "<script src=\"js/jsoeUtils.js\"></script>\n" +
       "<script src=\"js/jsoe.js\"></script>\n" +

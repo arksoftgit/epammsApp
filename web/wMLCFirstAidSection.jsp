@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCFirstAidSection   Generate Timestamp: 20170419093453748 --%>
+<%-- wMLCFirstAidSection   Generate Timestamp: 20170516151426943 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -79,7 +79,7 @@ public int DoInputMapping( HttpServletRequest request,
          }
       }
 
-      // EditBox: ReviewerNote
+      // MLEdit: ReviewerNote
       nRC = mMasLC.cursor( "M_GeneralSection" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 ) // CursorResult.SET
       {
@@ -1500,21 +1500,12 @@ else
 <div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GBFirstAidSection:GroupBox */ %>
 
-<div id="GBFirstAidSection" name="GBFirstAidSection" class="withborder"   style="float:left;position:relative; width:730px; height:100px;">  <!-- GBFirstAidSection --> 
+<div id="GBFirstAidSection" name="GBFirstAidSection" class="withborder"   style="float:left;position:relative; width:730px; height:126px;">  <!-- GBFirstAidSection --> 
 
-<% /* GroupBox1:GroupBox */ %>
-<div id="GroupBox1" name="GroupBox1" style="float:left;width:712px;" >
-
-<table cols=2 style="width:712px;"  class="grouptable">
-
-<tr>
-<td valign="top" style="width:112px;">
 <% /* FirstAidTitle::Text */ %>
 
-<label  id="FirstAidTitle:" name="FirstAidTitle:" style="width:106px;height:16px;position:absolute;left:6px;top:14px;">Title:</label>
+<label  id="FirstAidTitle:" name="FirstAidTitle:" style="width:106px;height:16px;position:absolute;left:14px;top:18px;">Title:</label>
 
-</td>
-<td valign="top"  class="text12" style="width:582px;">
 <% /* FirstAidTitle:EditBox */ %>
 <%
    strErrorMapValue = VmlOperation.CheckError( "FirstAidTitle", strError );
@@ -1554,20 +1545,15 @@ else
    }
 %>
 
-<input class="text12"  name="FirstAidTitle" id="FirstAidTitle" maxlength="4096" style="width:582px;position:absolute;left:118px;top:14px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12"  name="FirstAidTitle" id="FirstAidTitle" maxlength="4096" style="width:582px;position:absolute;left:126px;top:18px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
-</td>
-</tr>
-<tr>
-<td valign="top" style="width:112px;">
 <% /* ReviewerNote::Text */ %>
 
-<label  id="ReviewerNote:" name="ReviewerNote:" style="width:106px;height:16px;position:absolute;left:6px;top:36px;">Reviewer Note:</label>
+<label  id="ReviewerNote:" name="ReviewerNote:" style="width:106px;height:16px;position:absolute;left:14px;top:40px;">Reviewer Note:</label>
 
-</td>
-<td valign="top"  class="text12" style="width:582px;">
-<% /* ReviewerNote:EditBox */ %>
+<% /* ReviewerNote:MLEdit */ %>
 <%
+   // : ReviewerNote
    strErrorMapValue = VmlOperation.CheckError( "ReviewerNote", strError );
    if ( !StringUtils.isBlank( strErrorMapValue ) )
    {
@@ -1579,43 +1565,29 @@ else
       strErrorColor = "";
       mMasLC = task.getViewByName( "mMasLC" );
       if ( VmlOperation.isValid( mMasLC ) == false )
-         task.log( ).debug( "Invalid View: " + "ReviewerNote" );
+         task.log( ).info( "Invalid View: " + "ReviewerNote" );
       else
       {
          nRC = mMasLC.cursor( "M_GeneralSection" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            try
-            {
-               strErrorMapValue = mMasLC.cursor( "M_GeneralSection" ).getAttribute( "ReviewerNote" ).getString( "" );
-            }
-            catch (Exception e)
-            {
-               out.println("There is an error on ReviewerNote: " + e.getMessage());
-               task.log().error( "*** Error on ctrl ReviewerNote", e );
-            }
+            strErrorMapValue = mMasLC.cursor( "M_GeneralSection" ).getAttribute( "ReviewerNote" ).getString( "" );
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
 
-            task.log( ).debug( "M_GeneralSection.ReviewerNote: " + strErrorMapValue );
+            task.log( ).info( "M_GeneralSection.ReviewerNote: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist for ReviewerNote: " + "mMasLC.M_GeneralSection" );
+            task.log( ).info( "Entity does not exist for ReviewerNote: " + "mMasLC.M_GeneralSection" );
       }
    }
 %>
 
-<input class="text12"  name="ReviewerNote" id="ReviewerNote" maxlength="4096" style="width:582px;position:absolute;left:118px;top:36px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
-
-</td>
-</tr>
-</table>
-
-</div>  <!-- GroupBox1 --> 
+<textarea name="ReviewerNote" id="ReviewerNote" maxlength="4096" style="width:582px;height:52px;position:absolute;left:126px;top:40px;border:solid;border-width:4px;border-style:groove;" class="text12" wrap="wrap"><%=strErrorMapValue%></textarea>
 
 <% /* GBFirstAidStatements:GroupBox */ %>
 
-<div id="GBFirstAidStatements" name="GBFirstAidStatements" class="listgroup" style="width:708px;height:28px;position:absolute;left:8px;top:78px;">  <!-- GBFirstAidStatements --> 
+<div id="GBFirstAidStatements" name="GBFirstAidStatements" class="listgroup" style="width:708px;height:28px;position:absolute;left:8px;top:108px;">  <!-- GBFirstAidStatements --> 
 
 <% /* FirstAidStatements:Text */ %>
 
@@ -1701,6 +1673,9 @@ else
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
 
+
+ <!-- This is added as a line spacer -->
+<div style="height:2px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->

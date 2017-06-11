@@ -1,4 +1,4 @@
-// wMLCUsageGroupSelect   Generate Timestamp: 20160914154446879
+// wMLCUsageGroupSelect   Generate Timestamp: 20170608082634168
 
 var isWindowClosing = true;
 var timerID = null;
@@ -191,7 +191,7 @@ function CheckAllInGrid(id, CheckBoxName) // triggered by no text checkbox
    }
 }
 
-function RemoveMLC_UsageEntriesFromGroup( )
+function RemoveUsageEntriesFromGroup( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -201,7 +201,7 @@ function RemoveMLC_UsageEntriesFromGroup( )
    {
       _DisableFormElements( true );
 
-      document.wMLCUsageGroupSelect.zAction.value = "RemoveMLC_UsageEntriesFromGroup";
+      document.wMLCUsageGroupSelect.zAction.value = "RemoveUsageEntriesFromGroup";
       document.wMLCUsageGroupSelect.submit( );
    }
 }
@@ -221,7 +221,7 @@ function Return( )
    }
 }
 
-function SelectMLC_UsageEntriesForGroup( )
+function SelectUsageEntriesForGroup( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -231,7 +231,7 @@ function SelectMLC_UsageEntriesForGroup( )
    {
       _DisableFormElements( true );
 
-      document.wMLCUsageGroupSelect.zAction.value = "SelectMLC_UsageEntriesForGroup";
+      document.wMLCUsageGroupSelect.zAction.value = "SelectUsageEntriesForGroup";
       document.wMLCUsageGroupSelect.submit( );
    }
 }

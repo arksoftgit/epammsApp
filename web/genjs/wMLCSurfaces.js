@@ -1,11 +1,10 @@
-// wMLCSurfaces   Generate Timestamp: 20170419093343366
+// wMLCSurfaces   Generate Timestamp: 20170610202843083
 
 var isWindowClosing = true;
 var timerID = null;
 onerror = handleErr;
 window.history.forward( 1 );
-var Tab1;
-var Tab2;
+var Tab;
 
 function handleErr( msg, url, l )
 {
@@ -193,7 +192,7 @@ function CheckAllInGrid(id, CheckBoxName) // triggered by no text checkbox
    }
 }
 
-function ADD_SurfacesUsageItems( )
+function ADD_Surfaces( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -203,22 +202,7 @@ function ADD_SurfacesUsageItems( )
    {
       _DisableFormElements( true );
 
-      document.wMLCSurfaces.zAction.value = "ADD_SurfacesUsageItems";
-      document.wMLCSurfaces.submit( );
-   }
-}
-
-function GOTO_DeleteSelectedEntries( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCSurfaces.zAction.value = "GOTO_DeleteSelectedEntries";
+      document.wMLCSurfaces.zAction.value = "ADD_Surfaces";
       document.wMLCSurfaces.submit( );
    }
 }
@@ -263,7 +247,7 @@ function DELETE_UsageGroupEntriesOnly( )
    }
 }
 
-function DELETE_UsageGroupEntriesSurfaces( )
+function DeleteUsageGroups( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -273,7 +257,7 @@ function DELETE_UsageGroupEntriesSurfaces( )
    {
       _DisableFormElements( true );
 
-      document.wMLCSurfaces.zAction.value = "DELETE_UsageGroupEntriesSurfaces";
+      document.wMLCSurfaces.zAction.value = "DeleteUsageGroups";
       document.wMLCSurfaces.submit( );
    }
 }
@@ -289,6 +273,21 @@ function GOTO_AddUsageGroup( )
       _DisableFormElements( true );
 
       document.wMLCSurfaces.zAction.value = "GOTO_AddUsageGroup";
+      document.wMLCSurfaces.submit( );
+   }
+}
+
+function GOTO_DeleteSelectedSurfaces( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCSurfaces.zAction.value = "GOTO_DeleteSelectedSurfaces";
       document.wMLCSurfaces.submit( );
    }
 }

@@ -1,4 +1,4 @@
-// wMLCSurfacesStatement   Generate Timestamp: 20170406143038856
+// wMLCSurfacesStatement   Generate Timestamp: 20170608161518628
 
 var isWindowClosing = true;
 var timerID = null;
@@ -206,6 +206,27 @@ function AcceptAndReturnSurfacesStatement( )
    }
 }
 
+function Sort( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      // Javascript code entered by user.
+
+       document.wMLCSurfacesStatement.zTableRowSelect.value = buildSortTableHtml( "mMasLC", "M_SubUsage", "GridSurfaces",  ["Text"]  );
+
+      // END of Javascript code entered by user.
+
+      _DisableFormElements( true );
+
+      document.wMLCSurfacesStatement.zAction.value = "Sort";
+      document.wMLCSurfacesStatement.submit( );
+   }
+}
+
 function ADD_UsageKeyword( )
 {
 
@@ -285,21 +306,6 @@ function GOTO_AddSurfaceSubstatements( )
       _DisableFormElements( true );
 
       document.wMLCSurfacesStatement.zAction.value = "GOTO_AddSurfaceSubstatements";
-      document.wMLCSurfacesStatement.submit( );
-   }
-}
-
-function GOTO_DisplayGeneratedTextUsage( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCSurfacesStatement.zAction.value = "GOTO_DisplayGeneratedTextUsage";
       document.wMLCSurfacesStatement.submit( );
    }
 }

@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCOrganismClaimsStatement   Generate Timestamp: 20170406191702894 --%>
+<%-- wMLCOrganismClaimsStatement   Generate Timestamp: 20170608112953836 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -742,29 +742,8 @@ if ( strActionToProcess != null )
       if ( nRC < 0 )
          break;
 
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCOrganismClaimsStatement", "wMLC.GOTO_DisplayGeneratedTextUsage" );
-      nOptRC = wMLC.GOTO_DisplayGeneratedTextUsage( new zVIEW( vKZXMLPGO ) );
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "GeneratedTextDisplay" );
-      }
-
+      // Next Window
+      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "GeneratedTextDisplay" );
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
@@ -1260,7 +1239,7 @@ else
 <span style="height:16px;">&nbsp</span>
 <% /* PrecautionarySection:Text */ %>
 
-<span class="groupbox"  id="PrecautionarySection" name="PrecautionarySection" style="width:338px;height:16px;">Claims Statement</span>
+<span class="groupbox"  id="PrecautionarySection" name="PrecautionarySection" style="width:338px;height:16px;" tabindex=-1 >Claims Statement</span>
 
 </div>  <!-- End of a new line -->
 
@@ -1289,14 +1268,14 @@ else
 <td valign="top" style="width:96px;">
 <% /* Classification::Text */ %>
 
-<span  id="Classification:" name="Classification:" style="width:90px;height:16px;">Classification:</span>
+<span  id="Classification:" name="Classification:" style="width:90px;height:16px;" tabindex=-1 >Classification:</span>
 
 </td>
 <td valign="top" style="width:606px;">
 <% /* Usage:ComboBox */ %>
 <% strErrorMapValue = "";  %>
 
-<select  name="Usage" id="Usage" size="1" style="width:606px;" onchange="UsageOnChange( )" >
+<select  name="Usage" id="Usage" size="1" style="width:606px;"  tabindex=-1 onchange="UsageOnChange( )" >
 
 <%
    boolean inListUsage = false;
@@ -1379,7 +1358,7 @@ else
 <td valign="top" style="width:96px;">
 <% /* Pathogen::Text */ %>
 
-<span  id="Pathogen:" name="Pathogen:" style="width:90px;height:16px;">Pathogen:</span>
+<span  id="Pathogen:" name="Pathogen:" style="width:90px;height:16px;" tabindex=-1 >Pathogen:</span>
 
 </td>
 <td valign="top"  class="text12" style="width:606px;">
@@ -1422,7 +1401,7 @@ else
    }
 %>
 
-<input class="text12"  name="PrecautionarySubtitle" id="PrecautionarySubtitle" maxlength="4096" style="width:606px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12"  name="PrecautionarySubtitle" id="PrecautionarySubtitle" maxlength="4096" style="width:606px;<%=strErrorColor%>" tabindex=-1  type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>
@@ -1430,14 +1409,14 @@ else
 <td valign="top" style="width:96px;">
 <% /* Footnote::Text */ %>
 
-<span  id="Footnote:" name="Footnote:" style="width:90px;height:16px;">Footnote:</span>
+<span  id="Footnote:" name="Footnote:" style="width:90px;height:16px;" tabindex=-1 >Footnote:</span>
 
 </td>
 <td valign="top" style="width:606px;">
 <% /* UsageFootnote:ComboBox */ %>
 <% strErrorMapValue = "";  %>
 
-<select  name="UsageFootnote" id="UsageFootnote" size="1"style="width:606px;" onchange="UsageFootnoteOnChange( )">
+<select  name="UsageFootnote" id="UsageFootnote" size="1"style="width:606px;"  tabindex=-1 onchange="UsageFootnoteOnChange( )">
 
 <%
    mMasLC = task.getViewByName( "mMasLC" );
@@ -1556,17 +1535,17 @@ else
 <div id="GroupBox3" name="GroupBox3"   style="float:left;position:relative; width:754px; height:30px;">  <!-- GroupBox3 --> 
 
 <% /* ShowText:PushBtn */ %>
-<button type="button" class="newbutton" name="ShowText" id="ShowText" value="" onclick="GOTO_DisplayGeneratedTextUsage( )" style="width:158px;height:26px;position:absolute;left:402px;top:4px;">Show Generated Text</button>
+<button type="button" class="newbutton" name="ShowText" id="ShowText" value="" onclick="GOTO_DisplayGeneratedTextUsage( )" style="width:158px;height:26px;position:absolute;left:402px;top:4px;" tabindex=-1 >Show Generated Text</button>
 
 <% /* New:PushBtn */ %>
-<button type="button" class="newbutton" name="New" id="New" value="" onclick="ADD_UsageKeyword( )" style="width:66px;height:26px;position:absolute;left:582px;top:4px;">New</button>
+<button type="button" class="newbutton" name="New" id="New" value="" onclick="ADD_UsageKeyword( )" style="width:66px;height:26px;position:absolute;left:582px;top:4px;" tabindex=-1 >New</button>
 
 <% /* Paste:PushBtn */ %>
-<button type="button" class="newbutton" name="Paste" id="Paste" value="" onclick="PASTE_UsageKeywordAndText( )" style="width:74px;height:26px;position:absolute;left:666px;top:4px;">Paste</button>
+<button type="button" class="newbutton" name="Paste" id="Paste" value="" onclick="PASTE_UsageKeywordAndText( )" style="width:74px;height:26px;position:absolute;left:666px;top:4px;" tabindex=-1 >Paste</button>
 
 <% /* KeywordEmbedding1:Text */ %>
 
-<label class="listheader"  id="KeywordEmbedding1" name="KeywordEmbedding1" style="width:334px;height:16px;position:absolute;left:10px;top:8px;">Keyword text for Embedding in Statement Text</label>
+<label class="listheader"  id="KeywordEmbedding1" name="KeywordEmbedding1" style="">Keyword text for Embedding in Statement Text</label>
 
 
 </div>  <!--  GroupBox3 --> 
@@ -1705,17 +1684,17 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 <div id="GroupBox5" name="GroupBox5"   style="float:left;position:relative; width:756px; height:30px;">  <!-- GroupBox5 --> 
 
 <% /* ShowText2:PushBtn */ %>
-<button type="button" class="newbutton" name="ShowText2" id="ShowText2" value="" onclick="GOTO_DisplayGeneratedTextUsage( )" style="width:154px;height:26px;position:absolute;left:310px;top:4px;">Show Generated Text</button>
+<button type="button" class="newbutton" name="ShowText2" id="ShowText2" value="" onclick="GOTO_DisplayGeneratedTextUsage( )" style="width:154px;height:26px;position:absolute;left:310px;top:4px;" tabindex=-1 >Show Generated Text</button>
 
 <% /* AddBlank:PushBtn */ %>
-<button type="button" class="newbutton" name="AddBlank" id="AddBlank" value="" onclick="ADD_BlankClaimsKeywordAndText( )" style="width:122px;height:26px;position:absolute;left:474px;top:4px;">Add Blank Entry</button>
+<button type="button" class="newbutton" name="AddBlank" id="AddBlank" value="" onclick="ADD_BlankClaimsKeywordAndText( )" style="width:122px;height:26px;position:absolute;left:474px;top:4px;" tabindex=-1 >Add Blank Entry</button>
 
 <% /* AttemptKeyword:PushBtn */ %>
-<button type="button" class="newbutton" name="AttemptKeyword" id="AttemptKeyword" value="" onclick="AttemptDecipheredEntry( )" style="width:122px;height:26px;position:absolute;left:606px;top:4px;">Attempt Keyword</button>
+<button type="button" class="newbutton" name="AttemptKeyword" id="AttemptKeyword" value="" onclick="AttemptDecipheredEntry( )" style="width:122px;height:26px;position:absolute;left:606px;top:4px;" tabindex=-1 >Attempt Keyword</button>
 
 <% /* KeywordEmbedding2:Text */ %>
 
-<label class="listheader"  id="KeywordEmbedding2" name="KeywordEmbedding2" style="width:290px;height:16px;position:absolute;left:2px;top:8px;">Keyword text for Embedding in Statement</label>
+<label class="listheader"  id="KeywordEmbedding2" name="KeywordEmbedding2" style="">Keyword text for Embedding in Statement</label>
 
 
 </div>  <!--  GroupBox5 --> 

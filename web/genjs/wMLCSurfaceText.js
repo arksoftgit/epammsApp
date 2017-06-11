@@ -1,4 +1,4 @@
-// wMLCSurfaceText   Generate Timestamp: 20170404114725628
+// wMLCSurfaceText   Generate Timestamp: 20170608112526239
 
 var isWindowClosing = true;
 var timerID = null;
@@ -287,21 +287,6 @@ if (!confirm("OK to delete selected entry?"))
       _DisableFormElements( true );
 
       document.wMLCSurfaceText.zAction.value = "DELETE_UsageKeyword";
-      document.wMLCSurfaceText.submit( );
-   }
-}
-
-function GOTO_DisplayGeneratedTextUsage( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCSurfaceText.zAction.value = "GOTO_DisplayGeneratedTextUsage";
       document.wMLCSurfaceText.submit( );
    }
 }

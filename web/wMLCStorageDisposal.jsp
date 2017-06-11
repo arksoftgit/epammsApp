@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCStorageDisposal   Generate Timestamp: 20170504145716280 --%>
+<%-- wMLCStorageDisposal   Generate Timestamp: 20170517084229277 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -98,7 +98,7 @@ public int DoInputMapping( HttpServletRequest request,
          }
       }
 
-      // EditBox: MarketingReviewerNote
+      // MLEdit: MarketingReviewerNote
       nRC = mMasLC.cursor( "MasterLabelContent" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 ) // CursorResult.SET
       {
@@ -1525,7 +1525,7 @@ else
 <div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GBStorDispSections:GroupBox */ %>
 
-<div id="GBStorDispSections" name="GBStorDispSections"   style="float:left;position:relative; width:802px; height:132px;">  <!-- GBStorDispSections --> 
+<div id="GBStorDispSections" name="GBStorDispSections"   style="float:left;position:relative; width:802px; height:184px;">  <!-- GBStorDispSections --> 
 
 <% /* StorageDisposalStatements:Text */ %>
 
@@ -1625,8 +1625,9 @@ else
 
 <label  id="MarketingReviewerNote:" name="MarketingReviewerNote:" style="width:110px;height:16px;position:absolute;left:14px;top:78px;">Reviewer Note:</label>
 
-<% /* MarketingReviewerNote:EditBox */ %>
+<% /* MarketingReviewerNote:MLEdit */ %>
 <%
+   // : MarketingReviewerNote
    strErrorMapValue = VmlOperation.CheckError( "MarketingReviewerNote", strError );
    if ( !StringUtils.isBlank( strErrorMapValue ) )
    {
@@ -1638,43 +1639,35 @@ else
       strErrorColor = "";
       mMasLC = task.getViewByName( "mMasLC" );
       if ( VmlOperation.isValid( mMasLC ) == false )
-         task.log( ).debug( "Invalid View: " + "MarketingReviewerNote" );
+         task.log( ).info( "Invalid View: " + "MarketingReviewerNote" );
       else
       {
          nRC = mMasLC.cursor( "MasterLabelContent" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            try
-            {
-               strErrorMapValue = mMasLC.cursor( "MasterLabelContent" ).getAttribute( "ReviewerNoteSAD" ).getString( "" );
-            }
-            catch (Exception e)
-            {
-               out.println("There is an error on MarketingReviewerNote: " + e.getMessage());
-               task.log().error( "*** Error on ctrl MarketingReviewerNote", e );
-            }
+            strErrorMapValue = mMasLC.cursor( "MasterLabelContent" ).getAttribute( "ReviewerNoteSAD" ).getString( "" );
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
 
-            task.log( ).debug( "MasterLabelContent.ReviewerNoteSAD: " + strErrorMapValue );
+            task.log( ).info( "MasterLabelContent.ReviewerNoteSAD: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist for MarketingReviewerNote: " + "mMasLC.MasterLabelContent" );
+            task.log( ).info( "Entity does not exist for MarketingReviewerNote: " + "mMasLC.MasterLabelContent" );
       }
    }
 %>
 
-<input class="text12"  name="MarketingReviewerNote" id="MarketingReviewerNote" maxlength="4096" style="width:656px;position:absolute;left:130px;top:78px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<textarea name="MarketingReviewerNote" id="MarketingReviewerNote" maxlength="4096" style="width:656px;height:64px;position:absolute;left:130px;top:78px;border:solid;border-width:4px;border-style:groove;" class="text12" wrap="wrap"><%=strErrorMapValue%></textarea>
 
 <% /* New:PushBtn */ %>
-<button type="button" class="newbutton" name="New" id="New" value="" onclick="GOTO_StorageDispSectionAdd( )" style="width:78px;height:26px;position:absolute;left:586px;top:102px;">New</button>
+<button type="button" class="newbutton" name="New" id="New" value="" onclick="GOTO_StorageDispSectionAdd( )" style="width:78px;height:26px;position:absolute;left:586px;top:158px;">New</button>
 
 <% /* PBSort:PushBtn */ %>
-<button type="button" class="newbutton" name="PBSort" id="PBSort" value="" onclick="Sort( )" style="width:78px;height:26px;position:absolute;left:686px;top:102px;">Sort</button>
+<button type="button" class="newbutton" name="PBSort" id="PBSort" value="" onclick="Sort( )" style="width:78px;height:26px;position:absolute;left:686px;top:158px;">Sort</button>
 
 <% /* StorageAndDisposalSections:Text */ %>
 
-<label class="listheader"  id="StorageAndDisposalSections" name="StorageAndDisposalSections" style="width:210px;height:16px;position:absolute;left:6px;top:112px;">Storage and Disposal Sections</label>
+<label class="listheader"  id="StorageAndDisposalSections" name="StorageAndDisposalSections" style="width:210px;height:16px;position:absolute;left:6px;top:168px;">Storage and Disposal Sections</label>
 
 
 </div>  <!--  GBStorDispSections --> 
@@ -1682,6 +1675,9 @@ else
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
 
+
+ <!-- This is added as a line spacer -->
+<div style="height:4px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->

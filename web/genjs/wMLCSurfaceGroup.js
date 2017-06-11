@@ -1,4 +1,4 @@
-// wMLCSurfaceGroup   Generate Timestamp: 20160914154446337
+// wMLCSurfaceGroup   Generate Timestamp: 20170607091323007
 
 var isWindowClosing = true;
 var timerID = null;
@@ -206,6 +206,27 @@ function DELETE_SelectedGroupUsageEntries( )
    }
 }
 
+function Sort( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      // Javascript code entered by user.
+
+       document.wMLCSurfaceGroup.zTableRowSelect.value = buildSortTableHtml( "mMasLC", "M_UsageGroupUsage", "GridClaims",  ["Surfaces Within Group"]  );
+
+      // END of Javascript code entered by user.
+
+      _DisableFormElements( true );
+
+      document.wMLCSurfaceGroup.zAction.value = "Sort";
+      document.wMLCSurfaceGroup.submit( );
+   }
+}
+
 function GOTO_AddGroupUsageStatements( )
 {
 
@@ -255,7 +276,7 @@ function GOTO_UpdateGroupUsageStatement( strTagEntityKey )
    }
 }
 
-function RemoveMLC_UsageEntriesFromGroup( )
+function RemoveUsageEntriesFromGroup( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -265,7 +286,7 @@ function RemoveMLC_UsageEntriesFromGroup( )
    {
       _DisableFormElements( true );
 
-      document.wMLCSurfaceGroup.zAction.value = "RemoveMLC_UsageEntriesFromGroup";
+      document.wMLCSurfaceGroup.zAction.value = "RemoveUsageEntriesFromGroup";
       document.wMLCSurfaceGroup.submit( );
    }
 }

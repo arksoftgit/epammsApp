@@ -2,7 +2,7 @@
 // Project ePamms
 //
 // This is a part of the ePamms applications package.
-// Copyright (c) 2007 - 2016 Arksoft, Inc.
+// Copyright (c) 2007 - 2017 Arksoft, Inc.
 // All Rights Reserved.
 //
 // SUBSYSTEM:    mSPLDef       - Primary Registrant Label Content operations
@@ -3180,6 +3180,10 @@ BuildSPLD_FromSLC( VIEW NewSPLD  BASED ON LOD mSPLDef,
       SetMatchingAttributesByName( NewSPLD, "SPLD_UsageType", SrcSLC, "S_UsageType", zSET_NULL )
       INCLUDE NewSPLD.S_UsageType FROM SrcSLC.S_UsageType
       CopyUsagesRecursive( NewSPLD, SrcSLC )
+      FOR EACH SrcSLC.S_UsageGroup
+         CREATE ENTITY NewSPLD.SPLD_UsageGroup
+         SetMatchingAttributesByName( NewSPLD, "SPLD_UsageGroup", SrcSLC, "S_UsageGroup", zSET_NULL )
+      END
    END
 
    // Ingredients Section

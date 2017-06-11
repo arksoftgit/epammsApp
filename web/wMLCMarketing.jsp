@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCMarketing   Generate Timestamp: 20170419093241245 --%>
+<%-- wMLCMarketing   Generate Timestamp: 20170516143524295 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -79,7 +79,7 @@ public int DoInputMapping( HttpServletRequest request,
          }
       }
 
-      // EditBox: MarketingReviewerNote
+      // MLEdit: MarketingReviewerNote
       nRC = mMasLC.cursor( "MasterLabelContent" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 ) // CursorResult.SET
       {
@@ -1499,7 +1499,7 @@ else
 <div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GBStorDispSections:GroupBox */ %>
 
-<div id="GBStorDispSections" name="GBStorDispSections"   style="float:left;position:relative; width:780px; height:112px;">  <!-- GBStorDispSections --> 
+<div id="GBStorDispSections" name="GBStorDispSections"   style="float:left;position:relative; width:780px; height:142px;">  <!-- GBStorDispSections --> 
 
 <% /* OrganismClaimsStatements:Text */ %>
 
@@ -1554,8 +1554,9 @@ else
 
 <label  id="MarketingReviewerNote:" name="MarketingReviewerNote:" style="width:110px;height:16px;position:absolute;left:20px;top:52px;">Reviewer Note:</label>
 
-<% /* MarketingReviewerNote:EditBox */ %>
+<% /* MarketingReviewerNote:MLEdit */ %>
 <%
+   // : MarketingReviewerNote
    strErrorMapValue = VmlOperation.CheckError( "MarketingReviewerNote", strError );
    if ( !StringUtils.isBlank( strErrorMapValue ) )
    {
@@ -1567,43 +1568,35 @@ else
       strErrorColor = "";
       mMasLC = task.getViewByName( "mMasLC" );
       if ( VmlOperation.isValid( mMasLC ) == false )
-         task.log( ).debug( "Invalid View: " + "MarketingReviewerNote" );
+         task.log( ).info( "Invalid View: " + "MarketingReviewerNote" );
       else
       {
          nRC = mMasLC.cursor( "MasterLabelContent" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            try
-            {
-               strErrorMapValue = mMasLC.cursor( "MasterLabelContent" ).getAttribute( "ReviewerNoteMarketing" ).getString( "" );
-            }
-            catch (Exception e)
-            {
-               out.println("There is an error on MarketingReviewerNote: " + e.getMessage());
-               task.log().error( "*** Error on ctrl MarketingReviewerNote", e );
-            }
+            strErrorMapValue = mMasLC.cursor( "MasterLabelContent" ).getAttribute( "ReviewerNoteMarketing" ).getString( "" );
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
 
-            task.log( ).debug( "MasterLabelContent.ReviewerNoteMarketing: " + strErrorMapValue );
+            task.log( ).info( "MasterLabelContent.ReviewerNoteMarketing: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist for MarketingReviewerNote: " + "mMasLC.MasterLabelContent" );
+            task.log( ).info( "Entity does not exist for MarketingReviewerNote: " + "mMasLC.MasterLabelContent" );
       }
    }
 %>
 
-<input class="text12"  name="MarketingReviewerNote" id="MarketingReviewerNote" maxlength="4096" style="width:634px;position:absolute;left:130px;top:52px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<textarea name="MarketingReviewerNote" id="MarketingReviewerNote" maxlength="4096" style="width:634px;height:54px;position:absolute;left:130px;top:52px;border:solid;border-width:4px;border-style:groove;" class="text12" wrap="wrap"><%=strErrorMapValue%></textarea>
 
 <% /* New:PushBtn */ %>
-<button type="button" class="newbutton" name="New" id="New" value="" onclick="GOTO_MarketingSectionAdd( )" style="width:78px;height:26px;position:absolute;left:586px;top:82px;">New</button>
+<button type="button" class="newbutton" name="New" id="New" value="" onclick="GOTO_MarketingSectionAdd( )" style="width:78px;height:26px;position:absolute;left:586px;top:112px;">New</button>
 
 <% /* PBSort:PushBtn */ %>
-<button type="button" class="newbutton" name="PBSort" id="PBSort" value="" onclick="Sort( )" style="width:78px;height:26px;position:absolute;left:686px;top:82px;">Sort</button>
+<button type="button" class="newbutton" name="PBSort" id="PBSort" value="" onclick="Sort( )" style="width:78px;height:26px;position:absolute;left:686px;top:112px;">Sort</button>
 
 <% /* MarketingSections:Text */ %>
 
-<label class="listheader"  id="MarketingSections" name="MarketingSections" style="width:154px;height:16px;position:absolute;left:6px;top:92px;">Marketing Sections</label>
+<label class="listheader"  id="MarketingSections" name="MarketingSections" style="width:154px;height:16px;position:absolute;left:6px;top:122px;">Marketing Sections</label>
 
 
 </div>  <!--  GBStorDispSections --> 

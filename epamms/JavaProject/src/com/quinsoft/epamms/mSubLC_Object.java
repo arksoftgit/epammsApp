@@ -4022,7 +4022,19 @@ omSubLC_BuildSLC_FromMLC( View     NewSLC,
       RESULT = IncludeSubobjectFromSubobject( NewSLC, "M_UsageType", SrcMLC, "M_UsageType", zPOS_AFTER );
       //:CopyUsagesRecursive( NewSLC, SrcMLC )
       omSubLC_CopyUsagesRecursive( NewSLC, SrcMLC );
+      //:FOR EACH SrcMLC.M_UsageGroup
+      RESULT = SetCursorFirstEntity( SrcMLC, "M_UsageGroup", "" );
+      while ( RESULT > zCURSOR_UNCHANGED )
+      { 
+         //:CREATE ENTITY NewSLC.S_UsageGroup
+         RESULT = CreateEntity( NewSLC, "S_UsageGroup", zPOS_AFTER );
+         //:SetMatchingAttributesByName( NewSLC, "S_UsageGroup", SrcMLC, "M_UsageGroup", zSET_NULL )
+         SetMatchingAttributesByName( NewSLC, "S_UsageGroup", SrcMLC, "M_UsageGroup", zSET_NULL );
+         RESULT = SetCursorNextEntity( SrcMLC, "M_UsageGroup", "" );
+      } 
+
       RESULT = SetCursorNextEntity( SrcMLC, "M_UsageType", "" );
+      //:END
    } 
 
    //:END

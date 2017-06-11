@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCUpdateMasterProduct   Generate Timestamp: 20160914154446831 --%>
+<%-- wMLCUpdateMasterProduct   Generate Timestamp: 20170523084541317 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -82,6 +82,25 @@ public int DoInputMapping( HttpServletRequest request,
          }
       }
 
+      // EditBox: EstablishmentNumber
+      nRC = mMasProd.cursor( "MasterProduct" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 ) // CursorResult.SET
+      {
+         strMapValue = request.getParameter( "EstablishmentNumber" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "EstablishmentNumber", "", strMapValue );
+            else
+               mMasProd.cursor( "MasterProduct" ).getAttribute( "EPA_EstablishmentNumber" ).setValue( strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "EstablishmentNumber", e.getReason( ), strMapValue );
+         }
+      }
+
       // EditBox: MasterProductNumber
       nRC = mMasProd.cursor( "MasterProduct" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 ) // CursorResult.SET
@@ -117,25 +136,6 @@ public int DoInputMapping( HttpServletRequest request,
          {
             nMapError = -16;
             VmlOperation.CreateMessage( task, "ChemicalFamily", e.getReason( ), strMapValue );
-         }
-      }
-
-      // EditBox: EstablishmentNumber
-      nRC = mMasProd.cursor( "MasterProduct" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 ) // CursorResult.SET
-      {
-         strMapValue = request.getParameter( "EstablishmentNumber" );
-         try
-         {
-            if ( webMapping )
-               VmlOperation.CreateMessage( task, "EstablishmentNumber", "", strMapValue );
-            else
-               mMasProd.cursor( "MasterProduct" ).getAttribute( "EPA_EstablishmentNumber" ).setValue( strMapValue, "" );
-         }
-         catch ( InvalidAttributeValueException e )
-         {
-            nMapError = -16;
-            VmlOperation.CreateMessage( task, "EstablishmentNumber", e.getReason( ), strMapValue );
          }
       }
 
@@ -936,6 +936,7 @@ else
    <input name="zFocusCtrl" id="zFocusCtrl" type="hidden" value="<%=strFocusCtrl%>">
    <input name="zOpenFile" id="zOpenFile" type="hidden" value="<%=strOpenFile%>">
    <input name="zDateFormat" id="zDateFormat" type="hidden" value="<%=strDateFormat%>">
+   <input name="zDateSequence" id="zDateSequence" type="hidden" value="MDY">
    <input name="zLoginName" id="zLoginName" type="hidden" value="<%=strLoginName%>">
    <input name="zKeyRole" id="zKeyRole" type="hidden" value="<%=strKeyRole%>">
    <input name="zOpenPopupWindow" id="zOpenPopupWindow" type="hidden" value="<%=strOpenPopupWindow%>">
@@ -1001,7 +1002,7 @@ else
 <div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GBMasterProduct:GroupBox */ %>
 
-<div id="GBMasterProduct" name="GBMasterProduct"   style="float:left;position:relative; width:798px; height:284px;">  <!-- GBMasterProduct --> 
+<div id="GBMasterProduct" name="GBMasterProduct"   style="float:left;position:relative; width:798px; height:294px;">  <!-- GBMasterProduct --> 
 
 <% /* ProductName::Text */ %>
 
@@ -1009,7 +1010,7 @@ else
 
 <% /* GroupBox4:GroupBox */ %>
 
-<div id="GroupBox4" name="GroupBox4" style="width:578px;height:16px;position:absolute;left:198px;top:4px;">  <!-- GroupBox4 --> 
+<div id="GroupBox4" name="GroupBox4" style="width:578px;height:30px;position:absolute;left:198px;top:4px;">  <!-- GroupBox4 --> 
 
 <% /* MasterProductName:MLEdit */ %>
 <%
@@ -1043,14 +1044,59 @@ else
    }
 %>
 
-<div style="background-color:#eee;border:1px solid #042;width:578px;height:16px;position:absolute;left:0px;top:0px;overflow:auto;">
-<div class="text12 mceSimpleZeidonSpecialCharacters" name="MasterProductName" id="MasterProductName" style="width:578px;height:16px;position:absolute;left:0px;top:0px;"><%=strErrorMapValue%></div></div>
+<div style="background-color:#eee;border:1px solid #042;width:578px;height:26px;position:absolute;left:0px;top:0px;overflow:auto;">
+<div class="text12 mceSimpleZeidonSpecialCharacters" name="MasterProductName" id="MasterProductName" style="width:578px;height:26px;position:absolute;left:0px;top:0px;"><%=strErrorMapValue%></div></div>
 
 
 </div>  <!--  GroupBox4 --> 
+<% /* EstablishmentNumber::Text */ %>
+
+<label  id="EstablishmentNumber:" name="EstablishmentNumber:" style="width:178px;height:16px;position:absolute;left:12px;top:40px;">EPA Registration Number:</label>
+
+<% /* EstablishmentNumber:EditBox */ %>
+<%
+   strErrorMapValue = VmlOperation.CheckError( "EstablishmentNumber", strError );
+   if ( !StringUtils.isBlank( strErrorMapValue ) )
+   {
+      if ( StringUtils.equals( strErrorFlag, "Y" ) )
+         strErrorColor = "color:red;";
+   }
+   else
+   {
+      strErrorColor = "";
+      mMasProd = task.getViewByName( "mMasProd" );
+      if ( VmlOperation.isValid( mMasProd ) == false )
+         task.log( ).debug( "Invalid View: " + "EstablishmentNumber" );
+      else
+      {
+         nRC = mMasProd.cursor( "MasterProduct" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            try
+            {
+               strErrorMapValue = mMasProd.cursor( "MasterProduct" ).getAttribute( "EPA_EstablishmentNumber" ).getString( "" );
+            }
+            catch (Exception e)
+            {
+               out.println("There is an error on EstablishmentNumber: " + e.getMessage());
+               task.log().error( "*** Error on ctrl EstablishmentNumber", e );
+            }
+            if ( strErrorMapValue == null )
+               strErrorMapValue = "";
+
+            task.log( ).debug( "MasterProduct.EPA_EstablishmentNumber: " + strErrorMapValue );
+         }
+         else
+            task.log( ).debug( "Entity does not exist for EstablishmentNumber: " + "mMasProd.MasterProduct" );
+      }
+   }
+%>
+
+<input class="text12"  name="EstablishmentNumber" id="EstablishmentNumber" maxlength="128"  title="EPA Establishment Number"style="width:142px;position:absolute;left:198px;top:40px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+
 <% /* ProductNumber::Text */ %>
 
-<label  id="ProductNumber:" name="ProductNumber:" style="width:178px;height:16px;position:absolute;left:12px;top:30px;">Number:</label>
+<label  id="ProductNumber:" name="ProductNumber:" style="width:130px;height:16px;position:absolute;left:528px;top:40px;">Number:</label>
 
 <% /* MasterProductNumber:EditBox */ %>
 <%
@@ -1091,16 +1137,16 @@ else
    }
 %>
 
-<input class="text12" name="MasterProductNumber" id="MasterProductNumber" maxlength="32"  title="Product Number within this Registrant"style="width:142px;position:absolute;left:198px;top:30px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12"  name="MasterProductNumber" id="MasterProductNumber" maxlength="32"  title="Product Number within this Registrant"style="width:102px;position:absolute;left:666px;top:40px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* ChemicalFamily::Text */ %>
 
-<label  id="ChemicalFamily:" name="ChemicalFamily:" style="width:178px;height:16px;position:absolute;left:12px;top:56px;">Chemical Family:</label>
+<label  id="ChemicalFamily:" name="ChemicalFamily:" style="width:178px;height:16px;position:absolute;left:12px;top:68px;">Chemical Family:</label>
 
 <% /* ChemicalFamily:ComboBox */ %>
 <% strErrorMapValue = "";  %>
 
-<select  name="ChemicalFamily" id="ChemicalFamily" size="1" style="width:210px;position:absolute;left:198px;top:56px;" onchange="ChemicalFamilyOnChange( )">
+<select  name="ChemicalFamily" id="ChemicalFamily" size="1" style="width:210px;position:absolute;left:198px;top:68px;" onchange="ChemicalFamilyOnChange( )" >
 
 <%
    boolean inListChemicalFamily = false;
@@ -1177,59 +1223,14 @@ else
 </select>
 
 <input name="hChemicalFamily" id="hChemicalFamily" type="hidden" value="<%=strComboCurrentValue%>" >
-<% /* EstablishmentNumber::Text */ %>
-
-<label  id="EstablishmentNumber:" name="EstablishmentNumber:" style="width:178px;height:16px;position:absolute;left:12px;top:82px;">EPA Registration Number:</label>
-
-<% /* EstablishmentNumber:EditBox */ %>
-<%
-   strErrorMapValue = VmlOperation.CheckError( "EstablishmentNumber", strError );
-   if ( !StringUtils.isBlank( strErrorMapValue ) )
-   {
-      if ( StringUtils.equals( strErrorFlag, "Y" ) )
-         strErrorColor = "color:red;";
-   }
-   else
-   {
-      strErrorColor = "";
-      mMasProd = task.getViewByName( "mMasProd" );
-      if ( VmlOperation.isValid( mMasProd ) == false )
-         task.log( ).debug( "Invalid View: " + "EstablishmentNumber" );
-      else
-      {
-         nRC = mMasProd.cursor( "MasterProduct" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-         {
-            try
-            {
-               strErrorMapValue = mMasProd.cursor( "MasterProduct" ).getAttribute( "EPA_EstablishmentNumber" ).getString( "" );
-            }
-            catch (Exception e)
-            {
-               out.println("There is an error on EstablishmentNumber: " + e.getMessage());
-               task.log().error( "*** Error on ctrl EstablishmentNumber", e );
-            }
-            if ( strErrorMapValue == null )
-               strErrorMapValue = "";
-
-            task.log( ).debug( "MasterProduct.EPA_EstablishmentNumber: " + strErrorMapValue );
-         }
-         else
-            task.log( ).debug( "Entity does not exist for EstablishmentNumber: " + "mMasProd.MasterProduct" );
-      }
-   }
-%>
-
-<input class="text12" name="EstablishmentNumber" id="EstablishmentNumber" maxlength="128"  title="EPA Establishment Number"style="width:142px;position:absolute;left:198px;top:82px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
-
 <% /* ToxicityCategory::Text */ %>
 
-<label  id="ToxicityCategory:" name="ToxicityCategory:" style="width:178px;height:16px;position:absolute;left:12px;top:108px;">Toxicity Category:</label>
+<label  id="ToxicityCategory:" name="ToxicityCategory:" style="width:130px;height:16px;position:absolute;left:528px;top:68px;">Toxicity Category:</label>
 
 <% /* ToxicityCategory:ComboBox */ %>
 <% strErrorMapValue = "";  %>
 
-<select  name="ToxicityCategory" id="ToxicityCategory" size="1" style="width:142px;position:absolute;left:198px;top:108px;" onchange="ToxicityCategoryOnChange( )">
+<select  name="ToxicityCategory" id="ToxicityCategory" size="1" style="width:106px;position:absolute;left:666px;top:68px;" onchange="ToxicityCategoryOnChange( )" >
 
 <%
    boolean inListToxicityCategory = false;
@@ -1308,7 +1309,7 @@ else
 <input name="hToxicityCategory" id="hToxicityCategory" type="hidden" value="<%=strComboCurrentValue%>" >
 <% /* ReviewerNote::Text */ %>
 
-<label  id="ReviewerNote:" name="ReviewerNote:" style="width:178px;height:16px;position:absolute;left:12px;top:134px;">Reviewer Note:</label>
+<label  id="ReviewerNote:" name="ReviewerNote:" style="width:178px;height:16px;position:absolute;left:12px;top:102px;">Reviewer Note:</label>
 
 <% /* ReviewerNote:EditBox */ %>
 <%
@@ -1349,11 +1350,11 @@ else
    }
 %>
 
-<input class="text12" name="ReviewerNote" id="ReviewerNote" maxlength="2048"  title="Product Number within this Registrant"style="width:578px;position:absolute;left:198px;top:134px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12"  name="ReviewerNote" id="ReviewerNote" maxlength="4096"  title="Product Number within this Registrant"style="width:578px;position:absolute;left:198px;top:102px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* GroupBox1:GroupBox */ %>
 
-<div id="GroupBox1" name="GroupBox1" style="width:772px;height:120px;position:absolute;left:12px;top:160px;">  <!-- GroupBox1 --> 
+<div id="GroupBox1" name="GroupBox1" style="width:772px;height:156px;position:absolute;left:12px;top:130px;">  <!-- GroupBox1 --> 
 
 <% /* Description::Text */ %>
 
@@ -1440,8 +1441,8 @@ else
    }
 %>
 
-<div style="background-color:#eee;border:1px solid #042;width:668px;height:64px;position:absolute;left:0px;top:0px;overflow:auto;">
-<div class="mceSimpleZeidon" name="Footer" id="Footer" style="width:668px;height:64px;position:absolute;left:0px;top:0px;"><%=strErrorMapValue%></div></div>
+<div style="background-color:#eee;border:1px solid #042;width:668px;height:98px;position:absolute;left:0px;top:0px;overflow:auto;">
+<div class="mceSimpleZeidon" name="Footer" id="Footer" style="width:668px;height:98px;position:absolute;left:0px;top:0px;"><%=strErrorMapValue%></div></div>
 
 
 </div>  <!--  GroupBox3 --> 
@@ -1458,14 +1459,14 @@ else
 <div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GBMasterLabelContent:GroupBox */ %>
 
-<div id="GBMasterLabelContent" name="GBMasterLabelContent" class="listgroup"   style="float:left;position:relative; width:486px; height:40px;">  <!-- GBMasterLabelContent --> 
+<div id="GBMasterLabelContent" name="GBMasterLabelContent" class="listgroup"   style="float:left;position:relative; width:746px; height:40px;">  <!-- GBMasterLabelContent --> 
 
 <% /* MasterLabelContent:Text */ %>
 
 <label class="listheader"  id="MasterLabelContent" name="MasterLabelContent" style="width:154px;height:16px;position:absolute;left:10px;top:12px;">Master Label Content</label>
 
 <% /* PBNewMasterLabelContent:PushBtn */ %>
-<button type="button" class="newbutton" name="PBNewMasterLabelContent" id="PBNewMasterLabelContent" value="" onclick="NEW_MLC( )" style="width:78px;height:26px;position:absolute;left:342px;top:12px;">New</button>
+<button type="button" class="newbutton" name="PBNewMasterLabelContent" id="PBNewMasterLabelContent" value="" onclick="NEW_MLC( )" style="width:78px;height:26px;position:absolute;left:574px;top:12px;">New</button>
 
 
 </div>  <!--  GBMasterLabelContent --> 
@@ -1540,7 +1541,7 @@ try
          nRC = vGridMasterLabelContent.cursor( "MasterLabelContent" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditRevisionDate = vGridMasterLabelContent.cursor( "MasterLabelContent" ).getAttribute( "RevisionDate" ).getString( "REVMMDDYY" );
+            strGridEditRevisionDate = vGridMasterLabelContent.cursor( "MasterLabelContent" ).getAttribute( "RevisionDate" ).getString( "" );
 
             if ( strGridEditRevisionDate == null )
                strGridEditRevisionDate = "";

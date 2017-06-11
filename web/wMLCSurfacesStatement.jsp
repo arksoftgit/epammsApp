@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCSurfacesStatement   Generate Timestamp: 20170406143038856 --%>
+<%-- wMLCSurfacesStatement   Generate Timestamp: 20170608161518628 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -60,7 +60,7 @@ public int DoInputMapping( HttpServletRequest request,
    mMasLC = task.getViewByName( "mMasLC" );
    if ( VmlOperation.isValid( mMasLC ) )
    {
-      // Grid: Grid1
+      // Grid: GridSurfaces
       iTableRowCnt = 0;
 
       // We are creating a temp view to the grid view so that if there are 
@@ -78,7 +78,7 @@ public int DoInputMapping( HttpServletRequest request,
       }
 
       vGridTmp.drop( );
-      // Grid: Grid2
+      // Grid: GridKeyword
       iTableRowCnt = 0;
 
       // We are creating a temp view to the grid view so that if there are 
@@ -253,6 +253,30 @@ if ( strActionToProcess != null )
       }
       // Next Window
       strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReturnToParent, "", "" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "Sort" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCSurfacesStatement", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Next Window
+      // We are borrowing zTableRowSelect and this code is hardwired for the moment.  javascript code similar to the following must be added to the action:
+      // document.wSLCMarketingStatement.zTableRowSelect.value = buildSortTableHtml( "mSubLC", "S_MarketingUsageOrdering", "GridMarketingUsage", ["Usage Type","Usage Name"] );
+      wWebXA = task.getViewByName( "wWebXfer" );
+      String strHtml = (String) request.getParameter( "zTableRowSelect" );
+      wWebXA.cursor( "Root" ).getAttribute( "HTML" ).setValue( strHtml, "" );
+      // We are borrowing zTableRowSelect and the code above is hardwired for the moment
+
+      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wSystem", "DragDropSort" );
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
@@ -491,44 +515,6 @@ if ( strActionToProcess != null )
       {
          // Next Window
          strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "AddSubitems" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_DisplayGeneratedTextUsage" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCSurfacesStatement", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCSurfacesStatement", "wMLC.GOTO_DisplayGeneratedTextUsage" );
-      nOptRC = wMLC.GOTO_DisplayGeneratedTextUsage( new zVIEW( vKZXMLPGO ) );
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "GeneratedTextDisplay" );
       }
 
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -861,6 +847,8 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/common.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/css.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/sts.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/jsoeUtils.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/jsoe.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
@@ -1065,12 +1053,12 @@ else
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox4:GroupBox */ %>
-<div id="GroupBox4" name="GroupBox4" style="float:left;width:752px;" >
+<div id="GroupBox4" name="GroupBox4" style="float:left;width:730px;" >
 
-<table cols=0 style="width:752px;"  class="grouptable">
+<table cols=0 style="width:730px;"  class="grouptable">
 
 <tr>
-<td valign="top"  class="groupbox" style="width:584px;">
+<td valign="top"  class="groupbox" style="width:564px;">
 <% /* SurfacesStatement:Text */ %>
 
 <span class="groupbox"  id="SurfacesStatement" name="SurfacesStatement" style="width:338px;height:16px;">Surfaces Statement</span>
@@ -1172,14 +1160,17 @@ else
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox3:GroupBox */ %>
 
-<div id="GroupBox3" name="GroupBox3" class="listgroup"   style="float:left;position:relative; width:752px; height:40px;">  <!-- GroupBox3 --> 
+<div id="GroupBox3" name="GroupBox3" class="listgroup"   style="float:left;position:relative; width:714px; height:40px;">  <!-- GroupBox3 --> 
 
 <% /* Subsurfaces:Text */ %>
 
 <label class="listheader"  id="Subsurfaces" name="Subsurfaces" style="width:398px;height:16px;position:absolute;left:10px;top:8px;">Subsurfaces</label>
 
 <% /* PBNew:PushBtn */ %>
-<button type="button" name="PBNew" id="PBNew" value="" onclick="GOTO_AddSurfaceSubstatements( )" style="width:78px;height:26px;position:absolute;left:586px;top:10px;">New</button>
+<button type="button" name="PBNew" id="PBNew" value="" onclick="GOTO_AddSurfaceSubstatements( )" style="width:78px;height:26px;position:absolute;left:520px;top:10px;">New</button>
+
+<% /* PBSort:PushBtn */ %>
+<button type="button" class="newbutton" name="PBSort" id="PBSort" value="" onclick="Sort( )" style="width:78px;height:26px;position:absolute;left:612px;top:10px;">Sort</button>
 
 
 </div>  <!--  GroupBox3 --> 
@@ -1193,8 +1184,8 @@ else
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
-<% /* Grid1:Grid */ %>
-<table class="sortable"  cols=3 style=""  name="Grid1" id="Grid1">
+<% /* GridSurfaces:Grid */ %>
+<table class="sortable"  cols=3 style=""  name="GridSurfaces" id="GridSurfaces">
 
 <thead bgcolor=green><tr>
 
@@ -1222,21 +1213,21 @@ try
       String strBMBUpdateSubUsage;
       String strBMBDeleteSubUsage;
       
-      View vGrid1;
-      vGrid1 = mMasLC.newView( );
-      csrRC2 = vGrid1.cursor( "M_SubUsage" ).setFirst(  );
+      View vGridSurfaces;
+      vGridSurfaces = mMasLC.newView( );
+      csrRC2 = vGridSurfaces.cursor( "M_SubUsage" ).setFirst(  );
       while ( csrRC2.isSet() )
       {
          strOdd = (iTableRowCnt % 2) != 0 ? " class='odd'" : "";
          iTableRowCnt++;
 
-         lEntityKey = vGrid1.cursor( "M_SubUsage" ).getEntityKey( );
+         lEntityKey = vGridSurfaces.cursor( "M_SubUsage" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
          strSurfaceText = "";
-         nRC = vGrid1.cursor( "M_SubUsage" ).checkExistenceOfEntity( ).toInt();
+         nRC = vGridSurfaces.cursor( "M_SubUsage" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strSurfaceText = vGrid1.cursor( "M_SubUsage" ).getAttribute( "Name" ).getString( "" );
+            strSurfaceText = vGridSurfaces.cursor( "M_SubUsage" ).getAttribute( "Name" ).getString( "" );
 
             if ( strSurfaceText == null )
                strSurfaceText = "";
@@ -1256,9 +1247,9 @@ try
 </tr>
 
 <%
-         csrRC2 = vGrid1.cursor( "M_SubUsage" ).setNextContinue( );
+         csrRC2 = vGridSurfaces.cursor( "M_SubUsage" ).setNextContinue( );
       }
-      vGrid1.drop( );
+      vGridSurfaces.drop( );
    }
 }
 catch (Exception e)
@@ -1313,8 +1304,8 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
-<% /* Grid2:Grid */ %>
-<table class="sortable"  cols=4 style=""  name="Grid2" id="Grid2">
+<% /* GridKeyword:Grid */ %>
+<table class="sortable"  cols=4 style=""  name="GridKeyword" id="GridKeyword">
 
 <thead bgcolor=green><tr>
 
@@ -1344,21 +1335,21 @@ try
       String strBMBUpdateKeyword;
       String strBMBDeleteKeyword;
       
-      View vGrid2;
-      vGrid2 = mMasLC.newView( );
-      csrRC2 = vGrid2.cursor( "M_InsertTextKeywordUsage" ).setFirst(  );
+      View vGridKeyword;
+      vGridKeyword = mMasLC.newView( );
+      csrRC2 = vGridKeyword.cursor( "M_InsertTextKeywordUsage" ).setFirst(  );
       while ( csrRC2.isSet() )
       {
          strOdd = (iTableRowCnt % 2) != 0 ? " class='odd'" : "";
          iTableRowCnt++;
 
-         lEntityKey = vGrid2.cursor( "M_InsertTextKeywordUsage" ).getEntityKey( );
+         lEntityKey = vGridKeyword.cursor( "M_InsertTextKeywordUsage" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
          strKeywordName = "";
-         nRC = vGrid2.cursor( "M_InsertTextKeywordUsage" ).checkExistenceOfEntity( ).toInt();
+         nRC = vGridKeyword.cursor( "M_InsertTextKeywordUsage" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strKeywordName = vGrid2.cursor( "M_InsertTextKeywordUsage" ).getAttribute( "Name" ).getString( "" );
+            strKeywordName = vGridKeyword.cursor( "M_InsertTextKeywordUsage" ).getAttribute( "Name" ).getString( "" );
 
             if ( strKeywordName == null )
                strKeywordName = "";
@@ -1368,10 +1359,10 @@ try
             strKeywordName = "&nbsp";
 
          strKeywordText = "";
-         nRC = vGrid2.cursor( "M_Usage" ).checkExistenceOfEntity( ).toInt();
+         nRC = vGridKeyword.cursor( "M_Usage" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strKeywordText = vGrid2.cursor( "M_Usage" ).getAttribute( "dUsageKeywordText" ).getString( "" );
+            strKeywordText = vGridKeyword.cursor( "M_Usage" ).getAttribute( "dUsageKeywordText" ).getString( "" );
 
             if ( strKeywordText == null )
                strKeywordText = "";
@@ -1392,9 +1383,9 @@ try
 </tr>
 
 <%
-         csrRC2 = vGrid2.cursor( "M_InsertTextKeywordUsage" ).setNextContinue( );
+         csrRC2 = vGridKeyword.cursor( "M_InsertTextKeywordUsage" ).setNextContinue( );
       }
-      vGrid2.drop( );
+      vGridKeyword.drop( );
    }
 }
 catch (Exception e)

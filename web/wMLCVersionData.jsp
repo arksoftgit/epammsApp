@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCVersionData   Generate Timestamp: 20170419093532096 --%>
+<%-- wMLCVersionData   Generate Timestamp: 20170523083820342 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -102,7 +102,7 @@ public int DoInputMapping( HttpServletRequest request,
          }
       }
 
-      // EditBox: ReviewerNote
+      // MLEdit: ReviewerNote
       nRC = mMasLC.cursor( "MasterLabelContent" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 ) // CursorResult.SET
       {
@@ -1433,7 +1433,7 @@ else
 <div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
 <% /* MasterLabelContent:GroupBox */ %>
 
-<div id="MasterLabelContent" name="MasterLabelContent" class="withborder"   style="float:left;position:relative; width:784px; height:300px;">  <!-- MasterLabelContent --> 
+<div id="MasterLabelContent" name="MasterLabelContent" class="withborder"   style="float:left;position:relative; width:784px; height:310px;">  <!-- MasterLabelContent --> 
 
 <% /* PrimaryRegistrant:Text */ %>
 <% strTextDisplayValue = "";
@@ -1653,10 +1653,11 @@ else
 </div>  <!--  GroupBox1 --> 
 <% /* ReviewerNote::Text */ %>
 
-<label  id="ReviewerNote:" name="ReviewerNote:" style="width:152px;height:16px;position:absolute;left:12px;top:226px;">Reviewer Note:</label>
+<label  id="ReviewerNote:" name="ReviewerNote:" style="width:142px;height:16px;position:absolute;left:12px;top:226px;">Reviewer Note:</label>
 
-<% /* ReviewerNote:EditBox */ %>
+<% /* ReviewerNote:MLEdit */ %>
 <%
+   // : ReviewerNote
    strErrorMapValue = VmlOperation.CheckError( "ReviewerNote", strError );
    if ( !StringUtils.isBlank( strErrorMapValue ) )
    {
@@ -1668,37 +1669,29 @@ else
       strErrorColor = "";
       mMasLC = task.getViewByName( "mMasLC" );
       if ( VmlOperation.isValid( mMasLC ) == false )
-         task.log( ).debug( "Invalid View: " + "ReviewerNote" );
+         task.log( ).info( "Invalid View: " + "ReviewerNote" );
       else
       {
          nRC = mMasLC.cursor( "MasterLabelContent" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            try
-            {
-               strErrorMapValue = mMasLC.cursor( "MasterLabelContent" ).getAttribute( "ReviewerNote" ).getString( "" );
-            }
-            catch (Exception e)
-            {
-               out.println("There is an error on ReviewerNote: " + e.getMessage());
-               task.log().error( "*** Error on ctrl ReviewerNote", e );
-            }
+            strErrorMapValue = mMasLC.cursor( "MasterLabelContent" ).getAttribute( "ReviewerNote" ).getString( "" );
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
 
-            task.log( ).debug( "MasterLabelContent.ReviewerNote: " + strErrorMapValue );
+            task.log( ).info( "MasterLabelContent.ReviewerNote: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist for ReviewerNote: " + "mMasLC.MasterLabelContent" );
+            task.log( ).info( "Entity does not exist for ReviewerNote: " + "mMasLC.MasterLabelContent" );
       }
    }
 %>
 
-<input class="text12"  name="ReviewerNote" id="ReviewerNote" maxlength="4096" style="width:572px;position:absolute;left:172px;top:226px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<textarea name="ReviewerNote" id="ReviewerNote" maxlength="4096" style="width:572px;height:44px;position:absolute;left:162px;top:226px;border:solid;border-width:4px;border-style:groove;" class="text12" wrap="wrap"><%=strErrorMapValue%></textarea>
 
 <% /* Status::Text */ %>
 
-<label  id="Status:" name="Status:" style="width:152px;height:16px;position:absolute;left:12px;top:268px;">Status:</label>
+<label  id="Status:" name="Status:" style="width:152px;height:16px;position:absolute;left:12px;top:284px;">Status:</label>
 
 <% /* Finalized:Text */ %>
 <% strTextDisplayValue = "";
@@ -1725,7 +1718,7 @@ else
    }
 %>
 
-<label class="text12"  id="Finalized" name="Finalized" style="width:182px;height:24px;position:absolute;left:172px;top:268px;"><%=strTextDisplayValue%></label>
+<label class="text12"  id="Finalized" name="Finalized" style="width:182px;height:24px;position:absolute;left:172px;top:284px;"><%=strTextDisplayValue%></label>
 
 
 </div>  <!--  MasterLabelContent --> 
@@ -1733,9 +1726,6 @@ else
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
 
-
- <!-- This is added as a line spacer -->
-<div style="height:8px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:22px;float:left;"></div>   <!-- Width Spacer -->

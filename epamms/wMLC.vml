@@ -2,7 +2,7 @@
 // Project ePamms
 //
 // This is a part of the ePamms applications package.
-// Copyright (c) 2007 - 2016 Arksoft, Inc.
+// Copyright (c) 2007 - 2017 Arksoft, Inc.
 // All Rights Reserved.
 //
 // SUBSYSTEM:    wMLC          - Primary Registrant Label Content operations
@@ -161,7 +161,7 @@ FinalizeMasterLabelContent( VIEW ViewToWindow )
 
    VIEW mMasProd REGISTERED AS mMasProd
    VIEW mMasLC REGISTERED AS mMasLC
-   SHORT nRC
+// SHORT nRC
 
    // This is checked by JavaScript
 // nRC = OperatorWebPrompt( ViewToWindow, "Finalize Master Label Content",
@@ -478,7 +478,6 @@ DIALOG OPERATION
 GOTO_StorageDispStatementAdd( VIEW ViewToWindow )
 
    VIEW mMasLC REGISTERED AS mMasLC
-   SHORT nRC
 
    // We are creating the new temporal entity in this operation, rather than as auto action, so that
    // the NotForUseType attribute can be set, since it's currently required in the database.
@@ -514,7 +513,6 @@ DIALOG OPERATION
 GOTO_StorageDispSubStmtUpdate( VIEW ViewToWindow )
 
    VIEW mMasLC REGISTERED AS mMasLC
-   SHORT nRC
 
    SetViewToSubobject( mMasLC, "M_StorageDisposalSubStatement" )
    CreateTemporalSubobjectVersion( mMasLC, "M_StorageDisposalStatement" )
@@ -555,11 +553,11 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-//  OPERATION: DELETE_DirectionsForUseSection
+//  OPERATION: DeleteDirectionsForUseSection
 //
 /////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
-DELETE_DirectionsForUseSection( VIEW ViewToWindow )
+DeleteDirectionsForUseSection( VIEW ViewToWindow )
 
    VIEW mMasLC REGISTERED AS mMasLC
    
@@ -569,11 +567,11 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-//  OPERATION: DELETE_DirectionsForUseStatement
+//  OPERATION: DeleteDirectionsForUseStatement
 //
 /////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
-DELETE_DirectionsForUseStatement( VIEW ViewToWindow )
+DeleteDirectionsForUseStatement( VIEW ViewToWindow )
 
    VIEW mMasLC REGISTERED AS mMasLC
    
@@ -1002,7 +1000,6 @@ SAVE_MasterProduct( VIEW ViewToWindow )
    INTEGER lVersionLth
    INTEGER lControl
    INTEGER Ignore
-   SHORT   nRC
 
    IF mMasProd = 0
       MessageSend( ViewToWindow, "", "Update Master Product",
@@ -1183,8 +1180,6 @@ GenerateNewMLC_Version( VIEW ViewToWindow )
    VIEW mMasProd    REGISTERED AS mMasProd
    VIEW OriginalMLC BASED ON LOD  mMasLC
    VIEW NewMLC      BASED ON LOD  mMasLC
-   INTEGER lID
-   SHORT   nRC
 
    // Generate new MLC from the selected MLC.
    ACTIVATE OriginalMLC WHERE OriginalMLC.MasterLabelContent.ID = mMasProd.MasterLabelContent.ID
@@ -1492,14 +1487,13 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-//  OPERATION: DELETE_SelectedUsageEntries
+//  OPERATION: DeleteSelectedUsageEntries
 //
 /////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
-DELETE_SelectedUsageEntries( VIEW ViewToWindow )
+DeleteSelectedUsageEntries( VIEW ViewToWindow )
 
    VIEW mMasLC REGISTERED AS mMasLC
-   SHORT nRC
 
    FOR EACH mMasLC.M_Usage
       IF mMasLC.M_Usage.wSelected = "Y"
@@ -1683,7 +1677,6 @@ ConfirmDeleteUsageEntry( VIEW ViewToWindow )
    END
 
 END
-
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -1965,11 +1958,11 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-//  OPERATION: SelectMLC_UsageEntries
+//  OPERATION: SelectUsageEntries
 //
 /////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
-SelectMLC_UsageEntries( VIEW ViewToWindow )
+SelectUsageEntries( VIEW ViewToWindow )
 
    VIEW mMasLC REGISTERED AS mMasLC
 
@@ -2279,7 +2272,6 @@ ConfirmAddClaimsStmts( VIEW ViewToWindow )
    VIEW mMasLC   REGISTERED AS mMasLC
    VIEW mEPA     REGISTERED AS mEPA
    STRING ( 256 ) szName
-   SHORT   nRC
 
    AcceptSubobject( mMasLC, "M_Usage" )
    FOR EACH mMasLC.M_Usage
@@ -2331,7 +2323,6 @@ ConfirmAddAppTypesStmts( VIEW ViewToWindow )
    VIEW mMasLC   REGISTERED AS mMasLC
    VIEW mEPA     REGISTERED AS mEPA
    STRING ( 256 ) szName
-   SHORT   nRC
 
    AcceptSubobject( mMasLC, "M_Usage" )
    FOR EACH mMasLC.M_Usage
@@ -2382,7 +2373,6 @@ ConfirmAddLocationsStmts( VIEW ViewToWindow )
    VIEW mMasLC   REGISTERED AS mMasLC
    VIEW mEPA     REGISTERED AS mEPA
    STRING ( 256 ) szName
-   SHORT   nRC
 
    AcceptSubobject( mMasLC, "M_Usage" )
    FOR EACH mMasLC.M_Usage
@@ -2433,7 +2423,6 @@ ConfirmAddSurfacesStmts( VIEW ViewToWindow )
    VIEW mMasLC   REGISTERED AS mMasLC
    VIEW mEPA     REGISTERED AS mEPA
    STRING ( 256 ) szName
-   SHORT   nRC
 
    AcceptSubobject( mMasLC, "M_Usage" )
    FOR EACH mMasLC.M_Usage
@@ -2697,7 +2686,6 @@ ConfirmAddItemsMultipleClaims( VIEW ViewToWindow )
 
    VIEW mMasLC REGISTERED AS mMasLC
    VIEW wWebXfer REGISTERED AS wWebXfer
-   SHORT nRC
 
    // Make sure that a Claims Classification has been selected.
    IF mMasLC.MasterLabelContent.wSelectedClaimsClassification = ""
@@ -2766,6 +2754,36 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
+//  OPERATION: AddUsageStatements
+//
+/////////////////////////////////////////////////////////////////////////////
+LOCAL OPERATION
+AddUsageStatements( VIEW mMasLC )
+
+   STRING ( 1 )  szUsageType
+   
+   mMasLC.MasterLabelContent.wAddStatementsAttributeName = "Name"
+   mMasLC.MasterLabelContent.wAddStatementsWorkText      = ""
+   szUsageType = mMasLC.M_UsageType.UsageType
+
+   IF szUsageType = "S"  // Surfaces
+      mMasLC.MasterLabelContent.wAddStatementsPageTitle = "Surfaces"
+   ELSE
+   IF szUsageType = "L"  // Locations
+      mMasLC.MasterLabelContent.wAddStatementsPageTitle = "Locations"
+   ELSE
+   IF szUsageType = "T"
+      mMasLC.MasterLabelContent.wAddStatementsPageTitle = "Application Use"
+   ELSE
+      mMasLC.MasterLabelContent.wAddStatementsPageTitle = "Unknown"
+   END
+   END
+   END
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
 //  OPERATION: GOTO_AddUsageStatements
 //
 /////////////////////////////////////////////////////////////////////////////
@@ -2775,25 +2793,8 @@ GOTO_AddUsageStatements( VIEW ViewToWindow )
    VIEW mMasLC REGISTERED AS mMasLC
 
    // Set up the work areas that define to the Add Items page which items are being added.
-   mMasLC.MasterLabelContent.wAddStatementsEntityName    = "M_Usage"
-   mMasLC.MasterLabelContent.wAddStatementsAttributeName = "Name"
-   mMasLC.MasterLabelContent.wAddStatementsWorkText      = ""
-   IF mMasLC.M_UsageType.UsageType = "S"
-      // Surfaces
-      mMasLC.MasterLabelContent.wAddStatementsPageTitle = "Surfaces"
-   ELSE
-      IF mMasLC.M_UsageType.UsageType = "L"
-         // Locations
-         mMasLC.MasterLabelContent.wAddStatementsPageTitle = "Locations"
-      ELSE
-         IF mMasLC.M_UsageType.UsageType = "T"
-            mMasLC.MasterLabelContent.wAddStatementsPageTitle = "Application Use"
-         ELSE
-            mMasLC.MasterLabelContent.wAddStatementsPageTitle = "Unknown"
-         END
-      END
-   END
-
+   mMasLC.MasterLabelContent.wAddStatementsEntityName = "M_Usage"
+   AddUsageStatements( mMasLC )
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -2807,24 +2808,8 @@ GOTO_AddSubUsageStatements( VIEW ViewToWindow )
    VIEW mMasLC REGISTERED AS mMasLC
 
    // Set up the work areas that define to the Add SubItems page which items are being added.
-   mMasLC.MasterLabelContent.wAddStatementsEntityName    = "M_SubUsage"
-   mMasLC.MasterLabelContent.wAddStatementsAttributeName = "Name"
-   mMasLC.MasterLabelContent.wAddStatementsWorkText      = ""
-   IF mMasLC.M_UsageType.UsageType = "S"
-      // Surfaces
-      mMasLC.MasterLabelContent.wAddStatementsPageTitle = "Surfaces"
-   ELSE
-      IF mMasLC.M_UsageType.UsageType = "L"
-         // Locations
-         mMasLC.MasterLabelContent.wAddStatementsPageTitle = "Locations"
-      ELSE
-         IF mMasLC.M_UsageType.UsageType = "T"
-            mMasLC.MasterLabelContent.wAddStatementsPageTitle = "Application Use"
-         ELSE
-            mMasLC.MasterLabelContent.wAddStatementsPageTitle = "Unknown"
-         END
-      END
-   END
+   mMasLC.MasterLabelContent.wAddStatementsEntityName = "M_SubUsage"
+   AddUsageStatements( mMasLC )
 
 END
 
@@ -2839,24 +2824,8 @@ GOTO_AddGroupUsageStatements( VIEW ViewToWindow )
    VIEW mMasLC REGISTERED AS mMasLC
 
    // Set up the work areas that define to the Add Items page which items are being added.
-   mMasLC.MasterLabelContent.wAddStatementsEntityName    = "M_UsageGroupUsageTemp"
-   mMasLC.MasterLabelContent.wAddStatementsAttributeName = "Name"
-   mMasLC.MasterLabelContent.wAddStatementsWorkText      = ""
-   IF mMasLC.M_UsageType.UsageType = "S"
-      // Surfaces
-      mMasLC.MasterLabelContent.wAddStatementsPageTitle = "Surfaces"
-   ELSE
-      IF mMasLC.M_UsageType.UsageType = "L"
-         // Locations
-         mMasLC.MasterLabelContent.wAddStatementsPageTitle = "Locations"
-      ELSE
-         IF mMasLC.M_UsageType.UsageType = "T"
-            mMasLC.MasterLabelContent.wAddStatementsPageTitle = "Application Use"
-         ELSE
-            mMasLC.MasterLabelContent.wAddStatementsPageTitle = "Unknown"
-         END
-      END
-   END
+   mMasLC.MasterLabelContent.wAddStatementsEntityName = "M_UsageGroupUsageTemp"
+   AddUsageStatements( mMasLC )
 
 END
 
@@ -2880,6 +2849,7 @@ GOTO_UpdateGroupUsageStatement( VIEW ViewToWindow )
 
 END
 
+/*
 /////////////////////////////////////////////////////////////////////////////
 //
 //  OPERATION: GOTO_DisplayGeneratedTextMktg
@@ -2970,6 +2940,7 @@ GOTO_DisplayGeneratedTextUsage( VIEW ViewToWindow )
                          "M_InsertTextUsage", mMasLC.M_Usage.Name, "" )
 
 END
+*/
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -3991,14 +3962,13 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-//  OPERATION: DELETE_UsageGroupEntriesOnly
+//  OPERATION: DeleteUsageGroupEntriesOnly
 //
 /////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
-DELETE_UsageGroupEntriesOnly( VIEW ViewToWindow )
+DeleteUsageGroupEntriesOnly( VIEW ViewToWindow )
 
    VIEW mMasLC REGISTERED AS mMasLC
-   SHORT nRC
 
    // Delete each selected Group and the corresponding M_Usage entity.
    FOR EACH mMasLC.M_UsageGroup
@@ -4020,14 +3990,13 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-//  OPERATION: DELETE_UsageGroupEntries
+//  OPERATION: DeleteUsageGroupEntries
 //
 /////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
-DELETE_UsageGroupEntries( VIEW ViewToWindow )
+DeleteUsageGroupEntries( VIEW ViewToWindow )
 
    VIEW mMasLC REGISTERED AS mMasLC
-   SHORT nRC
 
    // Delete each selected Group and exclude the Group from the corresponding M_Usage entity.
    FOR EACH mMasLC.M_UsageGroup
@@ -4050,14 +4019,13 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-//  OPERATION: DELETE_SelectedGroupUsageEntries
+//  OPERATION: DeleteSelectedGroupUsageEntries
 //
 /////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
-DELETE_SelectedGroupUsageEntries( VIEW ViewToWindow )
+DeleteSelectedGroupUsageEntries( VIEW ViewToWindow )
 
    VIEW mMasLC REGISTERED AS mMasLC
-   SHORT nRC
 
    FOR EACH mMasLC.M_UsageGroupUsage
       IF mMasLC.M_UsageGroupUsage.wSelected = "Y"
@@ -4076,46 +4044,72 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-//  OPERATION: SelectMLC_UsageEntriesForGroup
+//  OPERATION: SelectUsageEntriesForGroup
 //
 /////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
-SelectMLC_UsageEntriesForGroup( VIEW ViewToWindow )
+SelectUsageEntriesForGroup( VIEW ViewToWindow )
 
    VIEW mMasLC REGISTERED AS mMasLC
+   VIEW mMasLC2 BASED ON LOD mMasLC
+   INTEGER ID
 
+   CreateViewFromView( mMasLC2, mMasLC )
+ 
    // Include each selected M_Usage entry under the current Group.
-   FOR EACH mMasLC.M_UsageNonGroupUsage
-      IF mMasLC.M_UsageNonGroupUsage.wSelected = "Y"
-         SET CURSOR FIRST mMasLC.M_Usage WHERE mMasLC.M_Usage.Name = mMasLC.M_UsageNonGroupUsage.Name
-         INCLUDE mMasLC.M_UsageUsageGroup FROM mMasLC.M_UsageGroup
-         INCLUDE mMasLC.M_UsageGroupUsage FROM mMasLC.M_Usage
-         EXCLUDE mMasLC.M_UsageNonGroupUsage NONE
+   FOR EACH mMasLC2.M_UsageNonGroupUsage
+      IF mMasLC2.M_UsageNonGroupUsage.wSelected = "Y"
+         ID = mMasLC2.M_UsageNonGroupUsage.ID
+         SET CURSOR FIRST mMasLC2.M_Usage WHERE mMasLC2.M_Usage.ID = ID
+         IF RESULT = 0
+            INCLUDE mMasLC2.M_UsageUsageGroup FROM mMasLC2.M_UsageGroup
+            INCLUDE mMasLC2.M_UsageGroupUsage FROM mMasLC2.M_Usage
+            EXCLUDE mMasLC2.M_UsageNonGroupUsage NONE
+         ELSE
+            MessageSend( ViewToWindow, "", "Select Usages For Group",
+                         "Error locating Usage by Id.",
+                         zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+            RETURN 2
+         END
       END
    END
-   OrderEntityForView( mMasLC, "M_UsageGroupUsage", "Name A" )
+   OrderEntityForView( mMasLC2, "M_UsageGroupUsage", "Name A" )
+   DropView( mMasLC2 )
 
 END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-//  OPERATION: RemoveMLC_UsageEntriesFromGroup
+//  OPERATION: RemoveUsageEntriesFromGroup
 //
 /////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
-RemoveMLC_UsageEntriesFromGroup( VIEW ViewToWindow )
+RemoveUsageEntriesFromGroup( VIEW ViewToWindow )
 
    VIEW mMasLC REGISTERED AS mMasLC
+   VIEW mMasLC2 BASED ON LOD mMasLC
+   INTEGER ID
+
+   CreateViewFromView( mMasLC2, mMasLC )
 
    // Exclude each selected M_Usage from under the group.
-   FOR EACH mMasLC.M_UsageGroupUsage
-      IF mMasLC.M_UsageGroupUsage.wSelected = "Y"
-         SET CURSOR FIRST mMasLC.M_Usage WHERE mMasLC.M_Usage.Name = mMasLC.M_UsageGroupUsage.Name
-         INCLUDE mMasLC.M_UsageNonGroupUsage FROM mMasLC.M_Usage
-         EXCLUDE mMasLC.M_UsageUsageGroup NONE
-         EXCLUDE mMasLC.M_UsageGroupUsage NONE
+   FOR EACH mMasLC2.M_UsageGroupUsage
+      IF mMasLC2.M_UsageGroupUsage.wSelected = "Y"
+         ID = mMasLC2.M_UsageGroupUsage.ID
+         SET CURSOR FIRST mMasLC2.M_Usage WHERE mMasLC2.M_Usage.ID = ID
+         IF RESULT = 0
+            INCLUDE mMasLC2.M_UsageNonGroupUsage FROM mMasLC2.M_Usage
+            EXCLUDE mMasLC2.M_UsageUsageGroup NONE
+            EXCLUDE mMasLC2.M_UsageGroupUsage NONE
+         ELSE
+            MessageSend( ViewToWindow, "", "Remove Usages For Group",
+                         "Error locating Usage by Id.",
+                         zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+            RETURN 2
+         END
       END
    END
+   DropView( mMasLC2 )
 
 END
 
@@ -4584,7 +4578,6 @@ InitTableColumns( VIEW ViewToWindow )
 
    VIEW mMasLC REGISTERED AS mMasLC
    VIEW wWebXfer REGISTERED AS wWebXfer
-   SHORT nRC
 
    FOR EACH wWebXfer.Work
       DELETE ENTITY wWebXfer.Work NONE
@@ -4726,5 +4719,17 @@ CancelMLC( VIEW ViewToWindow )
    VIEW mMasLC REGISTERED AS mMasLC
 
    DropObjectInstance( mMasLC )
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: REMOVE_SelectedGroupUsageEntries
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+REMOVE_SelectedGroupUsageEntries( VIEW ViewToWindow )
+
+
 
 END

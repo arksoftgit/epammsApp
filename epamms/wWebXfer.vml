@@ -2,7 +2,7 @@
 // Project ePamms
 //
 // This is a part of the ePamms applications package.
-// Copyright (c) 2007 - 2016 Arksoft, Inc.
+// Copyright (c) 2007 - 2017 Arksoft, Inc.
 // All Rights Reserved.
 //
 // SUBSYSTEM:    wWebXfer      - Transfer Work Area operations
@@ -69,7 +69,7 @@ dCurrentDate( VIEW wWebXfer BASED ON LOD wWebXfer,
               STRING ( 32 ) InternalAttribStructure,
               SHORT GetOrSetFlag )
 
-   STRING (  18  ) szDate
+   STRING ( 18 ) szDate
 
    CASE GetOrSetFlag
       OF zDERIVED_GET:
@@ -96,7 +96,7 @@ dCurrentDateTime( VIEW wWebXfer BASED ON LOD wWebXfer,
                   STRING ( 32 ) InternalAttribStructure,
                   SHORT GetOrSetFlag )
 
-   STRING (  18  ) szDateTime
+   STRING ( 18 ) szDateTime
 
    CASE GetOrSetFlag
       OF zDERIVED_GET:

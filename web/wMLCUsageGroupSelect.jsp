@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCUsageGroupSelect   Generate Timestamp: 20160914154446879 --%>
+<%-- wMLCUsageGroupSelect   Generate Timestamp: 20170608082634168 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -60,7 +60,7 @@ public int DoInputMapping( HttpServletRequest request,
    mMasLC = task.getViewByName( "mMasLC" );
    if ( VmlOperation.isValid( mMasLC ) )
    {
-      // Grid: Grid2
+      // Grid: Grid1
       iTableRowCnt = 0;
 
       // We are creating a temp view to the grid view so that if there are 
@@ -74,7 +74,7 @@ public int DoInputMapping( HttpServletRequest request,
          strEntityKey = Long.toString( lEntityKey );
          iTableRowCnt++;
 
-         strTag = "GridCheckCtl3" + strEntityKey;
+         strTag = "GridCheckCtl2" + strEntityKey;
          strMapValue = request.getParameter( strTag );
          // If the checkbox is not checked, then set to the unchecked value.
          if (strMapValue == null || strMapValue.isEmpty() )
@@ -83,7 +83,7 @@ public int DoInputMapping( HttpServletRequest request,
          try
          {
             if ( webMapping )
-               VmlOperation.CreateMessage( task, "GridCheckCtl3", "", strMapValue );
+               VmlOperation.CreateMessage( task, "GridCheckCtl2", "", strMapValue );
             else
                if ( strMapValue != null )
                   vGridTmp.cursor( "M_UsageGroupUsage" ).getAttribute( "wSelected" ).setValue( strMapValue, "" );
@@ -100,7 +100,7 @@ public int DoInputMapping( HttpServletRequest request,
       }
 
       vGridTmp.drop( );
-      // Grid: Grid3
+      // Grid: Grid2
       iTableRowCnt = 0;
 
       // We are creating a temp view to the grid view so that if there are 
@@ -114,7 +114,7 @@ public int DoInputMapping( HttpServletRequest request,
          strEntityKey = Long.toString( lEntityKey );
          iTableRowCnt++;
 
-         strTag = "GridCheckCtl2" + strEntityKey;
+         strTag = "GridCheckCtl1" + strEntityKey;
          strMapValue = request.getParameter( strTag );
          // If the checkbox is not checked, then set to the unchecked value.
          if (strMapValue == null || strMapValue.isEmpty() )
@@ -123,7 +123,7 @@ public int DoInputMapping( HttpServletRequest request,
          try
          {
             if ( webMapping )
-               VmlOperation.CreateMessage( task, "GridCheckCtl2", "", strMapValue );
+               VmlOperation.CreateMessage( task, "GridCheckCtl1", "", strMapValue );
             else
                if ( strMapValue != null )
                   vGridTmp.cursor( "M_UsageNonGroupUsage" ).getAttribute( "wSelected" ).setValue( strMapValue, "" );
@@ -261,7 +261,7 @@ if ( strActionToProcess != null )
 
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "RemoveMLC_UsageEntriesFromGroup" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "RemoveUsageEntriesFromGroup" ) )
    {
       bDone = true;
       VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCUsageGroupSelect", strActionToProcess );
@@ -273,8 +273,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCUsageGroupSelect", "wMLC.RemoveMLC_UsageEntriesFromGroup" );
-      nOptRC = wMLC.RemoveMLC_UsageEntriesFromGroup( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCUsageGroupSelect", "wMLC.RemoveUsageEntriesFromGroup" );
+      nOptRC = wMLC.RemoveUsageEntriesFromGroup( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -316,7 +316,7 @@ if ( strActionToProcess != null )
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "SelectMLC_UsageEntriesForGroup" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "SelectUsageEntriesForGroup" ) )
    {
       bDone = true;
       VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCUsageGroupSelect", strActionToProcess );
@@ -328,8 +328,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCUsageGroupSelect", "wMLC.SelectMLC_UsageEntriesForGroup" );
-      nOptRC = wMLC.SelectMLC_UsageEntriesForGroup( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCUsageGroupSelect", "wMLC.SelectUsageEntriesForGroup" );
+      nOptRC = wMLC.SelectUsageEntriesForGroup( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -482,6 +482,8 @@ else
 <%@ include file="./include/timeout.inc" %>
 <link rel="stylesheet" type="text/css" href="./css/print.css" media="print" />
 <script language="JavaScript" type="text/javascript" src="./js/common.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/css.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/sts.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
@@ -489,7 +491,12 @@ else
 
 </head>
 
-<body onLoad="_AfterPageLoaded( )" onSubmit="_DisableFormElements( true )" onBeforeUnload="_BeforePageUnload( )">
+<!-- 
+// If we have table sorting on this page, the table sorting does not work in Firefox 
+// (seems to work in IE and Opera).  The solution is to not call _AfterPageLoaded in OnLoad event. 
+// In the Standardista code (sts.js) there is an addEvent that will call _AfterPageLoaded. 
+--> 
+<body onSubmit="_DisableFormElements( true )" onBeforeUnload="_BeforePageUnload( )">
 
 <%@ include file="./include/pagebackground.inc" %>  <!-- just temporary until we get the painter dialog updates from Kelly ... 2011.10.08 dks -->
 
@@ -631,6 +638,7 @@ else
    <input name="zFocusCtrl" id="zFocusCtrl" type="hidden" value="<%=strFocusCtrl%>">
    <input name="zOpenFile" id="zOpenFile" type="hidden" value="<%=strOpenFile%>">
    <input name="zDateFormat" id="zDateFormat" type="hidden" value="<%=strDateFormat%>">
+   <input name="zDateSequence" id="zDateSequence" type="hidden" value="MDY">
    <input name="zLoginName" id="zLoginName" type="hidden" value="<%=strLoginName%>">
    <input name="zKeyRole" id="zKeyRole" type="hidden" value="<%=strKeyRole%>">
    <input name="zOpenPopupWindow" id="zOpenPopupWindow" type="hidden" value="<%=strOpenPopupWindow%>">
@@ -649,229 +657,76 @@ else
 <div style="height:2px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GroupBox5:GroupBox */ %>
+<div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GroupBox10:GroupBox */ %>
 
-<div id="GroupBox5" name="GroupBox5" style="width:480px;height:28px;float:left;">  <!-- GroupBox5 --> 
-
-
- <!-- This is added as a line spacer -->
-<div style="height:6px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<span style="height:16px;">&nbsp</span>
-<% /* PrecautionarySection2:Text */ %>
-
-<span class="groupbox"  id="PrecautionarySection2" name="PrecautionarySection2" style="width:338px;height:16px;">Select Usage Entries for Group</span>
-
-</div>  <!-- End of a new line -->
-
-
-</div>  <!--  GroupBox5 --> 
-</div>  <!-- End of a new line -->
-
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+<div id="GroupBox10" name="GroupBox10" style="width:730px;height:26px;float:left;">  <!-- GroupBox10 --> 
 
 
  <!-- This is added as a line spacer -->
-<div style="height:2px;width:100px;"></div>
+<div style="height:4px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:6px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GroupBox6:GroupBox */ %>
+<% /* UsageSelectionPrompt:Text */ %>
 
-<div id="GroupBox6" name="GroupBox6" style="width:762px;float:left;">  <!-- GroupBox6 --> 
+<span class="groupbox"  id="UsageSelectionPrompt" name="UsageSelectionPrompt" style="width:206px;height:16px;">Select Usage Entries for Group:</span>
 
-
- <!-- This is added as a line spacer -->
-<div style="height:2px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<% /* GroupBox2:GroupBox */ %>
-
-<div id="GroupBox2" name="GroupBox2" style="width:328px;float:left;">  <!-- GroupBox2 --> 
-
-
-<div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GroupBox7:GroupBox */ %>
-
-<div id="GroupBox7" name="GroupBox7" style="width:290px;height:20px;float:left;">  <!-- GroupBox7 --> 
-
-
-<div>  <!-- Beginning of a new line -->
-<% /* Text2:Text */ %>
-
-<span  id="Text2" name="Text2" style="width:254px;height:22px;">Currently MLC Usage Entries for Group</span>
-
-</div>  <!-- End of a new line -->
-
-
-</div>  <!--  GroupBox7 --> 
-</div>  <!-- End of a new line -->
-
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
-
-
- <!-- This is added as a line spacer -->
-<div style="height:14px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<% /* Grid2:Grid */ %>
-<table  cols=2 style="width:322px;"  name="Grid2" id="Grid2">
-
-<thead><tr>
-
-   <th class="gridheading"><input type="checkbox" onclick="CheckAllInGrid(this,'GridCheckCtl3')"></th>
-   <th style="width:276px;">Name</th>
-
-</tr></thead>
-
-<tbody>
-
-<%
-try
-{
-   iTableRowCnt = 0;
+<% /* Text1:Text */ %>
+<% strTextDisplayValue = "";
    mMasLC = task.getViewByName( "mMasLC" );
-   if ( VmlOperation.isValid( mMasLC ) )
+   if ( VmlOperation.isValid( mMasLC ) == false )
+      task.log( ).debug( "Invalid View: " + "Text1" );
+   else
    {
-      long   lEntityKey;
-      String strEntityKey;
-      String strButtonName;
-      String strOdd;
-      String strTag;
-      String strGridCheckCtl3;
-      String strGridCheckCtl3Value;
-      String strGridEditCtl4;
-      
-      View vGrid2;
-      vGrid2 = mMasLC.newView( );
-      csrRC2 = vGrid2.cursor( "M_UsageGroupUsage" ).setFirst(  );
-      while ( csrRC2.isSet() )
+      nRC = mMasLC.cursor( "M_UsageGroup" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
       {
-         strOdd = (iTableRowCnt % 2) != 0 ? " class='odd'" : "";
-         iTableRowCnt++;
-
-         lEntityKey = vGrid2.cursor( "M_UsageGroupUsage" ).getEntityKey( );
-         strEntityKey = Long.toString( lEntityKey );
-         strGridCheckCtl3 = "";
-         nRC = vGrid2.cursor( "M_UsageGroupUsage" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-         {
-            strGridCheckCtl3 = vGrid2.cursor( "M_UsageGroupUsage" ).getAttribute( "wSelected" ).getString( "" );
-
-            if ( strGridCheckCtl3 == null )
-               strGridCheckCtl3 = "";
-         }
-
-         if ( StringUtils.equals( strGridCheckCtl3, "Y" ) )
-         {
-            strGridCheckCtl3Value = "GridCheckCtl3" + strEntityKey;
-            strGridCheckCtl3 = "<input name='" + strGridCheckCtl3Value + "' id='" + strGridCheckCtl3Value + "' value='Y' type='checkbox'  CHECKED > ";
-         }
-         else
-         {
-            strGridCheckCtl3Value = "GridCheckCtl3" + strEntityKey;
-            strGridCheckCtl3 = "<input name='" + strGridCheckCtl3Value + "' id='" + strGridCheckCtl3Value + "' value='Y' type='checkbox' > ";
-         }
-
-         strGridEditCtl4 = "";
-         nRC = vGrid2.cursor( "M_UsageGroupUsage" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-         {
-            strGridEditCtl4 = vGrid2.cursor( "M_UsageGroupUsage" ).getAttribute( "Name" ).getString( "" );
-
-            if ( strGridEditCtl4 == null )
-               strGridEditCtl4 = "";
-         }
-
-         if ( StringUtils.isBlank( strGridEditCtl4 ) )
-            strGridEditCtl4 = "&nbsp";
-
-%>
-
-<tr<%=strOdd%>>
-
-   <td nowrap><%=strGridCheckCtl3%></td>
-   <td nowrap style="width:276px;"><%=strGridEditCtl4%></td>
-
-</tr>
-
-<%
-         csrRC2 = vGrid2.cursor( "M_UsageGroupUsage" ).setNextContinue( );
+      try
+      {
+         strTextDisplayValue = mMasLC.cursor( "M_UsageGroup" ).getAttribute( "Name" ).getString( "" );
       }
-      vGrid2.drop( );
+      catch (Exception e)
+      {
+         out.println("There is an error on Text1: " + e.getMessage());
+         task.log().info( "*** Error on ctrl Text1" + e.getMessage() );
+      }
+         if ( strTextDisplayValue == null )
+            strTextDisplayValue = "";
+      }
    }
-}
-catch (Exception e)
-{
-out.println("There is an error in grid: " + e.getMessage());
-task.log().info( "*** Error in grid" + e.getMessage() );
-}
 %>
-</tbody>
-</table>
+
+<label class="groupbox"  id="Text1" name="Text1" style="width:208px;height:16px;"><%=strTextDisplayValue%></label>
 
 </div>  <!-- End of a new line -->
 
 
-</div>  <!--  GroupBox2 --> 
+</div>  <!--  GroupBox10 --> 
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+<div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:4px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GroupBox4:GroupBox */ %>
-
-<div id="GroupBox4" name="GroupBox4" style="width:28px;height:224px;float:left;">  <!-- GroupBox4 --> 
-
-
-<div>  <!-- Beginning of a new line -->
-<% /* GroupBox8:GroupBox */ %>
-
-<div id="GroupBox8" name="GroupBox8" style="width:22px;height:62px;float:left;">  <!-- GroupBox8 --> 
-
-
-</div>  <!--  GroupBox8 --> 
-</div>  <!-- End of a new line -->
-
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
-
-
-<div>  <!-- Beginning of a new line -->
-<% /* PushBtn2:PushBtn */ %>
-<button type="button" name="PushBtn2" id="PushBtn2" value="" onclick="SelectMLC_UsageEntriesForGroup( )" style="width:26px;height:32px;"><-</button>
-
-</div>  <!-- End of a new line -->
-
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
-
-
- <!-- This is added as a line spacer -->
-<div style="height:6px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<% /* PushBtn3:PushBtn */ %>
-<button type="button" name="PushBtn3" id="PushBtn3" value="" onclick="RemoveMLC_UsageEntriesFromGroup( )" style="width:26px;height:32px;">-></button>
-
-</div>  <!-- End of a new line -->
-
-
-</div>  <!--  GroupBox4 --> 
-<div style="height:1px;width:6px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GroupBox3:GroupBox */ %>
-
-<div id="GroupBox3" name="GroupBox3" style="width:382px;float:left;">  <!-- GroupBox3 --> 
-
-
-<div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:2px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox9:GroupBox */ %>
 
-<div id="GroupBox9" name="GroupBox9" style="width:412px;height:30px;float:left;">  <!-- GroupBox9 --> 
+<div id="GroupBox9" name="GroupBox9" style="width:866px;height:28px;float:left;">  <!-- GroupBox9 --> 
 
+
+ <!-- This is added as a line spacer -->
+<div style="height:12px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
-<% /* Text4:Text */ %>
+<span style="height:16px;">&nbsp&nbsp</span>
+<% /* CurrentlySelected:Text */ %>
 
-<span  id="Text4" name="Text4" style="width:244px;height:24px;">Potential MLC Usage Entries</span>
+<span class="groupbox"  id="CurrentlySelected" name="CurrentlySelected" style="width:338px;height:16px;">Currently Selected MLC Usage Entries</span>
+
+<span style="height:16px;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
+<% /* Text3:Text */ %>
+
+<span class="groupbox"  id="Text3" name="Text3" style="width:338px;height:16px;">Potential MLC Usage Entries</span>
 
 </div>  <!-- End of a new line -->
 
@@ -883,16 +738,32 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 
 
  <!-- This is added as a line spacer -->
-<div style="height:4px;width:100px;"></div>
+<div style="height:6px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
-<% /* Grid3:Grid */ %>
-<table  cols=2 style="width:378px;"  name="Grid3" id="Grid3">
+<div style="height:1px;width:4px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GroupBox4:GroupBox */ %>
 
-<thead><tr>
+<div id="GroupBox4" name="GroupBox4" style="width:866px;float:left;">  <!-- GroupBox4 --> 
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:2px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<% /* GroupBox1:GroupBox */ %>
+
+<div id="GroupBox1" name="GroupBox1" style="width:404px;float:left;">  <!-- GroupBox1 --> 
+
+
+<div>  <!-- Beginning of a new line -->
+<% /* Grid1:Grid */ %>
+<table class="sortable"  cols=2 style="width:402px;"  name="Grid1" id="Grid1">
+
+<thead bgcolor=green><tr>
 
    <th class="gridheading"><input type="checkbox" onclick="CheckAllInGrid(this,'GridCheckCtl2')"></th>
-   <th style="width:330px;">Name</th>
+   <th style="width:358px;">Name</th>
 
 </tr></thead>
 
@@ -914,21 +785,21 @@ try
       String strGridCheckCtl2Value;
       String strGridEditCtl2;
       
-      View vGrid3;
-      vGrid3 = mMasLC.newView( );
-      csrRC2 = vGrid3.cursor( "M_UsageNonGroupUsage" ).setFirst(  );
+      View vGrid1;
+      vGrid1 = mMasLC.newView( );
+      csrRC2 = vGrid1.cursor( "M_UsageGroupUsage" ).setFirst(  );
       while ( csrRC2.isSet() )
       {
          strOdd = (iTableRowCnt % 2) != 0 ? " class='odd'" : "";
          iTableRowCnt++;
 
-         lEntityKey = vGrid3.cursor( "M_UsageNonGroupUsage" ).getEntityKey( );
+         lEntityKey = vGrid1.cursor( "M_UsageGroupUsage" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
          strGridCheckCtl2 = "";
-         nRC = vGrid3.cursor( "M_UsageNonGroupUsage" ).checkExistenceOfEntity( ).toInt();
+         nRC = vGrid1.cursor( "M_UsageGroupUsage" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridCheckCtl2 = vGrid3.cursor( "M_UsageNonGroupUsage" ).getAttribute( "wSelected" ).getString( "" );
+            strGridCheckCtl2 = vGrid1.cursor( "M_UsageGroupUsage" ).getAttribute( "wSelected" ).getString( "" );
 
             if ( strGridCheckCtl2 == null )
                strGridCheckCtl2 = "";
@@ -946,10 +817,10 @@ try
          }
 
          strGridEditCtl2 = "";
-         nRC = vGrid3.cursor( "M_UsageNonGroupUsage" ).checkExistenceOfEntity( ).toInt();
+         nRC = vGrid1.cursor( "M_UsageGroupUsage" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl2 = vGrid3.cursor( "M_UsageNonGroupUsage" ).getAttribute( "Name" ).getString( "" );
+            strGridEditCtl2 = vGrid1.cursor( "M_UsageGroupUsage" ).getAttribute( "dSubUsageCombinedText" ).getString( "" );
 
             if ( strGridEditCtl2 == null )
                strGridEditCtl2 = "";
@@ -963,14 +834,14 @@ try
 <tr<%=strOdd%>>
 
    <td nowrap><%=strGridCheckCtl2%></td>
-   <td nowrap style="width:330px;"><%=strGridEditCtl2%></td>
+   <td style="width:358px;"><%=strGridEditCtl2%></td>
 
 </tr>
 
 <%
-         csrRC2 = vGrid3.cursor( "M_UsageNonGroupUsage" ).setNextContinue( );
+         csrRC2 = vGrid1.cursor( "M_UsageGroupUsage" ).setNextContinue( );
       }
-      vGrid3.drop( );
+      vGrid1.drop( );
    }
 }
 catch (Exception e)
@@ -985,11 +856,154 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 </div>  <!-- End of a new line -->
 
 
-</div>  <!--  GroupBox3 --> 
+</div>  <!--  GroupBox1 --> 
+<% /* GroupBox3:GroupBox */ %>
+
+<div id="GroupBox3" name="GroupBox3" style="width:28px;height:224px;float:left;">  <!-- GroupBox3 --> 
+
+
+<div>  <!-- Beginning of a new line -->
+<% /* GroupBox5:GroupBox */ %>
+
+<div id="GroupBox5" name="GroupBox5" style="width:22px;height:54px;float:left;">  <!-- GroupBox5 --> 
+
+
+</div>  <!--  GroupBox5 --> 
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+<div>  <!-- Beginning of a new line -->
+<% /* PushBtn1:PushBtn */ %>
+<button type="button" name="PushBtn1" id="PushBtn1" value="" onclick="SelectUsageEntriesForGroup( )" style="width:26px;height:32px;"><-</button>
+
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:8px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<% /* PushBtn2:PushBtn */ %>
+<button type="button" name="PushBtn2" id="PushBtn2" value="" onclick="RemoveUsageEntriesFromGroup( )" style="width:26px;height:32px;">-></button>
+
 </div>  <!-- End of a new line -->
 
 
-</div>  <!--  GroupBox6 --> 
+</div>  <!--  GroupBox3 --> 
+<% /* GroupBox2:GroupBox */ %>
+
+<div id="GroupBox2" name="GroupBox2" style="width:412px;float:left;">  <!-- GroupBox2 --> 
+
+
+<div>  <!-- Beginning of a new line -->
+<% /* Grid2:Grid */ %>
+<table class="sortable"  cols=2 style="width:410px;"  name="Grid2" id="Grid2">
+
+<thead bgcolor=green><tr>
+
+   <th class="gridheading"><input type="checkbox" onclick="CheckAllInGrid(this,'GridCheckCtl1')"></th>
+   <th style="width:374px;">Name</th>
+
+</tr></thead>
+
+<tbody>
+
+<%
+try
+{
+   iTableRowCnt = 0;
+   mMasLC = task.getViewByName( "mMasLC" );
+   if ( VmlOperation.isValid( mMasLC ) )
+   {
+      long   lEntityKey;
+      String strEntityKey;
+      String strButtonName;
+      String strOdd;
+      String strTag;
+      String strGridCheckCtl1;
+      String strGridCheckCtl1Value;
+      String strGridEditCtl1;
+      
+      View vGrid2;
+      vGrid2 = mMasLC.newView( );
+      csrRC2 = vGrid2.cursor( "M_UsageNonGroupUsage" ).setFirst(  );
+      while ( csrRC2.isSet() )
+      {
+         strOdd = (iTableRowCnt % 2) != 0 ? " class='odd'" : "";
+         iTableRowCnt++;
+
+         lEntityKey = vGrid2.cursor( "M_UsageNonGroupUsage" ).getEntityKey( );
+         strEntityKey = Long.toString( lEntityKey );
+         strGridCheckCtl1 = "";
+         nRC = vGrid2.cursor( "M_UsageNonGroupUsage" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            strGridCheckCtl1 = vGrid2.cursor( "M_UsageNonGroupUsage" ).getAttribute( "wSelected" ).getString( "" );
+
+            if ( strGridCheckCtl1 == null )
+               strGridCheckCtl1 = "";
+         }
+
+         if ( StringUtils.equals( strGridCheckCtl1, "Y" ) )
+         {
+            strGridCheckCtl1Value = "GridCheckCtl1" + strEntityKey;
+            strGridCheckCtl1 = "<input name='" + strGridCheckCtl1Value + "' id='" + strGridCheckCtl1Value + "' value='Y' type='checkbox'  CHECKED > ";
+         }
+         else
+         {
+            strGridCheckCtl1Value = "GridCheckCtl1" + strEntityKey;
+            strGridCheckCtl1 = "<input name='" + strGridCheckCtl1Value + "' id='" + strGridCheckCtl1Value + "' value='Y' type='checkbox' > ";
+         }
+
+         strGridEditCtl1 = "";
+         nRC = vGrid2.cursor( "M_UsageNonGroupUsage" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            strGridEditCtl1 = vGrid2.cursor( "M_UsageNonGroupUsage" ).getAttribute( "dUsageNonGroupSubUsages" ).getString( "" );
+
+            if ( strGridEditCtl1 == null )
+               strGridEditCtl1 = "";
+         }
+
+         if ( StringUtils.isBlank( strGridEditCtl1 ) )
+            strGridEditCtl1 = "&nbsp";
+
+%>
+
+<tr<%=strOdd%>>
+
+   <td nowrap><%=strGridCheckCtl1%></td>
+   <td style="width:374px;"><%=strGridEditCtl1%></td>
+
+</tr>
+
+<%
+         csrRC2 = vGrid2.cursor( "M_UsageNonGroupUsage" ).setNextContinue( );
+      }
+      vGrid2.drop( );
+   }
+}
+catch (Exception e)
+{
+out.println("There is an error in grid: " + e.getMessage());
+task.log().info( "*** Error in grid" + e.getMessage() );
+}
+%>
+</tbody>
+</table>
+
+</div>  <!-- End of a new line -->
+
+
+</div>  <!--  GroupBox2 --> 
+</div>  <!-- End of a new line -->
+
+
+</div>  <!--  GroupBox4 --> 
 </div>  <!-- End of a new line -->
 
 
