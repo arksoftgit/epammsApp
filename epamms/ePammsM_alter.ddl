@@ -1,14 +1,10 @@
-USE ePammsM ;
 /* Alter script for ePammsM -- MySQL ePamms database */
 
 /* Entity M_Usage */
-ALTER TABLE M_USAGE ADD AUTOSEQ03                          int                NULL    ;
+ALTER TABLE M_USAGE ADD AUTOSEQ04                          int                NULL    ;
 
 /* Entity S_Usage */
-ALTER TABLE S_USAGE ADD AUTOSEQ03                          int                NULL    ;
-
-/* Entity SPLD_Usage */
-ALTER TABLE SPLD_USAGE ADD AUTOSEQ03                       int                NULL    ;
+ALTER TABLE S_USAGE ADD AUTOSEQ04                          int                NULL    ;
 
 /* Entity LLD */
 ALTER TABLE lld                                MODIFY COLUMN DEFAULTTEXTFONTFAMILY              longtext           NULL    ;

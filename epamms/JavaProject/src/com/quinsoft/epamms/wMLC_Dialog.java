@@ -3691,15 +3691,9 @@ GOTO_UpdateMLC( View     ViewToWindow )
    CreateViewFromView( mMasLC_Root, mMasLC );
    //:NAME VIEW mMasLC_Root "mMasLC_Root"
    SetNameForView( mMasLC_Root, "mMasLC_Root", null, zLEVEL_TASK );
-
-   //:// Build Usage Group Usage entries.
-   //:BuildUsageGroupEntries( mMasLC )
-   {
-    mMasLC_Object m_mMasLC_Object = new mMasLC_Object( mMasLC );
-    m_mMasLC_Object.omMasLC_BuildUsageGroupEntries( mMasLC );
-    // m_mMasLC_Object = null;  // permit gc  (unnecessary)
-   }
    return( 0 );
+//    // Build Usage Group Usage entries.
+// // BuildUsageGroupEntries( mMasLC )  don't think we want this ... dks 2017.06.15
 // END
 } 
 
@@ -6359,8 +6353,7 @@ SelectUsageEntriesForGroup( View     ViewToWindow )
          //:IF RESULT = 0
          if ( RESULT == 0 )
          { 
-            //:INCLUDE mMasLC2.M_UsageUsageGroup FROM mMasLC2.M_UsageGroup
-            RESULT = IncludeSubobjectFromSubobject( mMasLC2, "M_UsageUsageGroup", mMasLC2, "M_UsageGroup", zPOS_AFTER );
+            //:// INCLUDE mMasLC2.M_UsageUsageGroup FROM mMasLC2.M_UsageGroup
             //:INCLUDE mMasLC2.M_UsageGroupUsage FROM mMasLC2.M_Usage
             RESULT = IncludeSubobjectFromSubobject( mMasLC2, "M_UsageGroupUsage", mMasLC2, "M_Usage", zPOS_AFTER );
             //:EXCLUDE mMasLC2.M_UsageNonGroupUsage NONE
@@ -6432,8 +6425,7 @@ RemoveUsageEntriesFromGroup( View     ViewToWindow )
          { 
             //:INCLUDE mMasLC2.M_UsageNonGroupUsage FROM mMasLC2.M_Usage
             RESULT = IncludeSubobjectFromSubobject( mMasLC2, "M_UsageNonGroupUsage", mMasLC2, "M_Usage", zPOS_AFTER );
-            //:EXCLUDE mMasLC2.M_UsageUsageGroup NONE
-            RESULT = ExcludeEntity( mMasLC2, "M_UsageUsageGroup", zREPOS_NONE );
+            //:// EXCLUDE mMasLC2.M_UsageUsageGroup NONE
             //:EXCLUDE mMasLC2.M_UsageGroupUsage NONE
             RESULT = ExcludeEntity( mMasLC2, "M_UsageGroupUsage", zREPOS_NONE );
             //:ELSE

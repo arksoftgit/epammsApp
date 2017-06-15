@@ -1,4 +1,4 @@
-// wMLCSurfaces   Generate Timestamp: 20170610202843083
+// wMLCSurfaces   Generate Timestamp: 20170614142940089
 
 var isWindowClosing = true;
 var timerID = null;
@@ -247,7 +247,7 @@ function DELETE_UsageGroupEntriesOnly( )
    }
 }
 
-function DeleteUsageGroups( )
+function DeleteUsageGroup( strTagEntityKey )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -255,9 +255,13 @@ function DeleteUsageGroups( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      var nIdx = strTagEntityKey.lastIndexOf( '::' );
+      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
+
+      document.wMLCSurfaces.zTableRowSelect.value = strEntityKey;
       _DisableFormElements( true );
 
-      document.wMLCSurfaces.zAction.value = "DeleteUsageGroups";
+      document.wMLCSurfaces.zAction.value = "DeleteUsageGroup";
       document.wMLCSurfaces.submit( );
    }
 }

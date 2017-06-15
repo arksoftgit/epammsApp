@@ -1141,7 +1141,7 @@ GOTO_UpdateMLC( VIEW ViewToWindow )
    NAME VIEW mMasLC_Root "mMasLC_Root"
 
    // Build Usage Group Usage entries.
-   BuildUsageGroupEntries( mMasLC )
+// BuildUsageGroupEntries( mMasLC )  don't think we want this ... dks 2017.06.15
 
 END
 
@@ -4062,7 +4062,7 @@ SelectUsageEntriesForGroup( VIEW ViewToWindow )
          ID = mMasLC2.M_UsageNonGroupUsage.ID
          SET CURSOR FIRST mMasLC2.M_Usage WHERE mMasLC2.M_Usage.ID = ID
          IF RESULT = 0
-            INCLUDE mMasLC2.M_UsageUsageGroup FROM mMasLC2.M_UsageGroup
+         // INCLUDE mMasLC2.M_UsageUsageGroup FROM mMasLC2.M_UsageGroup
             INCLUDE mMasLC2.M_UsageGroupUsage FROM mMasLC2.M_Usage
             EXCLUDE mMasLC2.M_UsageNonGroupUsage NONE
          ELSE
@@ -4099,7 +4099,7 @@ RemoveUsageEntriesFromGroup( VIEW ViewToWindow )
          SET CURSOR FIRST mMasLC2.M_Usage WHERE mMasLC2.M_Usage.ID = ID
          IF RESULT = 0
             INCLUDE mMasLC2.M_UsageNonGroupUsage FROM mMasLC2.M_Usage
-            EXCLUDE mMasLC2.M_UsageUsageGroup NONE
+         // EXCLUDE mMasLC2.M_UsageUsageGroup NONE
             EXCLUDE mMasLC2.M_UsageGroupUsage NONE
          ELSE
             MessageSend( ViewToWindow, "", "Remove Usages For Group",

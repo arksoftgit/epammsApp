@@ -1327,14 +1327,13 @@ omMasLC_ObjectConstraints( View     mMasLC,
    { 
       //:OF   zOCE_ACTIVATE:
       case zOCE_ACTIVATE :
-
-         //:// Go to build the flat display of all components subobject.
-         //://BuildCompEntriesForMLC( mMasLC )
-
-         //:// Build Usage Group Usages.
-         //:BuildUsageGroupEntries( mMasLC )
-         omMasLC_BuildUsageGroupEntries( mMasLC );
          break ;
+
+      //:// Go to build the flat display of all components subobject.
+      //://BuildCompEntriesForMLC( mMasLC )
+
+      //:// Build Usage Group Usages.
+      //:// BuildUsageGroupEntries( mMasLC )   don't think we want this ... dks 2017.06.15
 
 
 
@@ -9367,101 +9366,6 @@ omMasLC_dUsageGroupCombinedText( View     mMasLC,
 
    //:     // end zDERIVED_SET
    //:END  // case
-   return( 0 );
-// END
-} 
-
-
-//:TRANSFORMATION OPERATION
-public int 
-omMasLC_BuildUsageGroupEntries( View     mMasLC )
-{
-   int      RESULT = 0;
-   int      lTempInteger_0 = 0;
-   int      lTempInteger_1 = 0;
-
-   //:BuildUsageGroupEntries( VIEW mMasLC BASED ON LOD mMasLC )
-
-   //:// Build Usage Group Usages.
-   //:// We treat M_UsageGroupUsage as a derived relationship, because we had JOE problems when we
-   //:// updated the same entity down two separate paths.
-   //:FOR EACH mMasLC.M_UsageType
-   RESULT = SetCursorFirstEntity( mMasLC, "M_UsageType", "" );
-   while ( RESULT > zCURSOR_UNCHANGED )
-   { 
-      //:FOR EACH mMasLC.M_UsageGroup
-      RESULT = SetCursorFirstEntity( mMasLC, "M_UsageGroup", "" );
-      while ( RESULT > zCURSOR_UNCHANGED )
-      { 
-         //:FOR EACH mMasLC.M_UsageGroupUsage
-         RESULT = SetCursorFirstEntity( mMasLC, "M_UsageGroupUsage", "" );
-         while ( RESULT > zCURSOR_UNCHANGED )
-         { 
-            //:EXCLUDE mMasLC.M_UsageGroupUsage NONE
-            RESULT = ExcludeEntity( mMasLC, "M_UsageGroupUsage", zREPOS_NONE );
-            RESULT = SetCursorNextEntity( mMasLC, "M_UsageGroupUsage", "" );
-         } 
-
-         RESULT = SetCursorNextEntity( mMasLC, "M_UsageGroup", "" );
-         //:END
-      } 
-
-      //:END
-      //:FOR EACH mMasLC.M_Usage
-      RESULT = SetCursorFirstEntity( mMasLC, "M_Usage", "" );
-      while ( RESULT > zCURSOR_UNCHANGED )
-      { 
-         //:IF mMasLC.M_UsageUsageGroup EXISTS
-         lTempInteger_0 = CheckExistenceOfEntity( mMasLC, "M_UsageUsageGroup" );
-         if ( lTempInteger_0 == 0 )
-         { 
-            //:SET CURSOR FIRST mMasLC.M_UsageGroup
-            //:           WHERE mMasLC.M_UsageGroup.ID = mMasLC.M_UsageUsageGroup.ID
-            {MutableInt mi_lTempInteger_1 = new MutableInt( lTempInteger_1 );
-                         GetIntegerFromAttribute( mi_lTempInteger_1, mMasLC, "M_UsageUsageGroup", "ID" );
-            lTempInteger_1 = mi_lTempInteger_1.intValue( );}
-            RESULT = SetCursorFirstEntityByInteger( mMasLC, "M_UsageGroup", "ID", lTempInteger_1, "" );
-            //:IF RESULT >= zCURSOR_SET
-            if ( RESULT >= zCURSOR_SET )
-            { 
-               //:INCLUDE mMasLC.M_UsageGroupUsage FROM mMasLC.M_Usage
-               RESULT = IncludeSubobjectFromSubobject( mMasLC, "M_UsageGroupUsage", mMasLC, "M_Usage", zPOS_AFTER );
-            } 
-
-            //:END
-         } 
-
-         RESULT = SetCursorNextEntity( mMasLC, "M_Usage", "" );
-         //:END
-      } 
-
-      RESULT = SetCursorNextEntity( mMasLC, "M_UsageType", "" );
-      //:END
-   } 
-
-   //:END
-
-   //:// Sort everything by Name.
-   //:FOR EACH mMasLC.M_UsageType
-   RESULT = SetCursorFirstEntity( mMasLC, "M_UsageType", "" );
-   while ( RESULT > zCURSOR_UNCHANGED )
-   { 
-      //:FOR EACH mMasLC.M_UsageGroup
-      RESULT = SetCursorFirstEntity( mMasLC, "M_UsageGroup", "" );
-      while ( RESULT > zCURSOR_UNCHANGED )
-      { 
-         //:OrderEntityForView( mMasLC, "M_UsageGroupUsage", "Name A" )
-         OrderEntityForView( mMasLC, "M_UsageGroupUsage", "Name A" );
-         RESULT = SetCursorNextEntity( mMasLC, "M_UsageGroup", "" );
-      } 
-
-      //:END
-      //:OrderEntityForView( mMasLC, "M_Usage", "Name A" )
-      OrderEntityForView( mMasLC, "M_Usage", "Name A" );
-      RESULT = SetCursorNextEntity( mMasLC, "M_UsageType", "" );
-   } 
-
-   //:END
    return( 0 );
 // END
 } 

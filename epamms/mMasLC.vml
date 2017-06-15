@@ -517,7 +517,7 @@ ObjectConstraints( VIEW mMasLC BASED ON LOD mMasLC,
       //BuildCompEntriesForMLC( mMasLC )
 
       // Build Usage Group Usages.
-      BuildUsageGroupEntries( mMasLC )
+   // BuildUsageGroupEntries( mMasLC )   don't think we want this ... dks 2017.06.15
 
 
 
@@ -3826,6 +3826,7 @@ dUsageGroupCombinedText( VIEW mMasLC BASED ON LOD mMasLC,
 
 END
 
+/*  don't think we want this ... dks 2017.06.15
 /////////////////////////////////////////////////////////////////////////////
 //
 //  OPERATION: BuildUsageGroupEntries
@@ -3863,6 +3864,7 @@ BuildUsageGroupEntries( VIEW mMasLC BASED ON LOD mMasLC )
    END
 
 END
+*/
 
 /*
 /////////////////////////////////////////////////////////////////////////////
