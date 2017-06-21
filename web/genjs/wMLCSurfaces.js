@@ -1,4 +1,4 @@
-// wMLCSurfaces   Generate Timestamp: 20170614142940089
+// wMLCSurfaces   Generate Timestamp: 20170619122943535
 
 var isWindowClosing = true;
 var timerID = null;
@@ -615,6 +615,48 @@ function smTables( )
       _DisableFormElements( true );
 
       document.wMLCSurfaces.zAction.value = "smTables";
+      document.wMLCSurfaces.submit( );
+   }
+}
+
+function SortSurfaces( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      // Javascript code entered by user.
+
+       document.wMLCSurfaces.zTableRowSelect.value = buildSortTableHtml( "mMasLC", "M_Usage", "GridSurfaces",  ["Surface"]  );
+
+      // END of Javascript code entered by user.
+
+      _DisableFormElements( true );
+
+      document.wMLCSurfaces.zAction.value = "SortSurfaces";
+      document.wMLCSurfaces.submit( );
+   }
+}
+
+function SortGroups( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      // Javascript code entered by user.
+
+       document.wMLCSurfaces.zTableRowSelect.value = buildSortTableHtml( "mMasLC", "M_UsageGroup", "GridSurfacesGroup",  ["Name", "Combined Surface"]  );
+
+      // END of Javascript code entered by user.
+
+      _DisableFormElements( true );
+
+      document.wMLCSurfaces.zAction.value = "SortGroups";
       document.wMLCSurfaces.submit( );
    }
 }

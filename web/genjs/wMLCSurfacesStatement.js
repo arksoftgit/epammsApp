@@ -1,4 +1,4 @@
-// wMLCSurfacesStatement   Generate Timestamp: 20170608161518628
+// wMLCSurfacesStatement   Generate Timestamp: 20170616135913157
 
 var isWindowClosing = true;
 var timerID = null;
@@ -206,7 +206,7 @@ function AcceptAndReturnSurfacesStatement( )
    }
 }
 
-function Sort( )
+function MoveSubsurfacesToGroup( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -214,15 +214,9 @@ function Sort( )
 
    if ( _IsDocDisabled( ) == false )
    {
-      // Javascript code entered by user.
-
-       document.wMLCSurfacesStatement.zTableRowSelect.value = buildSortTableHtml( "mMasLC", "M_SubUsage", "GridSurfaces",  ["Text"]  );
-
-      // END of Javascript code entered by user.
-
       _DisableFormElements( true );
 
-      document.wMLCSurfacesStatement.zAction.value = "Sort";
+      document.wMLCSurfacesStatement.zAction.value = "MoveSubsurfacesToGroup";
       document.wMLCSurfacesStatement.submit( );
    }
 }
@@ -374,6 +368,27 @@ function SaveAddNewUsage( )
       _DisableFormElements( true );
 
       document.wMLCSurfacesStatement.zAction.value = "SaveAddNewUsage";
+      document.wMLCSurfacesStatement.submit( );
+   }
+}
+
+function Sort( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      // Javascript code entered by user.
+
+       document.wMLCSurfacesStatement.zTableRowSelect.value = buildSortTableHtml( "mMasLC", "M_SubUsage", "GridSurfaces",  ["Text"]  );
+
+      // END of Javascript code entered by user.
+
+      _DisableFormElements( true );
+
+      document.wMLCSurfacesStatement.zAction.value = "Sort";
       document.wMLCSurfacesStatement.submit( );
    }
 }

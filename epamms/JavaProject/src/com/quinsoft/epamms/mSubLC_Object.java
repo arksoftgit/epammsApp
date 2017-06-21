@@ -9380,6 +9380,69 @@ omSubLC_ObjectConstraints( View     mSubLC,
       case zOCE_ACTIVATE :
 
          //:// Build the PrimaryMLC_ID  values from MLC subentities, if the ID values are null.
+         //:FOR EACH mSubLC.S_UsageType
+         RESULT = SetCursorFirstEntity( mSubLC, "S_UsageType", "" );
+         while ( RESULT > zCURSOR_UNCHANGED )
+         { 
+            //:FOR EACH mSubLC.S_Usage
+            RESULT = SetCursorFirstEntity( mSubLC, "S_Usage", "" );
+            while ( RESULT > zCURSOR_UNCHANGED )
+            { 
+               //:IF mSubLC.S_Usage.PrimaryMLC_ID = ""
+               if ( CompareAttributeToString( mSubLC, "S_Usage", "PrimaryMLC_ID", "" ) == 0 )
+               { 
+                  //:mSubLC.S_Usage.PrimaryMLC_ID = mSubLC.M_Usage.ID
+                  SetAttributeFromAttribute( mSubLC, "S_Usage", "PrimaryMLC_ID", mSubLC, "M_Usage", "ID" );
+               } 
+
+               //:END
+               //:// FOR EACH mSubLC.S_SubUsage
+               //://    IF mSubLC.S_SubUsage.PrimaryMLC_ID = ""
+               //://       mSubLC.S_SubUsage.PrimaryMLC_ID = mSubLC.M_SubUsage.ID
+               //://    END
+               //:// END
+               //:// FOR EACH mSubLC.S_InsertTextKeywordUsage
+               //://    IF mSubLC.S_InsertTextKeywordUsage.PrimaryMLC_ID = ""
+               //://       mSubLC.S_InsertTextKeywordUsage.PrimaryMLC_ID = mSubLC.M_InsertTextKeywordUsage.ID
+               //://    END
+               //://    FOR EACH mSubLC.S_InsertTextUsage
+               //://       IF mSubLC.S_InsertTextUsage.PrimaryMLC_ID = ""
+               //://          mSubLC.S_InsertTextUsage.PrimaryMLC_ID = mSubLC.M_InsertTextUsage.ID
+               //://       END
+               //://    END
+               //:// END
+               //:FOR EACH mSubLC.S_UsageFootnoteUsed
+               RESULT = SetCursorFirstEntity( mSubLC, "S_UsageFootnoteUsed", "" );
+               while ( RESULT > zCURSOR_UNCHANGED )
+               { 
+                  //:IF mSubLC.S_UsageFootnoteUsed.PrimaryMLC_ID = ""
+                  if ( CompareAttributeToString( mSubLC, "S_UsageFootnoteUsed", "PrimaryMLC_ID", "" ) == 0 )
+                  { 
+                     //:mSubLC.S_UsageFootnoteUsed.PrimaryMLC_ID = mSubLC.M_UsageFootnoteUsed.ID
+                     SetAttributeFromAttribute( mSubLC, "S_UsageFootnoteUsed", "PrimaryMLC_ID", mSubLC, "M_UsageFootnoteUsed", "ID" );
+                  } 
+
+                  RESULT = SetCursorNextEntity( mSubLC, "S_UsageFootnoteUsed", "" );
+                  //:END
+               } 
+
+               RESULT = SetCursorNextEntity( mSubLC, "S_Usage", "" );
+               //:END
+            } 
+
+            //:END
+            //:IF mSubLC.S_UsageType.PrimaryMLC_ID = ""
+            if ( CompareAttributeToString( mSubLC, "S_UsageType", "PrimaryMLC_ID", "" ) == 0 )
+            { 
+               //:mSubLC.S_UsageType.PrimaryMLC_ID = mSubLC.M_UsageType.ID
+               SetAttributeFromAttribute( mSubLC, "S_UsageType", "PrimaryMLC_ID", mSubLC, "M_UsageType", "ID" );
+            } 
+
+            RESULT = SetCursorNextEntity( mSubLC, "S_UsageType", "" );
+            //:END
+         } 
+
+         //:END
          //:FOR EACH mSubLC.S_GeneralSection
          RESULT = SetCursorFirstEntity( mSubLC, "S_GeneralSection", "" );
          while ( RESULT > zCURSOR_UNCHANGED )
@@ -9404,6 +9467,58 @@ omSubLC_ObjectConstraints( View     mSubLC,
                } 
 
                RESULT = SetCursorNextEntity( mSubLC, "S_GeneralStatement", "" );
+               //:END
+            } 
+
+            //:// FOR EACH mSubLC.S_InsertTextKeyword
+            //://    IF mSubLC.S_InsertTextKeyword.PrimaryMLC_ID = ""
+            //://       mSubLC.S_InsertTextKeyword.PrimaryMLC_ID = mSubLC.M_InsertTextKeyword.ID
+            //://    END
+            //://    FOR EACH mSubLC.S_InsertText
+            //://       IF mSubLC.S_InsertText.PrimaryMLC_ID = ""
+            //://          mSubLC.S_InsertText.PrimaryMLC_ID = mSubLC.M_InsertText.ID
+            //://       END
+            //://    END
+            //:// END
+            //:END
+            //:FOR EACH mSubLC.S_GeneralSubSection
+            RESULT = SetCursorFirstEntity( mSubLC, "S_GeneralSubSection", "" );
+            while ( RESULT > zCURSOR_UNCHANGED )
+            { 
+               //:IF mSubLC.S_GeneralSubSection.PrimaryMLC_ID = ""
+               if ( CompareAttributeToString( mSubLC, "S_GeneralSubSection", "PrimaryMLC_ID", "" ) == 0 )
+               { 
+                  //:mSubLC.S_GeneralSubSection.PrimaryMLC_ID = mSubLC.M_GeneralSubSection.ID
+                  SetAttributeFromAttribute( mSubLC, "S_GeneralSubSection", "PrimaryMLC_ID", mSubLC, "M_GeneralSubSection", "ID" );
+               } 
+
+               //:END
+               //:FOR EACH mSubLC.S_GeneralSubStatement
+               RESULT = SetCursorFirstEntity( mSubLC, "S_GeneralSubStatement", "" );
+               while ( RESULT > zCURSOR_UNCHANGED )
+               { 
+                  //:IF mSubLC.S_GeneralSubStatement.PrimaryMLC_ID = ""
+                  if ( CompareAttributeToString( mSubLC, "S_GeneralSubStatement", "PrimaryMLC_ID", "" ) == 0 )
+                  { 
+                     //:mSubLC.S_GeneralSubStatement.PrimaryMLC_ID = mSubLC.M_GeneralSubStatement.ID
+                     SetAttributeFromAttribute( mSubLC, "S_GeneralSubStatement", "PrimaryMLC_ID", mSubLC, "M_GeneralSubStatement", "ID" );
+                  } 
+
+                  RESULT = SetCursorNextEntity( mSubLC, "S_GeneralSubStatement", "" );
+                  //:END
+               } 
+
+               RESULT = SetCursorNextEntity( mSubLC, "S_GeneralSubSection", "" );
+               //:// FOR EACH mSubLC.S_InsertTextKeywordGeneral
+               //://    IF mSubLC.S_InsertTextKeywordGeneral.PrimaryMLC_ID = ""
+               //://       mSubLC.S_InsertTextKeywordGeneral.PrimaryMLC_ID = mSubLC.M_InsertTextKeywordGeneral.ID
+               //://    END
+               //://    FOR EACH mSubLC.S_InsertTextGeneral
+               //://       IF mSubLC.S_InsertTextGeneral.PrimaryMLC_ID = ""
+               //://          mSubLC.S_InsertTextGeneral.PrimaryMLC_ID = mSubLC.M_InsertTextGeneral.ID
+               //://       END
+               //://    END
+               //:// END
                //:END
             } 
 
@@ -9472,38 +9587,103 @@ omSubLC_ObjectConstraints( View     mSubLC,
             } 
 
             RESULT = SetCursorNextEntity( mSubLC, "S_StorageDisposalSection", "" );
+            //:// FOR EACH mSubLC.S_StorageDisposalSubStatement
+            //://    IF mSubLC.S_StorageDisposalSubStatement.PrimaryMLC_ID = ""
+            //://       mSubLC.S_StorageDisposalSubStatement.PrimaryMLC_ID = mSubLC.M_StorageDisposalSubStatement.ID
+            //://    END
+            //:// END
+            //:// FOR EACH mSubLC.S_InsertTextKeywordSD
+            //://    IF mSubLC.S_InsertTextKeywordSD.PrimaryMLC_ID = ""
+            //://       mSubLC.S_InsertTextKeywordSD.PrimaryMLC_ID = mSubLC.M_InsertTextKeywordSD.ID
+            //://    END
+            //://    FOR EACH mSubLC.S_InsertTextSD
+            //://       mSubLC.S_InsertTextSD.PrimaryMLC_ID = mSubLC.M_InsertTextSD.ID
+            //://       END
+            //://    END
+            //:// END
             //:END
          } 
 
          //:END
-         //:FOR EACH mSubLC.S_DirectionsForUseSection
-         RESULT = SetCursorFirstEntity( mSubLC, "S_DirectionsForUseSection", "" );
+         //:FOR EACH mSubLC.S_DirectionsForUseCategory
+         RESULT = SetCursorFirstEntity( mSubLC, "S_DirectionsForUseCategory", "" );
          while ( RESULT > zCURSOR_UNCHANGED )
          { 
-            //:IF mSubLC.S_DirectionsForUseSection.PrimaryMLC_ID = ""
-            if ( CompareAttributeToString( mSubLC, "S_DirectionsForUseSection", "PrimaryMLC_ID", "" ) == 0 )
+            //:IF mSubLC.S_DirectionsForUseCategory.PrimaryMLC_ID = ""
+            if ( CompareAttributeToString( mSubLC, "S_DirectionsForUseCategory", "PrimaryMLC_ID", "" ) == 0 )
             { 
-               //:mSubLC.S_DirectionsForUseSection.PrimaryMLC_ID = mSubLC.M_DirectionsForUseSection.ID
-               SetAttributeFromAttribute( mSubLC, "S_DirectionsForUseSection", "PrimaryMLC_ID", mSubLC, "M_DirectionsForUseSection", "ID" );
+               //:mSubLC.S_DirectionsForUseCategory.PrimaryMLC_ID = mSubLC.S_DirectionsForUseCategory.ID
+               SetAttributeFromAttribute( mSubLC, "S_DirectionsForUseCategory", "PrimaryMLC_ID", mSubLC, "S_DirectionsForUseCategory", "ID" );
             } 
 
             //:END
-            //:FOR EACH mSubLC.S_DirectionsForUseStatement
-            RESULT = SetCursorFirstEntity( mSubLC, "S_DirectionsForUseStatement", "" );
+            //:FOR EACH mSubLC.S_DirectionsForUseSection
+            RESULT = SetCursorFirstEntity( mSubLC, "S_DirectionsForUseSection", "" );
             while ( RESULT > zCURSOR_UNCHANGED )
             { 
-               //:IF mSubLC.S_DirectionsForUseStatement.PrimaryMLC_ID = ""
-               if ( CompareAttributeToString( mSubLC, "S_DirectionsForUseStatement", "PrimaryMLC_ID", "" ) == 0 )
+               //:IF mSubLC.S_DirectionsForUseSection.PrimaryMLC_ID = ""
+               if ( CompareAttributeToString( mSubLC, "S_DirectionsForUseSection", "PrimaryMLC_ID", "" ) == 0 )
                { 
-                  //:mSubLC.S_DirectionsForUseStatement.PrimaryMLC_ID = mSubLC.M_DirectionsForUseStatement.ID
-                  SetAttributeFromAttribute( mSubLC, "S_DirectionsForUseStatement", "PrimaryMLC_ID", mSubLC, "M_DirectionsForUseStatement", "ID" );
+                  //:mSubLC.S_DirectionsForUseSection.PrimaryMLC_ID = mSubLC.M_DirectionsForUseSection.ID
+                  SetAttributeFromAttribute( mSubLC, "S_DirectionsForUseSection", "PrimaryMLC_ID", mSubLC, "M_DirectionsForUseSection", "ID" );
                } 
 
-               RESULT = SetCursorNextEntity( mSubLC, "S_DirectionsForUseStatement", "" );
+               //:END
+               //:FOR EACH mSubLC.S_DirectionsForUseStatement
+               RESULT = SetCursorFirstEntity( mSubLC, "S_DirectionsForUseStatement", "" );
+               while ( RESULT > zCURSOR_UNCHANGED )
+               { 
+                  //:IF mSubLC.S_DirectionsForUseStatement.PrimaryMLC_ID = ""
+                  if ( CompareAttributeToString( mSubLC, "S_DirectionsForUseStatement", "PrimaryMLC_ID", "" ) == 0 )
+                  { 
+                     //:mSubLC.S_DirectionsForUseStatement.PrimaryMLC_ID = mSubLC.M_DirectionsForUseStatement.ID
+                     SetAttributeFromAttribute( mSubLC, "S_DirectionsForUseStatement", "PrimaryMLC_ID", mSubLC, "M_DirectionsForUseStatement", "ID" );
+                  } 
+
+                  RESULT = SetCursorNextEntity( mSubLC, "S_DirectionsForUseStatement", "" );
+                  //:END
+               } 
+
+               RESULT = SetCursorNextEntity( mSubLC, "S_DirectionsForUseSection", "" );
+               //:// FOR EACH mSubLC.S_DirectionsForUseSubStatement    recurse?
+               //://    IF mSubLC.S_DirectionsForUseSubStatement.PrimaryMLC_ID = ""
+               //://       mSubLC.S_DirectionsForUseSubStatement.PrimaryMLC_ID = mSubLC.M_DirectionsForUseSubStatement.ID
+               //://    END
+               //:// END
+               //:// FOR EACH mSubLC.S_InsertTextKeywordDU
+               //://    IF mSubLC.S_InsertTextKeywordDU.PrimaryMLC_ID = ""
+               //://       mSubLC.S_InsertTextKeywordDU.PrimaryMLC_ID = mSubLC.M_InsertTextKeywordDU.ID
+               //://    END
+               //://    FOR EACH mSubLC.S_InsertTextDU
+               //://       IF mSubLC.S_InsertTextDU.PrimaryMLC_ID = ""
+               //://          mSubLC.S_InsertTextDU.PrimaryMLC_ID = mSubLC.M_InsertTextDU.ID
+               //://       END
+               //://    END
+               //:// END
                //:END
             } 
 
-            RESULT = SetCursorNextEntity( mSubLC, "S_DirectionsForUseSection", "" );
+            RESULT = SetCursorNextEntity( mSubLC, "S_DirectionsForUseCategory", "" );
+            //:// FOR EACH mSubLC.S_ClaimsDrivingUsage
+            //://    IF mSubLC.S_ClaimsDrivingUsage.PrimaryMLC_ID = ""
+            //://       mSubLC.S_ClaimsDrivingUsage.PrimaryMLC_ID = mSubLC.M_ClaimsDrivingUsage.ID
+            //://    END
+            //:// END
+            //:// FOR EACH mSubLC.S_InsertTextKeywordSectionDU
+            //://    IF mSubLC.S_InsertTextKeywordSectionDU.PrimaryMLC_ID = ""
+            //://       mSubLC.S_InsertTextKeywordSectionDU.PrimaryMLC_ID = mSubLC.M_InsertTextKeywordSectionDU.ID
+            //://    END
+            //://    FOR EACH mSubLC.S_InsertTextSectionDU
+            //://       IF mSubLC.S_InsertTextSectionDU.PrimaryMLC_ID = ""
+            //://          mSubLC.S_InsertTextSectionDU.PrimaryMLC_ID = mSubLC.M_InsertTextSectionDU.ID
+            //://       END
+            //://    END
+            //:// END
+            //:// FOR EACH mSubLC.S_DirectionsForUseXORSection
+            //://    IF mSubLC.S_DirectionsForUseXORSection.PrimaryMLC_ID = ""
+            //://       mSubLC.S_DirectionsForUseXORSection.PrimaryMLC_ID = mSubLC.M_DirectionsForUseXORSection.ID
+            //://    END
+            //:// END
             //:END
          } 
 
@@ -9568,30 +9748,6 @@ omSubLC_ObjectConstraints( View     mSubLC,
             } 
 
             RESULT = SetCursorNextEntity( mSubLC, "S_DilutionGroup", "" );
-            //:END
-         } 
-
-         //:END
-         //:FOR EACH mSubLC.S_UsageType
-         RESULT = SetCursorFirstEntity( mSubLC, "S_UsageType", "" );
-         while ( RESULT > zCURSOR_UNCHANGED )
-         { 
-            //:FOR EACH mSubLC.S_Usage
-            RESULT = SetCursorFirstEntity( mSubLC, "S_Usage", "" );
-            while ( RESULT > zCURSOR_UNCHANGED )
-            { 
-               //:IF mSubLC.S_Usage.PrimaryMLC_ID = ""
-               if ( CompareAttributeToString( mSubLC, "S_Usage", "PrimaryMLC_ID", "" ) == 0 )
-               { 
-                  //:mSubLC.S_Usage.PrimaryMLC_ID = mSubLC.M_Usage.ID
-                  SetAttributeFromAttribute( mSubLC, "S_Usage", "PrimaryMLC_ID", mSubLC, "M_Usage", "ID" );
-               } 
-
-               RESULT = SetCursorNextEntity( mSubLC, "S_Usage", "" );
-               //:END
-            } 
-
-            RESULT = SetCursorNextEntity( mSubLC, "S_UsageType", "" );
             //:END
          } 
 

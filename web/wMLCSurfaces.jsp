@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCSurfaces   Generate Timestamp: 20170614142940089 --%>
+<%-- wMLCSurfaces   Generate Timestamp: 20170619122943535 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -138,7 +138,7 @@ public int DoInputMapping( HttpServletRequest request,
          }
       }
 
-      // Grid: GridClaimsGroup
+      // Grid: GridSurfacesGroup
       iTableRowCnt = 0;
 
       // We are creating a temp view to the grid view so that if there are 
@@ -333,6 +333,54 @@ if ( strActionToProcess != null )
       break;
    }
 
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "SortSurfaces" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCSurfaces", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Next Window
+      // We are borrowing zTableRowSelect and this code is hardwired for the moment.  javascript code similar to the following must be added to the action:
+      // document.wSLCMarketingStatement.zTableRowSelect.value = buildSortTableHtml( "mSubLC", "S_MarketingUsageOrdering", "GridMarketingUsage", ["Usage Type","Usage Name"] );
+      wWebXA = task.getViewByName( "wWebXfer" );
+      String strHtml = (String) request.getParameter( "zTableRowSelect" );
+      wWebXA.cursor( "Root" ).getAttribute( "HTML" ).setValue( strHtml, "" );
+      // We are borrowing zTableRowSelect and the code above is hardwired for the moment
+
+      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wSystem", "DragDropSort" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "SortGroups" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCGroups", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Next Window
+      // We are borrowing zTableRowSelect and this code is hardwired for the moment.  javascript code similar to the following must be added to the action:
+      // document.wSLCMarketingStatement.zTableRowSelect.value = buildSortTableHtml( "mSubLC", "S_MarketingUsageOrdering", "GridMarketingUsage", ["Usage Type","Usage Name"] );
+      wWebXA = task.getViewByName( "wWebXfer" );
+      String strHtml = (String) request.getParameter( "zTableRowSelect" );
+      wWebXA.cursor( "Root" ).getAttribute( "HTML" ).setValue( strHtml, "" );
+      // We are borrowing zTableRowSelect and the code above is hardwired for the moment
+
+      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wSystem", "DragDropSort" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
    while ( bDone == false && StringUtils.equals( strActionToProcess, "DELETE_SelectedUsageEntries" ) )
    {
       bDone = true;
@@ -503,7 +551,7 @@ if ( strActionToProcess != null )
       if ( strNextJSP_Name.equals( "" ) )
       {
          // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "SurfaceGroup" );
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "UsageGroupSelect" );
       }
 
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -1293,6 +1341,8 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/common.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/css.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/sts.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/jsoeUtils.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/jsoe.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
@@ -1674,7 +1724,10 @@ else
 <button type="button" name="PBDeleteSelectedSurfaces" id="PBDeleteSelectedSurfaces" value="" onclick="GOTO_DeleteSelectedSurfaces( )" style="width:198px;height:26px;position:absolute;left:176px;top:12px;" tabindex=-1 >Delete Selected Surfaces</button>
 
 <% /* PBNewSurface:PushBtn */ %>
-<button type="button" name="PBNewSurface" id="PBNewSurface" value="" onclick="ADD_Surfaces( )" style="width:78px;height:26px;position:absolute;left:482px;top:12px;" tabindex=-1 >New</button>
+<button type="button" name="PBNewSurface" id="PBNewSurface" value="" onclick="ADD_Surfaces( )" style="width:78px;height:26px;position:absolute;left:424px;top:12px;" tabindex=-1 >New</button>
+
+<% /* PBSortSurfaces:PushBtn */ %>
+<button type="button" class="newbutton" name="PBSortSurfaces" id="PBSortSurfaces" value="" onclick="SortSurfaces( )" style="width:78px;height:26px;position:absolute;left:522px;top:12px;" tabindex=-1 >Sort</button>
 
 
 </div>  <!--  GBSurfaceStatements --> 
@@ -1686,9 +1739,9 @@ else
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:6px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GridSurfaces:Grid */ %>
-<table class="sortable"  cols=3 style="width:626px;"  name="GridSurfaces" id="GridSurfaces">
+<table  cols=3 style="width:626px;"  name="GridSurfaces" id="GridSurfaces">
 
-<thead bgcolor=green><tr>
+<thead><tr>
 
    <th class="gridheading"><input type="checkbox" onclick="CheckAllInGrid(this,'GS_Select')"></th>
    <th>Surface</th>
@@ -1807,7 +1860,10 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 <label class="groupbox"  id="SurfaceStatementsGroup" name="SurfaceStatementsGroup" style="">Surface Groups</label>
 
 <% /* PBMoveToGroup:PushBtn */ %>
-<button type="button" name="PBMoveToGroup" id="PBMoveToGroup" value="" onclick="GOTO_AddUsageGroup( )" style="width:152px;height:26px;position:absolute;left:374px;top:12px;" tabindex=-1 >New Surfaces Group</button>
+<button type="button" name="PBMoveToGroup" id="PBMoveToGroup" value="" onclick="GOTO_AddUsageGroup( )" style="width:152px;height:26px;position:absolute;left:354px;top:12px;" tabindex=-1 >New Surfaces Group</button>
+
+<% /* PBSortGroups:PushBtn */ %>
+<button type="button" class="newbutton" name="PBSortGroups" id="PBSortGroups" value="" onclick="SortGroups( )" style="width:78px;height:26px;position:absolute;left:522px;top:12px;" tabindex=-1 >Sort</button>
 
 
 </div>  <!--  GB_SurfacesGroup --> 
@@ -1818,10 +1874,10 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:6px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GridClaimsGroup:Grid */ %>
-<table class="sortable"  cols=4 style="width:628px;"  name="GridClaimsGroup" id="GridClaimsGroup">
+<% /* GridSurfacesGroup:Grid */ %>
+<table  cols=4 style="width:628px;"  name="GridSurfacesGroup" id="GridSurfacesGroup">
 
-<thead bgcolor=green><tr>
+<thead><tr>
 
    <th>Name</th>
    <th>Combined Surface</th>
@@ -1849,21 +1905,21 @@ try
       String strBMBUpdateSurfacesGroup;
       String strBMBDeleteSurfacesGroup;
       
-      View vGridClaimsGroup;
-      vGridClaimsGroup = mMasLC.newView( );
-      csrRC2 = vGridClaimsGroup.cursor( "M_UsageGroup" ).setFirst(  );
+      View vGridSurfacesGroup;
+      vGridSurfacesGroup = mMasLC.newView( );
+      csrRC2 = vGridSurfacesGroup.cursor( "M_UsageGroup" ).setFirst(  );
       while ( csrRC2.isSet() )
       {
          strOdd = (iTableRowCnt % 2) != 0 ? " class='odd'" : "";
          iTableRowCnt++;
 
-         lEntityKey = vGridClaimsGroup.cursor( "M_UsageGroup" ).getEntityKey( );
+         lEntityKey = vGridSurfacesGroup.cursor( "M_UsageGroup" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
          strSurfacesGroupName = "";
-         nRC = vGridClaimsGroup.cursor( "M_UsageGroup" ).checkExistenceOfEntity( ).toInt();
+         nRC = vGridSurfacesGroup.cursor( "M_UsageGroup" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strSurfacesGroupName = vGridClaimsGroup.cursor( "M_UsageGroup" ).getAttribute( "Name" ).getString( "" );
+            strSurfacesGroupName = vGridSurfacesGroup.cursor( "M_UsageGroup" ).getAttribute( "Name" ).getString( "" );
 
             if ( strSurfacesGroupName == null )
                strSurfacesGroupName = "";
@@ -1873,10 +1929,10 @@ try
             strSurfacesGroupName = "&nbsp";
 
          strSurfacesGroup = "";
-         nRC = vGridClaimsGroup.cursor( "M_UsageGroup" ).checkExistenceOfEntity( ).toInt();
+         nRC = vGridSurfacesGroup.cursor( "M_UsageGroup" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strSurfacesGroup = vGridClaimsGroup.cursor( "M_UsageGroup" ).getAttribute( "dSubUsageCombinedText" ).getString( "" );
+            strSurfacesGroup = vGridSurfacesGroup.cursor( "M_UsageGroup" ).getAttribute( "dSubUsageCombinedText" ).getString( "" );
 
             if ( strSurfacesGroup == null )
                strSurfacesGroup = "";
@@ -1897,9 +1953,9 @@ try
 </tr>
 
 <%
-         csrRC2 = vGridClaimsGroup.cursor( "M_UsageGroup" ).setNextContinue( );
+         csrRC2 = vGridSurfacesGroup.cursor( "M_UsageGroup" ).setNextContinue( );
       }
-      vGridClaimsGroup.drop( );
+      vGridSurfacesGroup.drop( );
    }
 }
 catch (Exception e)

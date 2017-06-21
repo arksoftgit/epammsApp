@@ -1,7 +1,7 @@
-z1000-Zeidon    MSPLDEF  TZZOLODO                         05/18/17   14:09:14 1.0a2   
+z1000-Zeidon    MSPLDEF  TZZOLODO                         06/15/17   12:54:01 1.0a2   
 eLOD       1
 aZKey      69082112
-aNextZKeyToAssign 130002715
+aNextZKeyToAssign 130002723
 aName      mSPLDef
 aDesc      Subregistrant Physical Label Maintenance
 aActivateConstraint Y
@@ -1739,7 +1739,7 @@ aER_DiagramPosY 79
 
 eER_RelLinkRec 6
 aName      has
-aAutoSeq   N
+aAutoSeq   Y
 aHangingForeignKeyEntity N
 aZKey      120387543
 aCardMin   0
@@ -2263,15 +2263,15 @@ eLOD_EntityChild 5
 aName      SPLD_UsageGroupUsage
 aIndentName          SPLD_UsageGroupUsage
 aIndentLvl 9
-aZKey      130002708
+aZKey      130002716
 aCreate    N
 aDelete    N
-aUpdate    Y
+aUpdate    N
 aInclude   Y
 aInclSrc   Y
 aExclude   Y
 aRecursive N
-aDerived   Y
+aDerived   N
 aWork      N
 aParentDeleteBehave E
 aDupEntityInstance N
@@ -2279,49 +2279,49 @@ aDupRelationshipInstance N
 aRelLinkIndicator L
 
 eLOD_AttributeRec 6
-aZKey      130002709
+aZKey      130002717
 
 eER_AttributeRec 7
 
 eDomainRec 8
 
 eLOD_AttributeRec 6
-aZKey      130002710
+aZKey      130002718
 
 eER_AttributeRec 7
 
 eDomainRec 8
 
 eLOD_AttributeRec 6
-aZKey      130002711
+aZKey      130002719
 
 eER_AttributeRec 7
 
 eDomainRec 8
 
 eLOD_AttributeRec 6
-aZKey      130002712
+aZKey      130002720
 
 eER_AttributeRec 7
 
 eDomainRec 8
 
 eLOD_AttributeRec 6
-aZKey      130002713
+aZKey      130002721
 
 eER_AttributeRec 7
 
 eDomainRec 8
 
 eLOD_AttributeRec 6
-aZKey      130002714
+aZKey      130002722
 
 eER_AttributeRec 7
 
 eDomainRec 8
 
 eLOD_AttributeRec 6
-aZKey      130002715
+aZKey      130002723
 
 eER_AttributeRec 7
 
@@ -2331,7 +2331,7 @@ eER_EntityRec 6
 
 eER_RelLinkRec 6
 aName      has
-aAutoSeq   N
+aAutoSeq   Y
 aHangingForeignKeyEntity N
 aZKey      120388282
 aCardMin   0
@@ -2378,9 +2378,12 @@ aER_DiagramPosY 71
 
 eER_RelLinkRec 5
 aName      has
+aAutoSeq   Y
+aHangingForeignKeyEntity N
 aZKey      120388279
 aCardMin   0
 aCardMax   m
+aTE_NoForeignKeyPrefix N
 
 eER_RelTypeRec 6
 aZKey      120388278

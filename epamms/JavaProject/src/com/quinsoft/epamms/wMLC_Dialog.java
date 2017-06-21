@@ -77,82 +77,6 @@ GOTO_PrecautionaryStmtDelete( View     ViewToWindow )
 
 
 private int 
-o_fnLocalBuildQual_13( View     vSubtask,
-                       zVIEW    vQualObject,
-                       int      lTempInteger_0 )
-{
-   int      RESULT = 0;
-
-   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
-   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "MasterLabelContent" );
-   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "MasterLabelContent" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
-   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_0 );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
-   return( 0 );
-} 
-
-
-private int 
-o_fnLocalBuildQual_14( View     vSubtask,
-                       zVIEW    vQualObject,
-                       String   szTempString_0 )
-{
-   int      RESULT = 0;
-
-   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
-   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "MasterProduct" );
-   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "MasterProduct" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "Name" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Value", szTempString_0.toString( ) );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
-   return( 0 );
-} 
-
-
-private int 
-o_fnLocalBuildQual_3( View     vSubtask,
-                      zVIEW    vQualObject,
-                      int      lTempInteger_0 )
-{
-   int      RESULT = 0;
-
-   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
-   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "MasterProduct" );
-   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "PrimaryRegistrant" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
-   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_0 );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
-   return( 0 );
-} 
-
-
-private int 
-o_fnLocalBuildQual_4( View     vSubtask,
-                      zVIEW    vQualObject,
-                      int      lTempInteger_0 )
-{
-   int      RESULT = 0;
-
-   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
-   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "MasterLabelContent" );
-   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "MasterLabelContent" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
-   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_0 );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
-   return( 0 );
-} 
-
-
-private int 
 o_fnLocalBuildQual_5( View     vSubtask,
                       zVIEW    vQualObject,
                       int      lTempInteger_0 )
@@ -305,6 +229,44 @@ o_fnLocalBuildQual_12( View     vSubtask,
 
 
 private int 
+o_fnLocalBuildQual_13( View     vSubtask,
+                       zVIEW    vQualObject,
+                       int      lTempInteger_0 )
+{
+   int      RESULT = 0;
+
+   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
+   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "MasterLabelContent" );
+   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "MasterLabelContent" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
+   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_0 );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+   return( 0 );
+} 
+
+
+private int 
+o_fnLocalBuildQual_14( View     vSubtask,
+                       zVIEW    vQualObject,
+                       String   szTempString_0 )
+{
+   int      RESULT = 0;
+
+   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
+   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "MasterProduct" );
+   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "MasterProduct" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "Name" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Value", szTempString_0.toString( ) );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+   return( 0 );
+} 
+
+
+private int 
 o_fnLocalBuildQual_0( View     vSubtask,
                       zVIEW    vQualObject,
                       int      MasProdID )
@@ -354,6 +316,44 @@ o_fnLocalBuildQual_2( View     vSubtask,
    SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "MasterProduct" );
    CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
    SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "MasterProduct" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
+   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_0 );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+   return( 0 );
+} 
+
+
+private int 
+o_fnLocalBuildQual_3( View     vSubtask,
+                      zVIEW    vQualObject,
+                      int      lTempInteger_0 )
+{
+   int      RESULT = 0;
+
+   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
+   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "MasterProduct" );
+   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "PrimaryRegistrant" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
+   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_0 );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+   return( 0 );
+} 
+
+
+private int 
+o_fnLocalBuildQual_4( View     vSubtask,
+                      zVIEW    vQualObject,
+                      int      lTempInteger_0 )
+{
+   int      RESULT = 0;
+
+   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
+   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "MasterLabelContent" );
+   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "MasterLabelContent" );
    SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
    SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_0 );
    SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
@@ -820,41 +820,178 @@ GOTO_AddUsageGroup( View     ViewToWindow )
 {
    zVIEW    mMasLC = new zVIEW( );
    int      RESULT = 0;
-   //:INTEGER       SeqNo
-   int      SeqNo = 0;
-   //:STRING ( 3 )  szSeqNo
-   String   szSeqNo = null;
+   //:INTEGER       SeqNbr
+   int      SeqNbr = 0;
+   //:STRING ( 16 ) szSeqNbr
+   String   szSeqNbr = null;
+   //:STRING ( 15 ) szTemp
+   String   szTemp = null;
 
    RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
 
-   //:// Create a new Usage Group temporal entity and set Seq. No to last entry.
-   //:SeqNo = 0
-   SeqNo = 0;
-   //:FOR EACH mMasLC.M_UsageGroup
-   RESULT = SetCursorFirstEntity( mMasLC, "M_UsageGroup", "" );
-   while ( RESULT > zCURSOR_UNCHANGED )
+   //:SeqNbr = 0
+   SeqNbr = 0;
+   //:RESULT = zCURSOR_SET
+   RESULT = zCURSOR_SET;
+   //:LOOP WHILE RESULT >= zCURSOR_SET
+   while ( RESULT >= zCURSOR_SET )
    { 
-      //:SeqNo = SeqNo + 1
-      SeqNo = SeqNo + 1;
-      RESULT = SetCursorNextEntity( mMasLC, "M_UsageGroup", "" );
+      //:SeqNbr = SeqNbr + 1
+      SeqNbr = SeqNbr + 1;
+      //:szTemp = SeqNbr
+       {StringBuilder sb_szTemp;
+      if ( szTemp == null )
+         sb_szTemp = new StringBuilder( 32 );
+      else
+         sb_szTemp = new StringBuilder( szTemp );
+            ZeidonStringConvertFromNumber( sb_szTemp, 1, 0, 15, SeqNbr, (double) 0.0, "I" );
+      szTemp = sb_szTemp.toString( );}
+      //:szSeqNbr = "T" + szTemp
+       {StringBuilder sb_szSeqNbr;
+      if ( szSeqNbr == null )
+         sb_szSeqNbr = new StringBuilder( 32 );
+      else
+         sb_szSeqNbr = new StringBuilder( szSeqNbr );
+            ZeidonStringCopy( sb_szSeqNbr, 1, 0, "T", 1, 0, 17 );
+      szSeqNbr = sb_szSeqNbr.toString( );}
+       {StringBuilder sb_szSeqNbr;
+      if ( szSeqNbr == null )
+         sb_szSeqNbr = new StringBuilder( 32 );
+      else
+         sb_szSeqNbr = new StringBuilder( szSeqNbr );
+            ZeidonStringConcat( sb_szSeqNbr, 1, 0, szTemp, 1, 0, 17 );
+      szSeqNbr = sb_szSeqNbr.toString( );}
+      //:SET CURSOR FIRST mMasLC.M_UsageGroup WHERE mMasLC.M_UsageGroup.Name = szSeqNbr
+      RESULT = SetCursorFirstEntityByString( mMasLC, "M_UsageGroup", "Name", szSeqNbr, "" );
    } 
 
    //:END
-   //:SeqNo = SeqNo + 1
-   SeqNo = SeqNo + 1;
-   //:szSeqNo = SeqNo
-    {StringBuilder sb_szSeqNo;
-   if ( szSeqNo == null )
-      sb_szSeqNo = new StringBuilder( 32 );
-   else
-      sb_szSeqNo = new StringBuilder( szSeqNo );
-      ZeidonStringConvertFromNumber( sb_szSeqNo, 1, 0, 3, SeqNo, (double) 0.0, "I" );
-   szSeqNo = sb_szSeqNo.toString( );}
+
+   //:// Create a new Usage Group temporal entity and set Seq. No to last entry.
    //:CREATE ENTITY mMasLC.M_UsageGroup
    RESULT = CreateEntity( mMasLC, "M_UsageGroup", zPOS_AFTER );
-   //:mMasLC.M_UsageGroup.Name = szSeqNo
-   SetAttributeFromString( mMasLC, "M_UsageGroup", "Name", szSeqNo );
+   //:mMasLC.M_UsageGroup.Name = szSeqNbr
+   SetAttributeFromString( mMasLC, "M_UsageGroup", "Name", szSeqNbr );
    return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:MoveSubUsagesToUsageGroup( VIEW ViewToWindow )
+
+//:   VIEW mMasLC REGISTERED AS mMasLC
+public int 
+MoveSubUsagesToUsageGroup( View     ViewToWindow )
+{
+   zVIEW    mMasLC = new zVIEW( );
+   int      RESULT = 0;
+   //:VIEW mMasLC2 BASED ON LOD mMasLC
+   zVIEW    mMasLC2 = new zVIEW( );
+   //:STRING ( 2048 ) szName
+   String   szName = null;
+   String   szTempString_0 = null;
+   int      lTempInteger_0 = 0;
+
+   RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
+
+   //:GOTO_AddUsageGroup( ViewToWindow )
+   GOTO_AddUsageGroup( ViewToWindow );
+   //:CreateViewFromView( mMasLC2, mMasLC )  // keep mMasLC on new UsageGroup
+   CreateViewFromView( mMasLC2, mMasLC );
+   //:FOR EACH mMasLC.M_SubUsage
+   RESULT = SetCursorFirstEntity( mMasLC, "M_SubUsage", "" );
+   while ( RESULT > zCURSOR_UNCHANGED )
+   { 
+      //:CREATE ENTITY mMasLC2.M_Usage
+      RESULT = CreateEntity( mMasLC2, "M_Usage", zPOS_AFTER );
+      //:SetMatchingAttributesByName( mMasLC2, "M_Usage", mMasLC, "M_SubUsage", zSET_ALL )
+      SetMatchingAttributesByName( mMasLC2, "M_Usage", mMasLC, "M_SubUsage", zSET_ALL );
+      //:INCLUDE mMasLC.M_UsageGroupUsage FROM mMasLC2.M_Usage
+      RESULT = IncludeSubobjectFromSubobject( mMasLC, "M_UsageGroupUsage", mMasLC2, "M_Usage", zPOS_AFTER );
+      //:DELETE ENTITY mMasLC.M_SubUsage NONE
+      RESULT = DeleteEntity( mMasLC, "M_SubUsage", zREPOS_NONE );
+      RESULT = SetCursorNextEntity( mMasLC, "M_SubUsage", "" );
+   } 
+
+   //:END
+
+   //:FOR EACH mMasLC.M_InsertTextKeywordUsage
+   RESULT = SetCursorFirstEntity( mMasLC, "M_InsertTextKeywordUsage", "" );
+   while ( RESULT > zCURSOR_UNCHANGED )
+   { 
+      //:szName = "{" + mMasLC.M_InsertTextKeywordUsage.Name + "}"
+      {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
+      StringBuilder sb_szTempString_0;
+      if ( szTempString_0 == null )
+         sb_szTempString_0 = new StringBuilder( 32 );
+      else
+         sb_szTempString_0 = new StringBuilder( szTempString_0 );
+             GetVariableFromAttribute( sb_szTempString_0, mi_lTempInteger_0, 'S', 255, mMasLC, "M_InsertTextKeywordUsage", "Name", "", 0 );
+      lTempInteger_0 = mi_lTempInteger_0.intValue( );
+      szTempString_0 = sb_szTempString_0.toString( );}
+       {StringBuilder sb_szName;
+      if ( szName == null )
+         sb_szName = new StringBuilder( 32 );
+      else
+         sb_szName = new StringBuilder( szName );
+            ZeidonStringCopy( sb_szName, 1, 0, "{", 1, 0, 2049 );
+      szName = sb_szName.toString( );}
+       {StringBuilder sb_szName;
+      if ( szName == null )
+         sb_szName = new StringBuilder( 32 );
+      else
+         sb_szName = new StringBuilder( szName );
+            ZeidonStringConcat( sb_szName, 1, 0, szTempString_0, 1, 0, 2049 );
+      szName = sb_szName.toString( );}
+       {StringBuilder sb_szName;
+      if ( szName == null )
+         sb_szName = new StringBuilder( 32 );
+      else
+         sb_szName = new StringBuilder( szName );
+            ZeidonStringConcat( sb_szName, 1, 0, "}", 1, 0, 2049 );
+      szName = sb_szName.toString( );}
+      //:SET CURSOR FIRST mMasLC.M_UsageGroupUsage WHERE mMasLC.M_UsageGroupUsage.Name = szName
+      RESULT = SetCursorFirstEntityByString( mMasLC, "M_UsageGroupUsage", "Name", szName, "" );
+      //:IF RESULT >= zCURSOR_SET
+      if ( RESULT >= zCURSOR_SET )
+      { 
+         //:SetCursorFirstEntityByEntityCsr( mMasLC2, "M_Usage", mMasLC, "M_UsageGroupUsage", "" )
+         SetCursorFirstEntityByEntityCsr( mMasLC2, "M_Usage", mMasLC, "M_UsageGroupUsage", "" );
+         //:CREATE ENTITY mMasLC2.M_InsertTextKeywordUsage
+         RESULT = CreateEntity( mMasLC2, "M_InsertTextKeywordUsage", zPOS_AFTER );
+         //:SetMatchingAttributesByName( mMasLC2, "M_InsertTextKeywordUsage", mMasLC, "M_InsertTextKeywordUsage", zSET_ALL )
+         SetMatchingAttributesByName( mMasLC2, "M_InsertTextKeywordUsage", mMasLC, "M_InsertTextKeywordUsage", zSET_ALL );
+         //:FOR EACH mMasLC.M_InsertTextUsage
+         RESULT = SetCursorFirstEntity( mMasLC, "M_InsertTextUsage", "" );
+         while ( RESULT > zCURSOR_UNCHANGED )
+         { 
+            //:CREATE ENTITY mMasLC2.M_InsertTextUsage
+            RESULT = CreateEntity( mMasLC2, "M_InsertTextUsage", zPOS_AFTER );
+            //:SetMatchingAttributesByName( mMasLC2, "M_InsertTextUsage", mMasLC, "M_InsertTextUsage", zSET_ALL )
+            SetMatchingAttributesByName( mMasLC2, "M_InsertTextUsage", mMasLC, "M_InsertTextUsage", zSET_ALL );
+            RESULT = SetCursorNextEntity( mMasLC, "M_InsertTextUsage", "" );
+         } 
+
+         //:END
+      } 
+
+      //:END
+      //:DELETE ENTITY mMasLC.M_InsertTextKeywordUsage NONE
+      RESULT = DeleteEntity( mMasLC, "M_InsertTextKeywordUsage", zREPOS_NONE );
+      RESULT = SetCursorNextEntity( mMasLC, "M_InsertTextKeywordUsage", "" );
+   } 
+
+   //:END
+   //:AcceptSubobject( mMasLC, "M_Usage" )
+   AcceptSubobject( mMasLC, "M_Usage" );
+   return( 0 );
+// /*
+//    IF szName != "" AND szName != "{{}}"
+//       CREATE ENTITY mMasLC.M_Usage
+//       mMasLC.M_Usage.Name = szName
+//    END
+// */
 // END
 } 
 
@@ -3536,8 +3673,7 @@ GOTO_UpdateMLC( View     ViewToWindow )
    DropView( vTempViewVar_0 );
    //:NAME VIEW mMasLC "mMasLC"
    SetNameForView( mMasLC, "mMasLC", null, zLEVEL_TASK );
-   //:OrderEntityForView( mMasLC, "M_Usage", "UsageType A ClaimsClassification A Name A" )
-   OrderEntityForView( mMasLC, "M_Usage", "UsageType A ClaimsClassification A Name A" );
+   //:// OrderEntityForView( mMasLC, "M_Usage", "UsageType A ClaimsClassification A Name A" )
    //:SET CURSOR FIRST mMasLC.M_Usage
    RESULT = SetCursorFirstEntity( mMasLC, "M_Usage", "" );
 
@@ -3674,16 +3810,9 @@ GOTO_UpdateMLC( View     ViewToWindow )
    //:END
 
    //:// Make sure Usage Entries are sorted.
-   //:FOR EACH mMasLC.M_UsageType
-   RESULT = SetCursorFirstEntity( mMasLC, "M_UsageType", "" );
-   while ( RESULT > zCURSOR_UNCHANGED )
-   { 
-      //:OrderEntityForView( mMasLC, "M_Usage", "ClaimsClassification A Name A" )
-      OrderEntityForView( mMasLC, "M_Usage", "ClaimsClassification A Name A" );
-      RESULT = SetCursorNextEntity( mMasLC, "M_UsageType", "" );
-   } 
-
-   //:END
+   //:// FOR EACH mMasLC.M_UsageType
+   //://    OrderEntityForView( mMasLC, "M_Usage", "ClaimsClassification A Name A" )
+   //:// END
    //:SET CURSOR FIRST mMasLC.M_UsageType
    RESULT = SetCursorFirstEntity( mMasLC, "M_UsageType", "" );
 
@@ -3959,7 +4088,7 @@ SAVE_MasterProduct( View     ViewToWindow )
    else
    { 
       //:SET CURSOR FIRST lPrimReg.MasterProduct WHERE lPrimReg.MasterProduct.Name = szProductName
-      //:                                          AND lPrimReg.MasterProduct.ID  != mMasProd.MasterProduct.ID
+      //:                                          AND lPrimReg.MasterProduct.ID != mMasProd.MasterProduct.ID
       RESULT = SetCursorFirstEntity( lPrimReg, "MasterProduct", "" );
       if ( RESULT > zCURSOR_UNCHANGED )
       { 
@@ -5812,14 +5941,12 @@ ConfirmAddItemsMultiple( View     ViewToWindow )
       } 
 
       //:END
-
-      //:// Sort the Usage entries just added.
-      //:OrderEntityForView( mMasLC, "M_Usage", "Name A" )
-      OrderEntityForView( mMasLC, "M_Usage", "Name A" );
-      //:OrderEntityForView( mMasLC, "M_UsageGroupUsage", "Name A" )
-      OrderEntityForView( mMasLC, "M_UsageGroupUsage", "Name A" );
    } 
 
+
+   //:   // Sort the Usage entries just added.
+   //:// OrderEntityForView( mMasLC, "M_Usage", "Name A" )
+   //:// OrderEntityForView( mMasLC, "M_UsageGroupUsage", "Name A" )
    //:END
 
    //:IF wWebXfer.Root.Note != ""
@@ -6378,8 +6505,7 @@ SelectUsageEntriesForGroup( View     ViewToWindow )
    } 
 
    //:END
-   //:OrderEntityForView( mMasLC2, "M_UsageGroupUsage", "Name A" )
-   OrderEntityForView( mMasLC2, "M_UsageGroupUsage", "Name A" );
+   //:// OrderEntityForView( mMasLC2, "M_UsageGroupUsage", "Name A" )
    //:DropView( mMasLC2 )
    DropView( mMasLC2 );
    return( 0 );
@@ -9053,6 +9179,62 @@ AddTable( View     ViewToWindow )
    CreateTemporalEntity( mMasLC, "M_MetaTable", zPOS_AFTER );
    //:InitTableColumns( ViewToWindow )
    InitTableColumns( ViewToWindow );
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:CheckUniqueGroupName( VIEW ViewToWindow )
+
+//:   VIEW mMasLC REGISTERED AS mMasLC
+public int 
+CheckUniqueGroupName( View     ViewToWindow )
+{
+   zVIEW    mMasLC = new zVIEW( );
+   int      RESULT = 0;
+   //:STRING ( 2048 ) szName
+   String   szName = null;
+   int      lTempInteger_0 = 0;
+
+   RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
+
+   //:szName = mMasLC.M_UsageGroup.Name
+   {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
+   StringBuilder sb_szName;
+   if ( szName == null )
+      sb_szName = new StringBuilder( 32 );
+   else
+      sb_szName = new StringBuilder( szName );
+       GetVariableFromAttribute( sb_szName, mi_lTempInteger_0, 'S', 2049, mMasLC, "M_UsageGroup", "Name", "", 0 );
+   lTempInteger_0 = mi_lTempInteger_0.intValue( );
+   szName = sb_szName.toString( );}
+   //:SET CURSOR FIRST mMasLC.M_UsageGroupUsage WITHIN mMasLC.M_UsageType
+   //:           WHERE mMasLC.M_UsageGroupUsage.Name = szName
+   RESULT = SetCursorFirstEntityByString( mMasLC, "M_UsageGroupUsage", "Name", szName, "M_UsageType" );
+   //:IF RESULT >= 0
+   if ( RESULT >= 0 )
+   { 
+      //:SET CURSOR NEXT mMasLC.M_UsageGroupUsage WITHIN mMasLC.M_UsageType
+      //:           WHERE mMasLC.M_UsageGroupUsage.Name = szName
+      RESULT = SetCursorNextEntityByString( mMasLC, "M_UsageGroupUsage", "Name", szName, "M_UsageType" );
+      //:IF RESULT >= 0
+      if ( RESULT >= 0 )
+      { 
+         //:MessageSend( ViewToWindow, "", "Return Surfaces Group",
+         //:             "A unique Group Name must be specified.",
+         //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+         MessageSend( ViewToWindow, "", "Return Surfaces Group", "A unique Group Name must be specified.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+         //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+         m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
+         //:RETURN 2
+         if(8==8)return( 2 );
+      } 
+
+      //:END
+   } 
+
+   //:END
    return( 0 );
 // END
 } 

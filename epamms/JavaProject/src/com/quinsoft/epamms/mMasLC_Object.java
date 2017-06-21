@@ -8458,6 +8458,7 @@ omMasLC_dSubUsageCombinedText( View     mMasLC,
    String   szTempString_5 = null;
    int      lTempInteger_8 = 0;
 
+   //:// SHORT nRC
 
    //:CASE GetOrSetFlag
    switch( GetOrSetFlag )
@@ -8484,14 +8485,38 @@ omMasLC_dSubUsageCombinedText( View     mMasLC,
          RESULT = SetCursorFirstEntity( mMasLC2, "M_UsageGroupUsage", "" );
          while ( RESULT > zCURSOR_UNCHANGED )
          { 
+            //:// DisplayEntityInstance( mMasLC2, "M_UsageGroupUsage" )
+            //:// nRC = SetCursorFirstEntityByEntityCsr( mMasLC3, "M_Usage", mMasLC2, "M_UsageGroupUsage", "" )
             //:ID = mMasLC2.M_UsageGroupUsage.ID
             {MutableInt mi_ID = new MutableInt( ID );
                          GetIntegerFromAttribute( mi_ID, mMasLC2, "M_UsageGroupUsage", "ID" );
             ID = mi_ID.intValue( );}
-            //:SET CURSOR FIRST mMasLC3.M_Usage WHERE mMasLC3.M_Usage.ID = ID
-            RESULT = SetCursorFirstEntityByInteger( mMasLC3, "M_Usage", "ID", ID, "" );
-            //:IF RESULT = 0
-            if ( RESULT == 0 )
+            //:IF ID = 0
+            if ( ID == 0 )
+            { 
+               //:SET CURSOR FIRST mMasLC3.M_Usage WHERE mMasLC3.M_Usage.ID = ""
+               //:                                AND mMasLC3.M_Usage.Name = mMasLC2.M_UsageGroupUsage.Name
+               RESULT = SetCursorFirstEntity( mMasLC3, "M_Usage", "" );
+               if ( RESULT > zCURSOR_UNCHANGED )
+               { 
+                  while ( RESULT > zCURSOR_UNCHANGED && ( CompareAttributeToString( mMasLC3, "M_Usage", "ID", "" ) != 0 || CompareAttributeToAttribute( mMasLC3, "M_Usage", "Name", mMasLC2, "M_UsageGroupUsage", "Name" ) != 0 ) )
+                  { 
+                     RESULT = SetCursorNextEntity( mMasLC3, "M_Usage", "" );
+                  } 
+
+               } 
+
+               //:ELSE
+            } 
+            else
+            { 
+               //:SET CURSOR FIRST mMasLC3.M_Usage WHERE mMasLC3.M_Usage.ID = ID
+               RESULT = SetCursorFirstEntityByInteger( mMasLC3, "M_Usage", "ID", ID, "" );
+            } 
+
+            //:END
+            //:IF RESULT >= 0
+            if ( RESULT >= 0 )
             { 
                //:// Display required text combined with optional usage(s).
                //:szDisplayStatement = mMasLC3.M_Usage.Name
@@ -8834,6 +8859,16 @@ omMasLC_dSubUsageCombinedText( View     mMasLC,
             } 
             else
             { 
+               //:TraceLineS( "Did not find M_UsageGroupUsage", "" )
+               TraceLineS( "Did not find M_UsageGroupUsage", "" );
+               //:DisplayEntityInstance( mMasLC2, "M_UsageGroupUsage" )
+               DisplayEntityInstance( mMasLC2, "M_UsageGroupUsage" );
+                RESULT = mMasLC3.getCursor( "M_Usage" ).setFirst().toInt();
+                while ( RESULT >= 0 )
+                {
+                   mMasLC3.getCursor( "M_Usage" ).logEntity( false );
+                   RESULT = mMasLC3.getCursor( "M_Usage" ).setNext().toInt();
+                }
                //:szDisplayStatement = ""
                 {StringBuilder sb_szDisplayStatement;
                if ( szDisplayStatement == null )

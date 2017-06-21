@@ -1,10 +1,7 @@
 /* Alter script for ePammsM -- MySQL ePamms database */
 
-/* Entity M_Usage */
-ALTER TABLE M_USAGE ADD AUTOSEQ04                          int                NULL    ;
-
-/* Entity S_Usage */
-ALTER TABLE S_USAGE ADD AUTOSEQ04                          int                NULL    ;
+/* Entity S_DirectionsForUseCategory */
+ALTER TABLE S_DIRECTIONSFORUSECATEGORY ADD PRIMARYMLC_ID                      int                NULL    ;
 
 /* Entity LLD */
 ALTER TABLE lld                                MODIFY COLUMN DEFAULTTEXTFONTFAMILY              longtext           NULL    ;

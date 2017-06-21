@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCSurfacesStatement   Generate Timestamp: 20170608161518628 --%>
+<%-- wMLCSurfacesStatement   Generate Timestamp: 20170616135913157 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -258,7 +258,7 @@ if ( strActionToProcess != null )
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "Sort" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "MoveSubsurfacesToGroup" ) )
    {
       bDone = true;
       VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCSurfacesStatement", strActionToProcess );
@@ -268,15 +268,29 @@ if ( strActionToProcess != null )
       if ( nRC < 0 )
          break;
 
-      // Next Window
-      // We are borrowing zTableRowSelect and this code is hardwired for the moment.  javascript code similar to the following must be added to the action:
-      // document.wSLCMarketingStatement.zTableRowSelect.value = buildSortTableHtml( "mSubLC", "S_MarketingUsageOrdering", "GridMarketingUsage", ["Usage Type","Usage Name"] );
-      wWebXA = task.getViewByName( "wWebXfer" );
-      String strHtml = (String) request.getParameter( "zTableRowSelect" );
-      wWebXA.cursor( "Root" ).getAttribute( "HTML" ).setValue( strHtml, "" );
-      // We are borrowing zTableRowSelect and the code above is hardwired for the moment
+      // Action Operation
+      nRC = 0;
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCSurfacesStatement", "wMLC.MoveSubUsagesToUsageGroup" );
+      nOptRC = wMLC.MoveSubUsagesToUsageGroup( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
 
-      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wSystem", "DragDropSort" );
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReturnToParent, "", "" );
+      }
+
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
@@ -695,6 +709,30 @@ if ( strActionToProcess != null )
          strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
       }
 
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "Sort" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCSurfacesStatement", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Next Window
+      // We are borrowing zTableRowSelect and this code is hardwired for the moment.  javascript code similar to the following must be added to the action:
+      // document.wSLCMarketingStatement.zTableRowSelect.value = buildSortTableHtml( "mSubLC", "S_MarketingUsageOrdering", "GridMarketingUsage", ["Usage Type","Usage Name"] );
+      wWebXA = task.getViewByName( "wWebXfer" );
+      String strHtml = (String) request.getParameter( "zTableRowSelect" );
+      wWebXA.cursor( "Root" ).getAttribute( "HTML" ).setValue( strHtml, "" );
+      // We are borrowing zTableRowSelect and the code above is hardwired for the moment
+
+      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wSystem", "DragDropSort" );
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
@@ -1164,13 +1202,16 @@ else
 
 <% /* Subsurfaces:Text */ %>
 
-<label class="listheader"  id="Subsurfaces" name="Subsurfaces" style="width:398px;height:16px;position:absolute;left:10px;top:8px;">Subsurfaces</label>
+<label class="listheader"  id="Subsurfaces" name="Subsurfaces" style="width:278px;height:16px;position:absolute;left:10px;top:8px;">Subsurfaces</label>
+
+<% /* PBGroupSubsurfaces:PushBtn */ %>
+<button type="button" name="PBGroupSubsurfaces" id="PBGroupSubsurfaces" value="" onclick="MoveSubsurfacesToGroup( )" style="width:148px;height:26px;position:absolute;left:366px;top:10px;">Group Subsurfaces</button>
 
 <% /* PBNew:PushBtn */ %>
-<button type="button" name="PBNew" id="PBNew" value="" onclick="GOTO_AddSurfaceSubstatements( )" style="width:78px;height:26px;position:absolute;left:520px;top:10px;">New</button>
+<button type="button" name="PBNew" id="PBNew" value="" onclick="GOTO_AddSurfaceSubstatements( )" style="width:78px;height:26px;position:absolute;left:524px;top:10px;">New</button>
 
 <% /* PBSort:PushBtn */ %>
-<button type="button" class="newbutton" name="PBSort" id="PBSort" value="" onclick="Sort( )" style="width:78px;height:26px;position:absolute;left:612px;top:10px;">Sort</button>
+<button type="button" class="newbutton" name="PBSort" id="PBSort" value="" onclick="Sort( )" style="width:78px;height:26px;position:absolute;left:614px;top:10px;">Sort</button>
 
 
 </div>  <!--  GroupBox3 --> 

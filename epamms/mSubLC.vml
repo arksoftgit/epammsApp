@@ -3157,6 +3157,36 @@ ObjectConstraints( VIEW mSubLC BASED ON LOD mSubLC,
    OF   zOCE_ACTIVATE:
 
       // Build the PrimaryMLC_ID  values from MLC subentities, if the ID values are null.
+      FOR EACH mSubLC.S_UsageType
+         FOR EACH mSubLC.S_Usage
+            IF mSubLC.S_Usage.PrimaryMLC_ID = ""
+               mSubLC.S_Usage.PrimaryMLC_ID = mSubLC.M_Usage.ID
+            END
+         // FOR EACH mSubLC.S_SubUsage
+         //    IF mSubLC.S_SubUsage.PrimaryMLC_ID = ""
+         //       mSubLC.S_SubUsage.PrimaryMLC_ID = mSubLC.M_SubUsage.ID
+         //    END
+         // END
+         // FOR EACH mSubLC.S_InsertTextKeywordUsage
+         //    IF mSubLC.S_InsertTextKeywordUsage.PrimaryMLC_ID = ""
+         //       mSubLC.S_InsertTextKeywordUsage.PrimaryMLC_ID = mSubLC.M_InsertTextKeywordUsage.ID
+         //    END
+         //    FOR EACH mSubLC.S_InsertTextUsage
+         //       IF mSubLC.S_InsertTextUsage.PrimaryMLC_ID = ""
+         //          mSubLC.S_InsertTextUsage.PrimaryMLC_ID = mSubLC.M_InsertTextUsage.ID
+         //       END
+         //    END
+         // END
+            FOR EACH mSubLC.S_UsageFootnoteUsed
+               IF mSubLC.S_UsageFootnoteUsed.PrimaryMLC_ID = ""
+                  mSubLC.S_UsageFootnoteUsed.PrimaryMLC_ID = mSubLC.M_UsageFootnoteUsed.ID
+               END
+            END
+         END
+         IF mSubLC.S_UsageType.PrimaryMLC_ID = ""
+            mSubLC.S_UsageType.PrimaryMLC_ID = mSubLC.M_UsageType.ID
+         END
+      END
       FOR EACH mSubLC.S_GeneralSection
          IF mSubLC.S_GeneralSection.PrimaryMLC_ID = ""
             mSubLC.S_GeneralSection.PrimaryMLC_ID = mSubLC.M_GeneralSection.ID
@@ -3164,6 +3194,36 @@ ObjectConstraints( VIEW mSubLC BASED ON LOD mSubLC,
          FOR EACH mSubLC.S_GeneralStatement
             IF mSubLC.S_GeneralStatement.PrimaryMLC_ID = ""
                mSubLC.S_GeneralStatement.PrimaryMLC_ID = mSubLC.M_GeneralStatement.ID
+            END
+         // FOR EACH mSubLC.S_InsertTextKeyword
+         //    IF mSubLC.S_InsertTextKeyword.PrimaryMLC_ID = ""
+         //       mSubLC.S_InsertTextKeyword.PrimaryMLC_ID = mSubLC.M_InsertTextKeyword.ID
+         //    END
+         //    FOR EACH mSubLC.S_InsertText
+         //       IF mSubLC.S_InsertText.PrimaryMLC_ID = ""
+         //          mSubLC.S_InsertText.PrimaryMLC_ID = mSubLC.M_InsertText.ID
+         //       END
+         //    END
+         // END
+         END
+         FOR EACH mSubLC.S_GeneralSubSection
+            IF mSubLC.S_GeneralSubSection.PrimaryMLC_ID = ""
+               mSubLC.S_GeneralSubSection.PrimaryMLC_ID = mSubLC.M_GeneralSubSection.ID
+            END
+            FOR EACH mSubLC.S_GeneralSubStatement
+               IF mSubLC.S_GeneralSubStatement.PrimaryMLC_ID = ""
+                  mSubLC.S_GeneralSubStatement.PrimaryMLC_ID = mSubLC.M_GeneralSubStatement.ID
+               END
+            // FOR EACH mSubLC.S_InsertTextKeywordGeneral
+            //    IF mSubLC.S_InsertTextKeywordGeneral.PrimaryMLC_ID = ""
+            //       mSubLC.S_InsertTextKeywordGeneral.PrimaryMLC_ID = mSubLC.M_InsertTextKeywordGeneral.ID
+            //    END
+            //    FOR EACH mSubLC.S_InsertTextGeneral
+            //       IF mSubLC.S_InsertTextGeneral.PrimaryMLC_ID = ""
+            //          mSubLC.S_InsertTextGeneral.PrimaryMLC_ID = mSubLC.M_InsertTextGeneral.ID
+            //       END
+            //    END
+            // END
             END
          END
       END
@@ -3185,16 +3245,70 @@ ObjectConstraints( VIEW mSubLC BASED ON LOD mSubLC,
             IF mSubLC.S_StorageDisposalStatement.PrimaryMLC_ID = ""
                mSubLC.S_StorageDisposalStatement.PrimaryMLC_ID = mSubLC.M_StorageDisposalStatement.ID
             END
+         // FOR EACH mSubLC.S_StorageDisposalSubStatement
+         //    IF mSubLC.S_StorageDisposalSubStatement.PrimaryMLC_ID = ""
+         //       mSubLC.S_StorageDisposalSubStatement.PrimaryMLC_ID = mSubLC.M_StorageDisposalSubStatement.ID
+         //    END
+         // END
+         // FOR EACH mSubLC.S_InsertTextKeywordSD
+         //    IF mSubLC.S_InsertTextKeywordSD.PrimaryMLC_ID = ""
+         //       mSubLC.S_InsertTextKeywordSD.PrimaryMLC_ID = mSubLC.M_InsertTextKeywordSD.ID
+         //    END
+         //    FOR EACH mSubLC.S_InsertTextSD
+         //       mSubLC.S_InsertTextSD.PrimaryMLC_ID = mSubLC.M_InsertTextSD.ID
+         //       END
+         //    END
+         // END
          END
       END
-      FOR EACH mSubLC.S_DirectionsForUseSection
-         IF mSubLC.S_DirectionsForUseSection.PrimaryMLC_ID = ""
-            mSubLC.S_DirectionsForUseSection.PrimaryMLC_ID = mSubLC.M_DirectionsForUseSection.ID
+      FOR EACH mSubLC.S_DirectionsForUseCategory
+         IF mSubLC.S_DirectionsForUseCategory.PrimaryMLC_ID = ""
+            mSubLC.S_DirectionsForUseCategory.PrimaryMLC_ID = mSubLC.S_DirectionsForUseCategory.ID
          END
-         FOR EACH mSubLC.S_DirectionsForUseStatement
-            IF mSubLC.S_DirectionsForUseStatement.PrimaryMLC_ID = ""
-               mSubLC.S_DirectionsForUseStatement.PrimaryMLC_ID = mSubLC.M_DirectionsForUseStatement.ID
+         FOR EACH mSubLC.S_DirectionsForUseSection
+            IF mSubLC.S_DirectionsForUseSection.PrimaryMLC_ID = ""
+               mSubLC.S_DirectionsForUseSection.PrimaryMLC_ID = mSubLC.M_DirectionsForUseSection.ID
             END
+            FOR EACH mSubLC.S_DirectionsForUseStatement
+               IF mSubLC.S_DirectionsForUseStatement.PrimaryMLC_ID = ""
+                  mSubLC.S_DirectionsForUseStatement.PrimaryMLC_ID = mSubLC.M_DirectionsForUseStatement.ID
+               END
+            // FOR EACH mSubLC.S_DirectionsForUseSubStatement    recurse?
+            //    IF mSubLC.S_DirectionsForUseSubStatement.PrimaryMLC_ID = ""
+            //       mSubLC.S_DirectionsForUseSubStatement.PrimaryMLC_ID = mSubLC.M_DirectionsForUseSubStatement.ID
+            //    END
+            // END
+            // FOR EACH mSubLC.S_InsertTextKeywordDU
+            //    IF mSubLC.S_InsertTextKeywordDU.PrimaryMLC_ID = ""
+            //       mSubLC.S_InsertTextKeywordDU.PrimaryMLC_ID = mSubLC.M_InsertTextKeywordDU.ID
+            //    END
+            //    FOR EACH mSubLC.S_InsertTextDU
+            //       IF mSubLC.S_InsertTextDU.PrimaryMLC_ID = ""
+            //          mSubLC.S_InsertTextDU.PrimaryMLC_ID = mSubLC.M_InsertTextDU.ID
+            //       END
+            //    END
+            // END
+            END
+         // FOR EACH mSubLC.S_ClaimsDrivingUsage
+         //    IF mSubLC.S_ClaimsDrivingUsage.PrimaryMLC_ID = ""
+         //       mSubLC.S_ClaimsDrivingUsage.PrimaryMLC_ID = mSubLC.M_ClaimsDrivingUsage.ID
+         //    END
+         // END
+         // FOR EACH mSubLC.S_InsertTextKeywordSectionDU
+         //    IF mSubLC.S_InsertTextKeywordSectionDU.PrimaryMLC_ID = ""
+         //       mSubLC.S_InsertTextKeywordSectionDU.PrimaryMLC_ID = mSubLC.M_InsertTextKeywordSectionDU.ID
+         //    END
+         //    FOR EACH mSubLC.S_InsertTextSectionDU
+         //       IF mSubLC.S_InsertTextSectionDU.PrimaryMLC_ID = ""
+         //          mSubLC.S_InsertTextSectionDU.PrimaryMLC_ID = mSubLC.M_InsertTextSectionDU.ID
+         //       END
+         //    END
+         // END
+         // FOR EACH mSubLC.S_DirectionsForUseXORSection
+         //    IF mSubLC.S_DirectionsForUseXORSection.PrimaryMLC_ID = ""
+         //       mSubLC.S_DirectionsForUseXORSection.PrimaryMLC_ID = mSubLC.M_DirectionsForUseXORSection.ID
+         //    END
+         // END
          END
       END
       FOR EACH mSubLC.S_MarketingSection
@@ -3215,13 +3329,6 @@ ObjectConstraints( VIEW mSubLC BASED ON LOD mSubLC,
       FOR EACH mSubLC.S_DilutionGroup
          IF mSubLC.S_DilutionGroup.PrimaryMLC_ID = ""
             mSubLC.S_DilutionGroup.PrimaryMLC_ID = mSubLC.M_DilutionGroup.ID
-         END
-      END
-      FOR EACH mSubLC.S_UsageType
-         FOR EACH mSubLC.S_Usage
-            IF mSubLC.S_Usage.PrimaryMLC_ID = ""
-               mSubLC.S_Usage.PrimaryMLC_ID = mSubLC.M_Usage.ID
-            END
          END
       END
 

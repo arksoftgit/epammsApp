@@ -1018,7 +1018,7 @@ SAVE_MasterProduct( VIEW ViewToWindow )
       RETURN 2
    ELSE
       SET CURSOR FIRST lPrimReg.MasterProduct WHERE lPrimReg.MasterProduct.Name = szProductName
-                                                AND lPrimReg.MasterProduct.ID  != mMasProd.MasterProduct.ID
+                                                AND lPrimReg.MasterProduct.ID != mMasProd.MasterProduct.ID
       IF RESULT >= zCURSOR_SET
          MessageSend( ViewToWindow, "", "New Master Product",
                       "The Master Product Name must be unique.",
@@ -1074,7 +1074,7 @@ GOTO_UpdateMLC( VIEW ViewToWindow )
 
    ACTIVATE mMasLC WHERE mMasLC.MasterLabelContent.ID = mMasProd.MasterLabelContent.ID
    NAME VIEW mMasLC "mMasLC"
-   OrderEntityForView( mMasLC, "M_Usage", "UsageType A ClaimsClassification A Name A" )
+// OrderEntityForView( mMasLC, "M_Usage", "UsageType A ClaimsClassification A Name A" )
    SET CURSOR FIRST mMasLC.M_Usage
 
    // Create NetContent section if it doesn't already exist.
@@ -1132,9 +1132,9 @@ GOTO_UpdateMLC( VIEW ViewToWindow )
    END
 
    // Make sure Usage Entries are sorted.
-   FOR EACH mMasLC.M_UsageType
-      OrderEntityForView( mMasLC, "M_Usage", "ClaimsClassification A Name A" )
-   END
+// FOR EACH mMasLC.M_UsageType
+//    OrderEntityForView( mMasLC, "M_Usage", "ClaimsClassification A Name A" )
+// END
    SET CURSOR FIRST mMasLC.M_UsageType
 
    CreateViewFromView( mMasLC_Root, mMasLC )
@@ -2651,8 +2651,8 @@ ConfirmAddItemsMultiple( VIEW ViewToWindow )
       END
 
       // Sort the Usage entries just added.
-      OrderEntityForView( mMasLC, "M_Usage", "Name A" )
-      OrderEntityForView( mMasLC, "M_UsageGroupUsage", "Name A" )
+   // OrderEntityForView( mMasLC, "M_Usage", "Name A" )
+   // OrderEntityForView( mMasLC, "M_UsageGroupUsage", "Name A" )
    END
    
    IF wWebXfer.Root.Note != ""
@@ -2970,19 +2970,66 @@ DIALOG OPERATION
 GOTO_AddUsageGroup( VIEW ViewToWindow )
 
    VIEW mMasLC REGISTERED AS mMasLC
-   INTEGER       SeqNo
-   STRING ( 3 )  szSeqNo
+   INTEGER       SeqNbr
+   STRING ( 16 ) szSeqNbr
+   STRING ( 15 ) szTemp
 
-   // Create a new Usage Group temporal entity and set Seq. No to last entry.
-   SeqNo = 0
-   FOR EACH mMasLC.M_UsageGroup
-      SeqNo = SeqNo + 1
+   SeqNbr = 0
+   RESULT = zCURSOR_SET
+   LOOP WHILE RESULT >= zCURSOR_SET
+      SeqNbr = SeqNbr + 1
+      szTemp = SeqNbr
+      szSeqNbr = "T" + szTemp
+      SET CURSOR FIRST mMasLC.M_UsageGroup WHERE mMasLC.M_UsageGroup.Name = szSeqNbr
    END
-   SeqNo = SeqNo + 1
-   szSeqNo = SeqNo
+ 
+   // Create a new Usage Group temporal entity and set Seq. No to last entry.
    CREATE ENTITY mMasLC.M_UsageGroup
-   mMasLC.M_UsageGroup.Name = szSeqNo
+   mMasLC.M_UsageGroup.Name = szSeqNbr
 
+END
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: GOTO_AddUsageGroup
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+MoveSubUsagesToUsageGroup( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+   VIEW mMasLC2 BASED ON LOD mMasLC
+   STRING ( 2048 ) szName
+
+   GOTO_AddUsageGroup( ViewToWindow )
+   CreateViewFromView( mMasLC2, mMasLC )  // keep mMasLC on new UsageGroup
+   FOR EACH mMasLC.M_SubUsage
+      CREATE ENTITY mMasLC2.M_Usage
+      SetMatchingAttributesByName( mMasLC2, "M_Usage", mMasLC, "M_SubUsage", zSET_ALL )
+      INCLUDE mMasLC.M_UsageGroupUsage FROM mMasLC2.M_Usage
+      DELETE ENTITY mMasLC.M_SubUsage NONE
+   END
+
+   FOR EACH mMasLC.M_InsertTextKeywordUsage
+      szName = "{" + mMasLC.M_InsertTextKeywordUsage.Name + "}"
+      SET CURSOR FIRST mMasLC.M_UsageGroupUsage WHERE mMasLC.M_UsageGroupUsage.Name = szName
+      IF RESULT >= zCURSOR_SET
+         SetCursorFirstEntityByEntityCsr( mMasLC2, "M_Usage", mMasLC, "M_UsageGroupUsage", "" )
+         CREATE ENTITY mMasLC2.M_InsertTextKeywordUsage
+         SetMatchingAttributesByName( mMasLC2, "M_InsertTextKeywordUsage", mMasLC, "M_InsertTextKeywordUsage", zSET_ALL )
+         FOR EACH mMasLC.M_InsertTextUsage
+            CREATE ENTITY mMasLC2.M_InsertTextUsage
+            SetMatchingAttributesByName( mMasLC2, "M_InsertTextUsage", mMasLC, "M_InsertTextUsage", zSET_ALL )
+         END
+      END
+      DELETE ENTITY mMasLC.M_InsertTextKeywordUsage NONE
+   END
+   AcceptSubobject( mMasLC, "M_Usage" )
+/*
+   IF szName != "" AND szName != "{{}}"
+      CREATE ENTITY mMasLC.M_Usage
+      mMasLC.M_Usage.Name = szName
+   END
+*/
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -4073,7 +4120,7 @@ SelectUsageEntriesForGroup( VIEW ViewToWindow )
          END
       END
    END
-   OrderEntityForView( mMasLC2, "M_UsageGroupUsage", "Name A" )
+// OrderEntityForView( mMasLC2, "M_UsageGroupUsage", "Name A" )
    DropView( mMasLC2 )
 
 END
@@ -4731,5 +4778,33 @@ DIALOG OPERATION
 REMOVE_SelectedGroupUsageEntries( VIEW ViewToWindow )
 
 
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: CheckUniqueGroupName
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+CheckUniqueGroupName( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+   STRING ( 2048 ) szName
+
+   szName = mMasLC.M_UsageGroup.Name
+   SET CURSOR FIRST mMasLC.M_UsageGroupUsage WITHIN mMasLC.M_UsageType
+              WHERE mMasLC.M_UsageGroupUsage.Name = szName
+   IF RESULT >= 0
+      SET CURSOR NEXT mMasLC.M_UsageGroupUsage WITHIN mMasLC.M_UsageType
+                 WHERE mMasLC.M_UsageGroupUsage.Name = szName
+      IF RESULT >= 0
+         MessageSend( ViewToWindow, "", "Return Surfaces Group",
+                      "A unique Group Name must be specified.",
+                      zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+         SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+         RETURN 2
+      END
+   END
 
 END

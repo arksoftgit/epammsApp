@@ -1,4 +1,4 @@
-// wMLCSurfaceGroup   Generate Timestamp: 20170614142926388
+// wMLCSurfaceGroup   Generate Timestamp: 20170616210614040
 
 var isWindowClosing = true;
 var timerID = null;
@@ -206,27 +206,6 @@ function DELETE_SelectedGroupUsageEntries( )
    }
 }
 
-function Sort( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      // Javascript code entered by user.
-
-       document.wMLCSurfaceGroup.zTableRowSelect.value = buildSortTableHtml( "mMasLC", "M_UsageGroupUsage", "GridClaims",  ["Surfaces Within Group"]  );
-
-      // END of Javascript code entered by user.
-
-      _DisableFormElements( true );
-
-      document.wMLCSurfaceGroup.zAction.value = "Sort";
-      document.wMLCSurfaceGroup.submit( );
-   }
-}
-
 function GOTO_AddGroupUsageStatements( )
 {
 
@@ -276,6 +255,21 @@ function GOTO_UpdateGroupUsageStatement( strTagEntityKey )
    }
 }
 
+function GOTO_UpdateUsageGroup( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCSurfaceGroup.zAction.value = "GOTO_UpdateUsageGroup";
+      document.wMLCSurfaceGroup.submit( );
+   }
+}
+
 function RemoveUsageEntriesFromGroup( )
 {
 
@@ -302,6 +296,27 @@ function Return( )
       _DisableFormElements( true );
 
       document.wMLCSurfaceGroup.zAction.value = "Return";
+      document.wMLCSurfaceGroup.submit( );
+   }
+}
+
+function Sort( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      // Javascript code entered by user.
+
+       document.wMLCSurfaceGroup.zTableRowSelect.value = buildSortTableHtml( "mMasLC", "M_UsageGroupUsage", "GridClaims",  ["Surfaces Within Group"]  );
+
+      // END of Javascript code entered by user.
+
+      _DisableFormElements( true );
+
+      document.wMLCSurfaceGroup.zAction.value = "Sort";
       document.wMLCSurfaceGroup.submit( );
    }
 }

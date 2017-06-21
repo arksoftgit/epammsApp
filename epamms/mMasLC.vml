@@ -3647,6 +3647,7 @@ dSubUsageCombinedText( VIEW mMasLC BASED ON LOD mMasLC,
    STRING ( 1 ) szUsageType
    INTEGER ID
    SHORT bFirst
+// SHORT nRC
 
    CASE GetOrSetFlag
    OF   zDERIVED_GET:
@@ -3658,9 +3659,16 @@ dSubUsageCombinedText( VIEW mMasLC BASED ON LOD mMasLC,
       // values in the M_InsertTextMarketing subentities.
       szCombinedText = ""
       FOR EACH mMasLC2.M_UsageGroupUsage
+      // DisplayEntityInstance( mMasLC2, "M_UsageGroupUsage" )
+      // nRC = SetCursorFirstEntityByEntityCsr( mMasLC3, "M_Usage", mMasLC2, "M_UsageGroupUsage", "" )
          ID = mMasLC2.M_UsageGroupUsage.ID
-         SET CURSOR FIRST mMasLC3.M_Usage WHERE mMasLC3.M_Usage.ID = ID
-         IF RESULT = 0
+         IF ID = 0
+            SET CURSOR FIRST mMasLC3.M_Usage WHERE mMasLC3.M_Usage.ID = ""
+                                               AND mMasLC3.M_Usage.Name = mMasLC2.M_UsageGroupUsage.Name
+         ELSE
+            SET CURSOR FIRST mMasLC3.M_Usage WHERE mMasLC3.M_Usage.ID = ID
+         END
+         IF RESULT >= 0
             // Display required text combined with optional usage(s).
             szDisplayStatement = mMasLC3.M_Usage.Name
             InsertOptionalSubUsages( mMasLC3, szDisplayStatement, "M_SubUsage", 1 )
@@ -3704,6 +3712,14 @@ dSubUsageCombinedText( VIEW mMasLC BASED ON LOD mMasLC,
                END
             END
          ELSE
+            TraceLineS( "Did not find M_UsageGroupUsage", "" )
+            DisplayEntityInstance( mMasLC2, "M_UsageGroupUsage" )
+         // RESULT = mMasLC3.getCursor( "M_Usage" ).setFirst().toInt();
+         // while ( RESULT >= 0 )
+         // {
+         //    mMasLC3.getCursor( "M_Usage" ).logEntity( false );
+         //    RESULT = mMasLC3.getCursor( "M_Usage" ).setNext().toInt();
+         // }
             szDisplayStatement = ""
          END
          IF szCombinedText = ""
