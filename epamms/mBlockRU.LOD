@@ -1,4 +1,4 @@
-z1000-Zeidon    MBLOCKRU TZZOLODO                         11/18/16   15:02:17 1.0a2   
+z1000-Zeidon    MBLOCKRU TZZOLODO                         06/26/17   09:51:07 1.0a2   
 eLOD       1
 aZKey      110030723
 aName      mBlockRU
@@ -622,7 +622,7 @@ aName      LLD_Block
 aZKey      69021553
 aPurpose   A
 aER_DiagramPosX 243
-aER_DiagramPosY 45
+aER_DiagramPosY 38
 
 eER_RelLinkRec 5
 aName      is linked to
@@ -636,12 +636,12 @@ aTE_NoForeignKeyPrefix N
 eER_RelTypeRec 6
 aZKey      4495116
 aFact      Added thru ER Dialog
-aER_DiagramBendPosX 255
-aER_DiagramBendPosY 41
-aER_DiagramE1PosX 249
-aER_DiagramE1PosY 44
-aER_DiagramE2PosX 252
-aER_DiagramE2PosY 45
+aER_DiagramBendPosX 0
+aER_DiagramBendPosY 0
+aER_DiagramE1PosX 0
+aER_DiagramE1PosY 0
+aER_DiagramE2PosX 0
+aER_DiagramE2PosY 0
 
 eLOD_EntityChild 4
 aName      LLD_SpecialSectionAttribute
@@ -797,12 +797,12 @@ aTE_NoForeignKeyPrefix N
 eER_RelTypeRec 8
 aZKey      110030242
 aFact      Added thru ER Dialog
-aER_DiagramBendPosX 214
-aER_DiagramBendPosY 47
-aER_DiagramE1PosX 214
+aER_DiagramBendPosX 216
+aER_DiagramBendPosY 42
+aER_DiagramE1PosX 216
 aER_DiagramE1PosY 30
 aER_DiagramE2PosX 242
-aER_DiagramE2PosY 47
+aER_DiagramE2PosY 42
 
 ePOD_Entity 7
 aSQL_JoinWithParent Y
@@ -1162,18 +1162,18 @@ aAutoSeq   N
 aHangingForeignKeyEntity N
 aZKey      4322595
 aCardMin   0
-aCardMax   1
+aCardMax   m
 aTE_NoForeignKeyPrefix N
 
 eER_RelTypeRec 7
 aZKey      4322593
 aFact      Added thru ER Dialog
 aER_DiagramBendPosX 249
-aER_DiagramBendPosY 59
+aER_DiagramBendPosY 55
 aER_DiagramE1PosX 249
-aER_DiagramE1PosY 50
-aER_DiagramE2PosX 238
-aER_DiagramE2PosY 59
+aER_DiagramE1PosY 43
+aER_DiagramE2PosX 252
+aER_DiagramE2PosY 55
 
 ePOD_Entity 6
 aSQL_JoinWithParent Y
@@ -1203,8 +1203,8 @@ eER_EntityRec 5
 aName      LLD_SpecialSectionAttribute
 aZKey      4322587
 aPurpose   A
-aER_DiagramPosX 229
-aER_DiagramPosY 55
+aER_DiagramPosX 253
+aER_DiagramPosY 53
 
 eER_RelLinkRec 5
 aName      contains
@@ -1213,18 +1213,18 @@ aHangingForeignKeyEntity N
 aZKey      4322591
 aCardMin   0
 aCardMax   m
-aTE_ForeignKeyPrefix PF1
+aTE_ForeignKeyPrefix FKID1
 aTE_NoForeignKeyPrefix N
 
 eER_RelTypeRec 6
 aZKey      4322590
 aFact      Added thru ER Dialog
-aER_DiagramBendPosX 247
-aER_DiagramBendPosY 57
-aER_DiagramE1PosX 247
-aER_DiagramE1PosY 50
-aER_DiagramE2PosX 238
-aER_DiagramE2PosY 57
+aER_DiagramBendPosX 257
+aER_DiagramBendPosY 40
+aER_DiagramE1PosX 252
+aER_DiagramE1PosY 40
+aER_DiagramE2PosX 257
+aER_DiagramE2PosY 52
 
 eLOD_EntityChild 4
 aName      BlockBackgroundColor
@@ -1317,12 +1317,12 @@ aTE_NoForeignKeyPrefix N
 eER_RelTypeRec 6
 aZKey      110030236
 aFact      Added thru ER Dialog
-aER_DiagramBendPosX 216
-aER_DiagramBendPosY 46
-aER_DiagramE1PosX 216
+aER_DiagramBendPosX 218
+aER_DiagramBendPosY 40
+aER_DiagramE1PosX 218
 aER_DiagramE1PosY 30
 aER_DiagramE2PosX 242
-aER_DiagramE2PosY 46
+aER_DiagramE2PosY 40
 
 ePOD_Entity 5
 aSQL_JoinWithParent Y
@@ -1420,12 +1420,12 @@ aTE_NoForeignKeyPrefix N
 eER_RelTypeRec 6
 aZKey      110030239
 aFact      Added thru ER Dialog
-aER_DiagramBendPosX 218
-aER_DiagramBendPosY 45
-aER_DiagramE1PosX 218
+aER_DiagramBendPosX 220
+aER_DiagramBendPosY 38
+aER_DiagramE1PosX 220
 aER_DiagramE1PosY 30
 aER_DiagramE2PosX 242
-aER_DiagramE2PosY 45
+aER_DiagramE2PosY 38
 
 ePOD_Entity 5
 aSQL_JoinWithParent Y
@@ -1768,12 +1768,12 @@ aTE_NoForeignKeyPrefix N
 eER_RelTypeRec 5
 aZKey      110030386
 aFact      Added thru ER Dialog
-aER_DiagramBendPosX 0
-aER_DiagramBendPosY 0
-aER_DiagramE1PosX 242
-aER_DiagramE1PosY 49
+aER_DiagramBendPosX 247
+aER_DiagramBendPosY 48
+aER_DiagramE1PosX 247
+aER_DiagramE1PosY 43
 aER_DiagramE2PosX 205
-aER_DiagramE2PosY 49
+aER_DiagramE2PosY 48
 
 ePOD_Entity 4
 aSQL_JoinWithParent Y
@@ -1809,11 +1809,11 @@ aZKey      110030382
 
 eDomainRec 5
 aZKey      68568087
-aName      TextDescription
-aDomainType A
+aName      Description
+aDomainType E
 aDataType  S
-aMaxStringLth 2048
-aDesc      Long text
+aMaxStringLth 4096
+aDesc      Long text, no validation
 aContextRestriction N
 
 eLOD_AttributeRec 3

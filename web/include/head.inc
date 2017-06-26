@@ -7,6 +7,7 @@
 <!-- JQuery for Validations-->
 <script src="./js/jquery.js" type="text/javascript"></script>
 <script src="./js/jquery.maskedinput.js" type="text/javascript"></script>
+<script src="./js/jquery.mask.js" type="text/javascript"></script>
 <script language="JavaScript" type="text/javascript">
 
 function gLogout( )

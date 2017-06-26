@@ -1,4 +1,4 @@
-z1000-Zeidon    MMASLC   TZZOLODO                         06/20/17   13:46:58 1.0a2   
+z1000-Zeidon    MMASLC   TZZOLODO                         06/26/17   11:30:02 1.0a2   
 eLOD       1
 aZKey      69033382
 aNextZKeyToAssign 130003443
@@ -855,6 +855,7 @@ aHangingForeignKeyEntity N
 aZKey      120387537
 aCardMin   0
 aCardMax   m
+aTE_ForeignKeyPrefix RECURS
 aTE_NoForeignKeyPrefix N
 
 eER_RelTypeRec 7
@@ -1048,7 +1049,10 @@ aInclSrc   Y
 aExclude   Y
 aRecursive N
 aDerived   N
+aWork      N
 aParentDeleteBehave E
+aDupEntityInstance N
+aDupRelationshipInstance N
 aRelLinkIndicator H
 aSeqNo     0
 
@@ -1139,9 +1143,9 @@ aName      M_UsageUsageGroup
 aIndentName          M_UsageUsageGroup
 aIndentLvl 9
 aZKey      110302663
-aCreate    N
+aCreate    Y
 aDelete    N
-aUpdate    N
+aUpdate    Y
 aInclude   Y
 aInclSrc   Y
 aExclude   Y
@@ -1522,7 +1526,7 @@ aName      M_UsageGroupUsage
 aIndentName          M_UsageGroupUsage
 aIndentLvl 9
 aZKey      130003432
-aCreate    N
+aCreate    Y
 aDelete    N
 aUpdate    Y
 aInclude   Y
@@ -1742,7 +1746,7 @@ aIndentName       M_UsageNonGroupUsage
 aIndentLvl 6
 aZKey      110303498
 aCreate    N
-aDelete    N
+aDelete    Y
 aUpdate    N
 aInclude   Y
 aInclSrc   Y

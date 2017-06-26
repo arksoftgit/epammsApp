@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCSurfacesStatementMaintenance   Generate Timestamp: 20170404195453627 --%>
+<%-- wMLCSurfacesStatementMaintenance   Generate Timestamp: 20170622133106220 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -60,7 +60,7 @@ public int DoInputMapping( HttpServletRequest request,
    mMasLC = task.getViewByName( "mMasLC" );
    if ( VmlOperation.isValid( mMasLC ) )
    {
-      // EditBox: Title
+      // MLEdit: Title
       nRC = mMasLC.cursor( "M_Usage" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 ) // CursorResult.SET
       {
@@ -915,6 +915,12 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
+
+<!-- TinyMCE -->
+<script language="JavaScript" type="text/javascript" src="./js/tinymce/js/tinymce/tinymce.min.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/TinyMCE.js"></script>
+<!-- /TinyMCE -->
+
 <script language="JavaScript" type="text/javascript" src="./genjs/wMLCSurfacesStatementMaintenance.js"></script>
 
 </head>
@@ -1096,20 +1102,21 @@ else
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox2:GroupBox */ %>
-<div id="GroupBox2" name="GroupBox2" style="float:left;width:808px;" >
 
-<table cols=0 style="width:808px;"  class="grouptable">
+<div id="GroupBox2" name="GroupBox2"   style="float:left;position:relative; width:808px; height:50px;">  <!-- GroupBox2 --> 
 
-<tr>
-<td valign="top" style="width:80px;">
 <% /* Statement::Text */ %>
 
-<span  id="Statement:" name="Statement:" style="width:76px;height:20px;">Statement:</span>
+<label  id="Statement:" name="Statement:" style="width:76px;height:20px;position:absolute;left:0px;top:0px;">Statement:</label>
 
-</td>
-<td valign="top"  class="mceSimpleZeidon" style="width:722px;">
-<% /* Title:EditBox */ %>
+<% /* GroupBox4:GroupBox */ %>
+
+<div id="GroupBox4" name="GroupBox4" style="width:722px;height:42px;position:absolute;left:80px;top:0px;">  <!-- GroupBox4 --> 
+
+<div  id="GroupBox4" name="GroupBox4" >GroupBox4</div>
+<% /* Title:MLEdit */ %>
 <%
+   // : Title
    strErrorMapValue = VmlOperation.CheckError( "Title", strError );
    if ( !StringUtils.isBlank( strErrorMapValue ) )
    {
@@ -1121,40 +1128,31 @@ else
       strErrorColor = "";
       mMasLC = task.getViewByName( "mMasLC" );
       if ( VmlOperation.isValid( mMasLC ) == false )
-         task.log( ).debug( "Invalid View: " + "Title" );
+         task.log( ).info( "Invalid View: " + "Title" );
       else
       {
          nRC = mMasLC.cursor( "M_Usage" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            try
-            {
-               strErrorMapValue = mMasLC.cursor( "M_Usage" ).getAttribute( "Name" ).getString( "" );
-            }
-            catch (Exception e)
-            {
-               out.println("There is an error on Title: " + e.getMessage());
-               task.log().error( "*** Error on ctrl Title", e );
-            }
+            strErrorMapValue = mMasLC.cursor( "M_Usage" ).getAttribute( "Name" ).getString( "" );
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
 
-            task.log( ).debug( "M_Usage.Name: " + strErrorMapValue );
+            task.log( ).info( "M_Usage.Name: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist for Title: " + "mMasLC.M_Usage" );
+            task.log( ).info( "Entity does not exist for Title: " + "mMasLC.M_Usage" );
       }
    }
 %>
 
-<input class="mceSimpleZeidon"  name="Title" id="Title" maxlength="4096" style="width:722px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<div style="background-color:#eee;border:1px solid #042;width:722px;height:42px;position:absolute;left:0px;top:0px;overflow:auto;">
+<div class="mceSimpleZeidonSpecialCharacters" name="Title" id="Title" style="width:722px;height:42px;position:absolute;left:0px;top:0px;"><%=strErrorMapValue%></div></div>
 
-</td>
-</tr>
-</table>
 
-</div>  <!-- GroupBox2 --> 
+</div>  <!--  GroupBox4 --> 
 
+</div>  <!--  GroupBox2 --> 
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->

@@ -1,8 +1,5 @@
 /* Alter script for ePammsM -- MySQL ePamms database */
 
-/* Entity S_DirectionsForUseCategory */
-ALTER TABLE S_DIRECTIONSFORUSECATEGORY ADD PRIMARYMLC_ID                      int                NULL    ;
-
 /* Entity LLD */
 ALTER TABLE lld                                MODIFY COLUMN DEFAULTTEXTFONTFAMILY              longtext           NULL    ;
 ALTER TABLE lld                                MODIFY COLUMN DEFAULTTEXTFONTSIZE                longtext           NULL    ;

@@ -1,4 +1,4 @@
-// wMLCSurfaces   Generate Timestamp: 20170619122943535
+// wMLCSurfaces   Generate Timestamp: 20170626151800633
 
 var isWindowClosing = true;
 var timerID = null;
@@ -207,6 +207,35 @@ function ADD_Surfaces( )
    }
 }
 
+function DELETE_Surface( strTagEntityKey )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      var nIdx = strTagEntityKey.lastIndexOf( '::' );
+      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
+
+      document.wMLCSurfaces.zTableRowSelect.value = strEntityKey;
+      // Javascript code entered by user.
+
+// Confirmation of  Delete.
+if (!confirm("Delete Surface?"))
+{
+   return;
+}
+
+      // END of Javascript code entered by user.
+
+      _DisableFormElements( true );
+
+      document.wMLCSurfaces.zAction.value = "DELETE_Surface";
+      document.wMLCSurfaces.submit( );
+   }
+}
+
 function DELETE_SelectedUsageEntries( )
 {
 
@@ -296,6 +325,25 @@ function GOTO_DeleteSelectedSurfaces( )
    }
 }
 
+function GOTO_UpdateStandaloneSurfaces( strTagEntityKey )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      var nIdx = strTagEntityKey.lastIndexOf( '::' );
+      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
+
+      document.wMLCSurfaces.zTableRowSelect.value = strEntityKey;
+      _DisableFormElements( true );
+
+      document.wMLCSurfaces.zAction.value = "GOTO_UpdateStandaloneSurfaces";
+      document.wMLCSurfaces.submit( );
+   }
+}
+
 function GOTO_UpdateSurfacesStatement( strTagEntityKey )
 {
 
@@ -330,6 +378,48 @@ function GOTO_UpdateUsageGroup( strTagEntityKey )
       _DisableFormElements( true );
 
       document.wMLCSurfaces.zAction.value = "GOTO_UpdateUsageGroup";
+      document.wMLCSurfaces.submit( );
+   }
+}
+
+function SortGroups( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      // Javascript code entered by user.
+
+       document.wMLCSurfaces.zTableRowSelect.value = buildSortTableHtml( "mMasLC", "M_UsageGroup", "GridSurfacesGroup",  ["Name", "Combined Surface"]  );
+
+      // END of Javascript code entered by user.
+
+      _DisableFormElements( true );
+
+      document.wMLCSurfaces.zAction.value = "SortGroups";
+      document.wMLCSurfaces.submit( );
+   }
+}
+
+function SortSurfaces( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      // Javascript code entered by user.
+
+       document.wMLCSurfaces.zTableRowSelect.value = buildSortTableHtml( "mMasLC", "M_Usage", "GridSurfaces",  ["Surface"]  );
+
+      // END of Javascript code entered by user.
+
+      _DisableFormElements( true );
+
+      document.wMLCSurfaces.zAction.value = "SortSurfaces";
       document.wMLCSurfaces.submit( );
    }
 }
@@ -615,48 +705,6 @@ function smTables( )
       _DisableFormElements( true );
 
       document.wMLCSurfaces.zAction.value = "smTables";
-      document.wMLCSurfaces.submit( );
-   }
-}
-
-function SortSurfaces( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      // Javascript code entered by user.
-
-       document.wMLCSurfaces.zTableRowSelect.value = buildSortTableHtml( "mMasLC", "M_Usage", "GridSurfaces",  ["Surface"]  );
-
-      // END of Javascript code entered by user.
-
-      _DisableFormElements( true );
-
-      document.wMLCSurfaces.zAction.value = "SortSurfaces";
-      document.wMLCSurfaces.submit( );
-   }
-}
-
-function SortGroups( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      // Javascript code entered by user.
-
-       document.wMLCSurfaces.zTableRowSelect.value = buildSortTableHtml( "mMasLC", "M_UsageGroup", "GridSurfacesGroup",  ["Name", "Combined Surface"]  );
-
-      // END of Javascript code entered by user.
-
-      _DisableFormElements( true );
-
-      document.wMLCSurfaces.zAction.value = "SortGroups";
       document.wMLCSurfaces.submit( );
    }
 }

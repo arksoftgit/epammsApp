@@ -890,108 +890,81 @@ MoveSubUsagesToUsageGroup( View     ViewToWindow )
    zVIEW    mMasLC2 = new zVIEW( );
    //:STRING ( 2048 ) szName
    String   szName = null;
-   String   szTempString_0 = null;
+   //:INTEGER ID
+   int      ID = 0;
    int      lTempInteger_0 = 0;
 
    RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
 
-   //:GOTO_AddUsageGroup( ViewToWindow )
-   GOTO_AddUsageGroup( ViewToWindow );
-   //:CreateViewFromView( mMasLC2, mMasLC )  // keep mMasLC on new UsageGroup
-   CreateViewFromView( mMasLC2, mMasLC );
-   //:FOR EACH mMasLC.M_SubUsage
-   RESULT = SetCursorFirstEntity( mMasLC, "M_SubUsage", "" );
-   while ( RESULT > zCURSOR_UNCHANGED )
+   //:IF mMasLC.M_SubUsage DOES NOT EXIST
+   lTempInteger_0 = CheckExistenceOfEntity( mMasLC, "M_SubUsage" );
+   if ( lTempInteger_0 != 0 )
    { 
-      //:CREATE ENTITY mMasLC2.M_Usage
-      RESULT = CreateEntity( mMasLC2, "M_Usage", zPOS_AFTER );
-      //:SetMatchingAttributesByName( mMasLC2, "M_Usage", mMasLC, "M_SubUsage", zSET_ALL )
-      SetMatchingAttributesByName( mMasLC2, "M_Usage", mMasLC, "M_SubUsage", zSET_ALL );
-      //:INCLUDE mMasLC.M_UsageGroupUsage FROM mMasLC2.M_Usage
-      RESULT = IncludeSubobjectFromSubobject( mMasLC, "M_UsageGroupUsage", mMasLC2, "M_Usage", zPOS_AFTER );
-      //:DELETE ENTITY mMasLC.M_SubUsage NONE
-      RESULT = DeleteEntity( mMasLC, "M_SubUsage", zREPOS_NONE );
-      RESULT = SetCursorNextEntity( mMasLC, "M_SubUsage", "" );
+      //:MessageSend( ViewToWindow, "", "Group Subsurfaces",
+      //:             "There are no subsurfaces to group.",
+      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      MessageSend( ViewToWindow, "", "Group Subsurfaces", "There are no subsurfaces to group.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+
+      //:RETURN 2
+      if(8==8)return( 2 );
    } 
 
    //:END
 
-   //:FOR EACH mMasLC.M_InsertTextKeywordUsage
-   RESULT = SetCursorFirstEntity( mMasLC, "M_InsertTextKeywordUsage", "" );
-   while ( RESULT > zCURSOR_UNCHANGED )
+   //:ID = mMasLC.M_Usage.ID
+   {MutableInt mi_ID = new MutableInt( ID );
+       GetIntegerFromAttribute( mi_ID, mMasLC, "M_Usage", "ID" );
+   ID = mi_ID.intValue( );}
+   //:SET CURSOR FIRST mMasLC.M_UsageNonGroupUsage WHERE mMasLC.M_UsageNonGroupUsage.ID = ID
+   RESULT = SetCursorFirstEntityByInteger( mMasLC, "M_UsageNonGroupUsage", "ID", ID, "" );
+   //:IF RESULT = 0
+   if ( RESULT == 0 )
    { 
-      //:szName = "{" + mMasLC.M_InsertTextKeywordUsage.Name + "}"
-      {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
-      StringBuilder sb_szTempString_0;
-      if ( szTempString_0 == null )
-         sb_szTempString_0 = new StringBuilder( 32 );
-      else
-         sb_szTempString_0 = new StringBuilder( szTempString_0 );
-             GetVariableFromAttribute( sb_szTempString_0, mi_lTempInteger_0, 'S', 255, mMasLC, "M_InsertTextKeywordUsage", "Name", "", 0 );
-      lTempInteger_0 = mi_lTempInteger_0.intValue( );
-      szTempString_0 = sb_szTempString_0.toString( );}
-       {StringBuilder sb_szName;
-      if ( szName == null )
-         sb_szName = new StringBuilder( 32 );
-      else
-         sb_szName = new StringBuilder( szName );
-            ZeidonStringCopy( sb_szName, 1, 0, "{", 1, 0, 2049 );
-      szName = sb_szName.toString( );}
-       {StringBuilder sb_szName;
-      if ( szName == null )
-         sb_szName = new StringBuilder( 32 );
-      else
-         sb_szName = new StringBuilder( szName );
-            ZeidonStringConcat( sb_szName, 1, 0, szTempString_0, 1, 0, 2049 );
-      szName = sb_szName.toString( );}
-       {StringBuilder sb_szName;
-      if ( szName == null )
-         sb_szName = new StringBuilder( 32 );
-      else
-         sb_szName = new StringBuilder( szName );
-            ZeidonStringConcat( sb_szName, 1, 0, "}", 1, 0, 2049 );
-      szName = sb_szName.toString( );}
-      //:SET CURSOR FIRST mMasLC.M_UsageGroupUsage WHERE mMasLC.M_UsageGroupUsage.Name = szName
-      RESULT = SetCursorFirstEntityByString( mMasLC, "M_UsageGroupUsage", "Name", szName, "" );
-      //:IF RESULT >= zCURSOR_SET
-      if ( RESULT >= zCURSOR_SET )
+      //:GOTO_AddUsageGroup( ViewToWindow )
+      GOTO_AddUsageGroup( ViewToWindow );
+      //:CreateViewFromView( mMasLC2, mMasLC )  // keep mMasLC on new UsageGroup
+      CreateViewFromView( mMasLC2, mMasLC );
+      //:// INCLUDE mMasLC2.M_UsageUsageGroup FROM mMasLC2.M_UsageGroup
+      //:INCLUDE mMasLC.M_UsageGroupUsage FROM mMasLC.M_Usage
+      RESULT = IncludeSubobjectFromSubobject( mMasLC, "M_UsageGroupUsage", mMasLC, "M_Usage", zPOS_AFTER );
+      //:EXCLUDE mMasLC.M_UsageNonGroupUsage NONE
+      RESULT = ExcludeEntity( mMasLC, "M_UsageNonGroupUsage", zREPOS_NONE );
+      //:FOR EACH mMasLC.M_SubUsage
+      RESULT = SetCursorFirstEntity( mMasLC, "M_SubUsage", "" );
+      while ( RESULT > zCURSOR_UNCHANGED )
       { 
-         //:SetCursorFirstEntityByEntityCsr( mMasLC2, "M_Usage", mMasLC, "M_UsageGroupUsage", "" )
-         SetCursorFirstEntityByEntityCsr( mMasLC2, "M_Usage", mMasLC, "M_UsageGroupUsage", "" );
-         //:CREATE ENTITY mMasLC2.M_InsertTextKeywordUsage
-         RESULT = CreateEntity( mMasLC2, "M_InsertTextKeywordUsage", zPOS_AFTER );
-         //:SetMatchingAttributesByName( mMasLC2, "M_InsertTextKeywordUsage", mMasLC, "M_InsertTextKeywordUsage", zSET_ALL )
-         SetMatchingAttributesByName( mMasLC2, "M_InsertTextKeywordUsage", mMasLC, "M_InsertTextKeywordUsage", zSET_ALL );
-         //:FOR EACH mMasLC.M_InsertTextUsage
-         RESULT = SetCursorFirstEntity( mMasLC, "M_InsertTextUsage", "" );
-         while ( RESULT > zCURSOR_UNCHANGED )
-         { 
-            //:CREATE ENTITY mMasLC2.M_InsertTextUsage
-            RESULT = CreateEntity( mMasLC2, "M_InsertTextUsage", zPOS_AFTER );
-            //:SetMatchingAttributesByName( mMasLC2, "M_InsertTextUsage", mMasLC, "M_InsertTextUsage", zSET_ALL )
-            SetMatchingAttributesByName( mMasLC2, "M_InsertTextUsage", mMasLC, "M_InsertTextUsage", zSET_ALL );
-            RESULT = SetCursorNextEntity( mMasLC, "M_InsertTextUsage", "" );
-         } 
-
-         //:END
+         //:CREATE ENTITY mMasLC2.M_Usage
+         RESULT = CreateEntity( mMasLC2, "M_Usage", zPOS_AFTER );
+         //:SetMatchingAttributesByName( mMasLC2, "M_Usage", mMasLC, "M_SubUsage", zSET_ALL )
+         SetMatchingAttributesByName( mMasLC2, "M_Usage", mMasLC, "M_SubUsage", zSET_ALL );
+         //:SetAttributeFromAttribute( mMasLC2, "M_Usage", "UsageType", mMasLC, "M_UsageType", "UsageType" )
+         SetAttributeFromAttribute( mMasLC2, "M_Usage", "UsageType", mMasLC, "M_UsageType", "UsageType" );
+         //:INCLUDE mMasLC.M_UsageGroupUsage FROM mMasLC2.M_Usage
+         RESULT = IncludeSubobjectFromSubobject( mMasLC, "M_UsageGroupUsage", mMasLC2, "M_Usage", zPOS_AFTER );
+         //:DELETE ENTITY mMasLC.M_SubUsage NONE
+         RESULT = DeleteEntity( mMasLC, "M_SubUsage", zREPOS_NONE );
+         RESULT = SetCursorNextEntity( mMasLC, "M_SubUsage", "" );
       } 
 
       //:END
-      //:DELETE ENTITY mMasLC.M_InsertTextKeywordUsage NONE
-      RESULT = DeleteEntity( mMasLC, "M_InsertTextKeywordUsage", zREPOS_NONE );
-      RESULT = SetCursorNextEntity( mMasLC, "M_InsertTextKeywordUsage", "" );
+      //:DropView( mMasLC2 )
+      DropView( mMasLC2 );
+      //:AcceptSubobject( mMasLC, "M_Usage" )
+      AcceptSubobject( mMasLC, "M_Usage" );
+      //:ELSE
+   } 
+   else
+   { 
+      //:MessageSend( ViewToWindow, "", "Group Subsurfaces",
+      //:             "Error locating Non-Group Usage by Id.",
+      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      MessageSend( ViewToWindow, "", "Group Subsurfaces", "Error locating Non-Group Usage by Id.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+      //:RETURN 2
+      if(8==8)return( 2 );
    } 
 
    //:END
-   //:AcceptSubobject( mMasLC, "M_Usage" )
-   AcceptSubobject( mMasLC, "M_Usage" );
    return( 0 );
-// /*
-//    IF szName != "" AND szName != "{{}}"
-//       CREATE ENTITY mMasLC.M_Usage
-//       mMasLC.M_Usage.Name = szName
-//    END
-// */
 // END
 } 
 
@@ -2323,6 +2296,24 @@ RemoveMLC_UsageEntries( View     ViewToWindow )
 
 
 //:DIALOG OPERATION
+//:DisplayUsageGroups( VIEW ViewToWindow )
+
+//:   VIEW mMasLC REGISTERED AS mMasLC
+public int 
+DisplayUsageGroups( View     ViewToWindow )
+{
+   zVIEW    mMasLC = new zVIEW( );
+   int      RESULT = 0;
+
+   RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
+   return( 0 );
+// // TraceLineS( "UpdateStandaloneSurfaces: ", "M_Usage" );
+// // mMasLC.getCursor( "M_UsageGroup" ).logEntity( false );
+// END
+} 
+
+
+//:DIALOG OPERATION
 //:CLEAR_MLC_UsageTarget( VIEW ViewToWindow )
 
 //:   VIEW mMasLC REGISTERED AS mMasLC
@@ -3206,7 +3197,6 @@ ConfirmDeleteUsageEntry( View     ViewToWindow )
    int      lTempInteger_0 = 0;
    int      lTempInteger_1 = 0;
    int      lTempInteger_2 = 0;
-   String   szTempString_0 = null;
 
    RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
 
@@ -3291,45 +3281,26 @@ ConfirmDeleteUsageEntry( View     ViewToWindow )
          //:// Delete the actual Usage entry.
 
          //:// We don't believe this should be necessary, but JOE is being extremely picky ... DKS 2016.01.23
-         //:SET CURSOR FIRST mMasLC.M_UsageNonGroupUsage WHERE mMasLC.M_UsageNonGroupUsage.Name = mMasLC.M_Usage.Name 
-         {StringBuilder sb_szTempString_0;
-         if ( szTempString_0 == null )
-            sb_szTempString_0 = new StringBuilder( 32 );
-         else
-            sb_szTempString_0 = new StringBuilder( szTempString_0 );
-                   GetStringFromAttribute( sb_szTempString_0, mMasLC, "M_Usage", "Name" );
-         szTempString_0 = sb_szTempString_0.toString( );}
-         RESULT = SetCursorFirstEntityByString( mMasLC, "M_UsageNonGroupUsage", "Name", szTempString_0, "" );
+         //:SetCursorFirstEntityByEntityCsr( mMasLC, "M_UsageNonGroupUsage", mMasLC, "M_Usage", "" )
+         SetCursorFirstEntityByEntityCsr( mMasLC, "M_UsageNonGroupUsage", mMasLC, "M_Usage", "" );
          //:IF RESULT >= zCURSOR_SET
          if ( RESULT >= zCURSOR_SET )
          { 
             //:EXCLUDE mMasLC.M_UsageNonGroupUsage NONE
             RESULT = ExcludeEntity( mMasLC, "M_UsageNonGroupUsage", zREPOS_NONE );
-            //:ELSE
-         } 
-         else
-         { 
-            //:SET CURSOR FIRST mMasLC.M_UsageGroupUsage WITHIN mMasLC.M_UsageType 
-            //:           WHERE mMasLC.M_UsageGroupUsage.Name = mMasLC.M_Usage.Name 
-            {StringBuilder sb_szTempString_0;
-            if ( szTempString_0 == null )
-               sb_szTempString_0 = new StringBuilder( 32 );
-            else
-               sb_szTempString_0 = new StringBuilder( szTempString_0 );
-                         GetStringFromAttribute( sb_szTempString_0, mMasLC, "M_Usage", "Name" );
-            szTempString_0 = sb_szTempString_0.toString( );}
-            RESULT = SetCursorFirstEntityByString( mMasLC, "M_UsageGroupUsage", "Name", szTempString_0, "M_UsageType" );
-            //:IF RESULT >= zCURSOR_SET
-            if ( RESULT >= zCURSOR_SET )
-            { 
-               //:EXCLUDE mMasLC.M_UsageGroupUsage NONE
-               RESULT = ExcludeEntity( mMasLC, "M_UsageGroupUsage", zREPOS_NONE );
-            } 
-
-            //:END
          } 
 
          //:END
+         //:// SET CURSOR FIRST mMasLC.M_UsageNonGroupUsage WHERE mMasLC.M_UsageNonGroupUsage.Name = mMasLC.M_Usage.Name 
+         //:// IF RESULT >= zCURSOR_SET
+         //://    EXCLUDE mMasLC.M_UsageNonGroupUsage NONE
+         //:// ELSE
+         //://    SET CURSOR FIRST mMasLC.M_UsageGroupUsage WITHIN mMasLC.M_UsageType 
+         //://               WHERE mMasLC.M_UsageGroupUsage.Name = mMasLC.M_Usage.Name 
+         //://    IF RESULT >= zCURSOR_SET
+         //://       EXCLUDE mMasLC.M_UsageGroupUsage NONE
+         //://    END
+         //:// END
          //:// We don't believe the above should be necessary, but JOE is being extremely picky ... DKS 2016.01.23
 
          //:DELETE ENTITY mMasLC.M_Usage NONE
@@ -3389,7 +3360,6 @@ DeleteSelectedUsageEntries( View     ViewToWindow )
 {
    zVIEW    mMasLC = new zVIEW( );
    int      RESULT = 0;
-   String   szTempString_0 = null;
 
    RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
 
@@ -3400,45 +3370,26 @@ DeleteSelectedUsageEntries( View     ViewToWindow )
       //:IF mMasLC.M_Usage.wSelected = "Y"
       if ( CompareAttributeToString( mMasLC, "M_Usage", "wSelected", "Y" ) == 0 )
       { 
-         //:SET CURSOR FIRST mMasLC.M_UsageNonGroupUsage WHERE mMasLC.M_UsageNonGroupUsage.Name = mMasLC.M_Usage.Name
-         {StringBuilder sb_szTempString_0;
-         if ( szTempString_0 == null )
-            sb_szTempString_0 = new StringBuilder( 32 );
-         else
-            sb_szTempString_0 = new StringBuilder( szTempString_0 );
-                   GetStringFromAttribute( sb_szTempString_0, mMasLC, "M_Usage", "Name" );
-         szTempString_0 = sb_szTempString_0.toString( );}
-         RESULT = SetCursorFirstEntityByString( mMasLC, "M_UsageNonGroupUsage", "Name", szTempString_0, "" );
+         //:SetCursorFirstEntityByEntityCsr( mMasLC, "M_UsageNonGroupUsage", mMasLC, "M_Usage", "" )
+         SetCursorFirstEntityByEntityCsr( mMasLC, "M_UsageNonGroupUsage", mMasLC, "M_Usage", "" );
          //:IF RESULT >= zCURSOR_SET
          if ( RESULT >= zCURSOR_SET )
          { 
             //:EXCLUDE mMasLC.M_UsageNonGroupUsage NONE
             RESULT = ExcludeEntity( mMasLC, "M_UsageNonGroupUsage", zREPOS_NONE );
-            //:ELSE
-         } 
-         else
-         { 
-            //:SET CURSOR FIRST mMasLC.M_UsageGroupUsage WITHIN mMasLC.M_UsageType
-            //:           WHERE mMasLC.M_UsageGroupUsage.Name = mMasLC.M_Usage.Name
-            {StringBuilder sb_szTempString_0;
-            if ( szTempString_0 == null )
-               sb_szTempString_0 = new StringBuilder( 32 );
-            else
-               sb_szTempString_0 = new StringBuilder( szTempString_0 );
-                         GetStringFromAttribute( sb_szTempString_0, mMasLC, "M_Usage", "Name" );
-            szTempString_0 = sb_szTempString_0.toString( );}
-            RESULT = SetCursorFirstEntityByString( mMasLC, "M_UsageGroupUsage", "Name", szTempString_0, "M_UsageType" );
-            //:IF RESULT >= zCURSOR_SET
-            if ( RESULT >= zCURSOR_SET )
-            { 
-               //:EXCLUDE mMasLC.M_UsageGroupUsage NONE
-               RESULT = ExcludeEntity( mMasLC, "M_UsageGroupUsage", zREPOS_NONE );
-            } 
-
-            //:END
          } 
 
          //:END
+         //:// SET CURSOR FIRST mMasLC.M_UsageNonGroupUsage WHERE mMasLC.M_UsageNonGroupUsage.Name = mMasLC.M_Usage.Name
+         //:// IF RESULT >= zCURSOR_SET
+         //://    EXCLUDE mMasLC.M_UsageNonGroupUsage NONE
+         //:// ELSE
+         //://    SET CURSOR FIRST mMasLC.M_UsageGroupUsage WITHIN mMasLC.M_UsageType
+         //://               WHERE mMasLC.M_UsageGroupUsage.Name = mMasLC.M_Usage.Name
+         //://    IF RESULT >= zCURSOR_SET
+         //://       EXCLUDE mMasLC.M_UsageGroupUsage NONE
+         //://    END
+         //:// END
          //:DELETE ENTITY  mMasLC.M_Usage NONE
          RESULT = DeleteEntity( mMasLC, "M_Usage", zREPOS_NONE );
       } 
@@ -5423,6 +5374,8 @@ MoveSelectedKeywordToSurfaces( View     ViewToWindow )
       RESULT = CreateEntity( mMasLC, "M_SubUsage", zPOS_AFTER );
       //:mMasLC.M_SubUsage.Name = mMasLC.M_InsertTextUsage.Text
       SetAttributeFromAttribute( mMasLC, "M_SubUsage", "Name", mMasLC, "M_InsertTextUsage", "Text" );
+      //:mMasLC.M_SubUsage.UsageType = mMasLC.M_UsageType.UsageType
+      SetAttributeFromAttribute( mMasLC, "M_SubUsage", "UsageType", mMasLC, "M_UsageType", "UsageType" );
       //:DELETE ENTITY mMasLC.M_InsertTextUsage NONE
       RESULT = DeleteEntity( mMasLC, "M_InsertTextUsage", zREPOS_NONE );
       RESULT = SetCursorNextEntity( mMasLC, "M_InsertTextUsage", "" );
@@ -9236,6 +9189,88 @@ CheckUniqueGroupName( View     ViewToWindow )
 
    //:END
    return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:UpdateStandaloneSurfaces( VIEW ViewToWindow )
+
+//:   VIEW mMasLC REGISTERED AS mMasLC
+public int 
+UpdateStandaloneSurfaces( View     ViewToWindow )
+{
+   zVIEW    mMasLC = new zVIEW( );
+   int      RESULT = 0;
+
+   RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
+   //:// INTEGER ID
+
+   //:// TraceLineS( "UpdateStandaloneSurfaces: ", "M_UsageNonGroupUsage" );
+   //:// mMasLC.getCursor( "M_UsageNonGroupUsage" ).logEntity( false );
+   //:// Position on the corresponding M_Usage entity and create temporal subobject version.
+   //:SetCursorFirstEntityByEntityCsr( mMasLC, "M_Usage", mMasLC, "M_UsageNonGroupUsage", "" )
+   SetCursorFirstEntityByEntityCsr( mMasLC, "M_Usage", mMasLC, "M_UsageNonGroupUsage", "" );
+   //:// ID = mMasLC.M_UsageNonGroupUsage.ID
+   //:// IF ID = 0
+   //://    SET CURSOR FIRST mMasLC.M_Usage WHERE mMasLC.M_Usage.ID = ""
+   //://                                      AND mMasLC.M_Usage.Name = mMasLC.M_UsageNonGroupUsage.Name
+   //:// ELSE
+   //://    SET CURSOR FIRST mMasLC.M_Usage WHERE mMasLC.M_Usage.ID = ID
+   //:// END
+
+   //:// TraceLineS( "UpdateStandaloneSurfaces: ", "M_Usage" );
+   //:// mMasLC.getCursor( "M_Usage" ).logEntity( false );
+
+   //:CreateTemporalSubobjectVersion( mMasLC, "M_Usage" )
+   CreateTemporalSubobjectVersion( mMasLC, "M_Usage" );
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:DeleteNonGroupUsage( VIEW ViewToWindow )
+
+//:   VIEW mMasLC REGISTERED AS mMasLC
+public int 
+DeleteNonGroupUsage( View     ViewToWindow )
+{
+   zVIEW    mMasLC = new zVIEW( );
+   int      RESULT = 0;
+   //:INTEGER ID
+   int      ID = 0;
+
+   RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
+
+   //:ID = mMasLC.M_UsageNonGroupUsage.ID
+   {MutableInt mi_ID = new MutableInt( ID );
+       GetIntegerFromAttribute( mi_ID, mMasLC, "M_UsageNonGroupUsage", "ID" );
+   ID = mi_ID.intValue( );}
+   //:SET CURSOR FIRST mMasLC.M_Usage WHERE mMasLC.M_Usage.ID = ID
+   RESULT = SetCursorFirstEntityByInteger( mMasLC, "M_Usage", "ID", ID, "" );
+   //:IF RESULT = 0
+   if ( RESULT == 0 )
+   { 
+      //:EXCLUDE mMasLC.M_UsageNonGroupUsage NONE
+      RESULT = ExcludeEntity( mMasLC, "M_UsageNonGroupUsage", zREPOS_NONE );
+      //:DELETE ENTITY mMasLC.M_Usage NONE
+      RESULT = DeleteEntity( mMasLC, "M_Usage", zREPOS_NONE );
+      //:ELSE
+   } 
+   else
+   { 
+      //:MessageSend( ViewToWindow, "", "Delete Non-Group Usage",
+      //:             "Error locating Usage by Id.",
+      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      MessageSend( ViewToWindow, "", "Delete Non-Group Usage", "Error locating Usage by Id.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+      //:RETURN 2
+      if(8==8)return( 2 );
+   } 
+
+   //:END
+   return( 0 );
+//    
 // END
 } 
 

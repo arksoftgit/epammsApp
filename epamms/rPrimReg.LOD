@@ -1,4 +1,4 @@
-z1000-Zeidon    RPRIMREG TZZOLODO                         11/18/16   15:02:22 1.0a2   
+z1000-Zeidon    RPRIMREG TZZOLODO                         06/26/17   09:51:28 1.0a2   
 eLOD       1
 aZKey      1157074
 aName      rPrimReg
@@ -159,6 +159,13 @@ aZKey      1660582
 aCaseSens  Y
 
 eDomainRec 6
+aZKey      68568087
+aName      Description
+aDomainType E
+aDataType  S
+aMaxStringLth 4096
+aDesc      Long text, no validation
+aContextRestriction N
 
 eLOD_AttributeRec 4
 aZKey      1656196
@@ -413,13 +420,6 @@ aName      Description
 aZKey      69031560
 
 eDomainRec 6
-aZKey      68568087
-aName      TextDescription
-aDomainType A
-aDataType  S
-aMaxStringLth 2048
-aDesc      Long text
-aContextRestriction N
 
 eLOD_AttributeRec 4
 aZKey      3961574
@@ -991,12 +991,12 @@ eOperationList 2
 eOperSourceFile 3
 
 i12        5
-i21        18
 i35        5
 i38        18
 i47        44
 i56        5
 i59        18
+i65        21
 i74        71
 i77        41
 i80        41
@@ -1037,7 +1037,7 @@ i132       17
 i133       18
 i134       19
 i135       20
-i136       18
+i136       21
 i137       22
 i138       23
 i139       24
@@ -1059,7 +1059,7 @@ i154       61
 i155       62
 i156       63
 i157       64
-i158       65
+i158       21
 i159       66
 i160       67
 i161       68

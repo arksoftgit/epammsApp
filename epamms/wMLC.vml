@@ -1497,16 +1497,20 @@ DeleteSelectedUsageEntries( VIEW ViewToWindow )
 
    FOR EACH mMasLC.M_Usage
       IF mMasLC.M_Usage.wSelected = "Y"
-         SET CURSOR FIRST mMasLC.M_UsageNonGroupUsage WHERE mMasLC.M_UsageNonGroupUsage.Name = mMasLC.M_Usage.Name
+         SetCursorFirstEntityByEntityCsr( mMasLC, "M_UsageNonGroupUsage", mMasLC, "M_Usage", "" )
          IF RESULT >= zCURSOR_SET
             EXCLUDE mMasLC.M_UsageNonGroupUsage NONE
-         ELSE
-            SET CURSOR FIRST mMasLC.M_UsageGroupUsage WITHIN mMasLC.M_UsageType
-                       WHERE mMasLC.M_UsageGroupUsage.Name = mMasLC.M_Usage.Name
-            IF RESULT >= zCURSOR_SET
-               EXCLUDE mMasLC.M_UsageGroupUsage NONE
-            END
          END
+      // SET CURSOR FIRST mMasLC.M_UsageNonGroupUsage WHERE mMasLC.M_UsageNonGroupUsage.Name = mMasLC.M_Usage.Name
+      // IF RESULT >= zCURSOR_SET
+      //    EXCLUDE mMasLC.M_UsageNonGroupUsage NONE
+      // ELSE
+      //    SET CURSOR FIRST mMasLC.M_UsageGroupUsage WITHIN mMasLC.M_UsageType
+      //               WHERE mMasLC.M_UsageGroupUsage.Name = mMasLC.M_Usage.Name
+      //    IF RESULT >= zCURSOR_SET
+      //       EXCLUDE mMasLC.M_UsageGroupUsage NONE
+      //    END
+      // END
          DELETE ENTITY  mMasLC.M_Usage NONE
       END
    END
@@ -1660,16 +1664,20 @@ ConfirmDeleteUsageEntry( VIEW ViewToWindow )
          // Delete the actual Usage entry.
 
          // We don't believe this should be necessary, but JOE is being extremely picky ... DKS 2016.01.23
-         SET CURSOR FIRST mMasLC.M_UsageNonGroupUsage WHERE mMasLC.M_UsageNonGroupUsage.Name = mMasLC.M_Usage.Name 
+         SetCursorFirstEntityByEntityCsr( mMasLC, "M_UsageNonGroupUsage", mMasLC, "M_Usage", "" )
          IF RESULT >= zCURSOR_SET
             EXCLUDE mMasLC.M_UsageNonGroupUsage NONE
-         ELSE
-            SET CURSOR FIRST mMasLC.M_UsageGroupUsage WITHIN mMasLC.M_UsageType 
-                       WHERE mMasLC.M_UsageGroupUsage.Name = mMasLC.M_Usage.Name 
-            IF RESULT >= zCURSOR_SET
-               EXCLUDE mMasLC.M_UsageGroupUsage NONE
-            END
          END
+      // SET CURSOR FIRST mMasLC.M_UsageNonGroupUsage WHERE mMasLC.M_UsageNonGroupUsage.Name = mMasLC.M_Usage.Name 
+      // IF RESULT >= zCURSOR_SET
+      //    EXCLUDE mMasLC.M_UsageNonGroupUsage NONE
+      // ELSE
+      //    SET CURSOR FIRST mMasLC.M_UsageGroupUsage WITHIN mMasLC.M_UsageType 
+      //               WHERE mMasLC.M_UsageGroupUsage.Name = mMasLC.M_Usage.Name 
+      //    IF RESULT >= zCURSOR_SET
+      //       EXCLUDE mMasLC.M_UsageGroupUsage NONE
+      //    END
+      // END
          // We don't believe the above should be necessary, but JOE is being extremely picky ... DKS 2016.01.23
 
          DELETE ENTITY mMasLC.M_Usage NONE
@@ -1803,6 +1811,7 @@ MoveSelectedKeywordToSurfaces( VIEW ViewToWindow )
    FOR EACH mMasLC.M_InsertTextUsage
       CREATE ENTITY mMasLC.M_SubUsage 
       mMasLC.M_SubUsage.Name = mMasLC.M_InsertTextUsage.Text
+      mMasLC.M_SubUsage.UsageType = mMasLC.M_UsageType.UsageType
       DELETE ENTITY mMasLC.M_InsertTextUsage NONE
    END
 
@@ -2999,37 +3008,65 @@ MoveSubUsagesToUsageGroup( VIEW ViewToWindow )
    VIEW mMasLC REGISTERED AS mMasLC
    VIEW mMasLC2 BASED ON LOD mMasLC
    STRING ( 2048 ) szName
+   INTEGER ID
 
-   GOTO_AddUsageGroup( ViewToWindow )
-   CreateViewFromView( mMasLC2, mMasLC )  // keep mMasLC on new UsageGroup
-   FOR EACH mMasLC.M_SubUsage
-      CREATE ENTITY mMasLC2.M_Usage
-      SetMatchingAttributesByName( mMasLC2, "M_Usage", mMasLC, "M_SubUsage", zSET_ALL )
-      INCLUDE mMasLC.M_UsageGroupUsage FROM mMasLC2.M_Usage
-      DELETE ENTITY mMasLC.M_SubUsage NONE
+   IF mMasLC.M_SubUsage DOES NOT EXIST
+      MessageSend( ViewToWindow, "", "Group Subsurfaces",
+                   "There are no subsurfaces to group.",
+                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+
+      RETURN 2
    END
 
-   FOR EACH mMasLC.M_InsertTextKeywordUsage
-      szName = "{" + mMasLC.M_InsertTextKeywordUsage.Name + "}"
-      SET CURSOR FIRST mMasLC.M_UsageGroupUsage WHERE mMasLC.M_UsageGroupUsage.Name = szName
-      IF RESULT >= zCURSOR_SET
-         SetCursorFirstEntityByEntityCsr( mMasLC2, "M_Usage", mMasLC, "M_UsageGroupUsage", "" )
-         CREATE ENTITY mMasLC2.M_InsertTextKeywordUsage
-         SetMatchingAttributesByName( mMasLC2, "M_InsertTextKeywordUsage", mMasLC, "M_InsertTextKeywordUsage", zSET_ALL )
-         FOR EACH mMasLC.M_InsertTextUsage
-            CREATE ENTITY mMasLC2.M_InsertTextUsage
-            SetMatchingAttributesByName( mMasLC2, "M_InsertTextUsage", mMasLC, "M_InsertTextUsage", zSET_ALL )
-         END
+   ID = mMasLC.M_Usage.ID
+   SET CURSOR FIRST mMasLC.M_UsageNonGroupUsage WHERE mMasLC.M_UsageNonGroupUsage.ID = ID
+   IF RESULT = 0
+      GOTO_AddUsageGroup( ViewToWindow )
+      CreateViewFromView( mMasLC2, mMasLC )  // keep mMasLC on new UsageGroup
+   // INCLUDE mMasLC2.M_UsageUsageGroup FROM mMasLC2.M_UsageGroup
+      INCLUDE mMasLC.M_UsageGroupUsage FROM mMasLC.M_Usage
+      EXCLUDE mMasLC.M_UsageNonGroupUsage NONE
+      FOR EACH mMasLC.M_SubUsage
+         CREATE ENTITY mMasLC2.M_Usage
+         SetMatchingAttributesByName( mMasLC2, "M_Usage", mMasLC, "M_SubUsage", zSET_ALL )
+         SetAttributeFromAttribute( mMasLC2, "M_Usage", "UsageType", mMasLC, "M_UsageType", "UsageType" )
+         INCLUDE mMasLC.M_UsageGroupUsage FROM mMasLC2.M_Usage
+         DELETE ENTITY mMasLC.M_SubUsage NONE
       END
-      DELETE ENTITY mMasLC.M_InsertTextKeywordUsage NONE
+      DropView( mMasLC2 )
+      AcceptSubobject( mMasLC, "M_Usage" )
+   ELSE
+      MessageSend( ViewToWindow, "", "Group Subsurfaces",
+                   "Error locating Non-Group Usage by Id.",
+                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      RETURN 2
    END
-   AcceptSubobject( mMasLC, "M_Usage" )
-/*
-   IF szName != "" AND szName != "{{}}"
-      CREATE ENTITY mMasLC.M_Usage
-      mMasLC.M_Usage.Name = szName
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: DeleteNonGroupUsage
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+DeleteNonGroupUsage( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+   INTEGER ID
+
+   ID = mMasLC.M_UsageNonGroupUsage.ID
+   SET CURSOR FIRST mMasLC.M_Usage WHERE mMasLC.M_Usage.ID = ID
+   IF RESULT = 0
+      EXCLUDE mMasLC.M_UsageNonGroupUsage NONE
+      DELETE ENTITY mMasLC.M_Usage NONE
+   ELSE
+      MessageSend( ViewToWindow, "", "Delete Non-Group Usage",
+                   "Error locating Usage by Id.",
+                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      RETURN 2
    END
-*/
+   
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -4777,8 +4814,6 @@ END
 DIALOG OPERATION
 REMOVE_SelectedGroupUsageEntries( VIEW ViewToWindow )
 
-
-
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -4806,5 +4841,49 @@ CheckUniqueGroupName( VIEW ViewToWindow )
          RETURN 2
       END
    END
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: UpdateStandaloneSurfaces
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+UpdateStandaloneSurfaces( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+// INTEGER ID
+
+// TraceLineS( "UpdateStandaloneSurfaces: ", "M_UsageNonGroupUsage" );
+// mMasLC.getCursor( "M_UsageNonGroupUsage" ).logEntity( false );
+   // Position on the corresponding M_Usage entity and create temporal subobject version.
+   SetCursorFirstEntityByEntityCsr( mMasLC, "M_Usage", mMasLC, "M_UsageNonGroupUsage", "" )
+// ID = mMasLC.M_UsageNonGroupUsage.ID
+// IF ID = 0
+//    SET CURSOR FIRST mMasLC.M_Usage WHERE mMasLC.M_Usage.ID = ""
+//                                      AND mMasLC.M_Usage.Name = mMasLC.M_UsageNonGroupUsage.Name
+// ELSE
+//    SET CURSOR FIRST mMasLC.M_Usage WHERE mMasLC.M_Usage.ID = ID
+// END
+
+// TraceLineS( "UpdateStandaloneSurfaces: ", "M_Usage" );
+// mMasLC.getCursor( "M_Usage" ).logEntity( false );
+
+   CreateTemporalSubobjectVersion( mMasLC, "M_Usage" )
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: DisplayUsageGroups
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+DisplayUsageGroups( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+// TraceLineS( "UpdateStandaloneSurfaces: ", "M_Usage" );
+// mMasLC.getCursor( "M_UsageGroup" ).logEntity( false );
 
 END

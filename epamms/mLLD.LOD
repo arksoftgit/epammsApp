@@ -1,4 +1,4 @@
-z1000-Zeidon    MLLD     TZZOLODO                         01/12/17   16:50:16 1.0a2   
+z1000-Zeidon    MLLD     TZZOLODO                         06/26/17   09:51:07 1.0a2   
 eLOD       1
 aZKey      3
 aName      mLLD
@@ -1092,7 +1092,7 @@ aHangingForeignKeyEntity N
 aZKey      4322591
 aCardMin   0
 aCardMax   m
-aTE_ForeignKeyPrefix PF1
+aTE_ForeignKeyPrefix FKID1
 aTE_NoForeignKeyPrefix N
 
 eER_RelTypeRec 8

@@ -1,4 +1,4 @@
-z1000-Zeidon    QORGANIZ TZZOLODO                         11/18/16   15:02:22 1.0a2   
+z1000-Zeidon    QORGANIZ TZZOLODO                         06/26/17   09:51:28 1.0a2   
 eLOD       1
 aZKey      1658404
 aName      qOrganiz
@@ -866,6 +866,13 @@ aZKey      1660582
 aCaseSens  Y
 
 eDomainRec 5
+aZKey      68568087
+aName      Description
+aDomainType E
+aDataType  S
+aMaxStringLth 4096
+aDesc      Long text, no validation
+aContextRestriction N
 
 eLOD_AttributeRec 3
 aZKey      1658409
@@ -1527,7 +1534,6 @@ i149       5
 i152       56
 i154       20
 i155       21
-i158       21
 i161       59
 i167       21
 i172       21
@@ -1547,7 +1553,7 @@ i189       20
 i190       21
 i191       156
 i192       157
-i193       21
+i193       158
 i194       159
 i195       160
 i196       59
