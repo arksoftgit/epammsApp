@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCSurfaces   Generate Timestamp: 20170626151800633 --%>
+<%-- wMLCSurfaces   Generate Timestamp: 20170714142521712 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -333,6 +333,44 @@ if ( strActionToProcess != null )
       break;
    }
 
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "DELETE_SelectedUsageEntries" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCSurfaces", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Action Operation
+      nRC = 0;
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCSurfaces", "wMLC.DeleteSelectedUsageEntries" );
+      nOptRC = wMLC.DeleteSelectedUsageEntries( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
    while ( bDone == false && StringUtils.equals( strActionToProcess, "DELETE_Surface" ) )
    {
       bDone = true;
@@ -374,44 +412,6 @@ if ( strActionToProcess != null )
       nRC = 0;
       VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCSurfaces", "wMLC.DeleteNonGroupUsage" );
       nOptRC = wMLC.DeleteNonGroupUsage( new zVIEW( vKZXMLPGO ) );
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "DELETE_SelectedUsageEntries" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCSurfaces", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCSurfaces", "wMLC.DeleteSelectedUsageEntries" );
-      nOptRC = wMLC.DeleteSelectedUsageEntries( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -511,28 +511,29 @@ if ( strActionToProcess != null )
          }
       }
 
-      // Action Auto Object Function
+      // Action Operation
       nRC = 0;
-      try
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCSurfaces", "wMLC.DeleteGroup" );
+      nOptRC = wMLC.DeleteGroup( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
       {
-      EntityCursor cursor = mMasLC.cursor( "M_UsageGroup" );
-      if ( cursor.isNull() )
-         nRC = 0;
-      else
-      {
-         cursor.deleteEntity( CursorPosition.NEXT );
-         nRC = 0;
-      }
-
-      }
-      catch ( Exception e )
-      {
-         nRC = 2;
-         VmlOperation.CreateMessage( task, "DeleteUsageGroup", e.getMessage( ), "" );
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
          break;
       }
-      // Next Window
-      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
+      }
+
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
@@ -632,8 +633,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCSurfaces", "wMLC.UpdateStandaloneSurfaces" );
-      nOptRC = wMLC.UpdateStandaloneSurfaces( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCSurfaces", "wMLC.UpdateStandaloneUsages" );
+      nOptRC = wMLC.UpdateStandaloneUsages( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -749,6 +750,50 @@ if ( strActionToProcess != null )
                }
                else
                   csrRCk = mMasLC.cursor( "M_UsageGroup" ).setNextContinue( );
+            } // Grid
+         }
+      }
+
+      // Next Window
+      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "SurfaceGroup" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_UpdateGroup" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCSurfaces", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Position on the entity that was selected in the grid.
+      String strEntityKey = (String) request.getParameter( "zTableRowSelect" );
+      View mMasLC;
+      mMasLC = task.getViewByName( "mMasLC" );
+      if ( VmlOperation.isValid( mMasLC ) )
+      {
+         lEKey = java.lang.Long.parseLong( strEntityKey );
+         csrRC = mMasLC.cursor( "M_Usage" ).setByEntityKey( lEKey );
+         if ( !csrRC.isSet() )
+         {
+            boolean bFound = false;
+            csrRCk = mMasLC.cursor( "M_Usage" ).setFirst( );
+            while ( csrRCk.isSet() && !bFound )
+            {
+               lEKey = mMasLC.cursor( "M_Usage" ).getEntityKey( );
+               strKey = Long.toString( lEKey );
+               if ( StringUtils.equals( strKey, strEntityKey ) )
+               {
+                  // Stop while loop because we have positioned on the correct entity.
+                  bFound = true;
+               }
+               else
+                  csrRCk = mMasLC.cursor( "M_Usage" ).setNextContinue( );
             } // Grid
          }
       }
@@ -1890,12 +1935,13 @@ else
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:6px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GridSurfaces:Grid */ %>
-<table  cols=3 style="width:626px;"  name="GridSurfaces" id="GridSurfaces">
+<table class="sortable"  cols=4 style="width:626px;"  name="GridSurfaces" id="GridSurfaces">
 
-<thead><tr>
+<thead bgcolor=green><tr>
 
    <th class="gridheading"><input type="checkbox" onclick="CheckAllInGrid(this,'GS_Select')"></th>
    <th>Surface</th>
+   <th>Group</th>
    <th>Update</th>
 
 </tr></thead>
@@ -1917,6 +1963,7 @@ try
       String strGS_Select;
       String strGS_SelectValue;
       String strSurface;
+      String strSurfaceGroup;
       String strBMBUpdateSurfacesStatement;
       
       View vGridSurfaces;
@@ -1963,12 +2010,26 @@ try
          if ( StringUtils.isBlank( strSurface ) )
             strSurface = "&nbsp";
 
+         strSurfaceGroup = "";
+         nRC = vGridSurfaces.cursor( "M_Usage" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            strSurfaceGroup = vGridSurfaces.cursor( "M_Usage" ).getAttribute( "dUsageGroupName" ).getString( "" );
+
+            if ( strSurfaceGroup == null )
+               strSurfaceGroup = "";
+         }
+
+         if ( StringUtils.isBlank( strSurfaceGroup ) )
+            strSurfaceGroup = "&nbsp";
+
 %>
 
 <tr<%=strOdd%>>
 
    <td nowrap><%=strGS_Select%></td>
    <td><a href="#" onclick="GOTO_UpdateSurfacesStatement( this.id )" id="Surface::<%=strEntityKey%>"><%=strSurface%></a></td>
+   <td nowrap><a href="#" onclick="GOTO_UpdateGroup( this.id )" id="SurfaceGroup::<%=strEntityKey%>"><%=strSurfaceGroup%></a></td>
    <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateSurfacesStatement" onclick="GOTO_UpdateSurfacesStatement( this.id )" id="BMBUpdateSurfacesStatement::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
 
 </tr>

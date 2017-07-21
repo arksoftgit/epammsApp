@@ -1,10 +1,10 @@
-// wMLCLocations   Generate Timestamp: 20170608112933129
+// wMLCLocations   Generate Timestamp: 20170714173940355
 
 var isWindowClosing = true;
 var timerID = null;
 onerror = handleErr;
 window.history.forward( 1 );
-var Tab1;
+var Tab;
 
 function handleErr( msg, url, l )
 {
@@ -192,7 +192,7 @@ function CheckAllInGrid(id, CheckBoxName) // triggered by no text checkbox
    }
 }
 
-function ADD_LocationStatements( )
+function ADD_Locations( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -202,22 +202,7 @@ function ADD_LocationStatements( )
    {
       _DisableFormElements( true );
 
-      document.wMLCLocations.zAction.value = "ADD_LocationStatements";
-      document.wMLCLocations.submit( );
-   }
-}
-
-function GOTO_DeleteSelectedEntries( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCLocations.zAction.value = "GOTO_DeleteSelectedEntries";
+      document.wMLCLocations.zAction.value = "ADD_Locations";
       document.wMLCLocations.submit( );
    }
 }
@@ -247,7 +232,7 @@ if (!confirm("OK to delete selected Locations?"))
    }
 }
 
-function DELETE_UsageGroupEntries( )
+function DELETE_Location( strTagEntityKey )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -255,9 +240,23 @@ function DELETE_UsageGroupEntries( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      var nIdx = strTagEntityKey.lastIndexOf( '::' );
+      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
+
+      document.wMLCLocations.zTableRowSelect.value = strEntityKey;
+      // Javascript code entered by user.
+
+// Confirmation of  Delete.
+if (!confirm("Delete Location?"))
+{
+   return;
+}
+
+      // END of Javascript code entered by user.
+
       _DisableFormElements( true );
 
-      document.wMLCLocations.zAction.value = "DELETE_UsageGroupEntries";
+      document.wMLCLocations.zAction.value = "DELETE_Location";
       document.wMLCLocations.submit( );
    }
 }
@@ -277,6 +276,25 @@ function DELETE_UsageGroupEntriesOnly( )
    }
 }
 
+function DeleteUsageGroup( strTagEntityKey )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      var nIdx = strTagEntityKey.lastIndexOf( '::' );
+      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
+
+      document.wMLCLocations.zTableRowSelect.value = strEntityKey;
+      _DisableFormElements( true );
+
+      document.wMLCLocations.zAction.value = "DeleteUsageGroup";
+      document.wMLCLocations.submit( );
+   }
+}
+
 function GOTO_AddUsageGroup( )
 {
 
@@ -288,6 +306,40 @@ function GOTO_AddUsageGroup( )
       _DisableFormElements( true );
 
       document.wMLCLocations.zAction.value = "GOTO_AddUsageGroup";
+      document.wMLCLocations.submit( );
+   }
+}
+
+function GOTO_DeleteSelectedLocations( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCLocations.zAction.value = "GOTO_DeleteSelectedLocations";
+      document.wMLCLocations.submit( );
+   }
+}
+
+function GOTO_UpdateStandaloneLocations( strTagEntityKey )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      var nIdx = strTagEntityKey.lastIndexOf( '::' );
+      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
+
+      document.wMLCLocations.zTableRowSelect.value = strEntityKey;
+      _DisableFormElements( true );
+
+      document.wMLCLocations.zAction.value = "GOTO_UpdateStandaloneLocations";
       document.wMLCLocations.submit( );
    }
 }
@@ -326,6 +378,67 @@ function GOTO_UpdateUsageGroup( strTagEntityKey )
       _DisableFormElements( true );
 
       document.wMLCLocations.zAction.value = "GOTO_UpdateUsageGroup";
+      document.wMLCLocations.submit( );
+   }
+}
+
+function GOTO_UpdateGroup( strTagEntityKey )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      var nIdx = strTagEntityKey.lastIndexOf( '::' );
+      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
+
+      document.wMLCLocations.zTableRowSelect.value = strEntityKey;
+      _DisableFormElements( true );
+
+      document.wMLCLocations.zAction.value = "GOTO_UpdateGroup";
+      document.wMLCLocations.submit( );
+   }
+}
+
+function SortGroups( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      // Javascript code entered by user.
+
+       document.wMLCLocations.zTableRowSelect.value = buildSortTableHtml( "mMasLC", "M_UsageGroup", "GridLocationsGroup",  ["Name", "Combined Location"]  );
+
+      // END of Javascript code entered by user.
+
+      _DisableFormElements( true );
+
+      document.wMLCLocations.zAction.value = "SortGroups";
+      document.wMLCLocations.submit( );
+   }
+}
+
+function SortLocations( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      // Javascript code entered by user.
+
+       document.wMLCLocations.zTableRowSelect.value = buildSortTableHtml( "mMasLC", "M_Usage", "GridLocations",  ["Location"]  );
+
+      // END of Javascript code entered by user.
+
+      _DisableFormElements( true );
+
+      document.wMLCLocations.zAction.value = "SortLocations";
       document.wMLCLocations.submit( );
    }
 }

@@ -1,4 +1,4 @@
-// wMLCLocationsGroup   Generate Timestamp: 20170608112924912
+// wMLCLocationsGroup   Generate Timestamp: 20170714175131051
 
 var isWindowClosing = true;
 var timerID = null;
@@ -255,6 +255,21 @@ function GOTO_UpdateGroupUsageStatement( strTagEntityKey )
    }
 }
 
+function GOTO_UpdateUsageGroup( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCLocationsGroup.zAction.value = "GOTO_UpdateUsageGroup";
+      document.wMLCLocationsGroup.submit( );
+   }
+}
+
 function RemoveUsageEntriesFromGroup( )
 {
 
@@ -281,6 +296,27 @@ function Return( )
       _DisableFormElements( true );
 
       document.wMLCLocationsGroup.zAction.value = "Return";
+      document.wMLCLocationsGroup.submit( );
+   }
+}
+
+function Sort( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      // Javascript code entered by user.
+
+       document.wMLCLocationsGroup.zTableRowSelect.value = buildSortTableHtml( "mMasLC", "M_UsageGroupUsage", "GridClaims",  ["Locations Within Group"]  );
+
+      // END of Javascript code entered by user.
+
+      _DisableFormElements( true );
+
+      document.wMLCLocationsGroup.zAction.value = "Sort";
       document.wMLCLocationsGroup.submit( );
    }
 }

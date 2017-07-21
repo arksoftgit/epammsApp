@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCUsageGroupSelect   Generate Timestamp: 20170608082634168 --%>
+<%-- wMLCUsageGroupSelect   Generate Timestamp: 20170719132728211 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -60,6 +60,25 @@ public int DoInputMapping( HttpServletRequest request,
    mMasLC = task.getViewByName( "mMasLC" );
    if ( VmlOperation.isValid( mMasLC ) )
    {
+      // EditBox: GroupName
+      nRC = mMasLC.cursor( "M_UsageGroup" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 ) // CursorResult.SET
+      {
+         strMapValue = request.getParameter( "GroupName" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "GroupName", "", strMapValue );
+            else
+               mMasLC.cursor( "M_UsageGroup" ).getAttribute( "Name" ).setValue( strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "GroupName", e.getReason( ), strMapValue );
+         }
+      }
+
       // Grid: Grid1
       iTableRowCnt = 0;
 
@@ -309,8 +328,29 @@ if ( strActionToProcess != null )
       if ( nRC < 0 )
          break;
 
-      // Next Window
-      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReturnToParent, "", "" );
+      // Action Operation
+      nRC = 0;
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCUsageGroupSelect", "wMLC.CheckUniqueGroupName" );
+      nOptRC = wMLC.CheckUniqueGroupName( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReturnToParent, "", "" );
+      }
+
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
@@ -671,32 +711,46 @@ else
 
 <span class="groupbox"  id="UsageSelectionPrompt" name="UsageSelectionPrompt" style="width:206px;height:16px;">Select Usage Entries for Group:</span>
 
-<% /* Text1:Text */ %>
-<% strTextDisplayValue = "";
-   mMasLC = task.getViewByName( "mMasLC" );
-   if ( VmlOperation.isValid( mMasLC ) == false )
-      task.log( ).debug( "Invalid View: " + "Text1" );
+<% /* GroupName:EditBox */ %>
+<%
+   strErrorMapValue = VmlOperation.CheckError( "GroupName", strError );
+   if ( !StringUtils.isBlank( strErrorMapValue ) )
+   {
+      if ( StringUtils.equals( strErrorFlag, "Y" ) )
+         strErrorColor = "color:red;";
+   }
    else
    {
-      nRC = mMasLC.cursor( "M_UsageGroup" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 )
+      strErrorColor = "";
+      mMasLC = task.getViewByName( "mMasLC" );
+      if ( VmlOperation.isValid( mMasLC ) == false )
+         task.log( ).debug( "Invalid View: " + "GroupName" );
+      else
       {
-      try
-      {
-         strTextDisplayValue = mMasLC.cursor( "M_UsageGroup" ).getAttribute( "Name" ).getString( "" );
-      }
-      catch (Exception e)
-      {
-         out.println("There is an error on Text1: " + e.getMessage());
-         task.log().info( "*** Error on ctrl Text1" + e.getMessage() );
-      }
-         if ( strTextDisplayValue == null )
-            strTextDisplayValue = "";
+         nRC = mMasLC.cursor( "M_UsageGroup" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            try
+            {
+               strErrorMapValue = mMasLC.cursor( "M_UsageGroup" ).getAttribute( "Name" ).getString( "" );
+            }
+            catch (Exception e)
+            {
+               out.println("There is an error on GroupName: " + e.getMessage());
+               task.log().error( "*** Error on ctrl GroupName", e );
+            }
+            if ( strErrorMapValue == null )
+               strErrorMapValue = "";
+
+            task.log( ).debug( "M_UsageGroup.Name: " + strErrorMapValue );
+         }
+         else
+            task.log( ).debug( "Entity does not exist for GroupName: " + "mMasLC.M_UsageGroup" );
       }
    }
 %>
 
-<label class="groupbox"  id="Text1" name="Text1" style="width:208px;height:16px;"><%=strTextDisplayValue%></label>
+<input class="groupbox"  name="GroupName" id="GroupName" maxlength="4096" style="width:208px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </div>  <!-- End of a new line -->
 
@@ -876,7 +930,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 
 <div>  <!-- Beginning of a new line -->
 <% /* PushBtn1:PushBtn */ %>
-<button type="button" name="PushBtn1" id="PushBtn1" value="" onclick="SelectUsageEntriesForGroup( )" style="width:26px;height:32px;"><-</button>
+<button type="button" class="slider" name="PushBtn1" id="PushBtn1" value="" onclick="SelectUsageEntriesForGroup( )" style="width:26px;height:32px;"><-</button>
 
 </div>  <!-- End of a new line -->
 
@@ -887,8 +941,20 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 <div style="height:8px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
+<% /* GroupBox6:GroupBox */ %>
+
+<div id="GroupBox6" name="GroupBox6" style="width:22px;height:24px;float:left;">  <!-- GroupBox6 --> 
+
+
+</div>  <!--  GroupBox6 --> 
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+<div>  <!-- Beginning of a new line -->
 <% /* PushBtn2:PushBtn */ %>
-<button type="button" name="PushBtn2" id="PushBtn2" value="" onclick="RemoveUsageEntriesFromGroup( )" style="width:26px;height:32px;">-></button>
+<button type="button" class="slider" name="PushBtn2" id="PushBtn2" value="" onclick="RemoveUsageEntriesFromGroup( )" style="width:26px;height:32px;">-></button>
 
 </div>  <!-- End of a new line -->
 

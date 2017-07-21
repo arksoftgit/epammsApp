@@ -357,6 +357,10 @@ epamms header.png
    background-repeat:repeat-x;
 }
 
+.slider {
+   position:fixed; /* keep button visible on scroll */
+}
+
 /** widget **/
 
 #widgetbox{

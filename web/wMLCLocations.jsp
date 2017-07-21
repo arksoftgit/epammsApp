@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCLocations   Generate Timestamp: 20170608112933129 --%>
+<%-- wMLCLocations   Generate Timestamp: 20170714173940355 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -74,7 +74,7 @@ public int DoInputMapping( HttpServletRequest request,
          strEntityKey = Long.toString( lEntityKey );
          iTableRowCnt++;
 
-         strTag = "GS_SelectLocation" + strEntityKey;
+         strTag = "GS_Select" + strEntityKey;
          strMapValue = request.getParameter( strTag );
          // If the checkbox is not checked, then set to the unchecked value.
          if (strMapValue == null || strMapValue.isEmpty() )
@@ -83,7 +83,7 @@ public int DoInputMapping( HttpServletRequest request,
          try
          {
             if ( webMapping )
-               VmlOperation.CreateMessage( task, "GS_SelectLocation", "", strMapValue );
+               VmlOperation.CreateMessage( task, "GS_Select", "", strMapValue );
             else
                if ( strMapValue != null )
                   vGridTmp.cursor( "M_Usage" ).getAttribute( "wSelected" ).setValue( strMapValue, "" );
@@ -119,7 +119,7 @@ public int DoInputMapping( HttpServletRequest request,
          }
       }
 
-      // EditBox: ReviewerNote
+      // MLEdit: ReviewerNote
       nRC = mMasLC.cursor( "M_UsageType" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 ) // CursorResult.SET
       {
@@ -138,7 +138,7 @@ public int DoInputMapping( HttpServletRequest request,
          }
       }
 
-      // Grid: GridLocationGroup
+      // Grid: GridLocationsGroup
       iTableRowCnt = 0;
 
       // We are creating a temp view to the grid view so that if there are 
@@ -152,33 +152,11 @@ public int DoInputMapping( HttpServletRequest request,
          strEntityKey = Long.toString( lEntityKey );
          iTableRowCnt++;
 
-         strTag = "GS_SelectLocationGroup" + strEntityKey;
-         strMapValue = request.getParameter( strTag );
-         // If the checkbox is not checked, then set to the unchecked value.
-         if (strMapValue == null || strMapValue.isEmpty() )
-            strMapValue = "N";
-
-         try
-         {
-            if ( webMapping )
-               VmlOperation.CreateMessage( task, "GS_SelectLocationGroup", "", strMapValue );
-            else
-               if ( strMapValue != null )
-                  vGridTmp.cursor( "M_UsageGroup" ).getAttribute( "wSelected" ).setValue( strMapValue, "" );
-               else
-                  vGridTmp.cursor( "M_UsageGroup" ).getAttribute( "wSelected" ).setValue( "", "" );
-         }
-         catch ( InvalidAttributeValueException e )
-         {
-            nMapError = -16;
-            VmlOperation.CreateMessage( task, strTag, e.getReason( ), strMapValue );
-         }
-
          csrRC = vGridTmp.cursor( "M_UsageGroup" ).setNextContinue( );
       }
 
       vGridTmp.drop( );
-      // Grid: GridNonGroupLocations
+      // Grid: GridIndividualLocations
       iTableRowCnt = 0;
 
       // We are creating a temp view to the grid view so that if there are 
@@ -317,7 +295,7 @@ if ( strActionToProcess != null )
 
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "ADD_LocationStatements" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "ADD_Locations" ) )
    {
       bDone = true;
       VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCLocations", strActionToProcess );
@@ -329,8 +307,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCLocations", "wMLC.GOTO_LocationStatementAdd" );
-      nOptRC = wMLC.GOTO_LocationStatementAdd( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCLocations", "wMLC.GOTO_AddUsageStatements" );
+      nOptRC = wMLC.GOTO_AddUsageStatements( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -350,23 +328,6 @@ if ( strActionToProcess != null )
          strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "AddItemsMultiple" );
       }
 
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_DeleteSelectedEntries" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCLocations", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Next Window
-      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "DeleteUsageStatements" );
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
@@ -410,7 +371,7 @@ if ( strActionToProcess != null )
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "DELETE_UsageGroupEntries" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "DELETE_Location" ) )
    {
       bDone = true;
       VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCLocations", strActionToProcess );
@@ -420,10 +381,37 @@ if ( strActionToProcess != null )
       if ( nRC < 0 )
          break;
 
+      // Position on the entity that was selected in the grid.
+      String strEntityKey = (String) request.getParameter( "zTableRowSelect" );
+      View mMasLC;
+      mMasLC = task.getViewByName( "mMasLC" );
+      if ( VmlOperation.isValid( mMasLC ) )
+      {
+         lEKey = java.lang.Long.parseLong( strEntityKey );
+         csrRC = mMasLC.cursor( "M_UsageNonGroupUsage" ).setByEntityKey( lEKey );
+         if ( !csrRC.isSet() )
+         {
+            boolean bFound = false;
+            csrRCk = mMasLC.cursor( "M_UsageNonGroupUsage" ).setFirst( );
+            while ( csrRCk.isSet() && !bFound )
+            {
+               lEKey = mMasLC.cursor( "M_UsageNonGroupUsage" ).getEntityKey( );
+               strKey = Long.toString( lEKey );
+               if ( StringUtils.equals( strKey, strEntityKey ) )
+               {
+                  // Stop while loop because we have positioned on the correct entity.
+                  bFound = true;
+               }
+               else
+                  csrRCk = mMasLC.cursor( "M_UsageNonGroupUsage" ).setNextContinue( );
+            } // Grid
+         }
+      }
+
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCLocations", "wMLC.DeleteUsageGroupEntries" );
-      nOptRC = wMLC.DeleteUsageGroupEntries( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCLocations", "wMLC.DeleteNonGroupUsage" );
+      nOptRC = wMLC.DeleteNonGroupUsage( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -486,6 +474,71 @@ if ( strActionToProcess != null )
       break;
    }
 
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "DeleteUsageGroup" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCLocations", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Position on the entity that was selected in the grid.
+      String strEntityKey = (String) request.getParameter( "zTableRowSelect" );
+      View mMasLC;
+      mMasLC = task.getViewByName( "mMasLC" );
+      if ( VmlOperation.isValid( mMasLC ) )
+      {
+         lEKey = java.lang.Long.parseLong( strEntityKey );
+         csrRC = mMasLC.cursor( "M_UsageGroup" ).setByEntityKey( lEKey );
+         if ( !csrRC.isSet() )
+         {
+            boolean bFound = false;
+            csrRCk = mMasLC.cursor( "M_UsageGroup" ).setFirst( );
+            while ( csrRCk.isSet() && !bFound )
+            {
+               lEKey = mMasLC.cursor( "M_UsageGroup" ).getEntityKey( );
+               strKey = Long.toString( lEKey );
+               if ( StringUtils.equals( strKey, strEntityKey ) )
+               {
+                  // Stop while loop because we have positioned on the correct entity.
+                  bFound = true;
+               }
+               else
+                  csrRCk = mMasLC.cursor( "M_UsageGroup" ).setNextContinue( );
+            } // Grid
+         }
+      }
+
+      // Action Operation
+      nRC = 0;
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCLocations", "wMLC.DeleteGroup" );
+      nOptRC = wMLC.DeleteGroup( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
    while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_AddUsageGroup" ) )
    {
       bDone = true;
@@ -516,7 +569,89 @@ if ( strActionToProcess != null )
       if ( strNextJSP_Name.equals( "" ) )
       {
          // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "LocationsGroup" );
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "UsageGroupSelect" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_DeleteSelectedLocations" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCLocations", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Next Window
+      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "DeleteUsageStatements" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_UpdateStandaloneLocations" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCLocations", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Position on the entity that was selected in the grid.
+      String strEntityKey = (String) request.getParameter( "zTableRowSelect" );
+      View mMasLC;
+      mMasLC = task.getViewByName( "mMasLC" );
+      if ( VmlOperation.isValid( mMasLC ) )
+      {
+         lEKey = java.lang.Long.parseLong( strEntityKey );
+         csrRC = mMasLC.cursor( "M_UsageNonGroupUsage" ).setByEntityKey( lEKey );
+         if ( !csrRC.isSet() )
+         {
+            boolean bFound = false;
+            csrRCk = mMasLC.cursor( "M_UsageNonGroupUsage" ).setFirst( );
+            while ( csrRCk.isSet() && !bFound )
+            {
+               lEKey = mMasLC.cursor( "M_UsageNonGroupUsage" ).getEntityKey( );
+               strKey = Long.toString( lEKey );
+               if ( StringUtils.equals( strKey, strEntityKey ) )
+               {
+                  // Stop while loop because we have positioned on the correct entity.
+                  bFound = true;
+               }
+               else
+                  csrRCk = mMasLC.cursor( "M_UsageNonGroupUsage" ).setNextContinue( );
+            } // Grid
+         }
+      }
+
+      // Action Operation
+      nRC = 0;
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCLocations", "wMLC.UpdateStandaloneUsages" );
+      nOptRC = wMLC.UpdateStandaloneUsages( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "SurfacesStatement" );
       }
 
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -621,6 +756,119 @@ if ( strActionToProcess != null )
 
       // Next Window
       strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "LocationsGroup" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_UpdateGroup" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCLocations", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Position on the entity that was selected in the grid.
+      String strEntityKey = (String) request.getParameter( "zTableRowSelect" );
+      View mMasLC;
+      mMasLC = task.getViewByName( "mMasLC" );
+      if ( VmlOperation.isValid( mMasLC ) )
+      {
+         lEKey = java.lang.Long.parseLong( strEntityKey );
+         csrRC = mMasLC.cursor( "M_Usage" ).setByEntityKey( lEKey );
+         if ( !csrRC.isSet() )
+         {
+            boolean bFound = false;
+            csrRCk = mMasLC.cursor( "M_Usage" ).setFirst( );
+            while ( csrRCk.isSet() && !bFound )
+            {
+               lEKey = mMasLC.cursor( "M_Usage" ).getEntityKey( );
+               strKey = Long.toString( lEKey );
+               if ( StringUtils.equals( strKey, strEntityKey ) )
+               {
+                  // Stop while loop because we have positioned on the correct entity.
+                  bFound = true;
+               }
+               else
+                  csrRCk = mMasLC.cursor( "M_Usage" ).setNextContinue( );
+            } // Grid
+         }
+      }
+
+      // Action Operation
+      nRC = 0;
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCLocations", "wMLC.DisplayUsageGroups" );
+      nOptRC = wMLC.DisplayUsageGroups( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "LocationsGroup" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "SortGroups" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCLocations", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Next Window
+      // We are borrowing zTableRowSelect and this code is hardwired for the moment.  javascript code similar to the following must be added to the action:
+      // document.wSLCMarketingStatement.zTableRowSelect.value = buildSortTableHtml( "mSubLC", "S_MarketingUsageOrdering", "GridMarketingUsage", ["Usage Type","Usage Name"] );
+      wWebXA = task.getViewByName( "wWebXfer" );
+      String strHtml = (String) request.getParameter( "zTableRowSelect" );
+      wWebXA.cursor( "Root" ).getAttribute( "HTML" ).setValue( strHtml, "" );
+      // We are borrowing zTableRowSelect and the code above is hardwired for the moment
+
+      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wSystem", "DragDropSort" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "SortLocations" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCLocations", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Next Window
+      // We are borrowing zTableRowSelect and this code is hardwired for the moment.  javascript code similar to the following must be added to the action:
+      // document.wSLCMarketingStatement.zTableRowSelect.value = buildSortTableHtml( "mSubLC", "S_MarketingUsageOrdering", "GridMarketingUsage", ["Usage Type","Usage Name"] );
+      wWebXA = task.getViewByName( "wWebXfer" );
+      String strHtml = (String) request.getParameter( "zTableRowSelect" );
+      wWebXA.cursor( "Root" ).getAttribute( "HTML" ).setValue( strHtml, "" );
+      // We are borrowing zTableRowSelect and the code above is hardwired for the moment
+
+      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wSystem", "DragDropSort" );
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
@@ -1289,6 +1537,8 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/common.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/css.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/sts.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/jsoeUtils.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/jsoe.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
@@ -1642,15 +1892,15 @@ else
 <div style="height:8px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
-<% /* Tab1:Tab */ %>
+<div style="height:1px;width:18px;float:left;"></div>   <!-- Width Spacer -->
+<% /* Tab:Tab */ %>
 
-<div id="Tab1" class="tab-pane" style="width:660px;"> <!-- Beginning of Tab Control Tab1 -->
-<script type="text/javascript">Tab1 = new WebFXTabPane( document.getElementById( "Tab1" ) );</script>
+<div id="Tab" class="tab-pane" style="width:660px;"> <!-- Beginning of Tab Control Tab -->
+<script type="text/javascript">Tab = new WebFXTabPane( document.getElementById( "Tab" ) );</script>
 
-<div id="IndividualLocations" class="tab-page " > <!-- Tab item IndividualLocations -->
-<h2 class="tab"><span>Individual Locations</span></h2>
-<script type="text/javascript">Tab1.addTabPage( document.getElementById( "IndividualLocations" ) );</script>
+<div id="FullListLocations" class="tab-page " > <!-- Tab item FullListLocations -->
+<h2 class="tab"><span>Locations List</span></h2>
+<script type="text/javascript">Tab.addTabPage( document.getElementById( "FullListLocations" ) );</script>
 
 
  <!-- This is added as a line spacer -->
@@ -1660,17 +1910,20 @@ else
 <div style="height:1px;width:6px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GBLocationStatements:GroupBox */ %>
 
-<div id="GBLocationStatements" name="GBLocationStatements" class="withborder"   style="float:left;position:relative; width:616px; height:36px;">  <!-- GBLocationStatements --> 
+<div id="GBLocationStatements" name="GBLocationStatements" class="withborder"   style="float:left;position:relative; width:616px; height:38px;">  <!-- GBLocationStatements --> 
 
-<% /* LocationsStatements:Text */ %>
+<% /* LocationStatements:Text */ %>
 
-<label class="groupbox"  id="LocationsStatements" name="LocationsStatements" style="">Locations Statements</label>
+<label class="groupbox"  id="LocationStatements" name="LocationStatements" style="">Location Statement</label>
 
-<% /* PBDelete1:PushBtn */ %>
-<button type="button" name="PBDelete1" id="PBDelete1" value="" onclick="GOTO_DeleteSelectedEntries( )" style="width:210px;height:26px;position:absolute;left:264px;top:12px;" tabindex=-1 >Delete Selected Locations</button>
+<% /* PBDeleteSelectedLocations:PushBtn */ %>
+<button type="button" name="PBDeleteSelectedLocations" id="PBDeleteSelectedLocations" value="" onclick="GOTO_DeleteSelectedLocations( )" style="width:198px;height:26px;position:absolute;left:176px;top:12px;" tabindex=-1 >Delete Selected Locations</button>
 
-<% /* PBNew1:PushBtn */ %>
-<button type="button" name="PBNew1" id="PBNew1" value="" onclick="ADD_LocationStatements( )" style="width:78px;height:26px;position:absolute;left:482px;top:12px;" tabindex=-1 >New</button>
+<% /* PBNewLocation:PushBtn */ %>
+<button type="button" name="PBNewLocation" id="PBNewLocation" value="" onclick="ADD_Locations( )" style="width:78px;height:26px;position:absolute;left:424px;top:12px;" tabindex=-1 >New</button>
+
+<% /* PBSortLocations:PushBtn */ %>
+<button type="button" class="newbutton" name="PBSortLocations" id="PBSortLocations" value="" onclick="SortLocations( )" style="width:78px;height:26px;position:absolute;left:522px;top:12px;" tabindex=-1 >Sort</button>
 
 
 </div>  <!--  GBLocationStatements --> 
@@ -1679,18 +1932,16 @@ else
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
 
 
- <!-- This is added as a line spacer -->
-<div style="height:12px;width:100px;"></div>
-
 <div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
+<div style="height:1px;width:6px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GridLocations:Grid */ %>
-<table class="sortable"  cols=3 style="width:632px;"  name="GridLocations" id="GridLocations">
+<table class="sortable"  cols=4 style="width:626px;"  name="GridLocations" id="GridLocations">
 
 <thead bgcolor=green><tr>
 
-   <th class="gridheading"><input type="checkbox" onclick="CheckAllInGrid(this,'GS_SelectLocation')"></th>
-   <th>Locations</th>
+   <th class="gridheading"><input type="checkbox" onclick="CheckAllInGrid(this,'GS_Select')"></th>
+   <th>Location</th>
+   <th>Group</th>
    <th>Update</th>
 
 </tr></thead>
@@ -1709,9 +1960,10 @@ try
       String strButtonName;
       String strOdd;
       String strTag;
-      String strGS_SelectLocation;
-      String strGS_SelectLocationValue;
-      String strLocations;
+      String strGS_Select;
+      String strGS_SelectValue;
+      String strLocation;
+      String strLocationGroup;
       String strBMBUpdateLocationsStatement;
       
       View vGridLocations;
@@ -1724,46 +1976,60 @@ try
 
          lEntityKey = vGridLocations.cursor( "M_Usage" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strGS_SelectLocation = "";
+         strGS_Select = "";
          nRC = vGridLocations.cursor( "M_Usage" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGS_SelectLocation = vGridLocations.cursor( "M_Usage" ).getAttribute( "wSelected" ).getString( "" );
+            strGS_Select = vGridLocations.cursor( "M_Usage" ).getAttribute( "wSelected" ).getString( "" );
 
-            if ( strGS_SelectLocation == null )
-               strGS_SelectLocation = "";
+            if ( strGS_Select == null )
+               strGS_Select = "";
          }
 
-         if ( StringUtils.equals( strGS_SelectLocation, "Y" ) )
+         if ( StringUtils.equals( strGS_Select, "Y" ) )
          {
-            strGS_SelectLocationValue = "GS_SelectLocation" + strEntityKey;
-            strGS_SelectLocation = "<input name='" + strGS_SelectLocationValue + "' id='" + strGS_SelectLocationValue + "' value='Y' type='checkbox'  CHECKED > ";
+            strGS_SelectValue = "GS_Select" + strEntityKey;
+            strGS_Select = "<input name='" + strGS_SelectValue + "' id='" + strGS_SelectValue + "' value='Y' type='checkbox'  CHECKED > ";
          }
          else
          {
-            strGS_SelectLocationValue = "GS_SelectLocation" + strEntityKey;
-            strGS_SelectLocation = "<input name='" + strGS_SelectLocationValue + "' id='" + strGS_SelectLocationValue + "' value='Y' type='checkbox' > ";
+            strGS_SelectValue = "GS_Select" + strEntityKey;
+            strGS_Select = "<input name='" + strGS_SelectValue + "' id='" + strGS_SelectValue + "' value='Y' type='checkbox' > ";
          }
 
-         strLocations = "";
+         strLocation = "";
          nRC = vGridLocations.cursor( "M_Usage" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strLocations = vGridLocations.cursor( "M_Usage" ).getAttribute( "dUsageTextSubUsageNames" ).getString( "" );
+            strLocation = vGridLocations.cursor( "M_Usage" ).getAttribute( "dUsageTextSubUsageNames" ).getString( "" );
 
-            if ( strLocations == null )
-               strLocations = "";
+            if ( strLocation == null )
+               strLocation = "";
          }
 
-         if ( StringUtils.isBlank( strLocations ) )
-            strLocations = "&nbsp";
+         if ( StringUtils.isBlank( strLocation ) )
+            strLocation = "&nbsp";
+
+         strLocationGroup = "";
+         nRC = vGridLocations.cursor( "M_Usage" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            strLocationGroup = vGridLocations.cursor( "M_Usage" ).getAttribute( "dUsageGroupName" ).getString( "" );
+
+            if ( strLocationGroup == null )
+               strLocationGroup = "";
+         }
+
+         if ( StringUtils.isBlank( strLocationGroup ) )
+            strLocationGroup = "&nbsp";
 
 %>
 
 <tr<%=strOdd%>>
 
-   <td nowrap><%=strGS_SelectLocation%></td>
-   <td><a href="#" onclick="GOTO_UpdateLocationsStatement( this.id )" id="Locations::<%=strEntityKey%>"><%=strLocations%></a></td>
+   <td nowrap><%=strGS_Select%></td>
+   <td><a href="#" onclick="GOTO_UpdateLocationsStatement( this.id )" id="Location::<%=strEntityKey%>"><%=strLocation%></a></td>
+   <td nowrap><a href="#" onclick="GOTO_UpdateGroup( this.id )" id="LocationGroup::<%=strEntityKey%>"><%=strLocationGroup%></a></td>
    <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateLocationsStatement" onclick="GOTO_UpdateLocationsStatement( this.id )" id="BMBUpdateLocationsStatement::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
 
 </tr>
@@ -1785,11 +2051,11 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 
 </div>  <!-- End of a new line -->
 
-</div> <!-- End of Tab item IndividualLocations -->
+</div> <!-- End of Tab item FullListLocations -->
 
-<div id="GroupLocations" class="tab-page " > <!-- Tab item GroupLocations -->
-<h2 class="tab"><span>Group Locations</span></h2>
-<script type="text/javascript">Tab1.addTabPage( document.getElementById( "GroupLocations" ) );</script>
+<div id="GroupedLocations" class="tab-page " > <!-- Tab item GroupedLocations -->
+<h2 class="tab"><span>Grouped  Locations</span></h2>
+<script type="text/javascript">Tab.addTabPage( document.getElementById( "GroupedLocations" ) );</script>
 
 
  <!-- This is added as a line spacer -->
@@ -1797,43 +2063,38 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:6px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GBLocationGroups:GroupBox */ %>
+<% /* GB_LocationsGroup:GroupBox */ %>
 
-<div id="GBLocationGroups" name="GBLocationGroups" class="withborder"   style="float:left;position:relative; width:616px; height:68px;">  <!-- GBLocationGroups --> 
+<div id="GB_LocationsGroup" name="GB_LocationsGroup" class="withborder"   style="float:left;position:relative; width:616px; height:38px;">  <!-- GB_LocationsGroup --> 
 
-<% /* LocationsGroupsStatements:Text */ %>
+<% /* LocationStatementsGroup:Text */ %>
 
-<label class="groupbox"  id="LocationsGroupsStatements" name="LocationsGroupsStatements" style="">Locations Groups</label>
+<label class="groupbox"  id="LocationStatementsGroup" name="LocationStatementsGroup" style="">Location Groups</label>
 
-<% /* PBDelete2:PushBtn */ %>
-<button type="button" name="PBDelete2" id="PBDelete2" value="" onclick="DELETE_UsageGroupEntriesOnly( )" style="width:258px;height:26px;position:absolute;left:194px;top:12px;" tabindex=-1 >Delete Selected Groups Only</button>
+<% /* PBMoveToGroup:PushBtn */ %>
+<button type="button" name="PBMoveToGroup" id="PBMoveToGroup" value="" onclick="GOTO_AddUsageGroup( )" style="width:152px;height:26px;position:absolute;left:354px;top:12px;" tabindex=-1 >New Locations Group</button>
 
-<% /* PBNew2:PushBtn */ %>
-<button type="button" name="PBNew2" id="PBNew2" value="" onclick="GOTO_AddUsageGroup( )" style="width:78px;height:26px;position:absolute;left:482px;top:12px;" tabindex=-1 >New</button>
-
-<% /* DeleteLocationGroups:PushBtn */ %>
-<button type="button" name="DeleteLocationGroups" id="DeleteLocationGroups" value="" onclick="DELETE_UsageGroupEntries( )" style="width:258px;height:26px;position:absolute;left:194px;top:38px;" tabindex=-1 >Delete Selected Groups & Locations</button>
+<% /* PBSortGroups:PushBtn */ %>
+<button type="button" class="newbutton" name="PBSortGroups" id="PBSortGroups" value="" onclick="SortGroups( )" style="width:78px;height:26px;position:absolute;left:522px;top:12px;" tabindex=-1 >Sort</button>
 
 
-</div>  <!--  GBLocationGroups --> 
+</div>  <!--  GB_LocationsGroup --> 
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
 
 
- <!-- This is added as a line spacer -->
-<div style="height:10px;width:100px;"></div>
-
 <div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:8px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GridLocationGroup:Grid */ %>
-<table class="sortable"  cols=3 style="width:616px;"  name="GridLocationGroup" id="GridLocationGroup">
+<div style="height:1px;width:6px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GridLocationsGroup:Grid */ %>
+<table  cols=4 style="width:628px;"  name="GridLocationsGroup" id="GridLocationsGroup">
 
-<thead bgcolor=green><tr>
+<thead><tr>
 
-   <th class="gridheading"><input type="checkbox" onclick="CheckAllInGrid(this,'GS_SelectLocationGroup')"></th>
-   <th>Location Groups</th>
+   <th>Name</th>
+   <th>Combined Location</th>
    <th>Update</th>
+   <th>Delete</th>
 
 </tr></thead>
 
@@ -1851,69 +2112,62 @@ try
       String strButtonName;
       String strOdd;
       String strTag;
-      String strGS_SelectLocationGroup;
-      String strGS_SelectLocationGroupValue;
-      String strLocationGroups;
-      String strBMBUpdateLocationGroupsStatement;
+      String strLocationsGroupName;
+      String strLocationsGroup;
+      String strBMBUpdateLocationsGroup;
+      String strBMBDeleteLocationsGroup;
       
-      View vGridLocationGroup;
-      vGridLocationGroup = mMasLC.newView( );
-      csrRC2 = vGridLocationGroup.cursor( "M_UsageGroup" ).setFirst(  );
+      View vGridLocationsGroup;
+      vGridLocationsGroup = mMasLC.newView( );
+      csrRC2 = vGridLocationsGroup.cursor( "M_UsageGroup" ).setFirst(  );
       while ( csrRC2.isSet() )
       {
          strOdd = (iTableRowCnt % 2) != 0 ? " class='odd'" : "";
          iTableRowCnt++;
 
-         lEntityKey = vGridLocationGroup.cursor( "M_UsageGroup" ).getEntityKey( );
+         lEntityKey = vGridLocationsGroup.cursor( "M_UsageGroup" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strGS_SelectLocationGroup = "";
-         nRC = vGridLocationGroup.cursor( "M_UsageGroup" ).checkExistenceOfEntity( ).toInt();
+         strLocationsGroupName = "";
+         nRC = vGridLocationsGroup.cursor( "M_UsageGroup" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGS_SelectLocationGroup = vGridLocationGroup.cursor( "M_UsageGroup" ).getAttribute( "wSelected" ).getString( "" );
+            strLocationsGroupName = vGridLocationsGroup.cursor( "M_UsageGroup" ).getAttribute( "Name" ).getString( "" );
 
-            if ( strGS_SelectLocationGroup == null )
-               strGS_SelectLocationGroup = "";
+            if ( strLocationsGroupName == null )
+               strLocationsGroupName = "";
          }
 
-         if ( StringUtils.equals( strGS_SelectLocationGroup, "Y" ) )
-         {
-            strGS_SelectLocationGroupValue = "GS_SelectLocationGroup" + strEntityKey;
-            strGS_SelectLocationGroup = "<input name='" + strGS_SelectLocationGroupValue + "' id='" + strGS_SelectLocationGroupValue + "' value='Y' type='checkbox'  CHECKED > ";
-         }
-         else
-         {
-            strGS_SelectLocationGroupValue = "GS_SelectLocationGroup" + strEntityKey;
-            strGS_SelectLocationGroup = "<input name='" + strGS_SelectLocationGroupValue + "' id='" + strGS_SelectLocationGroupValue + "' value='Y' type='checkbox' > ";
-         }
+         if ( StringUtils.isBlank( strLocationsGroupName ) )
+            strLocationsGroupName = "&nbsp";
 
-         strLocationGroups = "";
-         nRC = vGridLocationGroup.cursor( "M_UsageGroup" ).checkExistenceOfEntity( ).toInt();
+         strLocationsGroup = "";
+         nRC = vGridLocationsGroup.cursor( "M_UsageGroup" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strLocationGroups = vGridLocationGroup.cursor( "M_UsageGroup" ).getAttribute( "dSubUsageCombinedText" ).getString( "" );
+            strLocationsGroup = vGridLocationsGroup.cursor( "M_UsageGroup" ).getAttribute( "dSubUsageCombinedText" ).getString( "" );
 
-            if ( strLocationGroups == null )
-               strLocationGroups = "";
+            if ( strLocationsGroup == null )
+               strLocationsGroup = "";
          }
 
-         if ( StringUtils.isBlank( strLocationGroups ) )
-            strLocationGroups = "&nbsp";
+         if ( StringUtils.isBlank( strLocationsGroup ) )
+            strLocationsGroup = "&nbsp";
 
 %>
 
 <tr<%=strOdd%>>
 
-   <td nowrap><%=strGS_SelectLocationGroup%></td>
-   <td><a href="#" onclick="GOTO_UpdateUsageGroup( this.id )" id="LocationGroups::<%=strEntityKey%>"><%=strLocationGroups%></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateLocationGroupsStatement" onclick="GOTO_UpdateUsageGroup( this.id )" id="BMBUpdateLocationGroupsStatement::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
+   <td nowrap><a href="#" onclick="GOTO_UpdateUsageGroup( this.id )" id="LocationsGroupName::<%=strEntityKey%>"><%=strLocationsGroupName%></a></td>
+   <td><a href="#" onclick="GOTO_UpdateUsageGroup( this.id )" id="LocationsGroup::<%=strEntityKey%>"><%=strLocationsGroup%></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateLocationsGroup" onclick="GOTO_UpdateUsageGroup( this.id )" id="BMBUpdateLocationsGroup::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteLocationsGroup" onclick="DeleteUsageGroup( this.id )" id="BMBDeleteLocationsGroup::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
 
 </tr>
 
 <%
-         csrRC2 = vGridLocationGroup.cursor( "M_UsageGroup" ).setNextContinue( );
+         csrRC2 = vGridLocationsGroup.cursor( "M_UsageGroup" ).setNextContinue( );
       }
-      vGridLocationGroup.drop( );
+      vGridLocationsGroup.drop( );
    }
 }
 catch (Exception e)
@@ -1927,24 +2181,46 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 
 </div>  <!-- End of a new line -->
 
-</div> <!-- End of Tab item GroupLocations -->
+</div> <!-- End of Tab item GroupedLocations -->
 
-<div id="NonGroupLocations" class="tab-page " > <!-- Tab item NonGroupLocations -->
-<h2 class="tab"><span>Nongroup Locations</span></h2>
-<script type="text/javascript">Tab1.addTabPage( document.getElementById( "NonGroupLocations" ) );</script>
+<div id="UngroupedLocations" class="tab-page " > <!-- Tab item UngroupedLocations -->
+<h2 class="tab"><span>Standalone Locations</span></h2>
+<script type="text/javascript">Tab.addTabPage( document.getElementById( "UngroupedLocations" ) );</script>
 
 
  <!-- This is added as a line spacer -->
-<div style="height:10px;width:100px;"></div>
+<div style="height:8px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:8px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GridNonGroupLocations:Grid */ %>
-<table class="sortable"  cols=1 style="width:594px;"  name="GridNonGroupLocations" id="GridNonGroupLocations">
+<div style="height:1px;width:6px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GBIndividualLocationStatements:GroupBox */ %>
+
+<div id="GBIndividualLocationStatements" name="GBIndividualLocationStatements" class="withborder"   style="float:left;position:relative; width:616px; height:38px;">  <!-- GBIndividualLocationStatements --> 
+
+<% /* IndividualLocations:Text */ %>
+
+<label class="groupbox"  id="IndividualLocations" name="IndividualLocations" style="">Location Statement</label>
+
+<% /* PBGroupLocations:PushBtn */ %>
+<button type="button" name="PBGroupLocations" id="PBGroupLocations" value="" onclick="GOTO_AddUsageGroup( )" style="width:152px;height:26px;position:absolute;left:374px;top:12px;" tabindex=-1 >New Locations Group</button>
+
+
+</div>  <!--  GBIndividualLocationStatements --> 
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:6px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GridIndividualLocations:Grid */ %>
+<table class="sortable"  cols=3 style="width:626px;"  name="GridIndividualLocations" id="GridIndividualLocations">
 
 <thead bgcolor=green><tr>
 
    <th>Locations</th>
+   <th>Update</th>
+   <th>Delete</th>
 
 </tr></thead>
 
@@ -1962,43 +2238,47 @@ try
       String strButtonName;
       String strOdd;
       String strTag;
-      String strGE_NonGroupLocations;
+      String strIndividualLocation;
+      String strBMBUpdateStandaloneLocation;
+      String strBMBDeleteLocations;
       
-      View vGridNonGroupLocations;
-      vGridNonGroupLocations = mMasLC.newView( );
-      csrRC2 = vGridNonGroupLocations.cursor( "M_UsageNonGroupUsage" ).setFirst(  );
+      View vGridIndividualLocations;
+      vGridIndividualLocations = mMasLC.newView( );
+      csrRC2 = vGridIndividualLocations.cursor( "M_UsageNonGroupUsage" ).setFirst(  );
       while ( csrRC2.isSet() )
       {
          strOdd = (iTableRowCnt % 2) != 0 ? " class='odd'" : "";
          iTableRowCnt++;
 
-         lEntityKey = vGridNonGroupLocations.cursor( "M_UsageNonGroupUsage" ).getEntityKey( );
+         lEntityKey = vGridIndividualLocations.cursor( "M_UsageNonGroupUsage" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strGE_NonGroupLocations = "";
-         nRC = vGridNonGroupLocations.cursor( "M_UsageNonGroupUsage" ).checkExistenceOfEntity( ).toInt();
+         strIndividualLocation = "";
+         nRC = vGridIndividualLocations.cursor( "M_UsageNonGroupUsage" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGE_NonGroupLocations = vGridNonGroupLocations.cursor( "M_UsageNonGroupUsage" ).getAttribute( "dUsageNonGroupSubUsages" ).getString( "" );
+            strIndividualLocation = vGridIndividualLocations.cursor( "M_UsageNonGroupUsage" ).getAttribute( "dUsageNonGroupSubUsages" ).getString( "" );
 
-            if ( strGE_NonGroupLocations == null )
-               strGE_NonGroupLocations = "";
+            if ( strIndividualLocation == null )
+               strIndividualLocation = "";
          }
 
-         if ( StringUtils.isBlank( strGE_NonGroupLocations ) )
-            strGE_NonGroupLocations = "&nbsp";
+         if ( StringUtils.isBlank( strIndividualLocation ) )
+            strIndividualLocation = "&nbsp";
 
 %>
 
 <tr<%=strOdd%>>
 
-   <td><%=strGE_NonGroupLocations%></td>
+   <td><a href="#" onclick="GOTO_UpdateStandaloneLocations( this.id )" id="IndividualLocation::<%=strEntityKey%>"><%=strIndividualLocation%></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateStandaloneLocation" onclick="GOTO_UpdateStandaloneLocations( this.id )" id="BMBUpdateStandaloneLocation::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteLocations" onclick="DELETE_Location( this.id )" id="BMBDeleteLocations::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
 
 </tr>
 
 <%
-         csrRC2 = vGridNonGroupLocations.cursor( "M_UsageNonGroupUsage" ).setNextContinue( );
+         csrRC2 = vGridIndividualLocations.cursor( "M_UsageNonGroupUsage" ).setNextContinue( );
       }
-      vGridNonGroupLocations.drop( );
+      vGridIndividualLocations.drop( );
    }
 }
 catch (Exception e)
@@ -2012,20 +2292,20 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 
 </div>  <!-- End of a new line -->
 
-</div> <!-- End of Tab item NonGroupLocations -->
+</div> <!-- End of Tab item UngroupedLocations -->
 
 <div id="General" class="tab-page " > <!-- Tab item General -->
 <h2 class="tab"><span>General</span></h2>
-<script type="text/javascript">Tab1.addTabPage( document.getElementById( "General" ) );</script>
+<script type="text/javascript">Tab.addTabPage( document.getElementById( "General" ) );</script>
 
 
  <!-- This is added as a line spacer -->
-<div style="height:12px;width:100px;"></div>
+<div style="height:8px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GroupBox2:GroupBox */ %>
-<div id="GroupBox2" name="GroupBox2" style="float:left;width:620px;" >
+<div style="height:1px;width:6px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GroupBoxGeneral:GroupBox */ %>
+<div id="GroupBoxGeneral" name="GroupBoxGeneral" style="float:left;width:620px;"  class="withborder">
 
 <table cols=2 style="width:620px;"  class="grouptable">
 
@@ -2088,8 +2368,9 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 
 </td>
 <td valign="top" style="width:466px;">
-<% /* ReviewerNote:EditBox */ %>
+<% /* ReviewerNote:MLEdit */ %>
 <%
+   // MLEdit: ReviewerNote
    strErrorMapValue = VmlOperation.CheckError( "ReviewerNote", strError );
    if ( !StringUtils.isBlank( strErrorMapValue ) )
    {
@@ -2107,15 +2388,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
          nRC = mMasLC.cursor( "M_UsageType" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            try
-            {
-               strErrorMapValue = mMasLC.cursor( "M_UsageType" ).getAttribute( "ReviewerNote" ).getString( "" );
-            }
-            catch (Exception e)
-            {
-               out.println("There is an error on ReviewerNote: " + e.getMessage());
-               task.log().error( "*** Error on ctrl ReviewerNote", e );
-            }
+            strErrorMapValue = mMasLC.cursor( "M_UsageType" ).getAttribute( "ReviewerNote" ).getString( "" );
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
 
@@ -2127,19 +2400,19 @@ task.log().info( "*** Error in grid" + e.getMessage() );
    }
 %>
 
-<input name="ReviewerNote" id="ReviewerNote" maxlength="4096" style="width:466px;<%=strErrorColor%>" tabindex=-1  type="text" value="<%=strErrorMapValue%>" >
+<textarea id="ReviewerNote" name="ReviewerNote" class="" maxlength="4096" style="width:466px;height:46px;border:solid;border-width:2px;border-style:groove;" tabindex=-1  wrap="wrap"><%=strErrorMapValue%></textarea>
 
 </td>
 </tr>
 </table>
 
-</div>  <!-- GroupBox2 --> 
+</div>  <!-- GroupBoxGeneral --> 
 
 </div>  <!-- End of a new line -->
 
 </div> <!-- End of Tab item General -->
 
-</div> <!-- End of Tab Control Tab1 -->
+</div> <!-- End of Tab Control Tab -->
 
 <script type="text/javascript">setupAllTabs( );</script>
 

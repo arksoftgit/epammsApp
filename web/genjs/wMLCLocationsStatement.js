@@ -1,4 +1,4 @@
-// wMLCLocationsStatement   Generate Timestamp: 20170608112918492
+// wMLCLocationsStatement   Generate Timestamp: 20170717131214163
 
 var isWindowClosing = true;
 var timerID = null;
@@ -202,6 +202,57 @@ function AcceptAndReturnAreasStatement( )
       _DisableFormElements( true );
 
       document.wMLCLocationsStatement.zAction.value = "AcceptAndReturnAreasStatement";
+      document.wMLCLocationsStatement.submit( );
+   }
+}
+
+function MoveSubsurfacesToGroup( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCLocationsStatement.zAction.value = "MoveSubsurfacesToGroup";
+      document.wMLCLocationsStatement.submit( );
+   }
+}
+
+function GOTO_AddLocationSubstatements( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCLocationsStatement.zAction.value = "GOTO_AddLocationSubstatements";
+      document.wMLCLocationsStatement.submit( );
+   }
+}
+
+function Sort( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      // Javascript code entered by user.
+
+       document.wMLCLocationsStatement.zTableRowSelect.value = buildSortTableHtml( "mMasLC", "M_SubUsage", "GridLocations",  ["Text"]  );
+
+      // END of Javascript code entered by user.
+
+      _DisableFormElements( true );
+
+      document.wMLCLocationsStatement.zAction.value = "Sort";
       document.wMLCLocationsStatement.submit( );
    }
 }

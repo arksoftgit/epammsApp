@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCSubsurfacesStatement   Generate Timestamp: 20170608112513043 --%>
+<%-- wMLCSubsurfacesStatement   Generate Timestamp: 20170628170602281 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -60,6 +60,28 @@ public int DoInputMapping( HttpServletRequest request,
    mMasLC = task.getViewByName( "mMasLC" );
    if ( VmlOperation.isValid( mMasLC ) )
    {
+      // MLEdit: SurfacesName
+      nRC = mMasLC.cursor( "M_Usage" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 ) // CursorResult.SET
+      {
+         strMapValue = request.getParameter( "SurfacesName" );
+         task.log().debug( "SurfacesName prior to TrimTinyHtml: " + strMapValue );
+         strMapValue = VmlOperation.TrimTinyHtml( strMapValue );
+         task.log().debug( "SurfacesName after TrimTinyHtml: '" + strMapValue + "'" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "SurfacesName", "", strMapValue );
+            else
+               mMasLC.cursor( "M_Usage" ).getAttribute( "Name" ).setValue( strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "SurfacesName", e.getReason( ), strMapValue );
+         }
+      }
+
       // Grid: Grid2
       iTableRowCnt = 0;
 
@@ -722,6 +744,12 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
+
+<!-- TinyMCE -->
+<script language="JavaScript" type="text/javascript" src="./js/tinymce/js/tinymce/tinymce.min.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/TinyMCE.js"></script>
+<!-- /TinyMCE -->
+
 <script language="JavaScript" type="text/javascript" src="./genjs/wMLCSubsurfacesStatement.js"></script>
 
 </head>
@@ -924,19 +952,65 @@ else
 <div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox4:GroupBox */ %>
 
-<div id="GroupBox4" name="GroupBox4" style="width:826px;height:28px;float:left;">  <!-- GroupBox4 --> 
+<div id="GroupBox4" name="GroupBox4"   style="float:left;position:relative; width:838px; height:82px;">  <!-- GroupBox4 --> 
 
-
- <!-- This is added as a line spacer -->
-<div style="height:6px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<span style="height:16px;">&nbsp</span>
 <% /* SubsurfacesStatement:Text */ %>
 
-<span class="groupbox"  id="SubsurfacesStatement" name="SubsurfacesStatement" style="width:338px;height:16px;">Subsurfaces Statement</span>
+<label class="groupbox"  id="SubsurfacesStatement" name="SubsurfacesStatement" style="width:338px;height:16px;position:absolute;left:6px;top:6px;">Subsurfaces Statement</label>
 
-</div>  <!-- End of a new line -->
+<% /* GroupBox2:GroupBox */ %>
+<div id="GroupBox2" name="GroupBox2" style="float:left;width:810px;" >
+
+<table cols=0 style="width:810px;"  class="grouptable">
+
+<tr>
+<td valign="top" style="width:66px;">
+<% /* Text::Text */ %>
+
+<label  id="Text:" name="Text:" style="width:54px;height:16px;position:absolute;left:6px;top:8px;">Text:</label>
+
+</td>
+<td valign="top"  class="mceSimpleZeidonSpecialCharacters" style="width:730px;">
+<% /* SurfacesName:MLEdit */ %>
+<%
+   // MLEdit: SurfacesName
+   strErrorMapValue = VmlOperation.CheckError( "SurfacesName", strError );
+   if ( !StringUtils.isBlank( strErrorMapValue ) )
+   {
+      if ( StringUtils.equals( strErrorFlag, "Y" ) )
+         strErrorColor = "color:red;";
+   }
+   else
+   {
+      strErrorColor = "";
+      mMasLC = task.getViewByName( "mMasLC" );
+      if ( VmlOperation.isValid( mMasLC ) == false )
+         task.log( ).debug( "Invalid View: " + "SurfacesName" );
+      else
+      {
+         nRC = mMasLC.cursor( "M_Usage" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            strErrorMapValue = mMasLC.cursor( "M_Usage" ).getAttribute( "Name" ).getString( "" );
+            if ( strErrorMapValue == null )
+               strErrorMapValue = "";
+
+            task.log( ).debug( "M_Usage.Name: " + strErrorMapValue );
+         }
+         else
+            task.log( ).debug( "Entity does not exist for SurfacesName: " + "mMasLC.M_Usage" );
+      }
+   }
+%>
+
+<div style="background-color:#eee;border:1px solid #041;width:91px;height:1px;position:absolute;left:0px;top:0px;overflow:auto;">
+<div class="mceSimpleZeidonSpecialCharacters"  style="width:91px;height:1px;position:absolute;left:0px;top:0px;"><%=strErrorMapValue%></div></div>
+
+</td>
+</tr>
+</table>
+
+</div>  <!-- GroupBox2 --> 
 
 
 </div>  <!--  GroupBox4 --> 
@@ -952,57 +1026,6 @@ else
 <div id="GBSurfacesStatement" name="GBSurfacesStatement" class="withborder" style="width:824px;height:48px;float:left;">  <!-- GBSurfacesStatement --> 
 
 
-<div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:8px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GroupBox2:GroupBox */ %>
-<div id="GroupBox2" name="GroupBox2" style="float:left;width:810px;" >
-
-<table cols=0 style="width:810px;"  class="grouptable">
-
-<tr>
-<td valign="top" style="width:66px;">
-<% /* Text::Text */ %>
-
-<span  id="Text:" name="Text:" style="width:54px;height:16px;">Text:</span>
-
-</td>
-<td valign="top"  class="text12" style="width:730px;">
-<% /* SurfacesName:Text */ %>
-<% strTextDisplayValue = "";
-   mMasLC = task.getViewByName( "mMasLC" );
-   if ( VmlOperation.isValid( mMasLC ) == false )
-      task.log( ).debug( "Invalid View: " + "SurfacesName" );
-   else
-   {
-      nRC = mMasLC.cursor( "M_Usage" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 )
-      {
-      try
-      {
-         strTextDisplayValue = mMasLC.cursor( "M_Usage" ).getAttribute( "dUsageTextSubUsageNames" ).getString( "" );
-      }
-      catch (Exception e)
-      {
-         out.println("There is an error on SurfacesName: " + e.getMessage());
-         task.log().info( "*** Error on ctrl SurfacesName" + e.getMessage() );
-      }
-         if ( strTextDisplayValue == null )
-            strTextDisplayValue = "";
-      }
-   }
-%>
-
-<span class="text12"  id="SurfacesName" name="SurfacesName" style="width:730px;height:28px;"><%=strTextDisplayValue%></span>
-
-</td>
-</tr>
-</table>
-
-</div>  <!-- GroupBox2 --> 
-
-</div>  <!-- End of a new line -->
-
-
 </div>  <!--  GBSurfacesStatement --> 
 </div>  <!-- End of a new line -->
 
@@ -1010,7 +1033,7 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:4px;width:100px;"></div>
+<div style="height:-2px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->

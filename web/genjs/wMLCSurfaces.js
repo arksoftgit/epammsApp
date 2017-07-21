@@ -1,4 +1,4 @@
-// wMLCSurfaces   Generate Timestamp: 20170626151800633
+// wMLCSurfaces   Generate Timestamp: 20170714142521712
 
 var isWindowClosing = true;
 var timerID = null;
@@ -207,6 +207,31 @@ function ADD_Surfaces( )
    }
 }
 
+function DELETE_SelectedUsageEntries( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      // Javascript code entered by user.
+
+// Confirmation of  Delete.
+if (!confirm("OK to delete selected Surfaces?"))
+{
+   return;
+}
+
+      // END of Javascript code entered by user.
+
+      _DisableFormElements( true );
+
+      document.wMLCSurfaces.zAction.value = "DELETE_SelectedUsageEntries";
+      document.wMLCSurfaces.submit( );
+   }
+}
+
 function DELETE_Surface( strTagEntityKey )
 {
 
@@ -232,31 +257,6 @@ if (!confirm("Delete Surface?"))
       _DisableFormElements( true );
 
       document.wMLCSurfaces.zAction.value = "DELETE_Surface";
-      document.wMLCSurfaces.submit( );
-   }
-}
-
-function DELETE_SelectedUsageEntries( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      // Javascript code entered by user.
-
-// Confirmation of  Delete.
-if (!confirm("OK to delete selected Surfaces?"))
-{
-   return;
-}
-
-      // END of Javascript code entered by user.
-
-      _DisableFormElements( true );
-
-      document.wMLCSurfaces.zAction.value = "DELETE_SelectedUsageEntries";
       document.wMLCSurfaces.submit( );
    }
 }
@@ -378,6 +378,25 @@ function GOTO_UpdateUsageGroup( strTagEntityKey )
       _DisableFormElements( true );
 
       document.wMLCSurfaces.zAction.value = "GOTO_UpdateUsageGroup";
+      document.wMLCSurfaces.submit( );
+   }
+}
+
+function GOTO_UpdateGroup( strTagEntityKey )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      var nIdx = strTagEntityKey.lastIndexOf( '::' );
+      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
+
+      document.wMLCSurfaces.zTableRowSelect.value = strEntityKey;
+      _DisableFormElements( true );
+
+      document.wMLCSurfaces.zAction.value = "GOTO_UpdateGroup";
       document.wMLCSurfaces.submit( );
    }
 }
