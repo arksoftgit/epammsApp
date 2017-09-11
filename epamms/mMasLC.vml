@@ -918,7 +918,8 @@ dUsgListFullEmbedName( VIEW mMasLC BASED ON LOD mMasLC,
    OF   zDERIVED_GET:
 
       CreateViewFromView( mMasLC2, mMasLC )
-      SetCursorFirstEntityByEntityCsr( mMasLC2, "M_Usage", mMasLC, "MI_UsageList", "" )
+   // SetCursorFirstEntityByEntityCsr( mMasLC2, "M_Usage", mMasLC, "MI_UsageList", "" )
+      SetCursorFirstEntityByCursor( mMasLC2, "M_Usage", mMasLC, "MI_UsageList", "", "Name" )
       szDisplayStatement = mMasLC2.M_Usage.Name
 
       // Display required text combined with optional usage(s).
@@ -959,7 +960,8 @@ dUsgNonGroupSubUsages( VIEW mMasLC BASED ON LOD mMasLC,
    OF   zDERIVED_GET:
 
       CreateViewFromView( mMasLC2, mMasLC )
-      SetCursorFirstEntityByEntityCsr( mMasLC2, "M_Usage", mMasLC, "M_UsageNonGroupUsage", "" )
+   // SetCursorFirstEntityByEntityCsr( mMasLC2, "M_Usage", mMasLC, "M_UsageNonGroupUsage", "" )
+      SetCursorFirstEntityByCursor( mMasLC2, "M_Usage", mMasLC, "M_UsageNonGroupUsage", "", "Name" )
       szDisplayStatement = mMasLC2.M_Usage.Name
 
       // Display required text combined with optional usage(s).
@@ -1005,6 +1007,39 @@ dUsgNonGroupSubUsages( VIEW mMasLC BASED ON LOD mMasLC,
             zSearchAndReplace( szDisplayStatement, 2048, szUsageName, szUsageText )
          END
          DropView( mMasLC3 )
+      END
+
+      // Store the calculated value in the object.
+      StoreStringInRecord( mMasLC, InternalEntityStructure, InternalAttribStructure, szDisplayStatement )
+
+        // end zDERIVED_GET
+   OF   zDERIVED_SET:
+
+        // end zDERIVED_SET
+   END  // case
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: dUsageGroupName
+//
+/////////////////////////////////////////////////////////////////////////////
+DERIVED ATTRIBUTE OPERATION
+dUsageGroupName( VIEW mMasLC BASED ON LOD mMasLC,
+                 STRING ( 32 ) InternalEntityStructure,
+                 STRING ( 32 ) InternalAttribStructure,
+                 SHORT GetOrSetFlag )
+
+   STRING ( 2048 ) szDisplayStatement
+
+   CASE GetOrSetFlag
+   OF   zDERIVED_GET:
+
+      IF mMasLC.M_UsageUsageGroup EXISTS
+         szDisplayStatement = mMasLC.M_UsageUsageGroup.Name
+      ELSE
+         szDisplayStatement = "n/a"
       END
 
       // Store the calculated value in the object.
@@ -3647,7 +3682,7 @@ dSubUsageCombinedText( VIEW mMasLC BASED ON LOD mMasLC,
    STRING ( 1 ) szUsageType
    INTEGER ID
    SHORT bFirst
-// SHORT nRC
+   SHORT nRC
 
    CASE GetOrSetFlag
    OF   zDERIVED_GET:
@@ -3661,14 +3696,16 @@ dSubUsageCombinedText( VIEW mMasLC BASED ON LOD mMasLC,
       FOR EACH mMasLC2.M_UsageGroupUsage
       // DisplayEntityInstance( mMasLC2, "M_UsageGroupUsage" )
       // nRC = SetCursorFirstEntityByEntityCsr( mMasLC3, "M_Usage", mMasLC2, "M_UsageGroupUsage", "" )
-         ID = mMasLC2.M_UsageGroupUsage.ID
-         IF ID = 0
-            SET CURSOR FIRST mMasLC3.M_Usage WHERE mMasLC3.M_Usage.ID = ""
-                                               AND mMasLC3.M_Usage.Name = mMasLC2.M_UsageGroupUsage.Name
-         ELSE
-            SET CURSOR FIRST mMasLC3.M_Usage WHERE mMasLC3.M_Usage.ID = ID
-         END
-         IF RESULT >= 0
+         nRC = SetCursorFirstEntityByCursor( mMasLC3, "M_Usage", mMasLC2, "M_UsageGroupUsage", "", "Name" )
+      //xID = mMasLC2.M_UsageGroupUsage.ID
+      //xIF ID = 0
+      //x   SET CURSOR FIRST mMasLC3.M_Usage WHERE mMasLC3.M_Usage.ID = ""
+      //x                                      AND mMasLC3.M_Usage.Name = mMasLC2.M_UsageGroupUsage.Name
+      //xELSE
+      //x   SET CURSOR FIRST mMasLC3.M_Usage WHERE mMasLC3.M_Usage.ID = ID
+      //xEND
+      //xIF RESULT >= 0
+         IF nRC >= 0
             // Display required text combined with optional usage(s).
             szDisplayStatement = mMasLC3.M_Usage.Name
             InsertOptionalSubUsages( mMasLC3, szDisplayStatement, "M_SubUsage", 1 )
@@ -3762,28 +3799,29 @@ dUsageGroupCombinedText( VIEW mMasLC BASED ON LOD mMasLC,
    STRING ( 1 ) szUsageType
    INTEGER ID
    SHORT bFirst
-// SHORT nRC
+   SHORT nRC
 
    CASE GetOrSetFlag
    OF   zDERIVED_GET:
 
       CreateViewFromView( mMasLC2, mMasLC )
+
       // Position on the corresponding M_Usage entity and create temporal subobject version.
-      ID = mMasLC.M_UsageGroupUsage.ID
-      IF ID = 0
-         SET CURSOR FIRST mMasLC2.M_Usage WHERE mMasLC2.M_Usage.Name = mMasLC.M_UsageGroupUsage.Name
-      ELSE
-         SET CURSOR FIRST mMasLC2.M_Usage WHERE mMasLC2.M_Usage.ID = ID
-      END
+   // nRC = SetCursorFirstEntityByEntityCsr( mMasLC2, "M_Usage", mMasLC, "M_UsageGroupUsage", "" )
+      nRC = SetCursorFirstEntityByCursor( mMasLC2, "M_Usage", mMasLC, "M_UsageGroupUsage", "", "Name" )
+   //xID = mMasLC.M_UsageGroupUsage.ID
+   //xIF ID = 0
+   //x   SET CURSOR FIRST mMasLC2.M_Usage WHERE mMasLC2.M_Usage.Name = mMasLC.M_UsageGroupUsage.Name
+   //x ELSE
+   //x   SET CURSOR FIRST mMasLC2.M_Usage WHERE mMasLC2.M_Usage.ID = ID
+   //xEND
 
    // TraceLineI( "Combining text for M_UsageGroupUsage: ", ID )
    // DisplayEntityInstance( mMasLC2, "M_Usage" )
 
-   // nRC = SetCursorFirstEntityByEntityCsr( mMasLC2, "M_Usage", mMasLC, "M_UsageGroupUsage", "" )
-
       // Expand the current Text attribute by replacing embedded Keywords with the Keyword
       // values in the M_InsertTextUsage subentities.
-      IF RESULT = 0
+      IF nRC = 0
          // Display required text combined with optional usage(s).
          szDisplayStatement = mMasLC2.M_Usage.Name
          InsertOptionalSubUsages( mMasLC2, szDisplayStatement, "M_SubUsage", 1 )

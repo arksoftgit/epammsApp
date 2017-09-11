@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSPLDSPLD_DirectionsForUse   Generate Timestamp: 20170511185413144 --%>
+<%-- wSPLDSPLD_DirectionsForUse --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -952,12 +952,11 @@ else
 <!-- Timeout.inc has a value for nTimeout which is used to determine when to -->
 <!-- log a user out.  Timeout.inc is not used if the dialog or window has a timeout value set. -->
 <%@ include file="./include/timeout.inc" %>
-<link rel="stylesheet" type="text/css" href="./css/print.css" media="print" />
-<script language="JavaScript" type="text/javascript" src="./js/common.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
-<script language="JavaScript" type="text/javascript" src="./genjs/wSPLDSPLD_DirectionsForUse.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/common.js?v=20170810173550696"></script>
+<script language="JavaScript" type="text/javascript" src="./js/scw.js?v=20170810173550696"></script>
+<script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js?v=20170810173550696"></script>
+<script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js?v=20170810173550696"></script>
+<script language="JavaScript" type="text/javascript" src="./genjs/wSPLDSPLD_DirectionsForUse.js?v=20170810173550696"></script>
 
 </head>
 
@@ -1304,6 +1303,7 @@ else
    <input name="zOpenFile" id="zOpenFile" type="hidden" value="<%=strOpenFile%>">
    <input name="zDateFormat" id="zDateFormat" type="hidden" value="<%=strDateFormat%>">
    <input name="zDateSequence" id="zDateSequence" type="hidden" value="MDY">
+   <input name="zLanguage" id="zLanguage" type="hidden" value="">
    <input name="zLoginName" id="zLoginName" type="hidden" value="<%=strLoginName%>">
    <input name="zKeyRole" id="zKeyRole" type="hidden" value="<%=strKeyRole%>">
    <input name="zOpenPopupWindow" id="zOpenPopupWindow" type="hidden" value="<%=strOpenPopupWindow%>">
@@ -1325,11 +1325,38 @@ else
 <div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GBDFU_Sections:GroupBox */ %>
 
-<div id="GBDFU_Sections" name="GBDFU_Sections" class="listgroup"   style="float:left;position:relative; width:798px; height:52px;">  <!-- GBDFU_Sections --> 
+<div id="GBDFU_Sections" name="GBDFU_Sections" class="listgroup"   style="float:left;position:relative; width:798px; height:88px;">  <!-- GBDFU_Sections --> 
+
+<% /* DirectionsForUse::Text */ %>
+
+<label class="groupbox"  id="DirectionsForUse:" name="DirectionsForUse:" style="width:134px;height:16px;position:absolute;left:6px;top:12px;">Directions for Use:</label>
 
 <% /* DirectionsForUse:Text */ %>
+<% strTextDisplayValue = "";
+   mSPLDef = task.getViewByName( "mSPLDef" );
+   if ( VmlOperation.isValid( mSPLDef ) == false )
+      task.log( ).debug( "Invalid View: " + "DirectionsForUse" );
+   else
+   {
+      nRC = mSPLDef.cursor( "SubregLabelContent" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+      {
+      try
+      {
+         strTextDisplayValue = mSPLDef.cursor( "SubregLabelContent" ).getAttribute( "TitleDFU" ).getString( "" );
+      }
+      catch (Exception e)
+      {
+         out.println("There is an error on DirectionsForUse: " + e.getMessage());
+         task.log().info( "*** Error on ctrl DirectionsForUse" + e.getMessage() );
+      }
+         if ( strTextDisplayValue == null )
+            strTextDisplayValue = "";
+      }
+   }
+%>
 
-<label class="groupbox"  id="DirectionsForUse" name="DirectionsForUse" style="width:238px;height:16px;position:absolute;left:6px;top:12px;">Directions for Use</label>
+<label class="groupbox"  id="DirectionsForUse" name="DirectionsForUse" style="width:606px;height:16px;position:absolute;left:150px;top:12px;"><%=strTextDisplayValue%></label>
 
 <% /* Text:Text */ %>
 <% strTextDisplayValue = "";
@@ -1356,7 +1383,11 @@ else
    }
 %>
 
-<label class="text12"  id="Text" name="Text" style="width:750px;height:12px;position:absolute;left:6px;top:34px;"><%=strTextDisplayValue%></label>
+<label class="text12"  id="Text" name="Text" style="width:730px;height:12px;position:absolute;left:28px;top:38px;"><%=strTextDisplayValue%></label>
+
+<% /* DFUCategories:Text */ %>
+
+<label  id="DFUCategories" name="DFUCategories" style="width:750px;height:12px;position:absolute;left:6px;top:70px;">Directions for Use Categories</label>
 
 
 </div>  <!--  GBDFU_Sections --> 
@@ -1365,19 +1396,15 @@ else
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
 
 
- <!-- This is added as a line spacer -->
-<div style="height:6px;width:100px;"></div>
-
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
 <% /* DFU_Categories:GroupBox */ %>
 
 <div id="DFU_Categories" name="DFU_Categories" class="listgroup" style="width:798px;height:244px;float:left;">  <!-- DFU_Categories --> 
 
-<div  id="DFU_Categories" name="DFU_Categories" >Directions for Use Categories</div>
 
  <!-- This is added as a line spacer -->
-<div style="height:24px;width:100px;"></div>
+<div style="height:14px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <% /* GridStorDisp:Grid */ %>
@@ -1451,7 +1478,7 @@ try
 
    <td><a href="#" onclick="GOTO_DirectionsForUseCategory( this.id )" id="Name::<%=strEntityKey%>"><%=strName%></a></td>
    <td><a href="#" onclick="GOTO_DirectionsForUseCategory( this.id )" id="Title::<%=strEntityKey%>"><%=strTitle%></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateDFU_Category" onclick="GOTO_DirectionsForUseCategory( this.id )" id="BMBUpdateDFU_Category::<%=strEntityKey%>"><img src="./images/ePammsDisplay.png" alt="Display"></a></td>
+   <td><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateDFU_Category" onclick="GOTO_DirectionsForUseCategory( this.id )" id="BMBUpdateDFU_Category::<%=strEntityKey%>"><img src="./images/ePammsDisplay.png" alt="Display"></a></td>
 
 </tr>
 

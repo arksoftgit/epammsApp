@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCDirsForUseDrivingUsageSelect   Generate Timestamp: 20161108114621351 --%>
+<%-- wMLCDirsForUseDrivingUsageSelect --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -382,8 +382,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCDirsForUseDrivingUsageSelect", "wMLC.RemoveMLC_UsageEntries" );
-      nOptRC = wMLC.RemoveMLC_UsageEntries( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCDirsForUseDrivingUsageSelect", "wMLC.DisplayUsageGroups" );
+      nOptRC = wMLC.DisplayUsageGroups( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -437,8 +437,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCDirsForUseDrivingUsageSelect", "wMLC.SelectMLC_UsageEntries" );
-      nOptRC = wMLC.SelectMLC_UsageEntries( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCDirsForUseDrivingUsageSelect", "wMLC.SelectUsageEntries" );
+      nOptRC = wMLC.SelectUsageEntries( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -665,12 +665,11 @@ else
 <!-- Timeout.inc has a value for nTimeout which is used to determine when to -->
 <!-- log a user out.  Timeout.inc is not used if the dialog or window has a timeout value set. -->
 <%@ include file="./include/timeout.inc" %>
-<link rel="stylesheet" type="text/css" href="./css/print.css" media="print" />
-<script language="JavaScript" type="text/javascript" src="./js/common.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
-<script language="JavaScript" type="text/javascript" src="./genjs/wMLCDirsForUseDrivingUsageSelect.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/common.js?v=20170721163515812"></script>
+<script language="JavaScript" type="text/javascript" src="./js/scw.js?v=20170721163515812"></script>
+<script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js?v=20170721163515812"></script>
+<script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js?v=20170721163515812"></script>
+<script language="JavaScript" type="text/javascript" src="./genjs/wMLCDirsForUseDrivingUsageSelect.js?v=20170721163515812"></script>
 
 </head>
 
@@ -816,6 +815,8 @@ else
    <input name="zFocusCtrl" id="zFocusCtrl" type="hidden" value="<%=strFocusCtrl%>">
    <input name="zOpenFile" id="zOpenFile" type="hidden" value="<%=strOpenFile%>">
    <input name="zDateFormat" id="zDateFormat" type="hidden" value="<%=strDateFormat%>">
+   <input name="zDateSequence" id="zDateSequence" type="hidden" value="MDY">
+   <input name="zLanguage" id="zLanguage" type="hidden" value="">
    <input name="zLoginName" id="zLoginName" type="hidden" value="<%=strLoginName%>">
    <input name="zKeyRole" id="zKeyRole" type="hidden" value="<%=strKeyRole%>">
    <input name="zOpenPopupWindow" id="zOpenPopupWindow" type="hidden" value="<%=strOpenPopupWindow%>">
@@ -875,7 +876,7 @@ else
    }
 %>
 
-<div name="Title1" id="Title1" style="width:502px;height:46px;position:absolute;left:316px;top:12px;border:solid;border-width:4px;border-style:groove;text-overflow:hidden;background-color:lightgray;" wrap="wrap"><%=strErrorMapValue%></div>
+<textarea name="Title1" id="Title1" style="width:502px;height:46px;position:absolute;left:316px;top:12px;border:solid;border-width:4px;border-style:groove;" wrap="wrap"><%=strErrorMapValue%></textarea>
 
 <% /* Text1:Text */ %>
 
@@ -1016,9 +1017,9 @@ try
 
 <tr<%=strOdd%>>
 
-   <td nowrap><%=strGridCheckCtl2%></td>
-   <td nowrap style="width:98px;"><%=strGridEditCtl2%></td>
-   <td nowrap style="width:276px;"><%=strGridEditCtl3%></td>
+   <td><%=strGridCheckCtl2%></td>
+   <td style="width:98px;"><%=strGridEditCtl2%></td>
+   <td style="width:276px;"><%=strGridEditCtl3%></td>
 
 </tr>
 
@@ -1041,7 +1042,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 
 
 </div>  <!--  GroupBox1 --> 
-<div style="height:1px;width:2px;float:left;"></div>   <!-- Width Spacer -->
+<div style="height:1px;width:4px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox3:GroupBox */ %>
 
 <div id="GroupBox3" name="GroupBox3" style="width:28px;height:224px;float:left;">  <!-- GroupBox3 --> 
@@ -1050,7 +1051,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 <div>  <!-- Beginning of a new line -->
 <% /* GroupBox5:GroupBox */ %>
 
-<div id="GroupBox5" name="GroupBox5" style="width:22px;height:62px;float:left;">  <!-- GroupBox5 --> 
+<div id="GroupBox5" name="GroupBox5" style="width:22px;height:54px;float:left;">  <!-- GroupBox5 --> 
 
 
 </div>  <!--  GroupBox5 --> 
@@ -1061,7 +1062,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 
 <div>  <!-- Beginning of a new line -->
 <% /* PushBtn1:PushBtn */ %>
-<button type="button" name="PushBtn1" id="PushBtn1" value="" onclick="SelectMLC_UsageEntries( )" style="width:26px;height:32px;"><-</button>
+<button type="button" class="slider" name="PushBtn1" id="PushBtn1" value="" onclick="SelectMLC_UsageEntries( )" style="width:26px;height:32px;"><-</button>
 
 </div>  <!-- End of a new line -->
 
@@ -1069,11 +1070,23 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 
 
  <!-- This is added as a line spacer -->
-<div style="height:6px;width:100px;"></div>
+<div style="height:8px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<% /* GroupBox7:GroupBox */ %>
+
+<div id="GroupBox7" name="GroupBox7" style="width:22px;height:24px;float:left;">  <!-- GroupBox7 --> 
+
+
+</div>  <!--  GroupBox7 --> 
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
 
 <div>  <!-- Beginning of a new line -->
 <% /* PushBtn2:PushBtn */ %>
-<button type="button" name="PushBtn2" id="PushBtn2" value="" onclick="RemoveMLC_UsageEntries( )" style="width:26px;height:32px;">-></button>
+<button type="button" class="slider" name="PushBtn2" id="PushBtn2" value="" onclick="RemoveMLC_UsageEntries( )" style="width:26px;height:32px;">-></button>
 
 </div>  <!-- End of a new line -->
 
@@ -1235,8 +1248,8 @@ try
 
 <tr<%=strOdd%>>
 
-   <td nowrap><%=strGridCheckCtl1%></td>
-   <td nowrap style="width:330px;"><%=strGridEditCtl1%></td>
+   <td><%=strGridCheckCtl1%></td>
+   <td style="width:330px;"><%=strGridEditCtl1%></td>
 
 </tr>
 

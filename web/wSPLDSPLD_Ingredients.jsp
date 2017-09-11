@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSPLDSPLD_Ingredients   Generate Timestamp: 20170511185329648 --%>
+<%-- wSPLDSPLD_Ingredients --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -908,12 +908,11 @@ else
 <!-- Timeout.inc has a value for nTimeout which is used to determine when to -->
 <!-- log a user out.  Timeout.inc is not used if the dialog or window has a timeout value set. -->
 <%@ include file="./include/timeout.inc" %>
-<link rel="stylesheet" type="text/css" href="./css/print.css" media="print" />
-<script language="JavaScript" type="text/javascript" src="./js/common.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
-<script language="JavaScript" type="text/javascript" src="./genjs/wSPLDSPLD_Ingredients.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/common.js?v=20170809184110799"></script>
+<script language="JavaScript" type="text/javascript" src="./js/scw.js?v=20170809184110799"></script>
+<script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js?v=20170809184110799"></script>
+<script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js?v=20170809184110799"></script>
+<script language="JavaScript" type="text/javascript" src="./genjs/wSPLDSPLD_Ingredients.js?v=20170809184110799"></script>
 
 </head>
 
@@ -1260,6 +1259,7 @@ else
    <input name="zOpenFile" id="zOpenFile" type="hidden" value="<%=strOpenFile%>">
    <input name="zDateFormat" id="zDateFormat" type="hidden" value="<%=strDateFormat%>">
    <input name="zDateSequence" id="zDateSequence" type="hidden" value="MDY">
+   <input name="zLanguage" id="zLanguage" type="hidden" value="">
    <input name="zLoginName" id="zLoginName" type="hidden" value="<%=strLoginName%>">
    <input name="zKeyRole" id="zKeyRole" type="hidden" value="<%=strKeyRole%>">
    <input name="zOpenPopupWindow" id="zOpenPopupWindow" type="hidden" value="<%=strOpenPopupWindow%>">
@@ -1281,33 +1281,16 @@ else
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox1:GroupBox */ %>
 
-<div id="GroupBox1" name="GroupBox1" style="width:786px;height:124px;float:left;">  <!-- GroupBox1 --> 
+<div id="GroupBox1" name="GroupBox1" class="listgroup"   style="float:left;position:relative; width:786px; height:124px;">  <!-- GroupBox1 --> 
 
-
- <!-- This is added as a line spacer -->
-<div style="height:12px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<span style="height:16px;">&nbsp</span>
 <% /* OrganismClaimsStatements2:Text */ %>
 
-<span class="groupbox"  id="OrganismClaimsStatements2" name="OrganismClaimsStatements2" style="width:238px;height:16px;">Ingredients</span>
+<label class="groupbox"  id="OrganismClaimsStatements2" name="OrganismClaimsStatements2" style="width:238px;height:16px;position:absolute;left:6px;top:12px;">Ingredients</label>
 
-</div>  <!-- End of a new line -->
-
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
-
-
- <!-- This is added as a line spacer -->
-<div style="height:12px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<span style="height:18px;">&nbsp&nbsp&nbsp</span>
 <% /* Active Title::Text */ %>
 
-<span  id="Active Title:" name="Active Title:" style="width:118px;height:18px;">ActiveTitle:</span>
+<label class="groupbox"  id="Active Title:" name="Active Title:" style="width:118px;height:18px;position:absolute;left:18px;top:40px;">ActiveTitle:</label>
 
-<span style="height:18px;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
 <% /* Text1:Text */ %>
 <% strTextDisplayValue = "";
    mSPLDef = task.getViewByName( "mSPLDef" );
@@ -1333,23 +1316,12 @@ else
    }
 %>
 
-<span  id="Text1" name="Text1" style="width:510px;height:18px;"><%=strTextDisplayValue%></span>
+<label class="groupbox"  id="Text1" name="Text1" style="width:510px;height:18px;position:absolute;left:268px;top:40px;"><%=strTextDisplayValue%></label>
 
-</div>  <!-- End of a new line -->
-
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
-
-
- <!-- This is added as a line spacer -->
-<div style="height:6px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<span style="height:18px;">&nbsp&nbsp&nbsp</span>
 <% /* InertTitle::Text */ %>
 
-<span  id="InertTitle:" name="InertTitle:" style="width:118px;height:18px;">Inert Title:</span>
+<label class="groupbox"  id="InertTitle:" name="InertTitle:" style="width:118px;height:18px;position:absolute;left:18px;top:64px;">Inert Title:</label>
 
-<span style="height:18px;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
 <% /* Text2:Text */ %>
 <% strTextDisplayValue = "";
    mSPLDef = task.getViewByName( "mSPLDef" );
@@ -1375,21 +1347,11 @@ else
    }
 %>
 
-<span  id="Text2" name="Text2" style="width:510px;height:18px;"><%=strTextDisplayValue%></span>
+<label class="groupbox"  id="Text2" name="Text2" style="width:510px;height:18px;position:absolute;left:268px;top:64px;"><%=strTextDisplayValue%></label>
 
-</div>  <!-- End of a new line -->
-
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
-
-
- <!-- This is added as a line spacer -->
-<div style="height:6px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<span style="height:16px;">&nbsp&nbsp&nbsp&nbsp</span>
 <% /* UnspecifiedInertPercentage::Text */ %>
 
-<span  id="UnspecifiedInertPercentage:" name="UnspecifiedInertPercentage:" style="width:248px;height:16px;">Unspecified Inert Percentage:</span>
+<label class="groupbox"  id="UnspecifiedInertPercentage:" name="UnspecifiedInertPercentage:" style="width:248px;height:16px;position:absolute;left:20px;top:88px;">Unspecified Inert Percentage:</label>
 
 <% /* Text3:Text */ %>
 <% strTextDisplayValue = "";
@@ -1416,9 +1378,7 @@ else
    }
 %>
 
-<span  id="Text3" name="Text3" style="width:50px;height:16px;"><%=strTextDisplayValue%></span>
-
-</div>  <!-- End of a new line -->
+<label class="groupbox"  id="Text3" name="Text3" style="width:50px;height:16px;position:absolute;left:268px;top:88px;"><%=strTextDisplayValue%></label>
 
 
 </div>  <!--  GroupBox1 --> 

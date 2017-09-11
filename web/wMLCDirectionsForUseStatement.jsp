@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCDirectionsForUseStatement   Generate Timestamp: 20170220191450827 --%>
+<%-- wMLCDirectionsForUseStatement --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -630,8 +630,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCDirectionsForUseStatement", "wMLC.DELETE_DirectionsForUseStatement" );
-      nOptRC = wMLC.DELETE_DirectionsForUseStatement( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCDirectionsForUseStatement", "wMLC.DeleteDirectionsForUseStatement" );
+      nOptRC = wMLC.DeleteDirectionsForUseStatement( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -1296,14 +1296,13 @@ else
 <!-- Timeout.inc has a value for nTimeout which is used to determine when to -->
 <!-- log a user out.  Timeout.inc is not used if the dialog or window has a timeout value set. -->
 <%@ include file="./include/timeout.inc" %>
-<link rel="stylesheet" type="text/css" href="./css/print.css" media="print" />
-<script language="JavaScript" type="text/javascript" src="./js/common.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/jsoeUtils.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/jsoe.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
-<script language="JavaScript" type="text/javascript" src="./genjs/wMLCDirectionsForUseStatement.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/common.js?v=20170721190215401"></script>
+<script language="JavaScript" type="text/javascript" src="./js/jsoeUtils.js?v=20170721190215401"></script>
+<script language="JavaScript" type="text/javascript" src="./js/jsoe.js?v=20170721190215401"></script>
+<script language="JavaScript" type="text/javascript" src="./js/scw.js?v=20170721190215401"></script>
+<script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js?v=20170721190215401"></script>
+<script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js?v=20170721190215401"></script>
+<script language="JavaScript" type="text/javascript" src="./genjs/wMLCDirectionsForUseStatement.js?v=20170721190215401"></script>
 
 </head>
 
@@ -1490,6 +1489,7 @@ else
    <input name="zOpenFile" id="zOpenFile" type="hidden" value="<%=strOpenFile%>">
    <input name="zDateFormat" id="zDateFormat" type="hidden" value="<%=strDateFormat%>">
    <input name="zDateSequence" id="zDateSequence" type="hidden" value="MDY">
+   <input name="zLanguage" id="zLanguage" type="hidden" value="">
    <input name="zLoginName" id="zLoginName" type="hidden" value="<%=strLoginName%>">
    <input name="zKeyRole" id="zKeyRole" type="hidden" value="<%=strKeyRole%>">
    <input name="zOpenPopupWindow" id="zOpenPopupWindow" type="hidden" value="<%=strOpenPopupWindow%>">
@@ -1532,16 +1532,16 @@ else
 <table cols=2 style="width:846px;"  class="grouptable">
 
 <tr>
-<td valign="top" style="width:116px;">
+<td style="width:116px;">
 <% /* Title::Text */ %>
 
 <span  id="Title:" name="Title:" style="width:110px;height:18px;">Title:</span>
 
 </td>
-<td valign="top" style="width:708px;">
+<td style="width:708px;">
 <% /* MLETitle:MLEdit */ %>
 <%
-   // MLEdit: MLETitle
+   // : MLETitle
    strErrorMapValue = VmlOperation.CheckError( "MLETitle", strError );
    if ( !StringUtils.isBlank( strErrorMapValue ) )
    {
@@ -1553,7 +1553,7 @@ else
       strErrorColor = "";
       mMasLC = task.getViewByName( "mMasLC" );
       if ( VmlOperation.isValid( mMasLC ) == false )
-         task.log( ).debug( "Invalid View: " + "MLETitle" );
+         task.log( ).info( "Invalid View: " + "MLETitle" );
       else
       {
          nRC = mMasLC.cursor( "M_DirectionsForUseStatement" ).checkExistenceOfEntity( ).toInt();
@@ -1563,29 +1563,29 @@ else
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
 
-            task.log( ).debug( "M_DirectionsForUseStatement.Title: " + strErrorMapValue );
+            task.log( ).info( "M_DirectionsForUseStatement.Title: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist for MLETitle: " + "mMasLC.M_DirectionsForUseStatement" );
+            task.log( ).info( "Entity does not exist for MLETitle: " + "mMasLC.M_DirectionsForUseStatement" );
       }
    }
 %>
 
-<textarea id="MLETitle" name="MLETitle" class="" maxlength="254" style="width:708px;height:34px;border:solid;border-width:4px;border-style:groove;" wrap="wrap"><%=strErrorMapValue%></textarea>
+<textarea name="MLETitle" id="MLETitle" style="width:708px;height:34px;border:solid;border-width:4px;border-style:groove;" wrap="wrap"><%=strErrorMapValue%></textarea>
 
 </td>
 </tr>
 <tr>
-<td valign="top" style="width:116px;">
+<td style="width:116px;">
 <% /* Text::Text */ %>
 
 <span  id="Text:" name="Text:" style="width:110px;height:18px;">Text:</span>
 
 </td>
-<td valign="top" style="width:708px;">
+<td style="width:708px;">
 <% /* MLEText:MLEdit */ %>
 <%
-   // MLEdit: MLEText
+   // : MLEText
    strErrorMapValue = VmlOperation.CheckError( "MLEText", strError );
    if ( !StringUtils.isBlank( strErrorMapValue ) )
    {
@@ -1597,7 +1597,7 @@ else
       strErrorColor = "";
       mMasLC = task.getViewByName( "mMasLC" );
       if ( VmlOperation.isValid( mMasLC ) == false )
-         task.log( ).debug( "Invalid View: " + "MLEText" );
+         task.log( ).info( "Invalid View: " + "MLEText" );
       else
       {
          nRC = mMasLC.cursor( "M_DirectionsForUseStatement" ).checkExistenceOfEntity( ).toInt();
@@ -1607,26 +1607,26 @@ else
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
 
-            task.log( ).debug( "M_DirectionsForUseStatement.Text: " + strErrorMapValue );
+            task.log( ).info( "M_DirectionsForUseStatement.Text: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist for MLEText: " + "mMasLC.M_DirectionsForUseStatement" );
+            task.log( ).info( "Entity does not exist for MLEText: " + "mMasLC.M_DirectionsForUseStatement" );
       }
    }
 %>
 
-<textarea id="MLEText" name="MLEText" class="" maxlength="2048" style="width:708px;height:128px;border:solid;border-width:4px;border-style:groove;" wrap="wrap"><%=strErrorMapValue%></textarea>
+<textarea name="MLEText" id="MLEText" style="width:708px;height:128px;border:solid;border-width:4px;border-style:groove;" wrap="wrap"><%=strErrorMapValue%></textarea>
 
 </td>
 </tr>
 <tr>
-<td valign="top" style="width:116px;">
+<td style="width:116px;">
 <% /* DFU_CategoryReviewerNote::Text */ %>
 
 <span  id="DFU_CategoryReviewerNote:" name="DFU_CategoryReviewerNote:" style="width:110px;height:18px;">Reviewer Note:</span>
 
 </td>
-<td valign="top"  class="text12" style="width:708px;">
+<td  class="text12" style="width:708px;">
 <% /* DFU_ReviewerNote:EditBox */ %>
 <%
    strErrorMapValue = VmlOperation.CheckError( "DFU_ReviewerNote", strError );
@@ -1666,17 +1666,17 @@ else
    }
 %>
 
-<input class="text12"  name="DFU_ReviewerNote" id="DFU_ReviewerNote" maxlength="2048" style="width:708px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12"  name="DFU_ReviewerNote" id="DFU_ReviewerNote" style="width:708px;<%=strErrorColor%>" type="text"  value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>
 <tr>
-<td valign="top" style="width:116px;">
+<td style="width:116px;">
 <% /* GroupBox1:GroupBox */ %>
 <div id="GroupBox1" name="GroupBox1" style="width:110px;height:18px;float:left;">
 </div>  <!-- GroupBox1 --> 
 </td>
-<td valign="top" style="width:644px;">
+<td style="width:644px;">
 <% /* ExclusiveToPreviousStatement:CheckBox */ %>
 <%
    strErrorMapValue = "";
@@ -1913,9 +1913,9 @@ try
 
    <td><a href="#" onclick="GOTO_MarketingKeywordUpdate( this.id )" id="Keyword::<%=strEntityKey%>"><%=strKeyword%></a></td>
    <td><%=strKeywordText%></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="UpdateKeyword" onclick="GOTO_MarketingKeywordUpdate( this.id )" id="UpdateKeyword::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBCopyDirectionsUseKeyword" onclick="COPY_InsertKeywordDU( this.id )" id="BMBCopyDirectionsUseKeyword::<%=strEntityKey%>"><img src="./images/ePammsCopy.png" alt="Copy"></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="DeleteKeyword" onclick="DELETE_DU_StatementKeyword( this.id )" id="DeleteKeyword::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
+   <td><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="UpdateKeyword" onclick="GOTO_MarketingKeywordUpdate( this.id )" id="UpdateKeyword::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
+   <td><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBCopyDirectionsUseKeyword" onclick="COPY_InsertKeywordDU( this.id )" id="BMBCopyDirectionsUseKeyword::<%=strEntityKey%>"><img src="./images/ePammsCopy.png" alt="Copy"></a></td>
+   <td><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="DeleteKeyword" onclick="DELETE_DU_StatementKeyword( this.id )" id="DeleteKeyword::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
 
 </tr>
 
@@ -2186,8 +2186,8 @@ try
 <tr<%=strOdd%>>
 
    <td title="Text for the Directions for Use Statement identified on this row" ><a href="#" onclick="GOTO_DirsForUseSubStmtUpdate( this.id )" id="GridEditDirectionsUse::<%=strEntityKey%>" title="Text for the Directions for Use Statement identified on this row" ><%=strGridEditDirectionsUse%></a></td>
-   <td nowrap title="Go to update the the Directions for Use Statement text identified on this row" ><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateDirectionsUseSubStmt" onclick="GOTO_DirsForUseSubStmtUpdate( this.id )" id="BMBUpdateDirectionsUseSubStmt::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png"  title="Go to update the the Directions for Use Statement text identified on this row" alt="Update"></a></td>
-   <td nowrap title="Delete the Directions for Use Statement entry identified on this row" ><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteDirectionsUseSubStmt" onclick="DELETE_DirectionsForUseSubStmt( this.id )" id="BMBDeleteDirectionsUseSubStmt::<%=strEntityKey%>"><img src="./images/ePammsDelete.png"  title="Delete the Directions for Use Statement entry identified on this row" alt="Delete"></a></td>
+   <td title="Go to update the the Directions for Use Statement text identified on this row" ><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateDirectionsUseSubStmt" onclick="GOTO_DirsForUseSubStmtUpdate( this.id )" id="BMBUpdateDirectionsUseSubStmt::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png"  title="Go to update the the Directions for Use Statement text identified on this row" alt="Update"></a></td>
+   <td title="Delete the Directions for Use Statement entry identified on this row" ><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteDirectionsUseSubStmt" onclick="DELETE_DirectionsForUseSubStmt( this.id )" id="BMBDeleteDirectionsUseSubStmt::<%=strEntityKey%>"><img src="./images/ePammsDelete.png"  title="Delete the Directions for Use Statement entry identified on this row" alt="Delete"></a></td>
 
 </tr>
 

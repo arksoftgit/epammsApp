@@ -8441,6 +8441,8 @@ omMasLC_dSubUsageCombinedText( View     mMasLC,
    int      ID = 0;
    //:SHORT bFirst
    int      bFirst = 0;
+   //:SHORT nRC
+   int      nRC = 0;
    int      RESULT = 0;
    int      lTempInteger_0 = 0;
    int      lTempInteger_1 = 0;
@@ -8458,7 +8460,6 @@ omMasLC_dSubUsageCombinedText( View     mMasLC,
    String   szTempString_5 = null;
    int      lTempInteger_8 = 0;
 
-   //:// SHORT nRC
 
    //:CASE GetOrSetFlag
    switch( GetOrSetFlag )
@@ -8487,36 +8488,22 @@ omMasLC_dSubUsageCombinedText( View     mMasLC,
          { 
             //:// DisplayEntityInstance( mMasLC2, "M_UsageGroupUsage" )
             //:// nRC = SetCursorFirstEntityByEntityCsr( mMasLC3, "M_Usage", mMasLC2, "M_UsageGroupUsage", "" )
-            //:ID = mMasLC2.M_UsageGroupUsage.ID
-            {MutableInt mi_ID = new MutableInt( ID );
-                         GetIntegerFromAttribute( mi_ID, mMasLC2, "M_UsageGroupUsage", "ID" );
-            ID = mi_ID.intValue( );}
-            //:IF ID = 0
-            if ( ID == 0 )
-            { 
-               //:SET CURSOR FIRST mMasLC3.M_Usage WHERE mMasLC3.M_Usage.ID = ""
-               //:                                AND mMasLC3.M_Usage.Name = mMasLC2.M_UsageGroupUsage.Name
-               RESULT = SetCursorFirstEntity( mMasLC3, "M_Usage", "" );
-               if ( RESULT > zCURSOR_UNCHANGED )
-               { 
-                  while ( RESULT > zCURSOR_UNCHANGED && ( CompareAttributeToString( mMasLC3, "M_Usage", "ID", "" ) != 0 || CompareAttributeToAttribute( mMasLC3, "M_Usage", "Name", mMasLC2, "M_UsageGroupUsage", "Name" ) != 0 ) )
-                  { 
-                     RESULT = SetCursorNextEntity( mMasLC3, "M_Usage", "" );
-                  } 
-
-               } 
-
-               //:ELSE
-            } 
-            else
-            { 
-               //:SET CURSOR FIRST mMasLC3.M_Usage WHERE mMasLC3.M_Usage.ID = ID
-               RESULT = SetCursorFirstEntityByInteger( mMasLC3, "M_Usage", "ID", ID, "" );
-            } 
-
-            //:END
-            //:IF RESULT >= 0
-            if ( RESULT >= 0 )
+            //:nRC = SetCursorFirstEntityByCursor( mMasLC3, "M_Usage", mMasLC2, "M_UsageGroupUsage", "", "Name" )
+            {
+             ZGlobal1_Operation m_ZGlobal1_Operation = new ZGlobal1_Operation( mMasLC3 );
+             nRC = m_ZGlobal1_Operation.SetCursorFirstEntityByCursor( mMasLC3, "M_Usage", mMasLC2, "M_UsageGroupUsage", "", "Name" );
+             // m_ZGlobal1_Operation = null;  // permit gc  (unnecessary)
+            }
+            //://xID = mMasLC2.M_UsageGroupUsage.ID
+            //://xIF ID = 0
+            //://x   SET CURSOR FIRST mMasLC3.M_Usage WHERE mMasLC3.M_Usage.ID = ""
+            //://x                                      AND mMasLC3.M_Usage.Name = mMasLC2.M_UsageGroupUsage.Name
+            //://xELSE
+            //://x   SET CURSOR FIRST mMasLC3.M_Usage WHERE mMasLC3.M_Usage.ID = ID
+            //://xEND
+            //://xIF RESULT >= 0
+            //:IF nRC >= 0
+            if ( nRC >= 0 )
             { 
                //:// Display required text combined with optional usage(s).
                //:szDisplayStatement = mMasLC3.M_Usage.Name
@@ -8863,12 +8850,12 @@ omMasLC_dSubUsageCombinedText( View     mMasLC,
                TraceLineS( "Did not find M_UsageGroupUsage", "" );
                //:DisplayEntityInstance( mMasLC2, "M_UsageGroupUsage" )
                DisplayEntityInstance( mMasLC2, "M_UsageGroupUsage" );
-                RESULT = mMasLC3.getCursor( "M_Usage" ).setFirst().toInt();
-                while ( RESULT >= 0 )
-                {
-                   mMasLC3.getCursor( "M_Usage" ).logEntity( false );
-                   RESULT = mMasLC3.getCursor( "M_Usage" ).setNext().toInt();
-                }
+               //:// RESULT = mMasLC3.getCursor( "M_Usage" ).setFirst().toInt();
+               //:// while ( RESULT >= 0 )
+               //:// {
+               //://    mMasLC3.getCursor( "M_Usage" ).logEntity( false );
+               //://    RESULT = mMasLC3.getCursor( "M_Usage" ).setNext().toInt();
+               //:// }
                //:szDisplayStatement = ""
                 {StringBuilder sb_szDisplayStatement;
                if ( szDisplayStatement == null )
@@ -8968,11 +8955,13 @@ omMasLC_dUsageGroupCombinedText( View     mMasLC,
    int      ID = 0;
    //:SHORT bFirst
    int      bFirst = 0;
-   int      RESULT = 0;
-   String   szTempString_0 = null;
+   //:SHORT nRC
+   int      nRC = 0;
    int      lTempInteger_0 = 0;
    int      lTempInteger_1 = 0;
+   int      RESULT = 0;
    int      lTempInteger_2 = 0;
+   String   szTempString_0 = null;
    int      lTempInteger_3 = 0;
    String   szTempString_1 = null;
    int      lTempInteger_4 = 0;
@@ -8985,7 +8974,6 @@ omMasLC_dUsageGroupCombinedText( View     mMasLC,
    String   szTempString_5 = null;
    int      lTempInteger_8 = 0;
 
-   //:// SHORT nRC
 
    //:CASE GetOrSetFlag
    switch( GetOrSetFlag )
@@ -8995,42 +8983,29 @@ omMasLC_dUsageGroupCombinedText( View     mMasLC,
 
          //:CreateViewFromView( mMasLC2, mMasLC )
          CreateViewFromView( mMasLC2, mMasLC );
-         //:// Position on the corresponding M_Usage entity and create temporal subobject version.
-         //:ID = mMasLC.M_UsageGroupUsage.ID
-         {MutableInt mi_ID = new MutableInt( ID );
-                   GetIntegerFromAttribute( mi_ID, mMasLC, "M_UsageGroupUsage", "ID" );
-         ID = mi_ID.intValue( );}
-         //:IF ID = 0
-         if ( ID == 0 )
-         { 
-            //:SET CURSOR FIRST mMasLC2.M_Usage WHERE mMasLC2.M_Usage.Name = mMasLC.M_UsageGroupUsage.Name
-            {StringBuilder sb_szTempString_0;
-            if ( szTempString_0 == null )
-               sb_szTempString_0 = new StringBuilder( 32 );
-            else
-               sb_szTempString_0 = new StringBuilder( szTempString_0 );
-                         GetStringFromAttribute( sb_szTempString_0, mMasLC, "M_UsageGroupUsage", "Name" );
-            szTempString_0 = sb_szTempString_0.toString( );}
-            RESULT = SetCursorFirstEntityByString( mMasLC2, "M_Usage", "Name", szTempString_0, "" );
-            //:ELSE
-         } 
-         else
-         { 
-            //:SET CURSOR FIRST mMasLC2.M_Usage WHERE mMasLC2.M_Usage.ID = ID
-            RESULT = SetCursorFirstEntityByInteger( mMasLC2, "M_Usage", "ID", ID, "" );
-         } 
 
-         //:END
+         //:// Position on the corresponding M_Usage entity and create temporal subobject version.
+         //:// nRC = SetCursorFirstEntityByEntityCsr( mMasLC2, "M_Usage", mMasLC, "M_UsageGroupUsage", "" )
+         //:nRC = SetCursorFirstEntityByCursor( mMasLC2, "M_Usage", mMasLC, "M_UsageGroupUsage", "", "Name" )
+         {
+          ZGlobal1_Operation m_ZGlobal1_Operation = new ZGlobal1_Operation( mMasLC2 );
+          nRC = m_ZGlobal1_Operation.SetCursorFirstEntityByCursor( mMasLC2, "M_Usage", mMasLC, "M_UsageGroupUsage", "", "Name" );
+          // m_ZGlobal1_Operation = null;  // permit gc  (unnecessary)
+         }
+         //://xID = mMasLC.M_UsageGroupUsage.ID
+         //://xIF ID = 0
+         //://x   SET CURSOR FIRST mMasLC2.M_Usage WHERE mMasLC2.M_Usage.Name = mMasLC.M_UsageGroupUsage.Name
+         //://x ELSE
+         //://x   SET CURSOR FIRST mMasLC2.M_Usage WHERE mMasLC2.M_Usage.ID = ID
+         //://xEND
 
          //:// TraceLineI( "Combining text for M_UsageGroupUsage: ", ID )
          //:// DisplayEntityInstance( mMasLC2, "M_Usage" )
 
-         //:// nRC = SetCursorFirstEntityByEntityCsr( mMasLC2, "M_Usage", mMasLC, "M_UsageGroupUsage", "" )
-
          //:// Expand the current Text attribute by replacing embedded Keywords with the Keyword
          //:// values in the M_InsertTextUsage subentities.
-         //:IF RESULT = 0
-         if ( RESULT == 0 )
+         //:IF nRC = 0
+         if ( nRC == 0 )
          { 
             //:// Display required text combined with optional usage(s).
             //:szDisplayStatement = mMasLC2.M_Usage.Name
@@ -9081,7 +9056,7 @@ omMasLC_dUsageGroupCombinedText( View     mMasLC,
                      sb_szTempString_0 = new StringBuilder( 32 );
                   else
                      sb_szTempString_0 = new StringBuilder( szTempString_0 );
-                                     GetVariableFromAttribute( sb_szTempString_0, mi_lTempInteger_3, 'S', 4097, mMasLC2, "M_InsertTextKeywordUsage", "Name", "", 0 );
+                                     GetVariableFromAttribute( sb_szTempString_0, mi_lTempInteger_3, 'S', 255, mMasLC2, "M_InsertTextKeywordUsage", "Name", "", 0 );
                   lTempInteger_3 = mi_lTempInteger_3.intValue( );
                   szTempString_0 = sb_szTempString_0.toString( );}
                    {StringBuilder sb_szUsageName;
@@ -9678,8 +9653,13 @@ omMasLC_dUsgListFullEmbedName( View     mMasLC,
 
          //:CreateViewFromView( mMasLC2, mMasLC )
          CreateViewFromView( mMasLC2, mMasLC );
-         //:SetCursorFirstEntityByEntityCsr( mMasLC2, "M_Usage", mMasLC, "MI_UsageList", "" )
-         SetCursorFirstEntityByEntityCsr( mMasLC2, "M_Usage", mMasLC, "MI_UsageList", "" );
+         //:// SetCursorFirstEntityByEntityCsr( mMasLC2, "M_Usage", mMasLC, "MI_UsageList", "" )
+         //:SetCursorFirstEntityByCursor( mMasLC2, "M_Usage", mMasLC, "MI_UsageList", "", "Name" )
+         {
+          ZGlobal1_Operation m_ZGlobal1_Operation = new ZGlobal1_Operation( mMasLC2 );
+          m_ZGlobal1_Operation.SetCursorFirstEntityByCursor( mMasLC2, "M_Usage", mMasLC, "MI_UsageList", "", "Name" );
+          // m_ZGlobal1_Operation = null;  // permit gc  (unnecessary)
+         }
          //:szDisplayStatement = mMasLC2.M_Usage.Name
          {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
          StringBuilder sb_szDisplayStatement;
@@ -9788,8 +9768,13 @@ omMasLC_dUsgNonGroupSubUsages( View     mMasLC,
 
          //:CreateViewFromView( mMasLC2, mMasLC )
          CreateViewFromView( mMasLC2, mMasLC );
-         //:SetCursorFirstEntityByEntityCsr( mMasLC2, "M_Usage", mMasLC, "M_UsageNonGroupUsage", "" )
-         SetCursorFirstEntityByEntityCsr( mMasLC2, "M_Usage", mMasLC, "M_UsageNonGroupUsage", "" );
+         //:// SetCursorFirstEntityByEntityCsr( mMasLC2, "M_Usage", mMasLC, "M_UsageNonGroupUsage", "" )
+         //:SetCursorFirstEntityByCursor( mMasLC2, "M_Usage", mMasLC, "M_UsageNonGroupUsage", "", "Name" )
+         {
+          ZGlobal1_Operation m_ZGlobal1_Operation = new ZGlobal1_Operation( mMasLC2 );
+          m_ZGlobal1_Operation.SetCursorFirstEntityByCursor( mMasLC2, "M_Usage", mMasLC, "M_UsageNonGroupUsage", "", "Name" );
+          // m_ZGlobal1_Operation = null;  // permit gc  (unnecessary)
+         }
          //:szDisplayStatement = mMasLC2.M_Usage.Name
          {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
          StringBuilder sb_szDisplayStatement;
@@ -10141,6 +10126,79 @@ omMasLC_dUsgNonGroupSubUsages( View     mMasLC,
             //:END
             //:DropView( mMasLC3 )
             DropView( mMasLC3 );
+         } 
+
+         //:END
+
+         //:// Store the calculated value in the object.
+         //:StoreStringInRecord( mMasLC, InternalEntityStructure, InternalAttribStructure, szDisplayStatement )
+         StoreStringInRecord( mMasLC, InternalEntityStructure, InternalAttribStructure, szDisplayStatement );
+         break ;
+
+      //:  // end zDERIVED_GET
+      //:OF   zDERIVED_SET:
+      case zDERIVED_SET :
+         break ;
+   } 
+
+
+   //:     // end zDERIVED_SET
+   //:END  // case
+   return( 0 );
+// END
+} 
+
+
+//:DERIVED ATTRIBUTE OPERATION
+//:dUsageGroupName( VIEW mMasLC BASED ON LOD mMasLC,
+//:                 STRING ( 32 ) InternalEntityStructure,
+//:                 STRING ( 32 ) InternalAttribStructure,
+//:                 SHORT GetOrSetFlag )
+
+//:   STRING ( 2048 ) szDisplayStatement
+public int 
+omMasLC_dUsageGroupName( View     mMasLC,
+                         String InternalEntityStructure,
+                         String InternalAttribStructure,
+                         Integer   GetOrSetFlag )
+{
+   String   szDisplayStatement = null;
+   int      lTempInteger_0 = 0;
+   int      lTempInteger_1 = 0;
+
+
+   //:CASE GetOrSetFlag
+   switch( GetOrSetFlag )
+   { 
+      //:OF   zDERIVED_GET:
+      case zDERIVED_GET :
+
+         //:IF mMasLC.M_UsageUsageGroup EXISTS
+         lTempInteger_0 = CheckExistenceOfEntity( mMasLC, "M_UsageUsageGroup" );
+         if ( lTempInteger_0 == 0 )
+         { 
+            //:szDisplayStatement = mMasLC.M_UsageUsageGroup.Name
+            {MutableInt mi_lTempInteger_1 = new MutableInt( lTempInteger_1 );
+            StringBuilder sb_szDisplayStatement;
+            if ( szDisplayStatement == null )
+               sb_szDisplayStatement = new StringBuilder( 32 );
+            else
+               sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
+                         GetVariableFromAttribute( sb_szDisplayStatement, mi_lTempInteger_1, 'S', 2049, mMasLC, "M_UsageUsageGroup", "Name", "", 0 );
+            lTempInteger_1 = mi_lTempInteger_1.intValue( );
+            szDisplayStatement = sb_szDisplayStatement.toString( );}
+            //:ELSE
+         } 
+         else
+         { 
+            //:szDisplayStatement = "n/a"
+             {StringBuilder sb_szDisplayStatement;
+            if ( szDisplayStatement == null )
+               sb_szDisplayStatement = new StringBuilder( 32 );
+            else
+               sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
+                        ZeidonStringCopy( sb_szDisplayStatement, 1, 0, "n/a", 1, 0, 2049 );
+            szDisplayStatement = sb_szDisplayStatement.toString( );}
          } 
 
          //:END

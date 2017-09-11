@@ -762,30 +762,30 @@ else
          </div> <!-- zheader -->
       </span>
       <span>
-            <div id="ztoolbar" class="ui-widget-header ui-corner-all">
-               <button id="at" class="zalign-btn">Align Top</button>
-               <button id="al" class="zalign-btn">Align Left</button>
-               <button id="ab" class="zalign-btn">Align Bottom</button>
-               <button id="ar" class="zalign-btn">Align Right</button>
-               <button id="ew" class="zalign-btn">Equal Width</button>
-               <button id="eh" class="zalign-btn">Equal Height</button>
-               <button id="ewh" class="zalign-btn">Equal Width & Height</button>
-               <button id="esh" class="zalign-btn">Equal Space Horizontal</button>
-               <button id="esv" class="zalign-btn">Equal Space Vertical</button>
-               <button id="ah" class="zalign-btn">Abut Horizontal</button>
-               <button id="av" class="zalign-btn">Abut Vertical</button>
-               <button id="db" class="zalign-btn">Delete Block</button>
-               <button id="ud" class="zalign-btn">Undo Delete</button>
+         <div id="ztoolbar" class="ui-widget-header ui-corner-all">
+            <button id="at" class="zalign-btn">Align Top</button>
+            <button id="al" class="zalign-btn">Align Left</button>
+            <button id="ab" class="zalign-btn">Align Bottom</button>
+            <button id="ar" class="zalign-btn">Align Right</button>
+            <button id="ew" class="zalign-btn">Equal Width</button>
+            <button id="eh" class="zalign-btn">Equal Height</button>
+            <button id="ewh" class="zalign-btn">Equal Width & Height</button>
+            <button id="esh" class="zalign-btn">Equal Space Horizontal</button>
+            <button id="esv" class="zalign-btn">Equal Space Vertical</button>
+            <button id="ah" class="zalign-btn">Abut Horizontal</button>
+            <button id="av" class="zalign-btn">Abut Vertical</button>
+            <button id="db" class="zalign-btn">Delete Block</button>
+            <button id="ud" class="zalign-btn">Undo Delete</button>
 
-               <button id="CancelReturn">Cancel/Return</button>
-               <button id="SaveReturn">Save/Return</button>
-               <button id="Save">Save</button>
-               <button id="GenerateSPLD_Label">Generate Label</button>
-               <input type="checkbox" id="labelBorders" name="labelBorders" style="margin:2px;">
-               <label for="labelBorders" style="margin-right:2px;margin-top:0px;">Borders</label>
-               <button id="UpdateBlock">Update Block</button>
-               <button id="ReuseBlock">Reuse Block</button>
-            </div> <!-- ztoolbar -->
+            <button id="CancelReturn">Cancel/Return</button>
+            <button id="SaveReturn">Save/Return</button>
+            <button id="Save">Save</button>
+            <button id="GenerateSPLD_Label">Generate Label</button>
+            <input type="checkbox" id="labelBorders" name="labelBorders" style="margin:2px;">
+            <label for="labelBorders" style="margin-right:2px;margin-top:0px;">Borders</label>
+            <button id="UpdateBlock">Update Block</button>
+            <button id="ReuseBlock">Reuse Block</button>
+         </div> <!-- ztoolbar -->
       </span>
       <div id="zclient" style="margin:0"> <!-- client area -->
          <div id="pagemenu" class="ui-widget-content" style="position:relative;margin:0">
@@ -855,24 +855,24 @@ else
                         <br>
                         <br>
                         <fieldset class="border" style="height:80px; width:200px"><legend>Snap amount for snap type Grid</legend>
-                        <span>
-                           <label for="SnapSpinnerX">Snap X:</label>
-                           <input type="text" id="SnapSpinnerX" value="0.25" style="width:25px;"/>
-                           <br>
-                           <label for="SnapSpinnerY">Snap Y:</label>
-                           <input type="text" id="SnapSpinnerY" value="0.25" style="width:25px;"/>
-                        </span>
+                           <span>
+                              <label for="SnapSpinnerX">Snap X:</label>
+                              <input type="text" id="SnapSpinnerX" value="0.25" style="width:25px;"/>
+                              <br>
+                              <label for="SnapSpinnerY">Snap Y:</label>
+                              <input type="text" id="SnapSpinnerY" value="0.25" style="width:25px;"/>
+                           </span>
                         </fieldset>
                      </div>
                   </div> <!-- zpool -->  <!-- End of: Block Types -->
                   <!--
                   // Make sure that the appropriate Keyword entries are set up for a given Section/Block Type.
-                  // Directions for Use:   Header / Title / Text
-                  // First Aid:   Header / Title / Text
+                  // Directions for Use:  Header / Title / Text
+                  // First Aid:  Header / Title / Text
                   // Human Hazard:  Hazards Warning / Hazards Signal Word / Hazards Precautionary
                   // Ingredients:  Ingredients Title / Ingredients Items / Ingredients Inert / Ingredients Total
-                  // Marketing:   Title / Text / Column List
-                  // Default:   Title / Text
+                  // Marketing:  Title / Text / Column List
+                  // Default:  Title / Text
 
                   Fields Common to All Block Types
                      1. Block Tag (display)
@@ -899,14 +899,13 @@ else
                   <h3>Block Properties</h3>
                   <div>
                      <span>
-                     <div style="overflow:hidden; white-space:nowrap;">
-                        <input type="text" id="zBlockId" class="zeidon" data-zmap="block.z_^i^d" style="float:right; font-size:9px; text-align:right; font-weight:100;" disabled />
+                        <div style="overflow:hidden; white-space:nowrap;">
+                           <input type="text" id="zBlockId" class="zeidon" data-zmap="block.z_^i^d" style="float:right; font-size:9px; text-align:right; font-weight:100;" disabled />
                         </div>
                         <div style="overflow:hidden; white-space:nowrap;">
-                       <label for="zBlockTag">Unique Name:</label>
-                       <input type="text" id="zBlockTag" class="zeidon" data-zmap="block.z_^tag" style="float:right" />
-                     </div>
-                     </span>
+                           <label for="zBlockTag">Unique Name:</label>
+                           <input type="text" id="zBlockTag" class="zeidon" data-zmap="block.z_^tag" style="float:right" />
+                        </div>
                      <!--
                      <div id="jQueryRequired" style="color: red; font-size: 1.4em">jQuery.js is not present. You must install jQuery in this folder for the demo to work.</div>
                      <div class="form-item">
@@ -916,104 +915,133 @@ else
                      <div id="zPickerBlock"></div>
                      -->
 
-                     <div class="ui-widget">
-                       <label>Section Type: </label>
-                       <select id="zSectionType" class="zeidon" data-zmap="block.z_^l^l^d_^section^type" style="float:right">
-                         <option value="">Select Section Type...</option>
-                         <option value="ContainerDisposal">Container Disposal</option>
-                         <option value="DirectionsForUse">Directions For Use</option>
-                         <option value="EPA_RegAndEstNbr">EPA Reg. No. - EPA Est. No.</option>
-                         <option value="FirstAid">First Aid</option>
-                         <option value="Graphic">Graphic</option>
-                         <option value="Hazards">Hazards</option>
-                         <option value="HumanHazard">Human Hazard</option>
-                         <option value="Ingredients">Ingredients</option>
-                         <option value="Marketing">Marketing</option>
-                         <option value="NetContents">Net Contents</option>
-                         <option value="EnvironmentalHazard">Environmental Hazard</option>
-                         <option value="Precautionary">Precautionary</option>
-                         <option value="ProductDescription">Product Description</option>
-                         <option value="ProductName">Product Name</option>
-                         <option value="ProductSpecific">Product Specific</option>
-                         <option value="StorageDisposal">Storage and Disposal</option>
-                        </select>
-                     </div>
-                     &nbsp;
-                     <div style="overflow:hidden; white-space:nowrap; display:none">
-                       <label for="zBlockTitle">Block Name:</label>
-                       <input type="text" id="zBlockName" class="zeidon" data-zmap="block.z_^name" style="float:right" />
-                     </div>
-                     <div style="overflow:hidden; white-space:nowrap;">
-                       <label for="zBlockTop">Block Top:</label>
-                       <input type="text" id="zBlockTop" class="zeidon" data-zmap="block.z_^top" style="float:right" />
-                     </div>
-                     <div style="overflow:hidden; white-space:nowrap;">
-                       <label for="zBlockLeft">Block Left:</label>
-                       <input type="text" id="zBlockLeft" class="zeidon" data-zmap="block.z_^left" style="float:right" />
-                     </div>
-                     <div style="overflow:hidden; white-space:nowrap;">
-                       <label for="zBlockHeight">Block Height:</label>
-                       <input type="text" id="zBlockHeight" class="zeidon" data-zmap="block.z_^height" style="float:right" />
-                     </div>
-                     <div style="overflow:hidden; white-space:nowrap;">
-                       <label for="zBlockWidth">Block Width:</label>
-                       <input type="text" id="zBlockWidth" class="zeidon" data-zmap="block.z_^width" style="float:right" />
-                     </div>
-                     <div style="overflow:hidden; white-space:nowrap;">
-                       <label for="zBorderStyle">Border Style:</label>
-                       <select id="zBorderStyle" class="zeidon" data-zmap="block.z_^border^style" style="float:right" />
-                           <option value="">Select Border Style...</option>
-                           <option value="solid">Solid</option>
-                           <option value="dotted">Dotted</option>
-                           <option value="dashed">Dashed</option>
-                           <option value="double">Double</option>
-                           <option value="groove">Groove</option>
-                        </select>
-                     </div>
-                     <div style="overflow:hidden; white-space:nowrap;">
-                       <label for="zBorderWidth">Border Width:</label>
-                       <input type="text" id="zBorderWidth" class="zeidon" data-zmap="block.z_^border^width" style="float:right" />
-                     </div>
-                     <div style="padding-bottom:6px;">
-                        <label for="zBorderColor">Border Color</label>
-                        <div class="colorPicker-frame" style="float:right">
-                           <input type="text" id="zBorderColor" class="zeidon" data-zmap="block.z_^border^color"  value="#ffffff" data-text="n/c" />
+                        <div class="ui-widget">
+                           <label>Section Type: </label>
+                           <select id="zSectionType" class="zeidon" data-zmap="block.z_^l^l^d_^section^type" style="float:right">
+                              <option value="">Select Section Type...</option>
+                              <option value="ContainerDisposal">Container Disposal</option>
+                              <option value="DirectionsForUse">Directions For Use</option>
+                              <option value="EPA_RegAndEstNbr">EPA Reg. No. - EPA Est. No.</option>
+                              <option value="FirstAid">First Aid</option>
+                              <option value="Graphic">Graphic</option>
+                              <option value="Hazards">Hazards</option>
+                              <option value="HumanHazard">Human Hazard</option>
+                              <option value="Ingredients">Ingredients</option>
+                              <option value="Marketing">Marketing</option>
+                              <option value="NetContents">Net Contents</option>
+                              <option value="EnvironmentalHazard">Environmental Hazard</option>
+                              <option value="Precautionary">Precautionary</option>
+                              <option value="ProductDescription">Product Description</option>
+                              <option value="ProductName">Product Name</option>
+                              <option value="ProductSpecific">Product Specific</option>
+                              <option value="StorageDisposal">Storage and Disposal</option>
+                           </select>
                         </div>
-                     </div>
-                     &nbsp;
-                     <div>
-                        <label for="zBackgroundColor">Background Color</label>
-                        <div class="colorPicker-frame" style="float:right">
-                           <input type="text" id="zBackgroundColor" class="zeidon" data-zmap="block.z_^background^color" value="#ffffff" data-text="n/b" />
+                        &nbsp;
+                        <div style="overflow:hidden; white-space:nowrap;">
+                           <label for="zBlockTitle">Block Title:</label>
+                           <input type="text" id="zBlockTitle" class="zeidon" data-zmap="block.z_^block^title" style="float:right" />
                         </div>
-                     </div>
-                     <p style="clear:both;position:relative"></p>
+                        <div style="overflow:hidden; white-space:nowrap; display:none">
+                           <label for="zBlockTitle">Block Name:</label>
+                           <input type="text" id="zBlockName" class="zeidon" data-zmap="block.z_^name" style="float:right" />
+                        </div>
+                        <div style="overflow:hidden; white-space:nowrap;">
+                          <label for="zBlockTop">Block Top:</label>
+                          <input type="text" id="zBlockTop" class="zeidon" data-zmap="block.z_^top" style="float:right" />
+                        </div>
+                        <div style="overflow:hidden; white-space:nowrap;">
+                           <label for="zBlockLeft">Block Left:</label>
+                           <input type="text" id="zBlockLeft" class="zeidon" data-zmap="block.z_^left" style="float:right" />
+                        </div>
+                        <div style="overflow:hidden; white-space:nowrap;">
+                           <label for="zBlockHeight">Block Height:</label>
+                           <input type="text" id="zBlockHeight" class="zeidon" data-zmap="block.z_^height" style="float:right" />
+                        </div>
+                        <div style="overflow:hidden; white-space:nowrap;">
+                           <label for="zBlockWidth">Block Width:</label>
+                           <input type="text" id="zBlockWidth" class="zeidon" data-zmap="block.z_^width" style="float:right" />
+                        </div>
+                        <div style="overflow:hidden; white-space:nowrap;">
+                           <label for="zBorderStyle">Border Style:</label>
+                           <select id="zBorderStyle" class="zeidon" data-zmap="block.z_^border^style" style="float:right" />
+                              <option value="">Select Border Style...</option>
+                              <option value="solid">Solid</option>
+                              <option value="dotted">Dotted</option>
+                              <option value="dashed">Dashed</option>
+                              <option value="double">Double</option>
+                              <option value="groove">Groove</option>
+                           </select>
+                        </div>
+                        <div style="overflow:hidden; white-space:nowrap;">
+                           <label for="zBorderWidth">Border Width:</label>
+                           <input type="text" id="zBorderWidth" class="zeidon" data-zmap="block.z_^border^width" style="float:right" />
+                        </div>
+                        &nbsp;
+                        <div style="padding-bottom:6px;">
+                           <label for="zBorderColor">Border Color</label>
+                           <div class="colorPicker-frame" style="float:right">
+                              <input type="text" id="zBorderColor" class="zeidon" data-zmap="block.z_^border^color"  value="#ffffff" data-text="n/c" />
+                           </div>
+                        </div>
+                        &nbsp;
+                        <div>
+                           <label for="zBackgroundColor">Background Color</label>
+                           <div class="colorPicker-frame" style="float:right">
+                              <input type="text" id="zBackgroundColor" class="zeidon" data-zmap="block.z_^background^color" value="#ffffff" data-text="n/b" />
+                           </div>
+                        </div>
+                        <p style="clear:both;position:relative"></p>
+                        &nbsp;
+                        &nbsp;
+                        <div style="overflow:hidden; white-space:nowrap;">
+                           <label for="zStatementFormat">Statement Format:</label>
+                           <select id="zStatementFormat" class="zeidon" data-zmap="block.z_^statement^format" style="float:right" />
+                              <option value="">Select Statement Format...</option>
+                              <option value="SP">Separate Paragraph</option>
+                              <option value="SPN">Separate Numbered Paragraph</option>
+                              <option value="SPB">Separate Bulleted Paragraph</option>
+                              <option value="SPU">Paragraph with Usage Statements</option>
+                              <option value="L2">2 Column Usage List</option>
+                              <option value="L3">3 Column Usage List</option>
+                           </select>
+                        </div>
+                        <div style="overflow:hidden; white-space:nowrap;">
+                           <label for="zTitlePosition">Title Position:</label>
+                           <select id="zTitlePosition" class="zeidon" data-zmap="block.z_^title^position" style="float:right" />
+                              <option value="">Select Title Position...</option>
+                              <option value="SL">Separate Line</option>
+                              <option value="CF">Combined with First Paragraph</option>
+                              <option value="SK">Skip Title</option>
+                           </select>
+                        </div>
+                     </span>
                      &nbsp;
                      &nbsp;
-<!--
+                <!--
                      <p style="clear:both;position:relative"></p>
                      <div style="overflow:hidden; white-space:nowrap;">
                 <!-- <fieldset class="border"><legend>Override CSS</legend> *->
-                     <hr>Override CSS<hr>
-                       <div><span>
-                          <input type="checkbox" id="zOverrideCSS_Text" name="zOverrideCSS_Text" class="zeidon" data-zmap="block.z_^text^color^override" /><label for="zOverrideCSS_Text">Text</label>
-                          <label for="zBlockTextColor">Color:</label>
-                          <input type="text" id="zBlockTextColor" class="colorwell colorwell1 zeidon" data-zmap="block.z_^text^color" value="#ff0000" style="float:right" />
-                       </span></div>
-                       <p style="clear:both;position:relative"></p>
-                       <div><span>
-                          <input type="checkbox" id="zOverrideCSS_Background" name="zOverrideCSS_Background" class="zeidon" data-zmap="block.z_^background^color^override" /><label for="zOverrideCSS_Background">Back</label>
-                          <label for="zBlockBackgroundColor">Color:</label>
-                          <input type="text" id="zBlockBackgroundColor" class="colorwell colorwell1 zeidon" data-zmap="block.z_^background^color" value="#00ff00" style="float:right" />
-                       </span></div>
-                       <p style="clear:both;position:relative"></p>
-                       <div><span>
-                          <input type="checkbox" id="zOverrideCSS_Border" name="zOverrideCSS_Border" class="zeidon" data-zmap="block.z_^border^color^override" /><label for="zOverrideCSS_Border">Border</label>
-                          <label for="zBlockBorderColor">Color:</label>
-                          <input type="text" id="zBlockBorderColor" class="colorwell colorwell1 zeidon" data-zmap="block.z_^border^color" value="#0000ff" style="float:right" />
-                       </span></div>
-                       <p style="clear:both"></p>
-                       <div id="zBlockPicker"></div>
+                        <hr>Override CSS<hr>
+                        <div><span>
+                           <input type="checkbox" id="zOverrideCSS_Text" name="zOverrideCSS_Text" class="zeidon" data-zmap="block.z_^text^color^override" /><label for="zOverrideCSS_Text">Text</label>
+                           <label for="zBlockTextColor">Color:</label>
+                           <input type="text" id="zBlockTextColor" class="colorwell colorwell1 zeidon" data-zmap="block.z_^text^color" value="#ff0000" style="float:right" />
+                        </span></div>
+                        <p style="clear:both;position:relative"></p>
+                        <div><span>
+                           <input type="checkbox" id="zOverrideCSS_Background" name="zOverrideCSS_Background" class="zeidon" data-zmap="block.z_^background^color^override" /><label for="zOverrideCSS_Background">Back</label>
+                           <label for="zBlockBackgroundColor">Color:</label>
+                           <input type="text" id="zBlockBackgroundColor" class="colorwell colorwell1 zeidon" data-zmap="block.z_^background^color" value="#00ff00" style="float:right" />
+                        </span></div>
+                        <p style="clear:both;position:relative"></p>
+                        <div><span>
+                           <input type="checkbox" id="zOverrideCSS_Border" name="zOverrideCSS_Border" class="zeidon" data-zmap="block.z_^border^color^override" /><label for="zOverrideCSS_Border">Border</label>
+                           <label for="zBlockBorderColor">Color:</label>
+                           <input type="text" id="zBlockBorderColor" class="colorwell colorwell1 zeidon" data-zmap="block.z_^border^color" value="#0000ff" style="float:right" />
+                        </span></div>
+                        <p style="clear:both"></p>
+                        <div id="zBlockPicker"></div>
                 <!-- </fieldset> *->
                      &nbsp;
                      &nbsp;
@@ -1028,7 +1056,7 @@ else
                         <div style="overflow:hidden; white-space:nowrap;">
                            <label for="zContinuationBlockTag">Continuation Block Tag:</label>
                            <input type="text" id="zContinuationBlockTag" class="zeidon" data-zmap="block.z_^continuation^block^tag" style="float:right" />
-                     </div>
+                        </div>
                      </div>
                      <p style="clear:both;position:relative"></p>
                      <div id="zMarketingSectionToggle" style="overflow:hidden; white-space:nowrap;">
@@ -1059,8 +1087,8 @@ else
                      // First Aid:  Header / Title / Text
                      // Human Hazard:  Hazards Warning / Hazards Signal Word / Hazards Precautionary
                      // Ingredients:  Ingredients Title / Ingredients Items / Ingredients Inert / Ingredients Total
-                     // Marketing:   Title / Text / Column List
-                     // Default:   Title / Text
+                     // Marketing:  Title / Text / Column List
+                     // Default:  Title / Text
                      -->
                      <div id="zBlockFormatTypeToggle" style="overflow:hidden; white-space:nowrap;display:hidden;">
                         <label for="zBlockFormatType">Special Formatting:</label>
@@ -1078,8 +1106,8 @@ else
                         </ul>
                         <div id="zFormatting">
                            <div style="overflow:hidden; white-space:nowrap;">
-                             <label for="zTitlePosition">Title Position:</label>
-                             <select id="zTitlePosition" class="zeidon-special" data-zmap="block.z_^title^position" style="float:right" />
+                              <label for="zTitlePosition">Title Position:</label>
+                              <select id="zTitlePosition" class="zeidon-special" data-zmap="block.z_^title^position" style="float:right" />
                                  <option value="">Select Title Position...</option>
                                  <option value="SL">Separate Line</option>
                                  <option value="CF">Combined with First Paragraph</option>
@@ -1087,9 +1115,9 @@ else
                               </select>
                            </div>
                            <div style="overflow:hidden; white-space:nowrap;">
-                             <label for="zTextAlign">Text Align:</label>
+                             <label for="zTextAlign">Alignment:</label>
                              <select id="zTextAlign" class="zeidon-special" data-zmap="block.z_^text^align" style="float:right" />
-                                 <option value="">Select Text Align...</option>
+                                 <option value="">Select Text Alignment...</option>
                                  <option value="left">Left</option>
                                  <option value="center">Center</option>
                                  <option value="right">Right</option>
@@ -1097,10 +1125,10 @@ else
                               </select>
                            </div>
                            <div style="overflow:hidden; white-space:nowrap;">
-                             <label for="zTextLineHeight">Text Line Height:</label>
+                             <label for="zTextLineHeight">Line Height:</label>
                              <input type="text" id="zTextLineHeight" class="zeidon-special" data-zmap="block.z_^text^line^height" style="float:right" />
                            </div>                           <div style="overflow:hidden; white-space:nowrap;">
-                             <label for="zTextLetterSpace">Text Character Spacing:</label>
+                             <label for="zTextLetterSpace">Character Spacing:</label>
                              <input type="text" id="zTextLetterSpace" class="zeidon-special" data-zmap="block.z_^text^letter^space" style="float:right" />
                            </div>
                            <div style="overflow:hidden; white-space:nowrap;">
@@ -1137,77 +1165,77 @@ else
                         </div>
                         <div id="zMargins">
                            <div style="overflow:hidden; white-space:nowrap;">
-                             <label for="zMargin" style="font-weight:bold">Margins:</label>
-                             <input type="text" id="zMargin" class="zeidon-special" data-zmap="block.z_^margin" style="float:right" />
+                              <label for="zMargin" style="font-weight:bold">Margins:</label>
+                              <input type="text" id="zMargin" class="zeidon-special" data-zmap="block.z_^margin" style="float:right" />
                            </div>
                            <div style="overflow:hidden; white-space:nowrap;">
-                             <label for="zMarginTop">Top:</label>
-                             <input type="text" id="zMarginTop" class="zeidon-special" data-zmap="block.z_^margin^top" style="float:right" />
+                              <label for="zMarginTop">Top:</label>
+                              <input type="text" id="zMarginTop" class="zeidon-special" data-zmap="block.z_^margin^top" style="float:right" />
                            </div>
                            <div style="overflow:hidden; white-space:nowrap;">
-                             <label for="zMarginBottom">Bottom:</label>
-                             <input type="text" id="zMarginBottom" class="zeidon-special" data-zmap="block.z_^margin^bottom" style="float:right" />
+                              <label for="zMarginBottom">Bottom:</label>
+                              <input type="text" id="zMarginBottom" class="zeidon-special" data-zmap="block.z_^margin^bottom" style="float:right" />
                            </div>
                            <div style="overflow:hidden; white-space:nowrap;">
-                             <label for="zMarginLeft">Left:</label>
-                             <input type="text" id="zMarginLeft" class="zeidon-special" data-zmap="block.z_^margin^left" style="float:right" />
+                              <label for="zMarginLeft">Left:</label>
+                              <input type="text" id="zMarginLeft" class="zeidon-special" data-zmap="block.z_^margin^left" style="float:right" />
                            </div>
                            <div style="overflow:hidden; white-space:nowrap;">
-                             <label for="zMarginRight">Right:</label>
-                             <input type="text" id="zMarginRight" class="zeidon-special" data-zmap="block.z_^margin^right" style="float:right" />
+                              <label for="zMarginRight">Right:</label>
+                              <input type="text" id="zMarginRight" class="zeidon-special" data-zmap="block.z_^margin^right" style="float:right" />
                            </div>
                            <div style="overflow:hidden; white-space:nowrap;">
-                             <input type="checkbox" id="zMarginOverride" name="zMarginOverride" class="zeidon-special" data-zmap="block.z_^margin^override" /><label for="zMarginOverride">Override CSS</label>
+                              <input type="checkbox" id="zMarginOverride" name="zMarginOverride" class="zeidon-special" data-zmap="block.z_^margin^override" /><label for="zMarginOverride">Override CSS</label>
                            </div>
                         </div>
                         <div id="zBorders">
                            <div style="overflow:hidden; white-space:nowrap;">
-                             <label for="zBorder" style="font-weight:bold">Borders:</label>
-                             <input type="text" id="zBorder" class="zeidon-special" data-zmap="block.z_^border" style="float:right" />
+                              <label for="zBorder" style="font-weight:bold">Borders:</label>
+                              <input type="text" id="zBorder" class="zeidon-special" data-zmap="block.z_^border" style="float:right" />
                            </div>
                            <div style="overflow:hidden; white-space:nowrap;">
-                             <label for="zBorderTop">Top:</label>
-                             <input type="text" id="zBorderTop" class="zeidon-special" data-zmap="block.z_^border^top" style="float:right" />
+                              <label for="zBorderTop">Top:</label>
+                              <input type="text" id="zBorderTop" class="zeidon-special" data-zmap="block.z_^border^top" style="float:right" />
                            </div>
                            <div style="overflow:hidden; white-space:nowrap;">
-                             <label for="zBorderBottom">Bottom:</label>
-                             <input type="text" id="zBorderBottom" class="zeidon-special" data-zmap="block.z_^border^bottom" style="float:right" />
+                              <label for="zBorderBottom">Bottom:</label>
+                              <input type="text" id="zBorderBottom" class="zeidon-special" data-zmap="block.z_^border^bottom" style="float:right" />
                            </div>
                            <div style="overflow:hidden; white-space:nowrap;">
-                             <label for="zBorderLeft">Left:</label>
-                             <input type="text" id="zBorderLeft" class="zeidon-special" data-zmap="block.z_^border^left" style="float:right" />
+                              <label for="zBorderLeft">Left:</label>
+                              <input type="text" id="zBorderLeft" class="zeidon-special" data-zmap="block.z_^border^left" style="float:right" />
                            </div>
                            <div style="overflow:hidden; white-space:nowrap;">
-                             <label for="zBorderRight">Right:</label>
-                             <input type="text" id="zBorderRight" class="zeidon-special" data-zmap="block.z_^border^right" style="float:right" />
+                              <label for="zBorderRight">Right:</label>
+                              <input type="text" id="zBorderRight" class="zeidon-special" data-zmap="block.z_^border^right" style="float:right" />
                            </div>
                            <div style="overflow:hidden; white-space:nowrap;">
-                             <input type="checkbox" id="zBorderOverride" name="zBorderOverride" class="zeidon-special" data-zmap="block.z_^border^override" style="float:center" /><label for="zBorderOverride">Override CSS</label>
+                              <input type="checkbox" id="zBorderOverride" name="zBorderOverride" class="zeidon-special" data-zmap="block.z_^border^override" style="float:center" /><label for="zBorderOverride">Override CSS</label>
                            </div>
                         </div>
                         <div id="zPaddings">
                            <div style="overflow:hidden; white-space:nowrap;">
-                             <label for="zPadding" style="font-weight:bold">Padding:</label>
-                             <input type="text" id="zPadding" class="zeidon-special" data-zmap="block.z_^padding" style="float:right" />
+                              <label for="zPadding" style="font-weight:bold">Padding:</label>
+                              <input type="text" id="zPadding" class="zeidon-special" data-zmap="block.z_^padding" style="float:right" />
                            </div>
                            <div style="overflow:hidden; white-space:nowrap;">
-                             <label for="zPaddingTop">Top:</label>
-                             <input type="text" id="zPaddingTop" class="zeidon-special" data-zmap="block.z_^padding^top" style="float:right" />
+                              <label for="zPaddingTop">Top:</label>
+                              <input type="text" id="zPaddingTop" class="zeidon-special" data-zmap="block.z_^padding^top" style="float:right" />
                            </div>
                            <div style="overflow:hidden; white-space:nowrap;">
-                             <label for="zPaddingBottom">Bottom:</label>
-                             <input type="text" id="zPaddingBottom" class="zeidon-special" data-zmap="block.z_^padding^bottom" style="float:right" />
+                              <label for="zPaddingBottom">Bottom:</label>
+                              <input type="text" id="zPaddingBottom" class="zeidon-special" data-zmap="block.z_^padding^bottom" style="float:right" />
                            </div>
                            <div style="overflow:hidden; white-space:nowrap;">
-                             <label for="zPaddingLeft">Left:</label>
-                             <input type="text" id="zPaddingLeft" class="zeidon-special" data-zmap="block.z_^padding^left" style="float:right" />
+                              <label for="zPaddingLeft">Left:</label>
+                              <input type="text" id="zPaddingLeft" class="zeidon-special" data-zmap="block.z_^padding^left" style="float:right" />
                            </div>
                            <div style="overflow:hidden; white-space:nowrap;">
-                             <label for="zPaddingRight">Right:</label>
-                             <input type="text" id="zPaddingRight" class="zeidon-special" data-zmap="block.z_^padding^right" style="float:right" />
+                              <label for="zPaddingRight">Right:</label>
+                              <input type="text" id="zPaddingRight" class="zeidon-special" data-zmap="block.z_^padding^right" style="float:right" />
                            </div>
                            <div style="overflow:hidden; white-space:nowrap;">
-                             <input type="checkbox" id="zPaddingOverride" name="zPaddingOverride" class="zeidon-special" data-zmap="block.z_^padding^override" /><label for="zPaddingOverride">Override CSS</label>
+                              <input type="checkbox" id="zPaddingOverride" name="zPaddingOverride" class="zeidon-special" data-zmap="block.z_^padding^override" /><label for="zPaddingOverride">Override CSS</label>
                            </div>
                         </div>
                      </div> <!-- end of: zmbp -->

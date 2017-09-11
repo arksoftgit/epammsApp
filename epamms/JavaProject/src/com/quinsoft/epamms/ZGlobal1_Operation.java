@@ -42,10 +42,12 @@ import org.joda.time.DateTime;
 import com.quinsoft.zeidon.CursorPosition;
 import com.quinsoft.zeidon.CursorResult;
 import com.quinsoft.zeidon.EntityCursor;
+import com.quinsoft.zeidon.EntityInstance;
 import com.quinsoft.zeidon.TaskQualification;
 import com.quinsoft.zeidon.Task;
 import com.quinsoft.zeidon.View;
 import com.quinsoft.zeidon.vml.VmlOperation;
+import static com.quinsoft.zeidon.vml.VmlOperation.zCURSOR_NULL;
 import com.quinsoft.zeidon.vml.zVIEW;
 //import com.quinsoft.zeidon.utils.JoeUtils;
 import com.quinsoft.zeidon.zeidonoperations.ZDRVROPR;
@@ -4634,15 +4636,16 @@ public class ZGlobal1_Operation extends VmlOperation
    //
    ////////////////////////////////////////////////////////////////////////////////////////////////////
    public int
-   WL_QC( View vAnyView,
+   WL_QC( View   vAnyView,
           int    lFile,
           String stringInput,
           String stringTransChar,
           int    nBlankLineCnt ) throws IOException
    {
-      //stringInput = stringInput.replaceAll( stringTransChar, "\"" );
-      stringInput = stringInput.replace( stringTransChar, "\"" );
-   // TraceLineS( "#### WL_QC: ", stringInput );
+      if ( stringTransChar.isEmpty() == false )
+         stringInput = stringInput.replace( stringTransChar, "\"" );
+
+      TraceLineS( "#### WL_QC: ", stringInput );
       m_KZOEP1AA.SysWriteLine( vAnyView, lFile, stringInput );
       while ( nBlankLineCnt-- > 0 )
          m_KZOEP1AA.SysWriteLine( vAnyView, lFile, "" );
@@ -7067,4 +7070,5 @@ ioe.printStackTrace();
       }
       return count;
    }
+
 }

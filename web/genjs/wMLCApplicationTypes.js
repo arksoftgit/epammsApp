@@ -1,10 +1,10 @@
-// wMLCApplicationTypes   Generate Timestamp: 20170608112838800
+// wMLCApplicationTypes   Generate Timestamp: 20170721173629881
 
 var isWindowClosing = true;
 var timerID = null;
 onerror = handleErr;
 window.history.forward( 1 );
-var Tab1;
+var Tab;
 
 function handleErr( msg, url, l )
 {
@@ -173,6 +173,15 @@ function _AfterPageLoaded( )
       timerID = null; // No timeout specified
 
 var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title ); }
+   var storageName = "epamms.wMLCApplicationTypes.position";
+   var scrollPosition = sessionStorage.getItem( storageName );
+   if ( scrollPosition.indexOf('#') > 0 )
+   {
+      var parts = scrollPosition.split( '#' );
+      document.body.scrollTop = parseInt( parts[parts.length - 2] );
+      document.body.scrollLeft = parseInt( parts[parts.length - 1] );
+   }
+   sessionStorage.removeItem( storageName );
    isWindowClosing = true;
 }
 
@@ -192,7 +201,7 @@ function CheckAllInGrid(id, CheckBoxName) // triggered by no text checkbox
    }
 }
 
-function ADD_ApplTypesUsageItems( )
+function ADD_ApplicationTypes( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -202,22 +211,14 @@ function ADD_ApplTypesUsageItems( )
    {
       _DisableFormElements( true );
 
-      document.wMLCApplicationTypes.zAction.value = "ADD_ApplTypesUsageItems";
-      document.wMLCApplicationTypes.submit( );
-   }
-}
-
-function GOTO_DeleteSelectedEntries( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCApplicationTypes.zAction.value = "GOTO_DeleteSelectedEntries";
+      if ( typeof(Storage) !== "undefined" )
+      {
+         // Code for localStorage/sessionStorage.
+         var storageName = "epamms.wMLCApplicationTypes.position"
+         var scrollPosition = document.body.scrollTop + '#' + document.body.scrollLeft;
+         sessionStorage.setItem( storageName, scrollPosition );
+      }
+      document.wMLCApplicationTypes.zAction.value = "ADD_ApplicationTypes";
       document.wMLCApplicationTypes.submit( );
    }
 }
@@ -242,12 +243,19 @@ if (!confirm("OK to delete selected Application Types?"))
 
       _DisableFormElements( true );
 
+      if ( typeof(Storage) !== "undefined" )
+      {
+         // Code for localStorage/sessionStorage.
+         var storageName = "epamms.wMLCApplicationTypes.position"
+         var scrollPosition = document.body.scrollTop + '#' + document.body.scrollLeft;
+         sessionStorage.setItem( storageName, scrollPosition );
+      }
       document.wMLCApplicationTypes.zAction.value = "DELETE_SelectedUsageEntries";
       document.wMLCApplicationTypes.submit( );
    }
 }
 
-function DELETE_UsageGroupEntries( )
+function DELETE_ApplicationType( strTagEntityKey )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -255,9 +263,30 @@ function DELETE_UsageGroupEntries( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      var nIdx = strTagEntityKey.lastIndexOf( '::' );
+      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
+
+      document.wMLCApplicationTypes.zTableRowSelect.value = strEntityKey;
+      // Javascript code entered by user.
+
+// Confirmation of  Delete.
+if (!confirm("Delete Application Type?"))
+{
+   return;
+}
+
+      // END of Javascript code entered by user.
+
       _DisableFormElements( true );
 
-      document.wMLCApplicationTypes.zAction.value = "DELETE_UsageGroupEntries";
+      if ( typeof(Storage) !== "undefined" )
+      {
+         // Code for localStorage/sessionStorage.
+         var storageName = "epamms.wMLCApplicationTypes.position"
+         var scrollPosition = document.body.scrollTop + '#' + document.body.scrollLeft;
+         sessionStorage.setItem( storageName, scrollPosition );
+      }
+      document.wMLCApplicationTypes.zAction.value = "DELETE_ApplicationType";
       document.wMLCApplicationTypes.submit( );
    }
 }
@@ -272,7 +301,40 @@ function DELETE_UsageGroupEntriesOnly( )
    {
       _DisableFormElements( true );
 
+      if ( typeof(Storage) !== "undefined" )
+      {
+         // Code for localStorage/sessionStorage.
+         var storageName = "epamms.wMLCApplicationTypes.position"
+         var scrollPosition = document.body.scrollTop + '#' + document.body.scrollLeft;
+         sessionStorage.setItem( storageName, scrollPosition );
+      }
       document.wMLCApplicationTypes.zAction.value = "DELETE_UsageGroupEntriesOnly";
+      document.wMLCApplicationTypes.submit( );
+   }
+}
+
+function DeleteUsageGroup( strTagEntityKey )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      var nIdx = strTagEntityKey.lastIndexOf( '::' );
+      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
+
+      document.wMLCApplicationTypes.zTableRowSelect.value = strEntityKey;
+      _DisableFormElements( true );
+
+      if ( typeof(Storage) !== "undefined" )
+      {
+         // Code for localStorage/sessionStorage.
+         var storageName = "epamms.wMLCApplicationTypes.position"
+         var scrollPosition = document.body.scrollTop + '#' + document.body.scrollLeft;
+         sessionStorage.setItem( storageName, scrollPosition );
+      }
+      document.wMLCApplicationTypes.zAction.value = "DeleteUsageGroup";
       document.wMLCApplicationTypes.submit( );
    }
 }
@@ -287,12 +349,41 @@ function GOTO_AddUsageGroup( )
    {
       _DisableFormElements( true );
 
+      if ( typeof(Storage) !== "undefined" )
+      {
+         // Code for localStorage/sessionStorage.
+         var storageName = "epamms.wMLCApplicationTypes.position"
+         var scrollPosition = document.body.scrollTop + '#' + document.body.scrollLeft;
+         sessionStorage.setItem( storageName, scrollPosition );
+      }
       document.wMLCApplicationTypes.zAction.value = "GOTO_AddUsageGroup";
       document.wMLCApplicationTypes.submit( );
    }
 }
 
-function GOTO_UpdateApplTypesStatement( strTagEntityKey )
+function GOTO_DeleteSelectedApplTypes( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      if ( typeof(Storage) !== "undefined" )
+      {
+         // Code for localStorage/sessionStorage.
+         var storageName = "epamms.wMLCApplicationTypes.position"
+         var scrollPosition = document.body.scrollTop + '#' + document.body.scrollLeft;
+         sessionStorage.setItem( storageName, scrollPosition );
+      }
+      document.wMLCApplicationTypes.zAction.value = "GOTO_DeleteSelectedApplTypes";
+      document.wMLCApplicationTypes.submit( );
+   }
+}
+
+function GOTO_UpdateStandaloneApplTypes( strTagEntityKey )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -306,7 +397,40 @@ function GOTO_UpdateApplTypesStatement( strTagEntityKey )
       document.wMLCApplicationTypes.zTableRowSelect.value = strEntityKey;
       _DisableFormElements( true );
 
-      document.wMLCApplicationTypes.zAction.value = "GOTO_UpdateApplTypesStatement";
+      if ( typeof(Storage) !== "undefined" )
+      {
+         // Code for localStorage/sessionStorage.
+         var storageName = "epamms.wMLCApplicationTypes.position"
+         var scrollPosition = document.body.scrollTop + '#' + document.body.scrollLeft;
+         sessionStorage.setItem( storageName, scrollPosition );
+      }
+      document.wMLCApplicationTypes.zAction.value = "GOTO_UpdateStandaloneApplTypes";
+      document.wMLCApplicationTypes.submit( );
+   }
+}
+
+function GOTO_UpdateApplicationTypesStmt( strTagEntityKey )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      var nIdx = strTagEntityKey.lastIndexOf( '::' );
+      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
+
+      document.wMLCApplicationTypes.zTableRowSelect.value = strEntityKey;
+      _DisableFormElements( true );
+
+      if ( typeof(Storage) !== "undefined" )
+      {
+         // Code for localStorage/sessionStorage.
+         var storageName = "epamms.wMLCApplicationTypes.position"
+         var scrollPosition = document.body.scrollTop + '#' + document.body.scrollLeft;
+         sessionStorage.setItem( storageName, scrollPosition );
+      }
+      document.wMLCApplicationTypes.zAction.value = "GOTO_UpdateApplicationTypesStmt";
       document.wMLCApplicationTypes.submit( );
    }
 }
@@ -325,7 +449,96 @@ function GOTO_UpdateUsageGroup( strTagEntityKey )
       document.wMLCApplicationTypes.zTableRowSelect.value = strEntityKey;
       _DisableFormElements( true );
 
+      if ( typeof(Storage) !== "undefined" )
+      {
+         // Code for localStorage/sessionStorage.
+         var storageName = "epamms.wMLCApplicationTypes.position"
+         var scrollPosition = document.body.scrollTop + '#' + document.body.scrollLeft;
+         sessionStorage.setItem( storageName, scrollPosition );
+      }
       document.wMLCApplicationTypes.zAction.value = "GOTO_UpdateUsageGroup";
+      document.wMLCApplicationTypes.submit( );
+   }
+}
+
+function GOTO_UpdateGroup( strTagEntityKey )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      var nIdx = strTagEntityKey.lastIndexOf( '::' );
+      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
+
+      document.wMLCApplicationTypes.zTableRowSelect.value = strEntityKey;
+      _DisableFormElements( true );
+
+      if ( typeof(Storage) !== "undefined" )
+      {
+         // Code for localStorage/sessionStorage.
+         var storageName = "epamms.wMLCApplicationTypes.position"
+         var scrollPosition = document.body.scrollTop + '#' + document.body.scrollLeft;
+         sessionStorage.setItem( storageName, scrollPosition );
+      }
+      document.wMLCApplicationTypes.zAction.value = "GOTO_UpdateGroup";
+      document.wMLCApplicationTypes.submit( );
+   }
+}
+
+function SortGroups( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      // Javascript code entered by user.
+
+       document.wMLCApplicationTypes.zTableRowSelect.value = buildSortTableHtml( "mMasLC", "M_UsageGroup", "GridApplicationTypesGroup",  ["Name", "Combined Application Type"]  );
+
+      // END of Javascript code entered by user.
+
+      _DisableFormElements( true );
+
+      if ( typeof(Storage) !== "undefined" )
+      {
+         // Code for localStorage/sessionStorage.
+         var storageName = "epamms.wMLCApplicationTypes.position"
+         var scrollPosition = document.body.scrollTop + '#' + document.body.scrollLeft;
+         sessionStorage.setItem( storageName, scrollPosition );
+      }
+      document.wMLCApplicationTypes.zAction.value = "SortGroups";
+      document.wMLCApplicationTypes.submit( );
+   }
+}
+
+function SortSurfaces( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      // Javascript code entered by user.
+
+       document.wMLCApplicationTypes.zTableRowSelect.value = buildSortTableHtml( "mMasLC", "M_Usage", "GridApplicationTypes",  ["Application Type"]  );
+
+      // END of Javascript code entered by user.
+
+      _DisableFormElements( true );
+
+      if ( typeof(Storage) !== "undefined" )
+      {
+         // Code for localStorage/sessionStorage.
+         var storageName = "epamms.wMLCApplicationTypes.position"
+         var scrollPosition = document.body.scrollTop + '#' + document.body.scrollLeft;
+         sessionStorage.setItem( storageName, scrollPosition );
+      }
+      document.wMLCApplicationTypes.zAction.value = "SortSurfaces";
       document.wMLCApplicationTypes.submit( );
    }
 }

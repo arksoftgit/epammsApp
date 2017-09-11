@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSLCEnvironmentalHazards   Generate Timestamp: 20170419092558700 --%>
+<%-- wSLCEnvironmentalHazards --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -902,12 +902,11 @@ else
 <!-- Timeout.inc has a value for nTimeout which is used to determine when to -->
 <!-- log a user out.  Timeout.inc is not used if the dialog or window has a timeout value set. -->
 <%@ include file="./include/timeout.inc" %>
-<link rel="stylesheet" type="text/css" href="./css/print.css" media="print" />
-<script language="JavaScript" type="text/javascript" src="./js/common.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
-<script language="JavaScript" type="text/javascript" src="./genjs/wSLCEnvironmentalHazards.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/common.js?v=20170809164830561"></script>
+<script language="JavaScript" type="text/javascript" src="./js/scw.js?v=20170809164830561"></script>
+<script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js?v=20170809164830561"></script>
+<script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js?v=20170809164830561"></script>
+<script language="JavaScript" type="text/javascript" src="./genjs/wSLCEnvironmentalHazards.js?v=20170809164830561"></script>
 
 </head>
 
@@ -1236,6 +1235,7 @@ else
    <input name="zOpenFile" id="zOpenFile" type="hidden" value="<%=strOpenFile%>">
    <input name="zDateFormat" id="zDateFormat" type="hidden" value="<%=strDateFormat%>">
    <input name="zDateSequence" id="zDateSequence" type="hidden" value="MDY">
+   <input name="zLanguage" id="zLanguage" type="hidden" value="">
    <input name="zLoginName" id="zLoginName" type="hidden" value="<%=strLoginName%>">
    <input name="zKeyRole" id="zKeyRole" type="hidden" value="<%=strKeyRole%>">
    <input name="zOpenPopupWindow" id="zOpenPopupWindow" type="hidden" value="<%=strOpenPopupWindow%>">
@@ -1257,29 +1257,11 @@ else
 <div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox2:GroupBox */ %>
 
-<div id="GroupBox2" name="GroupBox2" style="width:730px;height:34px;float:left;">  <!-- GroupBox2 --> 
+<div id="GroupBox2" name="GroupBox2" class="listgroup"   style="float:left;position:relative; width:730px; height:34px;">  <!-- GroupBox2 --> 
 
-
-<div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GBEnvironmentalHazardSections:GroupBox */ %>
-<div id="GBEnvironmentalHazardSections" name="GBEnvironmentalHazardSections" style="float:left;width:486px;"  class="listgroup">
-
-<table cols=0 style="width:486px;"  class="grouptable">
-
-<tr>
-<td valign="top"  class="listheader" style="width:238px;">
 <% /* EnvironmentalHazardSections:Text */ %>
 
-<span class="listheader"  id="EnvironmentalHazardSections" name="EnvironmentalHazardSections" style="width:238px;height:16px;">Hazard Sections</span>
-
-</td>
-</tr>
-</table>
-
-</div>  <!-- GBEnvironmentalHazardSections --> 
-
-</div>  <!-- End of a new line -->
+<label class="groupbox"  id="EnvironmentalHazardSections" name="EnvironmentalHazardSections" style="width:238px;height:16px;position:absolute;left:22px;top:12px;">Hazard Sections</label>
 
 
 </div>  <!--  GroupBox2 --> 

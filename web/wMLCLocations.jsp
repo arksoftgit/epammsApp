@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCLocations   Generate Timestamp: 20170714173940355 --%>
+<%-- wMLCLocations --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -1533,17 +1533,16 @@ else
 <!-- Timeout.inc has a value for nTimeout which is used to determine when to -->
 <!-- log a user out.  Timeout.inc is not used if the dialog or window has a timeout value set. -->
 <%@ include file="./include/timeout.inc" %>
-<link rel="stylesheet" type="text/css" href="./css/print.css" media="print" />
-<script language="JavaScript" type="text/javascript" src="./js/common.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/css.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/sts.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/jsoeUtils.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/jsoe.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/tabpane.js"></script>
-<script language="JavaScript" type="text/javascript" src="./genjs/wMLCLocations.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/common.js?v=20170721135740086"></script>
+<script language="JavaScript" type="text/javascript" src="./js/css.js?v=20170721135740086"></script>
+<script language="JavaScript" type="text/javascript" src="./js/sts.js?v=20170721135740086"></script>
+<script language="JavaScript" type="text/javascript" src="./js/jsoeUtils.js?v=20170721135740086"></script>
+<script language="JavaScript" type="text/javascript" src="./js/jsoe.js?v=20170721135740086"></script>
+<script language="JavaScript" type="text/javascript" src="./js/scw.js?v=20170721135740086"></script>
+<script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js?v=20170721135740086"></script>
+<script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js?v=20170721135740086"></script>
+<script language="JavaScript" type="text/javascript" src="./js/tabpane.js?v=20170721135740086"></script>
+<script language="JavaScript" type="text/javascript" src="./genjs/wMLCLocations.js?v=20170721135740086"></script>
 
 </head>
 
@@ -1874,6 +1873,7 @@ else
    <input name="zOpenFile" id="zOpenFile" type="hidden" value="<%=strOpenFile%>">
    <input name="zDateFormat" id="zDateFormat" type="hidden" value="<%=strDateFormat%>">
    <input name="zDateSequence" id="zDateSequence" type="hidden" value="MDY">
+   <input name="zLanguage" id="zLanguage" type="hidden" value="">
    <input name="zLoginName" id="zLoginName" type="hidden" value="<%=strLoginName%>">
    <input name="zKeyRole" id="zKeyRole" type="hidden" value="<%=strKeyRole%>">
    <input name="zOpenPopupWindow" id="zOpenPopupWindow" type="hidden" value="<%=strOpenPopupWindow%>">
@@ -1937,7 +1937,7 @@ else
 <% /* GridLocations:Grid */ %>
 <table class="sortable"  cols=4 style="width:626px;"  name="GridLocations" id="GridLocations">
 
-<thead bgcolor=green><tr>
+<thead><tr>
 
    <th class="gridheading"><input type="checkbox" onclick="CheckAllInGrid(this,'GS_Select')"></th>
    <th>Location</th>
@@ -2027,10 +2027,10 @@ try
 
 <tr<%=strOdd%>>
 
-   <td nowrap><%=strGS_Select%></td>
+   <td><%=strGS_Select%></td>
    <td><a href="#" onclick="GOTO_UpdateLocationsStatement( this.id )" id="Location::<%=strEntityKey%>"><%=strLocation%></a></td>
-   <td nowrap><a href="#" onclick="GOTO_UpdateGroup( this.id )" id="LocationGroup::<%=strEntityKey%>"><%=strLocationGroup%></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateLocationsStatement" onclick="GOTO_UpdateLocationsStatement( this.id )" id="BMBUpdateLocationsStatement::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
+   <td><a href="#" onclick="GOTO_UpdateGroup( this.id )" id="LocationGroup::<%=strEntityKey%>"><%=strLocationGroup%></a></td>
+   <td><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateLocationsStatement" onclick="GOTO_UpdateLocationsStatement( this.id )" id="BMBUpdateLocationsStatement::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
 
 </tr>
 
@@ -2157,10 +2157,10 @@ try
 
 <tr<%=strOdd%>>
 
-   <td nowrap><a href="#" onclick="GOTO_UpdateUsageGroup( this.id )" id="LocationsGroupName::<%=strEntityKey%>"><%=strLocationsGroupName%></a></td>
+   <td><a href="#" onclick="GOTO_UpdateUsageGroup( this.id )" id="LocationsGroupName::<%=strEntityKey%>"><%=strLocationsGroupName%></a></td>
    <td><a href="#" onclick="GOTO_UpdateUsageGroup( this.id )" id="LocationsGroup::<%=strEntityKey%>"><%=strLocationsGroup%></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateLocationsGroup" onclick="GOTO_UpdateUsageGroup( this.id )" id="BMBUpdateLocationsGroup::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteLocationsGroup" onclick="DeleteUsageGroup( this.id )" id="BMBDeleteLocationsGroup::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
+   <td><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateLocationsGroup" onclick="GOTO_UpdateUsageGroup( this.id )" id="BMBUpdateLocationsGroup::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
+   <td><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteLocationsGroup" onclick="DeleteUsageGroup( this.id )" id="BMBDeleteLocationsGroup::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
 
 </tr>
 
@@ -2216,7 +2216,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 <% /* GridIndividualLocations:Grid */ %>
 <table class="sortable"  cols=3 style="width:626px;"  name="GridIndividualLocations" id="GridIndividualLocations">
 
-<thead bgcolor=green><tr>
+<thead><tr>
 
    <th>Locations</th>
    <th>Update</th>
@@ -2270,8 +2270,8 @@ try
 <tr<%=strOdd%>>
 
    <td><a href="#" onclick="GOTO_UpdateStandaloneLocations( this.id )" id="IndividualLocation::<%=strEntityKey%>"><%=strIndividualLocation%></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateStandaloneLocation" onclick="GOTO_UpdateStandaloneLocations( this.id )" id="BMBUpdateStandaloneLocation::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteLocations" onclick="DELETE_Location( this.id )" id="BMBDeleteLocations::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
+   <td><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateStandaloneLocation" onclick="GOTO_UpdateStandaloneLocations( this.id )" id="BMBUpdateStandaloneLocation::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
+   <td><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteLocations" onclick="DELETE_Location( this.id )" id="BMBDeleteLocations::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
 
 </tr>
 
@@ -2310,13 +2310,13 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 <table cols=2 style="width:620px;"  class="grouptable">
 
 <tr>
-<td valign="top" style="width:136px;">
+<td style="width:136px;">
 <% /* Title::Text */ %>
 
 <span  id="Title:" name="Title:" style="width:132px;height:20px;" tabindex=-1 >Title:</span>
 
 </td>
-<td valign="top" style="width:466px;">
+<td style="width:466px;">
 <% /* Title:EditBox */ %>
 <%
    strErrorMapValue = VmlOperation.CheckError( "Title", strError );
@@ -2356,21 +2356,21 @@ task.log().info( "*** Error in grid" + e.getMessage() );
    }
 %>
 
-<input name="Title" id="Title" maxlength="4096" style="width:466px;<%=strErrorColor%>" tabindex=-1  type="text" value="<%=strErrorMapValue%>" >
+<input name="Title" id="Title" style="width:466px;<%=strErrorColor%>" tabindex=-1  type="text"  value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>
 <tr>
-<td valign="top" style="width:136px;">
+<td style="width:136px;">
 <% /* ReviewerNote::Text */ %>
 
 <span  id="ReviewerNote:" name="ReviewerNote:" style="width:132px;height:20px;" tabindex=-1 >Note to Reviewer:</span>
 
 </td>
-<td valign="top" style="width:466px;">
+<td style="width:466px;">
 <% /* ReviewerNote:MLEdit */ %>
 <%
-   // MLEdit: ReviewerNote
+   // : ReviewerNote
    strErrorMapValue = VmlOperation.CheckError( "ReviewerNote", strError );
    if ( !StringUtils.isBlank( strErrorMapValue ) )
    {
@@ -2382,7 +2382,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
       strErrorColor = "";
       mMasLC = task.getViewByName( "mMasLC" );
       if ( VmlOperation.isValid( mMasLC ) == false )
-         task.log( ).debug( "Invalid View: " + "ReviewerNote" );
+         task.log( ).info( "Invalid View: " + "ReviewerNote" );
       else
       {
          nRC = mMasLC.cursor( "M_UsageType" ).checkExistenceOfEntity( ).toInt();
@@ -2392,15 +2392,15 @@ task.log().info( "*** Error in grid" + e.getMessage() );
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
 
-            task.log( ).debug( "M_UsageType.ReviewerNote: " + strErrorMapValue );
+            task.log( ).info( "M_UsageType.ReviewerNote: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist for ReviewerNote: " + "mMasLC.M_UsageType" );
+            task.log( ).info( "Entity does not exist for ReviewerNote: " + "mMasLC.M_UsageType" );
       }
    }
 %>
 
-<textarea id="ReviewerNote" name="ReviewerNote" class="" maxlength="4096" style="width:466px;height:46px;border:solid;border-width:2px;border-style:groove;" tabindex=-1  wrap="wrap"><%=strErrorMapValue%></textarea>
+<textarea name="ReviewerNote" id="ReviewerNote" style="width:466px;height:46px;" tabindex=-1  wrap="wrap"><%=strErrorMapValue%></textarea>
 
 </td>
 </tr>

@@ -395,10 +395,10 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
 
       String jsonReuse = "[";
       ec = vLLD.cursor( "ReusableBlockDefinition" );
-      ec.orderEntities( "LLD_SectionType A Name A" );
+      ec.orderEntities( "LLD_BlockType A Name A" );
       CursorResult cr = ec.setFirst();
       while ( cr.isSet() ) {
-         jsonReuse += " { \"LLD_SectionType\" : \"" + ec.getAttribute( "LLD_SectionType" ).getString() +
+         jsonReuse += " { \"LLD_BlockType\" : \"" + ec.getAttribute( "LLD_BlockType" ).getString() +
                       "\", \"Name\" : \"" + ec.getAttribute( "Name" ).getString() +
                       "\", \"Description\" : \"" + ec.getAttribute( "Description" ).getString() + "\" }";
          cr = ec.setNext();
@@ -982,13 +982,13 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
       }
    }
 
-   // The difference between classes zeidon and zeidon-special is that zeidon-special is an extra block entity based on the section type of the current block.
+   // The difference between classes zeidon and zeidon-special is that zeidon-special is an extra block entity based on the block type of the current block.
    // When we switch to or from a special block category, we need to keep the block's data in sync with the special block data so that the UI works properly.
    // The functions mapToSpecialBlockFromBlock and mapFromSpecialBlockToBlock perform this synchronization using the attributes defined in g_SpecialBlockAttrList.
    // This list needs to be kept in sync between labeldesigner.js and GraphicalLabelDesignerServlet.java.
    private static final String[] g_SpecialBlockAttrList =
                new String[] { "TextColor", "TextColorOverride",
-                              "FontFamily", "FontSize", "FontWeight",
+                              "FontFamily", "FontSize", "FontWeight", "CapitalizeTitleTextFlag",
                               "Margin", "MarginTop", "MarginLeft", "MarginBottom", "MarginRight", "MarginOverride",
                               "Border", "BorderTop", "BorderBottom", "BorderLeft", "BorderRight", "BorderOverride",
                               "Padding", "PaddingTop", "PaddingBottom", "PaddingLeft", "PaddingRight", "PaddingOverride",
@@ -1060,7 +1060,7 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
                            }
                         }
                      /*
-                     // String sectionType = key.substring( 0, idx1 ); // e.g. DirectionsForUse
+                     // String blockType = key.substring( 0, idx1 ); // e.g. DirectionsForUse
                      // idx1++;
                      // int idx2 = key.indexOf( ".z_", idx1 );
                      // if ( idx2 >= 0 ) {
@@ -1076,13 +1076,13 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
                                  ec.getAttribute( "Name" ).setValue( blockType );
                               }
                               ec = vBlock.cursor( "LLD_SpecialSectionAttrBlock" );
-                              cr = ec.setFirst( "LLD_SectionType", sectionType );
+                              cr = ec.setFirst( "LLD_BlockType", blockType );
                               if ( cr.isSet() == false ) {
                                  cr = ec.setFirst();
                                  if ( cr.isSet() == false ) {
                                     ec.createEntity();
                                  }
-                                 ec.getAttribute( "LLD_SectionType" ).setValue( sectionType );
+                                 ec.getAttribute( "LLD_BlockType" ).setValue( blockType );
                               }
                      */
                         if ( ((key.equals( "BackgroundColor" ) || key.equals( "BorderColor" )) && bSpecial == false) ||
@@ -1379,7 +1379,7 @@ end debug code */
          EntityCursor ecb = mBlockRU.getCursor( "ReusableBlockDefinition" );
          ecb.createEntity();
          ecb.getAttribute( "Name" ).setValue( blockName );
-         ecb.getAttribute( "LLD_SectionType" ).setValue( ec.getAttribute( "LLD_SectionType" ) );
+         ecb.getAttribute( "LLD_BlockType" ).setValue( ec.getAttribute( "LLD_BlockType" ) );
 
          ecb = mBlockRU.getCursor( "Subregistrant" );
          ecb.includeSubobject( vLLD.getCursor( "Subregistrant" ) );
@@ -1391,10 +1391,10 @@ end debug code */
          vBlockCopy.drop();
          String jsonReuse = "{ \"ReusableBlocks\" : [ ";
          ec = vLLD.cursor( "ReusableBlockDefinition" );
-         ec.orderEntities( "LLD_SectionType A Name A" );
+         ec.orderEntities( "LLD_BlockType A Name A" );
          cr = ec.setFirst();
          while ( cr.isSet() ) {
-            jsonReuse += " { \"LLD_SectionType\" : \"" + ec.getAttribute( "LLD_SectionType" ).getString() +
+            jsonReuse += " { \"LLD_BlockType\" : \"" + ec.getAttribute( "LLD_BlockType" ).getString() +
                          "\", \"Name\" : \"" + ec.getAttribute( "Name" ).getString() +
                          "\", \"Description\" : \"" + ec.getAttribute( "Description" ).getString() + "\" }";
             cr = ec.setNext();

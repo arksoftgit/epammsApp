@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSPLDSPLD_FirstAid   Generate Timestamp: 20170511185347183 --%>
+<%-- wSPLDSPLD_FirstAid --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -60,25 +60,6 @@ public int DoInputMapping( HttpServletRequest request,
    mSPLDef = task.getViewByName( "mSPLDef" );
    if ( VmlOperation.isValid( mSPLDef ) )
    {
-      // EditBox: PrecautionaryTitle
-      nRC = mSPLDef.cursor( "SPLD_GeneralSection" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 ) // CursorResult.SET
-      {
-         strMapValue = request.getParameter( "PrecautionaryTitle" );
-         try
-         {
-            if ( webMapping )
-               VmlOperation.CreateMessage( task, "PrecautionaryTitle", "", strMapValue );
-            else
-               mSPLDef.cursor( "SPLD_GeneralSection" ).getAttribute( "Title" ).setValue( strMapValue, "" );
-         }
-         catch ( InvalidAttributeValueException e )
-         {
-            nMapError = -16;
-            VmlOperation.CreateMessage( task, "PrecautionaryTitle", e.getReason( ), strMapValue );
-         }
-      }
-
       // CheckBox: Combine
       nRC = mSPLDef.cursor( "SPLD_GeneralSection" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 ) // CursorResult.SET
@@ -1001,12 +982,11 @@ else
 <!-- Timeout.inc has a value for nTimeout which is used to determine when to -->
 <!-- log a user out.  Timeout.inc is not used if the dialog or window has a timeout value set. -->
 <%@ include file="./include/timeout.inc" %>
-<link rel="stylesheet" type="text/css" href="./css/print.css" media="print" />
-<script language="JavaScript" type="text/javascript" src="./js/common.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
-<script language="JavaScript" type="text/javascript" src="./genjs/wSPLDSPLD_FirstAid.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/common.js?v=20170810172948744"></script>
+<script language="JavaScript" type="text/javascript" src="./js/scw.js?v=20170810172948744"></script>
+<script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js?v=20170810172948744"></script>
+<script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js?v=20170810172948744"></script>
+<script language="JavaScript" type="text/javascript" src="./genjs/wSPLDSPLD_FirstAid.js?v=20170810172948744"></script>
 
 </head>
 
@@ -1353,6 +1333,7 @@ else
    <input name="zOpenFile" id="zOpenFile" type="hidden" value="<%=strOpenFile%>">
    <input name="zDateFormat" id="zDateFormat" type="hidden" value="<%=strDateFormat%>">
    <input name="zDateSequence" id="zDateSequence" type="hidden" value="MDY">
+   <input name="zLanguage" id="zLanguage" type="hidden" value="">
    <input name="zLoginName" id="zLoginName" type="hidden" value="<%=strLoginName%>">
    <input name="zKeyRole" id="zKeyRole" type="hidden" value="<%=strKeyRole%>">
    <input name="zOpenPopupWindow" id="zOpenPopupWindow" type="hidden" value="<%=strOpenPopupWindow%>">
@@ -1368,103 +1349,48 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:2px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GroupBox3:GroupBox */ %>
-
-<div id="GroupBox3" name="GroupBox3" style="width:730px;height:28px;float:left;">  <!-- GroupBox3 --> 
-
-
- <!-- This is added as a line spacer -->
-<div style="height:6px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<span style="height:16px;">&nbsp</span>
-<% /* PrecautionarySection:Text */ %>
-
-<span class="groupbox"  id="PrecautionarySection" name="PrecautionarySection" style="width:338px;height:16px;">First Aid Section</span>
-
-</div>  <!-- End of a new line -->
-
-
-</div>  <!--  GroupBox3 --> 
-</div>  <!-- End of a new line -->
-
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
-
+<div style="height:10px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GBPrecautionarySection:GroupBox */ %>
 
-<div id="GBPrecautionarySection" name="GBPrecautionarySection" class="withborder" style="width:730px;height:62px;float:left;">  <!-- GBPrecautionarySection --> 
+<div id="GBPrecautionarySection" name="GBPrecautionarySection" class="withborder"   style="float:left;position:relative; width:730px; height:62px;">  <!-- GBPrecautionarySection --> 
 
+<% /* PrecautionarySection:Text */ %>
 
-<div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:8px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GroupBox1:GroupBox */ %>
-<div id="GroupBox1" name="GroupBox1" style="float:left;width:640px;" >
+<label class="groupbox"  id="PrecautionarySection" name="PrecautionarySection" style="width:338px;height:16px;position:absolute;left:6px;top:12px;">First Aid Section</label>
 
-<table cols=0 style="width:640px;"  class="grouptable">
-
-<tr>
-<td valign="top" style="width:66px;">
 <% /* PrecautionaryTitle::Text */ %>
 
-<span  id="PrecautionaryTitle:" name="PrecautionaryTitle:" style="width:66px;height:16px;">Title:</span>
+<label  id="PrecautionaryTitle:" name="PrecautionaryTitle:" style="width:66px;height:16px;position:absolute;left:14px;top:38px;">Title:</label>
 
-</td>
-<td valign="top"  class="text12" style="width:550px;">
-<% /* PrecautionaryTitle:EditBox */ %>
-<%
-   strErrorMapValue = VmlOperation.CheckError( "PrecautionaryTitle", strError );
-   if ( !StringUtils.isBlank( strErrorMapValue ) )
-   {
-      if ( StringUtils.equals( strErrorFlag, "Y" ) )
-         strErrorColor = "color:red;";
-   }
+<% /* PrecautionaryTitle:Text */ %>
+<% strTextDisplayValue = "";
+   mSPLDef = task.getViewByName( "mSPLDef" );
+   if ( VmlOperation.isValid( mSPLDef ) == false )
+      task.log( ).debug( "Invalid View: " + "PrecautionaryTitle" );
    else
    {
-      strErrorColor = "";
-      mSPLDef = task.getViewByName( "mSPLDef" );
-      if ( VmlOperation.isValid( mSPLDef ) == false )
-         task.log( ).debug( "Invalid View: " + "PrecautionaryTitle" );
-      else
+      nRC = mSPLDef.cursor( "SPLD_GeneralSection" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
       {
-         nRC = mSPLDef.cursor( "SPLD_GeneralSection" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-         {
-            try
-            {
-               strErrorMapValue = mSPLDef.cursor( "SPLD_GeneralSection" ).getAttribute( "Title" ).getString( "" );
-            }
-            catch (Exception e)
-            {
-               out.println("There is an error on PrecautionaryTitle: " + e.getMessage());
-               task.log().error( "*** Error on ctrl PrecautionaryTitle", e );
-            }
-            if ( strErrorMapValue == null )
-               strErrorMapValue = "";
-
-            task.log( ).debug( "SPLD_GeneralSection.Title: " + strErrorMapValue );
-         }
-         else
-            task.log( ).debug( "Entity does not exist for PrecautionaryTitle: " + "mSPLDef.SPLD_GeneralSection" );
+      try
+      {
+         strTextDisplayValue = mSPLDef.cursor( "SPLD_GeneralSection" ).getAttribute( "Title" ).getString( "" );
+      }
+      catch (Exception e)
+      {
+         out.println("There is an error on PrecautionaryTitle: " + e.getMessage());
+         task.log().info( "*** Error on ctrl PrecautionaryTitle" + e.getMessage() );
+      }
+         if ( strTextDisplayValue == null )
+            strTextDisplayValue = "";
       }
    }
 %>
 
-<input class="text12"  name="PrecautionaryTitle" id="PrecautionaryTitle" maxlength="4096" style="width:550px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
-
-</td>
-</tr>
-</table>
-
-</div>  <!-- GroupBox1 --> 
-
-</div>  <!-- End of a new line -->
+<label class="text12"  id="PrecautionaryTitle" name="PrecautionaryTitle" style="width:550px;height:16px;position:absolute;left:80px;top:38px;"><%=strTextDisplayValue%></label>
 
 
 </div>  <!--  GBPrecautionarySection --> 
@@ -1474,7 +1400,7 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:2px;width:100px;"></div>
+<div style="height:6px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
@@ -1491,13 +1417,13 @@ else
 <table cols=0 style="width:684px;"  class="grouptable">
 
 <tr>
-<td valign="top"  class="listheader" style="width:202px;">
+<td  class="listheader" style="width:202px;">
 <% /* FirstAidStatements:Text */ %>
 
 <span class="listheader"  id="FirstAidStatements" name="FirstAidStatements" style="width:194px;height:16px;">First Aid Statements</span>
 
 </td>
-<td valign="top" style="width:336px;">
+<td style="width:336px;">
 <% /* GroupBox5:GroupBox */ %>
 <div id="GroupBox5" name="GroupBox5" style="width:314px;height:18px;float:left;">
 
@@ -1566,9 +1492,9 @@ else
 
 </div>  <!-- GroupBox5 --> 
 </td>
-<td valign="top"  class="newbutton" style="width:78px;">
+<td  class="newbutton" style="width:78px;">
 <% /* RefreshStatements:PushBtn */ %>
-<button type="button" class="newbutton"  id="RefreshStatements" name="RefreshStatements" value="Refresh" onclick="Refresh( )"  style="width:78px;height:26px;">Refresh</button>
+<button type="button" class="newbutton" name="RefreshStatements" id="RefreshStatements" value="" onclick="Refresh( )" style="width:78px;height:26px;">Refresh</button>
 
 </td>
 </tr>
@@ -1586,7 +1512,7 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:10px;width:100px;"></div>
+<div style="height:12px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->

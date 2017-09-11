@@ -1,4 +1,4 @@
-z1000-Zeidon    EPAMMS   TZZOXOGO                         12/28/16   13:16:30 1.0a2   
+z1000-Zeidon    EPAMMS   TZZOXOGO                         07/24/17   14:36:47 1.0a2   
 eTZZOXOGO  1
 aNAME      epamms
 
@@ -29,6 +29,34 @@ aDATATYPE  S
 ePARAMETER 4
 aNAME      MaxRecordLth
 aDATATYPE  L
+
+eOPERATION 3
+aNAME      SetCursorFirstEntityByCursor
+aTYPE      G
+
+ePARAMETER 4
+aNAME      TargetView
+aDATATYPE  V
+
+ePARAMETER 4
+aNAME      TargetEntityName
+aDATATYPE  S
+
+ePARAMETER 4
+aNAME      SourceView
+aDATATYPE  V
+
+ePARAMETER 4
+aNAME      SourceEntityName
+aDATATYPE  S
+
+ePARAMETER 4
+aNAME      ScopingEntity
+aDATATYPE  S
+
+ePARAMETER 4
+aNAME      AttributeName
+aDATATYPE  S
 
 eOPERATION 3
 aNAME      RemovePairedCharactersFromString

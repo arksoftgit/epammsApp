@@ -1,4 +1,4 @@
-// wSPLDSPLD_HumanHazard   Generate Timestamp: 20170511185338759
+// wSPLDSPLD_HumanHazard   Generate Timestamp: 20170810173025313
 
 var isWindowClosing = true;
 var timerID = null;
@@ -172,6 +172,15 @@ function _AfterPageLoaded( )
       timerID = null; // No timeout specified
 
 var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title ); }
+   var storageName = "epamms.wSPLDSPLD_HumanHazard.position";
+   var scrollPosition = sessionStorage.getItem( storageName );
+   if ( scrollPosition.indexOf('#') > 0 )
+   {
+      var parts = scrollPosition.split( '#' );
+      document.body.scrollTop = parseInt( parts[parts.length - 2] );
+      document.body.scrollLeft = parseInt( parts[parts.length - 1] );
+   }
+   sessionStorage.removeItem(storageName);
    isWindowClosing = true;
 }
 
@@ -201,6 +210,13 @@ function RefreshFullStatement( )
    {
       _DisableFormElements( true );
 
+      if ( typeof(Storage) !== "undefined" )
+      {
+         // Code for sessionStorage.
+         var storageName = "epamms.wSPLDSPLD_HumanHazard.position"
+         var scrollPosition = document.body.scrollTop + '#' + document.body.scrollLeft;
+         sessionStorage.setItem( storageName, scrollPosition );
+      }
       document.wSPLDSPLD_HumanHazard.zAction.value = "RefreshFullStatement";
       document.wSPLDSPLD_HumanHazard.submit( );
    }
@@ -214,6 +230,19 @@ function smSaveAndReturn( )
 
    if ( _IsDocDisabled( ) == false )
    {
+
+      // Javascript code entered by user.
+
+      if ( typeof(Storage) !== "undefined" )
+      {
+         // Remove scroll position in localStorage/sessionStorage.
+         var storageName = "ePamms.wSPLDSPLD_Components.position"
+         localStorage.setItem( storageName, "" );
+      }
+
+
+      // END of Javascript code entered by user.
+
       _DisableFormElements( true );
 
       document.wSPLDSPLD_HumanHazard.zAction.value = "smSaveAndReturn";
@@ -229,6 +258,19 @@ function smCancelAndReturn( )
 
    if ( _IsDocDisabled( ) == false )
    {
+
+      // Javascript code entered by user.
+
+      if ( typeof(Storage) !== "undefined" )
+      {
+         // Remove scroll position in localStorage/sessionStorage.
+         var storageName = "ePamms.wSPLDSPLD_Components.position"
+         localStorage.setItem( storageName, "" );
+      }
+
+
+      // END of Javascript code entered by user.
+
       _DisableFormElements( true );
 
       document.wSPLDSPLD_HumanHazard.zAction.value = "smCancelAndReturn";

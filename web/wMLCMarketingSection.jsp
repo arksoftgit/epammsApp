@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCMarketingSection   Generate Timestamp: 20160914154445607 --%>
+<%-- wMLCMarketingSection --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -378,18 +378,18 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-         View mMasLCAuto = task.getViewByName( "mMasLC" );
-         EntityCursor cursor = mMasLCAuto.cursor( "M_MarketingSection" );
-            if ( cursor.isNull() )
-               nRC = 0;
-            else
-            {
-               if ( cursor.isVersioned( ) )
-               {
-                  cursor.cancelSubobject( );
-               }
-            nRC = 0;
+      View mMasLC = task.getViewByName( "mMasLC" );
+      EntityCursor cursor = mMasLC.cursor( "M_MarketingSection" );
+      if ( cursor.isNull() )
+         nRC = 0;
+      else
+      {
+         if ( cursor.isVersioned( ) )
+         {
+            cursor.cancelSubobject( );
          }
+         nRC = 0;
+      }
 
       }
       catch ( Exception e )
@@ -446,14 +446,14 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-         EntityCursor cursor = mMasLC.cursor( "M_MarketingStatement" );
-            if ( cursor.isNull() )
-               nRC = 0;
-            else
-            {
-               cursor.deleteEntity( CursorPosition.NEXT );
-            nRC = 0;
-         }
+      EntityCursor cursor = mMasLC.cursor( "M_MarketingStatement" );
+      if ( cursor.isNull() )
+         nRC = 0;
+      else
+      {
+         cursor.deleteEntity( CursorPosition.NEXT );
+         nRC = 0;
+      }
 
       }
       catch ( Exception e )
@@ -510,14 +510,14 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-         EntityCursor cursor = mMasLC.cursor( "M_MarketingReviewerNote" );
-            if ( cursor.isNull() )
-               nRC = 0;
-            else
-            {
-               cursor.deleteEntity( CursorPosition.NEXT );
-            nRC = 0;
-         }
+      EntityCursor cursor = mMasLC.cursor( "M_MarketingReviewerNote" );
+      if ( cursor.isNull() )
+         nRC = 0;
+      else
+      {
+         cursor.deleteEntity( CursorPosition.NEXT );
+         nRC = 0;
+      }
 
       }
       catch ( Exception e )
@@ -612,8 +612,8 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-         EntityCursor cursor = mMasLC.cursor( "M_MarketingStatement" );
-         cursor.createTemporalSubobjectVersion( );
+      EntityCursor cursor = mMasLC.cursor( "M_MarketingStatement" );
+      cursor.createTemporalSubobjectVersion( );
 
       }
       catch ( Exception e )
@@ -643,9 +643,9 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-         View mMasLCAuto = task.getViewByName( "mMasLC" );
-         EntityCursor cursor = mMasLCAuto.cursor( "M_MarketingReviewerNote" );
-         cursor.createTemporalEntity( );
+      View mMasLC = task.getViewByName( "mMasLC" );
+      EntityCursor cursor = mMasLC.cursor( "M_MarketingReviewerNote" );
+      cursor.createTemporalEntity( );
 
       }
       catch ( Exception e )
@@ -702,8 +702,8 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-         EntityCursor cursor = mMasLC.cursor( "M_MarketingReviewerNote" );
-         cursor.createTemporalSubobjectVersion( );
+      EntityCursor cursor = mMasLC.cursor( "M_MarketingReviewerNote" );
+      cursor.createTemporalSubobjectVersion( );
 
       }
       catch ( Exception e )
@@ -921,15 +921,14 @@ else
 <!-- Timeout.inc has a value for nTimeout which is used to determine when to -->
 <!-- log a user out.  Timeout.inc is not used if the dialog or window has a timeout value set. -->
 <%@ include file="./include/timeout.inc" %>
-<link rel="stylesheet" type="text/css" href="./css/print.css" media="print" />
-<script language="JavaScript" type="text/javascript" src="./js/common.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/css.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/sts.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/tabpane.js"></script>
-<script language="JavaScript" type="text/javascript" src="./genjs/wMLCMarketingSection.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/common.js?v=20170724153407808"></script>
+<script language="JavaScript" type="text/javascript" src="./js/css.js?v=20170724153407808"></script>
+<script language="JavaScript" type="text/javascript" src="./js/sts.js?v=20170724153407808"></script>
+<script language="JavaScript" type="text/javascript" src="./js/scw.js?v=20170724153407808"></script>
+<script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js?v=20170724153407808"></script>
+<script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js?v=20170724153407808"></script>
+<script language="JavaScript" type="text/javascript" src="./js/tabpane.js?v=20170724153407808"></script>
+<script language="JavaScript" type="text/javascript" src="./genjs/wMLCMarketingSection.js?v=20170724153407808"></script>
 
 </head>
 
@@ -1119,6 +1118,8 @@ else
    <input name="zFocusCtrl" id="zFocusCtrl" type="hidden" value="<%=strFocusCtrl%>">
    <input name="zOpenFile" id="zOpenFile" type="hidden" value="<%=strOpenFile%>">
    <input name="zDateFormat" id="zDateFormat" type="hidden" value="<%=strDateFormat%>">
+   <input name="zDateSequence" id="zDateSequence" type="hidden" value="MDY">
+   <input name="zLanguage" id="zLanguage" type="hidden" value="">
    <input name="zLoginName" id="zLoginName" type="hidden" value="<%=strLoginName%>">
    <input name="zKeyRole" id="zKeyRole" type="hidden" value="<%=strKeyRole%>">
    <input name="zOpenPopupWindow" id="zOpenPopupWindow" type="hidden" value="<%=strOpenPopupWindow%>">
@@ -1164,13 +1165,13 @@ else
 <table cols=2 style="width:780px;"  class="grouptable">
 
 <tr>
-<td valign="top" style="width:128px;">
+<td style="width:128px;">
 <% /* Name::Text */ %>
 
 <span  id="Name:" name="Name:" style="width:126px;height:16px;">Name:</span>
 
 </td>
-<td valign="top"  class="text12" style="width:286px;">
+<td  class="text12" style="width:286px;">
 <% /* Name:EditBox */ %>
 <%
    strErrorMapValue = VmlOperation.CheckError( "Name", strError );
@@ -1210,18 +1211,18 @@ else
    }
 %>
 
-<input class="text12" name="Name" id="Name" maxlength="254" style="width:286px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12"  name="Name" id="Name" style="width:286px;<%=strErrorColor%>" type="text"  value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>
 <tr>
-<td valign="top" style="width:128px;">
+<td style="width:128px;">
 <% /* MarketingTitle::Text */ %>
 
 <span  id="MarketingTitle:" name="MarketingTitle:" style="width:122px;height:16px;">Title:</span>
 
 </td>
-<td valign="top"  class="text12" style="width:592px;">
+<td  class="text12" style="width:592px;">
 <% /* MarketingTitle:EditBox */ %>
 <%
    strErrorMapValue = VmlOperation.CheckError( "MarketingTitle", strError );
@@ -1261,18 +1262,18 @@ else
    }
 %>
 
-<input class="text12" name="MarketingTitle" id="MarketingTitle" maxlength="254" style="width:592px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12"  name="MarketingTitle" id="MarketingTitle" style="width:592px;<%=strErrorColor%>" type="text"  value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>
 <tr>
-<td valign="top" style="width:128px;">
+<td style="width:128px;">
 <% /* Subtitle::Text */ %>
 
 <span  id="Subtitle:" name="Subtitle:" style="width:122px;height:16px;">Subtitle:</span>
 
 </td>
-<td valign="top"  class="text12" style="width:592px;">
+<td  class="text12" style="width:592px;">
 <% /* Subtitle:EditBox */ %>
 <%
    strErrorMapValue = VmlOperation.CheckError( "Subtitle", strError );
@@ -1312,18 +1313,18 @@ else
    }
 %>
 
-<input class="text12" name="Subtitle" id="Subtitle" maxlength="2048" style="width:592px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12"  name="Subtitle" id="Subtitle" style="width:592px;<%=strErrorColor%>" type="text"  value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>
 <tr>
-<td valign="top" style="width:128px;">
+<td style="width:128px;">
 <% /* ReviewerNote::Text */ %>
 
 <span  id="ReviewerNote:" name="ReviewerNote:" style="width:122px;height:16px;">Reviewer Note:</span>
 
 </td>
-<td valign="top"  class="text12" style="width:592px;">
+<td  class="text12" style="width:592px;">
 <% /* Note:EditBox */ %>
 <%
    strErrorMapValue = VmlOperation.CheckError( "Note", strError );
@@ -1363,7 +1364,7 @@ else
    }
 %>
 
-<input class="text12" name="Note" id="Note" maxlength="2048" style="width:592px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12"  name="Note" id="Note" style="width:592px;<%=strErrorColor%>" type="text"  value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>
@@ -1429,7 +1430,7 @@ else
 <% /* GridMarketing:Grid */ %>
 <table class="sortable"  cols=3 style=""  name="GridMarketing" id="GridMarketing">
 
-<thead bgcolor=green><tr>
+<thead><tr>
 
    <th>Statement Title/Text</th>
    <th>Update</th>
@@ -1483,8 +1484,8 @@ try
 <tr<%=strOdd%>>
 
    <td><a href="#" onclick="GOTO_MarketingStatementUpdate( this.id )" id="GridEditMarketing::<%=strEntityKey%>"><%=strGridEditMarketing%></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateMarketingStatement" onclick="GOTO_MarketingStatementUpdate( this.id )" id="BMBUpdateMarketingStatement::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteMarketingStatement" onclick="DELETE_MarketingStatement( this.id )" id="BMBDeleteMarketingStatement::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
+   <td><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateMarketingStatement" onclick="GOTO_MarketingStatementUpdate( this.id )" id="BMBUpdateMarketingStatement::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
+   <td><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteMarketingStatement" onclick="DELETE_MarketingStatement( this.id )" id="BMBDeleteMarketingStatement::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
 
 </tr>
 
@@ -1536,7 +1537,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 <label class="listheader"  id="Text3" name="Text3" style="width:434px;height:16px;position:absolute;left:4px;top:4px;">Notes to Reviewer</label>
 
 <% /* PushBtn2:PushBtn */ %>
-<button type="button" class="newbutton"  title="Go to add one orPushBtn2" id="PushBtn2" value="" onclick="GOTO_ReviewerNoteAdd( )" style="width:78px;height:26px;position:absolute;left:544px;top:4px;">New</button>
+<button type="button" class="newbutton"  title="Go to add one or more lines of Directions for Use Statement text" name="PushBtn2" id="PushBtn2" value="" onclick="GOTO_ReviewerNoteAdd( )" style="width:78px;height:26px;position:absolute;left:544px;top:4px;">New</button>
 
 
 </div>  <!--  GroupBox7 --> 
@@ -1607,8 +1608,8 @@ try
 <tr<%=strOdd%>>
 
    <td title="Text for the Directions for Use Statement identified on this row" ><a href="#" onclick="GOTO_ReviewerNoteUpdate( this.id )" id="GridEditCtl4::<%=strEntityKey%>" title="Text for the Directions for Use Statement identified on this row" ><%=strGridEditCtl4%></a></td>
-   <td nowrap title="Go to update the the Directions for Use Statement text identified on this row" ><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BitmapBtn2" onclick="GOTO_ReviewerNoteUpdate( this.id )" id="BitmapBtn2::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png"  title="Go to update the the Directions for Use Statement text identified on this row" alt="Update"></a></td>
-   <td nowrap title="Delete the Directions for Use Statement entry identified on this row" ><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BitmapBtn3" onclick="DELETE_ReviewerNote( this.id )" id="BitmapBtn3::<%=strEntityKey%>"><img src="./images/ePammsDelete.png"  title="Delete the Directions for Use Statement entry identified on this row" alt="Delete"></a></td>
+   <td title="Go to update the the Directions for Use Statement text identified on this row" ><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BitmapBtn2" onclick="GOTO_ReviewerNoteUpdate( this.id )" id="BitmapBtn2::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png"  title="Go to update the the Directions for Use Statement text identified on this row" alt="Update"></a></td>
+   <td title="Delete the Directions for Use Statement entry identified on this row" ><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BitmapBtn3" onclick="DELETE_ReviewerNote( this.id )" id="BitmapBtn3::<%=strEntityKey%>"><img src="./images/ePammsDelete.png"  title="Delete the Directions for Use Statement entry identified on this row" alt="Delete"></a></td>
 
 </tr>
 

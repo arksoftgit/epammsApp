@@ -1095,8 +1095,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCDirectionsForUseSection", "wMLC.DELETE_DirectionsForUseStatement" );
-      nOptRC = wMLC.DELETE_DirectionsForUseStatement( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCDirectionsForUseSection", "wMLC.DeleteDirectionsForUseStatement" );
+      nOptRC = wMLC.DeleteDirectionsForUseStatement( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -1535,15 +1535,14 @@ else
 <!-- Timeout.inc has a value for nTimeout which is used to determine when to -->
 <!-- log a user out.  Timeout.inc is not used if the dialog or window has a timeout value set. -->
 <%@ include file="./include/timeout.inc" %>
-<link rel="stylesheet" type="text/css" href="./css/print.css" media="print" />
-<script language="JavaScript" type="text/javascript" src="./js/common.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/jsoeUtils.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/jsoe.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/tabpane.js"></script>
-<script language="JavaScript" type="text/javascript" src="./genjs/wMLCDirectionsForUseSection.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/common.js?v=20170721190144829"></script>
+<script language="JavaScript" type="text/javascript" src="./js/jsoeUtils.js?v=20170721190144829"></script>
+<script language="JavaScript" type="text/javascript" src="./js/jsoe.js?v=20170721190144829"></script>
+<script language="JavaScript" type="text/javascript" src="./js/scw.js?v=20170721190144829"></script>
+<script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js?v=20170721190144829"></script>
+<script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js?v=20170721190144829"></script>
+<script language="JavaScript" type="text/javascript" src="./js/tabpane.js?v=20170721190144829"></script>
+<script language="JavaScript" type="text/javascript" src="./genjs/wMLCDirectionsForUseSection.js?v=20170721190144829"></script>
 
 </head>
 
@@ -1739,6 +1738,7 @@ else
    <input name="zOpenFile" id="zOpenFile" type="hidden" value="<%=strOpenFile%>">
    <input name="zDateFormat" id="zDateFormat" type="hidden" value="<%=strDateFormat%>">
    <input name="zDateSequence" id="zDateSequence" type="hidden" value="MDY">
+   <input name="zLanguage" id="zLanguage" type="hidden" value="">
    <input name="zLoginName" id="zLoginName" type="hidden" value="<%=strLoginName%>">
    <input name="zKeyRole" id="zKeyRole" type="hidden" value="<%=strKeyRole%>">
    <input name="zOpenPopupWindow" id="zOpenPopupWindow" type="hidden" value="<%=strOpenPopupWindow%>">
@@ -1815,20 +1815,20 @@ else
 <table cols=1 style="width:820px;"  class="grouptable">
 
 <tr>
-<td valign="top" style="width:800px;">
+<td style="width:800px;">
 <% /* GroupBox7:GroupBox */ %>
 <div id="GroupBox7" name="GroupBox7" style="float:left;width:800px;" >
 
 <table cols=2 style="width:800px;"  class="grouptable">
 
 <tr>
-<td valign="top" style="width:150px;">
+<td style="width:150px;">
 <% /* DirectionsUseName::Text */ %>
 
 <span  id="DirectionsUseName:" name="DirectionsUseName:" style="width:150px;height:16px;" tabindex=-1 >Name:</span>
 
 </td>
-<td valign="top"  class="text12" style="width:650px;">
+<td  class="text12" style="width:650px;">
 <% /* DirectionsUseName:EditBox */ %>
 <%
    strErrorMapValue = VmlOperation.CheckError( "DirectionsUseName", strError );
@@ -1873,16 +1873,16 @@ else
 </td>
 </tr>
 <tr>
-<td valign="top" style="width:150px;">
+<td style="width:150px;">
 <% /* DirectionsForUseTitle::Text */ %>
 
 <span  id="DirectionsForUseTitle:" name="DirectionsForUseTitle:" style="width:150px;height:16px;" tabindex=-1 >Title:</span>
 
 </td>
-<td valign="top"  class="text12" style="width:650px;">
+<td  class="text12" style="width:650px;">
 <% /* DirectionsForUseTitle:MLEdit */ %>
 <%
-   // MLEdit: DirectionsForUseTitle
+   // : DirectionsForUseTitle
    strErrorMapValue = VmlOperation.CheckError( "DirectionsForUseTitle", strError );
    if ( !StringUtils.isBlank( strErrorMapValue ) )
    {
@@ -1894,7 +1894,7 @@ else
       strErrorColor = "";
       mMasLC = task.getViewByName( "mMasLC" );
       if ( VmlOperation.isValid( mMasLC ) == false )
-         task.log( ).debug( "Invalid View: " + "DirectionsForUseTitle" );
+         task.log( ).info( "Invalid View: " + "DirectionsForUseTitle" );
       else
       {
          nRC = mMasLC.cursor( "M_DirectionsForUseSection" ).checkExistenceOfEntity( ).toInt();
@@ -1904,26 +1904,26 @@ else
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
 
-            task.log( ).debug( "M_DirectionsForUseSection.Title: " + strErrorMapValue );
+            task.log( ).info( "M_DirectionsForUseSection.Title: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist for DirectionsForUseTitle: " + "mMasLC.M_DirectionsForUseSection" );
+            task.log( ).info( "Entity does not exist for DirectionsForUseTitle: " + "mMasLC.M_DirectionsForUseSection" );
       }
    }
 %>
 
-<textarea id="DirectionsForUseTitle" name="DirectionsForUseTitle" class="text12" style="width:650px;height:32px;border:solid;border-width:4px;border-style:groove;" tabindex=-1  wrap="wrap"><%=strErrorMapValue%></textarea>
+<textarea name="DirectionsForUseTitle" id="DirectionsForUseTitle"  title="Optional Title to appear with text on generated label"style="width:650px;height:32px;border:solid;border-width:4px;border-style:groove;" tabindex=-1  class="text12" wrap="wrap"><%=strErrorMapValue%></textarea>
 
 </td>
 </tr>
 <tr>
-<td valign="top" style="width:150px;">
+<td style="width:150px;">
 <% /* TitleNote::Text */ %>
 
 <span  id="TitleNote:" name="TitleNote:" style="width:150px;height:16px;" tabindex=-1 >Title Note:</span>
 
 </td>
-<td valign="top"  class="text12" style="width:650px;">
+<td  class="text12" style="width:650px;">
 <% /* TitleNote:EditBox */ %>
 <%
    strErrorMapValue = VmlOperation.CheckError( "TitleNote", strError );
@@ -1968,16 +1968,16 @@ else
 </td>
 </tr>
 <tr>
-<td valign="top" style="width:150px;">
+<td style="width:150px;">
 <% /* Subtitle::Text */ %>
 
 <span  id="Subtitle:" name="Subtitle:" style="width:150px;height:16px;" tabindex=-1 >Subtitle:</span>
 
 </td>
-<td valign="top"  class="text12" style="width:650px;">
+<td  class="text12" style="width:650px;">
 <% /* Subtitle:MLEdit */ %>
 <%
-   // MLEdit: Subtitle
+   // : Subtitle
    strErrorMapValue = VmlOperation.CheckError( "Subtitle", strError );
    if ( !StringUtils.isBlank( strErrorMapValue ) )
    {
@@ -1989,7 +1989,7 @@ else
       strErrorColor = "";
       mMasLC = task.getViewByName( "mMasLC" );
       if ( VmlOperation.isValid( mMasLC ) == false )
-         task.log( ).debug( "Invalid View: " + "Subtitle" );
+         task.log( ).info( "Invalid View: " + "Subtitle" );
       else
       {
          nRC = mMasLC.cursor( "M_DirectionsForUseSection" ).checkExistenceOfEntity( ).toInt();
@@ -1999,26 +1999,26 @@ else
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
 
-            task.log( ).debug( "M_DirectionsForUseSection.Subtitle: " + strErrorMapValue );
+            task.log( ).info( "M_DirectionsForUseSection.Subtitle: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist for Subtitle: " + "mMasLC.M_DirectionsForUseSection" );
+            task.log( ).info( "Entity does not exist for Subtitle: " + "mMasLC.M_DirectionsForUseSection" );
       }
    }
 %>
 
-<textarea id="Subtitle" name="Subtitle" class="text12" style="width:650px;height:96px;border:solid;border-width:4px;border-style:groove;" tabindex=-1  wrap="wrap"><%=strErrorMapValue%></textarea>
+<textarea name="Subtitle" id="Subtitle"  title="Optional Title to appear with text on generated label"style="width:650px;height:96px;border:solid;border-width:4px;border-style:groove;" tabindex=-1  class="text12" wrap="wrap"><%=strErrorMapValue%></textarea>
 
 </td>
 </tr>
 <tr>
-<td valign="top" style="width:150px;">
+<td style="width:150px;">
 <% /* DirectionsForUseReviewerNote::Text */ %>
 
 <span  id="DirectionsForUseReviewerNote:" name="DirectionsForUseReviewerNote:" style="width:150px;height:16px;" tabindex=-1 >Reviewer Note:</span>
 
 </td>
-<td valign="top"  class="text12" style="width:650px;">
+<td  class="text12" style="width:650px;">
 <% /* DirectionsForUseReviewerNote:EditBox */ %>
 <%
    strErrorMapValue = VmlOperation.CheckError( "DirectionsForUseReviewerNote", strError );
@@ -2063,13 +2063,13 @@ else
 </td>
 </tr>
 <tr>
-<td valign="top" style="width:150px;">
+<td style="width:150px;">
 <% /* SectionEndNote::Text */ %>
 
 <span  id="SectionEndNote:" name="SectionEndNote:" style="width:150px;height:16px;" tabindex=-1 >End Note:</span>
 
 </td>
-<td valign="top"  class="text12" style="width:650px;">
+<td  class="text12" style="width:650px;">
 <% /* SectionNote:EditBox */ %>
 <%
    strErrorMapValue = VmlOperation.CheckError( "SectionNote", strError );
@@ -2120,20 +2120,20 @@ else
 </td>
 </tr>
 <tr>
-<td valign="top" style="width:782px;">
+<td style="width:782px;">
 <% /* GroupBox1:GroupBox */ %>
 <div id="GroupBox1" name="GroupBox1" style="float:left;width:782px;" >
 
 <table cols=0 style="width:782px;"  class="grouptable">
 
 <tr>
-<td valign="top" style="width:150px;">
+<td style="width:150px;">
 <% /* ExclusiveXOR::Text */ %>
 
 <span  id="ExclusiveXOR:" name="ExclusiveXOR:" style="width:140px;height:16px;" tabindex=-1 >Exclusive To:</span>
 
 </td>
-<td valign="top" style="width:256px;">
+<td style="width:256px;">
 <% /* ComboBoxXOR:ComboBox */ %>
 <% strErrorMapValue = "";  %>
 
@@ -2192,13 +2192,13 @@ else
 <input name="hComboBoxXOR" id="hComboBoxXOR" type="hidden" value="<%=strComboSelectedValue%>" >
 
 </td>
-<td valign="top" style="width:132px;">
+<td style="width:132px;">
 <% /* ChangeCategory:Text */ %>
 
 <span  id="ChangeCategory" name="ChangeCategory" style="width:122px;height:16px;" tabindex=-1 >Change Category:</span>
 
 </td>
-<td valign="top" style="width:256px;">
+<td style="width:256px;">
 <% /* CMB_Categories:ComboBox */ %>
 <% strErrorMapValue = "";  %>
 
@@ -2399,8 +2399,8 @@ try
 <tr<%=strOdd%>>
 
    <td title="Text for the Directions for Use Statement identified on this row" ><a href="#" onclick="GOTO_DirsForUseStatementUpdate( this.id )" id="GridEditDirectionsUse::<%=strEntityKey%>" title="Text for the Directions for Use Statement identified on this row" ><%=strGridEditDirectionsUse%></a></td>
-   <td nowrap title="Go to update the the Directions for Use Statement text identified on this row" ><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateDirectionsUseStatement" onclick="GOTO_DirsForUseStatementUpdate( this.id )" id="BMBUpdateDirectionsUseStatement::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png"  title="Go to update the the Directions for Use Statement text identified on this row" alt="Update"></a></td>
-   <td nowrap title="Delete the Directions for Use Statement entry identified on this row" ><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteDirectionsUseStatement" onclick="DELETE_DirectionsForUseStatement( this.id )" id="BMBDeleteDirectionsUseStatement::<%=strEntityKey%>"><img src="./images/ePammsDelete.png"  title="Delete the Directions for Use Statement entry identified on this row" alt="Delete"></a></td>
+   <td title="Go to update the the Directions for Use Statement text identified on this row" ><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateDirectionsUseStatement" onclick="GOTO_DirsForUseStatementUpdate( this.id )" id="BMBUpdateDirectionsUseStatement::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png"  title="Go to update the the Directions for Use Statement text identified on this row" alt="Update"></a></td>
+   <td title="Delete the Directions for Use Statement entry identified on this row" ><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteDirectionsUseStatement" onclick="DELETE_DirectionsForUseStatement( this.id )" id="BMBDeleteDirectionsUseStatement::<%=strEntityKey%>"><img src="./images/ePammsDelete.png"  title="Delete the Directions for Use Statement entry identified on this row" alt="Delete"></a></td>
 
 </tr>
 
@@ -2771,9 +2771,9 @@ try
 
    <td><a href="#" onclick="GOTO_MarketingKeywordUpdate( this.id )" id="KeywordName::<%=strEntityKey%>"><%=strKeywordName%></a></td>
    <td><%=strKeywordText%></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdate" onclick="GOTO_MarketingKeywordUpdate( this.id )" id="BMBUpdate::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBCopy" onclick="COPY_InsertKeywordTitleDU( this.id )" id="BMBCopy::<%=strEntityKey%>"><img src="./images/ePammsCopy.png" alt="Copy"></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDelete" onclick="DELETE_TextKeywordTitleDU( this.id )" id="BMBDelete::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
+   <td><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdate" onclick="GOTO_MarketingKeywordUpdate( this.id )" id="BMBUpdate::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
+   <td><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBCopy" onclick="COPY_InsertKeywordTitleDU( this.id )" id="BMBCopy::<%=strEntityKey%>"><img src="./images/ePammsCopy.png" alt="Copy"></a></td>
+   <td><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDelete" onclick="DELETE_TextKeywordTitleDU( this.id )" id="BMBDelete::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
 
 </tr>
 
@@ -2896,8 +2896,8 @@ try
 <tr<%=strOdd%>>
 
    <td title="Text for the Directions for Use Statement identified on this row" ><a href="#" onclick="GOTO_ReviewerNoteUpdate( this.id )" id="GridEditCtl3::<%=strEntityKey%>" title="Text for the Directions for Use Statement identified on this row" ><%=strGridEditCtl3%></a></td>
-   <td nowrap title="Go to update the the Directions for Use Statement text identified on this row" ><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BitmapBtn1" onclick="GOTO_ReviewerNoteUpdate( this.id )" id="BitmapBtn1::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png"  title="Go to update the the Directions for Use Statement text identified on this row" alt="Update"></a></td>
-   <td nowrap title="Delete the Directions for Use Statement entry identified on this row" ><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BitmapBtn2" onclick="DELETE_ReviewerNote( this.id )" id="BitmapBtn2::<%=strEntityKey%>"><img src="./images/ePammsDelete.png"  title="Delete the Directions for Use Statement entry identified on this row" alt="Delete"></a></td>
+   <td title="Go to update the the Directions for Use Statement text identified on this row" ><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BitmapBtn1" onclick="GOTO_ReviewerNoteUpdate( this.id )" id="BitmapBtn1::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png"  title="Go to update the the Directions for Use Statement text identified on this row" alt="Update"></a></td>
+   <td title="Delete the Directions for Use Statement entry identified on this row" ><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BitmapBtn2" onclick="DELETE_ReviewerNote( this.id )" id="BitmapBtn2::<%=strEntityKey%>"><img src="./images/ePammsDelete.png"  title="Delete the Directions for Use Statement entry identified on this row" alt="Delete"></a></td>
 
 </tr>
 

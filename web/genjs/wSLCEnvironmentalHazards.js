@@ -1,4 +1,4 @@
-// wSLCEnvironmentalHazards   Generate Timestamp: 20170419092558700
+// wSLCEnvironmentalHazards   Generate Timestamp: 20170809164830517
 
 var isWindowClosing = true;
 var timerID = null;
@@ -172,6 +172,15 @@ function _AfterPageLoaded( )
       timerID = null; // No timeout specified
 
 var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title ); }
+   var storageName = "epamms.wSLCEnvironmentalHazards.position";
+   var scrollPosition = sessionStorage.getItem( storageName );
+   if ( scrollPosition.indexOf('#') > 0 )
+   {
+      var parts = scrollPosition.split( '#' );
+      document.body.scrollTop = parseInt( parts[parts.length - 2] );
+      document.body.scrollLeft = parseInt( parts[parts.length - 1] );
+   }
+   sessionStorage.removeItem(storageName);
    isWindowClosing = true;
 }
 
@@ -205,6 +214,13 @@ function EnvironmentalHazardsSection( strTagEntityKey )
       document.wSLCEnvironmentalHazards.zTableRowSelect.value = strEntityKey;
       _DisableFormElements( true );
 
+      if ( typeof(Storage) !== "undefined" )
+      {
+         // Code for sessionStorage.
+         var storageName = "epamms.wSLCEnvironmentalHazards.position"
+         var scrollPosition = document.body.scrollTop + '#' + document.body.scrollLeft;
+         sessionStorage.setItem( storageName, scrollPosition );
+      }
       document.wSLCEnvironmentalHazards.zAction.value = "EnvironmentalHazardsSection";
       document.wSLCEnvironmentalHazards.submit( );
    }

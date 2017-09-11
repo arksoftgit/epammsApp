@@ -1,4 +1,4 @@
-// wMLCDirectionsForUseSection   Generate Timestamp: 20170119152137810
+// wMLCDirectionsForUseSection   Generate Timestamp: 20170721190144773
 
 var isWindowClosing = true;
 var timerID = null;
@@ -173,6 +173,15 @@ function _AfterPageLoaded( )
       timerID = null; // No timeout specified
 
 var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title ); }
+   var storageName = "epamms.wMLCDirectionsForUseSection.position";
+   var scrollPosition = sessionStorage.getItem( storageName );
+   if ( scrollPosition.indexOf('#') > 0 )
+   {
+      var parts = scrollPosition.split( '#' );
+      document.body.scrollTop = parseInt( parts[parts.length - 2] );
+      document.body.scrollLeft = parseInt( parts[parts.length - 1] );
+   }
+   sessionStorage.removeItem( storageName );
    isWindowClosing = true;
 }
 
@@ -226,6 +235,13 @@ function CopyAndAddSection( )
    {
       _DisableFormElements( true );
 
+      if ( typeof(Storage) !== "undefined" )
+      {
+         // Code for localStorage/sessionStorage.
+         var storageName = "epamms.wMLCDirectionsForUseSection.position"
+         var scrollPosition = document.body.scrollTop + '#' + document.body.scrollLeft;
+         sessionStorage.setItem( storageName, scrollPosition );
+      }
       document.wMLCDirectionsForUseSection.zAction.value = "CopyAndAddSection";
       document.wMLCDirectionsForUseSection.submit( );
    }
@@ -241,6 +257,13 @@ function ParseSectionText( )
    {
       _DisableFormElements( true );
 
+      if ( typeof(Storage) !== "undefined" )
+      {
+         // Code for localStorage/sessionStorage.
+         var storageName = "epamms.wMLCDirectionsForUseSection.position"
+         var scrollPosition = document.body.scrollTop + '#' + document.body.scrollLeft;
+         sessionStorage.setItem( storageName, scrollPosition );
+      }
       document.wMLCDirectionsForUseSection.zAction.value = "ParseSectionText";
       document.wMLCDirectionsForUseSection.submit( );
    }
@@ -262,6 +285,13 @@ function Sort( )
 
       _DisableFormElements( true );
 
+      if ( typeof(Storage) !== "undefined" )
+      {
+         // Code for localStorage/sessionStorage.
+         var storageName = "epamms.wMLCDirectionsForUseSection.position"
+         var scrollPosition = document.body.scrollTop + '#' + document.body.scrollLeft;
+         sessionStorage.setItem( storageName, scrollPosition );
+      }
       document.wMLCDirectionsForUseSection.zAction.value = "Sort";
       document.wMLCDirectionsForUseSection.submit( );
    }
@@ -277,6 +307,13 @@ function AddNewDFU_Section( )
    {
       _DisableFormElements( true );
 
+      if ( typeof(Storage) !== "undefined" )
+      {
+         // Code for localStorage/sessionStorage.
+         var storageName = "epamms.wMLCDirectionsForUseSection.position"
+         var scrollPosition = document.body.scrollTop + '#' + document.body.scrollLeft;
+         sessionStorage.setItem( storageName, scrollPosition );
+      }
       document.wMLCDirectionsForUseSection.zAction.value = "AddNewDFU_Section";
       document.wMLCDirectionsForUseSection.submit( );
    }
@@ -292,6 +329,13 @@ function PASTE_InsertKeywordDU( )
    {
       _DisableFormElements( true );
 
+      if ( typeof(Storage) !== "undefined" )
+      {
+         // Code for localStorage/sessionStorage.
+         var storageName = "epamms.wMLCDirectionsForUseSection.position"
+         var scrollPosition = document.body.scrollTop + '#' + document.body.scrollLeft;
+         sessionStorage.setItem( storageName, scrollPosition );
+      }
       document.wMLCDirectionsForUseSection.zAction.value = "PASTE_InsertKeywordDU";
       document.wMLCDirectionsForUseSection.submit( );
    }
@@ -311,6 +355,13 @@ function COPY_InsertKeywordTitleDU( strTagEntityKey )
       document.wMLCDirectionsForUseSection.zTableRowSelect.value = strEntityKey;
       _DisableFormElements( true );
 
+      if ( typeof(Storage) !== "undefined" )
+      {
+         // Code for localStorage/sessionStorage.
+         var storageName = "epamms.wMLCDirectionsForUseSection.position"
+         var scrollPosition = document.body.scrollTop + '#' + document.body.scrollLeft;
+         sessionStorage.setItem( storageName, scrollPosition );
+      }
       document.wMLCDirectionsForUseSection.zAction.value = "COPY_InsertKeywordTitleDU";
       document.wMLCDirectionsForUseSection.submit( );
    }
@@ -326,6 +377,13 @@ function ADD_SectionKeywordDU( )
    {
       _DisableFormElements( true );
 
+      if ( typeof(Storage) !== "undefined" )
+      {
+         // Code for localStorage/sessionStorage.
+         var storageName = "epamms.wMLCDirectionsForUseSection.position"
+         var scrollPosition = document.body.scrollTop + '#' + document.body.scrollLeft;
+         sessionStorage.setItem( storageName, scrollPosition );
+      }
       document.wMLCDirectionsForUseSection.zAction.value = "ADD_SectionKeywordDU";
       document.wMLCDirectionsForUseSection.submit( );
    }
@@ -345,6 +403,13 @@ function DELETE_TextKeywordTitleDU( strTagEntityKey )
       document.wMLCDirectionsForUseSection.zTableRowSelect.value = strEntityKey;
       _DisableFormElements( true );
 
+      if ( typeof(Storage) !== "undefined" )
+      {
+         // Code for localStorage/sessionStorage.
+         var storageName = "epamms.wMLCDirectionsForUseSection.position"
+         var scrollPosition = document.body.scrollTop + '#' + document.body.scrollLeft;
+         sessionStorage.setItem( storageName, scrollPosition );
+      }
       document.wMLCDirectionsForUseSection.zAction.value = "DELETE_TextKeywordTitleDU";
       document.wMLCDirectionsForUseSection.submit( );
    }
@@ -360,6 +425,13 @@ function DisplayGeneratedTextDU( )
    {
       _DisableFormElements( true );
 
+      if ( typeof(Storage) !== "undefined" )
+      {
+         // Code for localStorage/sessionStorage.
+         var storageName = "epamms.wMLCDirectionsForUseSection.position"
+         var scrollPosition = document.body.scrollTop + '#' + document.body.scrollLeft;
+         sessionStorage.setItem( storageName, scrollPosition );
+      }
       document.wMLCDirectionsForUseSection.zAction.value = "DisplayGeneratedTextDU";
       document.wMLCDirectionsForUseSection.submit( );
    }
@@ -379,6 +451,13 @@ function GOTO_MarketingKeywordUpdate( strTagEntityKey )
       document.wMLCDirectionsForUseSection.zTableRowSelect.value = strEntityKey;
       _DisableFormElements( true );
 
+      if ( typeof(Storage) !== "undefined" )
+      {
+         // Code for localStorage/sessionStorage.
+         var storageName = "epamms.wMLCDirectionsForUseSection.position"
+         var scrollPosition = document.body.scrollTop + '#' + document.body.scrollLeft;
+         sessionStorage.setItem( storageName, scrollPosition );
+      }
       document.wMLCDirectionsForUseSection.zAction.value = "GOTO_MarketingKeywordUpdate";
       document.wMLCDirectionsForUseSection.submit( );
    }
@@ -394,6 +473,13 @@ function ChangeSectionCategory( )
    {
       _DisableFormElements( true );
 
+      if ( typeof(Storage) !== "undefined" )
+      {
+         // Code for localStorage/sessionStorage.
+         var storageName = "epamms.wMLCDirectionsForUseSection.position"
+         var scrollPosition = document.body.scrollTop + '#' + document.body.scrollLeft;
+         sessionStorage.setItem( storageName, scrollPosition );
+      }
       document.wMLCDirectionsForUseSection.zAction.value = "ChangeSectionCategory";
       document.wMLCDirectionsForUseSection.submit( );
    }
@@ -409,6 +495,13 @@ function SelectExclusiveOrSection( )
    {
       _DisableFormElements( true );
 
+      if ( typeof(Storage) !== "undefined" )
+      {
+         // Code for localStorage/sessionStorage.
+         var storageName = "epamms.wMLCDirectionsForUseSection.position"
+         var scrollPosition = document.body.scrollTop + '#' + document.body.scrollLeft;
+         sessionStorage.setItem( storageName, scrollPosition );
+      }
       document.wMLCDirectionsForUseSection.zAction.value = "SelectExclusiveOrSection";
       document.wMLCDirectionsForUseSection.submit( );
    }
@@ -424,6 +517,13 @@ function AcceptNext( )
    {
       _DisableFormElements( true );
 
+      if ( typeof(Storage) !== "undefined" )
+      {
+         // Code for localStorage/sessionStorage.
+         var storageName = "epamms.wMLCDirectionsForUseSection.position"
+         var scrollPosition = document.body.scrollTop + '#' + document.body.scrollLeft;
+         sessionStorage.setItem( storageName, scrollPosition );
+      }
       document.wMLCDirectionsForUseSection.zAction.value = "AcceptNext";
       document.wMLCDirectionsForUseSection.submit( );
    }
@@ -439,6 +539,13 @@ function AcceptPrevious( )
    {
       _DisableFormElements( true );
 
+      if ( typeof(Storage) !== "undefined" )
+      {
+         // Code for localStorage/sessionStorage.
+         var storageName = "epamms.wMLCDirectionsForUseSection.position"
+         var scrollPosition = document.body.scrollTop + '#' + document.body.scrollLeft;
+         sessionStorage.setItem( storageName, scrollPosition );
+      }
       document.wMLCDirectionsForUseSection.zAction.value = "AcceptPrevious";
       document.wMLCDirectionsForUseSection.submit( );
    }
@@ -473,6 +580,13 @@ function DELETE_DirectionsForUseStatement( strTagEntityKey )
       document.wMLCDirectionsForUseSection.zTableRowSelect.value = strEntityKey;
       _DisableFormElements( true );
 
+      if ( typeof(Storage) !== "undefined" )
+      {
+         // Code for localStorage/sessionStorage.
+         var storageName = "epamms.wMLCDirectionsForUseSection.position"
+         var scrollPosition = document.body.scrollTop + '#' + document.body.scrollLeft;
+         sessionStorage.setItem( storageName, scrollPosition );
+      }
       document.wMLCDirectionsForUseSection.zAction.value = "DELETE_DirectionsForUseStatement";
       document.wMLCDirectionsForUseSection.submit( );
    }
@@ -502,6 +616,13 @@ if (!confirm("OK to delete selected Reviewer Note?"))
 
       _DisableFormElements( true );
 
+      if ( typeof(Storage) !== "undefined" )
+      {
+         // Code for localStorage/sessionStorage.
+         var storageName = "epamms.wMLCDirectionsForUseSection.position"
+         var scrollPosition = document.body.scrollTop + '#' + document.body.scrollLeft;
+         sessionStorage.setItem( storageName, scrollPosition );
+      }
       document.wMLCDirectionsForUseSection.zAction.value = "DELETE_ReviewerNote";
       document.wMLCDirectionsForUseSection.submit( );
    }
@@ -517,6 +638,13 @@ function GOTO_DirsForUseStatementAdd( )
    {
       _DisableFormElements( true );
 
+      if ( typeof(Storage) !== "undefined" )
+      {
+         // Code for localStorage/sessionStorage.
+         var storageName = "epamms.wMLCDirectionsForUseSection.position"
+         var scrollPosition = document.body.scrollTop + '#' + document.body.scrollLeft;
+         sessionStorage.setItem( storageName, scrollPosition );
+      }
       document.wMLCDirectionsForUseSection.zAction.value = "GOTO_DirsForUseStatementAdd";
       document.wMLCDirectionsForUseSection.submit( );
    }
@@ -536,6 +664,13 @@ function GOTO_DirsForUseStatementUpdate( strTagEntityKey )
       document.wMLCDirectionsForUseSection.zTableRowSelect.value = strEntityKey;
       _DisableFormElements( true );
 
+      if ( typeof(Storage) !== "undefined" )
+      {
+         // Code for localStorage/sessionStorage.
+         var storageName = "epamms.wMLCDirectionsForUseSection.position"
+         var scrollPosition = document.body.scrollTop + '#' + document.body.scrollLeft;
+         sessionStorage.setItem( storageName, scrollPosition );
+      }
       document.wMLCDirectionsForUseSection.zAction.value = "GOTO_DirsForUseStatementUpdate";
       document.wMLCDirectionsForUseSection.submit( );
    }
@@ -551,6 +686,13 @@ function GOTO_ReviewerNoteAdd( )
    {
       _DisableFormElements( true );
 
+      if ( typeof(Storage) !== "undefined" )
+      {
+         // Code for localStorage/sessionStorage.
+         var storageName = "epamms.wMLCDirectionsForUseSection.position"
+         var scrollPosition = document.body.scrollTop + '#' + document.body.scrollLeft;
+         sessionStorage.setItem( storageName, scrollPosition );
+      }
       document.wMLCDirectionsForUseSection.zAction.value = "GOTO_ReviewerNoteAdd";
       document.wMLCDirectionsForUseSection.submit( );
    }
@@ -570,6 +712,13 @@ function GOTO_ReviewerNoteUpdate( strTagEntityKey )
       document.wMLCDirectionsForUseSection.zTableRowSelect.value = strEntityKey;
       _DisableFormElements( true );
 
+      if ( typeof(Storage) !== "undefined" )
+      {
+         // Code for localStorage/sessionStorage.
+         var storageName = "epamms.wMLCDirectionsForUseSection.position"
+         var scrollPosition = document.body.scrollTop + '#' + document.body.scrollLeft;
+         sessionStorage.setItem( storageName, scrollPosition );
+      }
       document.wMLCDirectionsForUseSection.zAction.value = "GOTO_ReviewerNoteUpdate";
       document.wMLCDirectionsForUseSection.submit( );
    }
@@ -592,6 +741,13 @@ function GOTO_SelectRemoveDrivingDU( )
 
       _DisableFormElements( true );
 
+      if ( typeof(Storage) !== "undefined" )
+      {
+         // Code for localStorage/sessionStorage.
+         var storageName = "epamms.wMLCDirectionsForUseSection.position"
+         var scrollPosition = document.body.scrollTop + '#' + document.body.scrollLeft;
+         sessionStorage.setItem( storageName, scrollPosition );
+      }
       document.wMLCDirectionsForUseSection.zAction.value = "GOTO_SelectRemoveDrivingDU";
       document.wMLCDirectionsForUseSection.submit( );
    }
@@ -606,10 +762,6 @@ function ComboBoxXOROnChange( )
    if ( _IsDocDisabled( ) == false )
    {
       document.wMLCDirectionsForUseSection.hComboBoxXOR.value = document.wMLCDirectionsForUseSection.ComboBoxXOR.selectedIndex;
-      _DisableFormElements( true );
-
-      document.wMLCDirectionsForUseSection.zAction.value = "SelectExclusiveOrSection";
-      document.wMLCDirectionsForUseSection.submit( );
    }
 }
 
@@ -622,10 +774,6 @@ function CMB_CategoriesOnChange( )
    if ( _IsDocDisabled( ) == false )
    {
       document.wMLCDirectionsForUseSection.hCMB_Categories.value = document.wMLCDirectionsForUseSection.CMB_Categories.selectedIndex;
-      _DisableFormElements( true );
-
-      document.wMLCDirectionsForUseSection.zAction.value = "ChangeSectionCategory";
-      document.wMLCDirectionsForUseSection.submit( );
    }
 }
 

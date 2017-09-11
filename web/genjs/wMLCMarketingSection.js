@@ -1,4 +1,4 @@
-// wMLCMarketingSection   Generate Timestamp: 20160914154445607
+// wMLCMarketingSection   Generate Timestamp: 20170724153407784
 
 var isWindowClosing = true;
 var timerID = null;
@@ -173,6 +173,15 @@ function _AfterPageLoaded( )
       timerID = null; // No timeout specified
 
 var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title ); }
+   var storageName = "epamms.wMLCMarketingSection.position";
+   var scrollPosition = sessionStorage.getItem( storageName );
+   if ( scrollPosition.indexOf('#') > 0 )
+   {
+      var parts = scrollPosition.split( '#' );
+      document.body.scrollTop = parseInt( parts[parts.length - 2] );
+      document.body.scrollLeft = parseInt( parts[parts.length - 1] );
+   }
+   sessionStorage.removeItem( storageName );
    isWindowClosing = true;
 }
 
@@ -202,6 +211,13 @@ function AcceptNext( )
    {
       _DisableFormElements( true );
 
+      if ( typeof(Storage) !== "undefined" )
+      {
+         // Code for localStorage/sessionStorage.
+         var storageName = "epamms.wMLCMarketingSection.position"
+         var scrollPosition = document.body.scrollTop + '#' + document.body.scrollLeft;
+         sessionStorage.setItem( storageName, scrollPosition );
+      }
       document.wMLCMarketingSection.zAction.value = "AcceptNext";
       document.wMLCMarketingSection.submit( );
    }
@@ -217,6 +233,13 @@ function AcceptPrevious( )
    {
       _DisableFormElements( true );
 
+      if ( typeof(Storage) !== "undefined" )
+      {
+         // Code for localStorage/sessionStorage.
+         var storageName = "epamms.wMLCMarketingSection.position"
+         var scrollPosition = document.body.scrollTop + '#' + document.body.scrollLeft;
+         sessionStorage.setItem( storageName, scrollPosition );
+      }
       document.wMLCMarketingSection.zAction.value = "AcceptPrevious";
       document.wMLCMarketingSection.submit( );
    }
@@ -261,6 +284,13 @@ if (!confirm("OK to delete selected Marketing Statement?"))
 
       _DisableFormElements( true );
 
+      if ( typeof(Storage) !== "undefined" )
+      {
+         // Code for localStorage/sessionStorage.
+         var storageName = "epamms.wMLCMarketingSection.position"
+         var scrollPosition = document.body.scrollTop + '#' + document.body.scrollLeft;
+         sessionStorage.setItem( storageName, scrollPosition );
+      }
       document.wMLCMarketingSection.zAction.value = "DELETE_MarketingStatement";
       document.wMLCMarketingSection.submit( );
    }
@@ -290,6 +320,13 @@ if (!confirm("OK to delete selected Reviewer Note?"))
 
       _DisableFormElements( true );
 
+      if ( typeof(Storage) !== "undefined" )
+      {
+         // Code for localStorage/sessionStorage.
+         var storageName = "epamms.wMLCMarketingSection.position"
+         var scrollPosition = document.body.scrollTop + '#' + document.body.scrollLeft;
+         sessionStorage.setItem( storageName, scrollPosition );
+      }
       document.wMLCMarketingSection.zAction.value = "DELETE_ReviewerNote";
       document.wMLCMarketingSection.submit( );
    }
@@ -305,6 +342,13 @@ function GOTO_MarketingStatementAdd( )
    {
       _DisableFormElements( true );
 
+      if ( typeof(Storage) !== "undefined" )
+      {
+         // Code for localStorage/sessionStorage.
+         var storageName = "epamms.wMLCMarketingSection.position"
+         var scrollPosition = document.body.scrollTop + '#' + document.body.scrollLeft;
+         sessionStorage.setItem( storageName, scrollPosition );
+      }
       document.wMLCMarketingSection.zAction.value = "GOTO_MarketingStatementAdd";
       document.wMLCMarketingSection.submit( );
    }
@@ -324,6 +368,13 @@ function GOTO_MarketingStatementUpdate( strTagEntityKey )
       document.wMLCMarketingSection.zTableRowSelect.value = strEntityKey;
       _DisableFormElements( true );
 
+      if ( typeof(Storage) !== "undefined" )
+      {
+         // Code for localStorage/sessionStorage.
+         var storageName = "epamms.wMLCMarketingSection.position"
+         var scrollPosition = document.body.scrollTop + '#' + document.body.scrollLeft;
+         sessionStorage.setItem( storageName, scrollPosition );
+      }
       document.wMLCMarketingSection.zAction.value = "GOTO_MarketingStatementUpdate";
       document.wMLCMarketingSection.submit( );
    }
@@ -339,6 +390,13 @@ function GOTO_ReviewerNoteAdd( )
    {
       _DisableFormElements( true );
 
+      if ( typeof(Storage) !== "undefined" )
+      {
+         // Code for localStorage/sessionStorage.
+         var storageName = "epamms.wMLCMarketingSection.position"
+         var scrollPosition = document.body.scrollTop + '#' + document.body.scrollLeft;
+         sessionStorage.setItem( storageName, scrollPosition );
+      }
       document.wMLCMarketingSection.zAction.value = "GOTO_ReviewerNoteAdd";
       document.wMLCMarketingSection.submit( );
    }
@@ -358,6 +416,13 @@ function GOTO_ReviewerNoteUpdate( strTagEntityKey )
       document.wMLCMarketingSection.zTableRowSelect.value = strEntityKey;
       _DisableFormElements( true );
 
+      if ( typeof(Storage) !== "undefined" )
+      {
+         // Code for localStorage/sessionStorage.
+         var storageName = "epamms.wMLCMarketingSection.position"
+         var scrollPosition = document.body.scrollTop + '#' + document.body.scrollLeft;
+         sessionStorage.setItem( storageName, scrollPosition );
+      }
       document.wMLCMarketingSection.zAction.value = "GOTO_ReviewerNoteUpdate";
       document.wMLCMarketingSection.submit( );
    }
@@ -373,6 +438,13 @@ function SaveMarketingSection( )
    {
       _DisableFormElements( true );
 
+      if ( typeof(Storage) !== "undefined" )
+      {
+         // Code for localStorage/sessionStorage.
+         var storageName = "epamms.wMLCMarketingSection.position"
+         var scrollPosition = document.body.scrollTop + '#' + document.body.scrollLeft;
+         sessionStorage.setItem( storageName, scrollPosition );
+      }
       document.wMLCMarketingSection.zAction.value = "SaveMarketingSection";
       document.wMLCMarketingSection.submit( );
    }

@@ -1408,7 +1408,7 @@ try
          nRC = vReusableBlocks.cursor( "ReusableBlockDefinition" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strSectionType = vReusableBlocks.cursor( "ReusableBlockDefinition" ).getAttribute( "LLD_SectionType" ).getString( "" );
+            strSectionType = vReusableBlocks.cursor( "ReusableBlockDefinition" ).getAttribute( "LLD_BlockType" ).getString( "" );
 
             if ( strSectionType == null )
                strSectionType = "";

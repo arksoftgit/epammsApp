@@ -1,4 +1,4 @@
-// wSLCIngredients   Generate Timestamp: 20170419092629205
+// wSLCIngredients   Generate Timestamp: 20170810174447287
 
 var isWindowClosing = true;
 var timerID = null;
@@ -172,6 +172,15 @@ function _AfterPageLoaded( )
       timerID = null; // No timeout specified
 
 var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title ); }
+   var storageName = "epamms.wSLCIngredients.position";
+   var scrollPosition = sessionStorage.getItem( storageName );
+   if ( scrollPosition.indexOf('#') > 0 )
+   {
+      var parts = scrollPosition.split( '#' );
+      document.body.scrollTop = parseInt( parts[parts.length - 2] );
+      document.body.scrollLeft = parseInt( parts[parts.length - 1] );
+   }
+   sessionStorage.removeItem(storageName);
    isWindowClosing = true;
 }
 

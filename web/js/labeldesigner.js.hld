@@ -2540,8 +2540,8 @@ public class FileServer {
    function formatTitle( entity, obj ) {
       var name;
       var space;
-      if ( obj["LLD_SectionType"] ) {
-         name = obj["LLD_SectionType"];
+      if ( obj["LLD_BlockType"] ) {
+         name = obj["LLD_BlockType"];
          space = ": ";
       }
       else
@@ -2696,7 +2696,7 @@ public class FileServer {
    }
 
    function AddSpecialAttributes( $block, obj ) {
-      var sectionType = obj["LLD_SectionType"]; // if there is no section type, we have nothing
+      var sectionType = obj["LLD_BlockType"]; // if there is no section type, we have nothing
       if ( ! sectionType || sectionType === "" ) {
       // console.log( "SpecialSection undefined" );
       } else {
@@ -3751,11 +3751,11 @@ public class FileServer {
          var sectionType = "";
          var $optgroup = null;
          $.each( jsonReusable, function( index, item ) {
-            if ( item.LLD_SectionType !== sectionType ) {
+            if ( item.LLD_BlockType !== sectionType ) {
                if ( $optgroup !== null ) {
                   $optgroup.appendTo( $select );
                }
-               $optgroup = $('<optgroup label="' + item.LLD_SectionType + '"></optgroup>');
+               $optgroup = $('<optgroup label="' + item.LLD_BlockType + '"></optgroup>');
             }
             var $option = $("<option></option>");
             $option.val( item.Name );

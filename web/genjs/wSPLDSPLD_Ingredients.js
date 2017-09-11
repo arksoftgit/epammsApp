@@ -1,4 +1,4 @@
-// wSPLDSPLD_Ingredients   Generate Timestamp: 20170511185329648
+// wSPLDSPLD_Ingredients   Generate Timestamp: 20170809184110617
 
 var isWindowClosing = true;
 var timerID = null;
@@ -172,6 +172,15 @@ function _AfterPageLoaded( )
       timerID = null; // No timeout specified
 
 var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title ); }
+   var storageName = "epamms.wSPLDSPLD_Ingredients.position";
+   var scrollPosition = sessionStorage.getItem( storageName );
+   if ( scrollPosition.indexOf('#') > 0 )
+   {
+      var parts = scrollPosition.split( '#' );
+      document.body.scrollTop = parseInt( parts[parts.length - 2] );
+      document.body.scrollLeft = parseInt( parts[parts.length - 1] );
+   }
+   sessionStorage.removeItem(storageName);
    isWindowClosing = true;
 }
 
@@ -199,6 +208,19 @@ function smSaveAndReturn( )
 
    if ( _IsDocDisabled( ) == false )
    {
+
+      // Javascript code entered by user.
+
+      if ( typeof(Storage) !== "undefined" )
+      {
+         // Remove scroll position in localStorage/sessionStorage.
+         var storageName = "ePamms.wSPLDSPLD_Components.position"
+         localStorage.setItem( storageName, "" );
+      }
+
+
+      // END of Javascript code entered by user.
+
       _DisableFormElements( true );
 
       document.wSPLDSPLD_Ingredients.zAction.value = "smSaveAndReturn";
@@ -214,6 +236,19 @@ function smCancelAndReturn( )
 
    if ( _IsDocDisabled( ) == false )
    {
+
+      // Javascript code entered by user.
+
+      if ( typeof(Storage) !== "undefined" )
+      {
+         // Remove scroll position in localStorage/sessionStorage.
+         var storageName = "ePamms.wSPLDSPLD_Components.position"
+         localStorage.setItem( storageName, "" );
+      }
+
+
+      // END of Javascript code entered by user.
+
       _DisableFormElements( true );
 
       document.wSPLDSPLD_Ingredients.zAction.value = "smCancelAndReturn";

@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSLCPrecautionarySection   Generate Timestamp: 20170419092657764 --%>
+<%-- wSLCPrecautionarySection --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -932,12 +932,11 @@ else
 <!-- Timeout.inc has a value for nTimeout which is used to determine when to -->
 <!-- log a user out.  Timeout.inc is not used if the dialog or window has a timeout value set. -->
 <%@ include file="./include/timeout.inc" %>
-<link rel="stylesheet" type="text/css" href="./css/print.css" media="print" />
-<script language="JavaScript" type="text/javascript" src="./js/common.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
-<script language="JavaScript" type="text/javascript" src="./genjs/wSLCPrecautionarySection.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/common.js?v=20170809165725985"></script>
+<script language="JavaScript" type="text/javascript" src="./js/scw.js?v=20170809165725985"></script>
+<script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js?v=20170809165725985"></script>
+<script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js?v=20170809165725985"></script>
+<script language="JavaScript" type="text/javascript" src="./genjs/wSLCPrecautionarySection.js?v=20170809165725985"></script>
 
 </head>
 
@@ -1266,6 +1265,7 @@ else
    <input name="zOpenFile" id="zOpenFile" type="hidden" value="<%=strOpenFile%>">
    <input name="zDateFormat" id="zDateFormat" type="hidden" value="<%=strDateFormat%>">
    <input name="zDateSequence" id="zDateSequence" type="hidden" value="MDY">
+   <input name="zLanguage" id="zLanguage" type="hidden" value="">
    <input name="zLoginName" id="zLoginName" type="hidden" value="<%=strLoginName%>">
    <input name="zKeyRole" id="zKeyRole" type="hidden" value="<%=strKeyRole%>">
    <input name="zOpenPopupWindow" id="zOpenPopupWindow" type="hidden" value="<%=strOpenPopupWindow%>">
@@ -1281,55 +1281,22 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:2px;width:100px;"></div>
+<div style="height:18px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
+<div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox3:GroupBox */ %>
 
-<div id="GroupBox3" name="GroupBox3" style="width:730px;height:28px;float:left;">  <!-- GroupBox3 --> 
+<div id="GroupBox3" name="GroupBox3" class="listgroup"   style="float:left;position:relative; width:794px; height:80px;">  <!-- GroupBox3 --> 
 
-
- <!-- This is added as a line spacer -->
-<div style="height:6px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<span style="height:16px;">&nbsp</span>
 <% /* PrecautionarySection:Text */ %>
 
-<span class="groupbox"  id="PrecautionarySection" name="PrecautionarySection" style="width:338px;height:16px;">Precautionary Section</span>
+<label class="groupbox"  id="PrecautionarySection" name="PrecautionarySection" style="width:330px;height:16px;position:absolute;left:6px;top:12px;">Precautionary Section</label>
 
-</div>  <!-- End of a new line -->
-
-
-</div>  <!--  GroupBox3 --> 
-</div>  <!-- End of a new line -->
-
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
-
-
-<div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GBPrecautionarySection:GroupBox */ %>
-
-<div id="GBPrecautionarySection" name="GBPrecautionarySection" class="withborder" style="width:730px;height:62px;float:left;">  <!-- GBPrecautionarySection --> 
-
-
-<div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:8px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GroupBox1:GroupBox */ %>
-<div id="GroupBox1" name="GroupBox1" style="float:left;width:640px;" >
-
-<table cols=2 style="width:640px;"  class="grouptable">
-
-<tr>
-<td valign="top" style="width:66px;">
 <% /* PrecautionaryTitle::Text */ %>
 
-<span  id="PrecautionaryTitle:" name="PrecautionaryTitle:" style="width:66px;height:16px;">Title:</span>
+<label class="groupbox"  id="PrecautionaryTitle:" name="PrecautionaryTitle:" style="width:86px;height:16px;position:absolute;left:6px;top:36px;">Title:</label>
 
-</td>
-<td valign="top"  class="text12" style="width:550px;">
 <% /* PrecautionaryTitle:Text */ %>
 <% strTextDisplayValue = "";
    mSubLC = task.getViewByName( "mSubLC" );
@@ -1355,18 +1322,12 @@ else
    }
 %>
 
-<span class="text12"  id="PrecautionaryTitle" name="PrecautionaryTitle" style="width:550px;height:16px;"><%=strTextDisplayValue%></span>
+<label class="groupbox"  id="PrecautionaryTitle" name="PrecautionaryTitle" style="width:668px;height:16px;position:absolute;left:106px;top:36px;"><%=strTextDisplayValue%></label>
 
-</td>
-</tr>
-<tr>
-<td valign="top" style="width:66px;">
 <% /* PrecautionarySubtitle::Text */ %>
 
-<span  id="PrecautionarySubtitle:" name="PrecautionarySubtitle:" style="width:66px;height:16px;">Subtitle:</span>
+<label class="groupbox"  id="PrecautionarySubtitle:" name="PrecautionarySubtitle:" style="width:86px;height:16px;position:absolute;left:6px;top:62px;">Subtitle:</label>
 
-</td>
-<td valign="top"  class="text12" style="width:550px;">
 <% /* PrecautionarySubtitle:Text */ %>
 <% strTextDisplayValue = "";
    mSubLC = task.getViewByName( "mSubLC" );
@@ -1392,32 +1353,24 @@ else
    }
 %>
 
-<span class="text12"  id="PrecautionarySubtitle" name="PrecautionarySubtitle" style="width:550px;height:16px;"><%=strTextDisplayValue%></span>
-
-</td>
-</tr>
-</table>
-
-</div>  <!-- GroupBox1 --> 
-
-</div>  <!-- End of a new line -->
+<label class="groupbox"  id="PrecautionarySubtitle" name="PrecautionarySubtitle" style="width:668px;height:16px;position:absolute;left:106px;top:62px;"><%=strTextDisplayValue%></label>
 
 
-</div>  <!--  GBPrecautionarySection --> 
+</div>  <!--  GroupBox3 --> 
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
 
 
- <!-- This is added as a line spacer -->
-<div style="height:2px;width:100px;"></div>
-
 <div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
+<div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox2:GroupBox */ %>
 
-<div id="GroupBox2" name="GroupBox2" style="width:730px;height:24px;float:left;">  <!-- GroupBox2 --> 
+<div id="GroupBox2" name="GroupBox2" class="listgroup" style="width:794px;height:36px;float:left;">  <!-- GroupBox2 --> 
 
+
+ <!-- This is added as a line spacer -->
+<div style="height:10px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
@@ -1427,13 +1380,13 @@ else
 <table cols=0 style="width:636px;"  class="grouptable">
 
 <tr>
-<td valign="top"  class="listheader" style="width:232px;">
+<td  class="listheader" style="width:232px;">
 <% /* PrecautionaryStatements:Text */ %>
 
 <span class="listheader"  id="PrecautionaryStatements" name="PrecautionaryStatements" style="width:214px;height:16px;">Precautionary Statements</span>
 
 </td>
-<td valign="top" style="width:102px;">
+<td style="width:102px;">
 <% /* Combine:CheckBox */ %>
 <%
    strErrorMapValue = "";
@@ -1455,7 +1408,7 @@ else
 <span style="width:102px;height:18px;">&nbsp Combine</span>
 
 </td>
-<td valign="top" style="width:102px;">
+<td style="width:102px;">
 <% /* BoldTitle:CheckBox */ %>
 <%
    strErrorMapValue = "";
@@ -1477,7 +1430,7 @@ else
 <span style="width:102px;height:18px;">&nbsp Bold Title</span>
 
 </td>
-<td valign="top" style="width:120px;">
+<td style="width:120px;">
 <% /* BoldText:CheckBox */ %>
 <%
    strErrorMapValue = "";
@@ -1499,9 +1452,9 @@ else
 <span style="width:102px;height:18px;">&nbsp Bold Text</span>
 
 </td>
-<td valign="top" style="width:60px;">
+<td style="width:60px;">
 <% /* Refresh:PushBtn */ %>
-<button type="button"  id="Refresh" name="Refresh" value="Refresh" onclick="RefreshTitle( )"  style="width:60px;height:18px;">Refresh</button>
+<button type="button" name="Refresh" id="Refresh" value="" onclick="RefreshTitle( )" style="width:60px;height:18px;">Refresh</button>
 
 </td>
 </tr>
@@ -1519,12 +1472,12 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:4px;width:100px;"></div>
+<div style="height:8px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
+<div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GridPrecautionary:Grid */ %>
-<table  cols=1 style="width:710px;"  name="GridPrecautionary" id="GridPrecautionary">
+<table  cols=1 style="width:792px;"  name="GridPrecautionary" id="GridPrecautionary">
 
 <thead><tr>
 

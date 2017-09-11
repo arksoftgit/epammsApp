@@ -1,4 +1,4 @@
-z1000-Zeidon    ZEIDON   TZDMXGPO                         04/03/17   07:48:27 1.0a2   
+z1000-Zeidon    ZEIDON   TZDMXGPO                         09/06/17   11:11:13 1.0a2   
 eDomainGroup 1
 aName      ePamms
 
@@ -2651,7 +2651,7 @@ eDomain    2
 aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
 aZKey      69055597
 aName      GeneralSectionType
-aDesc      Precautionary, Environmental/Physical Hazard, First Aid (P,E,F)
+aDesc      Precautionary, First Aid, Environmental Hazard, Chemical/Physical Hazard (P,F,E,C)
 aDomainType T
 aDataType  S
 aMaxStringLth 1
@@ -2678,7 +2678,7 @@ aInternalValue E
 
 eTableEntry 4
 aZKey      110030907
-aExternalValue Physical/Chemical Hazard
+aExternalValue Chemical/Physical Hazard
 aInternalValue C
 
 eContext   3
@@ -2969,6 +2969,146 @@ aIsDefault Y
 
 eDomain    2
 aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
+aZKey      69080516
+aName      LLD_BlockType
+aDesc      Template Block Types are usually the same as regular Block Types.
+aDomainType T
+aDataType  S
+aMaxStringLth 32
+aContextRestriction N
+
+eContext   3
+aZKey      69081346
+aName      LLD_BlockType
+aIsDefault Y
+
+eTableEntry 4
+aZKey      110006312
+aExternalValue Child Warning
+aInternalValue Child Warning
+
+eTableEntry 4
+aZKey      120180212
+aExternalValue Chemical/Physical Hazard
+aInternalValue Chemical/PhysicalHazard
+
+eTableEntry 4
+aZKey      3911627
+aExternalValue Container Disposal
+aInternalValue ContainerDisposal
+
+eTableEntry 4
+aZKey      69081353
+aExternalValue Directions For Use
+aInternalValue DirectionsForUse
+
+eTableEntry 4
+aZKey      69081350
+aExternalValue Environmental Hazard
+aInternalValue EnvironmentalHazard
+
+eTableEntry 4
+aZKey      3911629
+aExternalValue EPA Reg. No. - EPA Est. No.
+aInternalValue EPA_RegAndEstNbr
+
+eTableEntry 4
+aZKey      69081349
+aExternalValue First Aid
+aInternalValue FirstAid
+
+eTableEntry 4
+aZKey      110006307
+aExternalValue General
+aInternalValue General
+
+eTableEntry 4
+aZKey      69765626
+aExternalValue Graphic
+aInternalValue Graphic
+
+eTableEntry 4
+aZKey      69081355
+aExternalValue Human Hazard
+aInternalValue HumanHazard
+
+eTableEntry 4
+aZKey      69081348
+aExternalValue Ingredients
+aInternalValue Ingredients
+
+eTableEntry 4
+aZKey      110006314
+aExternalValue Location
+aInternalValue Location
+
+eTableEntry 4
+aZKey      69081354
+aExternalValue Marketing
+aInternalValue Marketing
+
+eTableEntry 4
+aZKey      110006310
+aExternalValue Marketing Usage
+aInternalValue MarketingUsage
+
+eTableEntry 4
+aZKey      69765630
+aExternalValue Net Contents
+aInternalValue NetContents
+
+eTableEntry 4
+aZKey      69081352
+aExternalValue Precautionary
+aInternalValue Precautionary
+
+eTableEntry 4
+aZKey      110006313
+aExternalValue Precautionary Stmt
+aInternalValue Precautionary Stmt
+
+eTableEntry 4
+aZKey      120180210
+aExternalValue Product Description
+aInternalValue ProductDescription
+
+eTableEntry 4
+aZKey      4043314
+aExternalValue Product Name
+aInternalValue ProductName
+
+eTableEntry 4
+aZKey      110006004
+aExternalValue Product Specific
+aInternalValue ProductSpecific
+
+eTableEntry 4
+aZKey      110006587
+aExternalValue Section
+aInternalValue Section
+
+eTableEntry 4
+aZKey      110006311
+aExternalValue Signal Word
+aInternalValue Signal Word
+
+eTableEntry 4
+aZKey      110006308
+aExternalValue Statement
+aInternalValue Statement
+
+eTableEntry 4
+aZKey      69081351
+aExternalValue Storage and Disposal
+aInternalValue StorageDisposal
+
+eTableEntry 4
+aZKey      110006309
+aExternalValue Title
+aInternalValue Title
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
 aZKey      120150076
 aName      LLD_ColumnListType
 aDomainType T
@@ -2990,141 +3130,6 @@ eTableEntry 4
 aZKey      120150079
 aExternalValue Usage List - 3 Column
 aInternalValue C3
-
-eDomain    2
-aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
-aZKey      69080516
-aName      LLD_SectionType
-aDesc      Template Section Types are usually the same as regular Section Types.
-aDomainType T
-aDataType  S
-aMaxStringLth 32
-aContextRestriction N
-
-eContext   3
-aZKey      69081346
-aName      LLD_SectionType
-aIsDefault Y
-
-eTableEntry 4
-aZKey      69081348
-aExternalValue Ingredients
-aInternalValue Ingredients
-
-eTableEntry 4
-aZKey      69081349
-aExternalValue First Aid
-aInternalValue FirstAid
-
-eTableEntry 4
-aZKey      69081355
-aExternalValue Human Hazard
-aInternalValue HumanHazard
-
-eTableEntry 4
-aZKey      69081350
-aExternalValue Environmental Hazard
-aInternalValue EnvironmentalHazard
-
-eTableEntry 4
-aZKey      3911627
-aExternalValue Container Disposal
-aInternalValue ContainerDisposal
-
-eTableEntry 4
-aZKey      69081351
-aExternalValue Storage and Disposal
-aInternalValue StorageDisposal
-
-eTableEntry 4
-aZKey      69081352
-aExternalValue Precautionary
-aInternalValue Precautionary
-
-eTableEntry 4
-aZKey      69081353
-aExternalValue Directions For Use
-aInternalValue DirectionsForUse
-
-eTableEntry 4
-aZKey      69081354
-aExternalValue Marketing
-aInternalValue Marketing
-
-eTableEntry 4
-aZKey      69765626
-aExternalValue Graphic
-aInternalValue Graphic
-
-eTableEntry 4
-aZKey      69765630
-aExternalValue Net Contents
-aInternalValue NetContents
-
-eTableEntry 4
-aZKey      3911629
-aExternalValue EPA Reg. No. - EPA Est. No.
-aInternalValue EPA_RegAndEstNbr
-
-eTableEntry 4
-aZKey      4043314
-aExternalValue Product Name
-aInternalValue ProductName
-
-eTableEntry 4
-aZKey      120180210
-aExternalValue Product Description
-aInternalValue ProductDescription
-
-eTableEntry 4
-aZKey      110006004
-aExternalValue Product Specific
-aInternalValue ProductSpecific
-
-eTableEntry 4
-aZKey      110006307
-aExternalValue General
-aInternalValue General
-
-eTableEntry 4
-aZKey      110006308
-aExternalValue Statement
-aInternalValue Statement
-
-eTableEntry 4
-aZKey      110006309
-aExternalValue Title
-aInternalValue Title
-
-eTableEntry 4
-aZKey      110006310
-aExternalValue Marketing Usage
-aInternalValue MarketingUsage
-
-eTableEntry 4
-aZKey      110006311
-aExternalValue Signal Word
-aInternalValue Signal Word
-
-eTableEntry 4
-aZKey      110006312
-aExternalValue Child Warning
-aInternalValue Child Warning
-
-eTableEntry 4
-aZKey      110006313
-aExternalValue Precautionary Stmt
-aInternalValue Precautionary Stmt
-
-eTableEntry 4
-aZKey      110006314
-aExternalValue Location
-aInternalValue Location
-
-eTableEntry 4
-aZKey      110006587
-aExternalValue Section
-aInternalValue Section
 
 eDomain    2
 aJavaClass com.quinsoft.zeidon.domains.StringDomain
@@ -3444,6 +3449,51 @@ eTableEntry 4
 aZKey      1178427
 aExternalValue Not Applicable
 aInternalValue N/A
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
+aZKey      69080546
+aName      StatementFormat
+aDesc      How Statements for a Section will be formatted.
+aDomainType T
+aDataType  S
+aMaxStringLth 5
+aContextRestriction N
+
+eContext   3
+aZKey      69081356
+aName      StatementFormat
+aIsDefault Y
+
+eTableEntry 4
+aZKey      69081358
+aExternalValue Separate Paragraph
+aInternalValue SP
+
+eTableEntry 4
+aZKey      69081359
+aExternalValue Separate Numbered Paragraph
+aInternalValue SPN
+
+eTableEntry 4
+aZKey      69081360
+aExternalValue Separate Bulleted Paragraph
+aInternalValue SPB
+
+eTableEntry 4
+aZKey      69081361
+aExternalValue Paragraph with Usage Statements
+aInternalValue SPU
+
+eTableEntry 4
+aZKey      69229445
+aExternalValue 2 Column Usage List
+aInternalValue L2
+
+eTableEntry 4
+aZKey      69229446
+aExternalValue 3 Column Usage List
+aInternalValue L3
 
 eDomain    2
 aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
@@ -4048,123 +4098,6 @@ aExternalValue Container Handling
 aInternalValue Container
 
 eDomain    2
-aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
-aZKey      69080546
-aName      TemplateStatementFormat
-aDesc      How Statements for a Section will be formatted.
-aDomainType T
-aDataType  S
-aMaxStringLth 5
-aContextRestriction N
-
-eContext   3
-aZKey      69081356
-aName      TemplateStatementFormat
-aIsDefault Y
-
-eTableEntry 4
-aZKey      69081358
-aExternalValue Separate Paragraph
-aInternalValue SP
-
-eTableEntry 4
-aZKey      69081359
-aExternalValue Separate Numbered Paragraph
-aInternalValue SPN
-
-eTableEntry 4
-aZKey      69081360
-aExternalValue Separate Bulleted Paragraph
-aInternalValue SPB
-
-eTableEntry 4
-aZKey      69081361
-aExternalValue Paragraph with Usage Statements
-aInternalValue SPU
-
-eTableEntry 4
-aZKey      69229445
-aExternalValue 2 Column Usage List
-aInternalValue L2
-
-eTableEntry 4
-aZKey      69229446
-aExternalValue 3 Column Usage List
-aInternalValue L3
-
-eDomain    2
-aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
-aZKey      69081340
-aName      TemplateTitlePosition
-aDesc      Where the Title is to be formatted for a Section
-aDomainType T
-aDataType  S
-aMaxStringLth 5
-aContextRestriction N
-
-eContext   3
-aZKey      69081341
-aName      TemplateTitlePosition
-
-eTableEntry 4
-aZKey      120190103
-
-eTableEntry 4
-aZKey      69081343
-aExternalValue Separate Line
-aInternalValue SL
-
-eTableEntry 4
-aZKey      69081344
-aExternalValue Combined with First Paragraph
-aInternalValue CF
-
-eTableEntry 4
-aZKey      4084753
-aExternalValue Skip Title
-aInternalValue SK
-
-eDomain    2
-aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
-aZKey      69080530
-aName      TemplateUsageFormatType
-aDesc      How any related Usage entries will be formatted for the Section.
-aDomainType T
-aDataType  S
-aMaxStringLth 2
-aContextRestriction N
-
-eContext   3
-aZKey      69081363
-aName      TemplateUsageFormatType
-aIsDefault Y
-
-eTableEntry 4
-aZKey      69081364
-aExternalValue Juxtapositioned in Paragraph
-aInternalValue JP
-
-eTableEntry 4
-aZKey      69081365
-aExternalValue Juxtapostioned in Title
-aInternalValue JT
-
-eTableEntry 4
-aZKey      69081366
-aExternalValue Listed in a Single Column
-aInternalValue C1
-
-eTableEntry 4
-aZKey      69081367
-aExternalValue Listed in 2 Columns
-aInternalValue C2
-
-eTableEntry 4
-aZKey      69081368
-aExternalValue Listed in 3 Columns
-aInternalValue C3
-
-eDomain    2
 aJavaClass com.quinsoft.zeidon.domains.StringDomain
 aZKey      68568081
 aName      Text
@@ -4262,6 +4195,35 @@ aEditString HHMISS999
 
 eDomain    2
 aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
+aZKey      69081340
+aName      TitlePosition
+aDesc      Where the Title is to be formatted for a Section (separate line, combined, skip)
+aDomainType T
+aDataType  S
+aMaxStringLth 5
+aContextRestriction N
+
+eContext   3
+aZKey      69081341
+aName      TitlePosition
+
+eTableEntry 4
+aZKey      69081343
+aExternalValue Separate Line
+aInternalValue SL
+
+eTableEntry 4
+aZKey      69081344
+aExternalValue Combined with First Paragraph
+aInternalValue CF
+
+eTableEntry 4
+aZKey      4084753
+aExternalValue Skip Title
+aInternalValue SK
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
 aZKey      1178527
 aName      ToxicityCategory
 aDomainType T
@@ -4322,6 +4284,46 @@ eTableEntry 4
 aZKey      130001722
 aExternalValue lbs.
 aInternalValue lbs
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
+aZKey      69080530
+aName      UsageFormatType
+aDesc      How any related Usage entries will be formatted for the Section.
+aDomainType T
+aDataType  S
+aMaxStringLth 2
+aContextRestriction N
+
+eContext   3
+aZKey      69081363
+aName      UsageFormatType
+aIsDefault Y
+
+eTableEntry 4
+aZKey      69081364
+aExternalValue Juxtapositioned in Paragraph
+aInternalValue JP
+
+eTableEntry 4
+aZKey      69081365
+aExternalValue Juxtapostioned in Title
+aInternalValue JT
+
+eTableEntry 4
+aZKey      69081366
+aExternalValue Listed in a Single Column
+aInternalValue C1
+
+eTableEntry 4
+aZKey      69081367
+aExternalValue Listed in 2 Columns
+aInternalValue C2
+
+eTableEntry 4
+aZKey      69081368
+aExternalValue Listed in 3 Columns
+aInternalValue C3
 
 eDomain    2
 aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain

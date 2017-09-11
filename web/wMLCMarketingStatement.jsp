@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCMarketingStatement   Generate Timestamp: 20160914154445708 --%>
+<%-- wMLCMarketingStatement --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -294,18 +294,18 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-         View mMasLCAuto = task.getViewByName( "mMasLC" );
-         EntityCursor cursor = mMasLCAuto.cursor( "M_MarketingStatement" );
-            if ( cursor.isNull() )
-               nRC = 0;
-            else
-            {
-               if ( cursor.isVersioned( ) )
-               {
-                  cursor.acceptSubobject( );
-               }
-            nRC = 0;
+      View mMasLC = task.getViewByName( "mMasLC" );
+      EntityCursor cursor = mMasLC.cursor( "M_MarketingStatement" );
+      if ( cursor.isNull() )
+         nRC = 0;
+      else
+      {
+         if ( cursor.isVersioned( ) )
+         {
+            cursor.acceptSubobject( );
          }
+         nRC = 0;
+      }
 
       }
       catch ( Exception e )
@@ -411,9 +411,9 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-         View mMasLCAuto = task.getViewByName( "mMasLC" );
-         EntityCursor cursor = mMasLCAuto.cursor( "M_InsertTextKeywordMarketing" );
-         cursor.createTemporalEntity( );
+      View mMasLC = task.getViewByName( "mMasLC" );
+      EntityCursor cursor = mMasLC.cursor( "M_InsertTextKeywordMarketing" );
+      cursor.createTemporalEntity( );
 
       }
       catch ( Exception e )
@@ -438,18 +438,18 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-         View mMasLCAuto = task.getViewByName( "mMasLC" );
-         EntityCursor cursor = mMasLCAuto.cursor( "M_MarketingStatement" );
-            if ( cursor.isNull() )
-               nRC = 0;
-            else
-            {
-               if ( cursor.isVersioned( ) )
-               {
-                  cursor.cancelSubobject( );
-               }
-            nRC = 0;
+      View mMasLC = task.getViewByName( "mMasLC" );
+      EntityCursor cursor = mMasLC.cursor( "M_MarketingStatement" );
+      if ( cursor.isNull() )
+         nRC = 0;
+      else
+      {
+         if ( cursor.isVersioned( ) )
+         {
+            cursor.cancelSubobject( );
          }
+         nRC = 0;
+      }
 
       }
       catch ( Exception e )
@@ -542,8 +542,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCMarketingStatement", "wMLC.DELETE_DirectionsForUseStatement" );
-      nOptRC = wMLC.DELETE_DirectionsForUseStatement( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCMarketingStatement", "wMLC.DeleteDirectionsForUseStatement" );
+      nOptRC = wMLC.DeleteDirectionsForUseStatement( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -609,14 +609,14 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-         EntityCursor cursor = mMasLC.cursor( "M_InsertTextKeywordMarketing" );
-            if ( cursor.isNull() )
-               nRC = 0;
-            else
-            {
-               cursor.deleteEntity( CursorPosition.NEXT );
-            nRC = 0;
-         }
+      EntityCursor cursor = mMasLC.cursor( "M_InsertTextKeywordMarketing" );
+      if ( cursor.isNull() )
+         nRC = 0;
+      else
+      {
+         cursor.deleteEntity( CursorPosition.NEXT );
+         nRC = 0;
+      }
 
       }
       catch ( Exception e )
@@ -684,9 +684,9 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-         View mMasLCAuto = task.getViewByName( "mMasLC" );
-         EntityCursor cursor = mMasLCAuto.cursor( "M_DirectionsForUseStatement" );
-         cursor.createTemporalSubobjectVersion( );
+      View mMasLC = task.getViewByName( "mMasLC" );
+      EntityCursor cursor = mMasLC.cursor( "M_DirectionsForUseStatement" );
+      cursor.createTemporalSubobjectVersion( );
 
       }
       catch ( Exception e )
@@ -697,44 +697,6 @@ if ( strActionToProcess != null )
       }
       // Next Window
       strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "DirectionsForUseStatement" );
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_DisplayGeneratedTextMktg" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCMarketingStatement", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCMarketingStatement", "wMLC.GOTO_DisplayGeneratedTextMktg" );
-      nOptRC = wMLC.GOTO_DisplayGeneratedTextMktg( new zVIEW( vKZXMLPGO ) );
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "EncodedTitleTextUpdate" );
-      }
-
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
@@ -836,8 +798,8 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-         EntityCursor cursor = mMasLC.cursor( "M_InsertTextKeywordMarketing" );
-         cursor.createTemporalSubobjectVersion( );
+      EntityCursor cursor = mMasLC.cursor( "M_InsertTextKeywordMarketing" );
+      cursor.createTemporalSubobjectVersion( );
 
       }
       catch ( Exception e )
@@ -1053,7 +1015,27 @@ if ( session.getAttribute( "ZeidonError" ) == "Y" )
    session.setAttribute( "ZeidonError", null );
 else
 {
+   VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCMarketingStatement", "wMLC.DisplayMarketingStatement" );
+   nOptRC = wMLC.DisplayMarketingStatement( new zVIEW( vKZXMLPGO ) );
+   if ( nOptRC == 2 )
+   {
+      View vView;
+      String strMessage;
+      String strURLParameters;
+
+      vView = task.getViewByName( "wXferO" );
+      strMessage = vView.cursor( "Root" ).getAttribute( "WebReturnMessage" ).getString( "" );
+      strURLParameters = "?CallingPage=wMLCMarketingStatement.jsp" +
+                         "&Message=" + strMessage +
+                         "&DialogName=" + "wMLC" +
+                         "&OperationName=" + "DisplayMarketingStatement";
+      strURL = response.encodeRedirectURL( "MessageDisplay.jsp" + strURLParameters );
+      response.sendRedirect( strURL );
+      task.log().info( "Pre/Post Redirect to: " + strURL );
+      return;
+   }
 }
+
    csrRC = vKZXMLPGO.cursor( "DynamicBannerName" ).setFirst( "DialogName", "wMLC", "" );
    if ( csrRC.isSet( ) )
       strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString( "" );
@@ -1079,22 +1061,21 @@ else
 <!-- Timeout.inc has a value for nTimeout which is used to determine when to -->
 <!-- log a user out.  Timeout.inc is not used if the dialog or window has a timeout value set. -->
 <%@ include file="./include/timeout.inc" %>
-<link rel="stylesheet" type="text/css" href="./css/print.css" media="print" />
-<script language="JavaScript" type="text/javascript" src="./js/common.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/css.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/sts.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/jsoeUtils.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/jsoe.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/common.js?v=20170726200315399"></script>
+<script language="JavaScript" type="text/javascript" src="./js/css.js?v=20170726200315399"></script>
+<script language="JavaScript" type="text/javascript" src="./js/sts.js?v=20170726200315399"></script>
+<script language="JavaScript" type="text/javascript" src="./js/jsoeUtils.js?v=20170726200315399"></script>
+<script language="JavaScript" type="text/javascript" src="./js/jsoe.js?v=20170726200315399"></script>
+<script language="JavaScript" type="text/javascript" src="./js/scw.js?v=20170726200315399"></script>
+<script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js?v=20170726200315399"></script>
+<script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js?v=20170726200315399"></script>
 
 <!-- TinyMCE -->
-<script language="JavaScript" type="text/javascript" src="./js/tinymce/js/tinymce/tinymce.min.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/TinyMCE.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/tinymce/js/tinymce/tinymce.min.js?v=20170726200315399"></script>
+<script language="JavaScript" type="text/javascript" src="./js/TinyMCE.js?v=20170726200315399"></script>
 <!-- /TinyMCE -->
 
-<script language="JavaScript" type="text/javascript" src="./genjs/wMLCMarketingStatement.js"></script>
+<script language="JavaScript" type="text/javascript" src="./genjs/wMLCMarketingStatement.js?v=20170726200315399"></script>
 
 </head>
 
@@ -1275,6 +1256,8 @@ else
    <input name="zFocusCtrl" id="zFocusCtrl" type="hidden" value="<%=strFocusCtrl%>">
    <input name="zOpenFile" id="zOpenFile" type="hidden" value="<%=strOpenFile%>">
    <input name="zDateFormat" id="zDateFormat" type="hidden" value="<%=strDateFormat%>">
+   <input name="zDateSequence" id="zDateSequence" type="hidden" value="MDY">
+   <input name="zLanguage" id="zLanguage" type="hidden" value="">
    <input name="zLoginName" id="zLoginName" type="hidden" value="<%=strLoginName%>">
    <input name="zKeyRole" id="zKeyRole" type="hidden" value="<%=strKeyRole%>">
    <input name="zOpenPopupWindow" id="zOpenPopupWindow" type="hidden" value="<%=strOpenPopupWindow%>">
@@ -1298,9 +1281,9 @@ else
 
 <div id="GBMarketingStatement" name="GBMarketingStatement" class="listgroup"   style="float:left;position:relative; width:822px; height:36px;">  <!-- GBMarketingStatement --> 
 
-<% /* OrganismClaimsStatements3:Text */ %>
+<% /* MarketingStatement:Text */ %>
 
-<label class="groupbox"  id="OrganismClaimsStatements3" name="OrganismClaimsStatements3" style="width:238px;height:16px;position:absolute;left:6px;top:12px;">Marketing Statement</label>
+<label class="groupbox"  id="MarketingStatement" name="MarketingStatement" style="width:238px;height:16px;position:absolute;left:6px;top:12px;">Marketing Statement</label>
 
 <% /* Section:Text */ %>
 
@@ -1692,9 +1675,9 @@ try
 
    <td><a href="#" onclick="GOTO_MarketingKeywordUpdate( this.id )" id="Keyword::<%=strEntityKey%>"><%=strKeyword%></a></td>
    <td><a href="#" onclick="GOTO_MarketingKeywordUpdate( this.id )" id="KeywordText::<%=strEntityKey%>"><%=strKeywordText%></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="UpdateKeyword" onclick="GOTO_MarketingKeywordUpdate( this.id )" id="UpdateKeyword::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="Copy" onclick="COPY_InsertKeyword( this.id )" id="Copy::<%=strEntityKey%>"><img src="./images/ePammsCopy.png" alt="Copy"></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="Delete" onclick="DELETE_MarketingStatementKeyword( this.id )" id="Delete::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
+   <td><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="UpdateKeyword" onclick="GOTO_MarketingKeywordUpdate( this.id )" id="UpdateKeyword::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
+   <td><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="Copy" onclick="COPY_InsertKeyword( this.id )" id="Copy::<%=strEntityKey%>"><img src="./images/ePammsCopy.png" alt="Copy"></a></td>
+   <td><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="Delete" onclick="DELETE_MarketingStatementKeyword( this.id )" id="Delete::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
 
 </tr>
 
@@ -1762,7 +1745,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 <% /* Grid1:Grid */ %>
 <table class="sortable"  cols=2 style=""  name="Grid1" id="Grid1">
 
-<thead bgcolor=green><tr>
+<thead><tr>
 
    <th>Usage Type</th>
    <th>Usage Name</th>

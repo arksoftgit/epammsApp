@@ -1,4 +1,4 @@
-// wMLCUsageGroupSelect   Generate Timestamp: 20170719132728211
+// wMLCUsageGroupSelect   Generate Timestamp: 20170721113151831
 
 var isWindowClosing = true;
 var timerID = null;
@@ -172,6 +172,15 @@ function _AfterPageLoaded( )
       timerID = null; // No timeout specified
 
 var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title ); }
+   var storageName = "epamms.wMLCUsageGroupSelect.position";
+   var scrollPosition = sessionStorage.getItem( storageName );
+   if ( scrollPosition.indexOf('#') > 0 )
+   {
+      var parts = scrollPosition.split( '#' );
+      document.body.scrollTop = parseInt( parts[parts.length - 2] );
+      document.body.scrollLeft = parseInt( parts[parts.length - 1] );
+   }
+   sessionStorage.removeItem( storageName );
    isWindowClosing = true;
 }
 
@@ -201,6 +210,13 @@ function RemoveUsageEntriesFromGroup( )
    {
       _DisableFormElements( true );
 
+      if ( typeof(Storage) !== "undefined" )
+      {
+         // Code for localStorage/sessionStorage.
+         var storageName = "epamms.wMLCUsageGroupSelect.position"
+         var scrollPosition = document.body.scrollTop + '#' + document.body.scrollLeft;
+         sessionStorage.setItem( storageName, scrollPosition );
+      }
       document.wMLCUsageGroupSelect.zAction.value = "RemoveUsageEntriesFromGroup";
       document.wMLCUsageGroupSelect.submit( );
    }
@@ -231,6 +247,13 @@ function SelectUsageEntriesForGroup( )
    {
       _DisableFormElements( true );
 
+      if ( typeof(Storage) !== "undefined" )
+      {
+         // Code for localStorage/sessionStorage.
+         var storageName = "epamms.wMLCUsageGroupSelect.position"
+         var scrollPosition = document.body.scrollTop + '#' + document.body.scrollLeft;
+         sessionStorage.setItem( storageName, scrollPosition );
+      }
       document.wMLCUsageGroupSelect.zAction.value = "SelectUsageEntriesForGroup";
       document.wMLCUsageGroupSelect.submit( );
    }

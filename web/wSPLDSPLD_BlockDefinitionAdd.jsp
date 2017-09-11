@@ -70,7 +70,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "ComboBox2", "", strMapValue );
             else
-               mSPLDef.cursor( "LLD_Block" ).getAttribute( "LLD_SectionType" ).setValue( strMapValue, "" );
+               mSPLDef.cursor( "LLD_Block" ).getAttribute( "LLD_BlockType" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -632,12 +632,12 @@ else
    mSPLDef = task.getViewByName( "mSPLDef" );
    if ( VmlOperation.isValid( mSPLDef ) )
    {
-      List<TableEntry> list = JspWebUtils.getTableDomainValues( mSPLDef , "LLD_Block", "LLD_SectionType", "" );
+      List<TableEntry> list = JspWebUtils.getTableDomainValues( mSPLDef , "LLD_Block", "LLD_BlockType", "" );
 
       nRC = mSPLDef.cursor( "LLD_Block" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
-         strComboCurrentValue = mSPLDef.cursor( "LLD_Block" ).getAttribute( "LLD_SectionType" ).getString( "" );
+         strComboCurrentValue = mSPLDef.cursor( "LLD_Block" ).getAttribute( "LLD_BlockType" ).getString( "" );
          if ( strComboCurrentValue == null )
             strComboCurrentValue = "";
       }

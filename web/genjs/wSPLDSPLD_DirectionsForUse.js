@@ -1,4 +1,4 @@
-// wSPLDSPLD_DirectionsForUse   Generate Timestamp: 20170511185413144
+// wSPLDSPLD_DirectionsForUse   Generate Timestamp: 20170810173550642
 
 var isWindowClosing = true;
 var timerID = null;
@@ -172,6 +172,15 @@ function _AfterPageLoaded( )
       timerID = null; // No timeout specified
 
 var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title ); }
+   var storageName = "epamms.wSPLDSPLD_DirectionsForUse.position";
+   var scrollPosition = sessionStorage.getItem( storageName );
+   if ( scrollPosition.indexOf('#') > 0 )
+   {
+      var parts = scrollPosition.split( '#' );
+      document.body.scrollTop = parseInt( parts[parts.length - 2] );
+      document.body.scrollLeft = parseInt( parts[parts.length - 1] );
+   }
+   sessionStorage.removeItem(storageName);
    isWindowClosing = true;
 }
 
@@ -205,6 +214,13 @@ function GOTO_DirectionsForUseCategory( strTagEntityKey )
       document.wSPLDSPLD_DirectionsForUse.zTableRowSelect.value = strEntityKey;
       _DisableFormElements( true );
 
+      if ( typeof(Storage) !== "undefined" )
+      {
+         // Code for sessionStorage.
+         var storageName = "epamms.wSPLDSPLD_DirectionsForUse.position"
+         var scrollPosition = document.body.scrollTop + '#' + document.body.scrollLeft;
+         sessionStorage.setItem( storageName, scrollPosition );
+      }
       document.wSPLDSPLD_DirectionsForUse.zAction.value = "GOTO_DirectionsForUseCategory";
       document.wSPLDSPLD_DirectionsForUse.submit( );
    }
@@ -218,6 +234,19 @@ function smSaveAndReturn( )
 
    if ( _IsDocDisabled( ) == false )
    {
+
+      // Javascript code entered by user.
+
+      if ( typeof(Storage) !== "undefined" )
+      {
+         // Remove scroll position in localStorage/sessionStorage.
+         var storageName = "ePamms.wSPLDSPLD_Components.position"
+         localStorage.setItem( storageName, "" );
+      }
+
+
+      // END of Javascript code entered by user.
+
       _DisableFormElements( true );
 
       document.wSPLDSPLD_DirectionsForUse.zAction.value = "smSaveAndReturn";
@@ -233,6 +262,19 @@ function smCancelAndReturn( )
 
    if ( _IsDocDisabled( ) == false )
    {
+
+      // Javascript code entered by user.
+
+      if ( typeof(Storage) !== "undefined" )
+      {
+         // Remove scroll position in localStorage/sessionStorage.
+         var storageName = "ePamms.wSPLDSPLD_Components.position"
+         localStorage.setItem( storageName, "" );
+      }
+
+
+      // END of Javascript code entered by user.
+
       _DisableFormElements( true );
 
       document.wSPLDSPLD_DirectionsForUse.zAction.value = "smCancelAndReturn";

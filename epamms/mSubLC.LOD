@@ -1,4 +1,4 @@
-z1000-Zeidon    MSUBLC   TZZOLODO                         06/26/17   09:51:27 1.0a2   
+z1000-Zeidon    MSUBLC   TZZOLODO                         09/06/17   13:13:59 1.0a2   
 eLOD       1
 aZKey      69035258
 aNextZKeyToAssign 130002887
@@ -3466,7 +3466,7 @@ aName      GeneralSectionType
 aDomainType T
 aDataType  S
 aMaxStringLth 1
-aDesc      Precautionary, Environmental/Physical Hazard, First Aid (P,E,F)
+aDesc      Precautionary, First Aid, Environmental Hazard, Chemical/Physical Hazard (P,F,E,C)
 aContextRestriction N
 
 eLOD_AttributeRec 4
@@ -10085,11 +10085,11 @@ aZKey      190979
 
 eDomainRec 6
 aZKey      69080516
-aName      LLD_SectionType
+aName      LLD_BlockType
 aDomainType T
 aDataType  S
 aMaxStringLth 32
-aDesc      Template Section Types are usually the same as regular Section Types.
+aDesc      Template Block Types are usually the same as regular Block Types.
 aContextRestriction N
 
 eLOD_AttributeRec 4

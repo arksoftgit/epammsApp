@@ -1,5 +1,8 @@
 /* Alter script for ePammsM -- MySQL ePamms database */
 
+/* Entity Keyword */
+ALTER TABLE KEYWORD ADD REPLACEVALUE                       varchar( 254 )     NULL    ;
+
 /* Entity LLD */
 ALTER TABLE lld                                MODIFY COLUMN DEFAULTTEXTFONTFAMILY              longtext           NULL    ;
 ALTER TABLE lld                                MODIFY COLUMN DEFAULTTEXTFONTSIZE                longtext           NULL    ;

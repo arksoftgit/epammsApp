@@ -646,7 +646,7 @@ else
       {
       try
       {
-         strTextDisplayValue = ReusableBlock.cursor( "ReusableBlockDefinition" ).getAttribute( "LLD_SectionType" ).getString( "" );
+         strTextDisplayValue = ReusableBlock.cursor( "ReusableBlockDefinition" ).getAttribute( "LLD_BlockType" ).getString( "" );
       }
       catch (Exception e)
       {

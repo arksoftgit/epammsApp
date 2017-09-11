@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSLCStorageDisposal   Generate Timestamp: 20170505175655825 --%>
+<%-- wSLCStorageDisposal --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -924,12 +924,11 @@ else
 <!-- Timeout.inc has a value for nTimeout which is used to determine when to -->
 <!-- log a user out.  Timeout.inc is not used if the dialog or window has a timeout value set. -->
 <%@ include file="./include/timeout.inc" %>
-<link rel="stylesheet" type="text/css" href="./css/print.css" media="print" />
-<script language="JavaScript" type="text/javascript" src="./js/common.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
-<script language="JavaScript" type="text/javascript" src="./genjs/wSLCStorageDisposal.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/common.js?v=20170809165504936"></script>
+<script language="JavaScript" type="text/javascript" src="./js/scw.js?v=20170809165504936"></script>
+<script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js?v=20170809165504936"></script>
+<script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js?v=20170809165504936"></script>
+<script language="JavaScript" type="text/javascript" src="./genjs/wSLCStorageDisposal.js?v=20170809165504936"></script>
 
 </head>
 
@@ -1258,6 +1257,7 @@ else
    <input name="zOpenFile" id="zOpenFile" type="hidden" value="<%=strOpenFile%>">
    <input name="zDateFormat" id="zDateFormat" type="hidden" value="<%=strDateFormat%>">
    <input name="zDateSequence" id="zDateSequence" type="hidden" value="MDY">
+   <input name="zLanguage" id="zLanguage" type="hidden" value="">
    <input name="zLoginName" id="zLoginName" type="hidden" value="<%=strLoginName%>">
    <input name="zKeyRole" id="zKeyRole" type="hidden" value="<%=strKeyRole%>">
    <input name="zOpenPopupWindow" id="zOpenPopupWindow" type="hidden" value="<%=strOpenPopupWindow%>">
@@ -1466,10 +1466,10 @@ try
 
 <tr<%=strOdd%>>
 
-   <td nowrap><%=strGridCheckCtl1%></td>
+   <td><%=strGridCheckCtl1%></td>
    <td><a href="#" onclick="GOTO_StorageDisposalSection( this.id )" id="GridEditStorDispName::<%=strEntityKey%>"><%=strGridEditStorDispName%></a></td>
    <td><a href="#" onclick="GOTO_StorageDisposalSection( this.id )" id="GridEditStorDispTitle::<%=strEntityKey%>"><%=strGridEditStorDispTitle%></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDisplaySD_Section" onclick="GOTO_StorageDisposalSection( this.id )" id="BMBDisplaySD_Section::<%=strEntityKey%>"><img src="./images/ePammsDisplay.png" alt="Display"></a></td>
+   <td><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDisplaySD_Section" onclick="GOTO_StorageDisposalSection( this.id )" id="BMBDisplaySD_Section::<%=strEntityKey%>"><img src="./images/ePammsDisplay.png" alt="Display"></a></td>
 
 </tr>
 

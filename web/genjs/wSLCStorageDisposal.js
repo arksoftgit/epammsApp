@@ -1,4 +1,4 @@
-// wSLCStorageDisposal   Generate Timestamp: 20170505175655825
+// wSLCStorageDisposal   Generate Timestamp: 20170809165504717
 
 var isWindowClosing = true;
 var timerID = null;
@@ -172,6 +172,15 @@ function _AfterPageLoaded( )
       timerID = null; // No timeout specified
 
 var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title ); }
+   var storageName = "epamms.wSLCStorageDisposal.position";
+   var scrollPosition = sessionStorage.getItem( storageName );
+   if ( scrollPosition.indexOf('#') > 0 )
+   {
+      var parts = scrollPosition.split( '#' );
+      document.body.scrollTop = parseInt( parts[parts.length - 2] );
+      document.body.scrollLeft = parseInt( parts[parts.length - 1] );
+   }
+   sessionStorage.removeItem(storageName);
    isWindowClosing = true;
 }
 
@@ -205,6 +214,13 @@ function GOTO_StorageDisposalSection( strTagEntityKey )
       document.wSLCStorageDisposal.zTableRowSelect.value = strEntityKey;
       _DisableFormElements( true );
 
+      if ( typeof(Storage) !== "undefined" )
+      {
+         // Code for sessionStorage.
+         var storageName = "epamms.wSLCStorageDisposal.position"
+         var scrollPosition = document.body.scrollTop + '#' + document.body.scrollLeft;
+         sessionStorage.setItem( storageName, scrollPosition );
+      }
       document.wSLCStorageDisposal.zAction.value = "GOTO_StorageDisposalSection";
       document.wSLCStorageDisposal.submit( );
    }

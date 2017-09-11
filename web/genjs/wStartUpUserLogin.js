@@ -315,7 +315,13 @@ function ProcessUserLogin( )
    localStorage.setItem( "epamms_user", document.getElementById( "EBUserName" ).value );
    localStorage.setItem( "epamms_registrant", document.getElementById( "EBRegistrantName" ).value );
    var e = document.getElementById("PrimaryRegistrants");
-   localStorage.setItem( "epamms_organization", e.options[e.selectedIndex].text );
+   var text;
+   if ( e.selectedIndex < 0 )
+      txt = e.options[ 0 ].text;
+   else
+      txt = e.options[e.selectedIndex].text;
+
+   localStorage.setItem( "epamms_organization", txt );
 
    if ( _IsDocDisabled( ) == false )
    {

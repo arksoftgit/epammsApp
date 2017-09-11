@@ -1,7 +1,7 @@
-z1000-Zeidon    ZGLOBAL1 TZOGSRCO                         12/28/16   13:16:29 1.0a2   
+z1000-Zeidon    ZGLOBAL1 TZOGSRCO                         07/24/17   14:36:47 1.0a2   
 eGlobalOperationGroup 1
 aZKey      89816452
-aNextZKeyToAssign 110040725
+aNextZKeyToAssign 110040732
 aName      ZGlobal1
 aDesc      Global Operations in C
 aExtension C
@@ -50,6 +50,55 @@ aDataType  L
 aPFlag     N
 aUFlag     N
 aZKey      89816458
+
+eOperation 2
+aName      SetCursorFirstEntityByCursor
+aZKey      110040726
+aDesc      Hopefully working replacement for SetCursorFirstEntityByEntityCursor
+aType      G
+aReturnDataType N
+
+eParameter 3
+aShortDesc TargetView
+aDataType  V
+aPFlag     N
+aUFlag     N
+aZKey      110040727
+
+eParameter 3
+aShortDesc TargetEntityName
+aDataType  S
+aPFlag     N
+aUFlag     N
+aZKey      110040728
+
+eParameter 3
+aShortDesc SourceView
+aDataType  V
+aPFlag     N
+aUFlag     N
+aZKey      110040729
+
+eParameter 3
+aShortDesc SourceEntityName
+aDataType  S
+aPFlag     N
+aUFlag     N
+aZKey      110040730
+
+eParameter 3
+aShortDesc ScopingEntity
+aDataType  S
+aPFlag     N
+aUFlag     N
+aZKey      110040731
+
+eParameter 3
+aShortDesc AttributeName
+aDataType  S
+aPFlag     N
+aUFlag     N
+aZKey      110040732
 
 eOperation 2
 aName      RemovePairedCharactersFromString

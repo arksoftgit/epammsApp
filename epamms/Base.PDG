@@ -1,7 +1,7 @@
-z1000-Zeidon    BASE     TZDGSRCO                         04/03/17   07:48:27 1.0a2   
+z1000-Zeidon    BASE     TZDGSRCO                         09/05/17   11:01:56 1.0a2   
 eDomainGroup 1
 aZKey      68567479
-aNextZKeyToAssign 130001734
+aNextZKeyToAssign 130001738
 aName      Base
 aExtension C
 aWorkNumeric 9
@@ -929,7 +929,7 @@ aInternalValue X
 eDomain    2
 aZKey      69055597
 aName      GeneralSectionType
-aDesc      Precautionary, Environmental/Physical Hazard, First Aid (P,E,F)
+aDesc      Precautionary, First Aid, Environmental Hazard, Chemical/Physical Hazard (P,F,E,C)
 aDomainType T
 aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
 aDataType  S
@@ -957,7 +957,7 @@ aInternalValue E
 
 eTableEntry 4
 aZKey      110030907
-aExternalValue Physical/Chemical Hazard
+aExternalValue Chemical/Physical Hazard
 aInternalValue C
 
 eContext   3

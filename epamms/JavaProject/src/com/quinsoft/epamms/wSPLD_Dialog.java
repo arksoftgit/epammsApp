@@ -870,9 +870,6 @@ SaveReusableBlock( View     ViewToWindow )
    RESULT = GetViewByName( mSPLDefPanel, "mSPLDefPanel", ViewToWindow, zLEVEL_TASK );
 
    //:ID = mSPLDefPanel.ReusableBlockDefinition.ID
-   {MutableInt mi_ID = new MutableInt( ID );
-       GetIntegerFromAttribute( mi_ID, mSPLDefPanel, "ReusableBlockDefinition", "ID" );
-   ID = mi_ID.intValue( );}
 
    //:ACTIVATE qBlockRU WHERE qBlockRU.Subregistrant.ID = mSPLDefPanel.Subregistrant.ID
    {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
@@ -946,11 +943,8 @@ SaveReusableBlock( View     ViewToWindow )
    if ( lTempInteger_2 == 0 )
    { 
       //:mSPLDefPanel.ReusableBlockDefinition.Name = wWebXfer.Root.SearchName
-      SetAttributeFromAttribute( mSPLDefPanel, "ReusableBlockDefinition", "Name", wWebXfer, "Root", "SearchName" );
       //:mBlockRU.ReusableBlockDefinition.Name = mSPLDefPanel.ReusableBlockDefinition.Name
-      SetAttributeFromAttribute( mBlockRU, "ReusableBlockDefinition", "Name", mSPLDefPanel, "ReusableBlockDefinition", "Name" );
       //:mBlockRU.ReusableBlockDefinition.Description = mSPLDefPanel.ReusableBlockDefinition.Description
-      SetAttributeFromAttribute( mBlockRU, "ReusableBlockDefinition", "Description", mSPLDefPanel, "ReusableBlockDefinition", "Description" );
       //:DisplayObjectInstance( mBlockRU, "", "" )
       DisplayObjectInstance( mBlockRU, "", "" );
       //:COMMIT mBlockRU
@@ -982,7 +976,6 @@ SaveNewReusableBlock( View     ViewToWindow )
    //:STRING ( 256 ) szMessage
    String   szMessage = null;
    int      lTempInteger_0 = 0;
-   int      lTempInteger_1 = 0;
 
    RESULT = GetViewByName( mSPLDefBlock, "mSPLDefBlock", ViewToWindow, zLEVEL_TASK );
    RESULT = GetViewByName( mSPLDef, "mSPLDef", ViewToWindow, zLEVEL_TASK );
@@ -990,43 +983,13 @@ SaveNewReusableBlock( View     ViewToWindow )
    //:GET VIEW mBlockRU NAMED "ReusableBlock"
    RESULT = GetViewByName( mBlockRU, "ReusableBlock", ViewToWindow, zLEVEL_TASK );
    //:szName = mBlockRU.ReusableBlockDefinition.Name
-   {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
-   StringBuilder sb_szName;
-   if ( szName == null )
-      sb_szName = new StringBuilder( 32 );
-   else
-      sb_szName = new StringBuilder( szName );
-       GetVariableFromAttribute( sb_szName, mi_lTempInteger_0, 'S', 129, mBlockRU, "ReusableBlockDefinition", "Name", "", 0 );
-   lTempInteger_0 = mi_lTempInteger_0.intValue( );
-   szName = sb_szName.toString( );}
    //:SET CURSOR FIRST mSPLDef.ReusableBlockDefinition WHERE mSPLDef.ReusableBlockDefinition.Name = szName
    RESULT = SetCursorFirstEntityByString( mSPLDef, "ReusableBlockDefinition", "Name", szName, "" );
    //:IF RESULT >= zCURSOR_SET OR szName = "Set Name of Reusable Block"
    if ( RESULT >= zCURSOR_SET || ZeidonStringCompare( szName, 1, 0, "Set Name of Reusable Block", 1, 0, 129 ) == 0 )
    { 
       //:szMessage = "Reusable Block Name (" +  szName
-       {StringBuilder sb_szMessage;
-      if ( szMessage == null )
-         sb_szMessage = new StringBuilder( 32 );
-      else
-         sb_szMessage = new StringBuilder( szMessage );
-            ZeidonStringCopy( sb_szMessage, 1, 0, "Reusable Block Name (", 1, 0, 257 );
-      szMessage = sb_szMessage.toString( );}
-       {StringBuilder sb_szMessage;
-      if ( szMessage == null )
-         sb_szMessage = new StringBuilder( 32 );
-      else
-         sb_szMessage = new StringBuilder( szMessage );
-            ZeidonStringConcat( sb_szMessage, 1, 0, szName, 1, 0, 257 );
-      szMessage = sb_szMessage.toString( );}
       //:szMessage = szMessage + ") already exists.  Please choose a unique name."
-       {StringBuilder sb_szMessage;
-      if ( szMessage == null )
-         sb_szMessage = new StringBuilder( 32 );
-      else
-         sb_szMessage = new StringBuilder( szMessage );
-            ZeidonStringConcat( sb_szMessage, 1, 0, ") already exists.  Please choose a unique name.", 1, 0, 257 );
-      szMessage = sb_szMessage.toString( );}
       //:MessageSend( ViewToWindow, "", "Select Reusable Block",
       //:             szMessage,
       //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
@@ -1040,8 +1003,8 @@ SaveNewReusableBlock( View     ViewToWindow )
    //:INCLUDE mBlockRU.Subregistrant FROM mSPLDef.Subregistrant
    RESULT = IncludeSubobjectFromSubobject( mBlockRU, "Subregistrant", mSPLDef, "Subregistrant", zPOS_AFTER );
    //:IF mSPLDefBlock.LLD_Block EXISTS
-   lTempInteger_1 = CheckExistenceOfEntity( mSPLDefBlock, "LLD_Block" );
-   if ( lTempInteger_1 == 0 )
+   lTempInteger_0 = CheckExistenceOfEntity( mSPLDefBlock, "LLD_Block" );
+   if ( lTempInteger_0 == 0 )
    { 
       //:CopyToReusableBlock( mSPLDefBlock )
       o_CopyToReusableBlock( mSPLDefBlock );
@@ -5079,18 +5042,18 @@ PrebuildBlockDefinitionUpdate( View     ViewToWindow )
 
    //:// Composite entity Section Types: Precautionary, Environmental/Physical Hazard, First Aid, Ingredients, Storage/Disposal, Directions For Use, Marketing (P,E,F,I,S,D,M)
    //://
-   //:// Textual LLD_SectionType: Precautionary, Human Hazard, Physical Hazard, First Aid, Ingredients, Storage and Disposal, Directions For Use, Marketing
+   //:// Textual LLD_BlockType: Precautionary, Human Hazard, Physical Hazard, First Aid, Ingredients, Storage and Disposal, Directions For Use, Marketing
    //://
-   //:// Non-textual LLD_SectionType:  Graphic, Product Name, Net Contents, EPA Reg. No. - EPA Est. No.
+   //:// Non-textual LLD_BlockType:    Graphic, Product Name, Net Contents, EPA Reg. No. - EPA Est. No.
    //://
-   //:szType = mSPLDefBlock.LLD_Block.LLD_SectionType
+   //:szType = mSPLDefBlock.LLD_Block.LLD_BlockType
    {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
    StringBuilder sb_szType;
    if ( szType == null )
       sb_szType = new StringBuilder( 32 );
    else
       sb_szType = new StringBuilder( szType );
-       GetVariableFromAttribute( sb_szType, mi_lTempInteger_0, 'S', 257, mSPLDefBlock, "LLD_Block", "LLD_SectionType", "", 0 );
+       GetVariableFromAttribute( sb_szType, mi_lTempInteger_0, 'S', 257, mSPLDefBlock, "LLD_Block", "LLD_BlockType", "", 0 );
    lTempInteger_0 = mi_lTempInteger_0.intValue( );
    szType = sb_szType.toString( );}
    //:szName = mSPLDefBlock.LLD_Block.Name
@@ -5243,13 +5206,13 @@ PrebuildBlockDefinitionUpdate( View     ViewToWindow )
    //:wWebXfer.Root.CurrentSectionTitle = szMsg
    SetAttributeFromString( wWebXfer, "Root", "CurrentSectionTitle", szMsg );
 
-   //:SetUpKeywordEntries( mSPLDefBlock, mSPLDefBlock.LLD_Block.LLD_SectionType )
+   //:SetUpKeywordEntries( mSPLDefBlock, mSPLDefBlock.LLD_Block.LLD_BlockType )
    {StringBuilder sb_szTempString_0;
    if ( szTempString_0 == null )
       sb_szTempString_0 = new StringBuilder( 32 );
    else
       sb_szTempString_0 = new StringBuilder( szTempString_0 );
-       GetStringFromAttribute( sb_szTempString_0, mSPLDefBlock, "LLD_Block", "LLD_SectionType" );
+       GetStringFromAttribute( sb_szTempString_0, mSPLDefBlock, "LLD_Block", "LLD_BlockType" );
    szTempString_0 = sb_szTempString_0.toString( );}
    {
     mSPLDef_Object m_mSPLDef_Object = new mSPLDef_Object( mSPLDefBlock );
@@ -5650,10 +5613,10 @@ CONTINUE_BlockSubBlockDefAdd( View     ViewToWindow )
    return( 2 );
 // // END
 //    /*IF mSPLDef.LLD_Block.Type = "Block"
-//       mSPLDef.LLD_Block.LLD_SectionType = mSPLDef.LLD_Block.LLD_SectionType
+//       mSPLDef.LLD_Block.LLD_BlockType = mSPLDef.LLD_Block.LLD_BlockType
 //       SetWindowActionBehavior( ViewToWindow, zWAB_ReplaceWindowWithModalWindow, "wSPLD", "SPLD_BlockDefinitionUpdate" )
 //    ELSE
-//       mSPLDef.LLD_SubBlock.LLD_SectionType = mSPLDef.LLD_Block.LLD_SectionType
+//       mSPLDef.LLD_SubBlock.LLD_BlockType = mSPLDef.LLD_Block.LLD_BlockType
 //       SetWindowActionBehavior( ViewToWindow, zWAB_ReplaceWindowWithModalWindow, "wSPLD", "SPLD_BlockDefinitionUpdateSub" )
 //    END*/
 // END
@@ -7579,8 +7542,7 @@ InitializeNewReusableBlock( View     ViewToWindow )
    SetAttributeFromString( mBlockRU, "ReusableBlockDefinition", "Name", "Set Name of Reusable Block" );
    //:mBlockRU.ReusableBlockDefinition.Description = "Set Description of Reusable Block"
    SetAttributeFromString( mBlockRU, "ReusableBlockDefinition", "Description", "Set Description of Reusable Block" );
-   //:mBlockRU.ReusableBlockDefinition.LLD_SectionType = mSPLDefBlock.LLD_Block.LLD_SectionType
-   SetAttributeFromAttribute( mBlockRU, "ReusableBlockDefinition", "LLD_SectionType", mSPLDefBlock, "LLD_Block", "LLD_SectionType" );
+   //:mBlockRU.ReusableBlockDefinition.LLD_BlockType = mSPLDefBlock.LLD_Block.LLD_BlockType
    return( 0 );
 // // INCLUDE mBlockRU.Subregistrant FROM mSPLDef.Subregistrant
 // // IF mSPLDefBlock.LLD_Block EXISTS

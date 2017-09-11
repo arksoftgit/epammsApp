@@ -1,4 +1,4 @@
-z1000-Zeidon    MBLOCKRU TZZOLODO                         06/26/17   09:51:07 1.0a2   
+z1000-Zeidon    MBLOCKRU TZZOLODO                         09/06/17   13:13:54 1.0a2   
 eLOD       1
 aZKey      110030723
 aName      mBlockRU
@@ -171,16 +171,16 @@ eLOD_AttributeRec 5
 aZKey      110030781
 
 eER_AttributeRec 6
-aName      LLD_SectionType
+aName      LLD_BlockType
 aZKey      4499170
 
 eDomainRec 7
 aZKey      69080516
-aName      LLD_SectionType
+aName      LLD_BlockType
 aDomainType T
 aDataType  S
 aMaxStringLth 32
-aDesc      Template Section Types are usually the same as regular Section Types.
+aDesc      Template Block Types are usually the same as regular Block Types.
 aContextRestriction N
 
 eLOD_AttributeRec 5
@@ -567,11 +567,11 @@ aZKey      120103266
 
 eDomainRec 7
 aZKey      69081340
-aName      TemplateTitlePosition
+aName      TitlePosition
 aDomainType T
 aDataType  S
 aMaxStringLth 5
-aDesc      Where the Title is to be formatted for a Section
+aDesc      Where the Title is to be formatted for a Section (separate line, combined, skip)
 aContextRestriction N
 
 eLOD_AttributeRec 5
@@ -1820,7 +1820,7 @@ eLOD_AttributeRec 3
 aZKey      110030728
 
 eER_AttributeRec 4
-aName      LLD_SectionType
+aName      LLD_BlockType
 aZKey      110030389
 
 eDomainRec 5

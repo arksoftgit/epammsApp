@@ -2261,11 +2261,11 @@ PrebuildBlockDefinitionUpdate( VIEW ViewToWindow )
 
    // Composite entity Section Types: Precautionary, Environmental/Physical Hazard, First Aid, Ingredients, Storage/Disposal, Directions For Use, Marketing (P,E,F,I,S,D,M)
    //
-   // Textual LLD_SectionType: Precautionary, Human Hazard, Physical Hazard, First Aid, Ingredients, Storage and Disposal, Directions For Use, Marketing
+   // Textual LLD_BlockType: Precautionary, Human Hazard, Physical Hazard, First Aid, Ingredients, Storage and Disposal, Directions For Use, Marketing
    //
-   // Non-textual LLD_SectionType:  Graphic, Product Name, Net Contents, EPA Reg. No. - EPA Est. No.
+   // Non-textual LLD_BlockType:    Graphic, Product Name, Net Contents, EPA Reg. No. - EPA Est. No.
    //
-   szType = mSPLDefBlock.LLD_Block.LLD_SectionType
+   szType = mSPLDefBlock.LLD_Block.LLD_BlockType
    szName = mSPLDefBlock.LLD_Block.Name
    szSearch = szName
    szGraphic = mSPLDefBlock.LLD_Block.ImageName
@@ -2293,7 +2293,7 @@ PrebuildBlockDefinitionUpdate( VIEW ViewToWindow )
 
    wWebXfer.Root.CurrentSectionTitle = szMsg
 
-   SetUpKeywordEntries( mSPLDefBlock, mSPLDefBlock.LLD_Block.LLD_SectionType )
+   SetUpKeywordEntries( mSPLDefBlock, mSPLDefBlock.LLD_Block.LLD_BlockType )
 
    // Select which of the CompositeComponentList entities are to be displayed
    FOR EACH mSPLDef.Display WITHIN mSPLDef.SubregPhysicalLabelDef
@@ -2641,10 +2641,10 @@ CONTINUE_BlockSubBlockDefAdd( VIEW ViewToWindow )
 // END
 
    /*IF mSPLDef.LLD_Block.Type = "Block"
-      mSPLDef.LLD_Block.LLD_SectionType = mSPLDef.LLD_Block.LLD_SectionType
+      mSPLDef.LLD_Block.LLD_BlockType = mSPLDef.LLD_Block.LLD_BlockType
       SetWindowActionBehavior( ViewToWindow, zWAB_ReplaceWindowWithModalWindow, "wSPLD", "SPLD_BlockDefinitionUpdate" )
    ELSE
-      mSPLDef.LLD_SubBlock.LLD_SectionType = mSPLDef.LLD_Block.LLD_SectionType
+      mSPLDef.LLD_SubBlock.LLD_BlockType = mSPLDef.LLD_Block.LLD_BlockType
       SetWindowActionBehavior( ViewToWindow, zWAB_ReplaceWindowWithModalWindow, "wSPLD", "SPLD_BlockDefinitionUpdateSub" )
    END*/
 
@@ -3421,7 +3421,7 @@ InitializeNewReusableBlock( VIEW ViewToWindow )
    CREATE ENTITY mBlockRU.ReusableBlockDefinition
    mBlockRU.ReusableBlockDefinition.Name = "Set Name of Reusable Block"
    mBlockRU.ReusableBlockDefinition.Description = "Set Description of Reusable Block"
-   mBlockRU.ReusableBlockDefinition.LLD_SectionType = mSPLDefBlock.LLD_Block.LLD_SectionType
+   mBlockRU.ReusableBlockDefinition.LLD_BlockType = mSPLDefBlock.LLD_Block.LLD_BlockType
 
 // INCLUDE mBlockRU.Subregistrant FROM mSPLDef.Subregistrant
 // IF mSPLDefBlock.LLD_Block EXISTS

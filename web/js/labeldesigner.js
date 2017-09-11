@@ -220,8 +220,8 @@ $(function() {
       if ( g_$current_block ) {
          mapUiDataToElementData( g_$current_block, true );
          if ( g_$current_block.hasClass( "panel" ) === false ) {
-            var sectionType = g_$current_block.data( "z_^l^l^d_^section^type" );
-            sessionStorage.setItem( "epamms_section_type", sectionType );
+            var blockType = g_$current_block.data( "z_^l^l^d_^block^type" );
+            sessionStorage.setItem( "epamms_block_type", blockType );
             if ( g_updatedLLD ) {
             // alert( "Changed" );
                ConvertWysiwygLabelDesignToZeidonJson( "saveLabel", "mSPLDef", updateBlockCallback, g_$current_block, null );
@@ -320,8 +320,8 @@ $(function() {
    $("body").on( "dblclick", ".canvas-element", function(e) {
    // console.log( "Double Click on canvas-element: " + this.id + " has been pressed!" );
       if ( $(this).hasClass( "panel" ) === false ) {
-         var sectionType = $(this).data( "z_^l^l^d_^section^type" );
-         sessionStorage.setItem( "epamms_section_type", sectionType );
+         var blockType = $(this).data( "z_^l^l^d_^block^type" );
+         sessionStorage.setItem( "epamms_block_type", blockType );
          if ( g_updatedLLD ) {
             ConvertWysiwygLabelDesignToZeidonJson( "saveLabel", "mSPLDef", updateBlockCallback, this, null );
          } else {
@@ -380,9 +380,9 @@ $(function() {
          }
       }
       if ( g_$current_block && g_$current_block.hasClass( "panel" ) === false ) {
-         $("#zSectionType").prop( 'disabled', false );
+         $("#zBlockType").prop( 'disabled', false );
       } else {
-         $("#zSectionType").prop( 'disabled', true );
+         $("#zBlockType").prop( 'disabled', true );
       }
 
       return false;  // prevent default propagation (otherwise, the click is propagated to parent elements ... which we do not want!)
@@ -1067,12 +1067,12 @@ $(function() {
          var entity;
          var key;
          var value;
-         var sectionType;
+         var blockType;
          var blockName;
          var element_id = $current_element.attr( "id" );
          if ( element_id !== "label" && element_id !== "page" ) {
             element_id = "block";
-            sectionType = "";
+             blockType = "";
          }
 
          $("input.zeidon, select.zeidon").each( function() {
@@ -1086,8 +1086,8 @@ $(function() {
                   if ( ! value ) {
                      value = "";
                   }
-                  if ( key === "z_^l^l^d_^section^type" ) {
-                     sectionType = value;
+                  if ( key === "z_^l^l^d_^block^type" ) {
+                      blockType = value;
                   } else if ( key === "z_^name" ) {
                      blockName = value;
                   }
@@ -1101,13 +1101,13 @@ $(function() {
          });
 
          if ( element_id === "block" ) {
-         // console.log( "Processing block type: " + sectionType );
+         // console.log( "Processing block type: " + blockType );
             var optionsDflt = "<option value=\"^title\">Title</option><option value=\"^text\">Text</option>";  // default
             var options = "";
             // The .prop() method should be used to set disabled and checked instead of the .attr() method.
             // $('#id').prop('disabled', false);
             // $('#id').prop('disabled', 'disabled');
-            if ( sectionType === "Graphic" ) {
+            if ( blockType === "Graphic" ) {
                $("#zImageNameToggle").show();
                $("#zCheckContinuationBlockToggle").hide();
             // console.log( "   Hiding capitalize" );
@@ -1115,7 +1115,7 @@ $(function() {
                $("#zClaimListTypeToggle").hide();
                $("#zMarketingSectionToggle").hide();
                options = optionsDflt;
-            } else if ( sectionType === "Marketing" ) {
+            } else if ( blockType === "Marketing" ) {
                $("#zCheckContinuationBlockToggle").show();
             // console.log( "   Showing capitalize" );
                $("#zCapitalizeTitleTextFlagToggle").show();
@@ -1125,15 +1125,15 @@ $(function() {
                $('#zMarketingSection option[value="' + blockName + '"]').prop( 'selected', true );
                // Marketing:  Title / Text / Column List
                options = optionsDflt + "<option value=\"^column ^list\">Column List</option>";
-            } else if ( sectionType === "DirectionsForUse" || sectionType === "FirstAid" ||
-                        sectionType === "StorageDisposal" || sectionType === "Hazards" || sectionType === "Precautionary" ) {
+            } else if ( blockType === "DirectionsForUse" ||  blockType === "FirstAid" ||
+                         blockType === "StorageDisposal" ||  blockType === "Hazards" ||  blockType === "Precautionary" ) {
                $("#zCheckContinuationBlockToggle").show();
             // console.log( "   Showing capitalize" );
                $("#zCapitalizeTitleTextFlagToggle").show();
                $("#zImageNameToggle").hide();
                $("#zClaimListTypeToggle").hide();
                $("#zMarketingSectionToggle").hide();
-               if ( sectionType === "DirectionsForUse" || sectionType === "FirstAid" ) {
+               if ( blockType === "DirectionsForUse" || blockType === "FirstAid" ) {
                   options = "<option value=\"^header\">Header</option>" + optionsDflt;
                } else {
                   options = optionsDflt;
@@ -1145,13 +1145,13 @@ $(function() {
                $("#zImageNameToggle").hide();
                $("#zClaimListTypeToggle").hide();
                $("#zMarketingSectionToggle").hide();
-               if ( sectionType === "HumanHazard" ) {
+               if ( blockType === "HumanHazard" ) {
                   // Human Hazard:  Hazards Warning / Hazards Signal Word / Hazards Precautionary
                   options = "<option value=\"^hazards ^warning\">Hazards Warning</option><option value=\"^hazards ^signal ^word\">Hazards Signal Word</option><option value=\"^hazards ^precautionary\">Hazards Precautionary</option>";
-               } else if ( sectionType === "Ingredients" ) {
+               } else if ( blockType === "Ingredients" ) {
                   // Ingredients:   Ingredients Title / Ingredients Items / Ingredients Inert / Ingredients Total
                   options = "<option value=\"^ingredients ^title\">Ingredients Title</option><option value=\"^ingredients ^items\">Ingredients Items</option><option value=\"^ingredients ^inert\">Ingredients Inert</option><option value=\"^ingredients ^total\">Ingredients Total</option>";
-               } else if ( sectionType === "NetContents" || sectionType === "EPA_RegAndEstNbr" ) {
+               } else if ( blockType === "NetContents" || blockType === "EPA_RegAndEstNbr" ) {
                   options = "<option value=\"^text\">Text</option>"
                } else {
                   // Default:  Title / Text
@@ -1166,13 +1166,17 @@ $(function() {
                .val('')
             ;
 
-            if ( $(this).hasClass( "panel" ) ) {
+            if ( $current_element.hasClass( "panel" ) ) {
                $("#zBlockFormatTypeToggle").hide();
+               $("#zBlockStatementTitleToggle").hide();
+               
             } else {
                $("#zBlockFormatTypeToggle").show();
+               $("#zBlockStatementTitleToggle").show();
             }
          } else {
             $("#zBlockFormatTypeToggle").hide();
+            $("#zBlockStatementTitleToggle").hide();
             $("#zCheckContinuationBlockToggle").hide();
          // console.log( "   Hiding capitalize" );
             $("#zCapitalizeTitleTextFlagToggle").hide();
@@ -1185,6 +1189,7 @@ $(function() {
             this.type === "checkbox" ? this.checked = false : $(this).val( "" );
          });
          $("#zBlockFormatTypeToggle").hide();
+         $("#zBlockStatementTitleToggle").hide();
          $("#zCheckContinuationBlockToggle").hide();
       // console.log( "   Hiding capitalize" );
          $("#zCapitalizeTitleTextFlagToggle").hide();
@@ -1658,12 +1663,12 @@ $(function() {
          }
       });
 
-   // The difference between classes zeidon and zeidon-special is that zeidon-special is an extra block entity based on the section type of the current block.
+   // The difference between classes zeidon and zeidon-special is that zeidon-special is an extra block entity based on the block type of the current block.
    // When we switch to or from a special block category, we need to keep the block's data in sync with the special block data so that the UI works properly.
    // The functions mapToSpecialBlockFromBlock and mapFromSpecialBlockToBlock perform this synchronization using the attributes defined in g_SpecialBlockAttrList.
    // This list needs to be kept in sync between labeldesigner.js and GraphicalLabelDesignerServlet.java.
    var g_SpecialBlockAttrList = [ "z_^text^color", "z_^text^color^override",
-                                  "z_^font^family", "z_^font^size", "z_^font^weight",
+                                  "z_^font^family", "z_^font^size", "z_^font^weight", "z_^capitalize^title^text^flag",
                                   "z_^margin", "z_^margin^top", "z_^margin^left", "z_^margin^bottom", "z_^margin^right", "z_^margin^override",
                                   "z_^border", "z_^border^top", "z_^border^bottom", "z_^border^left", "z_^borderRight", "z_^border^override",
                                   "z_^padding", "z_^padding^top", "z_^padding^bottom", "z_^padding^left", "z_^padding^right", "z_^padding^override",
@@ -1671,17 +1676,17 @@ $(function() {
 
    function mapToSpecialBlockFromBlock( currentType ) {
       if ( g_$current_block && g_$current_block.data() ) {
-         var sectionType = g_$current_block.data( "z_^l^l^d_^section^type" );
-         if ( sectionType ) {
+         var blockType = g_$current_block.data( "z_^l^l^d_^block^type" );
+         if ( blockType ) {
             var entityAttr;
             var n;
             var entity;
             var key;
             var value;
-            var prefix = sectionType + "." + currentType + ".";
+            var prefix = blockType + "." + currentType + ".";
             var fullKey;
 
-         // displayElementData( "mapToSpecialBlockFromBlock Before SectionType: " + prefix, g_$current_block );
+         // displayElementData( "mapToSpecialBlockFromBlock Before BlockType: " + prefix, g_$current_block );
             $("input.zeidon-special, select.zeidon-special").each( function() {  // mapping from "special element" GUI to DOM data
                entityAttr = $(this).data( "zmap" );
                if ( entityAttr ) {
@@ -1699,7 +1704,7 @@ $(function() {
                }
             });
 
-            // Change special block attributes to have the full name (including section type and current type).  Note that it's possible
+            // Change special block attributes to have the full name (including block type and current type).  Note that it's possible
             // this could have been done in the above loop, but doing it here for clarity.
             $.each( g_SpecialBlockAttrList, function( index, attributeName ) {
                fullKey = prefix + attributeName;
@@ -1717,11 +1722,11 @@ $(function() {
    // Process data of the form: z_^marketing.^text.^font^family : verdana
    function mapFromSpecialBlockToBlock( currentType ) {
       if ( g_$current_block && g_$current_block.data() ) {
-         var sectionType = g_$current_block.data( "z_^l^l^d_^section^type" );
-         if ( sectionType ) {
-         // var section = zeidonAttributeToKey( sectionType ) + "." + currentType + ".";
-            var prefix = sectionType + "." + currentType + ".";
-         // displayElementData( "Before mapFromSpecialBlockToBlock section: " + section, g_$current_block );
+         var blockType = g_$current_block.data( "z_^l^l^d_^block^type" );
+         if ( blockType ) {
+         // var block = zeidonAttributeToKey( blockType ) + "." + currentType + ".";
+            var prefix = blockType + "." + currentType + ".";
+         // displayElementData( "Before mapFromSpecialBlockToBlock block: " + block, g_$current_block );
             $.each( g_SpecialBlockAttrList, function( index, attributeName ) {
                var specialBlockAttribute = prefix + attributeName;
                if ( specialBlockAttribute in g_$current_block.data() ) {
@@ -1775,6 +1780,32 @@ $(function() {
             $("#SpecialAttrToggle").hide(200);
          } else {
             g_currentType = keyToZeidonAttribute( val );
+            if ( g_currentType === "Header" ) {
+               $("#zFormattingToggle").show();
+               $('#zTitlePosition option[value=""]').text("Select Header Position...");
+               $('#zTitlePosition option[value="CF"]').text("Combined w/First Paragraph");
+            // $("#zTitlePositionLabel").text("Header Position:");
+            // $("#zTitlePositionLabel").html("Header Position:");
+               $("label[for = zTitlePosition]").text("Header Position:");
+               $("label[for = zCapitalizeTitleTextFlag]").text("Capitalize Header Text");
+               $("#zCapitalizeTitleTextFlagToggle").show();
+            }
+            else {
+               if ( g_currentType === "Title" ) {
+                  $("#zFormattingToggle").show();
+                  $('#zTitlePosition option[value=""]').text("Select Title Position...");
+                  $('#zTitlePosition option[value="CF"]').text("Combined w/Text");
+               // $("#zTitlePositionLabel").text("Title Position:");
+               // $("#zTitlePositionLabel").html("Title Position:");
+                   $("#zCapitalizeTitleTextFlagToggle").show();
+                  $("label[for = zTitlePosition]").text("Title Position:");
+                  $("label[for = zCapitalizeTitleTextFlag]").text("Capitalize Title Text");
+                } else { // if ( g_currentType === "Text" )
+                  $("#zFormattingToggle").hide();
+                  $("#zCapitalizeTitleTextFlagToggle").hide();
+               // $('#zTitlePosition option[value=""]').text("Select Text Position...");
+               }
+            }
             mapFromSpecialBlockToBlock( g_currentType );
             $("#SpecialAttrToggle").show(400);
          }
@@ -1786,12 +1817,12 @@ $(function() {
          $("#zBlockName").val( val );
 
       // alert( "Selected value: " + val );
-      // g_$current_block.text( $('#zSectionType').val() );  this wipes out all child nodes of the div ... but the complicated next line works where
+      // g_$current_block.text( $('#zBlockType').val() );  this wipes out all child nodes of the div ... but the complicated next line works where
       // nodeType === 3 restricts this to TEXT_NODE.
          g_$current_block.contents().filter( function() { return this.nodeType === 3; }).replaceWith( "Marketing: " + val );
       });
 
-   $("#zSectionType")
+   $("#zBlockType")
       .change( function() {
          mapUiDataToElementData( g_$current_block, false );
 
@@ -1809,7 +1840,7 @@ $(function() {
          // val = "<div style=\"text-align: center;\"><IMG height=" + height + " width=" + width + " SRC=\"./images/" + graphic + "\" ALT=\"" + val + "\"></div>";
          }
       // alert( "Selected value: " + val );
-      // g_$current_block.text( $('#zSectionType').val() );  this wipes out all child nodes of the div ... but the complicated next line works where
+      // g_$current_block.text( $('#zBlockType').val() );  this wipes out all child nodes of the div ... but the complicated next line works where
       // nodeType === 3 restricts this to TEXT_NODE.
          g_$current_block.contents().filter( function() { return this.nodeType === 3; }).replaceWith( val );
 
@@ -2698,8 +2729,8 @@ public class FileServer {
    function formatTitle( entity, obj ) {
       var name;
       var space;
-      if ( obj["LLD_SectionType"] ) {
-         name = obj["LLD_SectionType"];
+      if ( obj["LLD_BlockType"] ) {
+         name = obj["LLD_BlockType"];
          space = ": ";
       }
       else
@@ -2724,9 +2755,12 @@ public class FileServer {
          }
          var id = obj["ID"];
          if ( id ) {
-            name += id + " : ";
+            name += id;
          }
-         name += obj["Tag"];
+         var tag = obj["Tag"]
+         if ( tag ) {
+            name += " : " + tag;
+         }
       }
       return name;
    }
@@ -2857,8 +2891,8 @@ public class FileServer {
 
    function AddSpecialAttributes( $block, obj ) {
       var parentId = obj["ID"]
-      var sectionType = obj["LLD_SectionType"]; // if there is no section type, we have nothing
-      if ( !sectionType || sectionType === "" ) {
+      var blockType = obj["LLD_BlockType"]; // if there is no block type, we have nothing
+      if ( !blockType || blockType === "" ) {
       // console.log( "SpecialSection undefined" );
       } else {
          var objSpecial = obj["LLD_SpecialSectionAttribute"];
@@ -3921,24 +3955,24 @@ public class FileServer {
          $select.children().remove("optgroup");
          $select.find('option:not(:first)').remove(); // wipe out all but the first option
       // $select.find('optgroup:not(:first)').remove(); // wipe out all but the first optgroup
-         var sectionType = "";
+         var blockType = "";
          var currentType;
          var $optgroup = null;
          $.each( jsonReusable, function( index, item ) {
-            currentType = item.LLD_SectionType;
+            currentType = item.LLD_BlockType;
             if ( currentType === "" ) {
                currentType = "Group";
             }
-            if ( currentType !== sectionType ) {
-               sectionType = currentType;
-            // if ( sectionType !== "" ) {  cannot happen anymore
+            if ( currentType !== blockType ) {
+               blockType = currentType;
+            // if ( blockType !== "" ) {  cannot happen anymore
                   if ( $optgroup !== null ) {
                      $optgroup.appendTo( $select );
                   }
-                  $optgroup = $('<optgroup label="' + sectionType + '"></optgroup>');
+                  $optgroup = $('<optgroup label="' + blockType + '"></optgroup>');
             // }
             }
-         // if ( sectionType !== "" ) {
+         // if ( blockType !== "" ) {
                var $option = $("<option></option>");
                $option.val( item.Name );
                $option.text( item.Name + ":" + item.Description );
@@ -4027,7 +4061,7 @@ public class FileServer {
 // Initialize everything (first time in).
    scrollbarHeightWidth();  // call the function to set g_scrollbar
    setLLD_sizes();
-   $("#zSectionType").prop( 'disabled', true );
+   $("#zBlockType").prop( 'disabled', true );
    LoadZeidonJsonFromLLD( "mSPLDef" );
 
    // set initial state.

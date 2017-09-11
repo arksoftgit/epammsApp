@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCUsageGroupSelect   Generate Timestamp: 20170719132728211 --%>
+<%-- wMLCUsageGroupSelect --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -520,14 +520,13 @@ else
 <!-- Timeout.inc has a value for nTimeout which is used to determine when to -->
 <!-- log a user out.  Timeout.inc is not used if the dialog or window has a timeout value set. -->
 <%@ include file="./include/timeout.inc" %>
-<link rel="stylesheet" type="text/css" href="./css/print.css" media="print" />
-<script language="JavaScript" type="text/javascript" src="./js/common.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/css.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/sts.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
-<script language="JavaScript" type="text/javascript" src="./genjs/wMLCUsageGroupSelect.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/common.js?v=20170721113151840"></script>
+<script language="JavaScript" type="text/javascript" src="./js/css.js?v=20170721113151840"></script>
+<script language="JavaScript" type="text/javascript" src="./js/sts.js?v=20170721113151840"></script>
+<script language="JavaScript" type="text/javascript" src="./js/scw.js?v=20170721113151840"></script>
+<script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js?v=20170721113151840"></script>
+<script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js?v=20170721113151840"></script>
+<script language="JavaScript" type="text/javascript" src="./genjs/wMLCUsageGroupSelect.js?v=20170721113151840"></script>
 
 </head>
 
@@ -679,6 +678,7 @@ else
    <input name="zOpenFile" id="zOpenFile" type="hidden" value="<%=strOpenFile%>">
    <input name="zDateFormat" id="zDateFormat" type="hidden" value="<%=strDateFormat%>">
    <input name="zDateSequence" id="zDateSequence" type="hidden" value="MDY">
+   <input name="zLanguage" id="zLanguage" type="hidden" value="">
    <input name="zLoginName" id="zLoginName" type="hidden" value="<%=strLoginName%>">
    <input name="zKeyRole" id="zKeyRole" type="hidden" value="<%=strKeyRole%>">
    <input name="zOpenPopupWindow" id="zOpenPopupWindow" type="hidden" value="<%=strOpenPopupWindow%>">
@@ -750,7 +750,7 @@ else
    }
 %>
 
-<input class="groupbox"  name="GroupName" id="GroupName" maxlength="4096" style="width:208px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="groupbox"  name="GroupName" id="GroupName" style="width:208px;<%=strErrorColor%>" type="text"  value="<%=strErrorMapValue%>" >
 
 </div>  <!-- End of a new line -->
 
@@ -814,7 +814,7 @@ else
 <% /* Grid1:Grid */ %>
 <table class="sortable"  cols=2 style="width:402px;"  name="Grid1" id="Grid1">
 
-<thead bgcolor=green><tr>
+<thead><tr>
 
    <th class="gridheading"><input type="checkbox" onclick="CheckAllInGrid(this,'GridCheckCtl2')"></th>
    <th style="width:358px;">Name</th>
@@ -887,7 +887,7 @@ try
 
 <tr<%=strOdd%>>
 
-   <td nowrap><%=strGridCheckCtl2%></td>
+   <td><%=strGridCheckCtl2%></td>
    <td style="width:358px;"><%=strGridEditCtl2%></td>
 
 </tr>
@@ -969,7 +969,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 <% /* Grid2:Grid */ %>
 <table class="sortable"  cols=2 style="width:410px;"  name="Grid2" id="Grid2">
 
-<thead bgcolor=green><tr>
+<thead><tr>
 
    <th class="gridheading"><input type="checkbox" onclick="CheckAllInGrid(this,'GridCheckCtl1')"></th>
    <th style="width:374px;">Name</th>
@@ -1042,7 +1042,7 @@ try
 
 <tr<%=strOdd%>>
 
-   <td nowrap><%=strGridCheckCtl1%></td>
+   <td><%=strGridCheckCtl1%></td>
    <td style="width:374px;"><%=strGridEditCtl1%></td>
 
 </tr>

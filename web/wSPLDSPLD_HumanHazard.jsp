@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSPLDSPLD_HumanHazard   Generate Timestamp: 20170511185338759 --%>
+<%-- wSPLDSPLD_HumanHazard --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -907,12 +907,11 @@ else
 <!-- Timeout.inc has a value for nTimeout which is used to determine when to -->
 <!-- log a user out.  Timeout.inc is not used if the dialog or window has a timeout value set. -->
 <%@ include file="./include/timeout.inc" %>
-<link rel="stylesheet" type="text/css" href="./css/print.css" media="print" />
-<script language="JavaScript" type="text/javascript" src="./js/common.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
-<script language="JavaScript" type="text/javascript" src="./genjs/wSPLDSPLD_HumanHazard.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/common.js?v=20170810173025360"></script>
+<script language="JavaScript" type="text/javascript" src="./js/scw.js?v=20170810173025360"></script>
+<script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js?v=20170810173025360"></script>
+<script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js?v=20170810173025360"></script>
+<script language="JavaScript" type="text/javascript" src="./genjs/wSPLDSPLD_HumanHazard.js?v=20170810173025360"></script>
 
 </head>
 
@@ -1259,6 +1258,7 @@ else
    <input name="zOpenFile" id="zOpenFile" type="hidden" value="<%=strOpenFile%>">
    <input name="zDateFormat" id="zDateFormat" type="hidden" value="<%=strDateFormat%>">
    <input name="zDateSequence" id="zDateSequence" type="hidden" value="MDY">
+   <input name="zLanguage" id="zLanguage" type="hidden" value="">
    <input name="zLoginName" id="zLoginName" type="hidden" value="<%=strLoginName%>">
    <input name="zKeyRole" id="zKeyRole" type="hidden" value="<%=strKeyRole%>">
    <input name="zOpenPopupWindow" id="zOpenPopupWindow" type="hidden" value="<%=strOpenPopupWindow%>">
@@ -1274,31 +1274,21 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:4px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<span style="height:16px;">&nbsp&nbsp</span>
-<% /* Text2:Text */ %>
-
-<span class="listheader"  id="Text2" name="Text2" style="width:250px;height:16px;">Hazard Attributes</span>
-
-</div>  <!-- End of a new line -->
-
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
-
-
- <!-- This is added as a line spacer -->
 <div style="height:10px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox1:GroupBox */ %>
 
-<div id="GroupBox1" name="GroupBox1"   style="float:left;position:relative; width:692px; height:366px;">  <!-- GroupBox1 --> 
+<div id="GroupBox1" name="GroupBox1" class="listgroup"   style="float:left;position:relative; width:692px; height:390px;">  <!-- GroupBox1 --> 
+
+<% /* Text2:Text */ %>
+
+<label class="listheader"  id="Text2" name="Text2" style="width:250px;height:16px;position:absolute;left:0px;top:0px;">Human Hazard Attributes</label>
 
 <% /* HazardText::Text */ %>
 
-<label  id="HazardText:" name="HazardText:" style="width:130px;height:16px;position:absolute;left:0px;top:0px;">Hazard Text:</label>
+<label  id="HazardText:" name="HazardText:" style="width:114px;height:16px;position:absolute;left:26px;top:30px;">Hazard Text:</label>
 
 <% /* Text3:Text */ %>
 <% strTextDisplayValue = "";
@@ -1325,11 +1315,11 @@ else
    }
 %>
 
-<label  id="Text3" name="Text3" style="width:544px;height:16px;position:absolute;left:130px;top:0px;"><%=strTextDisplayValue%></label>
+<label  id="Text3" name="Text3" style="width:544px;height:16px;position:absolute;left:142px;top:30px;"><%=strTextDisplayValue%></label>
 
 <% /* SignalWord::Text */ %>
 
-<label  id="SignalWord:" name="SignalWord:" style="width:130px;height:16px;position:absolute;left:0px;top:32px;">Signal Word:</label>
+<label  id="SignalWord:" name="SignalWord:" style="width:114px;height:16px;position:absolute;left:26px;top:62px;">Signal Word:</label>
 
 <% /* Text1:Text */ %>
 <% strTextDisplayValue = "";
@@ -1356,11 +1346,11 @@ else
    }
 %>
 
-<label  id="Text1" name="Text1" style="width:544px;height:16px;position:absolute;left:130px;top:32px;"><%=strTextDisplayValue%></label>
+<label  id="Text1" name="Text1" style="width:544px;height:16px;position:absolute;left:142px;top:62px;"><%=strTextDisplayValue%></label>
 
 <% /* Statement::Text */ %>
 
-<label  id="Statement:" name="Statement:" style="width:130px;height:16px;position:absolute;left:0px;top:70px;">Statement:</label>
+<label  id="Statement:" name="Statement:" style="width:114px;height:16px;position:absolute;left:26px;top:100px;">Statement:</label>
 
 <% /* Text4:Text */ %>
 <% strTextDisplayValue = "";
@@ -1387,11 +1377,11 @@ else
    }
 %>
 
-<label  id="Text4" name="Text4" style="width:542px;height:50px;position:absolute;left:134px;top:70px;"><%=strTextDisplayValue%></label>
+<label  id="Text4" name="Text4" style="width:542px;height:50px;position:absolute;left:146px;top:100px;"><%=strTextDisplayValue%></label>
 
 <% /* PanelLocation1::Text */ %>
 
-<label  id="PanelLocation1:" name="PanelLocation1:" style="width:130px;height:16px;position:absolute;left:0px;top:130px;">Panel Location:</label>
+<label  id="PanelLocation1:" name="PanelLocation1:" style="width:114px;height:16px;position:absolute;left:26px;top:160px;">Panel Location:</label>
 
 <% /* PanelLocation1:Text */ %>
 <% strTextDisplayValue = "";
@@ -1418,11 +1408,11 @@ else
    }
 %>
 
-<label  id="PanelLocation1" name="PanelLocation1" style="width:178px;height:16px;position:absolute;left:134px;top:130px;"><%=strTextDisplayValue%></label>
+<label  id="PanelLocation1" name="PanelLocation1" style="width:178px;height:16px;position:absolute;left:146px;top:160px;"><%=strTextDisplayValue%></label>
 
 <% /* LabelLocation1::Text */ %>
 
-<label  id="LabelLocation1:" name="LabelLocation1:" style="width:130px;height:16px;position:absolute;left:330px;top:130px;">Label Location:</label>
+<label  id="LabelLocation1:" name="LabelLocation1:" style="width:114px;height:16px;position:absolute;left:358px;top:160px;">Label Location:</label>
 
 <% /* LabelLocation1:Text */ %>
 <% strTextDisplayValue = "";
@@ -1449,11 +1439,11 @@ else
    }
 %>
 
-<label  id="LabelLocation1" name="LabelLocation1" style="width:178px;height:16px;position:absolute;left:466px;top:130px;"><%=strTextDisplayValue%></label>
+<label  id="LabelLocation1" name="LabelLocation1" style="width:178px;height:16px;position:absolute;left:478px;top:160px;"><%=strTextDisplayValue%></label>
 
 <% /* PanelLocation2::Text */ %>
 
-<label  id="PanelLocation2:" name="PanelLocation2:" style="width:130px;height:16px;position:absolute;left:0px;top:156px;">Panel Location:</label>
+<label  id="PanelLocation2:" name="PanelLocation2:" style="width:114px;height:16px;position:absolute;left:26px;top:186px;">Panel Location:</label>
 
 <% /* PanelLocation2:Text */ %>
 <% strTextDisplayValue = "";
@@ -1480,11 +1470,11 @@ else
    }
 %>
 
-<label  id="PanelLocation2" name="PanelLocation2" style="width:178px;height:16px;position:absolute;left:134px;top:156px;"><%=strTextDisplayValue%></label>
+<label  id="PanelLocation2" name="PanelLocation2" style="width:178px;height:16px;position:absolute;left:146px;top:186px;"><%=strTextDisplayValue%></label>
 
 <% /* LabelLocation2::Text */ %>
 
-<label  id="LabelLocation2:" name="LabelLocation2:" style="width:130px;height:16px;position:absolute;left:330px;top:156px;">LabelLocation:</label>
+<label  id="LabelLocation2:" name="LabelLocation2:" style="width:114px;height:16px;position:absolute;left:358px;top:186px;">LabelLocation:</label>
 
 <% /* LabelLocation2:Text */ %>
 <% strTextDisplayValue = "";
@@ -1511,11 +1501,11 @@ else
    }
 %>
 
-<label  id="LabelLocation2" name="LabelLocation2" style="width:178px;height:16px;position:absolute;left:466px;top:156px;"><%=strTextDisplayValue%></label>
+<label  id="LabelLocation2" name="LabelLocation2" style="width:178px;height:16px;position:absolute;left:478px;top:186px;"><%=strTextDisplayValue%></label>
 
 <% /* PanelLocation3::Text */ %>
 
-<label  id="PanelLocation3:" name="PanelLocation3:" style="width:130px;height:16px;position:absolute;left:0px;top:182px;">PanelLocation:</label>
+<label  id="PanelLocation3:" name="PanelLocation3:" style="width:114px;height:16px;position:absolute;left:26px;top:212px;">PanelLocation:</label>
 
 <% /* PanelLocation3:Text */ %>
 <% strTextDisplayValue = "";
@@ -1542,11 +1532,11 @@ else
    }
 %>
 
-<label  id="PanelLocation3" name="PanelLocation3" style="width:178px;height:16px;position:absolute;left:134px;top:182px;"><%=strTextDisplayValue%></label>
+<label  id="PanelLocation3" name="PanelLocation3" style="width:178px;height:16px;position:absolute;left:146px;top:212px;"><%=strTextDisplayValue%></label>
 
 <% /* LabelLocation3::Text */ %>
 
-<label  id="LabelLocation3:" name="LabelLocation3:" style="width:130px;height:16px;position:absolute;left:330px;top:182px;">LabelLocation:</label>
+<label  id="LabelLocation3:" name="LabelLocation3:" style="width:114px;height:16px;position:absolute;left:358px;top:212px;">LabelLocation:</label>
 
 <% /* LabelLocation3:Text */ %>
 <% strTextDisplayValue = "";
@@ -1573,11 +1563,11 @@ else
    }
 %>
 
-<label  id="LabelLocation3" name="LabelLocation3" style="width:178px;height:16px;position:absolute;left:466px;top:182px;"><%=strTextDisplayValue%></label>
+<label  id="LabelLocation3" name="LabelLocation3" style="width:178px;height:16px;position:absolute;left:478px;top:212px;"><%=strTextDisplayValue%></label>
 
 <% /* PanelLocation4::Text */ %>
 
-<label  id="PanelLocation4:" name="PanelLocation4:" style="width:130px;height:16px;position:absolute;left:0px;top:208px;">Panel Location:</label>
+<label  id="PanelLocation4:" name="PanelLocation4:" style="width:114px;height:16px;position:absolute;left:26px;top:238px;">Panel Location:</label>
 
 <% /* PanelLocation4:Text */ %>
 <% strTextDisplayValue = "";
@@ -1604,11 +1594,11 @@ else
    }
 %>
 
-<label  id="PanelLocation4" name="PanelLocation4" style="width:178px;height:16px;position:absolute;left:134px;top:208px;"><%=strTextDisplayValue%></label>
+<label  id="PanelLocation4" name="PanelLocation4" style="width:178px;height:16px;position:absolute;left:146px;top:238px;"><%=strTextDisplayValue%></label>
 
 <% /* LabelLocation4::Text */ %>
 
-<label  id="LabelLocation4:" name="LabelLocation4:" style="width:130px;height:16px;position:absolute;left:330px;top:208px;">Label Location:</label>
+<label  id="LabelLocation4:" name="LabelLocation4:" style="width:114px;height:16px;position:absolute;left:358px;top:238px;">Label Location:</label>
 
 <% /* LabelLocation4:Text */ %>
 <% strTextDisplayValue = "";
@@ -1635,11 +1625,11 @@ else
    }
 %>
 
-<label  id="LabelLocation4" name="LabelLocation4" style="width:178px;height:16px;position:absolute;left:466px;top:208px;"><%=strTextDisplayValue%></label>
+<label  id="LabelLocation4" name="LabelLocation4" style="width:178px;height:16px;position:absolute;left:478px;top:238px;"><%=strTextDisplayValue%></label>
 
 <% /* PanelLocation5::Text */ %>
 
-<label  id="PanelLocation5:" name="PanelLocation5:" style="width:130px;height:16px;position:absolute;left:0px;top:234px;">PanelLocation:</label>
+<label  id="PanelLocation5:" name="PanelLocation5:" style="width:114px;height:16px;position:absolute;left:26px;top:264px;">PanelLocation:</label>
 
 <% /* PanelLocation5:Text */ %>
 <% strTextDisplayValue = "";
@@ -1666,11 +1656,11 @@ else
    }
 %>
 
-<label  id="PanelLocation5" name="PanelLocation5" style="width:178px;height:16px;position:absolute;left:134px;top:234px;"><%=strTextDisplayValue%></label>
+<label  id="PanelLocation5" name="PanelLocation5" style="width:178px;height:16px;position:absolute;left:146px;top:264px;"><%=strTextDisplayValue%></label>
 
 <% /* LabelLocation5::Text */ %>
 
-<label  id="LabelLocation5:" name="LabelLocation5:" style="width:130px;height:16px;position:absolute;left:330px;top:234px;">LabelLocation:</label>
+<label  id="LabelLocation5:" name="LabelLocation5:" style="width:114px;height:16px;position:absolute;left:358px;top:264px;">LabelLocation:</label>
 
 <% /* LabelLocation5:Text */ %>
 <% strTextDisplayValue = "";
@@ -1697,11 +1687,11 @@ else
    }
 %>
 
-<label  id="LabelLocation5" name="LabelLocation5" style="width:178px;height:16px;position:absolute;left:466px;top:234px;"><%=strTextDisplayValue%></label>
+<label  id="LabelLocation5" name="LabelLocation5" style="width:178px;height:16px;position:absolute;left:478px;top:264px;"><%=strTextDisplayValue%></label>
 
 <% /* PanelLocation6::Text */ %>
 
-<label  id="PanelLocation6:" name="PanelLocation6:" style="width:130px;height:16px;position:absolute;left:0px;top:260px;">Panel Location:</label>
+<label  id="PanelLocation6:" name="PanelLocation6:" style="width:114px;height:16px;position:absolute;left:26px;top:290px;">Panel Location:</label>
 
 <% /* PanelLocation6:Text */ %>
 <% strTextDisplayValue = "";
@@ -1728,11 +1718,11 @@ else
    }
 %>
 
-<label  id="PanelLocation6" name="PanelLocation6" style="width:178px;height:16px;position:absolute;left:134px;top:260px;"><%=strTextDisplayValue%></label>
+<label  id="PanelLocation6" name="PanelLocation6" style="width:178px;height:16px;position:absolute;left:146px;top:290px;"><%=strTextDisplayValue%></label>
 
 <% /* LabelLocation6::Text */ %>
 
-<label  id="LabelLocation6:" name="LabelLocation6:" style="width:130px;height:16px;position:absolute;left:330px;top:260px;">Label Location:</label>
+<label  id="LabelLocation6:" name="LabelLocation6:" style="width:114px;height:16px;position:absolute;left:358px;top:290px;">Label Location:</label>
 
 <% /* LabelLocation6:Text */ %>
 <% strTextDisplayValue = "";
@@ -1759,11 +1749,11 @@ else
    }
 %>
 
-<label  id="LabelLocation6" name="LabelLocation6" style="width:178px;height:16px;position:absolute;left:466px;top:260px;"><%=strTextDisplayValue%></label>
+<label  id="LabelLocation6" name="LabelLocation6" style="width:178px;height:16px;position:absolute;left:478px;top:290px;"><%=strTextDisplayValue%></label>
 
 <% /* PanelLocation7::Text */ %>
 
-<label  id="PanelLocation7:" name="PanelLocation7:" style="width:130px;height:16px;position:absolute;left:0px;top:286px;">Panel Location:</label>
+<label  id="PanelLocation7:" name="PanelLocation7:" style="width:114px;height:16px;position:absolute;left:26px;top:316px;">Panel Location:</label>
 
 <% /* PanelLocation7:Text */ %>
 <% strTextDisplayValue = "";
@@ -1790,11 +1780,11 @@ else
    }
 %>
 
-<label  id="PanelLocation7" name="PanelLocation7" style="width:178px;height:16px;position:absolute;left:134px;top:286px;"><%=strTextDisplayValue%></label>
+<label  id="PanelLocation7" name="PanelLocation7" style="width:178px;height:16px;position:absolute;left:146px;top:316px;"><%=strTextDisplayValue%></label>
 
 <% /* LabelLocation7::Text */ %>
 
-<label  id="LabelLocation7:" name="LabelLocation7:" style="width:130px;height:16px;position:absolute;left:330px;top:286px;">LabelLocation:</label>
+<label  id="LabelLocation7:" name="LabelLocation7:" style="width:114px;height:16px;position:absolute;left:358px;top:316px;">LabelLocation:</label>
 
 <% /* LabelLocation7:Text */ %>
 <% strTextDisplayValue = "";
@@ -1821,11 +1811,11 @@ else
    }
 %>
 
-<label  id="LabelLocation7" name="LabelLocation7" style="width:178px;height:16px;position:absolute;left:466px;top:286px;"><%=strTextDisplayValue%></label>
+<label  id="LabelLocation7" name="LabelLocation7" style="width:178px;height:16px;position:absolute;left:478px;top:316px;"><%=strTextDisplayValue%></label>
 
 <% /* PanelLocation8::Text */ %>
 
-<label  id="PanelLocation8:" name="PanelLocation8:" style="width:130px;height:16px;position:absolute;left:0px;top:312px;">PanelLocation:</label>
+<label  id="PanelLocation8:" name="PanelLocation8:" style="width:114px;height:16px;position:absolute;left:26px;top:342px;">PanelLocation:</label>
 
 <% /* PanelLocation8:Text */ %>
 <% strTextDisplayValue = "";
@@ -1852,11 +1842,11 @@ else
    }
 %>
 
-<label  id="PanelLocation8" name="PanelLocation8" style="width:178px;height:16px;position:absolute;left:134px;top:312px;"><%=strTextDisplayValue%></label>
+<label  id="PanelLocation8" name="PanelLocation8" style="width:178px;height:16px;position:absolute;left:146px;top:342px;"><%=strTextDisplayValue%></label>
 
 <% /* LabelLocation8::Text */ %>
 
-<label  id="LabelLocation8:" name="LabelLocation8:" style="width:130px;height:16px;position:absolute;left:330px;top:312px;">LabelLocation:</label>
+<label  id="LabelLocation8:" name="LabelLocation8:" style="width:114px;height:16px;position:absolute;left:358px;top:342px;">LabelLocation:</label>
 
 <% /* LabelLocation8:Text */ %>
 <% strTextDisplayValue = "";
@@ -1883,11 +1873,11 @@ else
    }
 %>
 
-<label  id="LabelLocation8" name="LabelLocation8" style="width:178px;height:16px;position:absolute;left:466px;top:312px;"><%=strTextDisplayValue%></label>
+<label  id="LabelLocation8" name="LabelLocation8" style="width:178px;height:16px;position:absolute;left:478px;top:342px;"><%=strTextDisplayValue%></label>
 
 <% /* PanelLocation9::Text */ %>
 
-<label  id="PanelLocation9:" name="PanelLocation9:" style="width:130px;height:16px;position:absolute;left:0px;top:338px;">Panel Location:</label>
+<label  id="PanelLocation9:" name="PanelLocation9:" style="width:114px;height:16px;position:absolute;left:26px;top:368px;">Panel Location:</label>
 
 <% /* PanelLocation9:Text */ %>
 <% strTextDisplayValue = "";
@@ -1914,11 +1904,11 @@ else
    }
 %>
 
-<label  id="PanelLocation9" name="PanelLocation9" style="width:178px;height:16px;position:absolute;left:134px;top:338px;"><%=strTextDisplayValue%></label>
+<label  id="PanelLocation9" name="PanelLocation9" style="width:178px;height:16px;position:absolute;left:146px;top:368px;"><%=strTextDisplayValue%></label>
 
 <% /* LabelLocation9::Text */ %>
 
-<label  id="LabelLocation9:" name="LabelLocation9:" style="width:130px;height:16px;position:absolute;left:330px;top:338px;">Label Location:</label>
+<label  id="LabelLocation9:" name="LabelLocation9:" style="width:114px;height:16px;position:absolute;left:358px;top:368px;">Label Location:</label>
 
 <% /* LabelLocation9:Text */ %>
 <% strTextDisplayValue = "";
@@ -1945,7 +1935,7 @@ else
    }
 %>
 
-<label  id="LabelLocation9" name="LabelLocation9" style="width:178px;height:16px;position:absolute;left:466px;top:338px;"><%=strTextDisplayValue%></label>
+<label  id="LabelLocation9" name="LabelLocation9" style="width:178px;height:16px;position:absolute;left:478px;top:368px;"><%=strTextDisplayValue%></label>
 
 
 </div>  <!--  GroupBox1 --> 
@@ -1955,7 +1945,7 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:6px;width:100px;"></div>
+<div style="height:2px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
@@ -2015,7 +2005,7 @@ else
    }
 %>
 
-<div name="MLEditFullStatement" id="MLEditFullStatement" style="width:672px;height:136px;position:absolute;left:10px;top:0px;border:solid;border-width:4px;border-style:groove;text-overflow:hidden;background-color:lightgray;" wrap="wrap"><%=strErrorMapValue%></div>
+<textarea name="MLEditFullStatement" id="MLEditFullStatement" style="width:672px;height:136px;position:absolute;left:10px;top:0px;border:solid;border-width:4px;border-style:groove;" wrap="wrap"><%=strErrorMapValue%></textarea>
 
 
 </div>  <!--  GroupBox3 --> 

@@ -1,4 +1,4 @@
-//start mSPLDef 2017.06.26 09:51:26
+//start mSPLDef 2017.09.06 13:27:50
 zOPER_EXPORT zSHORT OPERATION
 omSPLDef_GeneratePDF_Label( zVIEW vViewToInstance0 );
 
@@ -25,15 +25,16 @@ omSPLDef_ProcessPDF_Blocks( zVIEW vViewToInstance0,
 
 zOPER_EXPORT zSHORT OPERATION
 omSPLDef_GeneratePDF_DFU( zVIEW vViewToInstance0,
-                          zVIEW vmSPLDefPDF1,
+                          zVIEW vmSPLDefBlock1,
                           zLONG llFile2,
                           zPCHAR pchszSectionType3,
-                          zPCHAR pchSTRING32szSPLD_Secti4,
-                          zPCHAR pchszStatementName5,
-                          zPCHAR pchszUsageName6,
-                          zPCHAR pchszUsageNameScope7,
-                          zPCHAR pchLeadingBlanks8,
-                          zPCHAR pchWriteBuffer9 );
+                          zPCHAR pchszSectionTitle4,
+                          zPCHAR pchszSPLD_SectionEntity5,
+                          zPCHAR pchszSPLD_StatementEnti6,
+                          zPCHAR pchszUsageTypeEntity7,
+                          zPCHAR pchszLoopingEntity8,
+                          zPCHAR pchLeadingBlanks9,
+                          zPCHAR pchWriteBuffer10 );
 
 zOPER_EXPORT zSHORT OPERATION
 omSPLDef_GeneratePDF_ClmList( zVIEW vViewToInstance0,
@@ -177,7 +178,7 @@ zOPER_EXPORT zSHORT OPERATION
 omTempl_BuildDisplayStructure( zVIEW vViewToInstance0 );
 
 //end
-//start mMasLC 2017.06.26 11:30:03
+//start mMasLC 2017.09.06 13:27:48
 zOPER_EXPORT zSHORT OPERATION
 omMasLC_MergeUsageSelectEnts( zVIEW vViewToInstance0 );
 
@@ -228,7 +229,7 @@ zOPER_EXPORT zSHORT OPERATION
 omMasLC_BuildNonGroupEntries( zVIEW vViewToInstance0 );
 
 //end
-//start mSubLC 2017.06.26 09:51:27
+//start mSubLC 2017.09.06 13:27:51
 zOPER_EXPORT zSHORT OPERATION
 omSubLC_BuildNewSLC_Version( zVIEW vViewToInstance0,
                              zVIEW vOriginalSLC1,
@@ -272,7 +273,7 @@ omSubLC_ObjectConstraints( zVIEW vViewtoInstance0,
                            zSHORT nState2 );
 
 //end
-//start DOMAINT 2017.06.26 09:51:05
+//start DOMAINT 2017.09.06 13:27:44
 zOPER_EXPORT zSHORT OPERATION
 oDOMAINT_ActivateDomainList( zPVIEW vViewToInstance0,
                              zVIEW vViewToWindow1 );
@@ -293,7 +294,7 @@ oDOMAINT_PreloadSystemDomains( zVIEW vViewToInstance0,
                                zPCHAR pchInstallApp2 );
 
 //end
-//start lMLCATgt 2017.06.26 09:51:06
+//start lMLCATgt 2017.09.06 13:27:45
 zOPER_EXPORT zSHORT OPERATION
 olMLCATgt_BuildDifferencesMLC( zVIEW vViewToInstance0,
                                zVIEW vSourceCompareObject1 );
@@ -312,13 +313,21 @@ zOPER_EXPORT zSHORT OPERATION
 olMLCATgt_DeleteEmptyTitles( zVIEW vViewToInstance0 );
 
 //end
-//start ZGlobal1 2016.12.28 13:16:30
+//start ZGlobal1 2017.07.24 14:36:47
 zOPER_EXPORT zSHORT OPERATION
 ConvertLineToEntity( zVIEW vEntityView0,
                      zVIEW vXOD_View1,
                      zPCHAR pchRecordArea2,
                      zPCHAR pchDelimiterType3,
                      zLONG lMaxRecordLth4 );
+
+zOPER_EXPORT zSHORT OPERATION
+SetCursorFirstEntityByCursor( zVIEW vTargetView0,
+                              zPCHAR pchTargetEntityName1,
+                              zVIEW vSourceView2,
+                              zPCHAR pchSourceEntityName3,
+                              zPCHAR pchScopingEntity4,
+                              zPCHAR pchAttributeName5 );
 
 zOPER_EXPORT zSHORT OPERATION
 RemovePairedCharactersFromString( zPCHAR pchString0,
@@ -1088,7 +1097,7 @@ zOPER_EXPORT zSHORT OPERATION
 omSPLDefx_TraverseBlocks( zVIEW vViewToInstance0 );
 
 //end
-//start mMasLC1 2017.06.26 09:51:25
+//start mMasLC1 2017.09.06 13:13:36
 zOPER_EXPORT zSHORT OPERATION
 omMasLC1_MergeUsageSelectEnts( zVIEW vViewToInstance0 );
 

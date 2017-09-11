@@ -1,4 +1,4 @@
-// wMLCLocations   Generate Timestamp: 20170714173940355
+// wMLCLocations   Generate Timestamp: 20170721135740035
 
 var isWindowClosing = true;
 var timerID = null;
@@ -173,6 +173,15 @@ function _AfterPageLoaded( )
       timerID = null; // No timeout specified
 
 var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title ); }
+   var storageName = "epamms.wMLCLocations.position";
+   var scrollPosition = sessionStorage.getItem( storageName );
+   if ( scrollPosition.indexOf('#') > 0 )
+   {
+      var parts = scrollPosition.split( '#' );
+      document.body.scrollTop = parseInt( parts[parts.length - 2] );
+      document.body.scrollLeft = parseInt( parts[parts.length - 1] );
+   }
+   sessionStorage.removeItem( storageName );
    isWindowClosing = true;
 }
 
@@ -202,6 +211,13 @@ function ADD_Locations( )
    {
       _DisableFormElements( true );
 
+      if ( typeof(Storage) !== "undefined" )
+      {
+         // Code for localStorage/sessionStorage.
+         var storageName = "epamms.wMLCLocations.position"
+         var scrollPosition = document.body.scrollTop + '#' + document.body.scrollLeft;
+         sessionStorage.setItem( storageName, scrollPosition );
+      }
       document.wMLCLocations.zAction.value = "ADD_Locations";
       document.wMLCLocations.submit( );
    }
@@ -227,6 +243,13 @@ if (!confirm("OK to delete selected Locations?"))
 
       _DisableFormElements( true );
 
+      if ( typeof(Storage) !== "undefined" )
+      {
+         // Code for localStorage/sessionStorage.
+         var storageName = "epamms.wMLCLocations.position"
+         var scrollPosition = document.body.scrollTop + '#' + document.body.scrollLeft;
+         sessionStorage.setItem( storageName, scrollPosition );
+      }
       document.wMLCLocations.zAction.value = "DELETE_SelectedUsageEntries";
       document.wMLCLocations.submit( );
    }
@@ -256,6 +279,13 @@ if (!confirm("Delete Location?"))
 
       _DisableFormElements( true );
 
+      if ( typeof(Storage) !== "undefined" )
+      {
+         // Code for localStorage/sessionStorage.
+         var storageName = "epamms.wMLCLocations.position"
+         var scrollPosition = document.body.scrollTop + '#' + document.body.scrollLeft;
+         sessionStorage.setItem( storageName, scrollPosition );
+      }
       document.wMLCLocations.zAction.value = "DELETE_Location";
       document.wMLCLocations.submit( );
    }
@@ -271,6 +301,13 @@ function DELETE_UsageGroupEntriesOnly( )
    {
       _DisableFormElements( true );
 
+      if ( typeof(Storage) !== "undefined" )
+      {
+         // Code for localStorage/sessionStorage.
+         var storageName = "epamms.wMLCLocations.position"
+         var scrollPosition = document.body.scrollTop + '#' + document.body.scrollLeft;
+         sessionStorage.setItem( storageName, scrollPosition );
+      }
       document.wMLCLocations.zAction.value = "DELETE_UsageGroupEntriesOnly";
       document.wMLCLocations.submit( );
    }
@@ -290,6 +327,13 @@ function DeleteUsageGroup( strTagEntityKey )
       document.wMLCLocations.zTableRowSelect.value = strEntityKey;
       _DisableFormElements( true );
 
+      if ( typeof(Storage) !== "undefined" )
+      {
+         // Code for localStorage/sessionStorage.
+         var storageName = "epamms.wMLCLocations.position"
+         var scrollPosition = document.body.scrollTop + '#' + document.body.scrollLeft;
+         sessionStorage.setItem( storageName, scrollPosition );
+      }
       document.wMLCLocations.zAction.value = "DeleteUsageGroup";
       document.wMLCLocations.submit( );
    }
@@ -305,6 +349,13 @@ function GOTO_AddUsageGroup( )
    {
       _DisableFormElements( true );
 
+      if ( typeof(Storage) !== "undefined" )
+      {
+         // Code for localStorage/sessionStorage.
+         var storageName = "epamms.wMLCLocations.position"
+         var scrollPosition = document.body.scrollTop + '#' + document.body.scrollLeft;
+         sessionStorage.setItem( storageName, scrollPosition );
+      }
       document.wMLCLocations.zAction.value = "GOTO_AddUsageGroup";
       document.wMLCLocations.submit( );
    }
@@ -320,6 +371,13 @@ function GOTO_DeleteSelectedLocations( )
    {
       _DisableFormElements( true );
 
+      if ( typeof(Storage) !== "undefined" )
+      {
+         // Code for localStorage/sessionStorage.
+         var storageName = "epamms.wMLCLocations.position"
+         var scrollPosition = document.body.scrollTop + '#' + document.body.scrollLeft;
+         sessionStorage.setItem( storageName, scrollPosition );
+      }
       document.wMLCLocations.zAction.value = "GOTO_DeleteSelectedLocations";
       document.wMLCLocations.submit( );
    }
@@ -339,6 +397,13 @@ function GOTO_UpdateStandaloneLocations( strTagEntityKey )
       document.wMLCLocations.zTableRowSelect.value = strEntityKey;
       _DisableFormElements( true );
 
+      if ( typeof(Storage) !== "undefined" )
+      {
+         // Code for localStorage/sessionStorage.
+         var storageName = "epamms.wMLCLocations.position"
+         var scrollPosition = document.body.scrollTop + '#' + document.body.scrollLeft;
+         sessionStorage.setItem( storageName, scrollPosition );
+      }
       document.wMLCLocations.zAction.value = "GOTO_UpdateStandaloneLocations";
       document.wMLCLocations.submit( );
    }
@@ -358,6 +423,13 @@ function GOTO_UpdateLocationsStatement( strTagEntityKey )
       document.wMLCLocations.zTableRowSelect.value = strEntityKey;
       _DisableFormElements( true );
 
+      if ( typeof(Storage) !== "undefined" )
+      {
+         // Code for localStorage/sessionStorage.
+         var storageName = "epamms.wMLCLocations.position"
+         var scrollPosition = document.body.scrollTop + '#' + document.body.scrollLeft;
+         sessionStorage.setItem( storageName, scrollPosition );
+      }
       document.wMLCLocations.zAction.value = "GOTO_UpdateLocationsStatement";
       document.wMLCLocations.submit( );
    }
@@ -377,6 +449,13 @@ function GOTO_UpdateUsageGroup( strTagEntityKey )
       document.wMLCLocations.zTableRowSelect.value = strEntityKey;
       _DisableFormElements( true );
 
+      if ( typeof(Storage) !== "undefined" )
+      {
+         // Code for localStorage/sessionStorage.
+         var storageName = "epamms.wMLCLocations.position"
+         var scrollPosition = document.body.scrollTop + '#' + document.body.scrollLeft;
+         sessionStorage.setItem( storageName, scrollPosition );
+      }
       document.wMLCLocations.zAction.value = "GOTO_UpdateUsageGroup";
       document.wMLCLocations.submit( );
    }
@@ -396,6 +475,13 @@ function GOTO_UpdateGroup( strTagEntityKey )
       document.wMLCLocations.zTableRowSelect.value = strEntityKey;
       _DisableFormElements( true );
 
+      if ( typeof(Storage) !== "undefined" )
+      {
+         // Code for localStorage/sessionStorage.
+         var storageName = "epamms.wMLCLocations.position"
+         var scrollPosition = document.body.scrollTop + '#' + document.body.scrollLeft;
+         sessionStorage.setItem( storageName, scrollPosition );
+      }
       document.wMLCLocations.zAction.value = "GOTO_UpdateGroup";
       document.wMLCLocations.submit( );
    }
@@ -417,6 +503,13 @@ function SortGroups( )
 
       _DisableFormElements( true );
 
+      if ( typeof(Storage) !== "undefined" )
+      {
+         // Code for localStorage/sessionStorage.
+         var storageName = "epamms.wMLCLocations.position"
+         var scrollPosition = document.body.scrollTop + '#' + document.body.scrollLeft;
+         sessionStorage.setItem( storageName, scrollPosition );
+      }
       document.wMLCLocations.zAction.value = "SortGroups";
       document.wMLCLocations.submit( );
    }
@@ -438,6 +531,13 @@ function SortLocations( )
 
       _DisableFormElements( true );
 
+      if ( typeof(Storage) !== "undefined" )
+      {
+         // Code for localStorage/sessionStorage.
+         var storageName = "epamms.wMLCLocations.position"
+         var scrollPosition = document.body.scrollTop + '#' + document.body.scrollLeft;
+         sessionStorage.setItem( storageName, scrollPosition );
+      }
       document.wMLCLocations.zAction.value = "SortLocations";
       document.wMLCLocations.submit( );
    }

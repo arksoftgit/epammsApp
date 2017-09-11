@@ -640,7 +640,7 @@ else
          {
             try
             {
-               strErrorMapValue = mSPLDefPanel.cursor( "ReusableBlockDefinition" ).getAttribute( "LLD_SectionType" ).getString( "" );
+               strErrorMapValue = mSPLDefPanel.cursor( "ReusableBlockDefinition" ).getAttribute( "LLD_BlockType" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -650,7 +650,7 @@ else
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
 
-            task.log( ).debug( "ReusableBlockDefinition.LLD_SectionType: " + strErrorMapValue );
+            task.log( ).debug( "ReusableBlockDefinition.LLD_BlockType: " + strErrorMapValue );
          }
          else
             task.log( ).debug( "Entity does not exist for SectionType: " + "mSPLDefPanel.ReusableBlockDefinition" );

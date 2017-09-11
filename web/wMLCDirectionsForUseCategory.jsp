@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCDirectionsForUseCategory   Generate Timestamp: 20160914154444233 --%>
+<%-- wMLCDirectionsForUseCategory --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -628,18 +628,18 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-         View mMasLCAuto = task.getViewByName( "mMasLC" );
-         EntityCursor cursor = mMasLCAuto.cursor( "M_DirectionsForUseCategory" );
-            if ( cursor.isNull() )
-               nRC = 0;
-            else
-            {
-               if ( cursor.isVersioned( ) )
-               {
-                  cursor.cancelSubobject( );
-               }
-            nRC = 0;
+      View mMasLC = task.getViewByName( "mMasLC" );
+      EntityCursor cursor = mMasLC.cursor( "M_DirectionsForUseCategory" );
+      if ( cursor.isNull() )
+         nRC = 0;
+      else
+      {
+         if ( cursor.isVersioned( ) )
+         {
+            cursor.cancelSubobject( );
          }
+         nRC = 0;
+      }
 
       }
       catch ( Exception e )
@@ -667,8 +667,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCDirectionsForUseCategory", "wMLC.DELETE_DirectionsForUseStatement" );
-      nOptRC = wMLC.DELETE_DirectionsForUseStatement( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCDirectionsForUseCategory", "wMLC.DeleteDirectionsForUseStatement" );
+      nOptRC = wMLC.DeleteDirectionsForUseStatement( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -745,9 +745,9 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-         View mMasLCAuto = task.getViewByName( "mMasLC" );
-         EntityCursor cursor = mMasLCAuto.cursor( "M_DirectionsForUseStatement" );
-         cursor.createTemporalSubobjectVersion( );
+      View mMasLC = task.getViewByName( "mMasLC" );
+      EntityCursor cursor = mMasLC.cursor( "M_DirectionsForUseStatement" );
+      cursor.createTemporalSubobjectVersion( );
 
       }
       catch ( Exception e )
@@ -889,14 +889,13 @@ else
 <!-- Timeout.inc has a value for nTimeout which is used to determine when to -->
 <!-- log a user out.  Timeout.inc is not used if the dialog or window has a timeout value set. -->
 <%@ include file="./include/timeout.inc" %>
-<link rel="stylesheet" type="text/css" href="./css/print.css" media="print" />
-<script language="JavaScript" type="text/javascript" src="./js/common.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/jsoeUtils.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/jsoe.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
-<script language="JavaScript" type="text/javascript" src="./genjs/wMLCDirectionsForUseCategory.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/common.js?v=20170721190114158"></script>
+<script language="JavaScript" type="text/javascript" src="./js/jsoeUtils.js?v=20170721190114158"></script>
+<script language="JavaScript" type="text/javascript" src="./js/jsoe.js?v=20170721190114158"></script>
+<script language="JavaScript" type="text/javascript" src="./js/scw.js?v=20170721190114158"></script>
+<script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js?v=20170721190114158"></script>
+<script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js?v=20170721190114158"></script>
+<script language="JavaScript" type="text/javascript" src="./genjs/wMLCDirectionsForUseCategory.js?v=20170721190114158"></script>
 
 </head>
 
@@ -1081,6 +1080,8 @@ else
    <input name="zFocusCtrl" id="zFocusCtrl" type="hidden" value="<%=strFocusCtrl%>">
    <input name="zOpenFile" id="zOpenFile" type="hidden" value="<%=strOpenFile%>">
    <input name="zDateFormat" id="zDateFormat" type="hidden" value="<%=strDateFormat%>">
+   <input name="zDateSequence" id="zDateSequence" type="hidden" value="MDY">
+   <input name="zLanguage" id="zLanguage" type="hidden" value="">
    <input name="zLoginName" id="zLoginName" type="hidden" value="<%=strLoginName%>">
    <input name="zKeyRole" id="zKeyRole" type="hidden" value="<%=strKeyRole%>">
    <input name="zOpenPopupWindow" id="zOpenPopupWindow" type="hidden" value="<%=strOpenPopupWindow%>">
@@ -1151,7 +1152,7 @@ else
    }
 %>
 
-<input class="text12" name="DFU_CategoryName" id="DFU_CategoryName" maxlength="254" style="width:656px;position:absolute;left:130px;top:26px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12"  name="DFU_CategoryName" id="DFU_CategoryName" style="position:absolute;left:130px;top:26px;<%=strErrorColor%>" type="text"  value="<%=strErrorMapValue%>" >
 
 <% /* DFU_CategoryTitle::Text */ %>
 
@@ -1196,7 +1197,7 @@ else
    }
 %>
 
-<input class="text12" name="DFU_CategoryTitle" id="DFU_CategoryTitle" maxlength="254" style="width:656px;position:absolute;left:130px;top:50px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12"  name="DFU_CategoryTitle" id="DFU_CategoryTitle" style="position:absolute;left:130px;top:50px;<%=strErrorColor%>" type="text"  value="<%=strErrorMapValue%>" >
 
 <% /* DFU_CategoryNote::Text */ %>
 
@@ -1241,7 +1242,7 @@ else
    }
 %>
 
-<input class="text12" name="DFU_CategoryNote" id="DFU_CategoryNote" maxlength="2048"  title="Optional Title to appear with text on generated label"style="width:656px;position:absolute;left:130px;top:74px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12"  name="DFU_CategoryNote" id="DFU_CategoryNote"  title="Optional Title to appear with text on generated label" style="position:absolute;left:130px;top:74px;<%=strErrorColor%>" type="text"  value="<%=strErrorMapValue%>" >
 
 <% /* DFU_CategoryReviewerNote::Text */ %>
 
@@ -1286,7 +1287,7 @@ else
    }
 %>
 
-<input class="text12" name="DFU_ReviewerNote" id="DFU_ReviewerNote" maxlength="2048" style="width:656px;position:absolute;left:130px;top:98px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12"  name="DFU_ReviewerNote" id="DFU_ReviewerNote" style="position:absolute;left:130px;top:98px;<%=strErrorColor%>" type="text"  value="<%=strErrorMapValue%>" >
 
 <% /* New:PushBtn */ %>
 <button type="button" class="newbutton" name="New" id="New" value="" onclick="GOTO_DU_SectionAdd( )" style="width:78px;height:26px;position:absolute;left:586px;top:132px;">New</button>
@@ -1389,8 +1390,8 @@ try
 
    <td><a href="#" onclick="GOTO_DirsForUseSectionUpdate( this.id )" id="Name::<%=strEntityKey%>"><%=strName%></a></td>
    <td><a href="#" onclick="GOTO_DirsForUseSectionUpdate( this.id )" id="Title::<%=strEntityKey%>"><%=strTitle%></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateStorDispSect" onclick="GOTO_DirsForUseSectionUpdate( this.id )" id="BMBUpdateStorDispSect::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteStorDispSect" onclick="GOTO_DirsForUseSectionDelete( this.id )" id="BMBDeleteStorDispSect::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
+   <td><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateStorDispSect" onclick="GOTO_DirsForUseSectionUpdate( this.id )" id="BMBUpdateStorDispSect::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
+   <td><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteStorDispSect" onclick="GOTO_DirsForUseSectionDelete( this.id )" id="BMBDeleteStorDispSect::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
 
 </tr>
 

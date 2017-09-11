@@ -1,13 +1,14 @@
-z1000-Zeidon    TEMPLATE TZDGSRCO                         11/16/16   14:59:37 1.0a2   
+z1000-Zeidon    TEMPLATE TZDGSRCO                         09/06/17   11:11:13 1.0a2   
 eDomainGroup 1
 aZKey      69081339
+aNextZKeyToAssign 120180212
 aName      Template
 aExtension C
 
 eDomain    2
 aZKey      69081340
-aName      TemplateTitlePosition
-aDesc      Where the Title is to be formatted for a Section
+aName      TitlePosition
+aDesc      Where the Title is to be formatted for a Section (separate line, combined, skip)
 aDomainType T
 aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
 aDataType  S
@@ -16,10 +17,7 @@ aContextRestriction N
 
 eContext   3
 aZKey      69081341
-aName      TemplateTitlePosition
-
-eTableEntry 4
-aZKey      120190103
+aName      TitlePosition
 
 eTableEntry 4
 aZKey      69081343
@@ -504,7 +502,7 @@ aInternalValue L
 
 eDomain    2
 aZKey      69080530
-aName      TemplateUsageFormatType
+aName      UsageFormatType
 aDesc      How any related Usage entries will be formatted for the Section.
 aDomainType T
 aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
@@ -514,7 +512,7 @@ aContextRestriction N
 
 eContext   3
 aZKey      69081363
-aName      TemplateUsageFormatType
+aName      UsageFormatType
 aIsDefault Y
 
 eTableEntry 4
@@ -544,7 +542,7 @@ aInternalValue C3
 
 eDomain    2
 aZKey      69080546
-aName      TemplateStatementFormat
+aName      StatementFormat
 aDesc      How Statements for a Section will be formatted.
 aDomainType T
 aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
@@ -554,7 +552,7 @@ aContextRestriction N
 
 eContext   3
 aZKey      69081356
-aName      TemplateStatementFormat
+aName      StatementFormat
 aIsDefault Y
 
 eTableEntry 4
@@ -589,8 +587,8 @@ aInternalValue L3
 
 eDomain    2
 aZKey      69080516
-aName      LLD_SectionType
-aDesc      Template Section Types are usually the same as regular Section Types.
+aName      LLD_BlockType
+aDesc      Template Block Types are usually the same as regular Block Types.
 aDomainType T
 aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
 aDataType  S
@@ -599,108 +597,8 @@ aContextRestriction N
 
 eContext   3
 aZKey      69081346
-aName      LLD_SectionType
+aName      LLD_BlockType
 aIsDefault Y
-
-eTableEntry 4
-aZKey      69081348
-aExternalValue Ingredients
-aInternalValue Ingredients
-
-eTableEntry 4
-aZKey      69081349
-aExternalValue First Aid
-aInternalValue FirstAid
-
-eTableEntry 4
-aZKey      69081355
-aExternalValue Human Hazard
-aInternalValue HumanHazard
-
-eTableEntry 4
-aZKey      69081350
-aExternalValue Environmental Hazard
-aInternalValue EnvironmentalHazard
-
-eTableEntry 4
-aZKey      3911627
-aExternalValue Container Disposal
-aInternalValue ContainerDisposal
-
-eTableEntry 4
-aZKey      69081351
-aExternalValue Storage and Disposal
-aInternalValue StorageDisposal
-
-eTableEntry 4
-aZKey      69081352
-aExternalValue Precautionary
-aInternalValue Precautionary
-
-eTableEntry 4
-aZKey      69081353
-aExternalValue Directions For Use
-aInternalValue DirectionsForUse
-
-eTableEntry 4
-aZKey      69081354
-aExternalValue Marketing
-aInternalValue Marketing
-
-eTableEntry 4
-aZKey      69765626
-aExternalValue Graphic
-aInternalValue Graphic
-
-eTableEntry 4
-aZKey      69765630
-aExternalValue Net Contents
-aInternalValue NetContents
-
-eTableEntry 4
-aZKey      3911629
-aExternalValue EPA Reg. No. - EPA Est. No.
-aInternalValue EPA_RegAndEstNbr
-
-eTableEntry 4
-aZKey      4043314
-aExternalValue Product Name
-aInternalValue ProductName
-
-eTableEntry 4
-aZKey      120180210
-aExternalValue Product Description
-aInternalValue ProductDescription
-
-eTableEntry 4
-aZKey      110006004
-aExternalValue Product Specific
-aInternalValue ProductSpecific
-
-eTableEntry 4
-aZKey      110006307
-aExternalValue General
-aInternalValue General
-
-eTableEntry 4
-aZKey      110006308
-aExternalValue Statement
-aInternalValue Statement
-
-eTableEntry 4
-aZKey      110006309
-aExternalValue Title
-aInternalValue Title
-
-eTableEntry 4
-aZKey      110006310
-aExternalValue Marketing Usage
-aInternalValue MarketingUsage
-
-eTableEntry 4
-aZKey      110006311
-aExternalValue Signal Word
-aInternalValue Signal Word
 
 eTableEntry 4
 aZKey      110006312
@@ -708,9 +606,54 @@ aExternalValue Child Warning
 aInternalValue Child Warning
 
 eTableEntry 4
-aZKey      110006313
-aExternalValue Precautionary Stmt
-aInternalValue Precautionary Stmt
+aZKey      120180212
+aExternalValue Chemical/Physical Hazard
+aInternalValue Chemical/PhysicalHazard
+
+eTableEntry 4
+aZKey      3911627
+aExternalValue Container Disposal
+aInternalValue ContainerDisposal
+
+eTableEntry 4
+aZKey      69081353
+aExternalValue Directions For Use
+aInternalValue DirectionsForUse
+
+eTableEntry 4
+aZKey      69081350
+aExternalValue Environmental Hazard
+aInternalValue EnvironmentalHazard
+
+eTableEntry 4
+aZKey      3911629
+aExternalValue EPA Reg. No. - EPA Est. No.
+aInternalValue EPA_RegAndEstNbr
+
+eTableEntry 4
+aZKey      69081349
+aExternalValue First Aid
+aInternalValue FirstAid
+
+eTableEntry 4
+aZKey      110006307
+aExternalValue General
+aInternalValue General
+
+eTableEntry 4
+aZKey      69765626
+aExternalValue Graphic
+aInternalValue Graphic
+
+eTableEntry 4
+aZKey      69081355
+aExternalValue Human Hazard
+aInternalValue HumanHazard
+
+eTableEntry 4
+aZKey      69081348
+aExternalValue Ingredients
+aInternalValue Ingredients
 
 eTableEntry 4
 aZKey      110006314
@@ -718,7 +661,67 @@ aExternalValue Location
 aInternalValue Location
 
 eTableEntry 4
+aZKey      69081354
+aExternalValue Marketing
+aInternalValue Marketing
+
+eTableEntry 4
+aZKey      110006310
+aExternalValue Marketing Usage
+aInternalValue MarketingUsage
+
+eTableEntry 4
+aZKey      69765630
+aExternalValue Net Contents
+aInternalValue NetContents
+
+eTableEntry 4
+aZKey      69081352
+aExternalValue Precautionary
+aInternalValue Precautionary
+
+eTableEntry 4
+aZKey      110006313
+aExternalValue Precautionary Stmt
+aInternalValue Precautionary Stmt
+
+eTableEntry 4
+aZKey      120180210
+aExternalValue Product Description
+aInternalValue ProductDescription
+
+eTableEntry 4
+aZKey      4043314
+aExternalValue Product Name
+aInternalValue ProductName
+
+eTableEntry 4
+aZKey      110006004
+aExternalValue Product Specific
+aInternalValue ProductSpecific
+
+eTableEntry 4
 aZKey      110006587
 aExternalValue Section
 aInternalValue Section
+
+eTableEntry 4
+aZKey      110006311
+aExternalValue Signal Word
+aInternalValue Signal Word
+
+eTableEntry 4
+aZKey      110006308
+aExternalValue Statement
+aInternalValue Statement
+
+eTableEntry 4
+aZKey      69081351
+aExternalValue Storage and Disposal
+aInternalValue StorageDisposal
+
+eTableEntry 4
+aZKey      110006309
+aExternalValue Title
+aInternalValue Title
 
