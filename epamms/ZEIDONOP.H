@@ -1,4 +1,4 @@
-//start mSPLDef 2017.09.06 13:27:50
+//start mSPLDef 2017.10.09 16:12:23
 zOPER_EXPORT zSHORT OPERATION
 omSPLDef_GeneratePDF_Label( zVIEW vViewToInstance0 );
 
@@ -24,17 +24,17 @@ omSPLDef_ProcessPDF_Blocks( zVIEW vViewToInstance0,
                             zPCHAR pchszWriteBuffer5 );
 
 zOPER_EXPORT zSHORT OPERATION
-omSPLDef_GeneratePDF_DFU( zVIEW vViewToInstance0,
-                          zVIEW vmSPLDefBlock1,
-                          zLONG llFile2,
-                          zPCHAR pchszSectionType3,
-                          zPCHAR pchszSectionTitle4,
-                          zPCHAR pchszSPLD_SectionEntity5,
-                          zPCHAR pchszSPLD_StatementEnti6,
-                          zPCHAR pchszUsageTypeEntity7,
-                          zPCHAR pchszLoopingEntity8,
-                          zPCHAR pchLeadingBlanks9,
-                          zPCHAR pchWriteBuffer10 );
+omSPLDef_GeneratePDF_Categories( zVIEW vViewToInstance0,
+                                 zVIEW vmSPLDefBlock1,
+                                 zLONG llFile2,
+                                 zPCHAR pchszSectionType3,
+                                 zPCHAR pchszSectionTitle4,
+                                 zPCHAR pchszSPLD_SectionEntity5,
+                                 zPCHAR pchszSPLD_StatementEnti6,
+                                 zPCHAR pchszUsageTypeEntity7,
+                                 zPCHAR pchszLoopingEntity8,
+                                 zPCHAR pchLeadingBlanks9,
+                                 zPCHAR pchWriteBuffer10 );
 
 zOPER_EXPORT zSHORT OPERATION
 omSPLDef_GeneratePDF_ClmList( zVIEW vViewToInstance0,
@@ -129,9 +129,15 @@ omSPLDef_AddFormatToSpecialText( zVIEW vViewToInstance0,
                                  zPCHAR pchWriteBuffer3 );
 
 zOPER_EXPORT zSHORT OPERATION
-omSPLDef_GenerateXML_File( zVIEW vmSPLDef0,
+omSPLDef_GenerateXSL_Page( zVIEW vViewToInstance0,
+                           zLONG llFile1,
+                           zPCHAR pchszWriteBuffer2 );
+
+zOPER_EXPORT zSHORT OPERATION
+omSPLDef_GenerateXML_File( zVIEW vViewToInstance0,
                            zPCHAR pchszTopEntityName1,
-                           zPCHAR pchszDirectoryAndFileNa2 );
+                           zPCHAR pchszDirectoryAndFileNa2,
+                           zPCHAR pchszWriteBuffer3 );
 
 zOPER_EXPORT zSHORT OPERATION
 omSPLDef_SetUpFormattingSelect( zVIEW vViewToInstance0,

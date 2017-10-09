@@ -1783,27 +1783,34 @@ $(function() {
             if ( g_currentType === "Header" ) {
                $("#zFormattingToggle").show();
                $('#zTitlePosition option[value=""]').text("Select Header Position...");
-               $('#zTitlePosition option[value="CF"]').text("Combined w/First Paragraph");
-            // $("#zTitlePositionLabel").text("Header Position:");
-            // $("#zTitlePositionLabel").html("Header Position:");
-               $("label[for = zTitlePosition]").text("Header Position:");
-               $("label[for = zCapitalizeTitleTextFlag]").text("Capitalize Header Text");
+               $('#zTitlePosition option[value="CF"]').text("Combine w/First Statement");
+               $('#zTitlePosition option[value="SK"]').text("Skip Header");
+            //x$("#zTitlePositionLabel").text("Position:");
+            //x$("#zTitlePositionLabel").html("Position:");
+               $("label[for = zTitlePosition]").text("Position:");
+               $("label[for = zTextColor]").text("Header Color");
+               $("label[for = zCapitalizeTitleTextFlag]").text("Capitalize Header");
                $("#zCapitalizeTitleTextFlagToggle").show();
             }
             else {
                if ( g_currentType === "Title" ) {
                   $("#zFormattingToggle").show();
                   $('#zTitlePosition option[value=""]').text("Select Title Position...");
-                  $('#zTitlePosition option[value="CF"]').text("Combined w/Text");
-               // $("#zTitlePositionLabel").text("Title Position:");
-               // $("#zTitlePositionLabel").html("Title Position:");
-                   $("#zCapitalizeTitleTextFlagToggle").show();
-                  $("label[for = zTitlePosition]").text("Title Position:");
-                  $("label[for = zCapitalizeTitleTextFlag]").text("Capitalize Title Text");
+                  $('#zTitlePosition option[value="CF"]').text("Combine w/Text");
+                  $('#zTitlePosition option[value="SK"]').text("Skip Title");
+               //x$("#zTitlePositionLabel").text("Position:");
+               //x$("#zTitlePositionLabel").html("Position:");
+                  $("label[for = zTitlePosition]").text("Position:");
+                  $("label[for = zTextColor]").text("Title Color");
+                  $("label[for = zCapitalizeTitleTextFlag]").text("Capitalize Title");
+                  $("#zCapitalizeTitleTextFlagToggle").show();
                 } else { // if ( g_currentType === "Text" )
                   $("#zFormattingToggle").hide();
-                  $("#zCapitalizeTitleTextFlagToggle").hide();
+                  $("label[for = zCapitalizeTitleTextFlag]").text("Capitalize Text");
+                  $("#zCapitalizeTitleTextFlagToggle").show();
                // $('#zTitlePosition option[value=""]').text("Select Text Position...");
+                  $("label[for = zTitlePosition]").text("Position:");
+                  $("label[for = zTextColor]").text("Text Color");
                }
             }
             mapFromSpecialBlockToBlock( g_currentType );

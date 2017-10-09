@@ -1008,11 +1008,11 @@ else
                               </select>
                            </div>
                            <div style="overflow:hidden; white-space:nowrap;">
-                              <label id="zTitlePositionLabel" for="zTitlePosition">Title Position:</label>
+                              <label id="zTitlePositionLabel" for="zTitlePosition">Position:</label>
                               <select id="zTitlePosition" class="zeidon" data-zmap="block.z_^title^position" style="float:right" />
                                  <option value="">Select Title Position...</option>
                                  <option value="SL">Separate Line</option>
-                                 <option value="CF">Combined with First Paragraph</option>
+                                 <option value="CF">Combine</option>
                                  <option value="SK">Skip Title</option>
                               </select>
                            </div>
@@ -1188,7 +1188,7 @@ else
                               <input type="text" id="zMarginRight" class="zeidon-special" data-zmap="block.z_^margin^right" style="float:right" />
                            </div>
                            <div style="overflow:hidden; white-space:nowrap;">
-                              <input type="checkbox" id="zMarginOverride" name="zMarginOverride" class="zeidon-special" data-zmap="block.z_^margin^override" /><label for="zMarginOverride">Override CSS</label>
+                              <input type="checkbox" id="zMarginOverride" name="zMarginOverride" class="zeidon-special" data-zmap="block.z_^margin^override" /><label for="zMarginOverride">Override Default</label>
                            </div>
                         </div>
                         <div id="zBorders">
@@ -1213,7 +1213,7 @@ else
                               <input type="text" id="zBorderRight" class="zeidon-special" data-zmap="block.z_^border^right" style="float:right" />
                            </div>
                            <div style="overflow:hidden; white-space:nowrap;">
-                              <input type="checkbox" id="zBorderOverride" name="zBorderOverride" class="zeidon-special" data-zmap="block.z_^border^override" style="float:center" /><label for="zBorderOverride">Override CSS</label>
+                              <input type="checkbox" id="zBorderOverride" name="zBorderOverride" class="zeidon-special" data-zmap="block.z_^border^override" style="float:center" /><label for="zBorderOverride">Override Default</label>
                            </div>
                         </div>
                         <div id="zPaddings">
@@ -1238,7 +1238,7 @@ else
                               <input type="text" id="zPaddingRight" class="zeidon-special" data-zmap="block.z_^padding^right" style="float:right" />
                            </div>
                            <div style="overflow:hidden; white-space:nowrap;">
-                              <input type="checkbox" id="zPaddingOverride" name="zPaddingOverride" class="zeidon-special" data-zmap="block.z_^padding^override" /><label for="zPaddingOverride">Override CSS</label>
+                              <input type="checkbox" id="zPaddingOverride" name="zPaddingOverride" class="zeidon-special" data-zmap="block.z_^padding^override" /><label for="zPaddingOverride">Override Default</label>
                            </div>
                         </div>
                      </div> <!-- end of: zmbp -->

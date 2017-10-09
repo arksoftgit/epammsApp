@@ -20,30 +20,7 @@ TRANSFORMATION OPERATION
 GeneratePDF_Label( VIEW mSPLDef BASED ON LOD mSPLDef )
 
    VIEW wWebXfer REGISTERED AS wWebXfer
-   VIEW mSPLDefBlock BASED ON LOD mSPLDef
-   VIEW mSPLDefContinue BASED ON LOD mSPLDef
    STRING ( 32000 ) szWriteBuffer
-   INTEGER lFile
-   INTEGER lControl
-   STRING ( 50 ) szPassedBlanks
-   STRING ( 32 ) szSize
-   STRING ( 32 ) szTop
-   STRING ( 32 ) szHeight
-   STRING ( 32 ) szWidth
-   STRING ( 32 ) szPageHeight
-   STRING ( 32 ) szPageWidth
-   STRING ( 32 ) szLeft
-   STRING ( 32 ) szLastSectionType
-   STRING ( 32 ) szVoid
-   STRING ( 2 )  szCount
-   STRING ( 40 ) szPanelDottedBorder
-   STRING ( 2 )  szSequenceNumber
-   STRING ( 50 ) szSectionName
-   INTEGER       lCount
-   SHORT         nRC
-   DECIMAL       InterPanelSpace
-   DECIMAL       Left
-   DECIMAL       Temp
    STRING ( 32 ) szLPLR_Name
    STRING ( 64 ) szSystemIniApplName
    STRING ( 64 ) szLabelName
@@ -53,6 +30,7 @@ GeneratePDF_Label( VIEW mSPLDef BASED ON LOD mSPLDef )
    STRING ( 256 ) szXslName
    STRING ( 30 ) szDateTime
    STRING ( 30 ) szDateTimeDisplay
+   INTEGER lFile
 
    // Generate a PDF Label from the SPLD.
    SysGetDateTime( szDateTime )
@@ -136,177 +114,10 @@ GeneratePDF_Label( VIEW mSPLDef BASED ON LOD mSPLDef )
    szWriteBuffer = "         <fo:layout-master-set>"
    WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
 
-   // Page
-   Temp = mSPLDef.LLD_Page.Height + 2.0  // add 1-inch border
-   szPageHeight = Temp
-   Temp = mSPLDef.LLD_Page.Width + 2.0 // add 1-inch border
-   szPageWidth  = Temp
-   szWriteBuffer = "            <fo:simple-page-master master-name=^p1^ page-width=^" + szPageWidth + "in^ page-height=^" + szPageHeight + "in^>"
-   WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
-
-   szWriteBuffer = "               <fo:region-body region-name=^xsl-region-body^ margin=^0.2in^/>"
-   WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
-   szWriteBuffer = "            </fo:simple-page-master>"
-   WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
-   szWriteBuffer = "         </fo:layout-master-set>"
-   WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
-   szWriteBuffer = "         <fo:page-sequence master-reference=^p1^>"
-   WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
-   szWriteBuffer = "            <fo:flow flow-name=^xsl-region-body^>"
-   WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
-
-   // Generate unique XML name for each Marketing Section, which contains a sequence number suffix.
-   lCount = 0
-   FOR EACH mSPLDef.SPLD_MarketingSection
-      lCount = lCount + 1
-      szSequenceNumber = lCount
-      szSectionName = "SPLD_MarketingSection" + szSequenceNumber
-      mSPLDef.SPLD_MarketingSection.wXML_MarketingName = szSectionName
+   FOR EACH mSPLDef.LLD_Page
+      TraceLineS( "Output Xsl Page: ", szXslName )
+      GenerateXSL_Page( mSPLDef, lFile, szWriteBuffer )
    END
-   mSPLDef.SubregPhysicalLabelDef.wLastDisplaySuffixCount = 0
-
-   // Generate printer location icons.
-   FormatPrintIcons( mSPLDef, lFile, szWriteBuffer )
-
-   // Compute the Top Position values for each Block and SubBlock.
-   ComputeTopPositions( mSPLDef )
-
-   // Reset the wContinuedFromTag for each Block and SubBlock.
-// TraverseBlocks( mSPLDef )  May use when we include "continuation" blocks
-
-   // Loop through each PANEL, creating a Panel with Block containers.
-   lCount          = 0
-   Left            = 1.0
-   InterPanelSpace = 0.75
-   IF mSPLDef.SubregPhysicalLabelDef.wFormatWithDottedBorders = "Y"
-   // TraceLineS( "Generate PDF Label with borders", "" )
-      szPanelDottedBorder = " border=^1.0pt dotted green^"
-   ELSE
-   // TraceLineS( "Generate PDF Label without borders", "" )
-      szPanelDottedBorder = ""
-   END
-   FOR EACH mSPLDef.LLD_Panel
-
-      lCount = lCount + 1
-      szCount = lCount
-      szLeft = Left
-
-      // Panel Container
-      //szTop        = "1.0"
-      Temp = mSPLDef.LLD_Panel.Top + 1.0
-      szTop = Temp
-      Temp = mSPLDef.LLD_Panel.Left + 1.0
-      szLeft = Temp
-      szHeight     = mSPLDef.LLD_Panel.Height
-      szWidth      = mSPLDef.LLD_Panel.Width
-      szWriteBuffer = "               <fo:block-container position=^absolute^ top=^" + szTop + "in^ left=^" + szLeft +
-                      "in^ height=^" + szHeight + "in^ width=^" + szWidth + "in^" + szPanelDottedBorder + ">"
-      WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
-      szWriteBuffer = ""
-      WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
-
-      // Panel Number
-      szWriteBuffer = "                  <!-- Panel Number " + szCount
-      WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
-      szWriteBuffer = "                  <fo:block-container position=^absolute^ top=^-0.2in^ left=^-0.2in^>"
-      WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
-      szWriteBuffer = "                     <fo:block text-align=^left^>"
-      WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
-      szWriteBuffer = "                        " + szCount
-      WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
-      szWriteBuffer = "                     </fo:block>"
-      WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
-      szWriteBuffer = "                  </fo:block-container>"
-      WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
-      szWriteBuffer = "                  -->"
-      WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
-      szWriteBuffer = ""
-      WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
-
-      IF mSPLDef.LLD_Block EXISTS
-      
-         // Process each Block within the Panel.
-         CreateViewFromView( mSPLDefBlock, mSPLDef )
-         CreateViewFromView( mSPLDefContinue, mSPLDef )
-         NAME VIEW mSPLDefBlock "mSPLDefBlock"
-         //NAME VIEW mSPLDefContinue "mSPLDefContinue"
-         //NAME VIEW mSPLDef "mSPLDef"
-
-         // Top call to ProcessPDF_Blocks <<=====================
-         szPassedBlanks = "               "
-         nRC = ProcessPDF_Blocks( mSPLDef, mSPLDefBlock, mSPLDefContinue, lFile, szPassedBlanks, szWriteBuffer )
-         DropView( mSPLDefContinue )
-         DropView( mSPLDefBlock )
-         IF nRC = 2
-            RETURN 2
-         END
-      ELSE
-         WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
-         szWriteBuffer = "                  <fo:block-container position=^absolute^ top=^-0.2in^ left=^-0.2in^>"
-         WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
-         szWriteBuffer = "                     <fo:block text-align=^left^>"
-         WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
-         szWriteBuffer = "      Empty Panel"
-         WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
-         szWriteBuffer = "                     </fo:block>"
-         WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
-         szWriteBuffer = "                  </fo:block-container>"
-         WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
-         szWriteBuffer = ""
-         WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
-      END
-
-      // Close Panel Container.
-      szWriteBuffer = "               </fo:block-container>"
-      WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
-
-      // Increment Left position for next Panel.
-      Left = Left + InterPanelSpace + mSPLDef.LLD_Panel.Width
-
-   END
-
-   // Close XSL body.
-   szWriteBuffer = "            </fo:flow>"
-   WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
-   szWriteBuffer = "         </fo:page-sequence>"
-   WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
-   szWriteBuffer = "      </fo:root>"
-   WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
-   szWriteBuffer = "   </xsl:template>"
-   WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
-   szWriteBuffer = ""
-   WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
-
-   // Sub Template.
-   szWriteBuffer = "   <xsl:template match=^sub^>"
-   WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
-   szWriteBuffer = "      <fo:inline vertical-align=^sub^ font-size=^75%^>"
-   WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
-   szWriteBuffer = "         <xsl:apply-templates select=^*||text()^/>"
-   WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
-   szWriteBuffer = "      </fo:inline>"
-   WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
-   szWriteBuffer = "   </xsl:template>"
-   WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
-
-   // Bold Template.
-   szWriteBuffer = "   <xsl:template match=^bold^>"
-   WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
-   szWriteBuffer = "      <fo:inline font-weight=^bold^>"
-   WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
-   szWriteBuffer = "         <xsl:apply-templates select=^*||text()^/>"
-   WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
-   szWriteBuffer = "      </fo:inline>"
-   WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
-   szWriteBuffer = "   </xsl:template>"
-   WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
-
-   // Conclude XSL.
-   szWriteBuffer = ""
-   WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
-   szWriteBuffer = "</xsl:stylesheet>"
-   WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
-
 
    // Close the XSL file.
    SysCloseFile( mSPLDef, lFile, 0 )
@@ -315,7 +126,7 @@ GeneratePDF_Label( VIEW mSPLDef BASED ON LOD mSPLDef )
 // szWriteBuffer = "c:\lplr\epamms\xsl\TestLabel.xml"
 // CommitOI_ToXML_File( mSPLDef, szWriteBuffer, 0 )
    TraceLineS( "Output Xml Directory/File Name: ", szXmlName )
-   GenerateXML_File( mSPLDef, "SubregPhysicalLabelDef", szXmlName )
+   GenerateXML_File( mSPLDef, "SubregPhysicalLabelDef", szXmlName, szWriteBuffer )
 
 END
 
@@ -859,8 +670,8 @@ ProcessPDF_Blocks( VIEW mSPLDef    BASED ON LOD mSPLDef,
    END
 
    FOR EACH mSPLDefBlock.LLD_Block
-//TraceLineS( "##########********** Block: ", mSPLDefBlock.LLD_Block.LLD_BlockType )
-//TraceLineS( "##########********** ContinuationBlockFlag: ", mSPLDefBlock.LLD_Block.ContinuationBlockFlag )
+      TraceLineS( "##########********** Block: ", mSPLDefBlock.LLD_Block.LLD_BlockType )
+      TraceLineS( "##########********** ContinuationBlockFlag: ", mSPLDefBlock.LLD_Block.ContinuationBlockFlag )
 
       szTag = mSPLDefBlock.LLD_Block.Tag
       IF mSPLDefBlock.LLD_Block.ContinuationBlockFlag = "Y"
@@ -967,10 +778,10 @@ ProcessPDF_Blocks( VIEW mSPLDef    BASED ON LOD mSPLDef,
                // For Directions For Use, we will process all Sections.
                FOR EACH mSPLDef.SPLD_DirectionsForUseCategory
                   FOR EACH mSPLDef.SPLD_DirectionsForUseSection
-                     GeneratePDF_DFU( mSPLDef, mSPLDefBlock, lFile, szBlockType, szTitle,
-                                      "SPLD_DirectionsForUseSection", "SPLD_DirectionsForUseStatement",
-                                      "SPLD_DirectionsUsage", "SPLD_DirectionsUsageOrdering",
-                                      szPassedBlanks, szWriteBuffer )
+                     GeneratePDF_Categories( mSPLDef, mSPLDefBlock, lFile, szBlockType, szTitle,
+                                             "SPLD_DirectionsForUseSection", "SPLD_DirectionsForUseStatement",
+                                             "SPLD_DirectionsUsage", "SPLD_DirectionsUsageOrdering",
+                                             szPassedBlanks, szWriteBuffer )
                   END
                END
             ELSE
@@ -980,9 +791,9 @@ ProcessPDF_Blocks( VIEW mSPLDef    BASED ON LOD mSPLDef,
             IF szBlockType = "Precautionary"
 
                SET CURSOR FIRST mSPLDef.SPLD_GeneralSection WHERE mSPLDef.SPLD_GeneralSection.SectionType = "P"  // SectionType of P is Precautionary
-               GeneratePDF_DFU( mSPLDef, mSPLDefBlock, lFile, szBlockType, "",
-                                "SPLD_GeneralSection", "SPLD_GeneralStatement",
-                                "", "", szPassedBlanks, szWriteBuffer )
+               GeneratePDF_Categories( mSPLDef, mSPLDefBlock, lFile, szBlockType, "",
+                                       "SPLD_GeneralSection", "SPLD_GeneralStatement",
+                                       "", "", szPassedBlanks, szWriteBuffer )
 
             ELSE
 
@@ -991,20 +802,19 @@ ProcessPDF_Blocks( VIEW mSPLDef    BASED ON LOD mSPLDef,
 
                SET CURSOR FIRST mSPLDef.SPLD_GeneralSection WHERE mSPLDef.SPLD_GeneralSection.SectionType = "F"  // SectionType of F is First Aid
                szTitle = mSPLDef.SPLD_GeneralSection.Title
-               GeneratePDF_DFU( mSPLDef, mSPLDefBlock, lFile, szBlockType, szTitle,
-                                "SPLD_GeneralSection", "SPLD_GeneralStatement",
-                                "", "", szPassedBlanks, szWriteBuffer )
+               GeneratePDF_Categories( mSPLDef, mSPLDefBlock, lFile, szBlockType, szTitle,
+                                       "SPLD_GeneralSection", "SPLD_GeneralStatement",
+                                       "", "", szPassedBlanks, szWriteBuffer )
 
             ELSE
 
             // ENVIRONMENTAL HAZARD
             IF szBlockType = "EnvironmentalHazard"
 
-            // TraceLineS( "Major Block: ", szBlockType )
                SET CURSOR FIRST mSPLDef.SPLD_GeneralSection WHERE mSPLDef.SPLD_GeneralSection.SectionType = "E"  // SectionType of E is Environmental Hazard
-               GeneratePDF_DFU( mSPLDef, mSPLDefBlock, lFile, szBlockType, "",
-                                "SPLD_GeneralSection", "SPLD_GeneralStatement",
-                                "", "", szPassedBlanks, szWriteBuffer )
+               GeneratePDF_Categories( mSPLDef, mSPLDefBlock, lFile, szBlockType, "",
+                                       "SPLD_GeneralSection", "SPLD_GeneralStatement",
+                                       "", "", szPassedBlanks, szWriteBuffer )
 
             ELSE
 
@@ -1013,9 +823,9 @@ ProcessPDF_Blocks( VIEW mSPLDef    BASED ON LOD mSPLDef,
 
             // TraceLineS( "Major Block: ", szBlockType )
                SET CURSOR FIRST mSPLDef.SPLD_GeneralSection WHERE mSPLDef.SPLD_GeneralSection.SectionType = "C"  // SectionType of C is Chemical/Physical Hazard
-               GeneratePDF_DFU( mSPLDef, mSPLDefBlock, lFile, szBlockType, "",
-                                "SPLD_GeneralSection", "SPLD_GeneralStatement",
-                                "", "", szPassedBlanks, szWriteBuffer )
+               GeneratePDF_Categories( mSPLDef, mSPLDefBlock, lFile, szBlockType, "",
+                                       "SPLD_GeneralSection", "SPLD_GeneralStatement",
+                                       "", "", szPassedBlanks, szWriteBuffer )
 
             ELSE
 
@@ -1041,10 +851,10 @@ ProcessPDF_Blocks( VIEW mSPLDef    BASED ON LOD mSPLDef,
                   // Don't execute if the only Statement is null. This could occur if the block contains a Claims List, without
                   // any marketing statement preceding it.
                   IF mSPLDef.SPLD_MarketingStatement.Text != ""
-                     GeneratePDF_DFU( mSPLDef, mSPLDefBlock, lFile, szBlockType, "",
-                                      "SPLD_MarketingSection", "SPLD_MarketingStatement",
-                                      "SPLD_MarketingUsage", "SPLD_MarketingUsageOrdering",
-                                      szPassedBlanks, szWriteBuffer )
+                     GeneratePDF_Categories( mSPLDef, mSPLDefBlock, lFile, szBlockType, "",
+                                             "SPLD_MarketingSection", "SPLD_MarketingStatement",
+                                             "SPLD_MarketingUsage", "SPLD_MarketingUsageOrdering",
+                                             szPassedBlanks, szWriteBuffer )
                   END
                ELSE
                   IF mSPLDefBlock.LLD_Block.Name = ""
@@ -1075,9 +885,9 @@ ProcessPDF_Blocks( VIEW mSPLDef    BASED ON LOD mSPLDef,
             // STORAGE AND DISPOSAL
             IF szBlockType = "StorageDisposal"
 
-               GeneratePDF_DFU( mSPLDef, mSPLDefBlock, lFile, szBlockType, "",
-                                "SPLD_StorageDisposalSection", "SPLD_StorageDisposalStatement",
-                                "", "", szPassedBlanks, szWriteBuffer )
+               GeneratePDF_Categories( mSPLDef, mSPLDefBlock, lFile, szBlockType, "",
+                                       "SPLD_StorageDisposalSection", "SPLD_StorageDisposalStatement",
+                                       "", "", szPassedBlanks, szWriteBuffer )
 
             ELSE
 
@@ -1449,7 +1259,7 @@ FormatBlock( VIEW mSPLDef BASED ON LOD mSPLDef,
    STRING ( 32 )  szTextAlign
    STRING ( 256 ) szImg
    // Process a Block and its subcomponents.
-   // Block Container Start
+   // Block Start
    szWriteBuffer = szPassedBlanks + "<fo:block"
 
    IF mSPLDef.BlockBackgroundColor EXISTS
@@ -1546,6 +1356,9 @@ END
 //
 //  OPERATION: AddFormatToSpecialText
 //
+//  Add any Special Attribute Block formatting attributes to the text
+//  passed in via szWriteBuffer.
+//
 /////////////////////////////////////////////////////////////////////////////
 TRANSFORMATION OPERATION
 AddFormatToSpecialText( VIEW mSPLDef BASED ON LOD mSPLDef,
@@ -1574,7 +1387,6 @@ AddFormatToSpecialText( VIEW mSPLDef BASED ON LOD mSPLDef,
    STRING ( 256 ) szImg
    SHORT nRC
 
-   // Add any Special Attribute Block formatting variables to the text statement passed in szWriteBuffer.
    // Skip if the Special Text Attribute hasn't been defined.
 
 // NAME VIEW mSPLDef "mSPLDefHazards"
@@ -1712,87 +1524,6 @@ AddFormatToSpecialText( VIEW mSPLDef BASED ON LOD mSPLDef,
 
 END
 
-LOCAL OPERATION
-GenerateTitleText( VIEW mSPLDef BASED ON LOD mSPLDef,
-                   VIEW mSPLDefBlock BASED ON LOD mSPLDef,
-                   INTEGER lFile,
-                   STRING ( 32 )  szBlockType,
-                   STRING ( 256 ) szTitle,
-                   STRING ( 32 )  szSPLD_EntityName,
-                   STRING ( 50 )  szDisplayName,
-                   STRING ( 50 )  szPassedBlanks,
-                   STRING ( 32000 ) szWriteBuffer )
-
-   STRING ( 1 )  szConvertToCapsFlag
-   STRING ( 2 )  szTitlePosition
-   STRING ( 256 ) szMsg
-
-// We expect cursor position to be set on the correct special section when we get here.
-// SET CURSOR FIRST mSPLDefBlock.LLD_SpecialSectionBlock WHERE mSPLDefBlock.LLD_SpecialSectionBlock.Name = szBlockType
-//   IF RESULT >= zCURSOR_SET
-      szTitlePosition = mSPLDefBlock.LLD_SpecialSectionAttrBlock.TitlePosition  // SL-separate line, CF-combined with first paragraph, SK-skip title
-      IF szTitlePosition = ""
-         szTitlePosition = "SL"    // Default will put the Title on a separate line.
-      ELSE
-      IF szTitlePosition = "SK"
-         szTitle = ""
-      END
-      END
-
-      IF szTitle != ""
-         szConvertToCapsFlag = mSPLDefBlock.LLD_SpecialSectionAttrBlock.CapitalizeTitleTextFlag
-         IF szConvertToCapsFlag = "Y"
-            szMsg = szTitle
-            zToUpper( szMsg, szTitle )
-         END
-               
-         // Set up title.
-         szWriteBuffer = szPassedBlanks + "   <fo:block "
-         AddFormatToSpecialText( mSPLDefBlock, szBlockType, "Header", szWriteBuffer )
-         WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
-         IF szTitlePosition = "CF"
-            szWriteBuffer = szPassedBlanks + "      <fo:inline "
-            AddFormatToSpecialText( mSPLDefBlock, szBlockType, "Title", szWriteBuffer )
-            WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
-            szWriteBuffer = szPassedBlanks + "         " + szTitle
-            WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
-            szWriteBuffer = szPassedBlanks + "      </fo:inline>"
-            WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
-            szWriteBuffer = szPassedBlanks + "      <fo:inline "
-            AddFormatToSpecialText( mSPLDefBlock, szBlockType, "Text", szWriteBuffer )
-            WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
-            szWriteBuffer = szPassedBlanks + "      <xsl:apply-templates select=^SubregPhysicalLabelDef/" + szDisplayName + "/Text^/>"
-            WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
-            szWriteBuffer = szPassedBlanks + "      </fo:inline>"
-            WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
-         ELSE
-            szWriteBuffer = szPassedBlanks + "      " + szTitle
-            WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
-            AddFormatToSpecialText( mSPLDefBlock, szBlockType, "Text", szWriteBuffer )
-            WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
-            szWriteBuffer = szPassedBlanks + "      <xsl:apply-templates select=^SubregPhysicalLabelDef/" + szDisplayName + "/Text^/>"
-            WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
-         END
-         szWriteBuffer = szPassedBlanks + "   </fo:block>"
-         WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
-
-      ELSE
-
-         szWriteBuffer = szPassedBlanks + "<fo:block "
-         AddFormatToSpecialText( mSPLDefBlock, szBlockType, "Text", szWriteBuffer )
-         WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
-
-         szWriteBuffer = szPassedBlanks + "      <xsl:apply-templates select=^SubregPhysicalLabelDef/" + szDisplayName + "/Text^/>"
-         WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
-
-        szWriteBuffer = szPassedBlanks + "</fo:block>"
-        WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
-
-      END
-// END
-
-END
-
 /////////////////////////////////////////////////////////////////////////////
 //
 //  OPERATION: GeneratePDF_Category
@@ -1804,7 +1535,7 @@ GeneratePDF_Category( VIEW mSPLDef BASED ON LOD mSPLDef,
                       VIEW mSPLDefBlock BASED ON LOD mSPLDef,
                       INTEGER lFile,
                       STRING ( 50 ) szBlockType,
-                      STRING ( 256 ) szSectionTitle,
+                      STRING ( 256 ) szSectionHeader,
                       STRING ( 32 ) szSPLD_SectionEntityName,
                       STRING ( 32 ) szSPLD_StatementEntityName,
                       STRING ( 32 ) szUsageTypeEntity,
@@ -1818,30 +1549,33 @@ GeneratePDF_Category( VIEW mSPLDef BASED ON LOD mSPLDef,
    STRING ( 32000 )  szTemp
    STRING ( 256 )    szStatementTitle
    STRING ( 50 )     szSectionName
-   STRING ( 10 )     szSeparatorCharacters
-   STRING ( 2 )      szSectionTitlePosition
+   STRING ( 2 )      szSectionHeaderPosition
+   STRING ( 1 )      szHeaderConvertToCapsFlag
+   STRING ( 1 )      szTitleConvertToCapsFlag
    STRING ( 2 )      szStatementTitlePosition
+   STRING ( 1 )      szTextConvertToCapsFlag
    STRING ( 2 )      szStatementFormat
    STRING ( 3 )      szDisplaySectionSuffix
    STRING ( 50 )     szDisplaySectionName
    STRING ( 50 )     szDisplayStatementName
-   STRING ( 1 )      szContinuationFlag
+   STRING ( 10 )     szSeparatorCharacters
+   STRING ( 1 )      szBlockContinuationFlag
    STRING ( 1 )      szBlockContinuationType
-   STRING ( 1 )      szConvertToCapsFlag
+   STRING ( 512 )    szMsg
+   INTEGER           lLastDisplaySuffixCount
    SHORT             nRC
-
-   STRING ( 512 ) szDebugMsg
 
    // Generate PDF for a "Directions of Use" or "Storage and Disposal" or "General" or "Marketing" Statement.
 
    szPassedBlanks = szPassedBlanks + "   "
+   lLastDisplaySuffixCount = mSPLDef.SubregPhysicalLabelDef.wLastDisplaySuffixCount
 
    // UsageSeparatorCharacters: 
    // TitlePosition: 
-   //   SL - separate line, CF - combined with first paragraph, SK - skip title
+   //   SL-separate line, CF-combined with first statement, SK-skip title
    // StatementFormat:
-   //   SP - separate paragraph, SPN - separate numbered paragraph, SPB - separate bulleted paragraph, SPU - paragraph with usage statements
-   //   L2 - 2 column usage list, L3 - 3 column usage list
+   //   SP-separate paragraph, SPN-separate numbered paragraph, SPB-separate bulleted paragraph, SPU-paragraph with usage statements
+   //   L2-2 column usage list, L3-3 column usage list
    szStatementFormat = mSPLDefBlock.LLD_Block.StatementFormat
    IF szStatementFormat = ""
       szStatementFormat = "SP"
@@ -1851,19 +1585,11 @@ GeneratePDF_Category( VIEW mSPLDef BASED ON LOD mSPLDef,
       szSeparatorCharacters = ", "
    END
 
+// szBlockType = mSPLDefBlock.LLD_Block.LLD_BlockType ... now passed in (dks 2017.01.30)
+
    // If this block is for a Marketing Section, we need to position on the corresponding Market Section by Name.
    // Otherwise, we are positioned on the correct Section already.
    // We also need to initialize the XML for the Marketing Section.
-// szBlockType = mSPLDefBlock.LLD_Block.LLD_BlockType ... now passed in (dks 2017.01.30)
-   IF szBlockType = "Marketing"
-      szSectionName = mSPLDefBlock.LLD_Block.Name
-      SetCursorFirstEntityByString( mSPLDef, szSPLD_SectionEntityName, "Name", szSectionName, "" )
-      TraceLineS( "Processing Marketing section name: ", szSectionName )
-   ELSE
-      TraceLineS( "Processing section name: ", szSectionName )
-      TraceLineS( "Processing section type: ", szBlockType )
-   END
-
    // Increment Display Section Suffix and Initialize DisplaySection entry for generation of xsl template ... e.g. for First Aid:
    //       <fo:block  font-size="6pt" font-weight="normal">
    //       <fo:inline  color="#0000ff"  font-size="10pt" font-weight="bold">
@@ -1877,29 +1603,33 @@ GeneratePDF_Category( VIEW mSPLDef BASED ON LOD mSPLDef,
    //       <DisplaySection1>
    //       <Title></Title>
    //       <DisplayStatement4>
-   //          <Title>IF ON SKIN:   </Title>
+   //          <Title>IF ON SKIN:</Title>
    //          <Text>Take off contaminated clothing. Rinse skin immediately with plenty of water for 15-20 minutes.</Text>
    //       </DisplayStatement4>
    //       </DisplaySection1>
    //
-   mSPLDef.SubregPhysicalLabelDef.wLastDisplaySuffixCount = mSPLDef.SubregPhysicalLabelDef.wLastDisplaySuffixCount + 1
-   szDisplaySectionSuffix = mSPLDef.SubregPhysicalLabelDef.wLastDisplaySuffixCount
-   szDisplaySectionName = "DisplaySection" + szDisplaySectionSuffix
+   TraceLineS( "Processing section type: ", szBlockType )
+   IF szBlockType = "Marketing"
+      szSectionName = mSPLDefBlock.LLD_Block.Name
+      SetCursorFirstEntityByString( mSPLDef, szSPLD_SectionEntityName, "Name", szSectionName, "" )
+      mSPLDef.SubregPhysicalLabelDef.wLastDisplaySuffixCount = mSPLDef.SubregPhysicalLabelDef.wLastDisplaySuffixCount + 1
+      szDisplaySectionSuffix = mSPLDef.SubregPhysicalLabelDef.wLastDisplaySuffixCount
+      szDisplaySectionName = "DisplaySection" + szDisplaySectionSuffix
+      TraceLineS( "Processing Marketing section name: ", szSectionName )
+   ELSE
+      szDisplaySectionName = szBlockType
+   // TraceLineS( "Processing section name: ", szDisplaySectionName )
+   END
+
    CREATE ENTITY mSPLDef.DisplaySection
    mSPLDef.DisplaySection.Type = szSPLD_SectionEntityName
    mSPLDef.DisplaySection.XML_SectionName = szDisplaySectionName
-   szStatementTitlePosition = "SL"
-   szConvertToCapsFlag = ""
 
-   // Format Section Title, if there is a Title.   *** We need to do something different with Section Title.
-   SET CURSOR FIRST mSPLDefBlock.LLD_SpecialSectionAttrBlock WHERE mSPLDefBlock.LLD_SpecialSectionAttrBlock.Name = "Header"
+   SET CURSOR FIRST mSPLDefBlock.LLD_SpecialSectionAttrBlock WHERE mSPLDefBlock.LLD_SpecialSectionAttrBlock.Name = "Text"
    IF RESULT >= zCURSOR_SET
-      GenerateTitleText( mSPLDef, mSPLDefBlock, lFile, szBlockType, szSectionTitle,
-                         szSPLD_SectionEntityName, szDisplaySectionName,
-                         szPassedBlanks, szWriteBuffer )
+      szTextConvertToCapsFlag = mSPLDefBlock.LLD_SpecialSectionAttrBlock.CapitalizeTitleTextFlag
    END
 
-   // Format each Statement, including Title, if requested.
    // Get Title option from the LLD_SpecialSectionAttrBlock entity for Title option.
    SET CURSOR FIRST mSPLDefBlock.LLD_SpecialSectionAttrBlock WHERE mSPLDefBlock.LLD_SpecialSectionAttrBlock.Name = "Title"
    IF RESULT >= zCURSOR_SET
@@ -1907,25 +1637,139 @@ GeneratePDF_Category( VIEW mSPLDef BASED ON LOD mSPLDef,
       IF szStatementTitlePosition = ""
          szStatementTitlePosition = "SL"
       END
-      szConvertToCapsFlag = mSPLDefBlock.LLD_SpecialSectionAttrBlock.CapitalizeTitleTextFlag
+      szTitleConvertToCapsFlag = mSPLDefBlock.LLD_SpecialSectionAttrBlock.CapitalizeTitleTextFlag
+   ELSE
+      szStatementTitlePosition = "SL"  // default will put the Title on a separate line
    END
 
+   // Format the first Statement, including Title, if requested.
    nRC = SetCursorFirstEntity( mSPLDef, szSPLD_StatementEntityName, "" )
+   IF nRC >= zCURSOR_SET
+
+      // Format Section Header, if there is one.   *** We do something different with Section Header.
+      IF szSectionHeader != ""
+
+         // Set cursor position on the Header special section.
+         SET CURSOR FIRST mSPLDefBlock.LLD_SpecialSectionAttrBlock WHERE mSPLDefBlock.LLD_SpecialSectionAttrBlock.Name = "Header"
+         IF RESULT >= zCURSOR_SET
+            szSectionHeaderPosition = mSPLDefBlock.LLD_SpecialSectionAttrBlock.TitlePosition  // SL-separate line, CF-combined with first statement, SK-skip title
+            IF szSectionHeaderPosition = ""
+               szSectionHeaderPosition = "SL"  // default will put the Header on a separate line
+            ELSE
+               IF szSectionHeaderPosition = "SK"
+                  szSectionHeader = ""  // if we skip the Header, it may as well be empty
+               END
+            END
+
+            szHeaderConvertToCapsFlag = mSPLDefBlock.LLD_SpecialSectionAttrBlock.CapitalizeTitleTextFlag
+            IF szHeaderConvertToCapsFlag = "Y"
+               szMsg = szSectionHeader
+               zToUpper( szMsg, szSectionHeader )  // Capitalize section header
+            END
+         END
+      END
+                  
+      IF szSectionHeader != ""  // we have to check again because it may have been blanked out by skip
+         // Set up section header with special attributes.
+      // WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+         IF szSectionHeaderPosition = "SL"  // header is on a separate line
+            szWriteBuffer = szPassedBlanks + "<fo:block>"
+            AddFormatToSpecialText( mSPLDefBlock, szBlockType, "Header", szWriteBuffer )
+            WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+            szWriteBuffer = szPassedBlanks + "      " + szSectionHeader
+            WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+            szWriteBuffer = szPassedBlanks + "      <xsl:apply-templates select=^SubregPhysicalLabelDef/" + szDisplaySectionName + "/Header^/>"
+            szWriteBuffer = szPassedBlanks + "</fo:block>"
+            WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+            // In this case, let Title/Text processing proceed as usual
+         ELSE
+            // szSectionHeaderPosition = "CF" ... Combining header with first statement
+            lLastDisplaySuffixCount = lLastDisplaySuffixCount + 1
+            mSPLDef.SubregPhysicalLabelDef.wLastDisplaySuffixCount = lLastDisplaySuffixCount
+            szDisplaySectionSuffix = lLastDisplaySuffixCount
+            szDisplayStatementName = "DisplayStatement" + szDisplaySectionSuffix
+            CREATE ENTITY mSPLDef.DisplayStatement
+            mSPLDef.DisplayStatement.XML_StatementName = szDisplayStatementName
+            GetStringFromAttribute( szStatementTitle, mSPLDef, szSPLD_StatementEntityName, "Title" )
+            GetStringFromAttribute( szStatementText, mSPLDef, szSPLD_StatementEntityName, "Text" )
+
+            // Convert Title to upper-case, if requested.
+            IF szTitleConvertToCapsFlag = "Y"
+               szTemp = szStatementTitle
+               zToUpper( szTemp, szStatementTitle )
+            END
+            IF szStatementTitle != ""
+               zTrim( szStatementTitle )
+               szStatementTitle = szStatementTitle + "  "
+            END
+
+            // Convert Text to upper-case, if requested.
+            IF szTextConvertToCapsFlag = "Y"
+               szTemp = szStatementText
+               zToUpper( szTemp, szStatementText )
+            END
+
+            mSPLDef.DisplayStatement.Title = szStatementTitle
+            mSPLDef.DisplayStatement.Text = szStatementText
+
+            szWriteBuffer = szPassedBlanks + "<fo:block> "
+            WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+            szWriteBuffer = szPassedBlanks + "   <fo:inline "
+            AddFormatToSpecialText( mSPLDefBlock, szBlockType, "Header", szWriteBuffer )
+            WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+            szWriteBuffer = szPassedBlanks + "      " + szSectionHeader
+            WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+            szWriteBuffer = szPassedBlanks + "      <xsl:apply-templates select=^SubregPhysicalLabelDef/" + szDisplaySectionName + "/Header^/>"
+            WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+            szWriteBuffer = szPassedBlanks + "   </fo:inline>"
+            WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+            szWriteBuffer = szPassedBlanks + "   <fo:inline "
+            AddFormatToSpecialText( mSPLDefBlock, szBlockType, "Title", szWriteBuffer )
+            WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+            szWriteBuffer = szPassedBlanks + "      <xsl:apply-templates select=^SubregPhysicalLabelDef/" + szDisplaySectionName + "/" + szDisplayStatementName + "/Title^/>"
+            WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+            szWriteBuffer = szPassedBlanks + "   </fo:inline>"
+            WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+            IF szStatementTitlePosition = "CF"
+               szWriteBuffer = szPassedBlanks + "   <fo:inline "
+               AddFormatToSpecialText( mSPLDefBlock, szBlockType, "Text", szWriteBuffer )
+               WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+               szWriteBuffer = szPassedBlanks + "      <xsl:apply-templates select=^SubregPhysicalLabelDef/" + szDisplaySectionName + "/" + szDisplayStatementName + "/Text^/>"
+               WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+               szWriteBuffer = szPassedBlanks + "   </fo:inline>"
+               WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+            ELSE
+               szWriteBuffer = szPassedBlanks + "</fo:block> "
+               WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+               szWriteBuffer = szPassedBlanks + "<fo:block "
+               AddFormatToSpecialText( mSPLDefBlock, szBlockType, "Text", szWriteBuffer )
+               WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+               szWriteBuffer = szPassedBlanks + "      <xsl:apply-templates select=^SubregPhysicalLabelDef/" + szDisplaySectionName + "/" + szDisplayStatementName + "/Text^/>"
+               WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+            END
+            szWriteBuffer = szPassedBlanks + "</fo:block> "
+            WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+            nRC = SetCursorNextEntity( mSPLDef, szSPLD_StatementEntityName, "" )
+         END
+      END
+   END
+
    LOOP WHILE nRC >= zCURSOR_SET
 
       // Get Continuation Flag used in logic below.
-      GetStringFromAttribute( szContinuationFlag, mSPLDef, szSPLD_StatementEntityName, "ContinuationBreakFlag" )
+      GetStringFromAttribute( szBlockContinuationFlag, mSPLDef, szSPLD_StatementEntityName, "ContinuationBreakFlag" )
 
       // Create the Display Statement entry, unless this Statement is a full continuation on next page.
-      IF szContinuationFlag = "" OR szContinuationFlag = "M"
-         mSPLDef.SubregPhysicalLabelDef.wLastDisplaySuffixCount = mSPLDef.SubregPhysicalLabelDef.wLastDisplaySuffixCount + 1
-         szDisplaySectionSuffix = mSPLDef.SubregPhysicalLabelDef.wLastDisplaySuffixCount
+      IF szBlockContinuationFlag = "" OR szBlockContinuationFlag = "M"
+         lLastDisplaySuffixCount = lLastDisplaySuffixCount + 1
+         mSPLDef.SubregPhysicalLabelDef.wLastDisplaySuffixCount = lLastDisplaySuffixCount
+         szDisplaySectionSuffix = lLastDisplaySuffixCount
          szDisplayStatementName = "DisplayStatement" + szDisplaySectionSuffix
          CREATE ENTITY mSPLDef.DisplayStatement
          mSPLDef.DisplayStatement.XML_StatementName = szDisplayStatementName
       END
 
-      IF szContinuationFlag = "M"     // M indicates this Statement is to be broken up into two pieces on separate panels.
+      IF szBlockContinuationFlag = "M"     // M indicates this Statement is to be broken up into two pieces on separate panels.
          // If this statement is to be split for continuation, get text from ContinuationLeadingText.
          GetStringFromAttribute( szStatementText, mSPLDef, szSPLD_StatementEntityName, "ContinuationLeadingText" )
       ELSE
@@ -1935,13 +1779,26 @@ GeneratePDF_Category( VIEW mSPLDef BASED ON LOD mSPLDef,
       GetStringFromAttribute( szStatementTitle, mSPLDef, szSPLD_StatementEntityName, "Title" )
 
       // Convert Title to upper-case, if requested.
-      IF szConvertToCapsFlag = "Y"
+      IF szTitleConvertToCapsFlag = "Y"
          szTemp = szStatementTitle
          zToUpper( szTemp, szStatementTitle )
       END
 
-      // Combine Title in text if specified (SL - separate line, CF - combined with first paragraph, SK - skip title)
+      // Convert Text to upper-case, if requested.
+      IF szTextConvertToCapsFlag = "Y"
+         szTemp = szStatementText
+         zToUpper( szTemp, szStatementText )
+      END
+
+      // Combine Title in text if specified (SL-separate line, CF-combined with first statement, SK-skip title)
+      // Note that the combination is done by XSL.  We simply provide the title and text here.
       IF szStatementTitle != "" AND szStatementTitlePosition = "CF"
+         zTrim( szStatementTitle )
+         szStatementTitle = szStatementTitle + "  "
+      END
+      mSPLDef.DisplayStatement.Title = szStatementTitle
+      
+/*    IF szStatementTitle != "" AND szStatementTitlePosition = "CF"
          // Title is combined with Text.
          szTemp = szStatementText
          szStatementText = szStatementTitle + " " + szTemp
@@ -1963,7 +1820,7 @@ GeneratePDF_Category( VIEW mSPLDef BASED ON LOD mSPLDef,
             mSPLDef.DisplayStatement.Title = szStatementTitle
          END
       END
-
+*/
       // Process any mapping data for the following key words inserted in any text.
       //    {{Usage}}
       //    {{Claim}}
@@ -1986,18 +1843,43 @@ GeneratePDF_Category( VIEW mSPLDef BASED ON LOD mSPLDef,
       // on the next Panel for all remaining Statement entities.
       // If the Statement does NOT have Continuation Text, format this and all remaining Statement entities on next Panel.
 
-      IF szContinuationFlag = ""
+      IF szBlockContinuationFlag = ""
 
          // Process regular Statement Text.
 
-         szWriteBuffer = szPassedBlanks + "<fo:block "
-         AddFormatToSpecialText( mSPLDefBlock, szBlockType, "Text", szWriteBuffer )
-         WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
-
-         //szWriteBuffer = szPassedBlanks + "      " + szStatementText
-         szWriteBuffer = szPassedBlanks + "   <xsl:apply-templates select=^SubregPhysicalLabelDef/"
-                                            + szDisplaySectionName + "/" + szDisplayStatementName + "/Text^/>"
-         WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+         IF szStatementTitlePosition = "CF"
+            szWriteBuffer = szPassedBlanks + "<fo:block> "
+            WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+            szWriteBuffer = szPassedBlanks + "   <fo:inline "
+            AddFormatToSpecialText( mSPLDefBlock, szBlockType, "Title", szWriteBuffer )
+            WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+            szWriteBuffer = szPassedBlanks + "      <xsl:apply-templates select=^SubregPhysicalLabelDef/" + szDisplaySectionName + "/" + szDisplayStatementName + "/Title^/>"
+            WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+            szWriteBuffer = szPassedBlanks + "   </fo:inline>"
+            WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+            szWriteBuffer = szPassedBlanks + "   <fo:inline "
+            AddFormatToSpecialText( mSPLDefBlock, szBlockType, "Text", szWriteBuffer )
+            WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+            szWriteBuffer = szPassedBlanks + "      <xsl:apply-templates select=^SubregPhysicalLabelDef/" + szDisplaySectionName + "/" + szDisplayStatementName + "/Text^/>"
+            WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+            szWriteBuffer = szPassedBlanks + "   </fo:inline>"
+            WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+         ELSE
+           IF szStatementTitlePosition = "SL"
+               szWriteBuffer = szPassedBlanks + "<fo:block "
+               AddFormatToSpecialText( mSPLDefBlock, szBlockType, "Title", szWriteBuffer )
+               WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+               szWriteBuffer = szPassedBlanks + "   <xsl:apply-templates select=^SubregPhysicalLabelDef/" + szDisplaySectionName + "/" + szDisplayStatementName + "/Title^/>"
+               WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+               szWriteBuffer = szPassedBlanks + "</fo:block>"
+               WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+            END
+            szWriteBuffer = szPassedBlanks + "<fo:block "
+            AddFormatToSpecialText( mSPLDefBlock, szBlockType, "Text", szWriteBuffer )
+            WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+            szWriteBuffer = szPassedBlanks + "   <xsl:apply-templates select=^SubregPhysicalLabelDef/" + szDisplaySectionName + "/" + szDisplayStatementName + "/Text^/>"
+            WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+         END
 
          szWriteBuffer = szPassedBlanks + "</fo:block>"
          WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
@@ -2011,7 +1893,7 @@ GeneratePDF_Category( VIEW mSPLDef BASED ON LOD mSPLDef,
          IF szBlockContinuationType = ""
 
             // If this is a partial text continuation, format the first part of the text on the current Block.
-            IF szContinuationFlag = "M"
+            IF szBlockContinuationFlag = "M"
                szWriteBuffer = szPassedBlanks + "   <fo:block "
                AddFormatToSpecialText( mSPLDefBlock, szBlockType, "Text", szWriteBuffer )
                WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
@@ -2030,26 +1912,26 @@ GeneratePDF_Category( VIEW mSPLDef BASED ON LOD mSPLDef,
             // be seen under view mSPLDefBlock. Thus the reason for the somewhat awkward code below where mSPLDefPanelLevel
             // is the same view as mSPLDefBlock for the case where the continuation is to the next Block.
 
-            szDebugMsg = mSPLDefBlock.LLD_Block.ID
-            szDebugMsg = szDebugMsg + "   Tag: " + mSPLDefBlock.LLD_Block.Tag
-            szDebugMsg = szDebugMsg + "   Name: " + mSPLDefBlock.LLD_Block.Name
-            szDebugMsg = szDebugMsg + "   Title: " + mSPLDefBlock.LLD_Block.BlockTitle
-            szDebugMsg = szDebugMsg + "   Section Type: " + mSPLDefBlock.LLD_Block.LLD_BlockType
-            szDebugMsg = szDebugMsg + "   Continuation: " + mSPLDefBlock.LLD_Block.ContinuationBlockFlag
-            TraceLineS( "Checking Continuation from Block ID: ",  szDebugMsg )
+            szMsg = mSPLDefBlock.LLD_Block.ID
+            szMsg = szMsg + "   Tag: " + mSPLDefBlock.LLD_Block.Tag
+            szMsg = szMsg + "   Name: " + mSPLDefBlock.LLD_Block.Name
+            szMsg = szMsg + "   Title: " + mSPLDefBlock.LLD_Block.BlockTitle
+            szMsg = szMsg + "   Section Type: " + mSPLDefBlock.LLD_Block.LLD_BlockType
+            szMsg = szMsg + "   Continuation: " + mSPLDefBlock.LLD_Block.ContinuationBlockFlag
+            TraceLineS( "Checking Continuation from Block ID: ",  szMsg )
 
 
             // First look to see if the next Block is a Continuation Block and set flag.
             CreateViewFromView( mSPLDefContinue, mSPLDefBlock )
             SET CURSOR NEXT mSPLDefContinue.LLD_Block WHERE mSPLDefContinue.LLD_Block.ContinuationBlockFlag = "Y"
             IF RESULT >= zCURSOR_SET
-               szDebugMsg = mSPLDefBlock.LLD_Block.ID
-               szDebugMsg = szDebugMsg + "   Tag: " + mSPLDefContinue.LLD_Block.Tag
-               szDebugMsg = szDebugMsg + "   Name: " + mSPLDefContinue.LLD_Block.Name
-               szDebugMsg = szDebugMsg + "   Title: " + mSPLDefContinue.LLD_Block.BlockTitle
-               szDebugMsg = szDebugMsg + "   Section Type: " + mSPLDefContinue.LLD_Block.LLD_BlockType
-               szDebugMsg = szDebugMsg + "   Continuation: " + mSPLDefContinue.LLD_Block.ContinuationBlockFlag
-               TraceLineS( "Checking Continuation To Block ID: ",  szDebugMsg )
+               szMsg = mSPLDefBlock.LLD_Block.ID
+               szMsg = szMsg + "   Tag: " + mSPLDefContinue.LLD_Block.Tag
+               szMsg = szMsg + "   Name: " + mSPLDefContinue.LLD_Block.Name
+               szMsg = szMsg + "   Title: " + mSPLDefContinue.LLD_Block.BlockTitle
+               szMsg = szMsg + "   Section Type: " + mSPLDefContinue.LLD_Block.LLD_BlockType
+               szMsg = szMsg + "   Continuation: " + mSPLDefContinue.LLD_Block.ContinuationBlockFlag
+               TraceLineS( "Checking Continuation To Block ID: ",  szMsg )
 
             // IF mSPLDefBlock.LLD_Block.ContinuationBlockFlag = "Y"
                   szBlockContinuationType = "B"
@@ -2082,7 +1964,7 @@ GeneratePDF_Category( VIEW mSPLDef BASED ON LOD mSPLDef,
 
                // Block continuation
 
-               IF szContinuationFlag = "M"
+               IF szBlockContinuationFlag = "M"
                   // Continuation is in two pieces, so next text is ContinuationText.
                   GetStringFromAttribute( szTemp, mSPLDef, szSPLD_StatementEntityName, "ContinuationText" )
                   CREATE ENTITY mSPLDef.ContinuationStatement
@@ -2126,7 +2008,7 @@ GeneratePDF_Category( VIEW mSPLDef BASED ON LOD mSPLDef,
                // Panel continuation
 
                /*
-               IF szContinuationFlag = "M"
+               IF szBlockContinuationFlag = "M"
                   // Continuation is in two pieces, so next text is ContinuationText.
                   GetStringFromAttribute( szTemp, mSPLDef, szSPLD_StatementEntityName, "ContinuationText" )
                   CREATE ENTITY mSPLDefPanelLevel.ContinuationStatement
@@ -2196,34 +2078,34 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-//  OPERATION: GeneratePDF_DFU
+//  OPERATION: GeneratePDF_Categories
 //  Directions For Use (Category) / Storage and Disposal / General / Marketing
 //
 /////////////////////////////////////////////////////////////////////////////
 TRANSFORMATION OPERATION
-GeneratePDF_DFU( VIEW mSPLDef    BASED ON LOD mSPLDef,
-                 VIEW mSPLDefBlock BASED ON LOD mSPLDef,
-                 INTEGER lFile,
-                 STRING ( 50 ) szBlockType,
-                 STRING ( 256 ) szSectionTitle,
-                 STRING ( 32 ) szSPLD_SectionEntityName,
-                 STRING ( 32 ) szSPLD_StatementEntityName,
-                 STRING ( 32 ) szUsageTypeEntity,
-                 STRING ( 32 ) szLoopingEntity,
-                 STRING ( 50 ) szPassedBlanks,
-                 STRING ( 32000 ) szWriteBuffer )
+GeneratePDF_Categories( VIEW mSPLDef    BASED ON LOD mSPLDef,
+                        VIEW mSPLDefBlock BASED ON LOD mSPLDef,
+                        INTEGER lFile,
+                        STRING ( 50 ) szBlockType,
+                        STRING ( 256 ) szSectionHeader,
+                        STRING ( 32 ) szSPLD_SectionEntityName,
+                        STRING ( 32 ) szSPLD_StatementEntityName,
+                        STRING ( 32 ) szUsageTypeEntity,
+                        STRING ( 32 ) szLoopingEntity,
+                        STRING ( 50 ) szPassedBlanks,
+                        STRING ( 32000 ) szWriteBuffer )
 
    SHORT  nRC
 
    IF szSPLD_StatementEntityName = "SPLD_DirectionsForUseSection"
       nRC = SetCursorFirstEntity( mSPLDef, "SPLD_DirectionsForUseCategory", "" )
       LOOP WHILE nRC >= zCURSOR_SET
-         GeneratePDF_Category( mSPLDef, mSPLDefBlock, lFile, szBlockType, szSectionTitle, szSPLD_SectionEntityName, szSPLD_StatementEntityName,
+         GeneratePDF_Category( mSPLDef, mSPLDefBlock, lFile, szBlockType, szSectionHeader, szSPLD_SectionEntityName, szSPLD_StatementEntityName,
                                szUsageTypeEntity, szLoopingEntity, szPassedBlanks, szWriteBuffer )
          nRC = SetCursorFirstEntity( mSPLDef, "SPLD_DirectionsForUseCategory", "" )
       END
    ELSE
-      GeneratePDF_Category( mSPLDef, mSPLDefBlock, lFile, szBlockType, szSectionTitle, szSPLD_SectionEntityName, szSPLD_StatementEntityName,
+      GeneratePDF_Category( mSPLDef, mSPLDefBlock, lFile, szBlockType, szSectionHeader, szSPLD_SectionEntityName, szSPLD_StatementEntityName,
                             szUsageTypeEntity, szLoopingEntity, szPassedBlanks, szWriteBuffer )
    END
 
@@ -2249,7 +2131,6 @@ GeneratePDF_ClmList( VIEW mSPLDef    BASED ON LOD mSPLDef,
    STRING ( 50 )     szBreakName2
    STRING ( 32 )     szMarginRight
    STRING ( 32 )     szMarginLeft
-   STRING ( 100 )    szSectionTitle
    STRING ( 100 )    szStatementTitle
    STRING ( 32 )     szTitleFormat
    STRING ( 50 )     szSectionName
@@ -4446,6 +4327,211 @@ GetLPLR_SourceDirectory( VIEW mSPLDef BASED ON LOD mSPLDef,
 
 END
 
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: GenerateXSL_Page
+//
+/////////////////////////////////////////////////////////////////////////////
+TRANSFORMATION OPERATION
+GenerateXSL_Page( VIEW mSPLDef BASED ON LOD mSPLDef,
+                  INTEGER lFile,
+                  STRING ( 32000 ) szWriteBuffer )
+
+   VIEW mSPLDefBlock BASED ON LOD mSPLDef
+   VIEW mSPLDefContinue BASED ON LOD mSPLDef
+   INTEGER lControl
+   STRING ( 50 ) szPassedBlanks
+   STRING ( 32 ) szSize
+   STRING ( 32 ) szTop
+   STRING ( 32 ) szHeight
+   STRING ( 32 ) szWidth
+   STRING ( 32 ) szPageHeight
+   STRING ( 32 ) szPageWidth
+   STRING ( 32 ) szLeft
+   STRING ( 32 ) szLastSectionType
+   STRING ( 32 ) szVoid
+   STRING ( 2 )  szCount
+   STRING ( 40 ) szPanelDottedBorder
+   STRING ( 2 )  szSequenceNumber
+   STRING ( 50 ) szSectionName
+   DECIMAL       InterPanelSpace
+   DECIMAL       dLeft
+   DECIMAL       dTemp
+   INTEGER       lCount
+   SHORT         nRC
+
+   // Page
+   dTemp = mSPLDef.LLD_Page.Height + 2.0  // add 1-inch border
+   szPageHeight = dTemp
+   dTemp = mSPLDef.LLD_Page.Width + 2.0 // add 1-inch border
+   szPageWidth  = dTemp
+   szWriteBuffer = "            <fo:simple-page-master master-name=^p1^ page-width=^" + szPageWidth + "in^ page-height=^" + szPageHeight + "in^>"
+   WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+
+   szWriteBuffer = "               <fo:region-body region-name=^xsl-region-body^ margin=^0.2in^/>"
+   WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+   szWriteBuffer = "            </fo:simple-page-master>"
+   WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+   szWriteBuffer = "         </fo:layout-master-set>"
+   WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+   szWriteBuffer = "         <fo:page-sequence master-reference=^p1^>"
+   WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+   szWriteBuffer = "            <fo:flow flow-name=^xsl-region-body^>"
+   WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+
+   // Generate unique XML name for each Marketing Section, which contains a sequence number suffix.
+   lCount = 0
+   FOR EACH mSPLDef.SPLD_MarketingSection
+      lCount = lCount + 1
+      szSequenceNumber = lCount
+      szSectionName = "SPLD_MarketingSection" + szSequenceNumber
+      mSPLDef.SPLD_MarketingSection.wXML_MarketingName = szSectionName
+   END
+   mSPLDef.SubregPhysicalLabelDef.wLastDisplaySuffixCount = 0
+
+   // Generate printer location icons.
+   FormatPrintIcons( mSPLDef, lFile, szWriteBuffer )
+
+   // Compute the Top Position values for each Block and SubBlock.
+   ComputeTopPositions( mSPLDef )
+
+   // Reset the wContinuedFromTag for each Block and SubBlock.
+// TraverseBlocks( mSPLDef )  May use when we include "continuation" blocks
+
+   // Loop through each PANEL, creating a Panel with Block containers.
+   lCount = 0
+   dLeft = 1.0
+   InterPanelSpace = 0.75
+   IF mSPLDef.SubregPhysicalLabelDef.wFormatWithDottedBorders = "Y"
+   // TraceLineS( "Generate PDF Label with borders", "" )
+      szPanelDottedBorder = " border=^1.0pt dotted green^"
+   ELSE
+   // TraceLineS( "Generate PDF Label without borders", "" )
+      szPanelDottedBorder = ""
+   END
+   FOR EACH mSPLDef.LLD_Panel
+
+      lCount = lCount + 1
+      szCount = lCount
+      szLeft = dLeft
+
+      // Panel Container
+      //szTop        = "1.0"
+      dTemp = mSPLDef.LLD_Panel.Top + 1.0
+      szTop = dTemp
+      dTemp = mSPLDef.LLD_Panel.Left + 1.0
+      szLeft = dTemp
+      szHeight     = mSPLDef.LLD_Panel.Height
+      szWidth      = mSPLDef.LLD_Panel.Width
+      szWriteBuffer = "               <fo:block-container position=^absolute^ top=^" + szTop + "in^ left=^" + szLeft +
+                      "in^ height=^" + szHeight + "in^ width=^" + szWidth + "in^" + szPanelDottedBorder + ">"
+      WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+      szWriteBuffer = ""
+      WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+
+      // Panel Number
+      szWriteBuffer = "                  <!-- Panel Number " + szCount
+      WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+      szWriteBuffer = "                  <fo:block-container position=^absolute^ top=^-0.2in^ left=^-0.2in^>"
+      WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+      szWriteBuffer = "                     <fo:block text-align=^left^>"
+      WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+      szWriteBuffer = "                        " + szCount
+      WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+      szWriteBuffer = "                     </fo:block>"
+      WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+      szWriteBuffer = "                  </fo:block-container>"
+      WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+      szWriteBuffer = "                  -->"
+      WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+      szWriteBuffer = ""
+      WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+
+      IF mSPLDef.LLD_Block EXISTS
+      
+         // Process each Block within the Panel.
+         CreateViewFromView( mSPLDefBlock, mSPLDef )
+         CreateViewFromView( mSPLDefContinue, mSPLDef )
+         NAME VIEW mSPLDefBlock "mSPLDefBlock"
+         //NAME VIEW mSPLDefContinue "mSPLDefContinue"
+         //NAME VIEW mSPLDef "mSPLDef"
+
+         // Top call to ProcessPDF_Blocks <<=====================
+         szPassedBlanks = "               "
+         nRC = ProcessPDF_Blocks( mSPLDef, mSPLDefBlock, mSPLDefContinue, lFile, szPassedBlanks, szWriteBuffer )
+         DropView( mSPLDefContinue )
+         DropView( mSPLDefBlock )
+         IF nRC = 2
+            RETURN 2
+         END
+      ELSE
+         WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+         szWriteBuffer = "                  <fo:block-container position=^absolute^ top=^-0.2in^ left=^-0.2in^>"
+         WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+         szWriteBuffer = "                     <fo:block text-align=^left^>"
+         WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+         szWriteBuffer = "      Empty Panel"
+         WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+         szWriteBuffer = "                     </fo:block>"
+         WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+         szWriteBuffer = "                  </fo:block-container>"
+         WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+         szWriteBuffer = ""
+         WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+      END
+
+      // Close Panel Container.
+      szWriteBuffer = "               </fo:block-container>"
+      WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+
+      // Increment Left position for next Panel.
+      dLeft = dLeft + InterPanelSpace + mSPLDef.LLD_Panel.Width
+
+   END
+
+   // Close XSL body.
+   szWriteBuffer = "            </fo:flow>"
+   WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+   szWriteBuffer = "         </fo:page-sequence>"
+   WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+   szWriteBuffer = "      </fo:root>"
+   WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+   szWriteBuffer = "   </xsl:template>"
+   WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+   szWriteBuffer = ""
+   WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+
+   // Sub Template.
+   szWriteBuffer = "   <xsl:template match=^sub^>"
+   WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+   szWriteBuffer = "      <fo:inline vertical-align=^sub^ font-size=^75%^>"
+   WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+   szWriteBuffer = "         <xsl:apply-templates select=^*||text()^/>"
+   WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+   szWriteBuffer = "      </fo:inline>"
+   WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+   szWriteBuffer = "   </xsl:template>"
+   WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+
+   // Bold Template.
+   szWriteBuffer = "   <xsl:template match=^bold^>"
+   WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+   szWriteBuffer = "      <fo:inline font-weight=^bold^>"
+   WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+   szWriteBuffer = "         <xsl:apply-templates select=^*||text()^/>"
+   WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+   szWriteBuffer = "      </fo:inline>"
+   WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+   szWriteBuffer = "   </xsl:template>"
+   WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+
+   // Conclude XSL.
+   szWriteBuffer = ""
+   WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+   szWriteBuffer = "</xsl:stylesheet>"
+   WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+
+END
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -4455,13 +4541,13 @@ END
 TRANSFORMATION OPERATION
 GenerateXML_File( VIEW mSPLDef BASED ON LOD mSPLDef,
                   STRING ( 32 )  szTopEntityName,
-                  STRING ( 300 ) szXmlDirectoryAndFileName )
+                  STRING ( 300 ) szXmlDirectoryAndFileName,
+                  STRING ( 32000 ) szWriteBuffer )
 
    STRING ( 50 )   szIndentation
    STRING ( 400 )  szMsg
    STRING ( 400 )  szFileName
    STRING ( 5000 ) szValue
-   STRING ( 5000 ) szOutputLine
    STRING ( 50 )   szSectionName
    STRING ( 50 )   szStatementName
    STRING ( 50 )   szDateTimeDisplay
@@ -4480,16 +4566,16 @@ GenerateXML_File( VIEW mSPLDef BASED ON LOD mSPLDef,
    END
 
    // Build Header entries.
-   szOutputLine = "<?xml version=" + QUOTES + "1.0" + QUOTES + "?>"
-   GenerateLine( mSPLDef, lFileHandle, szOutputLine )
+   szWriteBuffer = "<?xml version=" + QUOTES + "1.0" + QUOTES + "?>"
+   GenerateLine( mSPLDef, lFileHandle, szWriteBuffer )
    GetStringFromAttributeByContext( szDateTimeDisplay, mSPLDef, "SubregPhysicalLabelDef", "wDateTime", "YYYY/MM/DD HH:MM:SS.S AM", 30 )
-   szOutputLine = "<!-- Output created by ePamms   " + szDateTimeDisplay + " -->"
-   GenerateLine( mSPLDef, lFileHandle, szOutputLine )
+   szWriteBuffer = "<!-- Output created by ePamms   " + szDateTimeDisplay + " -->"
+   GenerateLine( mSPLDef, lFileHandle, szWriteBuffer )
 
-   szOutputLine = "   <zOI>"
-   GenerateLine( mSPLDef, lFileHandle, szOutputLine )
-   szOutputLine = "      <SubregPhysicalLabelDef>"
-   GenerateLine( mSPLDef, lFileHandle, szOutputLine )
+   szWriteBuffer = "   <zOI>"
+   GenerateLine( mSPLDef, lFileHandle, szWriteBuffer )
+   szWriteBuffer = "      <SubregPhysicalLabelDef>"
+   GenerateLine( mSPLDef, lFileHandle, szWriteBuffer )
 
    szIndentation = "         "
    szValue = mSPLDef.SubregPhysicalLabelDef.Name
@@ -4498,8 +4584,8 @@ GenerateXML_File( VIEW mSPLDef BASED ON LOD mSPLDef,
    GenerateAttribute( mSPLDef, lFileHandle, "ProductName", szIndentation, szValue )
 
    // <SubregLabelContent>
-   szOutputLine = "         <SubregLabelContent>"
-   GenerateLine( mSPLDef, lFileHandle, szOutputLine )
+   szWriteBuffer = "         <SubregLabelContent>"
+   GenerateLine( mSPLDef, lFileHandle, szWriteBuffer )
    szIndentation = "            "
    szValue = mSPLDef.SubregLabelContent.EPA_RegistrationNumber
    GenerateAttribute( mSPLDef, lFileHandle, "EPA_RegistrationNumber", szIndentation, szValue )
@@ -4507,13 +4593,13 @@ GenerateXML_File( VIEW mSPLDef BASED ON LOD mSPLDef,
    GenerateAttribute( mSPLDef, lFileHandle, "EPA_EstablishmentNumber", szIndentation, szValue )
    szValue = mSPLDef.SubregLabelContent.ESL_Date
    GenerateAttribute( mSPLDef, lFileHandle, "ESL_Date", szIndentation, szValue )
-   szOutputLine = "         </SubregLabelContent>"
-   GenerateLine( mSPLDef, lFileHandle, szOutputLine )
+   szWriteBuffer = "         </SubregLabelContent>"
+   GenerateLine( mSPLDef, lFileHandle, szWriteBuffer )
 
    // <SPLD_GeneralSection>
    FOR EACH mSPLDef.SPLD_GeneralSection
-      szOutputLine = "         <SPLD_GeneralSection>"
-      GenerateLine( mSPLDef, lFileHandle, szOutputLine )
+      szWriteBuffer = "         <SPLD_GeneralSection>"
+      GenerateLine( mSPLDef, lFileHandle, szWriteBuffer )
       szIndentation = "            "
       szValue = mSPLDef.SPLD_GeneralSection.Title
       GenerateAttribute( mSPLDef, lFileHandle, "Title", szIndentation, szValue )
@@ -4522,23 +4608,25 @@ GenerateXML_File( VIEW mSPLDef BASED ON LOD mSPLDef,
 
       // <SPLD_GeneralStatement>
       FOR EACH mSPLDef.SPLD_GeneralStatement
-         szOutputLine = "            <SPLD_GeneralStatement>"
-         GenerateLine( mSPLDef, lFileHandle, szOutputLine )
+         szWriteBuffer = "            <SPLD_GeneralStatement>"
+         GenerateLine( mSPLDef, lFileHandle, szWriteBuffer )
          szIndentation = "               "
+         szValue = mSPLDef.SPLD_GeneralStatement.Title
+         GenerateAttribute( mSPLDef, lFileHandle, "Title", szIndentation, szValue )
          szValue = mSPLDef.SPLD_GeneralStatement.Text
          GenerateAttribute( mSPLDef, lFileHandle, "Text", szIndentation, szValue )
-         szOutputLine = "            </SPLD_GeneralStatement>"
-         GenerateLine( mSPLDef, lFileHandle, szOutputLine )
+         szWriteBuffer = "            </SPLD_GeneralStatement>"
+         GenerateLine( mSPLDef, lFileHandle, szWriteBuffer )
       END
 
-      szOutputLine = "         </SPLD_GeneralSection>"
-      GenerateLine( mSPLDef, lFileHandle, szOutputLine )
+      szWriteBuffer = "         </SPLD_GeneralSection>"
+      GenerateLine( mSPLDef, lFileHandle, szWriteBuffer )
    END
 
    // <SPLD_IngredientsSection>
    FOR EACH mSPLDef.SPLD_IngredientsSection
-      szOutputLine = "         <SPLD_IngredientsSection>"
-      GenerateLine( mSPLDef, lFileHandle, szOutputLine )
+      szWriteBuffer = "         <SPLD_IngredientsSection>"
+      GenerateLine( mSPLDef, lFileHandle, szWriteBuffer )
       szIndentation = "            "
       szValue = mSPLDef.SPLD_IngredientsSection.ActiveTitle
       GenerateAttribute( mSPLDef, lFileHandle, "ActiveTitle", szIndentation, szValue )
@@ -4549,165 +4637,165 @@ GenerateXML_File( VIEW mSPLDef BASED ON LOD mSPLDef,
 
       // <SPLD_IngredientsStatement>
       FOR EACH mSPLDef.SPLD_IngredientsStatement
-         szOutputLine = "            <SPLD_IngredientsStatement>"
-         GenerateLine( mSPLDef, lFileHandle, szOutputLine )
+         szWriteBuffer = "            <SPLD_IngredientsStatement>"
+         GenerateLine( mSPLDef, lFileHandle, szWriteBuffer )
          szIndentation = "               "
          szValue = mSPLDef.SPLD_IngredientsStatement.ChemicalName
          GenerateAttribute( mSPLDef, lFileHandle, "ChemicalName", szIndentation, szValue )
          szValue = mSPLDef.SPLD_IngredientsStatement.Percent
          GenerateAttribute( mSPLDef, lFileHandle, "Percent", szIndentation, szValue )
-         szOutputLine = "            </SPLD_IngredientsStatement>"
-         GenerateLine( mSPLDef, lFileHandle, szOutputLine )
+         szWriteBuffer = "            </SPLD_IngredientsStatement>"
+         GenerateLine( mSPLDef, lFileHandle, szWriteBuffer )
       END
 
-      szOutputLine = "         </SPLD_IngredientsSection>"
-      GenerateLine( mSPLDef, lFileHandle, szOutputLine )
+      szWriteBuffer = "         </SPLD_IngredientsSection>"
+      GenerateLine( mSPLDef, lFileHandle, szWriteBuffer )
    END
 
    // <SPLD_StorageDisposalSection>
    /*FOR EACH mSPLDef.SPLD_StorageDisposalSection
-      szOutputLine = "         <SPLD_StorageDisposalSection>"
-      GenerateLine( mSPLDef, lFileHandle, szOutputLine )
+      szWriteBuffer = "         <SPLD_StorageDisposalSection>"
+      GenerateLine( mSPLDef, lFileHandle, szWriteBuffer )
       szIndentation = "            "
       szValue = mSPLDef.SPLD_StorageDisposalSection.Title
       GenerateAttribute( mSPLDef, lFileHandle, "Title", szIndentation, szValue )
       // <SPLD_StorageDisposalStatement>
       FOR EACH mSPLDef.SPLD_StorageDisposalStatement
-         szOutputLine = "            <SPLD_StorageDisposalStatement>"
-         GenerateLine( mSPLDef, lFileHandle, szOutputLine )
+         szWriteBuffer = "            <SPLD_StorageDisposalStatement>"
+         GenerateLine( mSPLDef, lFileHandle, szWriteBuffer )
          szIndentation = "               "
          szValue = mSPLDef.SPLD_StorageDisposalStatement.Title
          GenerateAttribute( mSPLDef, lFileHandle, "Title", szIndentation, szValue )
          szValue = mSPLDef.SPLD_StorageDisposalStatement.Text
          GenerateAttribute( mSPLDef, lFileHandle, "Text", szIndentation, szValue )
-         szOutputLine = "            </SPLD_StorageDisposalStatement>"
-         GenerateLine( mSPLDef, lFileHandle, szOutputLine )
+         szWriteBuffer = "            </SPLD_StorageDisposalStatement>"
+         GenerateLine( mSPLDef, lFileHandle, szWriteBuffer )
       END
-      szOutputLine = "         </SPLD_StorageDisposalSection>"
-      GenerateLine( mSPLDef, lFileHandle, szOutputLine )
+      szWriteBuffer = "         </SPLD_StorageDisposalSection>"
+      GenerateLine( mSPLDef, lFileHandle, szWriteBuffer )
    END
    // <SPLD_DirectionsForUseSection>
    FOR EACH mSPLDef.SPLD_DirectionsForUseSection
-      szOutputLine = "         <SPLD_DirectionsForUseSection>"
-      GenerateLine( mSPLDef, lFileHandle, szOutputLine )
+      szWriteBuffer = "         <SPLD_DirectionsForUseSection>"
+      GenerateLine( mSPLDef, lFileHandle, szWriteBuffer )
       szIndentation = "            "
       szValue = mSPLDef.SPLD_DirectionsForUseSection.Title
       GenerateAttribute( mSPLDef, lFileHandle, "Title", szIndentation, szValue )
       // <SPLD_DirectionsForUseStatement>
       FOR EACH mSPLDef.SPLD_DirectionsForUseStatement
-         szOutputLine = "            <SPLD_DirectionsForUseStatement>"
-         GenerateLine( mSPLDef, lFileHandle, szOutputLine )
+         szWriteBuffer = "            <SPLD_DirectionsForUseStatement>"
+         GenerateLine( mSPLDef, lFileHandle, szWriteBuffer )
          szIndentation = "               "
          szValue = mSPLDef.SPLD_DirectionsForUseStatement.Title
          GenerateAttribute( mSPLDef, lFileHandle, "Title", szIndentation, szValue )
          szValue = mSPLDef.SPLD_DirectionsForUseStatement.wkDisplayText     // We'll use wkDisplayText because it includes inserted characters.
          GenerateAttribute( mSPLDef, lFileHandle, "Text", szIndentation, szValue )
-         szOutputLine = "            </SPLD_DirectionsForUseStatement>"
-         GenerateLine( mSPLDef, lFileHandle, szOutputLine )
+         szWriteBuffer = "            </SPLD_DirectionsForUseStatement>"
+         GenerateLine( mSPLDef, lFileHandle, szWriteBuffer )
       END
       // <SPLD_DirectionsUsageOrdering>
       FOR EACH mSPLDef.SPLD_DirectionsUsageOrdering
-         szOutputLine = "         <SPLD_DirectionsUsageOrdering>"
-         GenerateLine( mSPLDef, lFileHandle, szOutputLine )
+         szWriteBuffer = "         <SPLD_DirectionsUsageOrdering>"
+         GenerateLine( mSPLDef, lFileHandle, szWriteBuffer )
          szIndentation = "            "
          szValue = mSPLDef.SPLD_DirectionsUsageOrdering.wSortOrder
          GenerateAttribute( mSPLDef, lFileHandle, "wSortOrder", szIndentation, szValue )
          // <SPLD_DirectionsUsageOrdering>
-         szOutputLine = "            <SPLD_DirectionsUsage>"
-         GenerateLine( mSPLDef, lFileHandle, szOutputLine )
+         szWriteBuffer = "            <SPLD_DirectionsUsage>"
+         GenerateLine( mSPLDef, lFileHandle, szWriteBuffer )
          szIndentation = "               "
          szValue = mSPLDef.SPLD_DirectionsUsage.UsageType
          GenerateAttribute( mSPLDef, lFileHandle, "UsageType", szIndentation, szValue )
          szValue = mSPLDef.SPLD_DirectionsUsage.Name
          GenerateAttribute( mSPLDef, lFileHandle, "Name", szIndentation, szValue )
-         szOutputLine = "            </SPLD_DirectionsUsage>"
-         GenerateLine( mSPLDef, lFileHandle, szOutputLine )
-         szOutputLine = "         </SPLD_DirectionsUsageOrdering>"
-         GenerateLine( mSPLDef, lFileHandle, szOutputLine )
+         szWriteBuffer = "            </SPLD_DirectionsUsage>"
+         GenerateLine( mSPLDef, lFileHandle, szWriteBuffer )
+         szWriteBuffer = "         </SPLD_DirectionsUsageOrdering>"
+         GenerateLine( mSPLDef, lFileHandle, szWriteBuffer )
       END
-      szOutputLine = "         </SPLD_DirectionsForUseSection>"
-      GenerateLine( mSPLDef, lFileHandle, szOutputLine )
+      szWriteBuffer = "         </SPLD_DirectionsForUseSection>"
+      GenerateLine( mSPLDef, lFileHandle, szWriteBuffer )
    END
    // <SPLD_MarketingSection>
    FOR EACH mSPLDef.SPLD_MarketingSection
       // The Marketing Section name includes the Sequence Number to get uniqueness
       szSectionName = mSPLDef.SPLD_MarketingSection.wXML_MarketingName
-      szOutputLine = "         <" + szSectionName + ">"
-      GenerateLine( mSPLDef, lFileHandle, szOutputLine )
+      szWriteBuffer = "         <" + szSectionName + ">"
+      GenerateLine( mSPLDef, lFileHandle, szWriteBuffer )
       szIndentation = "            "
       szValue = mSPLDef.SPLD_MarketingSection.Title
       GenerateAttribute( mSPLDef, lFileHandle, "Title", szIndentation, szValue )
       // <SPLD_MarketingStatement>
       FOR EACH mSPLDef.SPLD_MarketingStatement
-         szOutputLine = "            <SPLD_MarketingStatement>"
-         GenerateLine( mSPLDef, lFileHandle, szOutputLine )
+         szWriteBuffer = "            <SPLD_MarketingStatement>"
+         GenerateLine( mSPLDef, lFileHandle, szWriteBuffer )
          szIndentation = "               "
          szValue = mSPLDef.SPLD_MarketingStatement.Title
          GenerateAttribute( mSPLDef, lFileHandle, "Title", szIndentation, szValue )
          szValue = mSPLDef.SPLD_MarketingStatement.wkDisplayText     // We'll use wkDisplayText because it includes inserted characters.
          GenerateAttribute( mSPLDef, lFileHandle, "Text", szIndentation, szValue )
-         szOutputLine = "            </SPLD_MarketingStatement>"
-         GenerateLine( mSPLDef, lFileHandle, szOutputLine )
+         szWriteBuffer = "            </SPLD_MarketingStatement>"
+         GenerateLine( mSPLDef, lFileHandle, szWriteBuffer )
       END
       // <SPLD_DirectionsUsageOrdering>
       FOR EACH mSPLDef.SPLD_DirectionsUsageOrdering
-         szOutputLine = "         <SPLD_DirectionsUsageOrdering>"
-         GenerateLine( mSPLDef, lFileHandle, szOutputLine )
+         szWriteBuffer = "         <SPLD_DirectionsUsageOrdering>"
+         GenerateLine( mSPLDef, lFileHandle, szWriteBuffer )
          szIndentation = "               "
          szValue = mSPLDef.SPLD_DirectionsUsageOrdering.wSortOrder
          GenerateAttribute( mSPLDef, lFileHandle, "wSortOrder", szIndentation, szValue )
          // <SPLD_DirectionsUsageOrdering>
-         szOutputLine = "            <SPLD_DirectionsUsage>"
-         GenerateLine( mSPLDef, lFileHandle, szOutputLine )
+         szWriteBuffer = "            <SPLD_DirectionsUsage>"
+         GenerateLine( mSPLDef, lFileHandle, szWriteBuffer )
          szIndentation = "               "
          szValue = mSPLDef.SPLD_DirectionsUsage.UsageType
          GenerateAttribute( mSPLDef, lFileHandle, "UsageType", szIndentation, szValue )
          szValue = mSPLDef.SPLD_DirectionsUsage.Name
          GenerateAttribute( mSPLDef, lFileHandle, "Name", szIndentation, szValue )
-         szOutputLine = "            </SPLD_DirectionsUsage>"
-         GenerateLine( mSPLDef, lFileHandle, szOutputLine )
-         szOutputLine = "         </SPLD_DirectionsUsageOrdering>"
-         GenerateLine( mSPLDef, lFileHandle, szOutputLine )
+         szWriteBuffer = "            </SPLD_DirectionsUsage>"
+         GenerateLine( mSPLDef, lFileHandle, szWriteBuffer )
+         szWriteBuffer = "         </SPLD_DirectionsUsageOrdering>"
+         GenerateLine( mSPLDef, lFileHandle, szWriteBuffer )
       END
       // <DisplayUsageColumn1>
       FOR EACH mSPLDef.DisplayUsageColumn1
-         szOutputLine = "            <DisplayUsageColumn1>"
-         GenerateLine( mSPLDef, lFileHandle, szOutputLine )
+         szWriteBuffer = "            <DisplayUsageColumn1>"
+         GenerateLine( mSPLDef, lFileHandle, szWriteBuffer )
          szIndentation = "               "
          szValue = mSPLDef.DisplayUsageColumn1.Name
          GenerateAttribute( mSPLDef, lFileHandle, "Name", szIndentation, szValue )
-         szOutputLine = "            </DisplayUsageColumn1>"
-         GenerateLine( mSPLDef, lFileHandle, szOutputLine )
+         szWriteBuffer = "            </DisplayUsageColumn1>"
+         GenerateLine( mSPLDef, lFileHandle, szWriteBuffer )
       END
       // <DisplayUsageColumn2>
       FOR EACH mSPLDef.DisplayUsageColumn2
-         szOutputLine = "            <DisplayUsageColumn2>"
-         GenerateLine( mSPLDef, lFileHandle, szOutputLine )
+         szWriteBuffer = "            <DisplayUsageColumn2>"
+         GenerateLine( mSPLDef, lFileHandle, szWriteBuffer )
          szIndentation = "               "
          szValue = mSPLDef.DisplayUsageColumn2.Name
          GenerateAttribute( mSPLDef, lFileHandle, "Name", szIndentation, szValue )
-         szOutputLine = "            </DisplayUsageColumn2>"
-         GenerateLine( mSPLDef, lFileHandle, szOutputLine )
+         szWriteBuffer = "            </DisplayUsageColumn2>"
+         GenerateLine( mSPLDef, lFileHandle, szWriteBuffer )
       END
       // <DisplayUsageColumn3>
       FOR EACH mSPLDef.DisplayUsageColumn3
-         szOutputLine = "            <DisplayUsageColumn3>"
-         GenerateLine( mSPLDef, lFileHandle, szOutputLine )
+         szWriteBuffer = "            <DisplayUsageColumn3>"
+         GenerateLine( mSPLDef, lFileHandle, szWriteBuffer )
          szIndentation = "               "
          szValue = mSPLDef.DisplayUsageColumn3.Name
          GenerateAttribute( mSPLDef, lFileHandle, "Name", szIndentation, szValue )
-         szOutputLine = "            </DisplayUsageColumn3>"
-         GenerateLine( mSPLDef, lFileHandle, szOutputLine )
+         szWriteBuffer = "            </DisplayUsageColumn3>"
+         GenerateLine( mSPLDef, lFileHandle, szWriteBuffer )
       END
-      szOutputLine = "         </" + szSectionName + ">"
-      GenerateLine( mSPLDef, lFileHandle, szOutputLine )
+      szWriteBuffer = "         </" + szSectionName + ">"
+      GenerateLine( mSPLDef, lFileHandle, szWriteBuffer )
    END*/
 
    // <DisplaySection>
    FOR EACH mSPLDef.DisplaySection
       szSectionName = mSPLDef.DisplaySection.XML_SectionName
-      szOutputLine = "         <" + szSectionName + ">"
-      GenerateLine( mSPLDef, lFileHandle, szOutputLine )
+      szWriteBuffer = "         <" + szSectionName + ">"
+      GenerateLine( mSPLDef, lFileHandle, szWriteBuffer )
       szIndentation = "            "
       szValue = mSPLDef.DisplaySection.Title
       GenerateAttribute( mSPLDef, lFileHandle, "Title", szIndentation, szValue )
@@ -4715,59 +4803,59 @@ GenerateXML_File( VIEW mSPLDef BASED ON LOD mSPLDef,
       // <DisplayStatement>
       FOR EACH mSPLDef.DisplayStatement
          szStatementName = mSPLDef.DisplayStatement.XML_StatementName
-         szOutputLine = "            <" + szStatementName + ">"
-         GenerateLine( mSPLDef, lFileHandle, szOutputLine )
+         szWriteBuffer = "            <" + szStatementName + ">"
+         GenerateLine( mSPLDef, lFileHandle, szWriteBuffer )
          szIndentation = "               "
          szValue = mSPLDef.DisplayStatement.Title
          GenerateAttribute( mSPLDef, lFileHandle, "Title", szIndentation, szValue )
          szValue = mSPLDef.DisplayStatement.Text
          GenerateAttribute( mSPLDef, lFileHandle, "Text", szIndentation, szValue )
          szStatementName = mSPLDef.DisplayStatement.XML_StatementName
-         szOutputLine = "            </" + szStatementName + ">"
-         GenerateLine( mSPLDef, lFileHandle, szOutputLine )
+         szWriteBuffer = "            </" + szStatementName + ">"
+         GenerateLine( mSPLDef, lFileHandle, szWriteBuffer )
       END
 
       // <DisplayUsageColumn1>
       FOR EACH mSPLDef.DisplayUsageColumn1
-         szOutputLine = "            <DisplayUsageColumn1>"
-         GenerateLine( mSPLDef, lFileHandle, szOutputLine )
+         szWriteBuffer = "            <DisplayUsageColumn1>"
+         GenerateLine( mSPLDef, lFileHandle, szWriteBuffer )
          szIndentation = "               "
          szValue = mSPLDef.DisplayUsageColumn1.Name
          GenerateAttribute( mSPLDef, lFileHandle, "Name", szIndentation, szValue )
-         szOutputLine = "            </DisplayUsageColumn1>"
-         GenerateLine( mSPLDef, lFileHandle, szOutputLine )
+         szWriteBuffer = "            </DisplayUsageColumn1>"
+         GenerateLine( mSPLDef, lFileHandle, szWriteBuffer )
       END
 
       // <DisplayUsageColumn2>
       FOR EACH mSPLDef.DisplayUsageColumn2
-         szOutputLine = "            <DisplayUsageColumn2>"
-         GenerateLine( mSPLDef, lFileHandle, szOutputLine )
+         szWriteBuffer = "            <DisplayUsageColumn2>"
+         GenerateLine( mSPLDef, lFileHandle, szWriteBuffer )
          szIndentation = "               "
          szValue = mSPLDef.DisplayUsageColumn2.Name
          GenerateAttribute( mSPLDef, lFileHandle, "Name", szIndentation, szValue )
-         szOutputLine = "            </DisplayUsageColumn2>"
-         GenerateLine( mSPLDef, lFileHandle, szOutputLine )
+         szWriteBuffer = "            </DisplayUsageColumn2>"
+         GenerateLine( mSPLDef, lFileHandle, szWriteBuffer )
       END
 
       // <DisplayUsageColumn3>
       FOR EACH mSPLDef.DisplayUsageColumn3
-         szOutputLine = "            <DisplayUsageColumn3>"
-         GenerateLine( mSPLDef, lFileHandle, szOutputLine )
+         szWriteBuffer = "            <DisplayUsageColumn3>"
+         GenerateLine( mSPLDef, lFileHandle, szWriteBuffer )
          szIndentation = "               "
          szValue = mSPLDef.DisplayUsageColumn3.Name
          GenerateAttribute( mSPLDef, lFileHandle, "Name", szIndentation, szValue )
-         szOutputLine = "            </DisplayUsageColumn3>"
-         GenerateLine( mSPLDef, lFileHandle, szOutputLine )
+         szWriteBuffer = "            </DisplayUsageColumn3>"
+         GenerateLine( mSPLDef, lFileHandle, szWriteBuffer )
       END
 
-      szOutputLine = "         </" + szSectionName + ">"
-      GenerateLine( mSPLDef, lFileHandle, szOutputLine )
+      szWriteBuffer = "         </" + szSectionName + ">"
+      GenerateLine( mSPLDef, lFileHandle, szWriteBuffer )
    END
 
    // <SPLD_HumanHazardSection>
    FOR EACH mSPLDef.SPLD_HumanHazardSection
-      szOutputLine = "         <SPLD_HumanHazardSection>"
-      GenerateLine( mSPLDef, lFileHandle, szOutputLine )
+      szWriteBuffer = "         <SPLD_HumanHazardSection>"
+      GenerateLine( mSPLDef, lFileHandle, szWriteBuffer )
       szIndentation = "            "
       szValue = mSPLDef.SPLD_HumanHazardSection.EPA_SignalWord
       GenerateAttribute( mSPLDef, lFileHandle, "EPA_SignalWord", szIndentation, szValue )
@@ -4775,15 +4863,15 @@ GenerateXML_File( VIEW mSPLDef BASED ON LOD mSPLDef,
       GenerateAttribute( mSPLDef, lFileHandle, "EPA_ChildHazardWarning", szIndentation, szValue )
       szValue = mSPLDef.SPLD_HumanHazardSection.PrecautionaryStatement
       GenerateAttribute( mSPLDef, lFileHandle, "PrecautionaryStatement", szIndentation, szValue )
-      szOutputLine = "         </SPLD_HumanHazardSection>"
-      GenerateLine( mSPLDef, lFileHandle, szOutputLine )
+      szWriteBuffer = "         </SPLD_HumanHazardSection>"
+      GenerateLine( mSPLDef, lFileHandle, szWriteBuffer )
    END
 
    // Build Footer entries.
-   szOutputLine = "      </SubregPhysicalLabelDef>"
-   GenerateLine( mSPLDef, lFileHandle, szOutputLine )
-   szOutputLine = "   </zOI>"
-   GenerateLine( mSPLDef, lFileHandle, szOutputLine )
+   szWriteBuffer = "      </SubregPhysicalLabelDef>"
+   GenerateLine( mSPLDef, lFileHandle, szWriteBuffer )
+   szWriteBuffer = "   </zOI>"
+   GenerateLine( mSPLDef, lFileHandle, szWriteBuffer )
 
    // Close the XML file.
    SysCloseFile( mSPLDef, lFileHandle, 0 )
